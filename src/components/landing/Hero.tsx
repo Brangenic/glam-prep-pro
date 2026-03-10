@@ -33,7 +33,7 @@ const Hero = () => (
           Luxury glam, costume dressing, and concierge-style preparation for
           masqueraders who want to hit the road looking flawless.
         </p>
-        <p className="font-body text-sm text-muted-foreground leading-relaxed mb-10 max-w-lg animate-fade-up" style={{ animationDelay: "0.25s" }}>
+        <p className="font-body text-sm text-white/60 leading-relaxed mb-10 max-w-lg animate-fade-up" style={{ animationDelay: "0.25s" }}>
           From makeup to final touches — we handle everything so you can focus on the experience.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.35s" }}>
