@@ -19,8 +19,8 @@ const Solution = () => {
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 bg-background/80 backdrop-blur-md rounded-2xl p-4 border border-primary/10">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-2xl p-4 border border-primary/10">
               <p className="font-body text-xs text-primary font-medium uppercase tracking-wider">The Glam Hub Difference</p>
               <p className="font-body text-sm text-foreground/80 mt-1">Full-service. Concierge-style. Stress-free.</p>
             </div>

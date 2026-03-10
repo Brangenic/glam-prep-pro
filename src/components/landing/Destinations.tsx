@@ -76,10 +76,10 @@ const Destinations = () => {
                 </div>
               )}
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="font-display text-xl lg:text-2xl font-bold mb-2 italic">
+                <h3 className="font-display text-xl lg:text-2xl font-bold mb-2 italic text-white">
                   {d.name}
                 </h3>
-                <p className="font-body text-xs text-foreground/60 mb-5">
+                <p className="font-body text-xs text-white/70 mb-5">
                   {d.description}
                 </p>
                 <a
