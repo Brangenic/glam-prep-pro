@@ -29,7 +29,7 @@ const Hero = () => (
           Your Carnival Morning{" "}
           <span className="text-gradient-primary italic">Starts Here</span>
         </h1>
-        <p className="font-body text-lg sm:text-xl text-foreground/70 leading-relaxed mb-3 max-w-lg animate-fade-up" style={{ animationDelay: "0.15s" }}>
+        <p className="font-body text-lg sm:text-xl text-white/80 leading-relaxed mb-3 max-w-lg animate-fade-up" style={{ animationDelay: "0.15s" }}>
           Luxury glam, costume dressing, and concierge-style preparation for
           masqueraders who want to hit the road looking flawless.
         </p>
