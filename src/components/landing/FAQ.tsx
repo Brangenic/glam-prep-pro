@@ -37,29 +37,34 @@ const FAQ = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="faq" className="py-24 lg:py-32">
+    <section id="faq" className="py-24 lg:py-32 bg-card/50">
       <div ref={ref} className="container mx-auto px-6 max-w-2xl">
-        <h2
-          className={`font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          Frequently Asked Questions
-        </h2>
-        <Accordion type="single" collapsible className="space-y-2">
+        <div className="text-center mb-16">
+          <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}>Support</p>
+          <h2
+            className={`font-display text-3xl sm:text-4xl lg:text-5xl font-bold transition-all duration-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            Frequently Asked <span className="italic text-gradient-primary">Questions</span>
+          </h2>
+        </div>
+        <Accordion type="single" collapsible className="space-y-3">
           {faqs.map((faq, i) => (
             <AccordionItem
               key={i}
               value={`faq-${i}`}
-              className={`border border-border rounded-lg px-6 transition-all duration-500 ${
+              className={`bg-card border border-border rounded-2xl px-6 transition-all duration-500 hover:border-primary/20 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
               style={{ transitionDelay: `${200 + i * 80}ms` }}
             >
-              <AccordionTrigger className="font-display text-base font-bold hover:no-underline hover:text-secondary transition-colors">
+              <AccordionTrigger className="font-display text-base font-bold hover:no-underline hover:text-primary transition-colors py-5">
                 {faq.q}
               </AccordionTrigger>
-              <AccordionContent className="font-body text-muted-foreground text-sm leading-relaxed">
+              <AccordionContent className="font-body text-muted-foreground text-sm leading-relaxed pb-5">
                 {faq.a}
               </AccordionContent>
             </AccordionItem>
