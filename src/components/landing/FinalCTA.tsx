@@ -4,8 +4,10 @@ const FinalCTA = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="book" className="py-24 lg:py-32 bg-card/30">
-      <div ref={ref} className="container mx-auto px-6 text-center max-w-2xl">
+    <section id="book" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Subtle radial glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-card/50 to-background pointer-events-none" />
+      <div ref={ref} className="relative container mx-auto px-6 text-center max-w-2xl">
         <p
           className={`font-body text-sm uppercase tracking-[0.3em] text-primary mb-6 transition-all duration-700 ${
             isVisible ? "opacity-100" : "opacity-0"
@@ -37,13 +39,13 @@ const FinalCTA = () => {
         >
           <a
             href="#destinations"
-            className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-display font-bold text-lg px-10 py-4 rounded-lg hover:opacity-90 transition-opacity"
+            className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-display font-bold text-lg px-10 py-4 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
           >
             Book Your Glam Appointment
           </a>
           <a
             href="#destinations"
-            className="inline-flex items-center justify-center gap-2 border border-border text-foreground font-display font-bold text-sm px-8 py-4 rounded-lg hover:border-secondary hover:text-secondary transition-colors"
+            className="inline-flex items-center justify-center gap-2 border border-foreground/20 text-foreground font-display font-bold text-sm px-8 py-4 rounded-lg hover:border-secondary hover:text-secondary transition-colors"
           >
             View Destinations
           </a>

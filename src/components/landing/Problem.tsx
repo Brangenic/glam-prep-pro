@@ -5,7 +5,7 @@ const painPoints = [
   "Running around trying to find your artist.",
   "Dressing your costume alone in a rush.",
   "Sweating before you even hit the road.",
-  "Arriving to the band already exhausted.",
+  "By the time you reach the band, the experience already feels exhausting.",
 ];
 
 const Problem = () => {
@@ -23,17 +23,17 @@ const Problem = () => {
           <span className="text-secondary">Not Stressful</span>
         </h2>
         <p
-          className={`font-body text-muted-foreground text-lg mb-10 transition-all duration-700 delay-200 ${
+          className={`font-body text-lg text-muted-foreground mb-8 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
           The reality for many masqueraders is chaotic.
         </p>
-        <div className="space-y-4">
+        <div className="space-y-3 mb-12">
           {painPoints.map((point, i) => (
             <p
               key={i}
-              className={`font-body text-lg text-foreground/80 transition-all duration-500 ${
+              className={`font-body text-base lg:text-lg text-foreground/75 transition-all duration-500 ${
                 isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
               }`}
               style={{ transitionDelay: `${300 + i * 100}ms` }}
@@ -42,14 +42,16 @@ const Problem = () => {
             </p>
           ))}
         </div>
-        <p
-          className={`font-display text-xl text-primary mt-12 font-bold transition-all duration-700 ${
+        <div
+          className={`inline-block border-t border-border pt-8 transition-all duration-700 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
           style={{ transitionDelay: "900ms" }}
         >
-          Carnival Glam Hub was created to change that.
-        </p>
+          <p className="font-display text-xl text-primary font-bold">
+            Carnival Glam Hub was created to change that.
+          </p>
+        </div>
       </div>
     </section>
   );
