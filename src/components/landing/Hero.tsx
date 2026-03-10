@@ -25,7 +25,7 @@ const Hero = () => (
             Now Booking — Limited Slots
           </span>
         </div>
-        <h1 id="hero-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 animate-fade-up">
+        <h1 id="hero-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 animate-fade-up text-white">
           Your Carnival Morning{" "}
           <span className="text-gradient-primary italic">Starts Here</span>
         </h1>
