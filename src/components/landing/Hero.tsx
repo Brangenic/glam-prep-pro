@@ -1,27 +1,31 @@
 import heroBg from "@/assets/hero-bg.jpg";
 
+const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
+
 const Hero = () => (
   <section
     id="hero"
     className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    aria-labelledby="hero-heading"
   >
     <img
       src={heroBg}
-      alt="Carnival masquerader in full glam"
+      alt="Carnival masquerader with golden feather headdress and rhinestone costume — Carnival Glam Hub"
       className="absolute inset-0 w-full h-full object-cover object-top"
       loading="eager"
+      fetchPriority="high"
     />
     <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
     <div className="relative z-10 container mx-auto px-6 py-32 lg:py-0">
       <div className="max-w-2xl">
         <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-8 animate-fade-in">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
           <span className="font-body text-xs uppercase tracking-[0.2em] text-primary font-medium">
             Now Booking — Limited Slots
           </span>
         </div>
-        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 animate-fade-up">
+        <h1 id="hero-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 animate-fade-up">
           Your Carnival Morning{" "}
           <span className="text-gradient-primary italic">Starts Here</span>
         </h1>
@@ -34,11 +38,13 @@ const Hero = () => (
         </p>
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.35s" }}>
           <a
-            href="#book"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-body font-semibold text-base px-8 py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all group"
           >
             Book Your Carnival Glam
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-1 transition-transform">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-1 transition-transform" aria-hidden="true">
               <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
