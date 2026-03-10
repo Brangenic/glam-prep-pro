@@ -15,10 +15,10 @@ const Hero = () => (
       loading="eager"
       fetchPriority="high"
     />
-    <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
-    <div className="relative z-10 container mx-auto px-6 py-32 lg:py-0">
-      <div className="max-w-2xl">
+    <div className="absolute inset-0 bg-background/70" />
+    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+    <div className="relative z-10 container mx-auto px-6 py-32 lg:py-0 text-center flex flex-col items-center">
+      <div className="max-w-2xl flex flex-col items-center">
         <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-8 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
           <span className="font-body text-xs uppercase tracking-[0.2em] text-primary font-medium">
