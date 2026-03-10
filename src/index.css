@@ -4,50 +4,50 @@
 
 @layer base {
   :root {
-    /* Rich Black base */
-    --background: 0 0% 3%;
-    --foreground: 40 20% 95%;
+    /* Light warm white base */
+    --background: 40 20% 97%;
+    --foreground: 0 0% 10%;
 
-    /* Card: slightly lifted black */
-    --card: 0 0% 7%;
-    --card-foreground: 40 20% 95%;
+    /* Card: clean white */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
 
     /* Primary: Luxe Gold */
-    --primary: 43 72% 55%;
-    --primary-foreground: 0 0% 3%;
+    --primary: 43 72% 50%;
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary: Carnival Pink */
     --secondary: 330 65% 58%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted: dark charcoal */
-    --muted: 0 0% 12%;
-    --muted-foreground: 40 10% 55%;
+    /* Muted: soft warm grey */
+    --muted: 40 10% 92%;
+    --muted-foreground: 0 0% 40%;
 
-    /* Accent: soft rose-gold blend */
+    /* Accent: carnival pink */
     --accent: 330 65% 58%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 10% 16%;
-    --input: 40 10% 16%;
-    --ring: 43 72% 55%;
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 43 72% 50%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 5%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 43 72% 55%;
-    --sidebar-primary-foreground: 0 0% 3%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 40 20% 95%;
-    --sidebar-border: 40 10% 16%;
-    --sidebar-ring: 43 72% 55%;
+    --sidebar-background: 40 15% 95%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 43 72% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 10% 90%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 40 10% 88%;
+    --sidebar-ring: 43 72% 50%;
   }
 }
 

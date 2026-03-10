@@ -15,25 +15,25 @@ const Hero = () => (
       loading="eager"
       fetchPriority="high"
     />
-    <div className="absolute inset-0 bg-background/70" />
-    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+    <div className="absolute inset-0 bg-black/60" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30" />
     <div className="relative z-10 container mx-auto px-6 py-32 lg:py-0 text-center flex flex-col items-center">
       <div className="max-w-2xl flex flex-col items-center">
         <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-8 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
-          <span className="font-body text-xs uppercase tracking-[0.2em] text-primary font-medium">
+          <span className="font-body text-xs uppercase tracking-[0.2em] text-primary font-medium drop-shadow-lg">
             Now Booking — Limited Slots
           </span>
         </div>
-        <h1 id="hero-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 animate-fade-up">
+        <h1 id="hero-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 animate-fade-up text-white">
           Your Carnival Morning{" "}
           <span className="text-gradient-primary italic">Starts Here</span>
         </h1>
-        <p className="font-body text-lg sm:text-xl text-foreground/70 leading-relaxed mb-3 max-w-lg animate-fade-up" style={{ animationDelay: "0.15s" }}>
+        <p className="font-body text-lg sm:text-xl text-white/80 leading-relaxed mb-3 max-w-lg animate-fade-up" style={{ animationDelay: "0.15s" }}>
           Luxury glam, costume dressing, and concierge-style preparation for
           masqueraders who want to hit the road looking flawless.
         </p>
-        <p className="font-body text-sm text-muted-foreground leading-relaxed mb-10 max-w-lg animate-fade-up" style={{ animationDelay: "0.25s" }}>
+        <p className="font-body text-sm text-white/60 leading-relaxed mb-10 max-w-lg animate-fade-up" style={{ animationDelay: "0.25s" }}>
           From makeup to final touches — we handle everything so you can focus on the experience.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.35s" }}>
@@ -50,7 +50,7 @@ const Hero = () => (
           </a>
           <a
             href="#destinations"
-            className="inline-flex items-center justify-center gap-2 border border-primary/30 text-primary font-body font-medium text-sm px-8 py-4 rounded-full hover:bg-primary/10 transition-all"
+            className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-body font-medium text-sm px-8 py-4 rounded-full hover:bg-white/10 transition-all"
           >
             Choose Your Destination
           </a>
