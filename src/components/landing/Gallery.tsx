@@ -15,20 +15,25 @@ const Gallery = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="gallery" className="py-24 lg:py-32 bg-card/30">
+    <section id="gallery" className="py-24 lg:py-32">
       <div ref={ref} className="container mx-auto px-6">
-        <h2
-          className={`font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          Carnival Glam in Action
-        </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 auto-rows-[200px] lg:auto-rows-[250px]">
+        <div className="text-center mb-16">
+          <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}>Our Work</p>
+          <h2
+            className={`font-display text-3xl sm:text-4xl lg:text-5xl font-bold transition-all duration-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            Carnival Glam <span className="italic text-gradient-primary">in Action</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 auto-rows-[180px] lg:auto-rows-[240px]">
           {images.map((img, i) => (
             <div
               key={i}
-              className={`${img.className} rounded-xl overflow-hidden transition-all duration-700 ${
+              className={`${img.className} rounded-2xl overflow-hidden transition-all duration-700 ${
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
               }`}
               style={{ transitionDelay: `${200 + i * 150}ms` }}

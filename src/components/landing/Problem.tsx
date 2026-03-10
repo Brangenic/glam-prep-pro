@@ -15,25 +15,26 @@ const Problem = () => {
     <section id="problem" className="py-24 lg:py-32">
       <div ref={ref} className="container mx-auto px-6 max-w-3xl text-center">
         <h2
-          className={`font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-10 transition-all duration-700 ${
+          className={`font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-10 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          Carnival Morning Should Feel Exciting —{" "}
-          <span className="text-secondary">Not Stressful</span>
+          Carnival Morning Should Feel{" "}
+          <span className="italic text-gradient-primary">Exciting</span> —{" "}
+          <span className="text-gradient-pink">Not Stressful</span>
         </h2>
         <p
-          className={`font-body text-lg text-muted-foreground mb-8 transition-all duration-700 delay-200 ${
+          className={`font-body text-lg text-muted-foreground mb-10 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
           The reality for many masqueraders is chaotic.
         </p>
-        <div className="space-y-3 mb-12">
+        <div className="space-y-4 mb-12">
           {painPoints.map((point, i) => (
             <p
               key={i}
-              className={`font-body text-base lg:text-lg text-foreground/75 transition-all duration-500 ${
+              className={`font-body text-base lg:text-lg text-foreground/65 transition-all duration-500 ${
                 isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
               }`}
               style={{ transitionDelay: `${300 + i * 100}ms` }}
@@ -43,12 +44,13 @@ const Problem = () => {
           ))}
         </div>
         <div
-          className={`inline-block border-t border-border pt-8 transition-all duration-700 ${
+          className={`transition-all duration-700 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
           style={{ transitionDelay: "900ms" }}
         >
-          <p className="font-display text-xl text-primary font-bold">
+          <div className="w-12 h-px bg-primary mx-auto mb-8" />
+          <p className="font-display text-xl text-primary italic font-bold">
             Carnival Glam Hub was created to change that.
           </p>
         </div>

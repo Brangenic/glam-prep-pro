@@ -4,44 +4,50 @@
 
 @layer base {
   :root {
-    --background: 0 0% 6.3%;
-    --foreground: 0 0% 94.9%;
+    /* Rich Black base */
+    --background: 0 0% 3%;
+    --foreground: 40 20% 95%;
 
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 94.9%;
+    /* Card: slightly lifted black */
+    --card: 0 0% 7%;
+    --card-foreground: 40 20% 95%;
 
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 94.9%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 40 20% 95%;
 
-    --primary: 24 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary: Luxe Gold */
+    --primary: 43 72% 55%;
+    --primary-foreground: 0 0% 3%;
 
-    --secondary: 300 50% 65%;
+    /* Secondary: Carnival Pink */
+    --secondary: 330 65% 58%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 63.9%;
+    /* Muted: dark charcoal */
+    --muted: 0 0% 12%;
+    --muted-foreground: 40 10% 55%;
 
-    --accent: 300 50% 65%;
+    /* Accent: soft rose-gold blend */
+    --accent: 330 65% 58%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 24 100% 50%;
+    --border: 40 10% 16%;
+    --input: 40 10% 16%;
+    --ring: 43 72% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 6.3%;
-    --sidebar-foreground: 0 0% 94.9%;
-    --sidebar-primary: 24 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 0 0% 94.9%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 24 100% 50%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 40 20% 95%;
+    --sidebar-primary: 43 72% 55%;
+    --sidebar-primary-foreground: 0 0% 3%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 40 20% 95%;
+    --sidebar-border: 40 10% 16%;
+    --sidebar-ring: 43 72% 55%;
   }
 }
 
@@ -51,12 +57,12 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Playfair Display', serif;
   }
 
   html {
@@ -66,17 +72,28 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Playfair Display', serif;
   }
 
   .font-body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
   }
 
   .text-gradient-primary {
-    background: linear-gradient(135deg, hsl(24 100% 50%), hsl(300 50% 65%));
+    background: linear-gradient(135deg, hsl(43 72% 55%), hsl(43 72% 70%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .text-gradient-pink {
+    background: linear-gradient(135deg, hsl(330 65% 58%), hsl(340 80% 68%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 40px -10px hsl(43 72% 55% / 0.3);
   }
 }
