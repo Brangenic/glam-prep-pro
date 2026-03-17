@@ -1,6 +1,6 @@
-import jamaicaImg from "@/assets/dest-jamaica.jpg";
-import stluciaImg from "@/assets/dest-stlucia.jpg";
-import trinidadImg from "@/assets/dest-trinidad.jpg";
+import jamaicaImg from "@/assets/dest-jamaica-new.jpg";
+import stluciaImg from "@/assets/dest-stlucia-new.jpg";
+import trinidadImg from "@/assets/dest-trinidad-new.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
