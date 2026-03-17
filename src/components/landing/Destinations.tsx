@@ -1,6 +1,9 @@
 import jamaicaImg from "@/assets/dest-jamaica-new.jpg";
 import stluciaImg from "@/assets/dest-stlucia-new.jpg";
 import trinidadImg from "@/assets/dest-trinidad-new.jpg";
+import antiguaImg from "@/assets/carnival-3.jpg";
+import grenadaImg from "@/assets/carnival-5.jpg";
+import miamiImg from "@/assets/carnival-7.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -8,18 +11,42 @@ const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 const destinations = [
   {
     name: "Jamaica Carnival",
-    description: "Kingston glam hub services for Jamaica Carnival.",
+    date: "12 April 2026",
+    description: "Premium glam hub services for Jamaica Carnival.",
     image: jamaicaImg,
-    cta: "Book Jamaica Carnival",
+    cta: "Book Jamaica",
   },
   {
     name: "Saint Lucia Carnival",
-    description: "Premium glam services for Saint Lucia Carnival.",
+    date: "20–21 July 2026",
+    description: "Full-service glam for Saint Lucia Carnival.",
     image: stluciaImg,
     cta: "Book Saint Lucia",
   },
   {
+    name: "Antigua Carnival",
+    date: "4 August 2026",
+    description: "Carnival glam services for Antigua Carnival.",
+    image: antiguaImg,
+    cta: "Book Antigua",
+  },
+  {
+    name: "Grenada Carnival",
+    date: "11 August 2026",
+    description: "Premium glam services for Grenada Carnival.",
+    image: grenadaImg,
+    cta: "Book Grenada",
+  },
+  {
+    name: "Miami Carnival",
+    date: "Aug–Oct 2026",
+    description: "Glam hub services for Miami Carnival.",
+    image: miamiImg,
+    cta: "Book Miami",
+  },
+  {
     name: "Trinidad Carnival",
+    date: "Feb–Mar 2027",
     description: "Upcoming glam services for Trinidad Carnival — Port of Spain.",
     image: trinidadImg,
     cta: "View Availability",
@@ -54,14 +81,14 @@ const Destinations = () => {
             Choose your location to view availability and book your glam package.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {destinations.map((d, i) => (
             <div
               key={d.name}
               className={`group relative rounded-3xl overflow-hidden aspect-[3/4] cursor-pointer transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
-              style={{ transitionDelay: `${300 + i * 150}ms` }}
+              style={{ transitionDelay: `${300 + i * 100}ms` }}
             >
               <img
                 src={d.image}
@@ -75,6 +102,10 @@ const Destinations = () => {
                   Coming Soon
                 </div>
               )}
+              {/* Date badge */}
+              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full">
+                {d.date}
+              </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="font-display text-xl lg:text-2xl font-bold mb-2 italic text-white">
                   {d.name}
