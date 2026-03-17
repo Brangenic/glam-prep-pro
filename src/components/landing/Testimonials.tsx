@@ -22,14 +22,14 @@ const Testimonials = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="reviews" className="py-24 lg:py-32 bg-card/50">
-      <div ref={ref} className="container mx-auto px-6">
-        <div className="text-center mb-16">
+    <section id="reviews" className="py-16 sm:py-24 lg:py-32 bg-card/50">
+      <div ref={ref} className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 sm:mb-16">
           <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}>Testimonials</p>
           <h2
-            className={`font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 transition-all duration-700 ${
+            className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-5 sm:mb-6 transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -50,19 +50,19 @@ const Testimonials = () => {
             </span>
           </div>
         </div>
-        <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className={`relative bg-card border border-border rounded-2xl p-8 lg:p-10 hover:border-primary/20 transition-all duration-700 ${
+              className={`relative bg-card border border-border rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 hover:border-primary/20 transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: `${300 + i * 150}ms` }}
             >
-              <span className="font-display text-6xl text-secondary/30 leading-none absolute top-3 left-6">
+              <span className="font-display text-5xl sm:text-6xl text-secondary/30 leading-none absolute top-2 left-4 sm:top-3 sm:left-6">
                 &ldquo;
               </span>
-              <p className="font-body text-foreground/85 leading-relaxed mb-8 pt-8 text-[15px]">
+              <p className="font-body text-foreground/85 leading-relaxed mb-6 sm:mb-8 pt-6 sm:pt-8 text-sm sm:text-[15px]">
                 {t.quote}
               </p>
               <div className="flex items-center gap-3">
