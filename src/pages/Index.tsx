@@ -2,7 +2,6 @@ import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import SocialProof from "@/components/landing/SocialProof";
 import Problem from "@/components/landing/Problem";
-import Solution from "@/components/landing/Solution";
 import Services from "@/components/landing/Services";
 import Destinations from "@/components/landing/Destinations";
 import Gallery from "@/components/landing/Gallery";
