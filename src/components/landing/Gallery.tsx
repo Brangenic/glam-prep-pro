@@ -1,14 +1,26 @@
-import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/gallery-2.jpg";
-import gallery3 from "@/assets/gallery-3.jpg";
-import gallery4 from "@/assets/gallery-4.jpg";
+import carnival1 from "@/assets/carnival-1.jpg";
+import carnival2 from "@/assets/carnival-2.jpg";
+import carnival3 from "@/assets/carnival-3.jpg";
+import carnival4 from "@/assets/carnival-4.jpg";
+import carnival5 from "@/assets/carnival-5.jpg";
+import carnival6 from "@/assets/carnival-6.jpg";
+import carnival7 from "@/assets/carnival-7.jpg";
+import carnival8 from "@/assets/carnival-8.jpg";
+import carnival9 from "@/assets/carnival-9.jpg";
+import carnival10 from "@/assets/carnival-10.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const images = [
-  { src: gallery1, alt: "Carnival glam makeup results", className: "col-span-2 row-span-2" },
-  { src: gallery2, alt: "Behind the scenes preparation", className: "col-span-1 row-span-1" },
-  { src: gallery4, alt: "Close-up makeup details", className: "col-span-1 row-span-1" },
-  { src: gallery3, alt: "Group of carnival masqueraders", className: "col-span-2 row-span-1" },
+  { src: carnival1, alt: "Carnival glam with jeweled blue costume and rhinestones", className: "col-span-2 row-span-2" },
+  { src: carnival2, alt: "Blue feathered carnival costume with iridescent wings", className: "col-span-1 row-span-1" },
+  { src: carnival3, alt: "Jeweled carnival costume with emerald details", className: "col-span-1 row-span-1" },
+  { src: carnival4, alt: "Close-up carnival glam with glitter and turquoise", className: "col-span-1 row-span-1" },
+  { src: carnival5, alt: "Pink and orange feathered carnival wings costume", className: "col-span-1 row-span-1" },
+  { src: carnival6, alt: "Royal blue butterfly wings carnival costume", className: "col-span-1 row-span-2" },
+  { src: carnival7, alt: "Colorful feathered headdress carnival masquerader", className: "col-span-1 row-span-1" },
+  { src: carnival8, alt: "Golden carnival jewelry close-up with feather details", className: "col-span-1 row-span-1" },
+  { src: carnival9, alt: "Gold headpiece and crystal carnival jewelry close-up", className: "col-span-1 row-span-1" },
+  { src: carnival10, alt: "Pink and magenta butterfly wings carnival costume", className: "col-span-1 row-span-1" },
 ];
 
 const Gallery = () => {
@@ -29,14 +41,14 @@ const Gallery = () => {
             Carnival Glam <span className="italic text-gradient-primary">in Action</span>
           </h2>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 auto-rows-[180px] lg:auto-rows-[240px]">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 auto-rows-[160px] lg:auto-rows-[200px]">
           {images.map((img, i) => (
             <div
               key={i}
               className={`${img.className} rounded-2xl overflow-hidden transition-all duration-700 ${
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
               }`}
-              style={{ transitionDelay: `${200 + i * 150}ms` }}
+              style={{ transitionDelay: `${200 + i * 100}ms` }}
             >
               <img
                 src={img.src}

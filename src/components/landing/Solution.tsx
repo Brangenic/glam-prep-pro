@@ -1,4 +1,4 @@
-import solutionImg from "@/assets/solution-reveal.jpg";
+import solutionImg from "@/assets/carnival-9.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const Solution = () => {
