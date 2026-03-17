@@ -41,7 +41,7 @@ const Gallery = () => {
             Carnival Glam <span className="italic text-gradient-primary">in Action</span>
           </h2>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 auto-rows-[120px] sm:auto-rows-[160px] lg:auto-rows-[200px]">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 auto-rows-[120px] sm:auto-rows-[180px] lg:auto-rows-[240px]">
           {images.map((img, i) => (
             <div
               key={i}
@@ -53,7 +53,7 @@ const Gallery = () => {
               <img
                 src={img.src}
                 alt={img.alt}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
             </div>
