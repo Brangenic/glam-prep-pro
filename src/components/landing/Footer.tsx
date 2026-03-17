@@ -1,8 +1,8 @@
 const Footer = () => (
-  <footer id="contact" className="border-t border-border py-16">
-    <div className="container mx-auto px-6">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <div>
+  <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
+    <div className="container mx-auto px-4 sm:px-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+        <div className="col-span-2 sm:col-span-1">
           <h3 className="font-display text-xl font-bold mb-4">
             <span className="text-primary italic">Carnival</span>{" "}
             <span className="text-foreground">Glam Hub</span>
@@ -43,7 +43,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <div className="border-t border-border mt-12 pt-8 text-center">
+      <div className="border-t border-border mt-10 sm:mt-12 pt-6 sm:pt-8 text-center">
         <p className="font-body text-xs text-muted-foreground">
           © {new Date().getFullYear()} Carnival Glam Hub. All rights reserved.
         </p>

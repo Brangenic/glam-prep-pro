@@ -5,36 +5,31 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const services = [
   {
     title: "Makeup Services",
-    description:
-      "Professional glam designed specifically for Carnival lighting, photography, and long wear.",
+    description: "Professional glam designed specifically for Carnival lighting, photography, and long wear.",
     details: ["Soft glam", "Full glam", "Glitter & carnival looks"],
     accent: "from-primary/20 to-secondary/10",
   },
   {
     title: "Hair Styling",
-    description:
-      "Styles designed to complement your costume and survive the road.",
+    description: "Styles designed to complement your costume and survive the road.",
     details: ["Ponytails", "Braids", "Sleek styles"],
     accent: "from-secondary/20 to-primary/10",
   },
   {
     title: "Costume Dressing",
-    description:
-      "Our team ensures your costume is properly fitted and secured before you leave.",
+    description: "Our team ensures your costume is properly fitted and secured before you leave.",
     details: ["No last-minute adjustments on the road"],
     accent: "from-primary/15 to-secondary/15",
   },
   {
     title: "Content & Photos",
-    description:
-      "Start your carnival day with beautiful photos and content-ready moments.",
+    description: "Start your carnival day with beautiful photos and content-ready moments.",
     details: ["Pre-road photo shoot", "Social-ready content"],
     accent: "from-secondary/15 to-primary/20",
   },
   {
     title: "Concierge Prep",
-    description:
-      "An elevated experience designed to make your carnival morning seamless.",
+    description: "An elevated experience designed to make your carnival morning seamless.",
     details: ["From arrival to departure, everything coordinated"],
     accent: "from-primary/20 to-secondary/20",
   },
@@ -45,10 +40,10 @@ const Services = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="services" className="py-24 lg:py-32">
-      <div ref={ref} className="container mx-auto px-6 max-w-6xl">
+    <section id="services" className="py-16 sm:py-24 lg:py-32">
+      <div ref={ref} className="container mx-auto px-4 sm:px-6 max-w-6xl">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <p
             className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
               isVisible ? "opacity-100" : "opacity-0"
@@ -57,7 +52,7 @@ const Services = () => {
             Our Services
           </p>
           <h2
-            className={`font-display text-3xl sm:text-4xl lg:text-5xl font-bold transition-all duration-700 ${
+            className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -66,10 +61,10 @@ const Services = () => {
         </div>
 
         {/* Two-column: image + interactive list */}
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           {/* Image with floating active label */}
           <div
-            className={`relative rounded-3xl overflow-hidden aspect-[4/5] gold-glow transition-all duration-1000 ${
+            className={`relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[4/5] gold-glow transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
           >
@@ -82,8 +77,8 @@ const Services = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
             {/* Active service floating badge */}
-            <div className="absolute bottom-5 left-5 right-5 transition-all duration-500">
-              <div className="bg-white/90 backdrop-blur-md rounded-2xl px-5 py-4 border border-primary/10">
+            <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 transition-all duration-500">
+              <div className="bg-white/90 backdrop-blur-md rounded-xl sm:rounded-2xl px-4 py-3 sm:px-5 sm:py-4 border border-primary/10">
                 <p className="font-display text-sm font-bold text-primary mb-1">
                   {services[active].title}
                 </p>
@@ -94,7 +89,7 @@ const Services = () => {
             </div>
 
             {/* Step indicator dots */}
-            <div className="absolute top-5 right-5 flex flex-col gap-1.5">
+            <div className="absolute top-4 right-4 sm:top-5 sm:right-5 flex flex-col gap-1.5">
               {services.map((_, i) => (
                 <button
                   key={i}
@@ -111,12 +106,12 @@ const Services = () => {
           </div>
 
           {/* Interactive service list */}
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {services.map((s, i) => (
               <button
                 key={s.title}
                 onClick={() => setActive(i)}
-                className={`group w-full text-left relative rounded-2xl p-5 border transition-all duration-500 ${
+                className={`group w-full text-left relative rounded-xl sm:rounded-2xl p-4 sm:p-5 border transition-all duration-500 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"
@@ -129,15 +124,15 @@ const Services = () => {
               >
                 {/* Hover gradient */}
                 <div
-                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${s.accent} transition-opacity duration-500 ${
+                  className={`absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br ${s.accent} transition-opacity duration-500 ${
                     i === active ? "opacity-100" : "opacity-0 group-hover:opacity-50"
                   }`}
                 />
 
-                <div className="relative flex items-start gap-4">
+                <div className="relative flex items-start gap-3 sm:gap-4">
                   {/* Number indicator */}
                   <span
-                    className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-display text-sm font-bold transition-all duration-300 ${
+                    className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-display text-xs sm:text-sm font-bold transition-all duration-300 ${
                       i === active
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
@@ -148,7 +143,7 @@ const Services = () => {
 
                   <div className="flex-1 min-w-0">
                     <h3
-                      className={`font-display text-base font-bold mb-1 transition-colors duration-300 ${
+                      className={`font-display text-sm sm:text-base font-bold mb-1 transition-colors duration-300 ${
                         i === active ? "text-primary" : "text-foreground group-hover:text-primary"
                       }`}
                     >
@@ -161,7 +156,7 @@ const Services = () => {
                         i === active ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"
                       }`}
                     >
-                      <p className="font-body text-sm text-muted-foreground leading-relaxed mb-3">
+                      <p className="font-body text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
                         {s.description}
                       </p>
                       <ul className="space-y-1">
