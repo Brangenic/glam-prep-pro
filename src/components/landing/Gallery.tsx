@@ -54,6 +54,7 @@ const Gallery = () => {
                 src={img.src}
                 alt={img.alt}
                 className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                style={img.objectPosition ? { objectPosition: img.objectPosition } : undefined}
                 loading="lazy"
               />
             </div>
