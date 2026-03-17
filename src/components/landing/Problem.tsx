@@ -1,4 +1,4 @@
-import solutionImg from "@/assets/carnival-9.jpg";
+import solutionImg from "@/assets/experience-hero.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const luxuryFeatures = [
