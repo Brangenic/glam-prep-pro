@@ -1,4 +1,4 @@
-import heroBg from "@/assets/carnival-5.jpg";
+import heroBg from "@/assets/hero-new.jpg";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
