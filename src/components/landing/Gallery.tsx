@@ -10,31 +10,27 @@ import carnival9 from "@/assets/carnival-9.jpg";
 import carnival10 from "@/assets/carnival-10.jpg";
 import carnival11 from "@/assets/gallery-5.jpeg";
 import carnival12 from "@/assets/gallery-6.jpg";
-import carnival13 from "@/assets/gallery-7.jpg";
-import carnival14 from "@/assets/gallery-8.jpg";
-import carnival15 from "@/assets/gallery-9.jpg";
-import carnival16 from "@/assets/gallery-10.jpg";
-import carnival17 from "@/assets/gallery-11.jpg";
-import carnival18 from "@/assets/gallery-12.jpg";
-import carnival19 from "@/assets/gallery-13.jpg";
-import carnival20 from "@/assets/gallery-14.jpg";
+import carnival13 from "@/assets/gallery-8.jpg";
+import carnival14 from "@/assets/gallery-9.jpg";
+import carnival15 from "@/assets/gallery-10.jpg";
+import carnival16 from "@/assets/gallery-11.jpg";
+import carnival17 from "@/assets/gallery-13.jpg";
+import carnival18 from "@/assets/gallery-14.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const images = [
-  { src: carnival20, alt: "Three masqueraders posing together with pink and blue feathered wings on the road", aspectClass: "aspect-[4/3]", objectPosition: "center center" },
+  { src: carnival18, alt: "Three masqueraders posing together with pink and blue feathered wings on the road", aspectClass: "aspect-[4/3]", objectPosition: "center center" },
   { src: carnival1, alt: "Carnival glam with jeweled blue costume and rhinestones", aspectClass: "aspect-[4/5]" },
-  { src: carnival17, alt: "Close-up carnival portrait with bright blue costume details and jeweled headpiece", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
+  { src: carnival15, alt: "Close-up carnival portrait with bright blue costume details and jeweled headpiece", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival12, alt: "Full-length carnival costume with bright orange, pink, and turquoise feathers", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
-  { src: carnival18, alt: "Outdoor carnival portrait with warm-toned costume and dramatic glam makeup", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
-  { src: carnival14, alt: "Masquerader with blue dragon wings and jeweled carnival costume", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
+  { src: carnival16, alt: "Outdoor carnival portrait with warm-toned costume and dramatic glam makeup", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
+  { src: carnival13, alt: "Masquerader with blue dragon wings and jeweled carnival costume", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival6, alt: "Royal blue butterfly wings carnival costume", aspectClass: "aspect-[3/4]" },
-  { src: carnival15, alt: "Masquerader in a jeweled carnival costume seated in a colorful feathered backpiece", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival2, alt: "Blue feathered carnival costume with iridescent wings", aspectClass: "aspect-[4/5]" },
-  { src: carnival16, alt: "Celebrating masquerader on the road surrounded by photographers and carnival energy", aspectClass: "aspect-[4/5]", objectPosition: "center top" },
+  { src: carnival14, alt: "Celebrating masquerader on the road surrounded by photographers and carnival energy", aspectClass: "aspect-[4/5]", objectPosition: "center top" },
   { src: carnival11, alt: "Smiling carnival masquerader in orange costume with gold jewelry and pink gems", aspectClass: "aspect-square", objectPosition: "center 20%" },
   { src: carnival4, alt: "Close-up carnival glam with glitter and turquoise", aspectClass: "aspect-[4/5]", objectPosition: "center 20%" },
-  { src: carnival19, alt: "Beauty portrait in a red carnival costume with embellished eye makeup", aspectClass: "aspect-[4/5]", objectPosition: "center top" },
-  { src: carnival13, alt: "Two friends in carnival costumes hugging and smiling at an event", aspectClass: "aspect-square" },
+  { src: carnival17, alt: "Beauty portrait in a red carnival costume with embellished eye makeup", aspectClass: "aspect-[4/5]", objectPosition: "center top" },
   { src: carnival5, alt: "Pink and orange feathered carnival wings costume", aspectClass: "aspect-[4/5]" },
   { src: carnival10, alt: "Pink and magenta butterfly wings carnival costume", aspectClass: "aspect-[4/5]" },
   { src: carnival3, alt: "Jeweled carnival costume with emerald details", aspectClass: "aspect-square" },
