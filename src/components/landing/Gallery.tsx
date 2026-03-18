@@ -13,16 +13,16 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const images = [
   { src: carnival1, alt: "Carnival glam with jeweled blue costume and rhinestones", className: "col-span-1 row-span-1 sm:col-span-2 sm:row-span-2" },
+  { src: carnival11, alt: "Smiling carnival masquerader in orange costume with gold jewelry and pink gems", className: "col-span-1 row-span-1", objectPosition: "center 20%" },
   { src: carnival2, alt: "Blue feathered carnival costume with iridescent wings", className: "col-span-1 row-span-1" },
   { src: carnival3, alt: "Jeweled carnival costume with emerald details", className: "col-span-1 row-span-1" },
   { src: carnival4, alt: "Close-up carnival glam with glitter and turquoise", className: "col-span-1 row-span-1", objectPosition: "center 20%" },
-  { src: carnival5, alt: "Pink and orange feathered carnival wings costume", className: "col-span-1 row-span-1" },
   { src: carnival6, alt: "Royal blue butterfly wings carnival costume", className: "col-span-1 row-span-1 sm:col-span-1 sm:row-span-2" },
+  { src: carnival5, alt: "Pink and orange feathered carnival wings costume", className: "col-span-1 row-span-1" },
   { src: carnival7, alt: "Colorful feathered headdress carnival masquerader", className: "col-span-1 row-span-1" },
   { src: carnival8, alt: "Golden carnival jewelry close-up with feather details", className: "col-span-1 row-span-1" },
   { src: carnival9, alt: "Gold headpiece and crystal carnival jewelry close-up", className: "col-span-1 row-span-1" },
   { src: carnival10, alt: "Pink and magenta butterfly wings carnival costume", className: "col-span-1 row-span-1" },
-  { src: carnival11, alt: "Smiling carnival masquerader in orange costume with gold jewelry and pink gems", className: "col-span-1 row-span-1 sm:col-span-1 sm:row-span-2", objectPosition: "center 20%" },
 ];
 
 const Gallery = () => {
