@@ -17,9 +17,15 @@ const services = [
   },
   {
     title: "Costume Dressing",
-    description: "Our team ensures your costume is properly fitted and secured before you leave.",
-    details: ["No last-minute adjustments on the road"],
+    description: "Our team ensures your costume is properly fitted, secured, and photo-ready before you leave.",
+    details: ["On-site seamstress", "Dressing assistants", "Large mirrors"],
     accent: "from-primary/15 to-secondary/15",
+  },
+  {
+    title: "Bronzing",
+    description: "Body-perfecting bronzing for smoother, more even-looking skin in person and in photos.",
+    details: ["Remove visible tan lines", "Soften the look of stretch marks", "Even skin tone for better photos"],
+    accent: "from-secondary/15 to-primary/20",
   },
   {
     title: "Content & Photos",

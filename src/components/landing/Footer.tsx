@@ -1,3 +1,34 @@
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/carnivalglamhub",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/carnivalglamhub",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@carnivalglamhub",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@carnivalglamhub",
+  },
+  {
+    label: "Pinterest",
+    href: "https://www.pinterest.com/carnivalglamhub",
+  },
+  {
+    label: "WhatsApp Chat",
+    href: "https://wa.link/k63ryp",
+  },
+  {
+    label: "Carnival Amazon Store",
+    href: "https://www.amazon.com/shop/carnivalglamhub?ccs_id=7e98f14b-a852-49d9-a50d-4fb90fee34c8",
+  },
+];
+
 const Footer = () => (
   <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
     <div className="container mx-auto px-4 sm:px-6">
@@ -24,14 +55,19 @@ const Footer = () => (
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Follow
           </h4>
-          <a
-            href="https://instagram.com/carnivalglamhub"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-body text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            Instagram →
-          </a>
+          <div className="space-y-2">
+            {socialLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                {link.label} →
+              </a>
+            ))}
+          </div>
         </div>
         <div>
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
