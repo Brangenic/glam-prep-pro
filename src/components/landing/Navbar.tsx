@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -13,6 +14,8 @@ const links = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -20,13 +23,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const getLinkHref = (href: string) => {
+    if (href.startsWith("#")) {
+      return isHome ? href : `/${href}`;
+    }
+
+    return href;
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-background/50" : "bg-transparent"}`}
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-6 flex items-center justify-between h-18 py-4">
-        <a href="#hero" className="font-display text-xl font-bold tracking-tight" aria-label="Carnival Glam Hub — Home">
+        <a href={isHome ? "#hero" : "/"} className="font-display text-xl font-bold tracking-tight" aria-label="Carnival Glam Hub — Home">
           <span className="text-primary italic">Carnival</span>{" "}
           <span className="text-foreground">Glam Hub</span>
         </a>
@@ -34,7 +45,7 @@ const Navbar = () => {
           {links.map((l) => (
             <a
               key={l.href}
-              href={l.href}
+              href={getLinkHref(l.href)}
               className="font-body text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               {l.label}
@@ -76,7 +87,7 @@ const Navbar = () => {
           {links.map((l) => (
             <a
               key={l.href}
-              href={l.href}
+              href={getLinkHref(l.href)}
               onClick={() => setOpen(false)}
               className="block font-body text-base text-muted-foreground hover:text-primary transition-colors"
             >
