@@ -1,40 +1,9 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const reviewLinks = [
-  {
-    label: "Glam Hub Jamaica",
-    href: "https://share.google/1UdH9Xa7fIec2BcGn",
-  },
-  {
-    label: "Glam Hub Trinidad",
-    href: "https://share.google/vGlR6BZGtzYiFyPQW",
-  },
-  {
-    label: "Saint Lucia",
-    href: "https://share.google/gdqcWDk79Rp8oJxmK",
-  },
-];
-
-const testimonials = [
-  {
-    quote: "This was the best decision I made for Carnival morning. Everything was organized and the glam was flawless.",
-    name: "Alicia M.",
-    detail: "Jamaica Carnival 2024",
-  },
-  {
-    quote: "No stress, no rushing. I showed up and they handled everything. I felt like a queen before I even reached the band.",
-    name: "Keisha T.",
-    detail: "Saint Lucia Carnival 2023",
-  },
-  {
-    quote: "The team made my carnival morning feel like a luxury experience. The photos alone were worth it.",
-    name: "Danielle R.",
-    detail: "Jamaica Carnival 2024",
-  },
-];
+import { featuredReviews } from "@/components/landing/reviewsData";
 
 const Testimonials = () => {
   const { ref, isVisible } = useScrollReveal();
+  const testimonials = featuredReviews.slice(0, 3);
 
   return (
     <section id="reviews" className="py-16 sm:py-24 lg:py-32 bg-card/50">
@@ -62,28 +31,21 @@ const Testimonials = () => {
                 ))}
               </div>
               <span className="font-body text-xs text-muted-foreground font-medium">
-                5.0 · Google Reviews
+                Real client reviews
               </span>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              {reviewLinks.map((review) => (
-                <a
-                  key={review.href}
-                  href={review.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full border border-border bg-background px-4 py-2 font-body text-xs font-semibold text-foreground transition-colors hover:border-primary/25 hover:text-primary"
-                >
-                  {review.label}
-                </a>
-              ))}
-            </div>
+            <a
+              href="/reviews"
+              className="inline-flex items-center rounded-full border border-border bg-background px-4 py-2 font-body text-xs font-semibold text-foreground transition-colors hover:border-primary/25 hover:text-primary"
+            >
+              Read more reviews
+            </a>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {testimonials.map((t, i) => (
             <div
-              key={i}
+              key={`${t.name}-${i}`}
               className={`relative bg-card border border-border rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-10 hover:border-primary/20 transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
@@ -101,7 +63,7 @@ const Testimonials = () => {
                 </div>
                 <div>
                   <p className="font-body text-sm font-semibold">{t.name}</p>
-                  <p className="font-body text-xs text-muted-foreground">{t.detail}</p>
+                  <p className="font-body text-xs text-muted-foreground">{t.location}</p>
                 </div>
               </div>
             </div>
