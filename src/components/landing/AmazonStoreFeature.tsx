@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { supabase } from "@/integrations/supabase/client";
 
 const AMAZON_STORE_URL = "https://www.amazon.com/shop/carnivalglamhub?ccs_id=7e98f14b-a852-49d9-a50d-4fb90fee34c8";
 
@@ -8,8 +10,37 @@ const highlights = [
   "Road-ready accessories and prep items",
 ];
 
+type FeaturedProduct = {
+  external_id: string;
+  title: string;
+  price_text: string | null;
+  product_url: string;
+};
+
 const AmazonStoreFeature = () => {
   const { ref, isVisible } = useScrollReveal();
+  const [featuredProducts, setFeaturedProducts] = useState<FeaturedProduct[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadFeaturedProducts = async () => {
+      const { data } = await supabase
+        .from("amazon_products")
+        .select("external_id, title, price_text, product_url")
+        .order("synced_at", { ascending: false })
+        .limit(3);
+
+      if (!isMounted || !data?.length) return;
+      setFeaturedProducts(data as FeaturedProduct[]);
+    };
+
+    loadFeaturedProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <section id="amazon-store" className="py-16 sm:py-24 lg:py-32 bg-card/50" aria-labelledby="amazon-store-heading">
@@ -64,31 +95,50 @@ const AmazonStoreFeature = () => {
             <div className="rounded-[2rem] border border-border bg-card px-5 py-6 sm:px-6 sm:py-8 h-full flex flex-col justify-between">
               <div>
                 <p className="font-body text-xs uppercase tracking-[0.18em] text-secondary font-semibold mb-4">
-                  Curated by Glam Hub
+                  Featured products
                 </p>
                 <div className="space-y-3 mb-6">
                   <p className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-                    Beauty, travel, and carnival extras.
+                    Top picks from the store.
                   </p>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                    A simple place to shop the items you keep asking us about before carnival morning.
+                    Three quick product links right from the homepage.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
-                  <span className="font-body text-sm text-foreground">Makeup favorites</span>
-                  <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
-                  <span className="font-body text-sm text-foreground">Travel essentials</span>
-                  <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
-                  <span className="font-body text-sm text-foreground">Carnival prep picks</span>
-                  <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
-                </div>
+                {featuredProducts.length > 0 ? (
+                  featuredProducts.map((product) => (
+                    <a
+                      key={product.external_id}
+                      href={product.product_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border transition-colors hover:border-primary/25"
+                    >
+                      <span className="font-body text-sm text-foreground line-clamp-1">{product.title}</span>
+                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                        {product.price_text || "Shop"}
+                      </span>
+                    </a>
+                  ))
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
+                      <span className="font-body text-sm text-foreground">Makeup favorites</span>
+                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
+                    </div>
+                    <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
+                      <span className="font-body text-sm text-foreground">Travel essentials</span>
+                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
+                    </div>
+                    <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
+                      <span className="font-body text-sm text-foreground">Carnival prep picks</span>
+                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
