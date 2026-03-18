@@ -1,4 +1,4 @@
-import founderImg from "@/assets/founder.jpg";
+import founderImg from "@/assets/gabby-founder.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const Founder = () => {
