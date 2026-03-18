@@ -208,31 +208,44 @@ const syncAmazonProducts = async (
   const baseRows = toAmazonRows(baseProductsRaw);
 
   const storefrontLinks = await callFirecrawlLinks(firecrawlApiKey, sourceUrl).catch(() => []);
-  const listUrlsFromStorefront = Array.from(
-    new Set(
-      (Array.isArray(storefrontLinks) ? storefrontLinks : [])
-        .map((url) => normalizeText(url))
-        .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
-    ),
-  ).slice(0, 6);
-
-  const listUrlsFromProducts = Array.from(
-    new Set(
-      baseRows
-        .map((row) => normalizeText(row.product_url))
-        .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
-    ),
+  const seedListUrls = new Set(
+    [
+      ...((Array.isArray(storefrontLinks) ? storefrontLinks : []).map((url) => normalizeText(url))),
+      ...baseRows.map((row) => normalizeText(row.product_url)),
+    ]
+      .filter((url) => isAmazonListUrl(url))
+      .map((url) => canonicalizeUrl(url)),
   );
 
-  const listUrls = Array.from(new Set([...listUrlsFromStorefront, ...listUrlsFromProducts])).slice(0, 6);
+  const collectedListUrls = new Set<string>(seedListUrls);
+  const collectedProductLinks = new Set<string>();
+
+  const queue = Array.from(seedListUrls).slice(0, 20);
+  for (let i = 0; i < queue.length; i += 1) {
+    const currentUrl = queue[i];
+    const links = await callFirecrawlLinks(firecrawlApiKey, currentUrl).catch(() => []);
+
+    for (const link of Array.isArray(links) ? links : []) {
+      const normalized = canonicalizeUrl(normalizeText(link));
+
+      if (isAmazonListUrl(normalized) && !collectedListUrls.has(normalized) && collectedListUrls.size < 20) {
+        collectedListUrls.add(normalized);
+        queue.push(normalized);
+      }
+
+      if (isAmazonProductUrl(normalized)) {
+        collectedProductLinks.add(normalized);
+      }
+    }
+  }
 
   const listExtracts = await Promise.all(
-    listUrls.map((listUrl) =>
+    Array.from(collectedListUrls).map((listUrl) =>
       callFirecrawlJson(
         firecrawlApiKey,
         listUrl,
-        "Extract products from this Amazon list page into JSON with shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Use the direct product URL when visible. If only the list URL is available, keep that list URL.",
-      ).catch(() => null)
+        "Extract products from this Amazon list page into JSON with shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Use direct product URLs whenever visible.",
+      ).catch(() => null),
     ),
   );
 
@@ -240,10 +253,21 @@ const syncAmazonProducts = async (
     Array.isArray(extract?.products) ? extract.products : [],
   );
 
+  const expandedRows = [...baseRows, ...toAmazonRows(nestedProductsRaw)].map((row) => {
+    const productUrl = canonicalizeUrl(normalizeText(row.product_url));
+    const fallbackProductUrl = Array.from(collectedProductLinks).find((link) =>
+      normalizeText(row.title).length > 3 && link.toLowerCase().includes(normalizeText(row.title).toLowerCase().split(" ")[0]),
+    );
+
+    return {
+      ...row,
+      product_url: isAmazonProductUrl(productUrl) ? productUrl : fallbackProductUrl || productUrl,
+    };
+  });
+
   const dedupedRows = Array.from(
     new Map(
-      [...baseRows, ...toAmazonRows(nestedProductsRaw)]
-        .map((row) => [String(row.external_id), row]),
+      expandedRows.map((row) => [String(row.external_id), row]),
     ).values(),
   );
 
