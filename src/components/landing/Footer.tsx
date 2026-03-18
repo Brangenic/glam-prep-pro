@@ -1,3 +1,5 @@
+import brandLogo from "@/assets/gabby-glam-logo.png";
+
 const socialLinks = [
   {
     label: "Instagram",
@@ -44,10 +46,9 @@ const Footer = () => (
     <div className="container mx-auto px-4 sm:px-6">
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
         <div className="col-span-2 sm:col-span-1">
-          <h3 className="font-display text-xl font-bold mb-4">
-            <span className="text-primary italic">Carnival</span>{" "}
-            <span className="text-foreground">Glam Hub</span>
-          </h3>
+          <a href="/" className="inline-flex mb-4" aria-label="Carnival Glam Hub home">
+            <img src={brandLogo} alt="Carnival Glam Hub logo" className="h-14 w-auto sm:h-16" loading="lazy" />
+          </a>
           <p className="font-body text-sm text-muted-foreground leading-relaxed">
             Premium carnival morning preparation since 2017.
           </p>
