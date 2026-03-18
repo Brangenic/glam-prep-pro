@@ -72,11 +72,12 @@ const callFirecrawlLinks = async (apiKey: string, url: string) => {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
+    signal: AbortSignal.timeout(FIRECRAWL_TIMEOUT_MS),
     body: JSON.stringify({
       url,
       formats: ["links"],
       onlyMainContent: false,
-      waitFor: 4000,
+      waitFor: 2000,
     }),
   });
 
