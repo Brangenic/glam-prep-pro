@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      amazon_products: {
+        Row: {
+          category: string | null
+          created_at: string
+          external_id: string
+          id: string
+          image_url: string | null
+          price_text: string | null
+          product_url: string
+          raw_payload: Json | null
+          synced_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          external_id: string
+          id?: string
+          image_url?: string | null
+          price_text?: string | null
+          product_url: string
+          raw_payload?: Json | null
+          synced_at?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          external_id?: string
+          id?: string
+          image_url?: string | null
+          price_text?: string | null
+          product_url?: string
+          raw_payload?: Json | null
+          synced_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      google_reviews: {
+        Row: {
+          author_name: string | null
+          created_at: string
+          external_id: string
+          id: string
+          location: string | null
+          quote: string
+          rating: number | null
+          raw_payload: Json | null
+          review_date: string | null
+          review_url: string | null
+          synced_at: string
+          updated_at: string
+        }
+        Insert: {
+          author_name?: string | null
+          created_at?: string
+          external_id: string
+          id?: string
+          location?: string | null
+          quote: string
+          rating?: number | null
+          raw_payload?: Json | null
+          review_date?: string | null
+          review_url?: string | null
+          synced_at?: string
+          updated_at?: string
+        }
+        Update: {
+          author_name?: string | null
+          created_at?: string
+          external_id?: string
+          id?: string
+          location?: string | null
+          quote?: string
+          rating?: number | null
+          raw_payload?: Json | null
+          review_date?: string | null
+          review_url?: string | null
+          synced_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sync_state: {
+        Row: {
+          last_synced_at: string | null
+          message: string | null
+          source_key: string
+          source_url: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          last_synced_at?: string | null
+          message?: string | null
+          source_key: string
+          source_url: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          last_synced_at?: string | null
+          message?: string | null
+          source_key?: string
+          source_url?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
