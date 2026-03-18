@@ -195,20 +195,31 @@ const syncAmazonProducts = async (
   const baseProductsRaw = Array.isArray(storefrontExtract?.products) ? storefrontExtract.products : [];
   const baseRows = toAmazonRows(baseProductsRaw);
 
+  const storefrontLinks = await callFirecrawlLinks(firecrawlApiKey, sourceUrl).catch(() => []);
+  const listUrlsFromStorefront = Array.from(
+    new Set(
+      (Array.isArray(storefrontLinks) ? storefrontLinks : [])
+        .map((url) => normalizeText(url))
+        .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
+    ),
+  ).slice(0, 6);
+
   const listUrlsFromProducts = Array.from(
     new Set(
       baseRows
         .map((row) => normalizeText(row.product_url))
         .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
     ),
-  ).slice(0, 1);
+  );
+
+  const listUrls = Array.from(new Set([...listUrlsFromStorefront, ...listUrlsFromProducts])).slice(0, 6);
 
   const listExtracts = await Promise.all(
-    listUrlsFromProducts.map((listUrl) =>
+    listUrls.map((listUrl) =>
       callFirecrawlJson(
         firecrawlApiKey,
         listUrl,
-        "Extract products from this Amazon list page into JSON with shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Return all visible items.",
+        "Extract products from this Amazon list page into JSON with shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Use the direct product URL when visible. If only the list URL is available, keep that list URL.",
       ).catch(() => null)
     ),
   );
