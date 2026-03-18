@@ -283,27 +283,17 @@ const syncAmazonProducts = async (
     ].filter((url) => isAmazonListUrl(url)),
   );
 
-  const collectedListUrls = new Set<string>();
-  const queue = Array.from(seedListUrls).flatMap((listUrl) => buildPaginatedListUrls(listUrl));
-
-  for (let i = 0; i < queue.length && collectedListUrls.size < AMAZON_LIST_CRAWL_LIMIT; i += 1) {
-    const currentUrl = canonicalizeUrl(queue[i]);
-    if (!isAmazonListUrl(currentUrl) || collectedListUrls.has(currentUrl)) continue;
-
-    collectedListUrls.add(currentUrl);
-
-    const links = await callFirecrawlLinks(firecrawlApiKey, currentUrl).catch(() => []);
-    for (const link of Array.isArray(links) ? links : []) {
-      const normalized = canonicalizeUrl(normalizeText(link));
-
-      if (isAmazonListUrl(normalized) && !collectedListUrls.has(normalized) && queue.length < AMAZON_LIST_CRAWL_LIMIT * AMAZON_LIST_PAGE_DEPTH) {
-        queue.push(...buildPaginatedListUrls(normalized));
-      }
-    }
-  }
+  const collectedListUrls = Array.from(
+    new Set(
+      Array.from(seedListUrls)
+        .flatMap((listUrl) => buildPaginatedListUrls(listUrl))
+        .map((url) => canonicalizeUrl(url))
+        .filter((url) => isAmazonListUrl(url)),
+    ),
+  ).slice(0, AMAZON_LIST_CRAWL_LIMIT * AMAZON_LIST_PAGE_DEPTH);
 
   const listExtracts = await Promise.all(
-    Array.from(collectedListUrls).map(async (listUrl) => {
+    collectedListUrls.map(async (listUrl) => {
       const extract = await callFirecrawlJson(
         firecrawlApiKey,
         listUrl,
