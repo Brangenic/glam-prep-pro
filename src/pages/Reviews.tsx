@@ -20,9 +20,9 @@ const Reviews = () => {
     let isMounted = true;
 
     const syncAndLoadReviews = async () => {
-      await supabase.functions.invoke("sync-public-content", {
+      void supabase.functions.invoke("sync-public-content", {
         body: { source: "google_reviews" },
-      }).catch(() => null);
+      });
 
       const { data } = await supabase
         .from("google_reviews")

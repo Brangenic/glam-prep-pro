@@ -30,9 +30,9 @@ const AmazonStore = () => {
     let isMounted = true;
 
     const syncAndLoadProducts = async () => {
-      await supabase.functions.invoke("sync-public-content", {
+      void supabase.functions.invoke("sync-public-content", {
         body: { source: "amazon_store" },
-      }).catch(() => null);
+      });
 
       const { data } = await supabase
         .from("amazon_products")
