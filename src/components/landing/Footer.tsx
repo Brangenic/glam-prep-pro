@@ -29,6 +29,16 @@ const socialLinks = [
   },
 ];
 
+const isExternalLink = (href: string) => href.startsWith("http");
+
+const openExternalLink = (href: string) => {
+  const newWindow = window.open(href, "_blank", "noopener,noreferrer");
+
+  if (newWindow) {
+    newWindow.opener = null;
+  }
+};
+
 const Footer = () => (
   <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
     <div className="container mx-auto px-4 sm:px-6">
@@ -56,17 +66,26 @@ const Footer = () => (
             Follow
           </h4>
           <div className="space-y-2">
-            {socialLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                {link.label} →
-              </a>
-            ))}
+            {socialLinks.map((link) =>
+              isExternalLink(link.href) ? (
+                <button
+                  key={link.href}
+                  type="button"
+                  onClick={() => openExternalLink(link.href)}
+                  className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors text-left"
+                >
+                  {link.label} →
+                </button>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.label} →
+                </a>
+              ),
+            )}
           </div>
         </div>
         <div>
