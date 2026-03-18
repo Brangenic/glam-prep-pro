@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import FloatingWhatsApp from "@/components/landing/FloatingWhatsApp";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <FloatingWhatsApp />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
