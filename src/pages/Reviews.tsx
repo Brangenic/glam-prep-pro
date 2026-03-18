@@ -17,7 +17,7 @@ const Reviews = () => (
               Real Love from <span className="italic text-gradient-primary">Carnival Mornings</span>
             </h1>
             <p className="font-body text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-              A few real reviews from Carnival GLAM HUB Jamaica. We can add Trinidad and Saint Lucia reviews next as you send them over.
+              Real client reviews from Carnival GLAM HUB Jamaica and Carnival Glam Hub Trinidad, with Saint Lucia ready to add next.
             </p>
           </div>
 

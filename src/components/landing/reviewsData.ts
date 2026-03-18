@@ -27,4 +27,18 @@ export const featuredReviews: ReviewItem[] = [
     detail: "Jamaica review",
     location: "Carnival GLAM HUB Jamaica",
   },
+  {
+    quote:
+      "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam Hub and will be using them for both days next year 2027 Carnival. My makeup ...",
+    name: "Ashley Trini S",
+    detail: "Trinidad review",
+    location: "Carnival Glam Hub Trinidad",
+  },
+  {
+    quote:
+      "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time (which is everything during Carnival season!), and the entire process was professional, organized, ...",
+    name: "Kerra Denel",
+    detail: "Trinidad review",
+    location: "Carnival Glam Hub Trinidad",
+  },
 ];
