@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import brandLogo from "@/assets/gabby-glam-logo.png";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -38,9 +39,8 @@ const Navbar = () => {
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-6 flex items-center justify-between h-18 py-4">
-        <a href={isHome ? "#hero" : "/"} className="font-display text-xl font-bold tracking-tight" aria-label="Carnival Glam Hub — Home">
-          <span className="text-primary italic">Carnival</span>{" "}
-          <span className="text-foreground">Glam Hub</span>
+        <a href={isHome ? "#hero" : "/"} className="inline-flex items-center" aria-label="Carnival Glam Hub — Home">
+          <img src={brandLogo} alt="Carnival Glam Hub logo" className="h-12 w-auto sm:h-14" />
         </a>
         <div className="hidden lg:flex items-center gap-8">
           {links.map((l) => (
