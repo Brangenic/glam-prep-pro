@@ -58,8 +58,8 @@ const Footer = () => (
             Contact
           </h4>
           <div className="space-y-2 font-body text-sm text-muted-foreground">
-            <p>hello@carnivalglamhub.com</p>
-            <p>+1 (876) 555-0123</p>
+            <p>Bookings@carnivalglamhub.com</p>
+            <p>8765090997</p>
           </div>
         </div>
         <div>
