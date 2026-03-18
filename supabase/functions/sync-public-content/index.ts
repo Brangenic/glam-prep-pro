@@ -192,17 +192,19 @@ const syncAmazonProducts = async (
     "Extract storefront products into JSON with this exact shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Include every visible product card.",
   );
 
-  const linkResults = await callFirecrawlLinks(firecrawlApiKey, sourceUrl);
-  const listUrls = Array.from(
+  const baseProductsRaw = Array.isArray(storefrontExtract?.products) ? storefrontExtract.products : [];
+  const baseRows = toAmazonRows(baseProductsRaw);
+
+  const listUrlsFromProducts = Array.from(
     new Set(
-      (Array.isArray(linkResults) ? linkResults : [])
-        .map((url) => normalizeText(url))
+      baseRows
+        .map((row) => normalizeText(row.product_url))
         .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
     ),
-  ).slice(0, 3);
+  ).slice(0, 1);
 
   const listExtracts = await Promise.all(
-    listUrls.map((listUrl) =>
+    listUrlsFromProducts.map((listUrl) =>
       callFirecrawlJson(
         firecrawlApiKey,
         listUrl,
@@ -211,7 +213,6 @@ const syncAmazonProducts = async (
     ),
   );
 
-  const baseProductsRaw = Array.isArray(storefrontExtract?.products) ? storefrontExtract.products : [];
   const nestedProductsRaw = listExtracts.flatMap((extract) =>
     Array.isArray(extract?.products) ? extract.products : [],
   );
