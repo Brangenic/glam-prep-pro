@@ -14,6 +14,7 @@ type FeaturedProduct = {
   external_id: string;
   title: string;
   price_text: string | null;
+  image_url: string | null;
   product_url: string;
 };
 
@@ -27,7 +28,7 @@ const AmazonStoreFeature = () => {
     const loadFeaturedProducts = async () => {
       const { data } = await supabase
         .from("amazon_products")
-        .select("external_id, title, price_text, product_url")
+        .select("external_id, title, price_text, image_url, product_url")
         .order("synced_at", { ascending: false })
         .limit(3);
 
@@ -115,12 +116,24 @@ const AmazonStoreFeature = () => {
                       href={product.product_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border transition-colors hover:border-primary/25"
+                      className="flex items-center gap-3 rounded-2xl bg-background px-3 py-3 border border-border transition-colors hover:border-primary/25"
                     >
-                      <span className="font-body text-sm text-foreground line-clamp-1">{product.title}</span>
-                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                        {product.price_text || "Shop"}
-                      </span>
+                      {product.image_url ? (
+                        <img
+                          src={product.image_url}
+                          alt={product.title}
+                          className="h-14 w-14 shrink-0 rounded-lg object-cover border border-border"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="h-14 w-14 shrink-0 rounded-lg border border-border bg-muted" aria-hidden="true" />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="font-body text-sm text-foreground line-clamp-2">{product.title}</p>
+                        <p className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground mt-1">
+                          {product.price_text || "Shop"}
+                        </p>
+                      </div>
                     </a>
                   ))
                 ) : (
