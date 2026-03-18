@@ -45,26 +45,36 @@ const AmazonStore = () => {
     };
   }, []);
 
-  const categorySections = useMemo(() => {
+  const { categorySections, hasDirectProducts } = useMemo(() => {
+    const validCategorizedProducts = products.filter((product) =>
+      isValidCategory(normalizeCategory(product.category)),
+    );
+
+    const directProductRows = validCategorizedProducts.filter((product) =>
+      isDirectAmazonProductUrl(product.product_url),
+    );
+
+    const sourceRows = directProductRows.length > 0 ? directProductRows : validCategorizedProducts;
     const grouped = new Map<string, SyncedProduct[]>();
 
-    products.forEach((product) => {
+    sourceRows.forEach((product) => {
       const category = normalizeCategory(product.category);
-      if (!isValidCategory(category) || !isDirectAmazonProductUrl(product.product_url)) return;
-
       const existing = grouped.get(category) ?? [];
       if (existing.some((item) => item.external_id === product.external_id)) return;
       existing.push(product);
       grouped.set(category, existing);
     });
 
-    return Array.from(grouped.entries())
-      .map(([category, items]) => ({
-        category,
-        items,
-        previewItems: items.slice(0, PREVIEW_ITEMS_PER_CATEGORY),
-      }))
-      .sort((a, b) => a.category.localeCompare(b.category));
+    return {
+      hasDirectProducts: directProductRows.length > 0,
+      categorySections: Array.from(grouped.entries())
+        .map(([category, items]) => ({
+          category,
+          items,
+          previewItems: items.slice(0, PREVIEW_ITEMS_PER_CATEGORY),
+        }))
+        .sort((a, b) => a.category.localeCompare(b.category)),
+    };
   }, [products]);
 
   const totalPreviewProducts = useMemo(
@@ -91,6 +101,7 @@ const AmazonStore = () => {
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl mb-6 sm:mb-7">
                 See a few featured picks from each category here, then open the full Amazon store to browse everything.
+                {!hasDirectProducts ? " We’re finishing product-level updates, so category previews are shown temporarily." : ""}
               </p>
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
