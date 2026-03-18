@@ -34,11 +34,21 @@ const socialLinks = [
 const isExternalLink = (href: string) => href.startsWith("http");
 
 const openExternalLink = (href: string) => {
+  const topWindow = window.top;
+
+  if (topWindow && topWindow !== window) {
+    topWindow.location.href = href;
+    return;
+  }
+
   const newWindow = window.open(href, "_blank", "noopener,noreferrer");
 
   if (newWindow) {
     newWindow.opener = null;
+    return;
   }
+
+  window.location.href = href;
 };
 
 const Footer = () => (
