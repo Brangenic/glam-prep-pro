@@ -8,6 +8,7 @@ import carnival7 from "@/assets/carnival-7.jpg";
 import carnival8 from "@/assets/carnival-8.jpg";
 import carnival9 from "@/assets/carnival-9.jpg";
 import carnival10 from "@/assets/carnival-10.jpg";
+import carnival11 from "@/assets/gallery-5.jpeg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const images = [
@@ -21,6 +22,7 @@ const images = [
   { src: carnival8, alt: "Golden carnival jewelry close-up with feather details", className: "col-span-1 row-span-1" },
   { src: carnival9, alt: "Gold headpiece and crystal carnival jewelry close-up", className: "col-span-1 row-span-1" },
   { src: carnival10, alt: "Pink and magenta butterfly wings carnival costume", className: "col-span-1 row-span-1" },
+  { src: carnival11, alt: "Smiling carnival masquerader in orange costume with gold jewelry and pink gems", className: "col-span-1 row-span-1 sm:col-span-1 sm:row-span-2", objectPosition: "center 20%" },
 ];
 
 const Gallery = () => {
