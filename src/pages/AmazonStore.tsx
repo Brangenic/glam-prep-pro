@@ -45,7 +45,13 @@ const AmazonStore = () => {
   }, []);
 
   const categories = useMemo(() => {
-    const dynamic = Array.from(new Set(products.map((item) => item.category).filter(Boolean))) as string[];
+    const dynamic = Array.from(
+      new Set(
+        products
+          .map((item) => item.category?.trim())
+          .filter((category): category is string => Boolean(category) && category.toLowerCase() !== "n/a"),
+      ),
+    );
     return ["All", ...dynamic];
   }, [products]);
 
