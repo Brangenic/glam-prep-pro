@@ -12,6 +12,8 @@ import carnival11 from "@/assets/gallery-5.jpeg";
 import carnival12 from "@/assets/gallery-6.jpg";
 import carnival13 from "@/assets/gallery-7.jpg";
 import carnival14 from "@/assets/gallery-8.jpg";
+import carnival15 from "@/assets/gallery-9.jpg";
+import carnival16 from "@/assets/gallery-10.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const images = [
@@ -23,10 +25,12 @@ const images = [
   { src: carnival4, alt: "Close-up carnival glam with glitter and turquoise", className: "col-span-1 row-span-1", objectPosition: "center 20%" },
   { src: carnival6, alt: "Royal blue butterfly wings carnival costume", className: "col-span-1 row-span-1 sm:col-span-1 sm:row-span-2" },
   { src: carnival13, alt: "Two friends in carnival costumes hugging and smiling at an event", className: "col-span-1 row-span-1" },
+  { src: carnival15, alt: "Masquerader in a jeweled carnival costume seated in a colorful feathered backpiece", className: "col-span-1 row-span-1 sm:row-span-2", objectPosition: "center top" },
   { src: carnival5, alt: "Pink and orange feathered carnival wings costume", className: "col-span-1 row-span-1" },
   { src: carnival7, alt: "Colorful feathered headdress carnival masquerader", className: "col-span-1 row-span-1" },
   { src: carnival14, alt: "Masquerader with blue dragon wings and jeweled carnival costume", className: "col-span-1 row-span-1 sm:row-span-2", objectPosition: "center top" },
   { src: carnival8, alt: "Golden carnival jewelry close-up with feather details", className: "col-span-1 row-span-1" },
+  { src: carnival16, alt: "Celebrating masquerader on the road surrounded by photographers and carnival energy", className: "col-span-1 row-span-1", objectPosition: "center top" },
   { src: carnival9, alt: "Gold headpiece and crystal carnival jewelry close-up", className: "col-span-1 row-span-1" },
   { src: carnival10, alt: "Pink and magenta butterfly wings carnival costume", className: "col-span-1 row-span-1" },
 ];
