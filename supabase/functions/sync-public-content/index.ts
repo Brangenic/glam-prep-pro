@@ -47,7 +47,8 @@ const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) =>
     },
     body: JSON.stringify({
       url,
-      formats: [{ type: "json", prompt }],
+      formats: ["json"],
+      jsonOptions: { prompt },
       onlyMainContent: false,
       waitFor: 4000,
     }),
