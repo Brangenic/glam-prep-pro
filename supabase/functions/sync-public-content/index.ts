@@ -63,6 +63,30 @@ const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) =>
   return payload?.data?.json ?? payload?.json ?? payload?.data?.extract ?? payload?.extract ?? null;
 };
 
+const callFirecrawlLinks = async (apiKey: string, url: string) => {
+  const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url,
+      formats: ["links"],
+      onlyMainContent: false,
+      waitFor: 4000,
+    }),
+  });
+
+  const payload = await response.json();
+
+  if (!response.ok) {
+    throw new Error(`Firecrawl links scrape failed [${response.status}]: ${JSON.stringify(payload)}`);
+  }
+
+  return payload?.data?.links ?? payload?.links ?? [];
+};
+
 const syncGoogleReviews = async (
   supabaseAdmin: ReturnType<typeof createClient>,
   firecrawlApiKey: string,
@@ -130,66 +154,94 @@ const syncGoogleReviews = async (
   return rows.length;
 };
 
+const toAmazonRows = (productsRaw: unknown[]) => productsRaw
+  .map((product) => {
+    const item = product as Record<string, unknown>;
+    const title = normalizeText(item.title);
+    const productUrl = normalizeText(item.product_url);
+    if (!title || !productUrl) return null;
+
+    const externalId =
+      normalizeText(item.id) ||
+      `amazon_${hashString(`${title}|${productUrl}`)}`;
+
+    return {
+      external_id: externalId,
+      title,
+      price_text: normalizeText(item.price_text) || null,
+      image_url: normalizeText(item.image_url) || null,
+      product_url: productUrl,
+      category: normalizeText(item.category) || null,
+      raw_payload: item,
+      synced_at: new Date().toISOString(),
+    };
+  })
+  .filter(Boolean) as Array<Record<string, unknown>>;
+
 const syncAmazonProducts = async (
   supabaseAdmin: ReturnType<typeof createClient>,
   firecrawlApiKey: string,
   sourceUrl: string,
 ) => {
-  const extracted = await callFirecrawlJson(
+  const storefrontExtract = await callFirecrawlJson(
     firecrawlApiKey,
     sourceUrl,
     "Extract storefront products into JSON with this exact shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Include every visible product card.",
   );
 
-  const productsRaw = Array.isArray(extracted?.products) ? extracted.products : [];
+  const linkResults = await callFirecrawlLinks(firecrawlApiKey, sourceUrl);
+  const listUrls = Array.from(
+    new Set(
+      (Array.isArray(linkResults) ? linkResults : [])
+        .map((url) => normalizeText(url))
+        .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
+    ),
+  ).slice(0, 8);
 
-  const rows = productsRaw
-    .map((product: Record<string, unknown>) => {
-      const title = normalizeText(product.title);
-      const productUrl = normalizeText(product.product_url);
-      if (!title || !productUrl) return null;
+  const listExtracts = await Promise.all(
+    listUrls.map((listUrl) =>
+      callFirecrawlJson(
+        firecrawlApiKey,
+        listUrl,
+        "Extract products from this Amazon list page into JSON with shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Return all visible items.",
+      ).catch(() => null)
+    ),
+  );
 
-      const externalId =
-        normalizeText(product.id) ||
-        `amazon_${hashString(`${title}|${productUrl}`)}`;
+  const baseProductsRaw = Array.isArray(storefrontExtract?.products) ? storefrontExtract.products : [];
+  const nestedProductsRaw = listExtracts.flatMap((extract) =>
+    Array.isArray(extract?.products) ? extract.products : [],
+  );
 
-      return {
-        external_id: externalId,
-        title,
-        price_text: normalizeText(product.price_text) || null,
-        image_url: normalizeText(product.image_url) || null,
-        product_url: productUrl,
-        category: normalizeText(product.category) || null,
-        raw_payload: product,
-        synced_at: new Date().toISOString(),
-      };
-    })
-    .filter(Boolean) as Array<Record<string, unknown>>;
+  const dedupedRows = Array.from(
+    new Map(
+      [...toAmazonRows(baseProductsRaw), ...toAmazonRows(nestedProductsRaw)]
+        .map((row) => [String(row.external_id), row]),
+    ).values(),
+  );
 
-  if (rows.length === 0) {
+  if (dedupedRows.length === 0) {
     throw new Error("No products could be extracted from the Amazon storefront page.");
   }
 
   const { error: upsertError } = await supabaseAdmin
     .from("amazon_products")
-    .upsert(rows, { onConflict: "external_id" });
+    .upsert(dedupedRows, { onConflict: "external_id" });
 
   if (upsertError) {
     throw new Error(`Amazon products upsert failed: ${upsertError.message}`);
   }
 
-  if (rows.length > 0) {
-    const { error: deleteError } = await supabaseAdmin
-      .from("amazon_products")
-      .delete()
-      .not("external_id", "in", `(${rows.map((row) => `\"${String(row.external_id).replace(/\"/g, '\\\"')}\"`).join(",")})`);
+  const { error: deleteError } = await supabaseAdmin
+    .from("amazon_products")
+    .delete()
+    .not("external_id", "in", `(${dedupedRows.map((row) => `\"${String(row.external_id).replace(/\"/g, '\\\"')}\"`).join(",")})`);
 
-    if (deleteError) {
-      console.warn("Could not prune stale Amazon products:", deleteError.message);
-    }
+  if (deleteError) {
+    console.warn("Could not prune stale Amazon products:", deleteError.message);
   }
 
-  return rows.length;
+  return dedupedRows.length;
 };
 
 const shouldSync = (lastSyncedAt: string | null, force: boolean) => {
