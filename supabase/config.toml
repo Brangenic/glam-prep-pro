@@ -1,1 +1,4 @@
 project_id = "bvrejdrsrmvdknzoskxi"
+
+[functions.sync-public-content]
+verify_jwt = false
