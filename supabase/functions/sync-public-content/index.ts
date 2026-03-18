@@ -60,7 +60,7 @@ const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) =>
     throw new Error(`Firecrawl scrape failed [${response.status}]: ${JSON.stringify(payload)}`);
   }
 
-  return payload?.data?.json ?? payload?.json ?? null;
+  return payload?.data?.json ?? payload?.json ?? payload?.data?.extract ?? payload?.extract ?? null;
 };
 
 const syncGoogleReviews = async (
