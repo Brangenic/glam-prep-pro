@@ -16,6 +16,8 @@ const corsHeaders = {
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const FIRECRAWL_TIMEOUT_MS = 45000;
+const AMAZON_LIST_CRAWL_LIMIT = 60;
+const AMAZON_LIST_PAGE_DEPTH = 8;
 
 const hashString = (input: string) => {
   let hash = 0;
@@ -39,17 +41,40 @@ const normalizeRating = (value: unknown) => {
   return rounded;
 };
 
+const isAmazonListUrl = (url: string) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url);
+const isAmazonProductUrl = (url: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(url);
+
 const canonicalizeUrl = (value: string) => {
   try {
     const parsed = new URL(value);
+
+    if (isAmazonListUrl(value)) {
+      const pageValue = parsed.searchParams.get("page") ?? parsed.searchParams.get("pageNumber");
+      const page = pageValue && /^\d+$/.test(pageValue) ? pageValue : null;
+      return page ? `${parsed.origin}${parsed.pathname}?page=${page}` : `${parsed.origin}${parsed.pathname}`;
+    }
+
     return `${parsed.origin}${parsed.pathname}`;
   } catch {
     return value;
   }
 };
 
-const isAmazonListUrl = (url: string) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url);
-const isAmazonProductUrl = (url: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(url);
+const buildPaginatedListUrls = (baseListUrl: string) => {
+  const variants: string[] = [baseListUrl];
+
+  try {
+    const parsed = new URL(baseListUrl);
+    for (let page = 2; page <= AMAZON_LIST_PAGE_DEPTH; page += 1) {
+      parsed.searchParams.set("page", String(page));
+      variants.push(canonicalizeUrl(parsed.toString()));
+    }
+  } catch {
+    return variants;
+  }
+
+  return variants;
+};
 
 const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) => {
   const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
