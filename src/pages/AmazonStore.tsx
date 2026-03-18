@@ -6,6 +6,7 @@ import amazonLogo from "@/assets/amazon-logo.svg";
 import { supabase } from "@/integrations/supabase/client";
 
 const AMAZON_STORE_URL = "https://www.amazon.com/shop/carnivalglamhub?ccs_id=7e98f14b-a852-49d9-a50d-4fb90fee34c8";
+const PREVIEW_ITEMS_PER_CATEGORY = 4;
 
 type SyncedProduct = {
   external_id: string;
@@ -18,6 +19,7 @@ type SyncedProduct = {
 
 const normalizeCategory = (value: string | null) => value?.trim() || "";
 const isValidCategory = (value: string) => value !== "" && value.toLowerCase() !== "n/a";
+const isDirectAmazonProductUrl = (value: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(value);
 
 const AmazonStore = () => {
   const [products, setProducts] = useState<SyncedProduct[]>([]);
@@ -25,21 +27,18 @@ const AmazonStore = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const syncAndLoadProducts = async () => {
-      void supabase.functions.invoke("sync-public-content", {
-        body: { source: "amazon_store" },
-      });
-
+    const loadProducts = async () => {
       const { data } = await supabase
         .from("amazon_products")
         .select("external_id, title, price_text, image_url, product_url, category")
+        .order("category", { ascending: true })
         .order("synced_at", { ascending: false });
 
       if (!isMounted || !data?.length) return;
       setProducts(data as SyncedProduct[]);
     };
 
-    syncAndLoadProducts();
+    loadProducts();
 
     return () => {
       isMounted = false;
@@ -51,20 +50,25 @@ const AmazonStore = () => {
 
     products.forEach((product) => {
       const category = normalizeCategory(product.category);
-      if (!isValidCategory(category)) return;
+      if (!isValidCategory(category) || !isDirectAmazonProductUrl(product.product_url)) return;
 
       const existing = grouped.get(category) ?? [];
+      if (existing.some((item) => item.external_id === product.external_id)) return;
       existing.push(product);
       grouped.set(category, existing);
     });
 
     return Array.from(grouped.entries())
-      .map(([category, items]) => ({ category, items }))
+      .map(([category, items]) => ({
+        category,
+        items,
+        previewItems: items.slice(0, PREVIEW_ITEMS_PER_CATEGORY),
+      }))
       .sort((a, b) => a.category.localeCompare(b.category));
   }, [products]);
 
-  const totalProducts = useMemo(
-    () => categorySections.reduce((sum, section) => sum + section.items.length, 0),
+  const totalPreviewProducts = useMemo(
+    () => categorySections.reduce((sum, section) => sum + section.previewItems.length, 0),
     [categorySections],
   );
 
@@ -86,12 +90,12 @@ const AmazonStore = () => {
                 Shop the <span className="italic text-gradient-primary">Glam Hub Storefront</span>
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl mb-6 sm:mb-7">
-                Browse synced products grouped by category from all available Carnival Glam Hub Amazon lists.
+                See a few featured picks from each category here, then open the full Amazon store to browse everything.
               </p>
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="font-body text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-semibold">{totalProducts}</span> products in{" "}
+                  Showing <span className="text-foreground font-semibold">{totalPreviewProducts}</span> featured products across{" "}
                   <span className="text-foreground font-semibold">{categorySections.length}</span> categories
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
@@ -101,7 +105,7 @@ const AmazonStore = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-body text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25"
                   >
-                    Open Full Amazon Store
+                    View More in Full Store
                   </a>
                   <a
                     href="/"
@@ -115,27 +119,39 @@ const AmazonStore = () => {
 
             {categorySections.length ? (
               <div className="space-y-10 sm:space-y-12">
-                {categorySections.map(({ category, items }) => {
+                {categorySections.map(({ category, items, previewItems }) => {
                   const sectionId = `category-${category.toLowerCase().replace(/\s+/g, "-")}`;
 
                   return (
-                    <section key={category} aria-labelledby={sectionId}>
-                      <div className="flex items-center justify-between mb-4">
-                        <h2 id={sectionId} className="font-display text-2xl sm:text-3xl font-semibold text-foreground">
-                          {category}
-                        </h2>
-                        <p className="font-body text-xs sm:text-sm text-muted-foreground">{items.length} products</p>
+                    <section key={category} aria-labelledby={sectionId} className="rounded-3xl border border-border bg-card p-5 sm:p-6 lg:p-8">
+                      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+                        <div>
+                          <h2 id={sectionId} className="font-display text-2xl sm:text-3xl font-semibold text-foreground">
+                            {category}
+                          </h2>
+                          <p className="font-body text-sm text-muted-foreground mt-1">
+                            Showing {previewItems.length} of {items.length} products
+                          </p>
+                        </div>
+                        <a
+                          href={AMAZON_STORE_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center rounded-full border border-primary/30 px-5 py-2.5 font-body text-sm font-semibold text-primary transition-all hover:bg-primary/10"
+                        >
+                          View more
+                        </a>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-                        {items.map((product) => (
-                          <article key={product.external_id} className="rounded-2xl border border-border bg-card overflow-hidden group">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                        {previewItems.map((product) => (
+                          <article key={product.external_id} className="rounded-2xl border border-border bg-background overflow-hidden">
                             <div className="px-3 pt-3">
                               {product.image_url ? (
                                 <img
                                   src={product.image_url}
                                   alt={product.title}
-                                  className="w-full aspect-[4/3] object-cover rounded-xl border border-border transition-transform duration-300 group-hover:scale-[1.02]"
+                                  className="w-full aspect-[4/3] object-cover rounded-xl border border-border"
                                   loading="lazy"
                                 />
                               ) : (
@@ -144,16 +160,12 @@ const AmazonStore = () => {
                             </div>
 
                             <div className="p-4 sm:p-5">
-                              <h3 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h3>
-                              <p className="font-body text-sm text-muted-foreground mb-4">{product.price_text || "View on Amazon"}</p>
-                              <a
-                                href={product.product_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
-                              >
-                                View products
-                              </a>
+                              <h3 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">
+                                {product.title}
+                              </h3>
+                              <p className="font-body text-sm text-muted-foreground">
+                                {product.price_text || "Available in full store"}
+                              </p>
                             </div>
                           </article>
                         ))}
@@ -164,7 +176,9 @@ const AmazonStore = () => {
               </div>
             ) : (
               <div className="rounded-2xl border border-border bg-card p-6 text-center">
-                <p className="font-body text-sm text-muted-foreground">No categorized products available yet. Please check back after sync.</p>
+                <p className="font-body text-sm text-muted-foreground">
+                  Products are updating right now. Please check back shortly.
+                </p>
               </div>
             )}
           </div>
