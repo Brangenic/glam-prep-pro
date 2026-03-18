@@ -39,6 +39,18 @@ const normalizeRating = (value: unknown) => {
   return rounded;
 };
 
+const canonicalizeUrl = (value: string) => {
+  try {
+    const parsed = new URL(value);
+    return `${parsed.origin}${parsed.pathname}`;
+  } catch {
+    return value;
+  }
+};
+
+const isAmazonListUrl = (url: string) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url);
+const isAmazonProductUrl = (url: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(url);
+
 const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) => {
   const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
     method: "POST",
