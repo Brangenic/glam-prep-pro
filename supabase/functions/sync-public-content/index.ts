@@ -60,21 +60,7 @@ const canonicalizeUrl = (value: string) => {
   }
 };
 
-const buildPaginatedListUrls = (baseListUrl: string) => {
-  const variants: string[] = [baseListUrl];
-
-  try {
-    const parsed = new URL(baseListUrl);
-    for (let page = 2; page <= AMAZON_LIST_PAGE_DEPTH; page += 1) {
-      parsed.searchParams.set("page", String(page));
-      variants.push(canonicalizeUrl(parsed.toString()));
-    }
-  } catch {
-    return variants;
-  }
-
-  return variants;
-};
+const buildPaginatedListUrls = (baseListUrl: string) => [canonicalizeUrl(baseListUrl)];
 
 const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) => {
   const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
