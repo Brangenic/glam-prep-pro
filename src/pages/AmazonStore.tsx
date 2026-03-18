@@ -21,7 +21,6 @@ const isValidCategory = (value: string) => value !== "" && value.toLowerCase() !
 
 const AmazonStore = () => {
   const [products, setProducts] = useState<SyncedProduct[]>([]);
-  const [activeCategory, setActiveCategory] = useState<string>("All");
 
   useEffect(() => {
     let isMounted = true;
@@ -47,34 +46,27 @@ const AmazonStore = () => {
     };
   }, []);
 
-  const categoryCounts = useMemo(() => {
-    const counts = new Map<string, number>();
+  const categorySections = useMemo(() => {
+    const grouped = new Map<string, SyncedProduct[]>();
 
-    products.forEach((item) => {
-      const category = normalizeCategory(item.category);
+    products.forEach((product) => {
+      const category = normalizeCategory(product.category);
       if (!isValidCategory(category)) return;
-      counts.set(category, (counts.get(category) || 0) + 1);
+
+      const existing = grouped.get(category) ?? [];
+      existing.push(product);
+      grouped.set(category, existing);
     });
 
-    return counts;
+    return Array.from(grouped.entries())
+      .map(([category, items]) => ({ category, items }))
+      .sort((a, b) => a.category.localeCompare(b.category));
   }, [products]);
 
-  const categories = useMemo(() => {
-    const dynamic = Array.from(categoryCounts.keys());
-    return ["All", ...dynamic];
-  }, [categoryCounts]);
-
-  const visibleProducts = useMemo(() => {
-    const productsWithCategories = products.filter((product) => isValidCategory(normalizeCategory(product.category)));
-
-    if (activeCategory === "All") return productsWithCategories;
-    return productsWithCategories.filter((product) => normalizeCategory(product.category) === activeCategory);
-  }, [products, activeCategory]);
-
-  const getDisplayCategory = (product: SyncedProduct) => {
-    const category = normalizeCategory(product.category);
-    return isValidCategory(category) ? category : null;
-  };
+  const totalProducts = useMemo(
+    () => categorySections.reduce((sum, section) => sum + section.items.length, 0),
+    [categorySections],
+  );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -94,32 +86,13 @@ const AmazonStore = () => {
                 Shop the <span className="italic text-gradient-primary">Glam Hub Storefront</span>
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl mb-6 sm:mb-7">
-                Browse synced products from all available Carnival Glam Hub Amazon lists — refreshed daily for prep essentials, beauty tools, travel gear, and road-day extras.
+                Browse synced products grouped by category from all available Carnival Glam Hub Amazon lists.
               </p>
-
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5 sm:mb-6">
-                {categories.map((category) => {
-                  const isActive = activeCategory === category;
-                  return (
-                    <button
-                      key={category}
-                      type="button"
-                      onClick={() => setActiveCategory(category)}
-                      className={`rounded-full border px-4 py-2 font-body text-xs sm:text-sm font-semibold transition-colors ${
-                        isActive
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border bg-background text-foreground hover:border-primary/30"
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  );
-                })}
-              </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="font-body text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-semibold">{visibleProducts.length}</span> products
+                  Showing <span className="text-foreground font-semibold">{totalProducts}</span> products in{" "}
+                  <span className="text-foreground font-semibold">{categorySections.length}</span> categories
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
@@ -140,44 +113,60 @@ const AmazonStore = () => {
               </div>
             </header>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-              {visibleProducts.map((product) => {
-                const displayCategory = getDisplayCategory(product);
+            {categorySections.length ? (
+              <div className="space-y-10 sm:space-y-12">
+                {categorySections.map(({ category, items }) => {
+                  const sectionId = `category-${category.toLowerCase().replace(/\s+/g, "-")}`;
 
-                return (
-                  <article key={product.external_id} className="rounded-2xl border border-border bg-card overflow-hidden group">
-                    <div className="px-3 pt-3">
-                      {product.image_url ? (
-                        <img
-                          src={product.image_url}
-                          alt={product.title}
-                          className="w-full aspect-[4/3] object-cover rounded-xl border border-border transition-transform duration-300 group-hover:scale-[1.02]"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full aspect-[4/3] rounded-xl border border-border bg-muted" aria-hidden="true" />
-                      )}
-                    </div>
+                  return (
+                    <section key={category} aria-labelledby={sectionId}>
+                      <div className="flex items-center justify-between mb-4">
+                        <h2 id={sectionId} className="font-display text-2xl sm:text-3xl font-semibold text-foreground">
+                          {category}
+                        </h2>
+                        <p className="font-body text-xs sm:text-sm text-muted-foreground">{items.length} products</p>
+                      </div>
 
-                    <div className="p-4 sm:p-5">
-                      {displayCategory ? (
-                        <p className="font-body text-[11px] uppercase tracking-[0.14em] text-secondary mb-2">{displayCategory}</p>
-                      ) : null}
-                      <h2 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h2>
-                      <p className="font-body text-sm text-muted-foreground mb-4">{product.price_text || "View on Amazon"}</p>
-                      <a
-                        href={product.product_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
-                      >
-                        View products
-                      </a>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+                        {items.map((product) => (
+                          <article key={product.external_id} className="rounded-2xl border border-border bg-card overflow-hidden group">
+                            <div className="px-3 pt-3">
+                              {product.image_url ? (
+                                <img
+                                  src={product.image_url}
+                                  alt={product.title}
+                                  className="w-full aspect-[4/3] object-cover rounded-xl border border-border transition-transform duration-300 group-hover:scale-[1.02]"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="w-full aspect-[4/3] rounded-xl border border-border bg-muted" aria-hidden="true" />
+                              )}
+                            </div>
+
+                            <div className="p-4 sm:p-5">
+                              <h3 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h3>
+                              <p className="font-body text-sm text-muted-foreground mb-4">{product.price_text || "View on Amazon"}</p>
+                              <a
+                                href={product.product_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
+                              >
+                                View products
+                              </a>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-border bg-card p-6 text-center">
+                <p className="font-body text-sm text-muted-foreground">No categorized products available yet. Please check back after sync.</p>
+              </div>
+            )}
           </div>
         </section>
       </main>
