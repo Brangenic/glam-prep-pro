@@ -15,7 +15,7 @@ const socialLinks = [
   },
   {
     label: "YouTube",
-    href: "https://www.youtube.com/@carnivalglamhub",
+    href: "https://www.youtube.com/@carnivalglamhub/shorts",
   },
   {
     label: "Pinterest",
