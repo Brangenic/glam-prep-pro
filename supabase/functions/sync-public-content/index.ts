@@ -199,7 +199,7 @@ const syncAmazonProducts = async (
         .map((url) => normalizeText(url))
         .filter((url) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url)),
     ),
-  ).slice(0, 8);
+  ).slice(0, 3);
 
   const listExtracts = await Promise.all(
     listUrls.map((listUrl) =>
