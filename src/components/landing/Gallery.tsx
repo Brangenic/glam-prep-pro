@@ -69,7 +69,7 @@ const Gallery = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 auto-rows-[120px] sm:auto-rows-[180px] lg:auto-rows-[240px]">
+        <div className="grid grid-cols-2 grid-flow-dense sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 auto-rows-[120px] sm:auto-rows-[180px] lg:auto-rows-[240px]">
           {images.map((img, i) => (
             <div
               key={i}
