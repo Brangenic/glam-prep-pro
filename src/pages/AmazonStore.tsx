@@ -16,6 +16,8 @@ type SyncedProduct = {
   category: string | null;
 };
 
+const normalizeCategory = (value: string | null) => value?.trim() || "";
+
 const AmazonStore = () => {
   const [products, setProducts] = useState<SyncedProduct[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -44,21 +46,45 @@ const AmazonStore = () => {
     };
   }, []);
 
-  const categories = useMemo(() => {
-    const dynamic = Array.from(
-      new Set(
-        products
-          .map((item) => item.category?.trim())
-          .filter((category): category is string => Boolean(category) && category.toLowerCase() !== "n/a"),
-      ),
-    );
-    return ["All", ...dynamic];
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+
+    products.forEach((item) => {
+      const category = normalizeCategory(item.category);
+      if (!category || category.toLowerCase() === "n/a") return;
+      counts.set(category, (counts.get(category) || 0) + 1);
+    });
+
+    return counts;
   }, [products]);
+
+  const categories = useMemo(() => {
+    const dynamic = Array.from(categoryCounts.keys());
+    return ["All", ...dynamic];
+  }, [categoryCounts]);
 
   const visibleProducts = useMemo(() => {
     if (activeCategory === "All") return products;
-    return products.filter((product) => product.category === activeCategory);
+    return products.filter((product) => normalizeCategory(product.category) === activeCategory);
   }, [products, activeCategory]);
+
+  const getDisplayCategory = (product: SyncedProduct) => {
+    const category = normalizeCategory(product.category);
+
+    if (!category || category.toLowerCase() === "n/a") {
+      return activeCategory !== "All" ? activeCategory : null;
+    }
+
+    if (category.toLowerCase() === product.title.trim().toLowerCase()) {
+      return activeCategory !== "All" ? activeCategory : null;
+    }
+
+    if (!categoryCounts.has(category)) {
+      return activeCategory !== "All" ? activeCategory : null;
+    }
+
+    return category;
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -125,38 +151,42 @@ const AmazonStore = () => {
             </header>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-              {visibleProducts.map((product) => (
-                <article key={product.external_id} className="rounded-2xl border border-border bg-card overflow-hidden group">
-                  <div className="px-3 pt-3">
-                    {product.image_url ? (
-                      <img
-                        src={product.image_url}
-                        alt={product.title}
-                        className="w-full aspect-[4/3] object-cover rounded-xl border border-border transition-transform duration-300 group-hover:scale-[1.02]"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-full aspect-[4/3] rounded-xl border border-border bg-muted" aria-hidden="true" />
-                    )}
-                  </div>
+              {visibleProducts.map((product) => {
+                const displayCategory = getDisplayCategory(product);
 
-                  <div className="p-4 sm:p-5">
-                    {product.category && product.category.toLowerCase() !== "n/a" ? (
-                      <p className="font-body text-[11px] uppercase tracking-[0.14em] text-secondary mb-2">{product.category}</p>
-                    ) : null}
-                    <h2 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h2>
-                    <p className="font-body text-sm text-muted-foreground mb-4">{product.price_text || "View on Amazon"}</p>
-                    <a
-                      href={product.product_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
-                    >
-                      View products
-                    </a>
-                  </div>
-                </article>
-              ))}
+                return (
+                  <article key={product.external_id} className="rounded-2xl border border-border bg-card overflow-hidden group">
+                    <div className="px-3 pt-3">
+                      {product.image_url ? (
+                        <img
+                          src={product.image_url}
+                          alt={product.title}
+                          className="w-full aspect-[4/3] object-cover rounded-xl border border-border transition-transform duration-300 group-hover:scale-[1.02]"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full aspect-[4/3] rounded-xl border border-border bg-muted" aria-hidden="true" />
+                      )}
+                    </div>
+
+                    <div className="p-4 sm:p-5">
+                      {displayCategory ? (
+                        <p className="font-body text-[11px] uppercase tracking-[0.14em] text-secondary mb-2">{displayCategory}</p>
+                      ) : null}
+                      <h2 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h2>
+                      <p className="font-body text-sm text-muted-foreground mb-4">{product.price_text || "View on Amazon"}</p>
+                      <a
+                        href={product.product_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
+                      >
+                        View products
+                      </a>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
