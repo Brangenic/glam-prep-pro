@@ -141,7 +141,7 @@ const AmazonStore = () => {
                   </div>
 
                   <div className="p-4 sm:p-5">
-                    {product.category ? (
+                    {product.category && product.category.toLowerCase() !== "n/a" ? (
                       <p className="font-body text-[11px] uppercase tracking-[0.14em] text-secondary mb-2">{product.category}</p>
                     ) : null}
                     <h2 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h2>
