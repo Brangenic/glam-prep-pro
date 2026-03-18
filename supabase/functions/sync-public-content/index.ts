@@ -16,8 +16,8 @@ const corsHeaders = {
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const FIRECRAWL_TIMEOUT_MS = 45000;
-const AMAZON_LIST_CRAWL_LIMIT = 60;
-const AMAZON_LIST_PAGE_DEPTH = 8;
+const AMAZON_LIST_CRAWL_LIMIT = 12;
+const AMAZON_PRODUCTS_PER_LIST = 4;
 
 const hashString = (input: string) => {
   let hash = 0;
