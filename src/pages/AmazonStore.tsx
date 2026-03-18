@@ -101,7 +101,7 @@ const AmazonStore = () => {
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl mb-6 sm:mb-7">
                 See a few featured picks from each category here, then open the full Amazon store to browse everything.
-              </p>
+                {!hasDirectProducts ? " We’re finishing product-level updates, so category previews are shown temporarily." : ""}
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="font-body text-sm text-muted-foreground">
