@@ -17,6 +17,7 @@ type SyncedProduct = {
 };
 
 const normalizeCategory = (value: string | null) => value?.trim() || "";
+const isValidCategory = (value: string) => value !== "" && value.toLowerCase() !== "n/a";
 
 const AmazonStore = () => {
   const [products, setProducts] = useState<SyncedProduct[]>([]);
@@ -51,7 +52,7 @@ const AmazonStore = () => {
 
     products.forEach((item) => {
       const category = normalizeCategory(item.category);
-      if (!category || category.toLowerCase() === "n/a") return;
+      if (!isValidCategory(category)) return;
       counts.set(category, (counts.get(category) || 0) + 1);
     });
 
@@ -64,26 +65,15 @@ const AmazonStore = () => {
   }, [categoryCounts]);
 
   const visibleProducts = useMemo(() => {
-    if (activeCategory === "All") return products;
-    return products.filter((product) => normalizeCategory(product.category) === activeCategory);
+    const productsWithCategories = products.filter((product) => isValidCategory(normalizeCategory(product.category)));
+
+    if (activeCategory === "All") return productsWithCategories;
+    return productsWithCategories.filter((product) => normalizeCategory(product.category) === activeCategory);
   }, [products, activeCategory]);
 
   const getDisplayCategory = (product: SyncedProduct) => {
     const category = normalizeCategory(product.category);
-
-    if (!category || category.toLowerCase() === "n/a") {
-      return activeCategory !== "All" ? activeCategory : null;
-    }
-
-    if (category.toLowerCase() === product.title.trim().toLowerCase()) {
-      return activeCategory !== "All" ? activeCategory : null;
-    }
-
-    if (!categoryCounts.has(category)) {
-      return activeCategory !== "All" ? activeCategory : null;
-    }
-
-    return category;
+    return isValidCategory(category) ? category : null;
   };
 
   return (
