@@ -152,7 +152,7 @@ const AmazonStore = () => {
                       rel="noopener noreferrer"
                       className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
                     >
-                      View product
+                      View products
                     </a>
                   </div>
                 </article>
