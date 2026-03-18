@@ -283,26 +283,40 @@ const syncAmazonProducts = async (
     ].filter((url) => isAmazonListUrl(url)),
   );
 
+  const prioritizedListBases = [
+    ...Array.from(categoryByListBaseUrl.keys()),
+    ...Array.from(seedListUrls).map((url) => getAmazonListBaseUrl(url)),
+  ];
+
   const collectedListUrls = Array.from(
     new Set(
-      Array.from(seedListUrls)
-        .flatMap((listUrl) => buildPaginatedListUrls(listUrl))
+      prioritizedListBases
+        .flatMap((listBaseUrl) => buildPaginatedListUrls(listBaseUrl))
         .map((url) => canonicalizeUrl(url))
         .filter((url) => isAmazonListUrl(url)),
     ),
-  ).slice(0, AMAZON_LIST_CRAWL_LIMIT * AMAZON_LIST_PAGE_DEPTH);
+  ).slice(0, AMAZON_LIST_CRAWL_LIMIT);
 
-  const listExtracts = await Promise.all(
-    collectedListUrls.map(async (listUrl) => {
-      const extract = await callFirecrawlJson(
-        firecrawlApiKey,
-        listUrl,
-        "Extract this Amazon list into JSON with shape: { list_title, products: [{ id, title, price_text, image_url, product_url, category }] }. Include only actual products and only direct product URLs (/dp/ or /gp/product/). Do not include list/category links as products.",
-      ).catch(() => null);
+  const listExtracts: Array<{ listUrl: string; extract: any }> = [];
+  const BATCH_SIZE = 4;
 
-      return { listUrl, extract };
-    }),
-  );
+  for (let i = 0; i < collectedListUrls.length; i += BATCH_SIZE) {
+    const batch = collectedListUrls.slice(i, i + BATCH_SIZE);
+
+    const batchResults = await Promise.all(
+      batch.map(async (listUrl) => {
+        const extract = await callFirecrawlJson(
+          firecrawlApiKey,
+          listUrl,
+          "Extract this Amazon list into JSON with shape: { list_title, products: [{ id, title, price_text, image_url, product_url, category }] }. Include only actual products and only direct product URLs (/dp/ or /gp/product/). Do not include list/category links as products.",
+        ).catch(() => null);
+
+        return { listUrl, extract };
+      }),
+    );
+
+    listExtracts.push(...batchResults);
+  }
 
   const nestedRows = listExtracts.flatMap(({ listUrl, extract }) => {
     const productsRaw = Array.isArray(extract?.products) ? extract.products : [];
