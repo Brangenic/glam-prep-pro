@@ -13,8 +13,12 @@ type SyncedReview = {
   review_date: string | null;
 };
 
+type DisplayReview = ReviewItem & {
+  rating?: number;
+};
+
 const Reviews = () => {
-  const [syncedReviews, setSyncedReviews] = useState<ReviewItem[]>([]);
+  const [syncedReviews, setSyncedReviews] = useState<DisplayReview[]>([]);
 
   useEffect(() => {
     let isMounted = true;
