@@ -291,14 +291,13 @@ const syncAmazonProducts = async (
   const collectedListUrls = Array.from(
     new Set(
       prioritizedListBases
-        .flatMap((listBaseUrl) => buildPaginatedListUrls(listBaseUrl))
         .map((url) => canonicalizeUrl(url))
         .filter((url) => isAmazonListUrl(url)),
     ),
   ).slice(0, AMAZON_LIST_CRAWL_LIMIT);
 
   const listExtracts: Array<{ listUrl: string; extract: any }> = [];
-  const BATCH_SIZE = 4;
+  const BATCH_SIZE = 2;
 
   for (let i = 0; i < collectedListUrls.length; i += BATCH_SIZE) {
     const batch = collectedListUrls.slice(i, i + BATCH_SIZE);
