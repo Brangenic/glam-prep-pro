@@ -31,6 +31,13 @@ const images = [
   { src: carnival10, alt: "Pink and magenta butterfly wings carnival costume", className: "col-span-1 row-span-1" },
 ];
 
+const glamHubVideos = [
+  {
+    id: "W4b98oLRTCE",
+    title: "Glam Hub in Action video",
+  },
+];
+
 const Gallery = () => {
   const { ref, isVisible } = useScrollReveal();
 
@@ -49,6 +56,7 @@ const Gallery = () => {
             Carnival Glam <span className="italic text-gradient-primary">in Action</span>
           </h2>
         </div>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 auto-rows-[120px] sm:auto-rows-[180px] lg:auto-rows-[240px]">
           {images.map((img, i) => (
             <div
@@ -65,6 +73,30 @@ const Gallery = () => {
                 style={img.objectPosition ? { objectPosition: img.objectPosition } : undefined}
                 loading="lazy"
               />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 sm:mt-10 lg:mt-12 grid grid-cols-1 gap-4 sm:gap-6">
+          {glamHubVideos.map((video, i) => (
+            <div
+              key={video.id}
+              className={`overflow-hidden rounded-xl sm:rounded-2xl border border-border bg-card gold-glow transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+              style={{ transitionDelay: `${900 + i * 120}ms` }}
+            >
+              <div className="aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.id}`}
+                  title={video.title}
+                  className="h-full w-full"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
             </div>
           ))}
         </div>
