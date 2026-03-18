@@ -96,6 +96,14 @@ const Footer = () => (
           <div className="space-y-2 font-body text-sm text-muted-foreground">
             <p className="hover:text-foreground cursor-pointer transition-colors">Terms of Service</p>
             <p className="hover:text-foreground cursor-pointer transition-colors">Privacy Policy</p>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfatcdkmAEaPDXcB1XY-GYASAtqZpYCjH3Q97sZOhm0CkujYg/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:text-primary transition-colors"
+            >
+              Work at Glam Hub
+            </a>
           </div>
         </div>
       </div>
