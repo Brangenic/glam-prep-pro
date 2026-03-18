@@ -38,9 +38,9 @@ const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-background/50" : "bg-transparent"}`}
       aria-label="Main navigation"
     >
-      <div className="container mx-auto px-6 flex items-center justify-between h-18 py-4">
+      <div className="container mx-auto px-6 flex items-center justify-between min-h-24 py-4">
         <a href={isHome ? "#hero" : "/"} className="inline-flex items-center" aria-label="Carnival Glam Hub — Home">
-          <img src={brandLogo} alt="Carnival Glam Hub logo" className="h-12 w-auto sm:h-14" />
+          <img src={brandLogo} alt="Carnival Glam Hub logo" className="h-16 w-auto sm:h-20 lg:h-24" />
         </a>
         <div className="hidden lg:flex items-center gap-8">
           {links.map((l) => (
