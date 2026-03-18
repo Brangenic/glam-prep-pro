@@ -194,13 +194,33 @@ const syncGoogleReviews = async (
   return rows.length;
 };
 
-const toAmazonRows = (productsRaw: unknown[]) => productsRaw
+const getAmazonListBaseUrl = (url: string) => {
+  const canonical = canonicalizeUrl(url);
+
+  try {
+    const parsed = new URL(canonical);
+    return `${parsed.origin}${parsed.pathname}`;
+  } catch {
+    return canonical.split("?")[0] ?? canonical;
+  }
+};
+
+const normalizeCategoryLabel = (value: unknown) => {
+  const label = normalizeText(value);
+  if (!label || label.toLowerCase() === "n/a") return null;
+  return label;
+};
+
+const toAmazonRows = (productsRaw: unknown[], fallbackCategory: string | null = null) => productsRaw
   .map((product) => {
     const item = product as Record<string, unknown>;
     const title = normalizeText(item.title);
-    const productUrl = normalizeText(item.product_url);
-    if (!title || !productUrl) return null;
+    const productUrlRaw = normalizeText(item.product_url);
 
+    if (!title || !productUrlRaw || !isAmazonProductUrl(productUrlRaw)) return null;
+
+    const productUrl = canonicalizeUrl(productUrlRaw);
+    const category = normalizeCategoryLabel(item.category) ?? fallbackCategory;
     const externalId =
       normalizeText(item.id) ||
       `amazon_${hashString(`${title}|${productUrl}`)}`;
@@ -211,7 +231,7 @@ const toAmazonRows = (productsRaw: unknown[]) => productsRaw
       price_text: normalizeText(item.price_text) || null,
       image_url: normalizeText(item.image_url) || null,
       product_url: productUrl,
-      category: normalizeText(item.category) || null,
+      category,
       raw_payload: item,
       synced_at: new Date().toISOString(),
     };
@@ -223,64 +243,93 @@ const syncAmazonProducts = async (
   firecrawlApiKey: string,
   sourceUrl: string,
 ) => {
-  const storefrontExtract = await callFirecrawlJson(
-    firecrawlApiKey,
-    sourceUrl,
-    "Extract storefront products into JSON with this exact shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Include every visible product card.",
-  );
+  const [storefrontProductsExtract, storefrontListsExtract, storefrontLinks] = await Promise.all([
+    callFirecrawlJson(
+      firecrawlApiKey,
+      sourceUrl,
+      "Extract storefront products into JSON with this exact shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Include only entries where product_url is a direct Amazon product page URL (/dp/ or /gp/product/).",
+    ).catch(() => null),
+    callFirecrawlJson(
+      firecrawlApiKey,
+      sourceUrl,
+      "Extract all Amazon list categories from this storefront with shape: { lists: [{ title, list_url }] }. Include every visible list/category card and use full list URLs.",
+    ).catch(() => null),
+    callFirecrawlLinks(firecrawlApiKey, sourceUrl).catch(() => []),
+  ]);
 
-  const baseProductsRaw = Array.isArray(storefrontExtract?.products) ? storefrontExtract.products : [];
+  const baseProductsRaw = Array.isArray(storefrontProductsExtract?.products)
+    ? storefrontProductsExtract.products
+    : [];
   const baseRows = toAmazonRows(baseProductsRaw);
 
-  const storefrontLinks = await callFirecrawlLinks(firecrawlApiKey, sourceUrl).catch(() => []);
+  const storefrontListsRaw = Array.isArray(storefrontListsExtract?.lists)
+    ? storefrontListsExtract.lists
+    : [];
+
+  const categoryByListBaseUrl = new Map<string, string>();
+  for (const listEntry of storefrontListsRaw) {
+    const item = listEntry as Record<string, unknown>;
+    const listUrl = canonicalizeUrl(normalizeText(item.list_url));
+    const title = normalizeCategoryLabel(item.title);
+
+    if (!isAmazonListUrl(listUrl) || !title) continue;
+    categoryByListBaseUrl.set(getAmazonListBaseUrl(listUrl), title);
+  }
+
   const seedListUrls = new Set(
     [
       ...((Array.isArray(storefrontLinks) ? storefrontLinks : []).map((url) => canonicalizeUrl(normalizeText(url)))),
-      ...baseRows.map((row) => canonicalizeUrl(normalizeText(row.product_url))),
+      ...storefrontListsRaw.map((listEntry) => canonicalizeUrl(normalizeText((listEntry as Record<string, unknown>).list_url))),
     ].filter((url) => isAmazonListUrl(url)),
   );
 
-  const collectedListUrls = new Set<string>();
-  const queue = Array.from(seedListUrls).flatMap((listUrl) => buildPaginatedListUrls(listUrl));
+  const prioritizedListBases = [
+    ...Array.from(categoryByListBaseUrl.keys()),
+    ...Array.from(seedListUrls).map((url) => getAmazonListBaseUrl(url)),
+  ];
 
-  for (let i = 0; i < queue.length && collectedListUrls.size < AMAZON_LIST_CRAWL_LIMIT; i += 1) {
-    const currentUrl = canonicalizeUrl(queue[i]);
-    if (!isAmazonListUrl(currentUrl) || collectedListUrls.has(currentUrl)) continue;
+  const collectedListUrls = Array.from(
+    new Set(
+      prioritizedListBases
+        .map((url) => canonicalizeUrl(url))
+        .filter((url) => isAmazonListUrl(url)),
+    ),
+  ).slice(0, AMAZON_LIST_CRAWL_LIMIT);
 
-    collectedListUrls.add(currentUrl);
+  const listExtracts: Array<{ listUrl: string; extract: any }> = [];
+  const BATCH_SIZE = 2;
 
-    const links = await callFirecrawlLinks(firecrawlApiKey, currentUrl).catch(() => []);
-    for (const link of Array.isArray(links) ? links : []) {
-      const normalized = canonicalizeUrl(normalizeText(link));
+  for (let i = 0; i < collectedListUrls.length; i += BATCH_SIZE) {
+    const batch = collectedListUrls.slice(i, i + BATCH_SIZE);
 
-      if (isAmazonListUrl(normalized) && !collectedListUrls.has(normalized) && queue.length < AMAZON_LIST_CRAWL_LIMIT * AMAZON_LIST_PAGE_DEPTH) {
-        queue.push(...buildPaginatedListUrls(normalized));
-      }
-    }
+    const batchResults = await Promise.all(
+      batch.map(async (listUrl) => {
+        const extract = await callFirecrawlJson(
+          firecrawlApiKey,
+          listUrl,
+          "Extract this Amazon list into JSON with shape: { list_title, products: [{ id, title, price_text, image_url, product_url, category }] }. Include only actual products and only direct product URLs (/dp/ or /gp/product/). Do not include list/category links as products.",
+        ).catch(() => null);
+
+        return { listUrl, extract };
+      }),
+    );
+
+    listExtracts.push(...batchResults);
   }
 
-  const listExtracts = await Promise.all(
-    Array.from(collectedListUrls).map((listUrl) =>
-      callFirecrawlJson(
-        firecrawlApiKey,
-        listUrl,
-        "Extract products from this Amazon list page into JSON with shape: { products: [{ id, title, price_text, image_url, product_url, category }] }. Use direct product URLs whenever visible.",
-      ).catch(() => null),
-    ),
-  );
+  const nestedRows = listExtracts.flatMap(({ listUrl, extract }) => {
+    const productsRaw = Array.isArray(extract?.products) ? extract.products : [];
+    const fallbackCategory =
+      normalizeCategoryLabel(extract?.list_title) ??
+      categoryByListBaseUrl.get(getAmazonListBaseUrl(listUrl)) ??
+      null;
 
-  const nestedProductsRaw = listExtracts.flatMap((extract) =>
-    Array.isArray(extract?.products) ? extract.products : [],
-  );
-
-  const expandedRows = [...baseRows, ...toAmazonRows(nestedProductsRaw)].map((row) => ({
-    ...row,
-    product_url: canonicalizeUrl(normalizeText(row.product_url)),
-  }));
+    return toAmazonRows(productsRaw, fallbackCategory);
+  });
 
   const dedupedRows = Array.from(
     new Map(
-      expandedRows.map((row) => [String(row.external_id), row]),
+      [...baseRows, ...nestedRows].map((row) => [String(row.external_id), row]),
     ).values(),
   );
 
