@@ -219,7 +219,7 @@ const syncAmazonProducts = async (
 
   const dedupedRows = Array.from(
     new Map(
-      [...toAmazonRows(baseProductsRaw), ...toAmazonRows(nestedProductsRaw)]
+      [...baseRows, ...toAmazonRows(nestedProductsRaw)]
         .map((row) => [String(row.external_id), row]),
     ).values(),
   );
