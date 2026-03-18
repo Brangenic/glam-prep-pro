@@ -15,6 +15,7 @@ const corsHeaders = {
 };
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
+const FIRECRAWL_TIMEOUT_MS = 20000;
 
 const hashString = (input: string) => {
   let hash = 0;
