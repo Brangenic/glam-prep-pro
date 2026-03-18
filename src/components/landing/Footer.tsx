@@ -23,7 +23,7 @@ const socialLinks = [
   },
   {
     label: "WhatsApp Chat",
-    href: "https://wa.link/k63ryp",
+    href: "https://wa.me/18765090997?text=Hi%20Carnival%20Glam%20Hub",
   },
   {
     label: "Carnival Amazon Store",
