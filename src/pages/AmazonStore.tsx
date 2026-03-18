@@ -45,7 +45,13 @@ const AmazonStore = () => {
   }, []);
 
   const categories = useMemo(() => {
-    const dynamic = Array.from(new Set(products.map((item) => item.category).filter(Boolean))) as string[];
+    const dynamic = Array.from(
+      new Set(
+        products
+          .map((item) => item.category?.trim())
+          .filter((category): category is string => Boolean(category) && category.toLowerCase() !== "n/a"),
+      ),
+    );
     return ["All", ...dynamic];
   }, [products]);
 
@@ -135,7 +141,7 @@ const AmazonStore = () => {
                   </div>
 
                   <div className="p-4 sm:p-5">
-                    {product.category ? (
+                    {product.category && product.category.toLowerCase() !== "n/a" ? (
                       <p className="font-body text-[11px] uppercase tracking-[0.14em] text-secondary mb-2">{product.category}</p>
                     ) : null}
                     <h2 className="font-body text-sm font-semibold text-foreground mb-2 line-clamp-2 min-h-[2.6rem]">{product.title}</h2>
@@ -146,7 +152,7 @@ const AmazonStore = () => {
                       rel="noopener noreferrer"
                       className="inline-flex w-full items-center justify-center rounded-full border border-primary/30 px-4 py-2.5 font-body text-xs font-semibold text-primary transition-all hover:bg-primary/10"
                     >
-                      View product
+                      View products
                     </a>
                   </div>
                 </article>
