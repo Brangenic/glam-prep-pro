@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
+import AmazonStore from "./pages/AmazonStore.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/reviews" element={<Reviews />} />
+          <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

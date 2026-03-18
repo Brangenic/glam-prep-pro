@@ -1,0 +1,101 @@
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
+const AMAZON_STORE_URL = "https://www.amazon.com/shop/carnivalglamhub?ccs_id=7e98f14b-a852-49d9-a50d-4fb90fee34c8";
+
+const highlights = [
+  "Carnival essentials in one place",
+  "Travel-friendly beauty picks",
+  "Road-ready accessories and prep items",
+];
+
+const AmazonStoreFeature = () => {
+  const { ref, isVisible } = useScrollReveal();
+
+  return (
+    <section id="amazon-store" className="py-16 sm:py-24 lg:py-32 bg-card/50" aria-labelledby="amazon-store-heading">
+      <div ref={ref} className="container mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 sm:gap-8 lg:gap-12 items-stretch">
+          <div
+            className={`rounded-3xl border border-border bg-background p-6 sm:p-8 lg:p-10 transition-all duration-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4">
+              Carnival Amazon Store
+            </p>
+            <h2 id="amazon-store-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-5 sm:mb-6">
+              Shop the <span className="italic text-gradient-primary">Prep List</span>
+            </h2>
+            <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mb-6 sm:mb-8">
+              Explore our curated Amazon Store for carnival prep must-haves, glam tools, beauty favorites, travel basics, and extras that make the road easier.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
+              {highlights.map((item) => (
+                <div key={item} className="rounded-2xl border border-border bg-card px-4 py-4">
+                  <p className="font-body text-sm text-foreground/85 leading-relaxed">{item}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="/amazon-store"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3.5 font-body text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25"
+              >
+                View Store Page
+              </a>
+              <a
+                href={AMAZON_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-primary/30 px-6 py-3.5 font-body text-sm font-semibold text-primary transition-all hover:bg-primary/10"
+              >
+                Open Amazon Store
+              </a>
+            </div>
+          </div>
+
+          <div
+            className={`rounded-3xl border border-border bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-6 sm:p-8 lg:p-10 transition-all duration-700 delay-150 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <div className="rounded-[2rem] border border-border bg-card px-5 py-6 sm:px-6 sm:py-8 h-full flex flex-col justify-between">
+              <div>
+                <p className="font-body text-xs uppercase tracking-[0.18em] text-secondary font-semibold mb-4">
+                  Curated by Glam Hub
+                </p>
+                <div className="space-y-3 mb-6">
+                  <p className="font-display text-2xl sm:text-3xl font-bold text-foreground">
+                    Beauty, travel, and carnival extras.
+                  </p>
+                  <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                    A simple place to shop the items you keep asking us about before carnival morning.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
+                  <span className="font-body text-sm text-foreground">Makeup favorites</span>
+                  <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
+                </div>
+                <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
+                  <span className="font-body text-sm text-foreground">Travel essentials</span>
+                  <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
+                </div>
+                <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
+                  <span className="font-body text-sm text-foreground">Carnival prep picks</span>
+                  <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AmazonStoreFeature;
