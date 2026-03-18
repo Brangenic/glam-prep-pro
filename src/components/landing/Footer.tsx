@@ -25,7 +25,7 @@ const socialLinks = [
   },
   {
     label: "Carnival Amazon Store",
-    href: "https://www.amazon.com/shop/carnivalglamhub?ccs_id=7e98f14b-a852-49d9-a50d-4fb90fee34c8",
+    href: "/amazon-store",
   },
 ];
 
