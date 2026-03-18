@@ -34,6 +34,17 @@ const luxuryFeatures = [
   },
 ];
 
+const experienceVideos = [
+  {
+    id: "nnrkkH_ui1g",
+    title: "Carnival morning experience video 1",
+  },
+  {
+    id: "IHUJsYg0GhI",
+    title: "Carnival morning experience video 2",
+  },
+];
+
 const Problem = () => {
   const { ref, isVisible } = useScrollReveal();
 
@@ -123,6 +134,41 @@ const Problem = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10 sm:mt-14 lg:mt-16">
+          <div className="text-center mb-6 sm:mb-8">
+            <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
+              Watch the vibe
+            </p>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold">
+              See the <span className="italic text-gradient-primary">morning in motion</span>
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+            {experienceVideos.map((video, i) => (
+              <div
+                key={video.id}
+                className={`overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-card gold-glow transition-all duration-700 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: `${800 + i * 120}ms` }}
+              >
+                <div className="aspect-video">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.title}
+                    className="h-full w-full"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
