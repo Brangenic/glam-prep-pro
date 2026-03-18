@@ -16,6 +16,8 @@ const corsHeaders = {
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const FIRECRAWL_TIMEOUT_MS = 45000;
+const AMAZON_LIST_CRAWL_LIMIT = 60;
+const AMAZON_LIST_PAGE_DEPTH = 8;
 
 const hashString = (input: string) => {
   let hash = 0;
@@ -39,17 +41,40 @@ const normalizeRating = (value: unknown) => {
   return rounded;
 };
 
+const isAmazonListUrl = (url: string) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url);
+const isAmazonProductUrl = (url: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(url);
+
 const canonicalizeUrl = (value: string) => {
   try {
     const parsed = new URL(value);
+
+    if (isAmazonListUrl(value)) {
+      const pageValue = parsed.searchParams.get("page") ?? parsed.searchParams.get("pageNumber");
+      const page = pageValue && /^\d+$/.test(pageValue) ? pageValue : null;
+      return page ? `${parsed.origin}${parsed.pathname}?page=${page}` : `${parsed.origin}${parsed.pathname}`;
+    }
+
     return `${parsed.origin}${parsed.pathname}`;
   } catch {
     return value;
   }
 };
 
-const isAmazonListUrl = (url: string) => /amazon\.com\/shop\/carnivalglamhub\/list\//i.test(url);
-const isAmazonProductUrl = (url: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(url);
+const buildPaginatedListUrls = (baseListUrl: string) => {
+  const variants: string[] = [baseListUrl];
+
+  try {
+    const parsed = new URL(baseListUrl);
+    for (let page = 2; page <= AMAZON_LIST_PAGE_DEPTH; page += 1) {
+      parsed.searchParams.set("page", String(page));
+      variants.push(canonicalizeUrl(parsed.toString()));
+    }
+  } catch {
+    return variants;
+  }
+
+  return variants;
+};
 
 const callFirecrawlJson = async (apiKey: string, url: string, prompt: string) => {
   const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
@@ -210,31 +235,26 @@ const syncAmazonProducts = async (
   const storefrontLinks = await callFirecrawlLinks(firecrawlApiKey, sourceUrl).catch(() => []);
   const seedListUrls = new Set(
     [
-      ...((Array.isArray(storefrontLinks) ? storefrontLinks : []).map((url) => normalizeText(url))),
-      ...baseRows.map((row) => normalizeText(row.product_url)),
-    ]
-      .filter((url) => isAmazonListUrl(url))
-      .map((url) => canonicalizeUrl(url)),
+      ...((Array.isArray(storefrontLinks) ? storefrontLinks : []).map((url) => canonicalizeUrl(normalizeText(url)))),
+      ...baseRows.map((row) => canonicalizeUrl(normalizeText(row.product_url))),
+    ].filter((url) => isAmazonListUrl(url)),
   );
 
-  const collectedListUrls = new Set<string>(seedListUrls);
-  const collectedProductLinks = new Set<string>();
+  const collectedListUrls = new Set<string>();
+  const queue = Array.from(seedListUrls).flatMap((listUrl) => buildPaginatedListUrls(listUrl));
 
-  const queue = Array.from(seedListUrls).slice(0, 20);
-  for (let i = 0; i < queue.length; i += 1) {
-    const currentUrl = queue[i];
+  for (let i = 0; i < queue.length && collectedListUrls.size < AMAZON_LIST_CRAWL_LIMIT; i += 1) {
+    const currentUrl = canonicalizeUrl(queue[i]);
+    if (!isAmazonListUrl(currentUrl) || collectedListUrls.has(currentUrl)) continue;
+
+    collectedListUrls.add(currentUrl);
+
     const links = await callFirecrawlLinks(firecrawlApiKey, currentUrl).catch(() => []);
-
     for (const link of Array.isArray(links) ? links : []) {
       const normalized = canonicalizeUrl(normalizeText(link));
 
-      if (isAmazonListUrl(normalized) && !collectedListUrls.has(normalized) && collectedListUrls.size < 20) {
-        collectedListUrls.add(normalized);
-        queue.push(normalized);
-      }
-
-      if (isAmazonProductUrl(normalized)) {
-        collectedProductLinks.add(normalized);
+      if (isAmazonListUrl(normalized) && !collectedListUrls.has(normalized) && queue.length < AMAZON_LIST_CRAWL_LIMIT * AMAZON_LIST_PAGE_DEPTH) {
+        queue.push(...buildPaginatedListUrls(normalized));
       }
     }
   }
@@ -253,17 +273,10 @@ const syncAmazonProducts = async (
     Array.isArray(extract?.products) ? extract.products : [],
   );
 
-  const expandedRows = [...baseRows, ...toAmazonRows(nestedProductsRaw)].map((row) => {
-    const productUrl = canonicalizeUrl(normalizeText(row.product_url));
-    const fallbackProductUrl = Array.from(collectedProductLinks).find((link) =>
-      normalizeText(row.title).length > 3 && link.toLowerCase().includes(normalizeText(row.title).toLowerCase().split(" ")[0]),
-    );
-
-    return {
-      ...row,
-      product_url: isAmazonProductUrl(productUrl) ? productUrl : fallbackProductUrl || productUrl,
-    };
-  });
+  const expandedRows = [...baseRows, ...toAmazonRows(nestedProductsRaw)].map((row) => ({
+    ...row,
+    product_url: canonicalizeUrl(normalizeText(row.product_url)),
+  }));
 
   const dedupedRows = Array.from(
     new Map(
