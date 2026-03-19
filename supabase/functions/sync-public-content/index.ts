@@ -419,7 +419,7 @@ Deno.serve(async (req) => {
   }
 
   const body = await req.json().catch(() => ({}));
-  const source = body?.source === "google_reviews" || body?.source === "amazon_store" || body?.source === "all"
+  const source = body?.source === "google_reviews" || body?.source === "amazon_store" || body?.source === "blog_posts" || body?.source === "all"
     ? body.source
     : "all";
   const force = Boolean(body?.force);
