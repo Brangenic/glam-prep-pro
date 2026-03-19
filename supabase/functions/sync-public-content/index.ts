@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-type SourceKey = "google_reviews" | "amazon_store";
+type SourceKey = "google_reviews" | "amazon_store" | "blog_posts";
 
 type SyncStateRow = {
   source_key: SourceKey;
