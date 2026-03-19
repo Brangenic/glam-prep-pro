@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -9,14 +10,13 @@ type BlogPost = {
   title: string;
   excerpt: string | null;
   image_url: string | null;
+  slug: string | null;
   post_url: string;
   author_name: string | null;
   author_avatar_url: string | null;
   published_date: string | null;
   read_time: string | null;
 };
-
-const WIX_BLOG_URL = "https://glam.carnivalglamhub.com/blog";
 
 const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -26,14 +26,13 @@ const Blogs = () => {
     let isMounted = true;
 
     const load = async () => {
-      // Fire-and-forget sync
       supabase.functions.invoke("sync-public-content", {
         body: { source: "blog_posts" },
       });
 
       const { data } = await supabase
         .from("blog_posts")
-        .select("external_id, title, excerpt, image_url, post_url, author_name, author_avatar_url, published_date, read_time")
+        .select("external_id, title, excerpt, image_url, slug, post_url, author_name, author_avatar_url, published_date, read_time")
         .order("synced_at", { ascending: false });
 
       if (isMounted) {
@@ -49,13 +48,17 @@ const Blogs = () => {
   const featured = posts[0];
   const rest = posts.slice(1);
 
+  const getPostLink = (post: BlogPost) =>
+    post.slug ? `/blogs/${post.slug}` : post.post_url;
+
+  const isInternal = (post: BlogPost) => Boolean(post.slug);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <main className="pt-28 sm:pt-32">
         <section className="py-14 sm:py-18 lg:py-20" aria-labelledby="blog-page-heading">
           <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-            {/* Header */}
             <header className="mb-10 sm:mb-14">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
                 Carnival Glam Hub Blog
@@ -95,10 +98,10 @@ const Blogs = () => {
               <>
                 {/* Featured post */}
                 {featured && (
-                  <a
-                    href={featured.post_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <PostCardLink
+                    post={featured}
+                    href={getPostLink(featured)}
+                    internal={isInternal(featured)}
                     className="block rounded-3xl border border-border bg-card overflow-hidden mb-10 sm:mb-14 group hover:shadow-lg hover:shadow-primary/10 transition-all"
                   >
                     <div className="grid md:grid-cols-2">
@@ -140,18 +143,18 @@ const Blogs = () => {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </PostCardLink>
                 )}
 
                 {/* Post grid */}
                 {rest.length > 0 && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {rest.map((post) => (
-                      <a
+                      <PostCardLink
                         key={post.external_id}
-                        href={post.post_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        post={post}
+                        href={getPostLink(post)}
+                        internal={isInternal(post)}
                         className="rounded-2xl border border-border bg-card overflow-hidden group hover:shadow-lg hover:shadow-primary/10 transition-all"
                       >
                         {post.image_url ? (
@@ -188,22 +191,10 @@ const Blogs = () => {
                             </div>
                           </div>
                         </div>
-                      </a>
+                      </PostCardLink>
                     ))}
                   </div>
                 )}
-
-                {/* CTA to full blog */}
-                <div className="text-center mt-10 sm:mt-14">
-                  <a
-                    href={WIX_BLOG_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 font-body text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25"
-                  >
-                    View All Posts on Our Blog
-                  </a>
-                </div>
               </>
             )}
           </div>
@@ -212,6 +203,34 @@ const Blogs = () => {
       <Footer />
       <StickyMobileCTA />
     </div>
+  );
+};
+
+const PostCardLink = ({
+  post,
+  href,
+  internal,
+  className,
+  children,
+}: {
+  post: BlogPost;
+  href: string;
+  internal: boolean;
+  className: string;
+  children: React.ReactNode;
+}) => {
+  if (internal) {
+    return (
+      <Link to={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      {children}
+    </a>
   );
 };
 

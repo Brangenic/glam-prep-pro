@@ -8,6 +8,7 @@ import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
