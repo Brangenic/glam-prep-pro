@@ -60,6 +60,7 @@ export type Database = {
         Row: {
           author_avatar_url: string | null
           author_name: string | null
+          content: string | null
           created_at: string
           excerpt: string | null
           external_id: string
@@ -69,6 +70,7 @@ export type Database = {
           published_date: string | null
           raw_payload: Json | null
           read_time: string | null
+          slug: string | null
           synced_at: string
           title: string
           updated_at: string
@@ -76,6 +78,7 @@ export type Database = {
         Insert: {
           author_avatar_url?: string | null
           author_name?: string | null
+          content?: string | null
           created_at?: string
           excerpt?: string | null
           external_id: string
@@ -85,6 +88,7 @@ export type Database = {
           published_date?: string | null
           raw_payload?: Json | null
           read_time?: string | null
+          slug?: string | null
           synced_at?: string
           title: string
           updated_at?: string
@@ -92,6 +96,7 @@ export type Database = {
         Update: {
           author_avatar_url?: string | null
           author_name?: string | null
+          content?: string | null
           created_at?: string
           excerpt?: string | null
           external_id?: string
@@ -101,6 +106,7 @@ export type Database = {
           published_date?: string | null
           raw_payload?: Json | null
           read_time?: string | null
+          slug?: string | null
           synced_at?: string
           title?: string
           updated_at?: string
