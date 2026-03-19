@@ -13,4 +13,6 @@ Allow: /
 User-agent: *
 Allow: /
 
+Disallow: /api/
+
 Sitemap: https://carnivalglamhub.com/sitemap.xml
