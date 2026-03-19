@@ -470,7 +470,9 @@ Deno.serve(async (req) => {
     try {
       const count = sourceKey === "google_reviews"
         ? await syncGoogleReviews(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
-        : await syncAmazonProducts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
+        : sourceKey === "amazon_store"
+        ? await syncAmazonProducts(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
+        : await syncBlogPosts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
 
       await supabaseAdmin
         .from("sync_state")
