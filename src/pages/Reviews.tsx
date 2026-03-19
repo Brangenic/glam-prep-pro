@@ -77,25 +77,17 @@ const Reviews = () => {
               {reviewsToRender.map((review) => {
                 const rating = "rating" in review && typeof review.rating === "number" ? review.rating : 5;
 
-                const initials = review.name
-                  .split(" ")
-                  .map((w) => w[0])
-                  .join("")
-                  .slice(0, 2)
-                  .toUpperCase();
-
-                const hue = review.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % 360;
+                const avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg?seed=${encodeURIComponent(review.name)}`;
 
                 return (
                   <article key={`${review.name}-${review.quote.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
                     <div className="flex items-center justify-between gap-4 mb-5">
                       <div className="flex items-center gap-3">
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ring-2 ring-background shadow-md"
-                          style={{ background: `hsl(${hue}, 55%, 50%)` }}
-                        >
-                          <span className="font-display text-xs font-bold text-white">{initials}</span>
-                        </div>
+                        <img
+                          src={avatarUrl}
+                          alt={review.name}
+                          className="w-10 h-10 rounded-full shrink-0 ring-2 ring-primary/20 shadow-md bg-muted"
+                        />
                         <div>
                           <p className="font-body text-sm font-semibold text-foreground">{review.name}</p>
                           <p className="font-body text-xs text-muted-foreground">{review.location}</p>
