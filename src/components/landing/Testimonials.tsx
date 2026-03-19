@@ -58,9 +58,19 @@ const Testimonials = () => {
                 {t.quote}
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="font-display text-xs text-primary font-bold">{t.name[0]}</span>
-                </div>
+                {(() => {
+                  const hue = t.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % 360;
+                  return (
+                    <div
+                      className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 ring-2 ring-background shadow-md"
+                      style={{ background: `hsl(${hue}, 55%, 50%)` }}
+                    >
+                      <span className="font-display text-xs font-bold text-white">
+                        {t.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
+                      </span>
+                    </div>
+                  );
+                })()}
                 <div>
                   <p className="font-body text-sm font-semibold">{t.name}</p>
                   <p className="font-body text-xs text-muted-foreground">{t.location}</p>
