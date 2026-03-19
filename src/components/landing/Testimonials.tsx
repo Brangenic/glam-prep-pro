@@ -66,7 +66,7 @@ const Testimonials = () => {
               </p>
               <div className="flex items-center gap-3">
                 <img
-                  src={`https://i.pravatar.cc/80?img=${t.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % 70 + 1}`}
+                  src={avatarImages[i % avatarImages.length]}
                   alt={t.name}
                   className="w-9 h-9 rounded-full shrink-0 ring-2 ring-primary/20 shadow-md bg-muted"
                 />
