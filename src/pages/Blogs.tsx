@@ -33,7 +33,7 @@ const Blogs = () => {
       const { data } = await supabase
         .from("blog_posts")
         .select("external_id, title, excerpt, image_url, slug, post_url, author_name, author_avatar_url, published_date, read_time")
-        .order("synced_at", { ascending: false });
+        .order("published_date", { ascending: false });
 
       if (isMounted) {
         setPosts((data as BlogPost[]) ?? []);
