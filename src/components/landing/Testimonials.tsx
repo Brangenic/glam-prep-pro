@@ -1,5 +1,12 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { featuredReviews } from "@/components/landing/reviewsData";
+import avatar1 from "@/assets/avatar-1.jpg";
+import avatar2 from "@/assets/avatar-2.jpg";
+import avatar3 from "@/assets/avatar-3.jpg";
+import avatar4 from "@/assets/avatar-4.jpg";
+import avatar5 from "@/assets/avatar-5.jpg";
+
+const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
 const Testimonials = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -59,7 +66,7 @@ const Testimonials = () => {
               </p>
               <div className="flex items-center gap-3">
                 <img
-                  src={`https://i.pravatar.cc/80?img=${t.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % 70 + 1}`}
+                  src={avatarImages[i % avatarImages.length]}
                   alt={t.name}
                   className="w-9 h-9 rounded-full shrink-0 ring-2 ring-primary/20 shadow-md bg-muted"
                 />
