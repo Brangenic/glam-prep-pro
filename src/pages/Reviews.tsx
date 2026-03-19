@@ -84,8 +84,8 @@ const Reviews = () => {
               {reviewsToRender.map((review) => {
                 const rating = "rating" in review && typeof review.rating === "number" ? review.rating : 5;
 
-                const avatarIndex = review.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % 70 + 1;
-                const avatarUrl = `https://i.pravatar.cc/80?img=${avatarIndex}`;
+                const avatarIndex = review.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % avatarImages.length;
+                const avatarUrl = avatarImages[avatarIndex];
 
                 return (
                   <article key={`${review.name}-${review.quote.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
