@@ -324,6 +324,40 @@ const syncAmazonProducts = async (
   return dedupedRows.length;
 };
 
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 120);
+
+const scrapePostContent = async (firecrawlApiKey: string, postUrl: string) => {
+  try {
+    const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${firecrawlApiKey}`,
+        "Content-Type": "application/json",
+      },
+      signal: AbortSignal.timeout(FIRECRAWL_TIMEOUT_MS),
+      body: JSON.stringify({
+        url: postUrl,
+        formats: ["markdown"],
+        onlyMainContent: true,
+        waitFor: 2000,
+      }),
+    });
+
+    const payload = await response.json();
+    if (!response.ok) return null;
+
+    return payload?.data?.markdown ?? payload?.markdown ?? null;
+  } catch {
+    return null;
+  }
+};
+
 const syncBlogPosts = async (
   supabaseAdmin: ReturnType<typeof createClient>,
   firecrawlApiKey: string,
@@ -343,11 +377,13 @@ const syncBlogPosts = async (
       const postUrl = normalizeText(post.post_url);
       if (!title || !postUrl) return null;
 
+      const slug = slugify(title);
       const externalId = `blog_${hashString(`${title}|${postUrl}`)}`;
 
       return {
         external_id: externalId,
         title,
+        slug,
         excerpt: normalizeText(post.excerpt) || null,
         image_url: normalizeText(post.image_url) || null,
         post_url: postUrl,
@@ -357,12 +393,25 @@ const syncBlogPosts = async (
         read_time: normalizeText(post.read_time) || null,
         raw_payload: post,
         synced_at: new Date().toISOString(),
+        content: null as string | null,
       };
     })
     .filter(Boolean) as Array<Record<string, unknown>>;
 
   if (rows.length === 0) {
     throw new Error("No blog posts could be extracted from the page.");
+  }
+
+  // Scrape full content for each post (in batches of 2)
+  const BLOG_BATCH_SIZE = 2;
+  for (let i = 0; i < rows.length; i += BLOG_BATCH_SIZE) {
+    const batch = rows.slice(i, i + BLOG_BATCH_SIZE);
+    const contents = await Promise.all(
+      batch.map((row) => scrapePostContent(firecrawlApiKey, String(row.post_url))),
+    );
+    contents.forEach((content, idx) => {
+      batch[idx].content = content;
+    });
   }
 
   const { error: upsertError } = await supabaseAdmin
