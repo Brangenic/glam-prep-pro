@@ -10,6 +10,7 @@ const links = [
   { label: "Gallery", href: "#gallery" },
   { label: "Reviews", href: "/reviews" },
   { label: "Amazon Store", href: "/amazon-store" },
+  { label: "Blog", href: "/blogs" },
   { label: "FAQ", href: "#faq" },
 ];
 

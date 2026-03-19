@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-type SourceKey = "google_reviews" | "amazon_store";
+type SourceKey = "google_reviews" | "amazon_store" | "blog_posts";
 
 type SyncStateRow = {
   source_key: SourceKey;
@@ -15,7 +15,7 @@ const corsHeaders = {
 };
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
-const FIRECRAWL_TIMEOUT_MS = 45000;
+const FIRECRAWL_TIMEOUT_MS = 90000;
 const AMAZON_LIST_CRAWL_LIMIT = 12;
 const AMAZON_PRODUCTS_PER_LIST = 4;
 
@@ -324,6 +324,58 @@ const syncAmazonProducts = async (
   return dedupedRows.length;
 };
 
+const syncBlogPosts = async (
+  supabaseAdmin: ReturnType<typeof createClient>,
+  firecrawlApiKey: string,
+  sourceUrl: string,
+) => {
+  const extracted = await callFirecrawlJson(
+    firecrawlApiKey,
+    sourceUrl,
+    "Extract all visible blog post cards from this page into JSON with exact shape: { posts: [{ title, excerpt, image_url, post_url, author_name, author_avatar_url, published_date, read_time }] }. Include every visible blog post. Keep text verbatim. post_url must be the full URL to the blog post. image_url should be the featured/thumbnail image URL.",
+  );
+
+  const postsRaw = Array.isArray(extracted?.posts) ? extracted.posts : [];
+
+  const rows = postsRaw
+    .map((post: Record<string, unknown>) => {
+      const title = normalizeText(post.title);
+      const postUrl = normalizeText(post.post_url);
+      if (!title || !postUrl) return null;
+
+      const externalId = `blog_${hashString(`${title}|${postUrl}`)}`;
+
+      return {
+        external_id: externalId,
+        title,
+        excerpt: normalizeText(post.excerpt) || null,
+        image_url: normalizeText(post.image_url) || null,
+        post_url: postUrl,
+        author_name: normalizeText(post.author_name) || null,
+        author_avatar_url: normalizeText(post.author_avatar_url) || null,
+        published_date: normalizeText(post.published_date) || null,
+        read_time: normalizeText(post.read_time) || null,
+        raw_payload: post,
+        synced_at: new Date().toISOString(),
+      };
+    })
+    .filter(Boolean) as Array<Record<string, unknown>>;
+
+  if (rows.length === 0) {
+    throw new Error("No blog posts could be extracted from the page.");
+  }
+
+  const { error: upsertError } = await supabaseAdmin
+    .from("blog_posts")
+    .upsert(rows, { onConflict: "external_id" });
+
+  if (upsertError) {
+    throw new Error(`Blog posts upsert failed: ${upsertError.message}`);
+  }
+
+  return rows.length;
+};
+
 const shouldSync = (lastSyncedAt: string | null, force: boolean) => {
   if (force || !lastSyncedAt) return true;
   const elapsed = Date.now() - new Date(lastSyncedAt).getTime();
@@ -367,7 +419,7 @@ Deno.serve(async (req) => {
   }
 
   const body = await req.json().catch(() => ({}));
-  const source = body?.source === "google_reviews" || body?.source === "amazon_store" || body?.source === "all"
+  const source = body?.source === "google_reviews" || body?.source === "amazon_store" || body?.source === "blog_posts" || body?.source === "all"
     ? body.source
     : "all";
   const force = Boolean(body?.force);
@@ -377,7 +429,7 @@ Deno.serve(async (req) => {
   });
 
   const selectedSources: SourceKey[] = source === "all"
-    ? ["google_reviews", "amazon_store"]
+    ? ["google_reviews", "amazon_store", "blog_posts"]
     : [source];
 
   const { data: stateRows, error: stateError } = await supabaseAdmin
@@ -418,7 +470,9 @@ Deno.serve(async (req) => {
     try {
       const count = sourceKey === "google_reviews"
         ? await syncGoogleReviews(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
-        : await syncAmazonProducts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
+        : sourceKey === "amazon_store"
+        ? await syncAmazonProducts(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
+        : await syncBlogPosts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
 
       await supabaseAdmin
         .from("sync_state")

@@ -56,6 +56,57 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          author_avatar_url: string | null
+          author_name: string | null
+          created_at: string
+          excerpt: string | null
+          external_id: string
+          id: string
+          image_url: string | null
+          post_url: string
+          published_date: string | null
+          raw_payload: Json | null
+          read_time: string | null
+          synced_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_avatar_url?: string | null
+          author_name?: string | null
+          created_at?: string
+          excerpt?: string | null
+          external_id: string
+          id?: string
+          image_url?: string | null
+          post_url: string
+          published_date?: string | null
+          raw_payload?: Json | null
+          read_time?: string | null
+          synced_at?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_avatar_url?: string | null
+          author_name?: string | null
+          created_at?: string
+          excerpt?: string | null
+          external_id?: string
+          id?: string
+          image_url?: string | null
+          post_url?: string
+          published_date?: string | null
+          raw_payload?: Json | null
+          read_time?: string | null
+          synced_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       google_reviews: {
         Row: {
           author_name: string | null
