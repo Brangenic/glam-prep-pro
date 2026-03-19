@@ -429,7 +429,7 @@ Deno.serve(async (req) => {
   });
 
   const selectedSources: SourceKey[] = source === "all"
-    ? ["google_reviews", "amazon_store"]
+    ? ["google_reviews", "amazon_store", "blog_posts"]
     : [source];
 
   const { data: stateRows, error: stateError } = await supabaseAdmin
