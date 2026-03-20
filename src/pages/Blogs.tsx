@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -48,10 +48,15 @@ const Blogs = () => {
   const featured = posts[0];
   const rest = posts.slice(1);
 
-  const getPostLink = (post: BlogPost) =>
-    post.slug ? `/blogs/${post.slug}` : post.post_url;
+  const getSlugFromPostUrl = (postUrl: string) => {
+    const match = postUrl.match(/\/post\/([^/?#]+)/i);
+    return match?.[1] ? decodeURIComponent(match[1]) : null;
+  };
 
-  const isInternal = (post: BlogPost) => Boolean(post.slug);
+  const getPostLink = (post: BlogPost) => {
+    const resolvedSlug = post.slug || getSlugFromPostUrl(post.post_url) || post.external_id;
+    return `/blogs/${encodeURIComponent(resolvedSlug)}`;
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -99,9 +104,7 @@ const Blogs = () => {
                 {/* Featured post */}
                 {featured && (
                   <PostCardLink
-                    post={featured}
                     href={getPostLink(featured)}
-                    internal={isInternal(featured)}
                     className="block rounded-3xl border border-border bg-card overflow-hidden mb-10 sm:mb-14 group hover:shadow-lg hover:shadow-primary/10 transition-all"
                   >
                     <div className="grid md:grid-cols-2">
@@ -152,9 +155,7 @@ const Blogs = () => {
                     {rest.map((post) => (
                       <PostCardLink
                         key={post.external_id}
-                        post={post}
                         href={getPostLink(post)}
-                        internal={isInternal(post)}
                         className="rounded-2xl border border-border bg-card overflow-hidden group hover:shadow-lg hover:shadow-primary/10 transition-all"
                       >
                         {post.image_url ? (
@@ -207,30 +208,18 @@ const Blogs = () => {
 };
 
 const PostCardLink = ({
-  post,
   href,
-  internal,
   className,
   children,
 }: {
-  post: BlogPost;
   href: string;
-  internal: boolean;
   className: string;
   children: React.ReactNode;
 }) => {
-  if (internal) {
-    return (
-      <Link to={href} className={className}>
-        {children}
-      </Link>
-    );
-  }
-
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+    <Link to={href} className={className}>
       {children}
-    </a>
+    </Link>
   );
 };
 
