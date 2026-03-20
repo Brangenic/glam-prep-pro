@@ -15,7 +15,7 @@ const corsHeaders = {
 };
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
-const FIRECRAWL_TIMEOUT_MS = 90000;
+const FIRECRAWL_TIMEOUT_MS = 30000;
 const AMAZON_LIST_CRAWL_LIMIT = 12;
 const AMAZON_PRODUCTS_PER_LIST = 4;
 
@@ -393,25 +393,12 @@ const syncBlogPosts = async (
         read_time: normalizeText(post.read_time) || null,
         raw_payload: post,
         synced_at: new Date().toISOString(),
-        content: null as string | null,
       };
     })
     .filter(Boolean) as Array<Record<string, unknown>>;
 
   if (rows.length === 0) {
     throw new Error("No blog posts could be extracted from the page.");
-  }
-
-  // Scrape full content for each post (in batches of 2)
-  const BLOG_BATCH_SIZE = 2;
-  for (let i = 0; i < rows.length; i += BLOG_BATCH_SIZE) {
-    const batch = rows.slice(i, i + BLOG_BATCH_SIZE);
-    const contents = await Promise.all(
-      batch.map((row) => scrapePostContent(firecrawlApiKey, String(row.post_url))),
-    );
-    contents.forEach((content, idx) => {
-      batch[idx].content = content;
-    });
   }
 
   const { error: upsertError } = await supabaseAdmin

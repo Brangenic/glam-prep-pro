@@ -68,6 +68,17 @@ const BlogPost = () => {
         setPost(resolvedPost);
         setLoading(false);
       }
+
+      // If post exists but has no content, trigger a background sync
+      if (resolvedPost && !resolvedPost.content) {
+        // Scrape this specific post's content on demand
+        const { data: scraped } = await supabase.functions.invoke("scrape-blog-content", {
+          body: { slug: normalizedSlug },
+        });
+        if (isMounted && scraped?.content) {
+          setPost((prev) => prev ? { ...prev, content: scraped.content } : prev);
+        }
+      }
     };
 
     load();
