@@ -15,7 +15,7 @@ const corsHeaders = {
 };
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
-const FIRECRAWL_TIMEOUT_MS = 90000;
+const FIRECRAWL_TIMEOUT_MS = 30000;
 const AMAZON_LIST_CRAWL_LIMIT = 12;
 const AMAZON_PRODUCTS_PER_LIST = 4;
 
@@ -414,7 +414,7 @@ const syncBlogPosts = async (
     .from("blog_posts")
     .select("external_id, post_url")
     .is("content", null)
-    .limit(5);
+    .limit(2);
 
   if (postsNeedingContent && postsNeedingContent.length > 0) {
     for (const post of postsNeedingContent) {
