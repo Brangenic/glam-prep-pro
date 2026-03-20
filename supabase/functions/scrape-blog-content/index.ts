@@ -6,6 +6,31 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+const cleanMarkdown = (md: string): string => {
+  return md
+    // Remove Smartarget banner/link
+    .replace(/\[!\[.*?\]\(https:\/\/smartarget\.online[^\]]*\)\]\([^)]*\)\s*/g, '')
+    // Remove "Skip to Main Content" and surrounding whitespace
+    .replace(/Skip to Main Content\s*/gi, '')
+    // Remove Wix sidebar/navigation images (tall thin PNGs)
+    .replace(/!\[\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*?fill\/w_\d+,h_1200[^)]*\)\s*/g, '')
+    // Remove "Search" standalone lines
+    .replace(/^Search\s*$/gm, '')
+    // Remove bottom-of-page nav junk
+    .replace(/bottom of page[\s\S]*$/gi, '')
+    // Remove Smartarget app notices
+    .replace(/Smartarget Apps are hidden[\s\S]*?top of page\s*/gi, '')
+    // Remove visitor analytics errors
+    .replace(/loadbalancer\.visitor-analytics\.io[\s\S]*?ERR_BLOCKED_BY_CLIENT[\s\S]*?Reload\s*/gi, '')
+    // Remove inline SVG data images
+    .replace(/!\[\]\(data:image\/svg\+xml[^\n]*\n?/g, '')
+    // Remove close button icons
+    .replace(/!\[Close Button Icon\][^\n]*\n?/gi, '')
+    // Collapse excessive newlines
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+};
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -88,7 +113,8 @@ Deno.serve(async (req) => {
     });
 
     const payload = await response.json();
-    const content = payload?.data?.markdown ?? payload?.markdown ?? null;
+    const rawContent = payload?.data?.markdown ?? payload?.markdown ?? null;
+    const content = rawContent ? cleanMarkdown(rawContent) : null;
 
     if (content) {
       await supabaseAdmin
