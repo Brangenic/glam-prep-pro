@@ -409,25 +409,6 @@ const syncBlogPosts = async (
     throw new Error(`Blog posts upsert failed: ${upsertError.message}`);
   }
 
-  // Phase 2: scrape full content for posts that don't have it yet (max 5 per run)
-  const { data: postsNeedingContent } = await supabaseAdmin
-    .from("blog_posts")
-    .select("external_id, post_url")
-    .is("content", null)
-    .limit(2);
-
-  if (postsNeedingContent && postsNeedingContent.length > 0) {
-    for (const post of postsNeedingContent) {
-      const content = await scrapePostContent(firecrawlApiKey, post.post_url);
-      if (content) {
-        await supabaseAdmin
-          .from("blog_posts")
-          .update({ content })
-          .eq("external_id", post.external_id);
-      }
-    }
-  }
-
   return rows.length;
 };
 
