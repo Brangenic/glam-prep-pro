@@ -68,6 +68,13 @@ const BlogPost = () => {
         setPost(resolvedPost);
         setLoading(false);
       }
+
+      // If post exists but has no content, trigger a background sync
+      if (resolvedPost && !resolvedPost.content) {
+        supabase.functions.invoke("sync-public-content", {
+          body: { source: "blog_posts", force: true },
+        });
+      }
     };
 
     load();
