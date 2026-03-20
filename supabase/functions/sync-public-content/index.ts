@@ -393,7 +393,6 @@ const syncBlogPosts = async (
         read_time: normalizeText(post.read_time) || null,
         raw_payload: post,
         synced_at: new Date().toISOString(),
-        content: null as string | null,
       };
     })
     .filter(Boolean) as Array<Record<string, unknown>>;
@@ -402,24 +401,31 @@ const syncBlogPosts = async (
     throw new Error("No blog posts could be extracted from the page.");
   }
 
-  // Scrape full content for each post (in batches of 2)
-  const BLOG_BATCH_SIZE = 2;
-  for (let i = 0; i < rows.length; i += BLOG_BATCH_SIZE) {
-    const batch = rows.slice(i, i + BLOG_BATCH_SIZE);
-    const contents = await Promise.all(
-      batch.map((row) => scrapePostContent(firecrawlApiKey, String(row.post_url))),
-    );
-    contents.forEach((content, idx) => {
-      batch[idx].content = content;
-    });
-  }
-
   const { error: upsertError } = await supabaseAdmin
     .from("blog_posts")
     .upsert(rows, { onConflict: "external_id" });
 
   if (upsertError) {
     throw new Error(`Blog posts upsert failed: ${upsertError.message}`);
+  }
+
+  // Phase 2: scrape full content for posts that don't have it yet (max 5 per run)
+  const { data: postsNeedingContent } = await supabaseAdmin
+    .from("blog_posts")
+    .select("external_id, post_url")
+    .is("content", null)
+    .limit(5);
+
+  if (postsNeedingContent && postsNeedingContent.length > 0) {
+    for (const post of postsNeedingContent) {
+      const content = await scrapePostContent(firecrawlApiKey, post.post_url);
+      if (content) {
+        await supabaseAdmin
+          .from("blog_posts")
+          .update({ content })
+          .eq("external_id", post.external_id);
+      }
+    }
   }
 
   return rows.length;
