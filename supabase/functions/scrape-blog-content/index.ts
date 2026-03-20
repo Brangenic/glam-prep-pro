@@ -88,7 +88,8 @@ Deno.serve(async (req) => {
     });
 
     const payload = await response.json();
-    const content = payload?.data?.markdown ?? payload?.markdown ?? null;
+    const rawContent = payload?.data?.markdown ?? payload?.markdown ?? null;
+    const content = rawContent ? cleanMarkdown(rawContent) : null;
 
     if (content) {
       await supabaseAdmin
