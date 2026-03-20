@@ -185,7 +185,7 @@ const BlogPost = () => {
                     prose-li:font-body prose-li:text-foreground/85
                   ">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {post.content}
+                      {cleanMarkdown(post.content)}
                     </ReactMarkdown>
                   </div>
                 ) : post.excerpt ? (
