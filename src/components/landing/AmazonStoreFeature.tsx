@@ -18,9 +18,8 @@ type FeaturedProduct = {
   product_url: string;
 };
 
-const isDirectAmazonProductUrl = (value: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(value);
 const getFeaturedProductHref = (productUrl: string) =>
-  isDirectAmazonProductUrl(productUrl) ? productUrl : AMAZON_STORE_URL;
+  productUrl && productUrl.includes("amazon.com") ? productUrl : AMAZON_STORE_URL;
 
 const AmazonStoreFeature = () => {
   const { ref, isVisible } = useScrollReveal();
