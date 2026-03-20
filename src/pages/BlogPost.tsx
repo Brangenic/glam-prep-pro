@@ -24,18 +24,48 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
     let isMounted = true;
 
     const load = async () => {
-      const { data } = await supabase
+      const normalizedSlug = decodeURIComponent(slug);
+      const selectColumns = "title, content, excerpt, image_url, author_name, author_avatar_url, published_date, read_time";
+
+      const { data: bySlug } = await supabase
         .from("blog_posts")
-        .select("title, content, excerpt, image_url, author_name, author_avatar_url, published_date, read_time")
-        .eq("slug", slug)
+        .select(selectColumns)
+        .eq("slug", normalizedSlug)
         .maybeSingle();
 
+      let resolvedPost = bySlug as BlogPostData | null;
+
+      if (!resolvedPost) {
+        const { data: byExternalId } = await supabase
+          .from("blog_posts")
+          .select(selectColumns)
+          .eq("external_id", normalizedSlug)
+          .maybeSingle();
+
+        resolvedPost = byExternalId as BlogPostData | null;
+      }
+
+      if (!resolvedPost) {
+        const { data: byPostUrlSlug } = await supabase
+          .from("blog_posts")
+          .select(selectColumns)
+          .ilike("post_url", `%/post/${normalizedSlug}`)
+          .maybeSingle();
+
+        resolvedPost = byPostUrlSlug as BlogPostData | null;
+      }
+
       if (isMounted) {
-        setPost(data as BlogPostData | null);
+        setPost(resolvedPost);
         setLoading(false);
       }
     };
