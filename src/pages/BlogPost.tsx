@@ -71,9 +71,13 @@ const BlogPost = () => {
 
       // If post exists but has no content, trigger a background sync
       if (resolvedPost && !resolvedPost.content) {
-        supabase.functions.invoke("sync-public-content", {
-          body: { source: "blog_posts", force: true },
+        // Scrape this specific post's content on demand
+        const { data: scraped } = await supabase.functions.invoke("scrape-blog-content", {
+          body: { slug: normalizedSlug },
         });
+        if (isMounted && scraped?.content) {
+          setPost((prev) => prev ? { ...prev, content: scraped.content } : prev);
+        }
       }
     };
 
