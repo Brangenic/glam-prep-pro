@@ -18,6 +18,10 @@ type FeaturedProduct = {
   product_url: string;
 };
 
+const isDirectAmazonProductUrl = (value: string) => /amazon\.com\/.+\/(dp|gp\/product)\//i.test(value);
+const getFeaturedProductHref = (productUrl: string) =>
+  isDirectAmazonProductUrl(productUrl) ? productUrl : AMAZON_STORE_URL;
+
 const AmazonStoreFeature = () => {
   const { ref, isVisible } = useScrollReveal();
   const [featuredProducts, setFeaturedProducts] = useState<FeaturedProduct[]>([]);
@@ -113,7 +117,7 @@ const AmazonStoreFeature = () => {
                   featuredProducts.map((product) => (
                     <a
                       key={product.external_id}
-                      href={product.product_url}
+                      href={getFeaturedProductHref(product.product_url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-3 rounded-2xl bg-background px-3 py-3 border border-border transition-colors hover:border-primary/25"
