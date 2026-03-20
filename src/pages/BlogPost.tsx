@@ -1,7 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+const cleanMarkdown = (md: string): string => {
+  return md
+    .replace(/\[!\[.*?\]\(https:\/\/smartarget\.online[^\]]*\)\]\([^)]*\)\s*/g, '')
+    .replace(/Skip to Main Content\s*/gi, '')
+    .replace(/!\[\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*?fill\/w_\d+,h_1200[^)]*\)\s*/g, '')
+    .replace(/^Search\s*$/gm, '')
+    .replace(/bottom of page[\s\S]*$/gi, '')
+    .replace(/Smartarget Apps are hidden[\s\S]*?top of page\s*/gi, '')
+    .replace(/loadbalancer\.visitor-analytics\.io[\s\S]*?ERR_BLOCKED_BY_CLIENT[\s\S]*?Reload\s*/gi, '')
+    .replace(/!\[\]\(data:image\/svg\+xml[^\n]*\n?/g, '')
+    .replace(/!\[Close Button Icon\][^\n]*\n?/gi, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+};
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
