@@ -34,7 +34,7 @@ const images = [
   { src: carnival3, alt: "Jeweled carnival costume with emerald details", aspectClass: "aspect-square" },
   { src: carnival7, alt: "Colorful feathered headdress carnival masquerader", aspectClass: "aspect-square" },
   { src: carnival8, alt: "Golden carnival jewelry close-up with feather details", aspectClass: "aspect-square" },
-  { src: carnival9, alt: "Gold headpiece and crystal carnival jewelry close-up", aspectClass: "aspect-square" },
+  
 ];
 
 const glamHubVideos = [
