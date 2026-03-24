@@ -1,12 +1,10 @@
 import carnival1 from "@/assets/carnival-1.jpg";
-import carnival2 from "@/assets/carnival-2.jpg";
 import carnival3 from "@/assets/carnival-3.jpg";
 import carnival4 from "@/assets/carnival-4.jpg";
 import carnival5 from "@/assets/carnival-5.jpg";
 import carnival6 from "@/assets/carnival-6.jpg";
 import carnival7 from "@/assets/carnival-7.jpg";
 import carnival8 from "@/assets/carnival-8.jpg";
-import carnival9 from "@/assets/carnival-9.jpg";
 import carnival10 from "@/assets/carnival-10.jpg";
 import carnival11 from "@/assets/gallery-5.jpeg";
 import carnival12 from "@/assets/gallery-6.jpg";
@@ -26,7 +24,7 @@ const images = [
   { src: carnival16, alt: "Outdoor carnival portrait with warm-toned costume and dramatic glam makeup", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival13, alt: "Masquerader with blue dragon wings and jeweled carnival costume", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival6, alt: "Royal blue butterfly wings carnival costume", aspectClass: "aspect-[3/4]" },
-  { src: carnival2, alt: "Blue feathered carnival costume with iridescent wings", aspectClass: "aspect-[4/5]" },
+  
   { src: carnival14, alt: "Celebrating masquerader on the road surrounded by photographers and carnival energy", aspectClass: "aspect-[4/5]", objectPosition: "center top" },
   { src: carnival11, alt: "Smiling carnival masquerader in orange costume with gold jewelry and pink gems", aspectClass: "aspect-square", objectPosition: "center 20%" },
   { src: carnival4, alt: "Close-up carnival glam with glitter and turquoise", aspectClass: "aspect-[4/5]", objectPosition: "center 20%" },
@@ -36,7 +34,7 @@ const images = [
   { src: carnival3, alt: "Jeweled carnival costume with emerald details", aspectClass: "aspect-square" },
   { src: carnival7, alt: "Colorful feathered headdress carnival masquerader", aspectClass: "aspect-square" },
   { src: carnival8, alt: "Golden carnival jewelry close-up with feather details", aspectClass: "aspect-square" },
-  { src: carnival9, alt: "Gold headpiece and crystal carnival jewelry close-up", aspectClass: "aspect-square" },
+  
 ];
 
 const glamHubVideos = [
