@@ -2,7 +2,7 @@ import carnival1 from "@/assets/carnival-1.jpg";
 import carnival3 from "@/assets/carnival-3.jpg";
 import carnival4 from "@/assets/carnival-4.jpg";
 import carnival5 from "@/assets/carnival-5.jpg";
-import carnival6 from "@/assets/carnival-6.jpg";
+
 import carnival7 from "@/assets/carnival-7.jpg";
 import carnival8 from "@/assets/carnival-8.jpg";
 import carnival10 from "@/assets/carnival-10.jpg";
@@ -23,7 +23,7 @@ const images = [
   { src: carnival12, alt: "Full-length carnival costume with bright orange, pink, and turquoise feathers", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival16, alt: "Outdoor carnival portrait with warm-toned costume and dramatic glam makeup", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
   { src: carnival13, alt: "Masquerader with blue dragon wings and jeweled carnival costume", aspectClass: "aspect-[3/4]", objectPosition: "center top" },
-  { src: carnival6, alt: "Royal blue butterfly wings carnival costume", aspectClass: "aspect-[3/4]" },
+  
   
   { src: carnival14, alt: "Celebrating masquerader on the road surrounded by photographers and carnival energy", aspectClass: "aspect-[4/5]", objectPosition: "center top" },
   { src: carnival11, alt: "Smiling carnival masquerader in orange costume with gold jewelry and pink gems", aspectClass: "aspect-square", objectPosition: "center 20%" },
