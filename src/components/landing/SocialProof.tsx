@@ -1,5 +1,5 @@
 const stats = [
-  { value: "13,000+", label: "Masqueraders Since 2017" },
+  { value: "15,000+", label: "Masqueraders Since 2017" },
   { value: "Trusted", label: "By Carnival Bands & Influencers" },
   { value: "Pro Artists", label: "Professional Glam Team" },
   { value: "Premium", label: "Carnival Morning Experience" },
