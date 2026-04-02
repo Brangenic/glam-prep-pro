@@ -2,7 +2,7 @@ import carnival1 from "@/assets/carnival-1.jpg";
 import carnival3 from "@/assets/carnival-3.jpg";
 import carnival4 from "@/assets/carnival-4.jpg";
 import carnival5 from "@/assets/carnival-5.jpg";
-import carnival6 from "@/assets/carnival-6.jpg";
+
 import carnival7 from "@/assets/carnival-7.jpg";
 import carnival8 from "@/assets/carnival-8.jpg";
 import carnival10 from "@/assets/carnival-10.jpg";
