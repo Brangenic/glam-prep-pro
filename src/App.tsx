@@ -25,6 +25,16 @@ const App = () => (
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogPost />} />
+          <Route path="/jamaica" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/trinidad" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/antigua" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/barbados" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/grenada" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/tobago" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/st-lucia" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/miami" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/toronto" element={<Navigate to="/#destinations" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
