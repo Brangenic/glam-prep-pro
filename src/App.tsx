@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +25,16 @@ const App = () => (
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogPost />} />
+          <Route path="/jamaica" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/trinidad" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/antigua" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/barbados" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/grenada" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/tobago" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/st-lucia" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/miami" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/toronto" element={<Navigate to="/#destinations" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
