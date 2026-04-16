@@ -103,7 +103,7 @@ export default function Admin() {
       </header>
 
       <main className="max-w-6xl mx-auto p-6 space-y-6">
-        <Tabs defaultValue="content">
+        <Tabs defaultValue="assistant">
           <TabsList>
             <TabsTrigger value="assistant" className="gap-1.5"><Bot className="h-4 w-4" /> AI Assistant</TabsTrigger>
             <TabsTrigger value="content">Generated Content</TabsTrigger>
