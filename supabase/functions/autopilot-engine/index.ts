@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { decode } from "https://deno.land/std@0.203.0/encoding/base64.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -104,7 +105,6 @@ async function researchCompetitors(
   const competitorArticles: CompetitorInsight[] = [];
 
   if (firecrawlKey) {
-    // Use Firecrawl search to find top competing articles
     try {
       const res = await fetch("https://api.firecrawl.dev/v2/search", {
         method: "POST",
@@ -134,7 +134,6 @@ async function researchCompetitors(
     }
   }
 
-  // Fallback: plain fetch if Firecrawl returned nothing
   if (competitorArticles.length === 0) {
     const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(topicTitle)}`;
     try {
@@ -178,7 +177,6 @@ async function researchCompetitors(
     }
   }
 
-  // Build a gap analysis summary for the AI prompt
   let gaps = "";
   if (competitorArticles.length > 0) {
     const allPoints = competitorArticles.flatMap((a) => a.keyPoints);
@@ -276,7 +274,77 @@ Return JSON only:
   return JSON.parse(content);
 }
 
-/* ───── 5. Trigger sitemap regen ───── */
+/* ───── 5. Generate hero image ───── */
+async function generateHeroImage(
+  apiKey: string,
+  supabase: ReturnType<typeof createClient>,
+  title: string,
+  slug: string,
+): Promise<string | null> {
+  try {
+    const prompt = `A vibrant, high-quality editorial photograph for a carnival beauty blog article titled "${title}". The image should feature Caribbean carnival aesthetics: colorful feathered costumes, glitter makeup, bold face paint, tropical flowers, festival energy. Professional photography style, warm golden lighting, bokeh background, magazine-quality. No text or words in the image.`;
+
+    console.log("Generating hero image...");
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "google/gemini-3.1-flash-image-preview",
+        messages: [{ role: "user", content: prompt }],
+        modalities: ["image", "text"],
+      }),
+    });
+
+    if (!res.ok) {
+      console.error(`Hero image generation failed: ${res.status}`);
+      return null;
+    }
+
+    const data = await res.json();
+    const imageData = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    if (!imageData) {
+      console.error("No image data in AI response");
+      return null;
+    }
+
+    // Extract base64 data (strip the data:image/png;base64, prefix)
+    const base64Match = imageData.match(/^data:image\/(\w+);base64,(.+)$/);
+    if (!base64Match) {
+      console.error("Invalid base64 image format");
+      return null;
+    }
+
+    const imageFormat = base64Match[1]; // png, jpeg, etc.
+    const base64String = base64Match[2];
+    const imageBytes = decode(base64String);
+    const filePath = `${slug}.${imageFormat}`;
+
+    // Upload to blog-images bucket
+    const { error: uploadErr } = await supabase.storage
+      .from("blog-images")
+      .upload(filePath, imageBytes, {
+        contentType: `image/${imageFormat}`,
+        upsert: true,
+      });
+
+    if (uploadErr) {
+      console.error("Image upload failed:", uploadErr.message);
+      return null;
+    }
+
+    const { data: publicUrl } = supabase.storage
+      .from("blog-images")
+      .getPublicUrl(filePath);
+
+    console.log(`Hero image uploaded: ${publicUrl.publicUrl}`);
+    return publicUrl.publicUrl;
+  } catch (e) {
+    console.error("Hero image generation error:", e);
+    return null;
+  }
+}
+
+/* ───── 6. Trigger sitemap regen ───── */
 async function triggerSitemap(supabaseUrl: string, anonKey: string) {
   try {
     await fetch(`${supabaseUrl}/functions/v1/generate-sitemap`, {
@@ -289,7 +357,7 @@ async function triggerSitemap(supabaseUrl: string, anonKey: string) {
   }
 }
 
-/* ───── 6. IndexNow ping ───── */
+/* ───── 7. IndexNow ping ───── */
 async function pingIndexNow(slug: string) {
   const apiKey = Deno.env.get("INDEXNOW_API_KEY");
   if (!apiKey) {
@@ -370,13 +438,16 @@ Deno.serve(async (req) => {
     const article = await generateArticle(LOVABLE_API_KEY, freshTopic, internalLinks, competitorGaps);
     console.log(`Generated article: "${article.title}" (${article.slug})`);
 
-    // Step 6: Append FAQ schema as extractable comment
+    // Step 6: Generate hero image
+    const heroImageUrl = await generateHeroImage(LOVABLE_API_KEY, supabase, article.title, article.slug);
+
+    // Step 7: Append FAQ schema as extractable comment
     let fullContent = article.body ?? "";
     if (article.faq_schema) {
       fullContent += `\n\n<!-- FAQ_SCHEMA_JSON\n${JSON.stringify(article.faq_schema)}\n-->`;
     }
 
-    // Step 7: Insert into blog_posts
+    // Step 8: Insert into blog_posts (with hero image)
     const { error: insertErr } = await supabase.from("blog_posts").insert({
       external_id: `ai-engine-${Date.now()}`,
       title: article.title,
@@ -384,6 +455,7 @@ Deno.serve(async (req) => {
       excerpt: article.excerpt,
       content: fullContent,
       meta_description: article.meta_description,
+      image_url: heroImageUrl,
       post_url: `https://www.carnivalglamhub.com/blogs/${article.slug}`,
       source: "ai_generated",
       author_name: "Carnival Glam Hub",
@@ -392,7 +464,7 @@ Deno.serve(async (req) => {
     if (insertErr) throw new Error(`Insert failed: ${insertErr.message}`);
     console.log("Blog post published successfully");
 
-    // Step 8: Trigger sitemap regeneration + IndexNow ping
+    // Step 9: Trigger sitemap regeneration + IndexNow ping
     await Promise.all([
       triggerSitemap(SUPABASE_URL, SUPABASE_ANON_KEY),
       pingIndexNow(article.slug),
@@ -408,6 +480,7 @@ Deno.serve(async (req) => {
         slug: article.slug,
         internal_links_used: article.internal_links_used ?? 0,
         has_faq_schema: !!article.faq_schema,
+        has_hero_image: !!heroImageUrl,
         competitors_analyzed: competitors.length,
       }),
     }, { onConflict: "key" });
@@ -418,8 +491,10 @@ Deno.serve(async (req) => {
       title: article.title,
       slug: article.slug,
       url: `https://www.carnivalglamhub.com/blogs/${article.slug}`,
+      image_url: heroImageUrl,
       internal_links_used: article.internal_links_used ?? 0,
       has_faq_schema: !!article.faq_schema,
+      has_hero_image: !!heroImageUrl,
       competitors_analyzed: competitors.length,
     });
   } catch (e: any) {
