@@ -1,9 +1,11 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
 const FinalCTA = () => {
   const { ref, isVisible } = useScrollReveal();
+  const { get } = useSiteConfig();
 
   return (
     <section id="book" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden" aria-labelledby="cta-heading">
@@ -21,7 +23,7 @@ const FinalCTA = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          Secure Your Carnival{" "}
+          {get("cta_headline").replace(/Glam Slot/, "")}
           <span className="text-gradient-primary italic">Glam Slot</span>
         </h2>
         <p
@@ -29,9 +31,7 @@ const FinalCTA = () => {
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          Carnival morning appointments are limited and typically sell out early.
-          Reserve your spot now to ensure a smooth, stress-free start to your
-          Carnival day.
+          {get("cta_description")}
         </p>
         <div
           className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-700 delay-300 ${
@@ -44,7 +44,7 @@ const FinalCTA = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-3.5 sm:py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
           >
-            Book Your Glam Appointment
+            {get("cta_button_text")}
           </a>
           <a
             href="#destinations"
