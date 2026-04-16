@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import FloatingWhatsApp from "@/components/landing/FloatingWhatsApp";
+import ChatWidget from "@/components/landing/ChatWidget";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
+        <ChatWidget />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
