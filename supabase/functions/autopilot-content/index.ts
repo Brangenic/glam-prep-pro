@@ -8,22 +8,27 @@ const corsHeaders = {
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
-/* ───── Firecrawl trending search ───── */
+/* ───── Firecrawl: expanded trending search ───── */
 async function searchTrending(apiKey: string, territory: { name: string; country: string; keywords: string[] }) {
+  const year = new Date().getFullYear();
   const queries = [
-    `${territory.name} carnival 2026 makeup looks`,
+    `${territory.name} carnival ${year} makeup looks`,
     `${territory.name} carnival hairstyles tips`,
-    `best carnival glam ${territory.country} ${new Date().getFullYear()}`,
+    `best carnival glam ${territory.country} ${year}`,
+    `${territory.name} carnival costume ideas ${year}`,
+    `carnival fete outfit ${territory.country}`,
+    `jouvert body paint tips ${territory.name}`,
+    `${territory.name} carnival travel guide ${year}`,
   ];
 
   const results: { title: string; url: string; description: string }[] = [];
 
-  for (const query of queries) {
+  for (const query of queries.slice(0, 5)) {
     try {
       const res = await fetch("https://api.firecrawl.dev/v2/search", {
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ query, limit: 3, tbs: "qdr:w", scrapeOptions: { formats: ["markdown"] } }),
+        body: JSON.stringify({ query, limit: 3, tbs: "qdr:m", scrapeOptions: { formats: ["markdown"] } }),
       });
       if (res.ok) {
         const data = await res.json();
@@ -32,7 +37,7 @@ async function searchTrending(apiKey: string, territory: { name: string; country
           results.push({
             title: item.title ?? "",
             url: item.url ?? "",
-            description: (item.description ?? item.markdown ?? "").slice(0, 500),
+            description: (item.description ?? item.markdown ?? "").slice(0, 600),
           });
         }
       }
@@ -41,6 +46,32 @@ async function searchTrending(apiKey: string, territory: { name: string; country
     }
   }
   return results;
+}
+
+/* ───── Competitor intelligence: scrape top results ───── */
+async function scrapeCompetitors(apiKey: string, keyword: string) {
+  try {
+    const res = await fetch("https://api.firecrawl.dev/v2/search", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: keyword,
+        limit: 3,
+        scrapeOptions: { formats: ["markdown"], onlyMainContent: true },
+      }),
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const items = data.data ?? data.results ?? [];
+    return items.map((item: any) => ({
+      title: item.title ?? "",
+      url: item.url ?? "",
+      content: (item.markdown ?? item.description ?? "").slice(0, 800),
+    }));
+  } catch (e) {
+    console.error(`Competitor scrape failed for "${keyword}":`, e);
+    return [];
+  }
 }
 
 /* ───── Gather source data (reviews, products) ───── */
@@ -52,16 +83,43 @@ async function gatherSourceData(supabase: ReturnType<typeof createClient>) {
   return { reviews: reviews ?? [], products: products ?? [] };
 }
 
-/* ───── Generate SEO blog article ───── */
+/* ───── Get existing blogs for dedup + internal linking ───── */
+async function getExistingBlogs(supabase: ReturnType<typeof createClient>) {
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("title, slug")
+    .order("created_at", { ascending: false })
+    .limit(50);
+  return data ?? [];
+}
+
+/* ───── Generate SEO blog article (enhanced) ───── */
 async function generateBlogArticle(
   apiKey: string,
   territory: { name: string; country: string; keywords: string[]; hashtags: string[]; event_dates: string | null },
   trendingTopics: { title: string; description: string }[],
+  competitorData: { title: string; content: string }[],
   sourceData: Awaited<ReturnType<typeof gatherSourceData>>,
+  existingBlogs: { title: string; slug: string }[],
 ) {
   const trendingSummary = trendingTopics
     .slice(0, 5)
-    .map((t) => `- ${t.title}: ${t.description.slice(0, 200)}`)
+    .map((t) => `- ${t.title}: ${t.description.slice(0, 250)}`)
+    .join("\n");
+
+  const competitorSummary = competitorData
+    .slice(0, 3)
+    .map((c) => `- "${c.title}": ${c.content.slice(0, 300)}`)
+    .join("\n");
+
+  const existingTitles = existingBlogs
+    .slice(0, 20)
+    .map((b) => `- ${b.title}`)
+    .join("\n");
+
+  const internalLinks = existingBlogs
+    .slice(0, 10)
+    .map((b) => `- [${b.title}](https://www.carnivalglamhub.com/blogs/${b.slug})`)
     .join("\n");
 
   const reviewSnippets = sourceData.reviews
@@ -76,10 +134,19 @@ async function generateBlogArticle(
 
   const prompt = `You are a professional beauty and carnival blog writer for Carnival Glam Hub — the premier Caribbean carnival makeup and styling service.
 
-Write a FULL SEO-optimized blog article (800-1200 words) for ${territory.name}, ${territory.country}.
+Write a FULL SEO-optimized blog article (1000-1500 words) for ${territory.name}, ${territory.country}.
 
 TRENDING TOPICS (base the article on one or more of these):
 ${trendingSummary}
+
+COMPETITOR ARTICLES (analyze what they cover and write something BETTER — do NOT copy):
+${competitorSummary}
+
+EXISTING BLOG POSTS ON OUR SITE (DO NOT write about any of these topics — find something NEW):
+${existingTitles}
+
+INTERNAL LINKS TO WEAVE IN (include 2-3 of these naturally in the article body):
+${internalLinks}
 
 REAL CLIENT REVIEWS (weave 1-2 naturally into the article):
 ${reviewSnippets}
@@ -92,20 +159,24 @@ TERRITORY INFO:
 - Event dates: ${territory.event_dates ?? "TBA"}
 
 REQUIREMENTS:
-- Catchy, SEO-optimized title with the year (2026)
+- Catchy, SEO-optimized title with the year (${new Date().getFullYear()})
 - URL-friendly slug (lowercase, hyphens, no special chars)
 - Compelling meta description (under 160 chars) with CTA
 - 150-word excerpt for the blog listing
 - Full markdown body with:
-  - At least 3 H2 headings
-  - Internal link to booking: [Book your carnival glam artist](https://carnivalglamhub.masos.app/events)
+  - At least 4 H2 headings
+  - Internal link to booking: [Book your carnival glam artist](https://www.carnivalglamhub.com)
+  - 2-3 internal links to OTHER blog posts from the list above
   - Territory-specific tips and advice
   - Natural product mentions where relevant
   - End with a strong CTA to book with Carnival Glam Hub
 - Brand voice: confident, glamorous, inclusive, Caribbean-rooted
-- ORIGINAL content — do NOT copy from trending articles
+- ORIGINAL content — do NOT copy from trending or competitor articles
+- Include a FAQ section at the end with 3-4 questions and answers relevant to the topic
 
-Return JSON: { "title": "...", "slug": "...", "meta_description": "...", "excerpt": "...", "body": "...(full markdown)...", "keywords": ["..."] }`;
+IMPORTANT: Also generate a JSON-LD FAQ schema for the FAQ section.
+
+Return JSON: { "title": "...", "slug": "...", "meta_description": "...", "excerpt": "...", "body": "...(full markdown with FAQ section)...", "keywords": ["..."], "faq_schema": { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{ "@type": "Question", "name": "...", "acceptedAnswer": { "@type": "Answer", "text": "..." } }] }, "internal_links_used": 0 }`;
 
   const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
@@ -125,34 +196,76 @@ Return JSON: { "title": "...", "slug": "...", "meta_description": "...", "excerp
   return JSON.parse(content);
 }
 
-/* ───── Generate social posts ───── */
-async function generateSocialPosts(
+/* ───── Generate AI hero image ───── */
+async function generateHeroImage(
+  apiKey: string,
+  supabase: ReturnType<typeof createClient>,
+  title: string,
+  slug: string,
+  territory: string,
+) {
+  try {
+    const imagePrompt = `A vibrant, professional carnival photography-style hero image for a blog article titled "${title}". Caribbean carnival scene in ${territory} with colorful costumes, feathers, glitter makeup, and festive energy. High-quality editorial photography style, warm golden lighting, celebration atmosphere. No text or watermarks.`;
+
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash-image",
+        messages: [{ role: "user", content: imagePrompt }],
+        modalities: ["image", "text"],
+      }),
+    });
+
+    if (!res.ok) throw new Error(`Image generation failed: ${res.status}`);
+    const data = await res.json();
+    const imageData = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    if (!imageData) throw new Error("No image in response");
+
+    // Extract base64 data
+    const base64 = imageData.replace(/^data:image\/\w+;base64,/, "");
+    const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+
+    const filePath = `${slug}-${Date.now()}.png`;
+    const { error: uploadErr } = await supabase.storage
+      .from("blog-images")
+      .upload(filePath, bytes, { contentType: "image/png", upsert: true });
+
+    if (uploadErr) throw uploadErr;
+
+    const { data: urlData } = supabase.storage.from("blog-images").getPublicUrl(filePath);
+    return urlData.publicUrl;
+  } catch (e) {
+    console.error(`Image generation failed for "${slug}":`, e);
+    return null;
+  }
+}
+
+/* ───── Generate social content IDEAS ───── */
+async function generateContentIdeas(
   apiKey: string,
   territory: { name: string; country: string; keywords: string[]; hashtags: string[] },
   trendingTopics: { title: string; description: string }[],
-  channels: string[],
+  blogTitle: string,
 ) {
   const trendingSummary = trendingTopics.slice(0, 3).map((t) => t.title).join(", ");
 
-  const prompt = `You are a social media manager for Carnival Glam Hub — Caribbean carnival makeup & styling.
+  const prompt = `You are a social media strategist for Carnival Glam Hub — Caribbean carnival makeup & styling.
 
-Generate ${channels.length} social media posts for ${territory.name}, ${territory.country}.
+Generate 2 social media CONTENT IDEAS (not full posts) for ${territory.name}, ${territory.country}.
 
-CHANNELS: ${channels.join(", ")}
+BLOG JUST PUBLISHED: "${blogTitle}"
 TRENDING TOPICS: ${trendingSummary}
 HASHTAGS: ${territory.hashtags?.join(" ")}
-KEYWORDS: ${territory.keywords?.join(", ")}
 
-For each post:
-- Engaging, scroll-stopping copy
-- Include relevant hashtags
-- Include booking CTA: carnivalglamhub.masos.app/events or DM/WhatsApp
-- Instagram: 150-250 words with emoji, 20-30 hashtags
-- Twitter: under 280 chars
-- WhatsApp: friendly, personal tone with link
-- Facebook: 100-200 words, conversational
+For each content idea provide:
+- A hook/angle (what makes this scroll-stopping)
+- Platform suggestion (Instagram Reel, TikTok, Story, Carousel, etc.)
+- Key talking points (3-4 bullets)
+- Suggested hashtags (10-15)
+- A one-line caption starter
 
-Return JSON array: [{ "channel": "...", "title": "...", "body": "...", "hashtags": ["..."] }]`;
+Return JSON: { "ideas": [{ "channel": "...", "hook": "...", "platform_format": "...", "talking_points": ["..."], "hashtags": ["..."], "caption_starter": "..." }] }`;
 
   const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
@@ -165,12 +278,26 @@ Return JSON array: [{ "channel": "...", "title": "...", "body": "...", "hashtags
     }),
   });
 
-  if (!res.ok) throw new Error(`AI social generation failed: ${res.status}`);
+  if (!res.ok) throw new Error(`AI content ideas failed: ${res.status}`);
   const data = await res.json();
   const content = data.choices?.[0]?.message?.content;
-  if (!content) throw new Error("Empty AI response for social");
+  if (!content) throw new Error("Empty AI response for ideas");
   const parsed = JSON.parse(content);
-  return Array.isArray(parsed) ? parsed : parsed.posts ?? parsed.results ?? [parsed];
+  return parsed.ideas ?? (Array.isArray(parsed) ? parsed : [parsed]);
+}
+
+/* ───── Regenerate sitemap ───── */
+async function regenerateSitemap(supabase: ReturnType<typeof createClient>, supabaseUrl: string, anonKey: string) {
+  try {
+    await fetch(`${supabaseUrl}/functions/v1/generate-sitemap`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${anonKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ trigger: "autopilot" }),
+    });
+    console.log("Sitemap regeneration triggered");
+  } catch (e) {
+    console.error("Sitemap regen failed:", e);
+  }
 }
 
 /* ───── Main handler ───── */
@@ -180,6 +307,7 @@ Deno.serve(async (req) => {
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? "";
     const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
@@ -198,28 +326,68 @@ Deno.serve(async (req) => {
     if (!territories?.length) return json({ success: true, message: "No active territories", results: [] });
 
     const sourceData = await gatherSourceData(supabase);
+    const existingBlogs = await getExistingBlogs(supabase);
     const results: any[] = [];
-    const socialChannels = ["instagram", "twitter", "whatsapp", "facebook"];
 
     for (const territory of territories) {
-      const territoryResult: any = { territory: territory.name, blog: null, social: 0, errors: [] };
+      const territoryResult: any = {
+        territory: territory.name,
+        blog: null,
+        image: false,
+        internal_links: 0,
+        content_ideas: 0,
+        errors: [],
+      };
 
       try {
-        // 1. Search trending topics
+        // 1. Search trending topics (expanded queries)
         const trending = await searchTrending(FIRECRAWL_API_KEY, territory);
         console.log(`[${territory.name}] Found ${trending.length} trending topics`);
 
-        // 2. Generate & insert blog article
+        // 2. Scrape competitors for the primary keyword
+        const primaryKeyword = `${territory.name} carnival makeup ${new Date().getFullYear()}`;
+        const competitors = await scrapeCompetitors(FIRECRAWL_API_KEY, primaryKeyword);
+        console.log(`[${territory.name}] Scraped ${competitors.length} competitor articles`);
+
+        // 3. Generate & insert blog article with enhanced prompting
+        let blogTitle = "";
+        let blogSlug = "";
         try {
-          const blog = await generateBlogArticle(LOVABLE_API_KEY, territory, trending, sourceData);
+          const blog = await generateBlogArticle(
+            LOVABLE_API_KEY,
+            territory,
+            trending,
+            competitors,
+            sourceData,
+            existingBlogs,
+          );
+
+          blogTitle = blog.title;
+          blogSlug = blog.slug;
+
+          // Append FAQ schema as HTML comment in content for BlogPost to extract
+          let fullContent = blog.body;
+          if (blog.faq_schema) {
+            fullContent += `\n\n<!-- FAQ_SCHEMA_JSON\n${JSON.stringify(blog.faq_schema)}\n-->`;
+          }
+
+          // 4. Generate hero image
+          let imageUrl: string | null = null;
+          try {
+            imageUrl = await generateHeroImage(LOVABLE_API_KEY, supabase, blog.title, blog.slug, territory.name);
+            if (imageUrl) territoryResult.image = true;
+          } catch (imgErr: any) {
+            console.error(`[${territory.name}] Image error:`, imgErr.message);
+          }
 
           const { error: blogErr } = await supabase.from("blog_posts").insert({
             external_id: `ai-${territory.slug}-${Date.now()}`,
             title: blog.title,
             slug: blog.slug,
             excerpt: blog.excerpt,
-            content: blog.body,
+            content: fullContent,
             meta_description: blog.meta_description,
+            image_url: imageUrl,
             post_url: `https://www.carnivalglamhub.com/blogs/${blog.slug}`,
             source: "ai_generated",
             author_name: "Carnival Glam Hub",
@@ -227,34 +395,46 @@ Deno.serve(async (req) => {
 
           if (blogErr) throw blogErr;
           territoryResult.blog = blog.title;
+          territoryResult.internal_links = blog.internal_links_used ?? 0;
+
+          // Add to existing blogs so next territory avoids duplicates
+          existingBlogs.unshift({ title: blog.title, slug: blog.slug });
         } catch (e: any) {
           console.error(`[${territory.name}] Blog error:`, e.message);
           territoryResult.errors.push(`blog: ${e.message}`);
         }
 
-        // 3. Generate social posts (pick 2 random channels)
+        // 5. Generate content ideas (not full social posts)
         try {
-          const shuffled = [...socialChannels].sort(() => Math.random() - 0.5);
-          const picked = shuffled.slice(0, 2);
-          const posts = await generateSocialPosts(LOVABLE_API_KEY, territory, trending, picked);
+          const ideas = await generateContentIdeas(
+            LOVABLE_API_KEY,
+            territory,
+            trending,
+            blogTitle || `${territory.name} carnival content`,
+          );
 
-          for (const post of posts) {
+          for (const idea of ideas) {
             await supabase.from("generated_content").insert({
               territory_id: territory.id,
-              channel: post.channel,
-              content_type: "social_post",
-              title: post.title,
-              body: post.body,
-              hashtags: post.hashtags ?? [],
+              channel: idea.channel ?? "instagram",
+              content_type: "content_idea",
+              title: idea.hook ?? idea.caption_starter,
+              body: JSON.stringify({
+                hook: idea.hook,
+                platform_format: idea.platform_format,
+                talking_points: idea.talking_points,
+                caption_starter: idea.caption_starter,
+              }),
+              hashtags: idea.hashtags ?? [],
               status: "draft",
               ai_model: "gemini-2.5-flash",
-              source_data: { trending_topics: trending.slice(0, 3).map((t) => t.title) },
+              source_data: { blog_title: blogTitle, territory: territory.name },
             });
-            territoryResult.social++;
+            territoryResult.content_ideas++;
           }
         } catch (e: any) {
-          console.error(`[${territory.name}] Social error:`, e.message);
-          territoryResult.errors.push(`social: ${e.message}`);
+          console.error(`[${territory.name}] Content ideas error:`, e.message);
+          territoryResult.errors.push(`ideas: ${e.message}`);
         }
       } catch (e: any) {
         console.error(`[${territory.name}] General error:`, e.message);
@@ -269,6 +449,9 @@ Deno.serve(async (req) => {
       key: "autopilot_last_run",
       value: JSON.stringify({ timestamp: new Date().toISOString(), results }),
     }, { onConflict: "key" });
+
+    // Regenerate sitemap
+    await regenerateSitemap(supabase, SUPABASE_URL, SUPABASE_ANON_KEY);
 
     return json({ success: true, results });
   } catch (e: any) {

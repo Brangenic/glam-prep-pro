@@ -6,14 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { RefreshCw, Zap, Clock, FileText, MessageSquare } from "lucide-react";
+import { RefreshCw, Zap, Clock, FileText, Lightbulb, Image, Link2 } from "lucide-react";
 
 export default function AutopilotTab() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [running, setRunning] = useState(false);
 
-  // Last run info
   const { data: lastRun } = useQuery({
     queryKey: ["autopilot_last_run"],
     queryFn: async () => {
@@ -31,13 +30,12 @@ export default function AutopilotTab() {
     },
   });
 
-  // Recent AI-generated blog posts
   const { data: recentBlogs } = useQuery({
     queryKey: ["autopilot_blogs"],
     queryFn: async () => {
       const { data } = await supabase
         .from("blog_posts")
-        .select("title, slug, created_at, meta_description")
+        .select("title, slug, created_at, meta_description, image_url")
         .eq("source", "ai_generated")
         .order("created_at", { ascending: false })
         .limit(10);
@@ -45,13 +43,13 @@ export default function AutopilotTab() {
     },
   });
 
-  // Recent auto-generated social drafts
-  const { data: recentSocial } = useQuery({
-    queryKey: ["autopilot_social"],
+  const { data: recentIdeas } = useQuery({
+    queryKey: ["autopilot_ideas"],
     queryFn: async () => {
       const { data } = await supabase
         .from("generated_content")
-        .select("title, channel, status, created_at, territories(name)")
+        .select("title, channel, status, created_at, body, hashtags, territories(name)")
+        .eq("content_type", "content_idea")
         .order("created_at", { ascending: false })
         .limit(15);
       return data ?? [];
@@ -69,7 +67,7 @@ export default function AutopilotTab() {
       });
       queryClient.invalidateQueries({ queryKey: ["autopilot_last_run"] });
       queryClient.invalidateQueries({ queryKey: ["autopilot_blogs"] });
-      queryClient.invalidateQueries({ queryKey: ["autopilot_social"] });
+      queryClient.invalidateQueries({ queryKey: ["autopilot_ideas"] });
     } catch (e: any) {
       toast({ title: "Error", description: e.message, variant: "destructive" });
     }
@@ -80,10 +78,13 @@ export default function AutopilotTab() {
     ? new Date(lastRun.timestamp).toLocaleString()
     : "Never";
 
+  const totalImages = lastRun?.results?.filter((r: any) => r.image).length ?? 0;
+  const totalLinks = lastRun?.results?.reduce((sum: number, r: any) => sum + (r.internal_links ?? 0), 0) ?? 0;
+
   return (
     <div className="space-y-6">
-      {/* Status & trigger */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Status cards */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
@@ -92,7 +93,7 @@ export default function AutopilotTab() {
           </CardHeader>
           <CardContent>
             <p className="text-lg font-semibold">{lastRunTime}</p>
-            <p className="text-xs text-muted-foreground mt-1">Runs daily at 6:00 AM UTC</p>
+            <p className="text-xs text-muted-foreground mt-1">Daily at 6:00 AM UTC</p>
           </CardContent>
         </Card>
 
@@ -104,29 +105,53 @@ export default function AutopilotTab() {
           </CardHeader>
           <CardContent>
             <p className="text-lg font-semibold">{recentBlogs?.length ?? 0}</p>
-            <p className="text-xs text-muted-foreground mt-1">Auto-published to /blogs</p>
+            <p className="text-xs text-muted-foreground mt-1">Auto-published</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <MessageSquare className="h-4 w-4" /> Social Drafts
+              <Image className="h-4 w-4" /> AI Images
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-lg font-semibold">{recentSocial?.filter((s: any) => s.status === "draft").length ?? 0}</p>
+            <p className="text-lg font-semibold">{totalImages}</p>
+            <p className="text-xs text-muted-foreground mt-1">Last run</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <Link2 className="h-4 w-4" /> Internal Links
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-semibold">{totalLinks}</p>
+            <p className="text-xs text-muted-foreground mt-1">Last run</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" /> Content Ideas
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-semibold">{recentIdeas?.filter((s: any) => s.status === "draft").length ?? 0}</p>
             <p className="text-xs text-muted-foreground mt-1">Awaiting review</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Run now button */}
+      {/* Run now */}
       <Card>
         <CardContent className="py-4 flex items-center justify-between">
           <div>
             <h3 className="font-medium flex items-center gap-2"><Zap className="h-4 w-4" /> Manual Run</h3>
-            <p className="text-sm text-muted-foreground">Trigger the autopilot content engine now for all territories</p>
+            <p className="text-sm text-muted-foreground">Trigger the supercharged autopilot now for all territories</p>
           </div>
           <Button onClick={handleRunNow} disabled={running}>
             {running ? <><RefreshCw className="h-4 w-4 mr-2 animate-spin" /> Running...</> : <><Zap className="h-4 w-4 mr-2" /> Run Now</>}
@@ -146,7 +171,9 @@ export default function AutopilotTab() {
                 <TableRow>
                   <TableHead>Territory</TableHead>
                   <TableHead>Blog</TableHead>
-                  <TableHead>Social Posts</TableHead>
+                  <TableHead>Image</TableHead>
+                  <TableHead>Links</TableHead>
+                  <TableHead>Ideas</TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -154,8 +181,10 @@ export default function AutopilotTab() {
                 {lastRun.results.map((r: any, i: number) => (
                   <TableRow key={i}>
                     <TableCell className="font-medium">{r.territory}</TableCell>
-                    <TableCell className="max-w-[200px] truncate">{r.blog ?? "—"}</TableCell>
-                    <TableCell>{r.social}</TableCell>
+                    <TableCell className="max-w-[180px] truncate">{r.blog ?? "—"}</TableCell>
+                    <TableCell>{r.image ? "✅" : "—"}</TableCell>
+                    <TableCell>{r.internal_links ?? 0}</TableCell>
+                    <TableCell>{r.content_ideas ?? 0}</TableCell>
                     <TableCell>
                       <Badge variant={r.errors?.length ? "destructive" : "default"}>
                         {r.errors?.length ? `${r.errors.length} error(s)` : "Success"}
@@ -180,15 +209,50 @@ export default function AutopilotTab() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Title</TableHead>
+                  <TableHead>Image</TableHead>
                   <TableHead>Created</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {recentBlogs.map((b: any) => (
                   <TableRow key={b.slug}>
-                    <TableCell className="font-medium max-w-[300px] truncate">{b.title}</TableCell>
+                    <TableCell className="font-medium max-w-[250px] truncate">{b.title}</TableCell>
+                    <TableCell>{b.image_url ? "✅" : "—"}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {new Date(b.created_at).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Content Ideas */}
+      {recentIdeas && recentIdeas.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Recent Content Ideas</CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Hook</TableHead>
+                  <TableHead>Channel</TableHead>
+                  <TableHead>Territory</TableHead>
+                  <TableHead>Created</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {recentIdeas.map((idea: any, i: number) => (
+                  <TableRow key={i}>
+                    <TableCell className="font-medium max-w-[250px] truncate">{idea.title}</TableCell>
+                    <TableCell><Badge variant="outline">{idea.channel}</Badge></TableCell>
+                    <TableCell className="text-sm">{idea.territories?.name ?? "—"}</TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {new Date(idea.created_at).toLocaleDateString()}
                     </TableCell>
                   </TableRow>
                 ))}
