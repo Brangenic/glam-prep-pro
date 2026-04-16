@@ -114,7 +114,7 @@ CHANNEL GUIDELINES: ${channelGuide[channel] ?? channelGuide.instagram}
 
 Return JSON: { "title": "...", "body": "...", "hashtags": ["..."] }`;
 
-  const res = await fetch("https://ai.lovable.dev/v1/chat/completions", {
+  const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${lovableApiKey}`,
