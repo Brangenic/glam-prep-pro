@@ -31,6 +31,7 @@ type BlogPostData = {
   author_avatar_url: string | null;
   published_date: string | null;
   read_time: string | null;
+  meta_description: string | null;
 };
 
 const BlogPost = () => {
@@ -49,7 +50,7 @@ const BlogPost = () => {
 
     const load = async () => {
       const normalizedSlug = decodeURIComponent(slug);
-      const selectColumns = "title, content, excerpt, image_url, author_name, author_avatar_url, published_date, read_time";
+      const selectColumns = "title, content, excerpt, image_url, author_name, author_avatar_url, published_date, read_time, meta_description";
 
       const { data: bySlug } = await supabase
         .from("blog_posts")
@@ -104,8 +105,13 @@ const BlogPost = () => {
     if (post?.title) {
       document.title = `${post.title} | Carnival Glam Hub Blog`;
     }
+    // Set meta description for SEO
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (post?.meta_description && metaDesc) {
+      metaDesc.setAttribute("content", post.meta_description);
+    }
     return () => { document.title = "Carnival Glam Hub"; };
-  }, [post?.title]);
+  }, [post?.title, post?.meta_description]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

@@ -66,11 +66,13 @@ export type Database = {
           external_id: string
           id: string
           image_url: string | null
+          meta_description: string | null
           post_url: string
           published_date: string | null
           raw_payload: Json | null
           read_time: string | null
           slug: string | null
+          source: string
           synced_at: string
           title: string
           updated_at: string
@@ -84,11 +86,13 @@ export type Database = {
           external_id: string
           id?: string
           image_url?: string | null
+          meta_description?: string | null
           post_url: string
           published_date?: string | null
           raw_payload?: Json | null
           read_time?: string | null
           slug?: string | null
+          source?: string
           synced_at?: string
           title: string
           updated_at?: string
@@ -102,11 +106,13 @@ export type Database = {
           external_id?: string
           id?: string
           image_url?: string | null
+          meta_description?: string | null
           post_url?: string
           published_date?: string | null
           raw_payload?: Json | null
           read_time?: string | null
           slug?: string | null
+          source?: string
           synced_at?: string
           title?: string
           updated_at?: string
@@ -116,6 +122,7 @@ export type Database = {
       generated_content: {
         Row: {
           ai_model: string | null
+          auto_publish: boolean
           body: string
           channel: string
           content_type: string
@@ -130,6 +137,7 @@ export type Database = {
         }
         Insert: {
           ai_model?: string | null
+          auto_publish?: boolean
           body: string
           channel?: string
           content_type?: string
@@ -144,6 +152,7 @@ export type Database = {
         }
         Update: {
           ai_model?: string | null
+          auto_publish?: boolean
           body?: string
           channel?: string
           content_type?: string
