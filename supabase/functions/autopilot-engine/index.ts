@@ -25,7 +25,6 @@ async function searchTrending(firecrawlKey: string | undefined): Promise<{ title
   const results: { title: string; description: string }[] = [];
 
   if (!firecrawlKey) {
-    // Fallback: return hardcoded seasonal topic seeds when Firecrawl isn't available
     return [
       { title: `Top Carnival Makeup Trends for ${year}`, description: "Glitter, gems, bold lips and waterproof everything." },
       { title: `Best Jouvert Body Paint That Won't Budge in ${year}`, description: "Water-resistant body paint options for the road." },
@@ -73,11 +72,9 @@ function pickFreshTopic(
     const norm = normalize(topic.title);
     const slug = norm.replace(/\s+/g, "-").slice(0, 80);
 
-    // Skip if title or slug already exists
     if (titleSet.has(norm)) continue;
     if (slugSet.has(slug)) continue;
 
-    // Skip if a very similar title already exists (>60% word overlap)
     const words = new Set(norm.split(" "));
     const isDuplicate = [...titleSet].some((existing) => {
       const existingWords = new Set(existing.split(" "));
@@ -92,11 +89,127 @@ function pickFreshTopic(
   return null;
 }
 
-/* ───── 3. Generate blog article ───── */
+/* ───── 3. Competitor research ───── */
+type CompetitorInsight = {
+  url: string;
+  title: string;
+  keyPoints: string[];
+  wordCount: number;
+};
+
+async function researchCompetitors(
+  topicTitle: string,
+  firecrawlKey: string | undefined,
+): Promise<{ insights: CompetitorInsight[]; gaps: string }> {
+  const competitorArticles: CompetitorInsight[] = [];
+
+  if (firecrawlKey) {
+    // Use Firecrawl search to find top competing articles
+    try {
+      const res = await fetch("https://api.firecrawl.dev/v2/search", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${firecrawlKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: topicTitle,
+          limit: 5,
+          scrapeOptions: { formats: ["markdown"], onlyMainContent: true },
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        for (const item of (data.data ?? data.results ?? []).slice(0, 5)) {
+          const markdown = item.markdown ?? item.description ?? "";
+          const headings = (markdown.match(/^#{1,3}\s+.+$/gm) ?? []).map((h: string) => h.replace(/^#+\s*/, ""));
+          competitorArticles.push({
+            url: item.url ?? "",
+            title: item.title ?? "",
+            keyPoints: headings.slice(0, 8),
+            wordCount: markdown.split(/\s+/).length,
+          });
+        }
+      }
+    } catch (e) {
+      console.error("Firecrawl competitor search failed:", e);
+    }
+  }
+
+  // Fallback: plain fetch if Firecrawl returned nothing
+  if (competitorArticles.length === 0) {
+    const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(topicTitle)}`;
+    try {
+      const res = await fetch(searchUrl, {
+        headers: { "User-Agent": "Mozilla/5.0 (compatible; CarnivalGlamBot/1.0)" },
+      });
+      if (res.ok) {
+        const html = await res.text();
+        const linkMatches = [...html.matchAll(/href="(https?:\/\/[^"]+)"/g)]
+          .map((m) => m[1])
+          .filter((u) => !u.includes("duckduckgo") && !u.includes("ad_domain"))
+          .slice(0, 3);
+
+        for (const url of linkMatches) {
+          try {
+            const pageRes = await fetch(url, {
+              headers: { "User-Agent": "Mozilla/5.0 (compatible; CarnivalGlamBot/1.0)" },
+              signal: AbortSignal.timeout(8000),
+            });
+            if (pageRes.ok) {
+              const pageHtml = await pageRes.text();
+              const titleMatch = pageHtml.match(/<title[^>]*>([^<]+)<\/title>/i);
+              const headings = [...pageHtml.matchAll(/<h[1-3][^>]*>([^<]+)<\/h[1-3]>/gi)]
+                .map((m) => m[1].trim())
+                .slice(0, 8);
+              const textContent = pageHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+              competitorArticles.push({
+                url,
+                title: titleMatch?.[1]?.trim() ?? url,
+                keyPoints: headings,
+                wordCount: textContent.split(/\s+/).length,
+              });
+            }
+          } catch {
+            // skip unreachable pages
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Fallback competitor search failed:", e);
+    }
+  }
+
+  // Build a gap analysis summary for the AI prompt
+  let gaps = "";
+  if (competitorArticles.length > 0) {
+    const allPoints = competitorArticles.flatMap((a) => a.keyPoints);
+    const avgWordCount = Math.round(
+      competitorArticles.reduce((sum, a) => sum + a.wordCount, 0) / competitorArticles.length,
+    );
+    gaps = `COMPETITOR ANALYSIS (${competitorArticles.length} articles found):
+${competitorArticles.map((a, i) => `${i + 1}. "${a.title}" (~${a.wordCount} words)\n   Covers: ${a.keyPoints.join(", ") || "unknown"}`).join("\n")}
+
+Average competitor word count: ~${avgWordCount}
+Common topics covered: ${[...new Set(allPoints)].slice(0, 12).join(", ")}
+
+YOUR MISSION: Write content that OUTPERFORMS these competitors by:
+- Covering angles they missed (e.g. specific product recommendations, insider tips, Caribbean cultural context)
+- Being more actionable with step-by-step advice
+- Including original insights from a professional carnival makeup artist perspective
+- Aiming for at least ${Math.max(900, avgWordCount + 200)} words to be more comprehensive
+- Adding unique value like product links, booking CTAs, and real-world carnival experience`;
+  } else {
+    gaps = "No competitor articles found — write the definitive guide on this topic.";
+  }
+
+  return { insights: competitorArticles, gaps };
+}
+
+/* ───── 4. Generate blog article (competitor-aware) ───── */
 async function generateArticle(
   apiKey: string,
   topic: { title: string; description: string },
   internalLinks: { title: string; slug: string }[],
+  competitorGaps: string,
 ) {
   const linksBlock = internalLinks
     .slice(0, 10)
@@ -109,6 +222,8 @@ Write a FULL SEO-optimized blog article (800-1200 words) based on this topic:
 
 TOPIC: ${topic.title}
 CONTEXT: ${topic.description}
+
+${competitorGaps}
 
 INTERNAL LINKS — weave 2-3 of these naturally into the body:
 ${linksBlock}
@@ -123,7 +238,7 @@ REQUIREMENTS:
 - Include 2-3 internal links from the list above, placed naturally
 - End with a strong CTA to book with Carnival Glam Hub
 - Brand voice: confident, glamorous, inclusive, Caribbean-rooted
-- ORIGINAL content only
+- ORIGINAL content only — do NOT copy competitor content
 
 Also include a FAQ section at the end (3-4 Q&As) and generate a JSON-LD FAQPage schema.
 
@@ -161,7 +276,7 @@ Return JSON only:
   return JSON.parse(content);
 }
 
-/* ───── 4. Trigger sitemap regen ───── */
+/* ───── 5. Trigger sitemap regen ───── */
 async function triggerSitemap(supabaseUrl: string, anonKey: string) {
   try {
     await fetch(`${supabaseUrl}/functions/v1/generate-sitemap`, {
@@ -174,7 +289,7 @@ async function triggerSitemap(supabaseUrl: string, anonKey: string) {
   }
 }
 
-/* ───── 5. IndexNow ping ───── */
+/* ───── 6. IndexNow ping ───── */
 async function pingIndexNow(slug: string) {
   const apiKey = Deno.env.get("INDEXNOW_API_KEY");
   if (!apiKey) {
@@ -239,21 +354,29 @@ Deno.serve(async (req) => {
     }
     console.log(`Selected fresh topic: "${freshTopic.title}"`);
 
-    // Step 4: Generate the blog article
+    // Step 4: Competitor research
+    console.log("Researching competitors...");
+    const { insights: competitors, gaps: competitorGaps } = await researchCompetitors(
+      freshTopic.title,
+      FIRECRAWL_API_KEY,
+    );
+    console.log(`Analyzed ${competitors.length} competitor articles`);
+
+    // Step 5: Generate the blog article with competitor intelligence
     const internalLinks = (existingPosts ?? [])
       .filter((p: any) => p.slug)
       .slice(0, 10);
 
-    const article = await generateArticle(LOVABLE_API_KEY, freshTopic, internalLinks);
+    const article = await generateArticle(LOVABLE_API_KEY, freshTopic, internalLinks, competitorGaps);
     console.log(`Generated article: "${article.title}" (${article.slug})`);
 
-    // Step 5: Append FAQ schema as extractable comment
+    // Step 6: Append FAQ schema as extractable comment
     let fullContent = article.body ?? "";
     if (article.faq_schema) {
       fullContent += `\n\n<!-- FAQ_SCHEMA_JSON\n${JSON.stringify(article.faq_schema)}\n-->`;
     }
 
-    // Step 6: Insert into blog_posts
+    // Step 7: Insert into blog_posts
     const { error: insertErr } = await supabase.from("blog_posts").insert({
       external_id: `ai-engine-${Date.now()}`,
       title: article.title,
@@ -269,7 +392,7 @@ Deno.serve(async (req) => {
     if (insertErr) throw new Error(`Insert failed: ${insertErr.message}`);
     console.log("Blog post published successfully");
 
-    // Step 7: Trigger sitemap regeneration + IndexNow ping
+    // Step 8: Trigger sitemap regeneration + IndexNow ping
     await Promise.all([
       triggerSitemap(SUPABASE_URL, SUPABASE_ANON_KEY),
       pingIndexNow(article.slug),
@@ -285,6 +408,7 @@ Deno.serve(async (req) => {
         slug: article.slug,
         internal_links_used: article.internal_links_used ?? 0,
         has_faq_schema: !!article.faq_schema,
+        competitors_analyzed: competitors.length,
       }),
     }, { onConflict: "key" });
 
@@ -296,6 +420,7 @@ Deno.serve(async (req) => {
       url: `https://www.carnivalglamhub.com/blogs/${article.slug}`,
       internal_links_used: article.internal_links_used ?? 0,
       has_faq_schema: !!article.faq_schema,
+      competitors_analyzed: competitors.length,
     });
   } catch (e: any) {
     console.error("Autopilot engine error:", e);
