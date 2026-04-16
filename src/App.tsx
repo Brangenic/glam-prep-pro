@@ -41,6 +41,8 @@ const App = () => (
           <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
           <Route path="/miami" element={<Navigate to="/#destinations" replace />} />
           <Route path="/toronto" element={<Navigate to="/#destinations" replace />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
