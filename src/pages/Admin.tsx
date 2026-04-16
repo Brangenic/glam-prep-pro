@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, Sparkles, Check, Trash2, RefreshCw } from "lucide-react";
+import { LogOut, Sparkles, Check, Trash2, RefreshCw, Bot } from "lucide-react";
+import AdminChat from "@/components/admin/AdminChat";
 
 export default function Admin() {
   const { user, loading, isAdmin, signOut } = useAuth();
@@ -102,12 +103,19 @@ export default function Admin() {
       </header>
 
       <main className="max-w-6xl mx-auto p-6 space-y-6">
-        <Tabs defaultValue="content">
+        <Tabs defaultValue="assistant">
           <TabsList>
+            <TabsTrigger value="assistant" className="gap-1.5"><Bot className="h-4 w-4" /> AI Assistant</TabsTrigger>
             <TabsTrigger value="content">Generated Content</TabsTrigger>
             <TabsTrigger value="generate">Generate New</TabsTrigger>
             <TabsTrigger value="territories">Territories</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="assistant">
+            <Card>
+              <AdminChat />
+            </Card>
+          </TabsContent>
 
           <TabsContent value="generate" className="space-y-4">
             <Card>
