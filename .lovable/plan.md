@@ -1,97 +1,99 @@
 
 
-## Plan: Autonomous Content Engine — "Smart Site"
+## Plan: Supercharged Autopilot Engine
 
-### What It Does
+### Current State
+The autopilot generates 10 blog posts + 20 social drafts daily. Social posts aren't needed — just **social post ideas**. Now we make it truly powerful.
 
-An automated daily pipeline that turns your site into a self-feeding content machine. Every day it:
+### What We're Adding
 
-1. **Searches trending carnival topics** — uses Firecrawl to find what people are searching for right now (e.g. "Trinidad carnival 2026 makeup", "best body paint for jouvert")
-2. **Auto-generates SEO blog articles** — writes full 800-1200 word blog posts targeting those trending searches, published directly to your `/blogs` page
-3. **Auto-generates social posts** — creates Instagram, WhatsApp, Facebook, and Twitter content for each territory
-4. **Auto-publishes to the site** — blog content goes live automatically (social posts stay as drafts for review)
-5. **Tracks performance** — logs what was generated, when, and for which territory
+**1. Competitor Intelligence Scraping**
+Before writing each blog, the engine scrapes top-ranking competitor articles for the same keywords. It analyzes what's ranking, what's missing, and generates content that fills the gaps — not copying, but **outperforming** existing content.
 
-### Architecture
+**2. Duplicate Topic Prevention**
+Before generating a new blog, the engine checks existing `blog_posts` titles and slugs to avoid writing about the same topic twice. It tells the AI "these topics are already covered — find something NEW."
+
+**3. Internal Linking Web**
+Each new blog post gets 2-3 links to existing blog posts on the site (not just the booking page). This builds a powerful internal link network that search engines love. The engine fetches recent post slugs and titles and instructs the AI to weave them in naturally.
+
+**4. AI-Generated Featured Images**
+Each blog post gets a unique AI-generated carnival-themed hero image using the Lovable AI image generation model. Stored in a storage bucket and linked to the post.
+
+**5. FAQ Schema Generation**
+Each blog post gets a JSON-LD FAQ schema block embedded in the content. This makes posts eligible for Google's "People Also Ask" rich results — massive visibility boost.
+
+**6. Auto-Sitemap Regeneration**
+After each autopilot run, the engine regenerates `/sitemap.xml` dynamically from all blog posts in the database, so Google discovers new content immediately.
+
+**7. Social Post Ideas (not full posts)**
+Instead of full social posts, generate **content ideas** with hooks, angles, and suggested hashtags — formatted as inspiration for the admin to adapt.
+
+**8. Smarter Trending Search**
+Expand search queries to include competitor brand names, seasonal events, and "people also ask" style queries. Use broader carnival lifestyle topics (fashion, travel, fetes, costumes) not just makeup.
+
+### Architecture Update
 
 ```text
-Daily Cron (6 AM) ──► autopilot-content (Edge Function)
+Daily Cron (6 AM) ──► autopilot-content (Enhanced)
                            │
-                    ┌──────┼──────┐
-                    ▼      ▼      ▼
-              Firecrawl  Google   Existing
-              Trending   Reviews  Blog Data
-                    │      │      │
-                    └──────┼──────┘
+                    ┌──────┼──────────┐
+                    ▼      ▼          ▼
+              Firecrawl  Competitor   Existing
+              Trending   Analysis     Blog Data
+                    │      │          │
+                    └──────┼──────────┘
                            ▼
                     Lovable AI (gemini-2.5-flash)
                            │
-                    ┌──────┼──────┐
-                    ▼      ▼      ▼
-              SEO Blog   Social   generated_content
-              Articles   Posts    (database)
-              (auto-     (draft
-              published)  status)
+                    ┌──────┼──────┬──────────┐
+                    ▼      ▼      ▼          ▼
+              SEO Blog   Images  Social     Sitemap
+              + FAQ      (AI)    Ideas      Regen
+              + Links
 ```
 
 ### Implementation Steps
 
-**1. New Edge Function: `autopilot-content`**
-- Runs autonomously (no user input needed)
-- For each active territory:
-  - Searches Firecrawl for trending carnival + makeup queries
-  - Picks the top 2-3 trending topics
-  - Generates one full SEO blog article per territory (title, slug, excerpt, full markdown body, meta description)
-  - Generates 2 social posts per territory (Instagram + one random channel)
-- Blog articles are inserted directly into `blog_posts` table with status "published" — they appear on `/blogs` immediately
-- Social posts go into `generated_content` as drafts
+**Step 1: Storage bucket for AI images**
+- Create `blog-images` storage bucket with public read access
+- Edge function generates images and uploads them
 
-**2. Database changes**
-- Add `source` column to `blog_posts` (`'wix_sync'` or `'ai_generated'`, default `'wix_sync'`) to distinguish AI-written posts from synced ones
-- Add `meta_description` column to `blog_posts` for SEO
-- Add `auto_publish` column to `generated_content` (boolean, default false)
+**Step 2: Rewrite `autopilot-content` edge function**
+- Add duplicate detection (query existing blog slugs/titles)
+- Add competitor scraping (Firecrawl top 3 results for target keyword, extract what they cover)
+- Add internal linking (fetch 10 recent blog slugs/titles, pass to AI prompt)
+- Add FAQ schema generation in blog body
+- Expand trending queries to carnival lifestyle topics
+- Change social generation to "content ideas" format
+- Generate AI image per blog post via Lovable AI image model
+- Upload image to storage, set `image_url` on blog post
 
-**3. Daily cron job via pg_cron**
-- Schedule `autopilot-content` to run daily at 6:00 AM UTC
-- Uses `pg_cron` + `pg_net` to call the edge function automatically
+**Step 3: Dynamic sitemap edge function**
+- New `generate-sitemap` edge function that queries all blog posts and builds XML sitemap
+- Called at end of each autopilot run
+- Also serves as a route the frontend can hit
 
-**4. SEO enhancements for AI blog posts**
-- Auto-generated blog posts include: H2 headings, internal links to booking page, territory-specific keywords, CTA at the end
-- `BlogPost.tsx` updated to render meta description tag for SEO
-- Sitemap generation considers AI-generated posts
+**Step 4: Serve dynamic sitemap**
+- Update the app to fetch sitemap from the edge function or serve from `site_config`
+- Store generated sitemap XML in `site_config` so it's served statically
 
-**5. Admin visibility**
-- New "Autopilot" tab in admin dashboard showing:
-  - Last run timestamp and results
-  - Toggle to enable/disable autopilot per territory
-  - Log of generated content with counts
-
-### What the Daily Output Looks Like
-
-For 10 active territories, each day the site would produce:
-- **10 new SEO blog posts** (one per territory, targeting trending searches)
-- **20 social media drafts** (2 per territory, ready for review)
-- All blog posts live on the site within minutes, indexed by search engines
-
-### Example Generated Blog Post
-
-> **Title**: "5 Jouvert Makeup Looks That Won't Budge in Trinidad Carnival 2026"
-> **Slug**: `/blogs/jouvert-makeup-looks-trinidad-2026`
-> **Content**: Full 1000-word article with tips, product links, booking CTA
-> **Meta**: "Discover the best waterproof jouvert makeup looks for Trinidad Carnival 2026. Book your glam artist with Carnival Glam Hub."
+**Step 5: Update AutopilotTab UI**
+- Show image generation status in run results
+- Show "Content Ideas" section instead of "Social Drafts"
+- Add count of internal links created
 
 ### Files Changed
-- **New**: `supabase/functions/autopilot-content/index.ts`
-- **New migration**: Add `source`, `meta_description` columns to `blog_posts`; add `auto_publish` to `generated_content`
-- **New migration**: pg_cron job scheduling
-- **Modified**: `src/pages/Admin.tsx` — add Autopilot tab
-- **Modified**: `src/pages/BlogPost.tsx` — render meta description
-- **Modified**: `index.html` — dynamic meta tag support
+- **Modified**: `supabase/functions/autopilot-content/index.ts` — major rewrite with all enhancements
+- **New**: `supabase/functions/generate-sitemap/index.ts` — dynamic sitemap builder
+- **New migration**: Create `blog-images` storage bucket
+- **Modified**: `src/components/admin/AutopilotTab.tsx` — updated UI for new features
+- **Modified**: `generated_content` usage — social posts become "content ideas"
 
-### Important Notes
-- Blog posts are generated as original content, not copied from other sites
-- Each post targets specific long-tail keywords people are actually searching for
-- The AI uses your real reviews, products, and brand voice to stay authentic
-- Social posts stay as drafts so you can review before posting externally
-- You can disable autopilot for any territory from the admin dashboard
+### Daily Output (10 territories)
+- 10 SEO blog posts with competitor-aware content
+- 10 AI-generated hero images
+- 10 FAQ schema blocks (Google rich results)
+- 20-30 internal links woven across new posts
+- 10 social content idea briefs
+- 1 fresh sitemap submitted to search engines
 
