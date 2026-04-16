@@ -1,63 +1,97 @@
 
 
-## Plan: Admin AI Chat for Site Management
+## Plan: Autonomous Content Engine — "Smart Site"
 
 ### What It Does
-A chat interface in the `/admin` dashboard where admins talk to an AI assistant that can:
-- Generate and publish content (social posts, blog drafts) — already partially built
-- Update site configuration: hero text, announcements, featured destinations, CTA labels
-- Query site data: "how many reviews do we have?", "show me draft content for Jamaica"
+
+An automated daily pipeline that turns your site into a self-feeding content machine. Every day it:
+
+1. **Searches trending carnival topics** — uses Firecrawl to find what people are searching for right now (e.g. "Trinidad carnival 2026 makeup", "best body paint for jouvert")
+2. **Auto-generates SEO blog articles** — writes full 800-1200 word blog posts targeting those trending searches, published directly to your `/blogs` page
+3. **Auto-generates social posts** — creates Instagram, WhatsApp, Facebook, and Twitter content for each territory
+4. **Auto-publishes to the site** — blog content goes live automatically (social posts stay as drafts for review)
+5. **Tracks performance** — logs what was generated, when, and for which territory
 
 ### Architecture
 
 ```text
-Admin Chat UI ──► Edge Function (admin-chat) ──► Lovable AI
-                                                    │
-                                              Tool Calling
-                                                    │
-                                    ┌───────────────┼───────────────┐
-                                    ▼               ▼               ▼
-                              site_config      generated_content   queries
-                              (DB table)       (existing table)    (read-only)
+Daily Cron (6 AM) ──► autopilot-content (Edge Function)
+                           │
+                    ┌──────┼──────┐
+                    ▼      ▼      ▼
+              Firecrawl  Google   Existing
+              Trending   Reviews  Blog Data
+                    │      │      │
+                    └──────┼──────┘
+                           ▼
+                    Lovable AI (gemini-2.5-flash)
+                           │
+                    ┌──────┼──────┐
+                    ▼      ▼      ▼
+              SEO Blog   Social   generated_content
+              Articles   Posts    (database)
+              (auto-     (draft
+              published)  status)
 ```
 
 ### Implementation Steps
 
-**1. Create `site_config` table**
-- Key-value store for dynamic site elements (hero headline, hero subtitle, announcement banner, featured territory, CTA text)
-- Public read access (site renders from it), admin write access
-- Site components read from this table with sensible defaults as fallback
+**1. New Edge Function: `autopilot-content`**
+- Runs autonomously (no user input needed)
+- For each active territory:
+  - Searches Firecrawl for trending carnival + makeup queries
+  - Picks the top 2-3 trending topics
+  - Generates one full SEO blog article per territory (title, slug, excerpt, full markdown body, meta description)
+  - Generates 2 social posts per territory (Instagram + one random channel)
+- Blog articles are inserted directly into `blog_posts` table with status "published" — they appear on `/blogs` immediately
+- Social posts go into `generated_content` as drafts
 
-**2. Create `admin-chat` Edge Function**
-- Uses Lovable AI with tool calling
-- Tools available to the AI:
-  - `update_site_config` — change hero text, banners, CTAs
-  - `generate_content` — create social/blog content for a territory
-  - `publish_content` — approve and publish draft content
-  - `query_data` — read stats (review count, content count, territories)
-- Admin-only: validates JWT and checks `has_role(admin)`
+**2. Database changes**
+- Add `source` column to `blog_posts` (`'wix_sync'` or `'ai_generated'`, default `'wix_sync'`) to distinguish AI-written posts from synced ones
+- Add `meta_description` column to `blog_posts` for SEO
+- Add `auto_publish` column to `generated_content` (boolean, default false)
 
-**3. Add Chat tab to Admin dashboard**
-- New "AI Assistant" tab in the existing admin Tabs component
-- Chat UI similar to the public Glam Bot but styled for admin
-- Shows what actions the AI took (e.g., "Updated hero headline to ...")
+**3. Daily cron job via pg_cron**
+- Schedule `autopilot-content` to run daily at 6:00 AM UTC
+- Uses `pg_cron` + `pg_net` to call the edge function automatically
 
-**4. Update site components to use `site_config`**
-- Hero, FinalCTA, and Navbar read dynamic text from `site_config` with hardcoded defaults as fallback
-- Uses React Query with a long stale time so it doesn't over-fetch
+**4. SEO enhancements for AI blog posts**
+- Auto-generated blog posts include: H2 headings, internal links to booking page, territory-specific keywords, CTA at the end
+- `BlogPost.tsx` updated to render meta description tag for SEO
+- Sitemap generation considers AI-generated posts
 
-### What the Admin Experience Looks Like
-- Admin: "Change the hero headline to 'Get Your Carnival Glam On'"
-- AI: "Done — I've updated the hero headline. It's live now."
-- Admin: "Generate 3 Instagram posts for Trinidad carnival"
-- AI: "Created 3 draft posts for Trinidad. You can review them in the Content tab."
-- Admin: "How many 5-star reviews do we have?"
-- AI: "You currently have 47 five-star Google reviews."
+**5. Admin visibility**
+- New "Autopilot" tab in admin dashboard showing:
+  - Last run timestamp and results
+  - Toggle to enable/disable autopilot per territory
+  - Log of generated content with counts
+
+### What the Daily Output Looks Like
+
+For 10 active territories, each day the site would produce:
+- **10 new SEO blog posts** (one per territory, targeting trending searches)
+- **20 social media drafts** (2 per territory, ready for review)
+- All blog posts live on the site within minutes, indexed by search engines
+
+### Example Generated Blog Post
+
+> **Title**: "5 Jouvert Makeup Looks That Won't Budge in Trinidad Carnival 2026"
+> **Slug**: `/blogs/jouvert-makeup-looks-trinidad-2026`
+> **Content**: Full 1000-word article with tips, product links, booking CTA
+> **Meta**: "Discover the best waterproof jouvert makeup looks for Trinidad Carnival 2026. Book your glam artist with Carnival Glam Hub."
 
 ### Files Changed
-- **New**: `supabase/functions/admin-chat/index.ts`
-- **New migration**: `site_config` table + RLS
-- **Modified**: `src/pages/Admin.tsx` — add AI Assistant tab
-- **Modified**: `src/components/landing/Hero.tsx` — read from `site_config`
-- **Modified**: `src/components/landing/FinalCTA.tsx` — read from `site_config`
+- **New**: `supabase/functions/autopilot-content/index.ts`
+- **New migration**: Add `source`, `meta_description` columns to `blog_posts`; add `auto_publish` to `generated_content`
+- **New migration**: pg_cron job scheduling
+- **Modified**: `src/pages/Admin.tsx` — add Autopilot tab
+- **Modified**: `src/pages/BlogPost.tsx` — render meta description
+- **Modified**: `index.html` — dynamic meta tag support
+
+### Important Notes
+- Blog posts are generated as original content, not copied from other sites
+- Each post targets specific long-tail keywords people are actually searching for
+- The AI uses your real reviews, products, and brand voice to stay authentic
+- Social posts stay as drafts so you can review before posting externally
+- You can disable autopilot for any territory from the admin dashboard
 
