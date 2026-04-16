@@ -9,6 +9,8 @@ import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import Auth from "./pages/Auth.tsx";
+import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
