@@ -269,8 +269,11 @@ Deno.serve(async (req) => {
     if (insertErr) throw new Error(`Insert failed: ${insertErr.message}`);
     console.log("Blog post published successfully");
 
-    // Step 7: Trigger sitemap regeneration
-    await triggerSitemap(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Step 7: Trigger sitemap regeneration + IndexNow ping
+    await Promise.all([
+      triggerSitemap(SUPABASE_URL, SUPABASE_ANON_KEY),
+      pingIndexNow(article.slug),
+    ]);
 
     // Log the run
     await supabase.from("site_config").upsert({
