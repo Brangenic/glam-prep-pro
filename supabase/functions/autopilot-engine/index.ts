@@ -174,6 +174,34 @@ async function triggerSitemap(supabaseUrl: string, anonKey: string) {
   }
 }
 
+/* ───── 5. IndexNow ping ───── */
+async function pingIndexNow(slug: string) {
+  const apiKey = Deno.env.get("INDEXNOW_API_KEY");
+  if (!apiKey) {
+    console.warn("INDEXNOW_API_KEY not set — skipping IndexNow ping");
+    return;
+  }
+
+  const host = "www.carnivalglamhub.com";
+  const url = `https://${host}/blogs/${slug}`;
+
+  try {
+    const res = await fetch("https://api.indexnow.org/IndexNow", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        host,
+        key: apiKey,
+        keyLocation: `https://${host}/${apiKey}.txt`,
+        urlList: [url],
+      }),
+    });
+    console.log(`IndexNow ping for ${url}: ${res.status}`);
+  } catch (e) {
+    console.error("IndexNow ping failed:", e);
+  }
+}
+
 /* ───── Main handler ───── */
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
