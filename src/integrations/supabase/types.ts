@@ -113,6 +113,59 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_content: {
+        Row: {
+          ai_model: string | null
+          body: string
+          channel: string
+          content_type: string
+          created_at: string
+          hashtags: string[] | null
+          id: string
+          source_data: Json | null
+          status: string
+          territory_id: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          ai_model?: string | null
+          body: string
+          channel?: string
+          content_type?: string
+          created_at?: string
+          hashtags?: string[] | null
+          id?: string
+          source_data?: Json | null
+          status?: string
+          territory_id?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          ai_model?: string | null
+          body?: string
+          channel?: string
+          content_type?: string
+          created_at?: string
+          hashtags?: string[] | null
+          id?: string
+          source_data?: Json | null
+          status?: string
+          territory_id?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_content_territory_id_fkey"
+            columns: ["territory_id"]
+            isOneToOne: false
+            referencedRelation: "territories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       google_reviews: {
         Row: {
           author_name: string | null
@@ -181,6 +234,45 @@ export type Database = {
           source_key?: string
           source_url?: string
           status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      territories: {
+        Row: {
+          active: boolean
+          country: string
+          created_at: string
+          event_dates: string | null
+          hashtags: string[] | null
+          id: string
+          keywords: string[] | null
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          country: string
+          created_at?: string
+          event_dates?: string | null
+          hashtags?: string[] | null
+          id?: string
+          keywords?: string[] | null
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          country?: string
+          created_at?: string
+          event_dates?: string | null
+          hashtags?: string[] | null
+          id?: string
+          keywords?: string[] | null
+          name?: string
+          slug?: string
           updated_at?: string
         }
         Relationships: []
