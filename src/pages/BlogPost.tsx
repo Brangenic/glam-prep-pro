@@ -105,13 +105,31 @@ const BlogPost = () => {
     if (post?.title) {
       document.title = `${post.title} | Carnival Glam Hub Blog`;
     }
-    // Set meta description for SEO
     const metaDesc = document.querySelector('meta[name="description"]');
     if (post?.meta_description && metaDesc) {
       metaDesc.setAttribute("content", post.meta_description);
     }
-    return () => { document.title = "Carnival Glam Hub"; };
-  }, [post?.title, post?.meta_description]);
+
+    // Extract and inject FAQ schema from AI-generated content
+    let faqScript: HTMLScriptElement | null = null;
+    if (post?.content) {
+      const faqMatch = post.content.match(/<!-- FAQ_SCHEMA_JSON\n([\s\S]*?)\n-->/);
+      if (faqMatch?.[1]) {
+        try {
+          const faqSchema = JSON.parse(faqMatch[1]);
+          faqScript = document.createElement("script");
+          faqScript.type = "application/ld+json";
+          faqScript.textContent = JSON.stringify(faqSchema);
+          document.head.appendChild(faqScript);
+        } catch {}
+      }
+    }
+
+    return () => {
+      document.title = "Carnival Glam Hub";
+      if (faqScript) faqScript.remove();
+    };
+  }, [post?.title, post?.meta_description, post?.content]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
