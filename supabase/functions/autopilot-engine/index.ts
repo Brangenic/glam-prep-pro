@@ -401,8 +401,9 @@ Deno.serve(async (req) => {
     const article = await generateArticle(LOVABLE_API_KEY, freshTopic, internalLinks, competitorGaps);
     console.log(`Generated article: "${article.title}" (${article.slug})`);
 
-    // Step 6: Generate hero image
-    const heroImageUrl = await generateHeroImage(LOVABLE_API_KEY, supabase, article.title, article.slug);
+    // Step 6: Pick hero image from curated pool
+    const heroImageUrl = pickPoolImage();
+    console.log(`Selected hero image from pool: ${heroImageUrl}`);
 
     // Step 7: Append FAQ schema as extractable comment
     let fullContent = article.body ?? "";
