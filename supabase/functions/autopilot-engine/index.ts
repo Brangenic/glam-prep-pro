@@ -304,75 +304,8 @@ Return JSON only:
   return JSON.parse(content);
 }
 
-/* ───── 5. Generate hero image ───── */
-async function generateHeroImage(
-  apiKey: string,
-  supabase: ReturnType<typeof createClient>,
-  title: string,
-  slug: string,
-): Promise<string | null> {
-  try {
-    const prompt = `A vibrant, high-quality editorial photograph for a carnival beauty blog article titled "${title}". The image should feature Caribbean carnival aesthetics: colorful feathered costumes, glitter makeup, bold face paint, tropical flowers, festival energy. Professional photography style, warm golden lighting, bokeh background, magazine-quality. No text or words in the image.`;
-
-    console.log("Generating hero image...");
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "google/gemini-3.1-flash-image-preview",
-        messages: [{ role: "user", content: prompt }],
-        modalities: ["image", "text"],
-      }),
-    });
-
-    if (!res.ok) {
-      console.error(`Hero image generation failed: ${res.status}`);
-      return null;
-    }
-
-    const data = await res.json();
-    const imageData = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-    if (!imageData) {
-      console.error("No image data in AI response");
-      return null;
-    }
-
-    // Extract base64 data (strip the data:image/png;base64, prefix)
-    const base64Match = imageData.match(/^data:image\/(\w+);base64,(.+)$/);
-    if (!base64Match) {
-      console.error("Invalid base64 image format");
-      return null;
-    }
-
-    const imageFormat = base64Match[1]; // png, jpeg, etc.
-    const base64String = base64Match[2];
-    const imageBytes = decode(base64String);
-    const filePath = `${slug}.${imageFormat}`;
-
-    // Upload to blog-images bucket
-    const { error: uploadErr } = await supabase.storage
-      .from("blog-images")
-      .upload(filePath, imageBytes, {
-        contentType: `image/${imageFormat}`,
-        upsert: true,
-      });
-
-    if (uploadErr) {
-      console.error("Image upload failed:", uploadErr.message);
-      return null;
-    }
-
-    const { data: publicUrl } = supabase.storage
-      .from("blog-images")
-      .getPublicUrl(filePath);
-
-    console.log(`Hero image uploaded: ${publicUrl.publicUrl}`);
-    return publicUrl.publicUrl;
-  } catch (e) {
-    console.error("Hero image generation error:", e);
-    return null;
-  }
-}
+/* ───── 5. Pick hero image from curated pool (real event photography) ───── */
+// Replaced AI image generation with random selection from PHOTO_POOL above.
 
 /* ───── 6. Trigger sitemap regen ───── */
 async function triggerSitemap(supabaseUrl: string, anonKey: string) {
