@@ -1,10 +1,40 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { decode } from "https://deno.land/std@0.203.0/encoding/base64.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+/* ───── Curated photo pool (real Carnival Glam Hub event photography) ───── */
+const POOL_BASE = "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/pool";
+const PHOTO_POOL: string[] = [
+  `${POOL_BASE}/gallery-1.jpg`,
+  `${POOL_BASE}/gallery-2.jpg`,
+  `${POOL_BASE}/gallery-3.jpg`,
+  `${POOL_BASE}/gallery-4.jpg`,
+  `${POOL_BASE}/gallery-5.jpeg`,
+  `${POOL_BASE}/gallery-6.jpg`,
+  `${POOL_BASE}/gallery-7.jpg`,
+  `${POOL_BASE}/gallery-8.jpg`,
+  `${POOL_BASE}/gallery-9.jpg`,
+  `${POOL_BASE}/gallery-10.jpg`,
+  `${POOL_BASE}/gallery-11.jpg`,
+  `${POOL_BASE}/gallery-12.jpg`,
+  `${POOL_BASE}/gallery-13.jpg`,
+  `${POOL_BASE}/gallery-14.jpg`,
+  `${POOL_BASE}/carnival-1.jpg`,
+  `${POOL_BASE}/carnival-3.jpg`,
+  `${POOL_BASE}/carnival-4.jpg`,
+  `${POOL_BASE}/carnival-5.jpg`,
+  `${POOL_BASE}/carnival-7.jpg`,
+  `${POOL_BASE}/carnival-8.jpg`,
+  `${POOL_BASE}/carnival-9.jpg`,
+  `${POOL_BASE}/carnival-10.jpg`,
+];
+
+function pickPoolImage(): string {
+  return PHOTO_POOL[Math.floor(Math.random() * PHOTO_POOL.length)];
+}
 
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), {
@@ -274,75 +304,8 @@ Return JSON only:
   return JSON.parse(content);
 }
 
-/* ───── 5. Generate hero image ───── */
-async function generateHeroImage(
-  apiKey: string,
-  supabase: ReturnType<typeof createClient>,
-  title: string,
-  slug: string,
-): Promise<string | null> {
-  try {
-    const prompt = `A vibrant, high-quality editorial photograph for a carnival beauty blog article titled "${title}". The image should feature Caribbean carnival aesthetics: colorful feathered costumes, glitter makeup, bold face paint, tropical flowers, festival energy. Professional photography style, warm golden lighting, bokeh background, magazine-quality. No text or words in the image.`;
-
-    console.log("Generating hero image...");
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "google/gemini-3.1-flash-image-preview",
-        messages: [{ role: "user", content: prompt }],
-        modalities: ["image", "text"],
-      }),
-    });
-
-    if (!res.ok) {
-      console.error(`Hero image generation failed: ${res.status}`);
-      return null;
-    }
-
-    const data = await res.json();
-    const imageData = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-    if (!imageData) {
-      console.error("No image data in AI response");
-      return null;
-    }
-
-    // Extract base64 data (strip the data:image/png;base64, prefix)
-    const base64Match = imageData.match(/^data:image\/(\w+);base64,(.+)$/);
-    if (!base64Match) {
-      console.error("Invalid base64 image format");
-      return null;
-    }
-
-    const imageFormat = base64Match[1]; // png, jpeg, etc.
-    const base64String = base64Match[2];
-    const imageBytes = decode(base64String);
-    const filePath = `${slug}.${imageFormat}`;
-
-    // Upload to blog-images bucket
-    const { error: uploadErr } = await supabase.storage
-      .from("blog-images")
-      .upload(filePath, imageBytes, {
-        contentType: `image/${imageFormat}`,
-        upsert: true,
-      });
-
-    if (uploadErr) {
-      console.error("Image upload failed:", uploadErr.message);
-      return null;
-    }
-
-    const { data: publicUrl } = supabase.storage
-      .from("blog-images")
-      .getPublicUrl(filePath);
-
-    console.log(`Hero image uploaded: ${publicUrl.publicUrl}`);
-    return publicUrl.publicUrl;
-  } catch (e) {
-    console.error("Hero image generation error:", e);
-    return null;
-  }
-}
+/* ───── 5. Pick hero image from curated pool (real event photography) ───── */
+// Replaced AI image generation with random selection from PHOTO_POOL above.
 
 /* ───── 6. Trigger sitemap regen ───── */
 async function triggerSitemap(supabaseUrl: string, anonKey: string) {
@@ -438,8 +401,9 @@ Deno.serve(async (req) => {
     const article = await generateArticle(LOVABLE_API_KEY, freshTopic, internalLinks, competitorGaps);
     console.log(`Generated article: "${article.title}" (${article.slug})`);
 
-    // Step 6: Generate hero image
-    const heroImageUrl = await generateHeroImage(LOVABLE_API_KEY, supabase, article.title, article.slug);
+    // Step 6: Pick hero image from curated pool
+    const heroImageUrl = pickPoolImage();
+    console.log(`Selected hero image from pool: ${heroImageUrl}`);
 
     // Step 7: Append FAQ schema as extractable comment
     let fullContent = article.body ?? "";
