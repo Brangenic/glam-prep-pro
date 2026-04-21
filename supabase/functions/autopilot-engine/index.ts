@@ -1,10 +1,40 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { decode } from "https://deno.land/std@0.203.0/encoding/base64.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+/* ───── Curated photo pool (real Carnival Glam Hub event photography) ───── */
+const POOL_BASE = "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/pool";
+const PHOTO_POOL: string[] = [
+  `${POOL_BASE}/gallery-1.jpg`,
+  `${POOL_BASE}/gallery-2.jpg`,
+  `${POOL_BASE}/gallery-3.jpg`,
+  `${POOL_BASE}/gallery-4.jpg`,
+  `${POOL_BASE}/gallery-5.jpeg`,
+  `${POOL_BASE}/gallery-6.jpg`,
+  `${POOL_BASE}/gallery-7.jpg`,
+  `${POOL_BASE}/gallery-8.jpg`,
+  `${POOL_BASE}/gallery-9.jpg`,
+  `${POOL_BASE}/gallery-10.jpg`,
+  `${POOL_BASE}/gallery-11.jpg`,
+  `${POOL_BASE}/gallery-12.jpg`,
+  `${POOL_BASE}/gallery-13.jpg`,
+  `${POOL_BASE}/gallery-14.jpg`,
+  `${POOL_BASE}/carnival-1.jpg`,
+  `${POOL_BASE}/carnival-3.jpg`,
+  `${POOL_BASE}/carnival-4.jpg`,
+  `${POOL_BASE}/carnival-5.jpg`,
+  `${POOL_BASE}/carnival-7.jpg`,
+  `${POOL_BASE}/carnival-8.jpg`,
+  `${POOL_BASE}/carnival-9.jpg`,
+  `${POOL_BASE}/carnival-10.jpg`,
+];
+
+function pickPoolImage(): string {
+  return PHOTO_POOL[Math.floor(Math.random() * PHOTO_POOL.length)];
+}
 
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), {
