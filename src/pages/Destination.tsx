@@ -1,12 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { BOOKING_URL, destinations, getDestinationBySlug } from "@/data/destinations";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  BOOKING_URL,
+  destinations,
+  getDestinationBySlug,
+  getDestinationFaqs,
+} from "@/data/destinations";
 
 const Destination = () => {
   const { slug = "" } = useParams();
   const dest = getDestinationBySlug(slug);
+  const faqs = useMemo(() => (dest ? getDestinationFaqs(dest) : []), [dest]);
 
   useEffect(() => {
     if (!dest) return;
@@ -32,33 +44,84 @@ const Destination = () => {
     }
     canonical.setAttribute("href", `https://www.carnivalglamhub.com/destinations/${dest.slug}`);
 
-    const ldId = "destination-jsonld";
-    let ld = document.getElementById(ldId) as HTMLScriptElement | null;
-    if (!ld) {
-      ld = document.createElement("script");
-      ld.type = "application/ld+json";
-      ld.id = ldId;
-      document.head.appendChild(ld);
-    }
-    ld.textContent = JSON.stringify({
+    const pageUrl = `https://www.carnivalglamhub.com/destinations/${dest.slug}`;
+
+    const upsertJsonLd = (id: string, data: unknown) => {
+      let el = document.getElementById(id) as HTMLScriptElement | null;
+      if (!el) {
+        el = document.createElement("script");
+        el.type = "application/ld+json";
+        el.id = id;
+        document.head.appendChild(el);
+      }
+      el.textContent = JSON.stringify(data);
+    };
+
+    upsertJsonLd("destination-service-jsonld", {
       "@context": "https://schema.org",
       "@type": "Service",
       name: `${dest.name} Glam Services`,
+      serviceType: `${dest.shortName} Carnival Makeup, Hair & Body Art`,
       description: dest.metaDescription,
-      url: `https://www.carnivalglamhub.com/destinations/${dest.slug}`,
-      areaServed: dest.shortName,
+      url: pageUrl,
+      areaServed: { "@type": "Place", name: dest.shortName },
       provider: {
         "@type": "Organization",
         name: "Carnival Glam Hub",
         url: "https://www.carnivalglamhub.com",
+        telephone: "+1-876-509-0997",
+        email: "Bookings@carnivalglamhub.com",
       },
-      offers: { "@type": "Offer", url: BOOKING_URL, availability: "https://schema.org/InStock" },
+      offers: {
+        "@type": "Offer",
+        url: BOOKING_URL,
+        availability: "https://schema.org/InStock",
+        category: `${dest.shortName} Carnival Glam`,
+      },
+    });
+
+    upsertJsonLd("destination-faq-jsonld", {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    });
+
+    upsertJsonLd("destination-breadcrumb-jsonld", {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.carnivalglamhub.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Destinations",
+          item: "https://www.carnivalglamhub.com/#destinations",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: dest.name,
+          item: pageUrl,
+        },
+      ],
     });
 
     return () => {
       document.title = prevTitle;
+      ["destination-service-jsonld", "destination-faq-jsonld", "destination-breadcrumb-jsonld"].forEach(
+        (id) => document.getElementById(id)?.remove(),
+      );
     };
-  }, [dest]);
+  }, [dest, faqs]);
 
   if (!dest) return <Navigate to="/#destinations" replace />;
 
@@ -146,6 +209,49 @@ const Destination = () => {
                   Book on Masos
                 </a>
               </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ section — renders the same Q&A captured in FAQPage JSON-LD */}
+        <section
+          className="py-12 sm:py-20 border-t border-border"
+          aria-labelledby={`${dest.slug}-faq-heading`}
+        >
+          <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+            <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3 text-center">
+              {dest.shortName} Carnival Glam — FAQ
+            </p>
+            <h2
+              id={`${dest.slug}-faq-heading`}
+              className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-center"
+            >
+              {dest.shortName} Carnival Glam{" "}
+              <span className="text-gradient-primary italic">Questions</span>
+            </h2>
+
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((f, i) => (
+                <AccordionItem key={f.question} value={`item-${i}`}>
+                  <AccordionTrigger className="text-left font-body font-semibold text-base">
+                    {f.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {f.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+
+            <div className="text-center mt-10">
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+              >
+                {dest.cta}
+              </a>
             </div>
           </div>
         </section>
