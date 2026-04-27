@@ -196,49 +196,31 @@ Return JSON: { "title": "...", "slug": "...", "meta_description": "...", "excerp
   return JSON.parse(content);
 }
 
-/* ───── Generate AI hero image ───── */
-async function generateHeroImage(
-  apiKey: string,
-  supabase: ReturnType<typeof createClient>,
-  title: string,
-  slug: string,
-  territory: string,
-) {
-  try {
-    const imagePrompt = `A vibrant, professional carnival photography-style hero image for a blog article titled "${title}". Caribbean carnival scene in ${territory} with colorful costumes, feathers, glitter makeup, and festive energy. High-quality editorial photography style, warm golden lighting, celebration atmosphere. No text or watermarks.`;
+/* ───── Curated photo pool (NEVER use AI-generated images for blog hero) ───── */
+const POOL_BASE = "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/pool";
+const PHOTO_POOL: string[] = [
+  `${POOL_BASE}/gallery-1.jpg`,
+  `${POOL_BASE}/gallery-2.jpg`,
+  `${POOL_BASE}/gallery-3.jpg`,
+  `${POOL_BASE}/gallery-4.jpg`,
+  `${POOL_BASE}/gallery-5.jpg`,
+  `${POOL_BASE}/gallery-6.jpg`,
+  `${POOL_BASE}/gallery-7.jpg`,
+  `${POOL_BASE}/gallery-8.jpg`,
+  `${POOL_BASE}/carnival-1.jpg`,
+  `${POOL_BASE}/carnival-2.jpg`,
+  `${POOL_BASE}/carnival-3.jpg`,
+  `${POOL_BASE}/carnival-4.jpg`,
+  `${POOL_BASE}/carnival-5.jpg`,
+  `${POOL_BASE}/carnival-6.jpg`,
+  `${POOL_BASE}/carnival-7.jpg`,
+  `${POOL_BASE}/carnival-8.jpg`,
+  `${POOL_BASE}/carnival-9.jpg`,
+  `${POOL_BASE}/carnival-10.jpg`,
+];
 
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image",
-        messages: [{ role: "user", content: imagePrompt }],
-        modalities: ["image", "text"],
-      }),
-    });
-
-    if (!res.ok) throw new Error(`Image generation failed: ${res.status}`);
-    const data = await res.json();
-    const imageData = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-    if (!imageData) throw new Error("No image in response");
-
-    // Extract base64 data
-    const base64 = imageData.replace(/^data:image\/\w+;base64,/, "");
-    const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
-
-    const filePath = `${slug}-${Date.now()}.png`;
-    const { error: uploadErr } = await supabase.storage
-      .from("blog-images")
-      .upload(filePath, bytes, { contentType: "image/png", upsert: true });
-
-    if (uploadErr) throw uploadErr;
-
-    const { data: urlData } = supabase.storage.from("blog-images").getPublicUrl(filePath);
-    return urlData.publicUrl;
-  } catch (e) {
-    console.error(`Image generation failed for "${slug}":`, e);
-    return null;
-  }
+function pickPoolImage(): string {
+  return PHOTO_POOL[Math.floor(Math.random() * PHOTO_POOL.length)];
 }
 
 /* ───── Generate social content IDEAS ───── */
@@ -371,14 +353,10 @@ Deno.serve(async (req) => {
             fullContent += `\n\n<!-- FAQ_SCHEMA_JSON\n${JSON.stringify(blog.faq_schema)}\n-->`;
           }
 
-          // 4. Generate hero image
-          let imageUrl: string | null = null;
-          try {
-            imageUrl = await generateHeroImage(LOVABLE_API_KEY, supabase, blog.title, blog.slug, territory.name);
-            if (imageUrl) territoryResult.image = true;
-          } catch (imgErr: any) {
-            console.error(`[${territory.name}] Image error:`, imgErr.message);
-          }
+          // 4. Pick hero image from curated real-photo pool (NO AI image generation)
+          const imageUrl: string = pickPoolImage();
+          territoryResult.image = true;
+          console.log(`[${territory.name}] Selected hero image from pool: ${imageUrl}`);
 
           const { error: blogErr } = await supabase.from("blog_posts").insert({
             external_id: `ai-${territory.slug}-${Date.now()}`,
