@@ -190,3 +190,46 @@ export const destinations: Destination[] = [
 
 export const getDestinationBySlug = (slug: string) =>
   destinations.find((d) => d.slug === slug);
+
+export type Faq = { question: string; answer: string };
+
+/**
+ * SEO-rich FAQs per destination, targeting "{destination} carnival glam"
+ * and related long-tail searches (cost, location, what's included, etc.).
+ */
+export function getDestinationFaqs(d: Destination): Faq[] {
+  const loc = d.shortName;
+  const event = d.name;
+  const date = d.date;
+
+  return [
+    {
+      question: `Where can I book ${loc} carnival glam?`,
+      answer: `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at carnivalglamhub.masos.app/events. We're the leading carnival glam service for ${event}, offering full makeup, hair, gems, lashes and body paint packages by professional Caribbean-trained artists.`,
+    },
+    {
+      question: `When is ${event} in ${date.includes("2027") ? "2027" : "2026"}?`,
+      answer: `${event} ${d.upcoming ? "takes place" : "is scheduled for"} ${date}. Carnival Glam Hub services are available throughout the carnival weekend — including j'ouvert, road march and fete glam appointments. Spaces fill quickly, so we recommend booking at least 4–6 weeks in advance.`,
+    },
+    {
+      question: `What's included in a ${loc} carnival glam package?`,
+      answer: `Our ${loc} carnival glam packages include ${d.highlights.map((h) => h.toLowerCase()).join(", ")}. Every package is performed by a senior Caribbean carnival makeup artist using long-wear, sweat-proof products designed for full-day road performance.`,
+    },
+    {
+      question: `How much does ${loc} carnival makeup cost?`,
+      answer: `${loc} carnival makeup pricing varies by service tier — full glam, j'ouvert paint, hair, gems and lashes are all available as individual add-ons or full packages. Live pricing and availability for each ${loc} package is shown on our booking page at carnivalglamhub.masos.app/events.`,
+    },
+    {
+      question: `Do you offer j'ouvert paint and body art for ${event}?`,
+      answer: `Yes — j'ouvert paint, shimmer, oil and body art are part of our ${loc} carnival glam menu. Our artists use professional, skin-safe carnival paints that hold up to heat, sweat and water on the road.`,
+    },
+    {
+      question: `How early should I book ${loc} carnival glam?`,
+      answer: `For ${event} (${date}), we recommend booking your ${loc} carnival glam appointment at least 4–6 weeks ahead. Peak weekend slots — especially j'ouvert morning and road march — sell out first every season.`,
+    },
+    {
+      question: `Are your ${loc} carnival makeup artists professional?`,
+      answer: `Every Carnival Glam Hub artist working ${event} is a vetted, professional Caribbean carnival makeup artist with multi-season experience in long-wear, photo-ready road glam. We service masqueraders across all major bands in ${loc}.`,
+    },
+  ];
+}
