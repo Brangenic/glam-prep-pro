@@ -140,6 +140,9 @@ const Destination = () => {
       ["destination-service-jsonld", "destination-faq-jsonld", "destination-breadcrumb-jsonld"].forEach(
         (id) => document.getElementById(id)?.remove(),
       );
+      ["ga-barbados-loader", "ga-barbados-init"].forEach((id) =>
+        document.getElementById(id)?.remove(),
+      );
     };
   }, [dest, faqs]);
 
