@@ -1,12 +1,5 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { featuredReviews } from "@/components/landing/reviewsData";
-import avatar1 from "@/assets/avatar-1.jpg";
-import avatar2 from "@/assets/avatar-2.jpg";
-import avatar3 from "@/assets/avatar-3.jpg";
-import avatar4 from "@/assets/avatar-4.jpg";
-import avatar5 from "@/assets/avatar-5.jpg";
-
-const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
 const Testimonials = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -64,16 +57,9 @@ const Testimonials = () => {
               <p className="font-body text-foreground/85 leading-relaxed mb-6 sm:mb-8 pt-6 sm:pt-8 text-sm sm:text-[15px]">
                 {t.quote}
               </p>
-              <div className="flex items-center gap-3">
-                <img
-                  src={avatarImages[i % avatarImages.length]}
-                  alt={t.name}
-                  className="w-9 h-9 rounded-full shrink-0 ring-2 ring-primary/20 shadow-md bg-muted"
-                />
-                <div>
-                  <p className="font-body text-sm font-semibold">{t.name}</p>
-                  <p className="font-body text-xs text-muted-foreground">{t.location}</p>
-                </div>
+              <div>
+                <p className="font-body text-sm font-semibold">{t.name}</p>
+                <p className="font-body text-xs text-muted-foreground">{t.location}</p>
               </div>
             </div>
           ))}
