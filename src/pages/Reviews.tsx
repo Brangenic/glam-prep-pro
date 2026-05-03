@@ -4,13 +4,6 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { featuredReviews, type ReviewItem } from "@/components/landing/reviewsData";
 import { supabase } from "@/integrations/supabase/client";
-import avatar1 from "@/assets/avatar-1.jpg";
-import avatar2 from "@/assets/avatar-2.jpg";
-import avatar3 from "@/assets/avatar-3.jpg";
-import avatar4 from "@/assets/avatar-4.jpg";
-import avatar5 from "@/assets/avatar-5.jpg";
-
-const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
 type SyncedReview = {
   author_name: string | null;
@@ -84,22 +77,12 @@ const Reviews = () => {
               {reviewsToRender.map((review) => {
                 const rating = "rating" in review && typeof review.rating === "number" ? review.rating : 5;
 
-                const avatarIndex = review.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0) % avatarImages.length;
-                const avatarUrl = avatarImages[avatarIndex];
-
                 return (
                   <article key={`${review.name}-${review.quote.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
                     <div className="flex items-center justify-between gap-4 mb-5">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={avatarUrl}
-                          alt={review.name}
-                          className="w-10 h-10 rounded-full shrink-0 ring-2 ring-primary/20 shadow-md bg-muted"
-                        />
-                        <div>
-                          <p className="font-body text-sm font-semibold text-foreground">{review.name}</p>
-                          <p className="font-body text-xs text-muted-foreground">{review.location}</p>
-                        </div>
+                      <div>
+                        <p className="font-body text-sm font-semibold text-foreground">{review.name}</p>
+                        <p className="font-body text-xs text-muted-foreground">{review.location}</p>
                       </div>
                       <span className="font-body text-[11px] uppercase tracking-[0.16em] text-secondary font-semibold">
                         {review.detail}
