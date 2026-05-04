@@ -100,7 +100,7 @@ export default function AutopilotTab() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <FileText className="h-4 w-4" /> AI Blog Posts
+              <FileText className="h-4 w-4" /> Blog Posts
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -112,12 +112,12 @@ export default function AutopilotTab() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <Image className="h-4 w-4" /> AI Images
+              <Image className="h-4 w-4" /> Pool Images
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-lg font-semibold">{totalImages}</p>
-            <p className="text-xs text-muted-foreground mt-1">Last run</p>
+            <p className="text-xs text-muted-foreground mt-1">Real photos</p>
           </CardContent>
         </Card>
 
@@ -198,11 +198,11 @@ export default function AutopilotTab() {
         </Card>
       )}
 
-      {/* Recent AI blogs */}
+      {/* Recent autopilot blogs */}
       {recentBlogs && recentBlogs.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm">Recent AI Blog Posts</CardTitle>
+            <CardTitle className="text-sm">Recent Blog Posts</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <Table>
