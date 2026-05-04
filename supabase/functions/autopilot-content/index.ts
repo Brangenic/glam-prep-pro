@@ -197,30 +197,52 @@ Return JSON: { "title": "...", "slug": "...", "meta_description": "...", "excerp
 }
 
 /* ───── Curated photo pool (NEVER use AI-generated images for blog hero) ───── */
-const POOL_BASE = "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/pool";
-const PHOTO_POOL: string[] = [
-  `${POOL_BASE}/gallery-1.jpg`,
-  `${POOL_BASE}/gallery-2.jpg`,
-  `${POOL_BASE}/gallery-3.jpg`,
-  `${POOL_BASE}/gallery-4.jpg`,
-  `${POOL_BASE}/gallery-5.jpg`,
-  `${POOL_BASE}/gallery-6.jpg`,
-  `${POOL_BASE}/gallery-7.jpg`,
-  `${POOL_BASE}/gallery-8.jpg`,
-  `${POOL_BASE}/carnival-1.jpg`,
-  `${POOL_BASE}/carnival-2.jpg`,
-  `${POOL_BASE}/carnival-3.jpg`,
-  `${POOL_BASE}/carnival-4.jpg`,
-  `${POOL_BASE}/carnival-5.jpg`,
-  `${POOL_BASE}/carnival-6.jpg`,
-  `${POOL_BASE}/carnival-7.jpg`,
-  `${POOL_BASE}/carnival-8.jpg`,
-  `${POOL_BASE}/carnival-9.jpg`,
-  `${POOL_BASE}/carnival-10.jpg`,
-];
+const BLOG_IMAGE_BUCKET = "blog-images";
+const BLOG_POOL_FOLDER = "pool";
 
-function pickPoolImage(): string {
-  return PHOTO_POOL[Math.floor(Math.random() * PHOTO_POOL.length)];
+async function getAvailablePoolImages(supabase: ReturnType<typeof createClient>, supabaseUrl: string): Promise<string[]> {
+  const { data, error } = await supabase.storage.from(BLOG_IMAGE_BUCKET).list(BLOG_POOL_FOLDER, {
+    limit: 200,
+    sortBy: { column: "name", order: "ascending" },
+  });
+
+  if (error) throw new Error(`Blog image pool unavailable: ${error.message}`);
+
+  const images = (data ?? [])
+    .filter((file: any) => file.name && file.metadata?.mimetype?.startsWith("image/"))
+    .map((file: any) => {
+      const encodedName = encodeURIComponent(file.name);
+      return `${supabaseUrl}/storage/v1/object/public/${BLOG_IMAGE_BUCKET}/${BLOG_POOL_FOLDER}/${encodedName}`;
+    });
+
+  if (images.length === 0) {
+    throw new Error("Blog image pool is empty. Add user-provided photos before generating blog posts.");
+  }
+
+  return images;
+}
+
+async function getPoolImageUsageCounts(supabase: ReturnType<typeof createClient>) {
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("image_url")
+    .like("image_url", `%/storage/v1/object/public/${BLOG_IMAGE_BUCKET}/${BLOG_POOL_FOLDER}/%`);
+
+  return (data ?? []).reduce((counts: Map<string, number>, post: any) => {
+    if (post.image_url) counts.set(post.image_url, (counts.get(post.image_url) ?? 0) + 1);
+    return counts;
+  }, new Map<string, number>());
+}
+
+function pickPoolImage(poolImages: string[], usageCounts: Map<string, number>, usedThisRun: Set<string>): string {
+  const notUsedThisRun = poolImages.filter((url) => !usedThisRun.has(url));
+  const candidates = notUsedThisRun.length > 0 ? notUsedThisRun : poolImages;
+  const lowestUseCount = Math.min(...candidates.map((url) => usageCounts.get(url) ?? 0));
+  const leastUsed = candidates.filter((url) => (usageCounts.get(url) ?? 0) === lowestUseCount);
+  const selected = leastUsed[Math.floor(Math.random() * leastUsed.length)];
+  usedThisRun.add(selected);
+  usageCounts.set(selected, (usageCounts.get(selected) ?? 0) + 1);
+  return selected;
 }
 
 /* ───── Generate social content IDEAS ───── */
@@ -309,6 +331,9 @@ Deno.serve(async (req) => {
 
     const sourceData = await gatherSourceData(supabase);
     const existingBlogs = await getExistingBlogs(supabase);
+    const poolImages = await getAvailablePoolImages(supabase, SUPABASE_URL);
+    const imageUsageCounts = await getPoolImageUsageCounts(supabase);
+    const usedImagesThisRun = new Set<string>();
     const results: any[] = [];
 
     for (const territory of territories) {
@@ -354,7 +379,7 @@ Deno.serve(async (req) => {
           }
 
           // 4. Pick hero image from curated real-photo pool (NO AI image generation)
-          const imageUrl: string = pickPoolImage();
+          const imageUrl: string = pickPoolImage(poolImages, imageUsageCounts, usedImagesThisRun);
           territoryResult.image = true;
           console.log(`[${territory.name}] Selected hero image from pool: ${imageUrl}`);
 
