@@ -1,6 +1,6 @@
 ---
 name: Supercharged Autopilot Content Engine
-description: Daily automated pipeline with competitor intelligence, AI images, FAQ schema, internal linking, content ideas, and dynamic sitemap
+description: Daily automated pipeline with competitor intelligence, user-provided pool images, FAQ schema, internal linking, content ideas, and dynamic sitemap
 type: feature
 ---
 
@@ -11,7 +11,7 @@ type: feature
 3. **Duplicate prevention** — queries existing blog_posts titles/slugs before generation, tells AI to find NEW topics
 4. **SEO blog generation** — 1000-1500 word articles with 4+ H2s, competitor-aware content, 2-3 internal links to other posts
 5. **FAQ schema** — each blog includes FAQ section + JSON-LD FAQPage schema embedded as HTML comment for BlogPost.tsx to extract
-6. **AI hero images** — generates carnival-themed hero images via gemini-2.5-flash-image, uploads to `blog-images` storage bucket
+6. **User-provided hero images only** — selects the least-used photo from the curated `blog-images/pool` bucket and fails loudly if no pool photos exist
 7. **Content ideas** (not full posts) — generates hooks, angles, talking points, hashtags for social content inspiration
 8. **Sitemap regeneration** — triggers `generate-sitemap` edge function after each run
 
@@ -23,7 +23,7 @@ type: feature
 
 ## Database
 - `blog_posts.source` = `'ai_generated'` for autopilot posts
-- `blog_posts.image_url` set from storage bucket public URL
+- `blog_posts.image_url` set only from the user-provided `blog-images/pool` storage path
 - `generated_content.content_type` = `'content_idea'` for ideas (body is JSON with hook, talking_points, etc.)
 - `site_config.sitemap_xml` stores generated sitemap
 - Storage bucket: `blog-images` (public read)
