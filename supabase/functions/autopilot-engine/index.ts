@@ -8,6 +8,7 @@ const corsHeaders = {
 /* ───── Curated photo pool (real Carnival Glam Hub event photography only) ───── */
 const BLOG_IMAGE_BUCKET = "blog-images";
 const BLOG_POOL_FOLDER = "pool";
+const BLOCKED_POOL_IMAGES = new Set(["gallery-1.jpg", "gallery-4.jpg", "carnival-4.jpg", "carnival-9.jpg"]);
 
 async function getAvailablePoolImages(supabase: ReturnType<typeof createClient>, supabaseUrl: string): Promise<string[]> {
   const { data, error } = await supabase.storage.from(BLOG_IMAGE_BUCKET).list(BLOG_POOL_FOLDER, {
@@ -18,7 +19,7 @@ async function getAvailablePoolImages(supabase: ReturnType<typeof createClient>,
   if (error) throw new Error(`Blog image pool unavailable: ${error.message}`);
 
   const images = (data ?? [])
-    .filter((file: any) => file.name && file.metadata?.mimetype?.startsWith("image/"))
+    .filter((file: any) => file.name && file.metadata?.mimetype?.startsWith("image/") && !BLOCKED_POOL_IMAGES.has(file.name))
     .map((file: any) => {
       const encodedName = encodeURIComponent(file.name);
       return `${supabaseUrl}/storage/v1/object/public/${BLOG_IMAGE_BUCKET}/${BLOG_POOL_FOLDER}/${encodedName}`;
