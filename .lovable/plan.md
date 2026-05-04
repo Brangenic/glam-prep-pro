@@ -16,8 +16,8 @@ Before generating a new blog, the engine checks existing `blog_posts` titles and
 **3. Internal Linking Web**
 Each new blog post gets 2-3 links to existing blog posts on the site (not just the booking page). This builds a powerful internal link network that search engines love. The engine fetches recent post slugs and titles and instructs the AI to weave them in naturally.
 
-**4. AI-Generated Featured Images**
-Each blog post gets a unique AI-generated carnival-themed hero image using the Lovable AI image generation model. Stored in a storage bucket and linked to the post.
+**4. User-Provided Featured Images**
+Each blog post gets a real hero image selected from the curated user-provided `blog-images/pool` bucket. No blog images are AI-generated.
 
 **5. FAQ Schema Generation**
 Each blog post gets a JSON-LD FAQ schema block embedded in the content. This makes posts eligible for Google's "People Also Ask" rich results — massive visibility boost.
@@ -48,15 +48,15 @@ Daily Cron (6 AM) ──► autopilot-content (Enhanced)
                     ┌──────┼──────┬──────────┐
                     ▼      ▼      ▼          ▼
               SEO Blog   Images  Social     Sitemap
-              + FAQ      (AI)    Ideas      Regen
+              + FAQ      (Pool)  Ideas      Regen
               + Links
 ```
 
 ### Implementation Steps
 
-**Step 1: Storage bucket for AI images**
-- Create `blog-images` storage bucket with public read access
-- Edge function generates images and uploads them
+**Step 1: Storage bucket for user-provided blog images**
+- Use `blog-images` storage bucket with public read access
+- Blog images are selected only from the curated `pool/` folder
 
 **Step 2: Rewrite `autopilot-content` edge function**
 - Add duplicate detection (query existing blog slugs/titles)
@@ -65,8 +65,7 @@ Daily Cron (6 AM) ──► autopilot-content (Enhanced)
 - Add FAQ schema generation in blog body
 - Expand trending queries to carnival lifestyle topics
 - Change social generation to "content ideas" format
-- Generate AI image per blog post via Lovable AI image model
-- Upload image to storage, set `image_url` on blog post
+- Select a least-used pool image for each post and set `image_url` on the blog post
 
 **Step 3: Dynamic sitemap edge function**
 - New `generate-sitemap` edge function that queries all blog posts and builds XML sitemap
@@ -78,7 +77,7 @@ Daily Cron (6 AM) ──► autopilot-content (Enhanced)
 - Store generated sitemap XML in `site_config` so it's served statically
 
 **Step 5: Update AutopilotTab UI**
-- Show image generation status in run results
+- Show pool image assignment status in run results
 - Show "Content Ideas" section instead of "Social Drafts"
 - Add count of internal links created
 
@@ -91,7 +90,7 @@ Daily Cron (6 AM) ──► autopilot-content (Enhanced)
 
 ### Daily Output (10 territories)
 - 10 SEO blog posts with competitor-aware content
-- 10 AI-generated hero images
+- 10 user-provided hero images from the curated pool
 - 10 FAQ schema blocks (Google rich results)
 - 20-30 internal links woven across new posts
 - 10 social content idea briefs
