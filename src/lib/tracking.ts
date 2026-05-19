@@ -12,13 +12,13 @@ declare global {
 }
 
 const GOOGLE_ADS_ID = "AW-10894663311";
+// GA4 is initialised in index.html (G-BZCF4FF50Y); events here flow to it automatically.
 
 export function trackPageView(path: string) {
   try {
     window.fbq?.("track", "PageView");
     window.gtag?.("event", "page_view", {
       page_path: path,
-      send_to: GOOGLE_ADS_ID,
     });
   } catch {
     /* analytics never throw */
@@ -37,7 +37,10 @@ export function trackEvent(name: EventName, params: Record<string, unknown> = {}
         : name === "Contact"
         ? "contact"
         : "view_item";
-    window.gtag?.("event", gaName, { send_to: GOOGLE_ADS_ID, ...params });
+    // GA4 conversion event
+    window.gtag?.("event", gaName, params);
+    // Google Ads conversion signal
+    window.gtag?.("event", "conversion", { send_to: GOOGLE_ADS_ID, ...params });
   } catch {
     /* noop */
   }
