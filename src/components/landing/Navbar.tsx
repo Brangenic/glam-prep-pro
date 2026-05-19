@@ -57,6 +57,15 @@ const Navbar = () => {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
+                window.gtag("event", "conversion", {
+                  send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
+                  value: 1.0,
+                  currency: "USD",
+                });
+              }
+            }}
             className="bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
           >
             Book Now
@@ -100,7 +109,16 @@ const Navbar = () => {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
+                window.gtag("event", "conversion", {
+                  send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
+                  value: 1.0,
+                  currency: "USD",
+                });
+              }
+              setOpen(false);
+            }}
             className="block text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-3 rounded-full"
           >
             Book Now
