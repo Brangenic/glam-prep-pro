@@ -39,6 +39,10 @@ const App = () => (
           <Route path="/blogs/:slug" element={<BlogPost />} />
           {/* Wix legacy URL pattern → new blog URLs */}
           <Route path="/post/:slug" element={<WixPostRedirect />} />
+          {/* Legacy /blog and /blog/post/:slug → new /blogs paths */}
+          <Route path="/blog" element={<Navigate to="/blogs" replace />} />
+          <Route path="/blog/post/:slug" element={<WixPostRedirect />} />
+          <Route path="/blog/:slug" element={<WixPostRedirect />} />
           <Route path="/destinations/:slug" element={<Destination />} />
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<Navigate to="/destinations/jamaica" replace />} />
