@@ -1,10 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useParams } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import FloatingWhatsApp from "@/components/landing/FloatingWhatsApp";
 import ChatWidget from "@/components/landing/ChatWidget";
+import RouteTracker from "@/components/RouteTracker";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
@@ -17,18 +18,27 @@ import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
+// Redirect Wix legacy /post/:slug URLs to the new blog path
+const WixPostRedirect = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/blogs/${slug ?? ""}`} replace />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <RouteTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogPost />} />
+          {/* Wix legacy URL pattern → new blog URLs */}
+          <Route path="/post/:slug" element={<WixPostRedirect />} />
           <Route path="/destinations/:slug" element={<Destination />} />
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<Navigate to="/destinations/jamaica" replace />} />
