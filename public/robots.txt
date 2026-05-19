@@ -16,3 +16,4 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://carnivalglamhub.com/sitemap.xml
+Sitemap: https://www.carnivalglamhub.com/sitemap.xml
