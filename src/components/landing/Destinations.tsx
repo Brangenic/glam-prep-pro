@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
+import { buildDestinationUrl } from "@/lib/destinations";
 
 const Destinations = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -31,10 +31,18 @@ const Destinations = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
           {destinations.map((d, i) => (
-            <Link
+            <a
               key={d.slug}
-              to={`/destinations/${d.slug}`}
-              aria-label={`View ${d.name} glam services`}
+              href={buildDestinationUrl(d.slug)}
+              onClick={() => {
+                if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
+                  window.gtag("event", "destination_click", {
+                    event_category: "navigation",
+                    event_label: d.slug,
+                  });
+                }
+              }}
+              aria-label={`Book ${d.name} glam services`}
               className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] block transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
@@ -67,7 +75,7 @@ const Destinations = () => {
                   {d.cta}
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
