@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import FloatingWhatsApp from "@/components/landing/FloatingWhatsApp";
 import ChatWidget from "@/components/landing/ChatWidget";
+import RouteTracker from "@/components/RouteTracker";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
@@ -23,12 +24,15 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <RouteTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogPost />} />
+          {/* Wix legacy URL pattern → new blog URLs */}
+          <Route path="/post/:slug" element={<WixPostRedirect />} />
           <Route path="/destinations/:slug" element={<Destination />} />
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<Navigate to="/destinations/jamaica" replace />} />
