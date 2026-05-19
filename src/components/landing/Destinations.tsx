@@ -39,6 +39,12 @@ const Destinations = () => {
                   window.gtag("event", "destination_click", {
                     event_category: "navigation",
                     event_label: d.slug,
+                    destination: d.slug,
+                  });
+                  window.gtag("event", "conversion", {
+                    send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
+                    value: 1.0,
+                    currency: "USD",
                   });
                 }
               }}

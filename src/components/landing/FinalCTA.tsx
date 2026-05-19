@@ -42,6 +42,15 @@ const FinalCTA = () => {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
+                window.gtag("event", "conversion", {
+                  send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
+                  value: 1.0,
+                  currency: "USD",
+                });
+              }
+            }}
             className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-3.5 sm:py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
           >
             {get("cta_button_text")}
