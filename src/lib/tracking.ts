@@ -12,7 +12,7 @@ declare global {
 }
 
 const GOOGLE_ADS_ID = "AW-10894663311";
-const GA4_ID = "G-BZCF4FF50Y";
+// GA4 is initialised in index.html (G-BZCF4FF50Y); events here flow to it automatically.
 
 export function trackPageView(path: string) {
   try {
