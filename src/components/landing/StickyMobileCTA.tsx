@@ -6,6 +6,15 @@ const StickyMobileCTA = () => (
       href={BOOKING_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => {
+        if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
+          window.gtag("event", "conversion", {
+            send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
+            value: 1.0,
+            currency: "USD",
+          });
+        }
+      }}
       className="flex items-center justify-center w-full bg-primary text-primary-foreground font-body font-semibold text-base py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
     >
       Book Your Glam
