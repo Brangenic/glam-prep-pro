@@ -6,6 +6,7 @@ import grenadaImg from "@/assets/carnival-5.jpg";
 import miamiImg from "@/assets/carnival-7.jpg";
 import barbadosImg from "@/assets/carnival-8.jpg";
 import torontoImg from "@/assets/dest-toronto-real.jpg";
+import guyanaImg from "@/assets/carnival-4.jpg";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -185,6 +186,26 @@ export const destinations: Destination[] = [
     metaTitle: "Trinidad Carnival Makeup & Glam Services 2027 | Carnival Glam Hub",
     metaDescription:
       "Trinidad Carnival 2027 glam hub waitlist — full road makeup, hair, gems and j'ouvert paint in Port of Spain. Reserve early.",
+  },
+  {
+    slug: "guyana",
+    name: "Guyana Carnival",
+    shortName: "Guyana",
+    date: "May 2026",
+    description: "Full glam hub services for Guyana Carnival.",
+    longDescription:
+      "Guyana Carnival brings Mashramani energy to the road — and our Guyana glam hub keeps you flawless from fete to road march. Full makeup, hair, gems, lashes and body art by our Caribbean-trained carnival artists.",
+    image: guyanaImg,
+    cta: "Book Guyana Glam",
+    highlights: [
+      "Full road carnival glam",
+      "Festival hair styling",
+      "Gem & rhinestone application",
+      "Body paint and shimmer",
+    ],
+    metaTitle: "Guyana Carnival Makeup & Glam Services 2026 | Carnival Glam Hub",
+    metaDescription:
+      "Book premium Guyana Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists.",
   },
 ];
 
