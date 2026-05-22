@@ -163,7 +163,7 @@ export const destinations: Destination[] = [
     ],
     metaTitle: "Toronto Caribana Makeup & Glam Services 2026 | Carnival Glam Hub",
     metaDescription:
-      "Toronto Caribana 2026 glam hub — full carnival makeup, hair, gems and body art for the Grand Parade. Book your slot today.",
+      "Toronto Caribbean carnival glam from Carnival Glam Hub. Expert carnival makeup for Caribana and the diaspora. Book your look for Toronto Carnival now.",
   },
   {
     slug: "trinidad",
