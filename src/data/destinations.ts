@@ -121,7 +121,7 @@ export const destinations: Destination[] = [
       "Festival hair & braids",
       "Gems, lashes and shimmer",
     ],
-    metaTitle: "Barbados Crop Over Makeup & Glam 2026 | Carnival Glam Hub",
+    metaTitle: "Barbados Carnival Glam & Makeup Services | Carnival Glam Hub",
     metaDescription:
       "Barbados Crop Over 2026 glam hub: Grand Kadooment makeup, hair, gems and Foreday paint by professional Caribbean artists. Reserve now.",
   },
