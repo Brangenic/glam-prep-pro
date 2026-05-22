@@ -65,6 +65,7 @@ const App = () => (
           <Route path="/st-lucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
           <Route path="/saint-lucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
           <Route path="/stlucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
+          <Route path="/saintlucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
           <Route path="/miami" element={<Navigate to="/destinations/miami" replace />} />
           <Route path="/toronto" element={<Navigate to="/destinations/toronto" replace />} />
           <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
