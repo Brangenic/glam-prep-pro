@@ -1,0 +1,1 @@
+DELETE FROM public.google_reviews WHERE author_name IN ('Jane Doe', 'John Smith', 'Alice Johnson');
