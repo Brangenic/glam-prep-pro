@@ -15,8 +15,9 @@ import {
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
 
-const Destination = () => {
-  const { slug = "" } = useParams();
+const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
+  const params = useParams();
+  const slug = slugOverride ?? params.slug ?? "";
   const dest = getDestinationBySlug(slug);
   const faqs = useMemo(() => (dest ? getDestinationFaqs(dest) : []), [dest]);
   const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
