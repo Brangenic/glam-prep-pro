@@ -123,7 +123,7 @@ export const destinations: Destination[] = [
     ],
     metaTitle: "Barbados Carnival Glam & Makeup Services | Carnival Glam Hub",
     metaDescription:
-      "Barbados Crop Over 2026 glam hub: Grand Kadooment makeup, hair, gems and Foreday paint by professional Caribbean artists. Reserve now.",
+      "Carnival Glam Hub brings expert carnival makeup to Barbados. Caribbean-inspired glam for diaspora women ready to shine. Book your Cropover look today.",
   },
   {
     slug: "miami",
