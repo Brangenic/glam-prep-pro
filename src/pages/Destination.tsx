@@ -2,6 +2,8 @@ import { useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import MasosEmbed from "@/components/MasosEmbed";
+import { getDestination as getMasosDestination } from "@/lib/destinations";
 import {
   Accordion,
   AccordionContent,
@@ -151,6 +153,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   if (!dest) return <Navigate to="/#destinations" replace />;
 
   const others = destinations.filter((d) => d.slug !== dest.slug).slice(0, 4);
+  const masosEntry = getMasosDestination(dest.slug);
+  const embedUrl =
+    masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -180,6 +185,11 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <p className="font-body text-sm sm:text-base text-white/80 mt-3">{dest.date}</p>
           </div>
         </section>
+
+        {/* Live MasOS booking embed */}
+        {embedUrl && (
+          <MasosEmbed url={embedUrl} title={`Book ${dest.name} glam`} />
+        )}
 
         {/* Body */}
         <section className="py-12 sm:py-20">
