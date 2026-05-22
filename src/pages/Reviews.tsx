@@ -109,18 +109,6 @@ const googleProfiles = [
   },
 ];
 
-type SyncedReview = {
-  author_name: string | null;
-  location: string | null;
-  quote: string;
-  rating: number | null;
-  review_date: string | null;
-};
-
-type DisplayReview = ReviewItem & {
-  rating?: number;
-};
-
 const Reviews = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -205,19 +193,22 @@ const Reviews = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-              {reviewsToRender.map((review) => {
-                const rating = "rating" in review && typeof review.rating === "number" ? review.rating : 5;
-
+              {realReviews.map((review) => {
+                const rating = review.stars;
                 return (
-                  <article key={`${review.name}-${review.quote.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
-                    <div className="flex items-center justify-between gap-4 mb-5">
-                      <div>
-                        <p className="font-body text-sm font-semibold text-foreground">{review.name}</p>
-                        <p className="font-body text-xs text-muted-foreground">{review.location}</p>
+                  <article key={`${review.name}-${review.text.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
+                    <div className="flex items-center gap-4 mb-5">
+                      <img
+                        src={review.photo}
+                        alt={`${review.name} Google profile photo`}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        className="h-12 w-12 rounded-full object-cover border border-border flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-body text-sm font-semibold text-foreground truncate">{review.name}</p>
+                        <p className="font-body text-xs text-muted-foreground">{review.location} · Google review</p>
                       </div>
-                      <span className="font-body text-[11px] uppercase tracking-[0.16em] text-secondary font-semibold">
-                        {review.detail}
-                      </span>
                     </div>
                     <div className="flex gap-0.5 mb-4" aria-label={`${rating} star review`}>
                       {[...Array(5)].map((_, i) => (
@@ -227,7 +218,7 @@ const Reviews = () => {
                       ))}
                     </div>
                     <p className="font-body text-sm sm:text-[15px] leading-relaxed text-foreground/85">
-                      “{review.quote}”
+                      “{review.text}”
                     </p>
                   </article>
                 );
