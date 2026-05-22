@@ -6,6 +6,7 @@ import grenadaImg from "@/assets/carnival-5.jpg";
 import miamiImg from "@/assets/carnival-7.jpg";
 import barbadosImg from "@/assets/carnival-8.jpg";
 import torontoImg from "@/assets/dest-toronto-real.jpg";
+import guyanaImg from "@/assets/carnival-4.jpg";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
