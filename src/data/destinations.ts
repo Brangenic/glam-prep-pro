@@ -161,7 +161,7 @@ export const destinations: Destination[] = [
       "Festival hair & braids",
       "Gems, lashes and shimmer",
     ],
-    metaTitle: "Toronto Caribana Makeup & Glam Services 2026 | Carnival Glam Hub",
+    metaTitle: "Toronto Carnival Makeup & Glam Services | Carnival Glam Hub",
     metaDescription:
       "Toronto Caribbean carnival glam from Carnival Glam Hub. Expert carnival makeup for Caribana and the diaspora. Book your look for Toronto Carnival now.",
   },
