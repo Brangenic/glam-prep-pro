@@ -9,10 +9,9 @@ const PAGE_DESCRIPTION =
 
 type RealReview = {
   name: string;
-  photo: string;
+  photo?: string;
   stars: number;
   text: string;
-  location: string;
 };
 
 const realReviews: RealReview[] = [
@@ -21,72 +20,82 @@ const realReviews: RealReview[] = [
     photo: "https://lh3.googleusercontent.com/a/ACg8ocKAgKeQo-0x3xSi6D_Q4esEipUJOjxQ73dDG9zOWWXpEWvB8Q=w72-h72-p-rp-mo-br100",
     stars: 5,
     text: "Carnival Glam Hub was everything! I loved being able to get my makeup, hair, and photoshoot all in one place, so easy and stress-free. The dressing room assistants were a huge help! My makeup lasted all day, even through the heat and nonstop dancing. Such an amazing experience! Thanks, Glam Hub team!",
-    location: "Jamaica",
-  },
-  {
-    name: "Shadae Henry",
-    photo: "https://lh3.googleusercontent.com/a/ACg8ocJsQUz7R5d4eoB2NlNs5v7r9dxI566i0FNXXp2tSqtvPcIqFA=w72-h72-p-rp-mo-br100",
-    stars: 5,
-    text: "I've been going to Carnival Glam Hub since 2022 and I'll be back again for 2025! It's the place to be for your hair, makeup and photoshoot needs. It's like your own personal glam squad right before you touch on the road!",
-    location: "Jamaica",
-  },
-  {
-    name: "Antoinette Dixon",
-    photo: "https://lh3.googleusercontent.com/a-/ALV-UjXm9-L-TadspKdG6eTmup06BHI16fquw0dtUTmIUuW8UAhln3eO7g=w72-h72-p-rp-mo-br100",
-    stars: 5,
-    text: "I've been to Carnival Glam Hub since 2021 and their service is always amazing. I got my hair and makeup done in one place and not to mention enjoying the mimosas and breakfast they had available. It's a really great premium experience for all carnival masqueraders.",
-    location: "Jamaica",
   },
   {
     name: "Snowwhite Hogie",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjVO2OxItMqgN50il_nXYb7l4X3lz3ax6WjquqhSe7nOr87GmCc=w72-h72-p-rp-mo-ba2-br100",
     stars: 5,
-    text: "I love Carnival Glam Hub — 10/10 Experience! Absolutely loved the service! The makeup was flawless, transportation was smooth and stress-free, and the photoshoot captured the vibes perfectly.",
-    location: "Jamaica",
+    text: "I love Carnival Glam Hub 10/10 Experience! Absolutely loved the service! The makeup was flawless, transportation was smooth and stress-free, and the photoshoot captured the vibes perfectly.",
   },
   {
     name: "Daydrie Burke",
-    photo: "https://lh3.googleusercontent.com/a-/ALV-UjVRrmOcPDgq-svpGkUFxDJTB4Au-TWGn8L31WweiUVtoQMpVGRm2w=w72-h72-p-rp-mo-br100",
     stars: 5,
-    text: "When it comes to Glam Hub, consider it your one stop shop for getting ready for the road on carnival day! From getting your hair and fabulous makeup done by the best in the business to having help putting on your costume.",
-    location: "Jamaica",
+    text: "When it comes to Glam Hub, consider it your one stop shop for getting ready for the road on carnival day! From getting ur hair and fabulous makeup done by the best in the business to having help to put on your costume from their dressing assistants. Not to mention the breakfast and drinks to start your morning. Fabulous experience and awesome service. Only place to be on carnival morning.",
   },
   {
-    name: "Krystal Angelique",
-    photo: "https://lh3.googleusercontent.com/a-/ALV-UjX6BQh4kA2G3At2XOveoQfHd4r4-QVxBleNql5IgnAwu6nRAiis=w72-h72-p-rp-mo-br100",
+    name: "Shadae Henry",
     stars: 5,
-    text: "Glam Hub is what we always needed and every year it evolves. A place with everything! Thoughtfully curated, from welcome refreshments, to snacks, makeup, hair, help with costumes, photo shoots and so much more.",
-    location: "Jamaica",
+    text: "I've been going to Carnival Glam Hub since 2022 and I'll be back again for 2025! It's the place to be for your hair, makeup and photoshoot needs. It's like your own personal glam squad right before you touch on the road!",
   },
   {
-    name: "Mala Morrison",
-    photo: "https://lh3.googleusercontent.com/a-/ALV-UjUDR28GEwMrbthygeQ_9csH8O3HIZhyhovD9ypnLbsV16lziYKacA=w72-h72-p-rp-mo-br100",
+    name: "Antoinette Dixon",
     stars: 5,
-    text: "Carnival Glam Hub is my choice for a one stop hassle-free carnival glam experience.",
-    location: "Jamaica",
+    text: "I've been to Carnival Glam Hub since 2021 and their service is always amazing. I got my hair and makeup done in one place and not to mention enjoying the mimosas and breakfast they had available. It's a really great premium experience for all carnival masqueraders.",
   },
   {
-    name: "Marissa Williams",
-    photo: "https://lh3.googleusercontent.com/a-/ALV-UjXtQ_DxGGcUOAvjVpmH2BYfofQj_M9z68j7PCOgAkDDQ4Utk2s=w72-h72-p-rp-mo-br100",
+    name: "Jade Amiel",
     stars: 5,
-    text: "If you were at Jamaica carnival this year you know the heat was on another level and my makeup held up through sweat and bottles of water being spritzed on it. I was truly amazed by the talent and quality of makeup I received.",
-    location: "Jamaica",
+    text: "Last year was the first staging of Carnival GLAM Hub and it was well thought out and an enjoyable experience. I had the best time. I'm very curious to see what's new for the second staging. Something tells me it's gonna be 10x better. So excited!",
   },
   {
     name: "Ashley Trini S",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjWoM8cTsPE2l8KK5vjYg5zbqjJv7v8RqsinZQLFs-hWwjtFEFVFDA=w72-h72-p-rp-mo-ba4-br100",
     stars: 5,
-    text: "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam Hub and will be using them for both days next year.",
-    location: "Trinidad",
+    text: "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam hub and will be using them for both days next year 2027 Carnival.",
   },
   {
     name: "Kerra Denel",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjXDGXza3lSHsqgrXp55mDKOmlc2Zx0i-JI6qmoKCTYvpv1gJ-5d=w72-h72-p-rp-mo-br100",
     stars: 5,
-    text: "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time (which is everything during Carnival season!), and the entire process was professional and organized.",
-    location: "Trinidad",
+    text: "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time (which is everything during Carnival season!), and the entire process was professional, organized.",
+  },
+  {
+    name: "Emma Aqui",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjW4m7n-dRXDTcqpxcIjDydx2AfVanNfD8M8ZdZnzEhGYhN4r7Q=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "My experience with Carnival Glam Hub was nothing short of exceptional. From their professionalism to the quality of hair, makeup, and bronzing services, everything exceeded my expectations.",
+  },
+  {
+    name: "Jodi Henriques",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjUjlg68wXx_qhfMyDHCk7FqVTmch_EMfU65b2IVktFrfp1pusv-=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "My make up was beautiful, Gabby selected Colours that not only looked good with my costume but complimented my skin tone. I also did the photo package and what a relief to get the pics out the way so I can get on. I'll definitely be booking again",
+  },
+  {
+    name: "Nicholas Dodd",
+    photo: "https://lh3.googleusercontent.com/a/ACg8ocL_UgSw__k3h-zT2gamTXmkd78Tyk8uRyhpz6-OtSQAlc8Png=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "Glamhub is a heaven sent spot for carnival goers. They have a barber there where I can get my hair trimmed/shaped up for the road and they also have breakfast, complimentary drinks all while I'm waiting for my gf to get her hair and makeup done there too.",
+  },
+  {
+    name: "Marissa Hanson",
+    stars: 5,
+    text: "I would recommend the Glam Hub for absolutely EVERYONE prepping for carnival! From hair to makeup to photoshoot, it's always a 5 star experience. If you enjoy being treated like a princess, this is the place to get ready for carnival.",
+  },
+  {
+    name: "Michaela Excell",
+    stars: 5,
+    text: "I had an amazing experience at Carnival GlamHub! The makeup was flawless, and the team made sure I looked stunning for the occasion. The photos they took were professional and captured every detail perfectly.",
   },
 ];
+
+const getInitials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((n) => n[0]?.toUpperCase() ?? "")
+    .join("");
 
 const googleProfiles = [
   {
@@ -198,16 +207,25 @@ const Reviews = () => {
                 return (
                   <article key={`${review.name}-${review.text.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
                     <div className="flex items-center gap-4 mb-5">
-                      <img
-                        src={review.photo}
-                        alt={`${review.name} Google profile photo`}
-                        loading="lazy"
-                        referrerPolicy="no-referrer"
-                        className="h-12 w-12 rounded-full object-cover border border-border flex-shrink-0"
-                      />
+                      {review.photo ? (
+                        <img
+                          src={review.photo}
+                          alt={`${review.name} Google profile photo`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          className="h-12 w-12 rounded-full object-cover border border-primary/30 flex-shrink-0"
+                        />
+                      ) : (
+                        <div
+                          aria-hidden="true"
+                          className="h-12 w-12 rounded-full flex items-center justify-center border border-primary/30 bg-primary/10 text-primary font-display text-sm font-semibold flex-shrink-0"
+                        >
+                          {getInitials(review.name)}
+                        </div>
+                      )}
                       <div className="flex-1 min-w-0">
                         <p className="font-body text-sm font-semibold text-foreground truncate">{review.name}</p>
-                        <p className="font-body text-xs text-muted-foreground">{review.location} · Google review</p>
+                        <p className="font-body text-xs text-muted-foreground">Verified Google review</p>
                       </div>
                     </div>
                     <div className="flex gap-0.5 mb-4" aria-label={`${rating} star review`}>
