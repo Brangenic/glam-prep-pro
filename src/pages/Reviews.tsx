@@ -1,9 +1,92 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
-import { featuredReviews, type ReviewItem } from "@/components/landing/reviewsData";
-import { supabase } from "@/integrations/supabase/client";
+
+const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Carnival Glam Testimonials";
+const PAGE_DESCRIPTION =
+  "Read real reviews from Carnival Glam Hub clients. Authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.";
+
+type RealReview = {
+  name: string;
+  photo: string;
+  stars: number;
+  text: string;
+  location: string;
+};
+
+const realReviews: RealReview[] = [
+  {
+    name: "Melissa Chung",
+    photo: "https://lh3.googleusercontent.com/a/ACg8ocKAgKeQo-0x3xSi6D_Q4esEipUJOjxQ73dDG9zOWWXpEWvB8Q=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "Carnival Glam Hub was everything! I loved being able to get my makeup, hair, and photoshoot all in one place, so easy and stress-free. The dressing room assistants were a huge help! My makeup lasted all day, even through the heat and nonstop dancing. Such an amazing experience! Thanks, Glam Hub team!",
+    location: "Jamaica",
+  },
+  {
+    name: "Shadae Henry",
+    photo: "https://lh3.googleusercontent.com/a/ACg8ocJsQUz7R5d4eoB2NlNs5v7r9dxI566i0FNXXp2tSqtvPcIqFA=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "I've been going to Carnival Glam Hub since 2022 and I'll be back again for 2025! It's the place to be for your hair, makeup and photoshoot needs. It's like your own personal glam squad right before you touch on the road!",
+    location: "Jamaica",
+  },
+  {
+    name: "Antoinette Dixon",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjXm9-L-TadspKdG6eTmup06BHI16fquw0dtUTmIUuW8UAhln3eO7g=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "I've been to Carnival Glam Hub since 2021 and their service is always amazing. I got my hair and makeup done in one place and not to mention enjoying the mimosas and breakfast they had available. It's a really great premium experience for all carnival masqueraders.",
+    location: "Jamaica",
+  },
+  {
+    name: "Snowwhite Hogie",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjVO2OxItMqgN50il_nXYb7l4X3lz3ax6WjquqhSe7nOr87GmCc=w72-h72-p-rp-mo-ba2-br100",
+    stars: 5,
+    text: "I love Carnival Glam Hub — 10/10 Experience! Absolutely loved the service! The makeup was flawless, transportation was smooth and stress-free, and the photoshoot captured the vibes perfectly.",
+    location: "Jamaica",
+  },
+  {
+    name: "Daydrie Burke",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjVRrmOcPDgq-svpGkUFxDJTB4Au-TWGn8L31WweiUVtoQMpVGRm2w=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "When it comes to Glam Hub, consider it your one stop shop for getting ready for the road on carnival day! From getting your hair and fabulous makeup done by the best in the business to having help putting on your costume.",
+    location: "Jamaica",
+  },
+  {
+    name: "Krystal Angelique",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjX6BQh4kA2G3At2XOveoQfHd4r4-QVxBleNql5IgnAwu6nRAiis=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "Glam Hub is what we always needed and every year it evolves. A place with everything! Thoughtfully curated, from welcome refreshments, to snacks, makeup, hair, help with costumes, photo shoots and so much more.",
+    location: "Jamaica",
+  },
+  {
+    name: "Mala Morrison",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjUDR28GEwMrbthygeQ_9csH8O3HIZhyhovD9ypnLbsV16lziYKacA=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "Carnival Glam Hub is my choice for a one stop hassle-free carnival glam experience.",
+    location: "Jamaica",
+  },
+  {
+    name: "Marissa Williams",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjXtQ_DxGGcUOAvjVpmH2BYfofQj_M9z68j7PCOgAkDDQ4Utk2s=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "If you were at Jamaica carnival this year you know the heat was on another level and my makeup held up through sweat and bottles of water being spritzed on it. I was truly amazed by the talent and quality of makeup I received.",
+    location: "Jamaica",
+  },
+  {
+    name: "Ashley Trini S",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjWoM8cTsPE2l8KK5vjYg5zbqjJv7v8RqsinZQLFs-hWwjtFEFVFDA=w72-h72-p-rp-mo-ba4-br100",
+    stars: 5,
+    text: "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam Hub and will be using them for both days next year.",
+    location: "Trinidad",
+  },
+  {
+    name: "Kerra Denel",
+    photo: "https://lh3.googleusercontent.com/a-/ALV-UjXDGXza3lSHsqgrXp55mDKOmlc2Zx0i-JI6qmoKCTYvpv1gJ-5d=w72-h72-p-rp-mo-br100",
+    stars: 5,
+    text: "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time (which is everything during Carnival season!), and the entire process was professional and organized.",
+    location: "Trinidad",
+  },
+];
 
 const googleProfiles = [
   {
@@ -26,58 +109,33 @@ const googleProfiles = [
   },
 ];
 
-type SyncedReview = {
-  author_name: string | null;
-  location: string | null;
-  quote: string;
-  rating: number | null;
-  review_date: string | null;
-};
-
-type DisplayReview = ReviewItem & {
-  rating?: number;
-};
-
 const Reviews = () => {
-  const [syncedReviews, setSyncedReviews] = useState<DisplayReview[]>([]);
-
   useEffect(() => {
-    let isMounted = true;
+    const previousTitle = document.title;
+    document.title = PAGE_TITLE;
 
-    const syncAndLoadReviews = async () => {
-      void supabase.functions.invoke("sync-public-content", {
-        body: { source: "google_reviews" },
-      });
-
-      const { data } = await supabase
-        .from("google_reviews")
-        .select("author_name, location, quote, rating, review_date")
-        .order("synced_at", { ascending: false });
-
-      if (!isMounted || !data?.length) return;
-
-      const mapped = (data as SyncedReview[]).map((review) => ({
-        quote: review.quote,
-        name: review.author_name || "Google Reviewer",
-        detail: review.review_date || "Google review",
-        location: review.location || "Carnival Glam Hub",
-        rating: review.rating ?? 5,
-      }));
-
-      setSyncedReviews(mapped);
+    const setMeta = (name: string, content: string) => {
+      let tag = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute("name", name);
+        document.head.appendChild(tag);
+      }
+      const prev = tag.getAttribute("content");
+      tag.setAttribute("content", content);
+      return () => {
+        if (prev === null) tag?.remove();
+        else tag?.setAttribute("content", prev);
+      };
     };
 
-    syncAndLoadReviews();
+    const restoreDesc = setMeta("description", PAGE_DESCRIPTION);
 
     return () => {
-      isMounted = false;
+      document.title = previousTitle;
+      restoreDesc();
     };
   }, []);
-
-  const reviewsToRender = useMemo(
-    () => (syncedReviews.length > 0 ? syncedReviews : featuredReviews),
-    [syncedReviews],
-  );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -135,19 +193,22 @@ const Reviews = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-              {reviewsToRender.map((review) => {
-                const rating = "rating" in review && typeof review.rating === "number" ? review.rating : 5;
-
+              {realReviews.map((review) => {
+                const rating = review.stars;
                 return (
-                  <article key={`${review.name}-${review.quote.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
-                    <div className="flex items-center justify-between gap-4 mb-5">
-                      <div>
-                        <p className="font-body text-sm font-semibold text-foreground">{review.name}</p>
-                        <p className="font-body text-xs text-muted-foreground">{review.location}</p>
+                  <article key={`${review.name}-${review.text.slice(0, 24)}`} className="relative rounded-2xl border border-border bg-card p-6 sm:p-8">
+                    <div className="flex items-center gap-4 mb-5">
+                      <img
+                        src={review.photo}
+                        alt={`${review.name} Google profile photo`}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        className="h-12 w-12 rounded-full object-cover border border-border flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-body text-sm font-semibold text-foreground truncate">{review.name}</p>
+                        <p className="font-body text-xs text-muted-foreground">{review.location} · Google review</p>
                       </div>
-                      <span className="font-body text-[11px] uppercase tracking-[0.16em] text-secondary font-semibold">
-                        {review.detail}
-                      </span>
                     </div>
                     <div className="flex gap-0.5 mb-4" aria-label={`${rating} star review`}>
                       {[...Array(5)].map((_, i) => (
@@ -157,7 +218,7 @@ const Reviews = () => {
                       ))}
                     </div>
                     <p className="font-body text-sm sm:text-[15px] leading-relaxed text-foreground/85">
-                      “{review.quote}”
+                      “{review.text}”
                     </p>
                   </article>
                 );
