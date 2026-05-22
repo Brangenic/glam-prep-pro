@@ -141,7 +141,7 @@ export const destinations: Destination[] = [
       "Festival hair styling",
       "Gems, lashes and body paint",
     ],
-    metaTitle: "Miami Carnival Makeup & Glam Services 2026 | Carnival Glam Hub",
+    metaTitle: "Miami Carnival Makeup & Glam Services | Carnival Glam Hub",
     metaDescription:
       "Book your Miami Carnival glam look with Carnival Glam Hub. Makeup and styling for diaspora women ready to shine. Miami Caribbean carnival specialists.",
   },
