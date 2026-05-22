@@ -143,7 +143,7 @@ export const destinations: Destination[] = [
     ],
     metaTitle: "Miami Carnival Makeup & Glam Services 2026 | Carnival Glam Hub",
     metaDescription:
-      "Miami Carnival 2026 glam hub — book full carnival makeup, hair, gems and body art with Carnival Glam Hub for the Columbus Day weekend.",
+      "Book your Miami Carnival glam look with Carnival Glam Hub. Makeup and styling for diaspora women ready to shine. Miami Caribbean carnival specialists.",
   },
   {
     slug: "toronto",
