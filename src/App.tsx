@@ -1,7 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate, useParams } from "react-router-dom";
-import { buildDestinationUrl } from "@/lib/destinations";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +11,7 @@ import Reviews from "./pages/Reviews.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import Destination from "./pages/Destination.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -23,14 +22,6 @@ const queryClient = new QueryClient();
 const WixPostRedirect = () => {
   const { slug } = useParams();
   return <Navigate to={`/blogs/${slug ?? ""}`} replace />;
-};
-
-const DestinationRedirect = () => {
-  const { slug = "" } = useParams<{ slug: string }>();
-  useEffect(() => {
-    window.location.replace(buildDestinationUrl(slug));
-  }, [slug]);
-  return null;
 };
 
 const App = () => (
@@ -52,7 +43,7 @@ const App = () => (
           <Route path="/blog" element={<Navigate to="/blogs" replace />} />
           <Route path="/blog/post/:slug" element={<WixPostRedirect />} />
           <Route path="/blog/:slug" element={<WixPostRedirect />} />
-          <Route path="/destinations/:slug" element={<DestinationRedirect />} />
+          <Route path="/destinations/:slug" element={<Destination />} />
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<Navigate to="/destinations/jamaica" replace />} />
           <Route path="/trinidad" element={<Navigate to="/destinations/trinidad" replace />} />
