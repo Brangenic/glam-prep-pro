@@ -9,16 +9,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  BOOKING_URL,
   destinations,
   getDestinationBySlug,
   getDestinationFaqs,
 } from "@/data/destinations";
+import { buildDestinationUrl } from "@/lib/destinations";
 
 const Destination = () => {
   const { slug = "" } = useParams();
   const dest = getDestinationBySlug(slug);
   const faqs = useMemo(() => (dest ? getDestinationFaqs(dest) : []), [dest]);
+  const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
 
   useEffect(() => {
     if (!dest) return;
@@ -94,7 +95,7 @@ const Destination = () => {
       },
       offers: {
         "@type": "Offer",
-        url: BOOKING_URL,
+        url: bookingUrl,
         availability: "https://schema.org/InStock",
         category: `${dest.shortName} Carnival Glam`,
       },
@@ -144,7 +145,7 @@ const Destination = () => {
         document.getElementById(id)?.remove(),
       );
     };
-  }, [dest, faqs]);
+  }, [dest, faqs, bookingUrl]);
 
   if (!dest) return <Navigate to="/#destinations" replace />;
 
@@ -202,12 +203,12 @@ const Destination = () => {
                 </ul>
 
                 <a
-                  href={BOOKING_URL}
+                  href={bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                 >
-                  {dest.cta}
+                  Book Your Glam
                 </a>
               </div>
 
@@ -224,12 +225,12 @@ const Destination = () => {
                   Limited availability. Booking closes early every season.
                 </p>
                 <a
-                  href={BOOKING_URL}
+                  href={bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                 >
-                  Book on Masos
+                  Book Your Glam
                 </a>
               </aside>
             </div>
@@ -268,12 +269,12 @@ const Destination = () => {
 
             <div className="text-center mt-10">
               <a
-                href={BOOKING_URL}
+                href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
               >
-                {dest.cta}
+                Book Your Glam
               </a>
             </div>
           </div>
