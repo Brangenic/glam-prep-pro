@@ -3,7 +3,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
-const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Carnival Glam Testimonials";
+const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Carnival Makeup Testimonials";
 const PAGE_DESCRIPTION =
   "Read real reviews from Carnival Glam Hub clients. Authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.";
 
@@ -25,67 +25,67 @@ const realReviews: RealReview[] = [
     name: "Snowwhite Hogie",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjVO2OxItMqgN50il_nXYb7l4X3lz3ax6WjquqhSe7nOr87GmCc=w72-h72-p-rp-mo-ba2-br100",
     stars: 5,
-    text: "I love Carnival Glam Hub 10/10 Experience! Absolutely loved the service! The makeup was flawless, transportation was smooth and stress-free, and the photoshoot captured the vibes perfectly.",
+    text: "I love Carnival Glam Hub 10/10 Experience! The makeup was flawless, transportation was smooth and stress-free, and the photoshoot captured the vibes perfectly.",
   },
   {
     name: "Daydrie Burke",
     stars: 5,
-    text: "When it comes to Glam Hub, consider it your one stop shop for getting ready for the road on carnival day! From getting ur hair and fabulous makeup done by the best in the business to having help to put on your costume from their dressing assistants. Not to mention the breakfast and drinks to start your morning. Fabulous experience and awesome service. Only place to be on carnival morning.",
+    text: "When it comes to Glam Hub, consider it your one stop shop for getting ready for the road on carnival day! From getting ur hair and fabulous makeup done by the best in the business to having help to put on your costume from their dressing assistants. Not to mention the breakfast and drinks. Fabulous experience and awesome service. Only place to be on carnival morning.",
   },
   {
     name: "Shadae Henry",
     stars: 5,
-    text: "I've been going to Carnival Glam Hub since 2022 and I'll be back again for 2025! It's the place to be for your hair, makeup and photoshoot needs. It's like your own personal glam squad right before you touch on the road!",
+    text: "I have been going to Carnival Glam Hub since 2022 and will be back for 2025! It is the place to be for your hair, makeup and photoshoot needs. Like your own personal glam squad right before you hit the road!",
   },
   {
     name: "Antoinette Dixon",
     stars: 5,
-    text: "I've been to Carnival Glam Hub since 2021 and their service is always amazing. I got my hair and makeup done in one place and not to mention enjoying the mimosas and breakfast they had available. It's a really great premium experience for all carnival masqueraders.",
+    text: "I have been to Carnival Glam Hub since 2021 and their service is always amazing. Hair and makeup in one place plus mimosas and breakfast. A really great premium experience for all carnival masqueraders.",
   },
   {
     name: "Jade Amiel",
     stars: 5,
-    text: "Last year was the first staging of Carnival GLAM Hub and it was well thought out and an enjoyable experience. I had the best time. I'm very curious to see what's new for the second staging. Something tells me it's gonna be 10x better. So excited!",
+    text: "Last year was the first staging of Carnival GLAM Hub and it was well thought out and an enjoyable experience. I had the best time. So excited for what is next - going to be 10x better!",
   },
   {
     name: "Ashley Trini S",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjWoM8cTsPE2l8KK5vjYg5zbqjJv7v8RqsinZQLFs-hWwjtFEFVFDA=w72-h72-p-rp-mo-ba4-br100",
     stars: 5,
-    text: "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam hub and will be using them for both days next year 2027 Carnival.",
+    text: "5 stars across the board! I chose Carnival Glam Hub for Carnival Monday and went elsewhere on Tuesday. I completely prefer Glam hub and will be using them for both days in 2027 Carnival.",
   },
   {
     name: "Kerra Denel",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjXDGXza3lSHsqgrXp55mDKOmlc2Zx0i-JI6qmoKCTYvpv1gJ-5d=w72-h72-p-rp-mo-br100",
     stars: 5,
-    text: "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time (which is everything during Carnival season!), and the entire process was professional, organized.",
+    text: "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time, and the entire process was professional and organized.",
   },
   {
     name: "Emma Aqui",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjW4m7n-dRXDTcqpxcIjDydx2AfVanNfD8M8ZdZnzEhGYhN4r7Q=w72-h72-p-rp-mo-br100",
     stars: 5,
-    text: "My experience with Carnival Glam Hub was nothing short of exceptional. From their professionalism to the quality of hair, makeup, and bronzing services, everything exceeded my expectations.",
+    text: "My experience with Carnival Glam Hub was nothing short of exceptional. From the professionalism to the quality of hair, makeup, and bronzing services, everything exceeded my expectations.",
   },
   {
     name: "Jodi Henriques",
     photo: "https://lh3.googleusercontent.com/a-/ALV-UjUjlg68wXx_qhfMyDHCk7FqVTmch_EMfU65b2IVktFrfp1pusv-=w72-h72-p-rp-mo-br100",
     stars: 5,
-    text: "My make up was beautiful, Gabby selected Colours that not only looked good with my costume but complimented my skin tone. I also did the photo package and what a relief to get the pics out the way so I can get on. I'll definitely be booking again",
+    text: "My makeup was beautiful, Gabby selected colours that complimented my skin tone and costume. I also did the photo package - what a relief to get the pics out the way before hitting the road. Definitely booking again!",
   },
   {
     name: "Nicholas Dodd",
     photo: "https://lh3.googleusercontent.com/a/ACg8ocL_UgSw__k3h-zT2gamTXmkd78Tyk8uRyhpz6-OtSQAlc8Png=w72-h72-p-rp-mo-br100",
     stars: 5,
-    text: "Glamhub is a heaven sent spot for carnival goers. They have a barber there where I can get my hair trimmed/shaped up for the road and they also have breakfast, complimentary drinks all while I'm waiting for my gf to get her hair and makeup done there too.",
+    text: "Glamhub is a heaven sent spot for carnival goers. They have a barber there where I can get my hair trimmed for the road and they also have breakfast, complimentary drinks all while waiting for my partner to get her hair and makeup done too.",
   },
   {
     name: "Marissa Hanson",
     stars: 5,
-    text: "I would recommend the Glam Hub for absolutely EVERYONE prepping for carnival! From hair to makeup to photoshoot, it's always a 5 star experience. If you enjoy being treated like a princess, this is the place to get ready for carnival.",
+    text: "I would recommend the Glam Hub for absolutely EVERYONE prepping for carnival! From hair to makeup to photoshoot, always a 5 star experience. If you enjoy being treated like a princess, this is the place to get ready for carnival.",
   },
   {
     name: "Michaela Excell",
     stars: 5,
-    text: "I had an amazing experience at Carnival GlamHub! The makeup was flawless, and the team made sure I looked stunning for the occasion. The photos they took were professional and captured every detail perfectly.",
+    text: "I had an amazing experience at Carnival GlamHub! The makeup was flawless, and the team made sure I looked stunning. The photos were professional and captured every detail perfectly.",
   },
 ];
 
