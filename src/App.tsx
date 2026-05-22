@@ -24,6 +24,9 @@ const WixPostRedirect = () => {
   return <Navigate to={`/blogs/${slug ?? ""}`} replace />;
 };
 
+// Render the Destination landing page for a fixed slug (short SEO aliases).
+const DestinationAlias = ({ slug }: { slug: string }) => <Destination slugOverride={slug} />;
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -45,20 +48,20 @@ const App = () => (
           <Route path="/blog/:slug" element={<WixPostRedirect />} />
           <Route path="/destinations/:slug" element={<Destination />} />
           {/* Direct slug aliases for SEO */}
-          <Route path="/jamaica" element={<Navigate to="/destinations/jamaica" replace />} />
-          <Route path="/trinidad" element={<Navigate to="/destinations/trinidad" replace />} />
-          <Route path="/trinidad-and-tobago" element={<Navigate to="/destinations/trinidad" replace />} />
-          <Route path="/tobago" element={<Navigate to="/destinations/trinidad" replace />} />
-          <Route path="/antigua" element={<Navigate to="/destinations/antigua" replace />} />
-          <Route path="/antigua-and-barbuda" element={<Navigate to="/destinations/antigua" replace />} />
-          <Route path="/barbados" element={<Navigate to="/destinations/barbados" replace />} />
-          <Route path="/grenada" element={<Navigate to="/destinations/grenada" replace />} />
-          <Route path="/st-lucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
-          <Route path="/saint-lucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
-          <Route path="/stlucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
-          <Route path="/saintlucia" element={<Navigate to="/destinations/saint-lucia" replace />} />
-          <Route path="/miami" element={<Navigate to="/destinations/miami" replace />} />
-          <Route path="/toronto" element={<Navigate to="/destinations/toronto" replace />} />
+          <Route path="/jamaica" element={<DestinationAlias slug="jamaica" />} />
+          <Route path="/trinidad" element={<DestinationAlias slug="trinidad" />} />
+          <Route path="/trinidad-and-tobago" element={<DestinationAlias slug="trinidad" />} />
+          <Route path="/tobago" element={<DestinationAlias slug="trinidad" />} />
+          <Route path="/antigua" element={<DestinationAlias slug="antigua" />} />
+          <Route path="/antigua-and-barbuda" element={<DestinationAlias slug="antigua" />} />
+          <Route path="/barbados" element={<DestinationAlias slug="barbados" />} />
+          <Route path="/grenada" element={<DestinationAlias slug="grenada" />} />
+          <Route path="/st-lucia" element={<DestinationAlias slug="saint-lucia" />} />
+          <Route path="/saint-lucia" element={<DestinationAlias slug="saint-lucia" />} />
+          <Route path="/stlucia" element={<DestinationAlias slug="saint-lucia" />} />
+          <Route path="/saintlucia" element={<DestinationAlias slug="saint-lucia" />} />
+          <Route path="/miami" element={<DestinationAlias slug="miami" />} />
+          <Route path="/toronto" element={<DestinationAlias slug="toronto" />} />
           <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
