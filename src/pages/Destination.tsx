@@ -211,11 +211,6 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         </section>
         )}
 
-        {/* Live MasOS booking embed */}
-        {embedUrl && (
-          <MasosEmbed url={embedUrl} title={`Book ${dest.name} glam`} />
-        )}
-
         {/* Packages */}
         {packagesData && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
