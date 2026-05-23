@@ -224,7 +224,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 {packagesData.eventDate}
               </p>
               <h2 id="packages-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center">
-                <span className="text-gradient-primary italic">{packagesData.eventTitle}</span>
+                <span className="text-gradient-primary italic">Choose Your Package</span>
               </h2>
 
               {packagesData.sections.map((section, idx) => (
@@ -234,36 +234,33 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {section.title}
                     </h3>
                   )}
-                  <div className={dest.slug === "grenada" ? "grid grid-cols-2 sm:grid-cols-4 gap-4" : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6"}>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                     {section.packages.map((pkg) => (
                       <a
                         key={pkg.name}
                         href={packagesData.bookingUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={dest.slug === "grenada"
-                          ? "group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all"
-                          : "group block rounded-2xl overflow-hidden bg-card border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all"}
+                        className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all"
                       >
-                        <div className={dest.slug === "grenada" ? "h-[200px] overflow-hidden bg-muted" : "aspect-[462/578] overflow-hidden bg-muted"}>
+                        <div className="h-[200px] overflow-hidden bg-muted">
                           <img
                             src={pkg.image}
                             alt={pkg.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                             loading="lazy"
                           />
                         </div>
-                        <div className="p-4">
-                          <h4 className={dest.slug === "grenada"
-                            ? "font-display text-base sm:text-lg font-bold leading-tight mb-2 text-foreground"
-                            : "font-display text-base sm:text-lg font-bold leading-tight mb-2"}>
+                        <div className="p-4 flex flex-col flex-1">
+                          <h4 className="font-display text-base sm:text-lg font-bold leading-tight mb-2 text-foreground">
                             {pkg.name}
                           </h4>
-                          <p className={dest.slug === "grenada"
-                            ? "font-body text-sm font-semibold text-primary"
-                            : "font-body text-sm text-secondary font-semibold"}>
+                          <p className="font-body text-lg sm:text-xl font-bold text-primary mb-3">
                             {pkg.price}
                           </p>
+                          <span className="mt-auto inline-block text-center bg-primary text-primary-foreground font-body font-semibold text-xs uppercase tracking-wide px-4 py-2 rounded-full group-hover:shadow-lg group-hover:shadow-primary/30 transition-all">
+                            Book Now
+                          </span>
                         </div>
                       </a>
                     ))}
