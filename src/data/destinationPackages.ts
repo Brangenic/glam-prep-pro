@@ -124,19 +124,20 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       {
         title: "Grenada - Monday Carnival Glam Hub 2026",
         packages: [
-          { name: "Monday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/462x578` },
-          { name: "Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/8753e929-2f12-481b-a8f2-75d619ddbb2b/462x578` },
-          { name: "Monday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/462x578` },
-          { name: "Monday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/462x578` },
+          { name: "Monday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/600x750` },
+          { name: "Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/8753e929-2f12-481b-a8f2-75d619ddbb2b/600x750` },
+          { name: "Monday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/600x750` },
+          { name: "Monday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/600x750` },
         ],
       },
       {
         title: "Grenada - Tuesday Carnival Glam Hub 2026",
         packages: [
-          { name: "Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/462x578` },
-          { name: "Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/462x578` },
-          { name: "Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/59439c7d-8c5b-4950-8c5f-7f4338e365d9/462x578` },
-          { name: "Tuesday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/462x578` },
+          { name: "Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/600x750` },
+          { name: "Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/600x750` },
+          { name: "Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/59439c7d-8c5b-4950-8c5f-7f4338e365d9/600x750` },
+          { name: "Tuesday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/600x750` },
+          { name: "Tuesday Shuttle Services", price: "$35 USD", image: `${IMG}/033de542-1958-4817-b7b7-5eaeb5454e3f/600x750` },
         ],
       },
     ],
