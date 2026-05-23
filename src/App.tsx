@@ -63,6 +63,8 @@ const App = () => (
           <Route path="/miami" element={<DestinationAlias slug="miami" />} />
           <Route path="/toronto" element={<DestinationAlias slug="toronto" />} />
           <Route path="/guyana" element={<DestinationAlias slug="guyana" />} />
+          <Route path="/epic-cruise" element={<DestinationAlias slug="epic-cruise" />} />
+          <Route path="/epic" element={<DestinationAlias slug="epic-cruise" />} />
           <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />

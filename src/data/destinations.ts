@@ -208,6 +208,27 @@ export const destinations: Destination[] = [
     metaDescription:
       "Book premium Guyana Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists.",
   },
+  {
+    slug: "epic-cruise",
+    name: "Epic Cruise — Trinidad Carnival",
+    shortName: "Epic Cruise",
+    date: "8–9 February 2027",
+    description: "Premium glam hub services for EPIC Carnival Experience masqueraders.",
+    longDescription:
+      "Glam Hub at sea! Carnival Glam Hub is aboard the EPIC Carnival Experience — the luxury floating hotel that sails masqueraders from San Juan, Puerto Rico straight to Trinidad Carnival. Book your makeup, hair, photoshoot, and get-dressed services exclusively for EPIC cruise masqueraders.",
+    image: "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&dl=1",
+    cta: "Book Epic Cruise Glam",
+    objectPosition: "50% 20%",
+    highlights: [
+      "Glam hub aboard the EPIC cruise ship",
+      "Carnival Monday & Tuesday coverage",
+      "Full makeup, hair & photoshoot",
+      "Get Dressed assistance included",
+    ],
+    metaTitle: "EPIC Cruise Carnival Glam Hub 2027 | Carnival Glam Hub",
+    metaDescription:
+      "Book your carnival glam services on the EPIC Cruise. Carnival Glam Hub is aboard the EPIC Carnival Experience for Trinidad Carnival 2027.",
+  },
 ];
 
 export const getDestinationBySlug = (slug: string) =>

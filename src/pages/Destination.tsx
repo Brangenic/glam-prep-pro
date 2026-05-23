@@ -183,6 +183,16 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
               Where We Glam
             </p>
+            {dest.slug === "epic-cruise" && (
+              <span className="inline-block w-fit bg-secondary/90 text-secondary-foreground font-body text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
+                🚢 Glam Hub at Sea — exclusively for EPIC Cruise masqueraders
+              </span>
+            )}
+            {dest.slug === "trinidad" && (
+              <span className="inline-block w-fit bg-secondary/90 text-secondary-foreground font-body text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
+                Also available on Epic Cruise 🚢
+              </span>
+            )}
             <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold italic text-white max-w-3xl">
               {dest.name}
             </h1>
