@@ -125,7 +125,7 @@ export const destinationPackages: Record<string, DestinationPackages> = {
         title: "Grenada - Monday Carnival Glam Hub 2026",
         packages: [
           { name: "Monday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/600x750` },
-          { name: "Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/8753e929-2f12-481b-a8f2-75d619ddbb2b/600x750` },
+          { name: "Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/ef8f7fd3-9a89-4621-adc8-426319de66a9/600x750` },
           { name: "Monday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/600x750` },
           { name: "Monday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/600x750` },
         ],
