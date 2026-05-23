@@ -1,10 +1,4 @@
 import jamaicaImg from "@/assets/dest-jamaica-new.jpg";
-import stluciaImg from "@/assets/dest-stlucia-new.jpg";
-import antiguaImg from "@/assets/carnival-3.jpg";
-import grenadaImg from "@/assets/carnival-5.jpg";
-import miamiImg from "@/assets/carnival-7.jpg";
-import barbadosImg from "@/assets/carnival-8.jpg";
-import torontoImg from "@/assets/dest-toronto-real.jpg";
 import guyanaImg from "@/assets/carnival-4.jpg";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -53,7 +47,7 @@ export const destinations: Destination[] = [
     description: "Full-service glam for Saint Lucia Carnival.",
     longDescription:
       "Our Saint Lucia Carnival glam hub is set up across the island with packages for road march, j'ouvert and fete looks. Get matched with a senior artist for your full carnival glam experience.",
-    image: stluciaImg,
+    image: "https://www.dropbox.com/scl/fi/ns7h0tq44hyuwyyon6ruc/IMG_5720.jpg?rlkey=s5hqgzch1y0xzoeguewdpbgoa&st=n467bmwi&dl=1",
     cta: "Book Saint Lucia Glam",
     highlights: [
       "Road march full glam",
@@ -73,7 +67,7 @@ export const destinations: Destination[] = [
     description: "Carnival glam services for Antigua Carnival.",
     longDescription:
       "Antigua Carnival is one of the Caribbean's most colorful festivals — and our glam hub keeps you camera-ready from j'ouvert to last lap. Premium makeup, hair, gems and body art available across the island.",
-    image: antiguaImg,
+    image: "https://www.dropbox.com/scl/fi/6wchhafesmdhwkthgq8kc/IMG_4191.jpg?rlkey=jxnusfdwug3rivkyefbm0ca7r&st=v64m5fm9&dl=1",
     cta: "Book Antigua Glam",
     highlights: [
       "Full carnival makeup",
@@ -93,7 +87,7 @@ export const destinations: Destination[] = [
     description: "Premium glam services for Grenada Spicemas.",
     longDescription:
       "Spicemas is unmatched — and our Grenada Carnival glam hub matches the energy. Full makeup, hair, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists.",
-    image: grenadaImg,
+    image: "https://www.dropbox.com/scl/fi/7dwtqe5zhbgsfdxdcnmhd/IMG_4192-2.jpg?rlkey=3mrr8r86ec1mjjpp4ioxol160&st=wq46d817&dl=1",
     cta: "Book Grenada Glam",
     highlights: [
       "Spicemas full glam",
@@ -113,7 +107,7 @@ export const destinations: Destination[] = [
     description: "Full glam hub services for Barbados Crop Over.",
     longDescription:
       "Crop Over is the Caribbean's biggest summer carnival — and our Barbados glam hub is fully booked every season for a reason. Get the full road experience with sweat-proof makeup, festival hair, gems and j'ouvert paint by our top artists.",
-    image: barbadosImg,
+    image: "https://www.dropbox.com/scl/fi/dhwh4i4ho8bos4bg5uzxl/IMG_0864.jpg?rlkey=qev6rmd0tzcwcofagybin38o7&st=csylmxx2&dl=1",
     cta: "Book Barbados Glam",
     highlights: [
       "Grand Kadooment full glam",
@@ -133,7 +127,7 @@ export const destinations: Destination[] = [
     description: "Glam hub services for Miami Carnival.",
     longDescription:
       "Our Miami Carnival glam hub serves the entire Miami Carnival season — from pre-carnival fetes through Columbus Day weekend. Full makeup, hair, gems and body art by our pro carnival team.",
-    image: miamiImg,
+    image: "https://www.dropbox.com/scl/fi/3hdshv8hz52v8nabwqrxz/IMG_0863.jpg?rlkey=ae86g6b4cy7rs80vw53iwdmdg&st=q3g11n1x&dl=1",
     cta: "Book Miami Glam",
     highlights: [
       "Full road glam packages",
@@ -153,7 +147,7 @@ export const destinations: Destination[] = [
     description: "Glam hub services for Toronto Caribana.",
     longDescription:
       "Caribana is North America's biggest Caribbean carnival, and our Toronto glam hub is on the road with you. Full makeup, hair, festival gems and body art for the Grand Parade and weekend fetes.",
-    image: torontoImg,
+    image: "https://www.dropbox.com/scl/fi/q3mh3zhg71mzki5vfitvn/IMG_4436.jpg?rlkey=hd46hy1efelzaz35e0g6ghdgh&st=em1s3ddw&dl=1",
     cta: "Book Toronto Glam",
     highlights: [
       "Grand Parade full glam",
@@ -173,7 +167,7 @@ export const destinations: Destination[] = [
     description: "Premium glam services for Trinidad Carnival 2027 - Port of Spain.",
     longDescription:
       "Trinidad Carnival 2027 packages opening soon. Join the waitlist for j'ouvert, Monday wear and Carnival Tuesday road glam in Port of Spain.",
-    image: "https://images.unsplash.com/photo-1718996966052-833b57330073?auto=format&fit=crop&w=1200&q=80",
+    image: "https://www.dropbox.com/scl/fi/mlgtv0pf50ycb39biy6ze/IMG_4432.jpg?rlkey=elsa6avxrnq2xnxx8obzzd73j&st=dv20matm&dl=1",
     cta: "Book Trinidad Glam",
     upcoming: false,
     highlights: [
