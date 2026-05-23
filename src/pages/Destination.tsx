@@ -17,6 +17,7 @@ import {
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
 import logoImg from "@/assets/logo.png";
+import { getDestinationPackages } from "@/data/destinationPackages";
 
 const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const params = useParams();
@@ -157,6 +158,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const masosEntry = getMasosDestination(dest.slug);
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
+  const packagesData = getDestinationPackages(dest.slug);
 
   return (
     <div className="min-h-screen bg-background">
@@ -212,6 +214,69 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         {/* Live MasOS booking embed */}
         {embedUrl && (
           <MasosEmbed url={embedUrl} title={`Book ${dest.name} glam`} />
+        )}
+
+        {/* Packages */}
+        {packagesData && (
+          <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
+            <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+              <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3 text-center">
+                {packagesData.eventDate}
+              </p>
+              <h2 id="packages-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center">
+                <span className="text-gradient-primary italic">{packagesData.eventTitle}</span>
+              </h2>
+
+              {packagesData.sections.map((section, idx) => (
+                <div key={idx} className={idx > 0 ? "mt-16" : ""}>
+                  {section.title && (
+                    <h3 className="font-display text-xl sm:text-2xl font-bold mb-8 text-center">
+                      {section.title}
+                    </h3>
+                  )}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+                    {section.packages.map((pkg) => (
+                      <a
+                        key={pkg.name}
+                        href={packagesData.bookingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block rounded-2xl overflow-hidden bg-card border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all"
+                      >
+                        <div className="aspect-[462/578] overflow-hidden bg-muted">
+                          <img
+                            src={pkg.image}
+                            alt={pkg.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-display text-base sm:text-lg font-bold leading-tight mb-2">
+                            {pkg.name}
+                          </h4>
+                          <p className="font-body text-sm text-secondary font-semibold">
+                            {pkg.price}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              <div className="text-center mt-12">
+                <a
+                  href={packagesData.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-8 py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
+                >
+                  Book Your Glam
+                </a>
+              </div>
+            </div>
+          </section>
         )}
 
         {/* Body */}

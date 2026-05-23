@@ -110,7 +110,7 @@ export const destinations: Destination[] = [
     slug: "barbados",
     name: "Barbados Crop Over",
     shortName: "Barbados",
-    date: "August 2026",
+    date: "3 August 2026",
     description: "Full glam hub services for Barbados Crop Over.",
     longDescription:
       "Crop Over is the Caribbean's biggest summer carnival — and our Barbados glam hub is fully booked every season for a reason. Get the full road experience with sweat-proof makeup, festival hair, gems and j'ouvert paint by our top artists.",
@@ -130,7 +130,7 @@ export const destinations: Destination[] = [
     slug: "miami",
     name: "Miami Carnival",
     shortName: "Miami",
-    date: "Aug–Oct 2026",
+    date: "11 October 2026",
     description: "Glam hub services for Miami Carnival.",
     longDescription:
       "Our Miami Carnival glam hub serves the entire Miami Carnival season — from pre-carnival fetes through Columbus Day weekend. Full makeup, hair, gems and body art by our pro carnival team.",
@@ -150,7 +150,7 @@ export const destinations: Destination[] = [
     slug: "toronto",
     name: "Toronto Caribana",
     shortName: "Toronto",
-    date: "August 2026",
+    date: "1 August 2026",
     description: "Glam hub services for Toronto Caribana.",
     longDescription:
       "Caribana is North America's biggest Caribbean carnival, and our Toronto glam hub is on the road with you. Full makeup, hair, festival gems and body art for the Grand Parade and weekend fetes.",
