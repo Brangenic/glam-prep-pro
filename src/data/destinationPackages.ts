@@ -141,6 +141,57 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       },
     ],
   },
+  trinidad: {
+    eventTitle: "Trinidad - Carnival Glam Hub 2027",
+    eventDate: "8-9 February 2027",
+    bookingUrl: "https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb",
+    sections: [
+      {
+        title: "Monday 8 February 2027",
+        packages: [
+          { name: "Gabby Glam Team Monday Makeup Only", price: "$250 USD", image: `${IMG}/ec4fe656-22ef-4f5d-94ac-88caad314d98/462x578` },
+          { name: "Gabby Glam Team Monday Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/e67cf4d5-6cb6-415e-bb85-a63772402f1e/462x578` },
+          { name: "Trinidad Monday Makeup Only", price: "$180 USD", image: `${IMG}/7cc50573-b1af-423a-b00f-da2abaf1896e/462x578` },
+          { name: "Trinidad Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/b6e9cb02-ea71-4bd4-8a3f-fd31e30a483e/462x578` },
+          { name: "Trinidad Monday Full Glam", price: "$440 USD", image: `${IMG}/c5dba60c-4280-4504-8fdb-ec201a3a55fb/462x578` },
+          { name: "Trinidad Monday Makeup & Photoshoot + Bronzing", price: "$480 USD", image: `${IMG}/4f28b357-f347-4909-8636-d44ed0fd3fa5/462x578` },
+          { name: "Trinidad Monday Photoshoot Only", price: "$160 USD", image: `${IMG}/66c1579a-5d62-4803-be13-f57bd7fea92d/462x578` },
+          { name: "Trinidad Monday Hair Only", price: "$120 USD", image: `${IMG}/f008bb25-80bc-4733-b1a2-3ea0e4ca5650/462x578` },
+          { name: "Monday Front Braided Ponytail", price: "$185 USD", image: `${IMG}/a39e49a4-c984-4d09-afec-0e4ae2fa9d5d/462x578` },
+          { name: "Monday Half Up Half Down Ponytail", price: "$220 USD", image: `${IMG}/b479d4d8-d245-4a2f-8029-754fea039020/462x578` },
+          { name: "Trinidad Monday His Glam", price: "$35 USD", image: `${IMG}/456ab071-0f85-4fe0-8541-d7410dd465de/462x578` },
+          { name: "Monday Chontelle Sewett MUA", price: "$350 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
+        ],
+      },
+      {
+        title: "Tuesday 9 February 2027",
+        packages: [
+          { name: "Gabby Glam Team Tuesday Makeup Only", price: "$250 USD", image: `${IMG}/cd5ca635-209b-4185-82c3-580be33fddac/462x578` },
+          { name: "Gabby Glam Team Tuesday Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/1acf94cd-ca39-4200-b409-62428403d5b9/462x578` },
+          { name: "Trinidad Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/80ed37c5-125b-4c29-832f-9c4016feb014/462x578` },
+          { name: "Trinidad Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/79ce4fac-414f-4cfe-95fa-e31ad5de18fc/462x578` },
+          { name: "Trinidad Tuesday Full Glam", price: "$440 USD", image: `${IMG}/8255cfa7-1c9c-415d-a4c6-ae0628625a36/462x578` },
+          { name: "Trinidad Tuesday Makeup & Photoshoot + Bronzing", price: "$480 USD", image: `${IMG}/f832281b-cd40-442e-8d7d-a8075c52bd56/462x578` },
+          { name: "Tuesday Chontelle Sewett MUA", price: "$350 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
+          { name: "Tuesday Chontelle Sewett MUA Team", price: "$250 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
+          { name: "Trinidad Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/d60f1246-a372-4bc4-aec7-9cfe760d01b6/462x578` },
+          { name: "Tuesday Bronzing", price: "$160 USD", image: `${IMG}/dc8c705a-26fe-4373-b869-5d738180b664/462x578` },
+          { name: "Trinidad Tuesday Hair Only", price: "$120 USD", image: `${IMG}/dcfa0d3f-e8a0-4c3a-a5cc-90b5dd4a61e5/462x578` },
+          { name: "Tuesday Front Braided Ponytail", price: "$185 USD", image: `${IMG}/cd724402-a680-4460-9948-937110ea08e8/462x578` },
+        ],
+      },
+      {
+        title: "Both Days",
+        packages: [
+          { name: "BOTH DAYS Gabby Glam Team Makeup Only", price: "$480 USD", image: `${IMG}/cf93d4d6-cb97-4375-9cb7-7559e615ee56/462x578` },
+          { name: "BOTH DAYS Gabby Glam Team Makeup & Photoshoot", price: "$580 USD", image: `${IMG}/d430f4e7-f1f8-4ec7-894c-22078daed4bc/462x578` },
+          { name: "BOTH DAYS Makeup Only", price: "$380 USD", image: `${IMG}/8452bcff-aec4-41d3-ad52-925d1778ed55/462x578` },
+          { name: "BOTH DAYS Makeup & Photoshoot", price: "$480 USD", image: `${IMG}/6554cb14-b736-4986-89b8-cf0c426fd985/462x578` },
+          { name: "BOTH DAYS Full Glam", price: "$680 USD", image: `${IMG}/2b4a26fe-7f26-4c9d-a94f-14ab16125f7b/462x578` },
+        ],
+      },
+    ],
+  },
 };
 
 export const getDestinationPackages = (slug: string) => destinationPackages[slug];
