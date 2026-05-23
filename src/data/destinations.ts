@@ -13,6 +13,7 @@ export type Destination = {
   image: string;
   cta: string;
   upcoming?: boolean;
+  objectPosition?: string;
   highlights: string[];
   metaTitle: string;
   metaDescription: string;
