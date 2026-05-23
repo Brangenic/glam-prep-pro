@@ -170,12 +170,12 @@ export const destinations: Destination[] = [
     name: "Trinidad Carnival",
     shortName: "Trinidad",
     date: "Feb–Mar 2027",
-    description: "Upcoming glam services for Trinidad Carnival — Port of Spain.",
+    description: "Premium glam services for Trinidad Carnival 2027 - Port of Spain.",
     longDescription:
       "Trinidad Carnival 2027 packages opening soon. Join the waitlist for j'ouvert, Monday wear and Carnival Tuesday road glam in Port of Spain.",
-    image: trinidadImg,
-    cta: "Join Trinidad Waitlist",
-    upcoming: true,
+    image: "https://images.unsplash.com/photo-1718996966052-833b57330073?auto=format&fit=crop&w=1200&q=80",
+    cta: "Book Trinidad Glam",
+    upcoming: false,
     highlights: [
       "Carnival Monday & Tuesday road glam",
       "J'ouvert paint packages",
