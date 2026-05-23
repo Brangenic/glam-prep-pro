@@ -75,15 +75,21 @@ export const destinationPackages: Record<string, DestinationPackages> = {
     bookingUrl: "https://carnivalglamhub.masos.app/events/060faa4a-949a-4b36-893e-dc6db75e3100",
     sections: [
       {
+        title: "Monday",
         packages: [
           { name: "Monday Makeup Only", price: "$200 USD", image: `${IMG}/7966cf66-49d7-477e-aaf8-7191894d28a6/462x578` },
           { name: "Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/ef8f7fd3-9a89-4621-adc8-426319de66a9/462x578` },
           { name: "Monday Makeup & Photoshoot + Bronzing", price: "$450 USD", image: `${IMG}/3979787b-0455-4b14-abee-a057919ffe78/462x578` },
-          { name: "Tuesday Makeup ONLY", price: "$185 USD", image: `${IMG}/8fc65c53-8edb-47bd-a79c-f1f628fcad2b/462x578` },
           { name: "Monday Hair Only", price: "$120 USD", image: `${IMG}/5597720a-1b7f-4d41-83f5-23d53672a129/462x578` },
-          { name: "Photoshoot Only", price: "$160 USD", image: `${IMG}/6314aa19-afb8-4d84-81e5-33981fd8cd07/462x578` },
-          { name: "His Glam - Barber", price: "$35 USD", image: `${IMG}/2cb008bb-8cad-44dd-ac3f-9cca7da601cb/462x578` },
-          { name: "Bring A Friend", price: "$25 USD", image: `${IMG}/903621bc-7894-4a31-aeb0-a667acde53e0/462x578` },
+        ],
+      },
+      {
+        title: "Tuesday",
+        packages: [
+          { name: "Tuesday Makeup Only", price: "$185 USD", image: `${IMG}/8fc65c53-8edb-47bd-a79c-f1f628fcad2b/462x578` },
+          { name: "Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/6314aa19-afb8-4d84-81e5-33981fd8cd07/462x578` },
+          { name: "Tuesday His Glam - Barber", price: "$35 USD", image: `${IMG}/2cb008bb-8cad-44dd-ac3f-9cca7da601cb/462x578` },
+          { name: "Tuesday Bring A Friend", price: "$25 USD", image: `${IMG}/903621bc-7894-4a31-aeb0-a667acde53e0/462x578` },
         ],
       },
     ],
