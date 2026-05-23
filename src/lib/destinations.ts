@@ -13,6 +13,7 @@ export const DESTINATIONS: Destination[] = [
   { slug: 'miami', label: 'Miami', masosUrl: 'https://carnivalglamhub.masos.app/events/d6238a3f-73d0-4805-a3f2-91e8b4415047' },
   { slug: 'trinidad', label: 'Trinidad', masosUrl: 'https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb' },
   { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
+  { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events' },
   { slug: 'guyana', label: 'Guyana', masosUrl: 'https://carnivalglamhub.masos.app/events/a810f2b9-fce4-46be-9b33-5191863e1805' },
 ];

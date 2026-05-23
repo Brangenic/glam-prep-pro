@@ -192,6 +192,35 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       },
     ],
   },
+  "epic-cruise": {
+    eventTitle: "EPIC Carnival Experience x Carnival Glam Hub Trinidad 2027",
+    eventDate: "8–9 February 2027",
+    bookingUrl: "https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244",
+    sections: [
+      {
+        title: "Carnival Monday — 8 February 2027",
+        packages: [
+          { name: "Epic Monday Makeup Only", price: "$200 USD", image: `${IMG}/1be30ffc-a933-4584-95a6-5c3a53dae31b` },
+          { name: "Epic Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/c612f252-aa7e-4948-aa4d-74fd19b0fcff` },
+          { name: "Epic Monday Full Glam", price: "$440 USD", image: `${IMG}/ae62a7f1-1792-4bdb-a08b-07bd0485610f` },
+          { name: "Epic Monday Hair Only", price: "$120 USD", image: `${IMG}/ad03a043-b7e5-4a21-ba02-8f7f7813c5fd` },
+          { name: "Epic Monday Photoshoot Only", price: "$140 USD", image: `${IMG}/bf778c82-79c6-48ec-872e-429d12597a64` },
+          { name: "Get Dressed Monday", price: "$35 USD", image: `${IMG}/fd35ec54-3395-4541-a3fe-4aee45752d54` },
+        ],
+      },
+      {
+        title: "Carnival Tuesday — 9 February 2027",
+        packages: [
+          { name: "Epic Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/421b5290-2aa0-46fb-9333-f5a49c4bd625` },
+          { name: "Epic Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/07b521e4-d70b-49ed-8323-20ab10c4a750` },
+          { name: "Epic Tuesday Full Glam", price: "$440 USD", image: `${IMG}/ad16985b-bbbb-4ca7-a780-5dcb901d0fce` },
+          { name: "Epic Tuesday Hair Only", price: "$120 USD", image: `${IMG}/6ce6d73f-f5ef-41b5-9c38-5cdcaa1f7a82` },
+          { name: "Epic Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/9ab12d2f-a488-4926-802e-66bdc4f7aff7` },
+          { name: "Get Dressed Tuesday", price: "$35 USD", image: `${IMG}/fd35ec54-3395-4541-a3fe-4aee45752d54` },
+        ],
+      },
+    ],
+  },
 };
 
 export const getDestinationPackages = (slug: string) => destinationPackages[slug];
