@@ -234,16 +234,18 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {section.title}
                     </h3>
                   )}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+                  <div className={dest.slug === "grenada" ? "grid grid-cols-2 sm:grid-cols-4 gap-4" : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6"}>
                     {section.packages.map((pkg) => (
                       <a
                         key={pkg.name}
                         href={packagesData.bookingUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group block rounded-2xl overflow-hidden bg-card border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all"
+                        className={dest.slug === "grenada"
+                          ? "group block rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all"
+                          : "group block rounded-2xl overflow-hidden bg-card border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all"}
                       >
-                        <div className="aspect-[462/578] overflow-hidden bg-muted">
+                        <div className={dest.slug === "grenada" ? "h-[200px] overflow-hidden bg-muted" : "aspect-[462/578] overflow-hidden bg-muted"}>
                           <img
                             src={pkg.image}
                             alt={pkg.name}
@@ -252,10 +254,14 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                           />
                         </div>
                         <div className="p-4">
-                          <h4 className="font-display text-base sm:text-lg font-bold leading-tight mb-2">
+                          <h4 className={dest.slug === "grenada"
+                            ? "font-display text-base sm:text-lg font-bold leading-tight mb-2 text-foreground"
+                            : "font-display text-base sm:text-lg font-bold leading-tight mb-2"}>
                             {pkg.name}
                           </h4>
-                          <p className="font-body text-sm text-secondary font-semibold">
+                          <p className={dest.slug === "grenada"
+                            ? "font-body text-sm font-semibold text-primary"
+                            : "font-body text-sm text-secondary font-semibold"}>
                             {pkg.price}
                           </p>
                         </div>
