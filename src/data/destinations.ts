@@ -1,6 +1,5 @@
 import jamaicaImg from "@/assets/dest-jamaica-new.jpg";
 import stluciaImg from "@/assets/dest-stlucia-new.jpg";
-import trinidadImg from "@/assets/dest-trinidad-new.jpg";
 import antiguaImg from "@/assets/carnival-3.jpg";
 import grenadaImg from "@/assets/carnival-5.jpg";
 import miamiImg from "@/assets/carnival-7.jpg";
