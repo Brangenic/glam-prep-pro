@@ -216,7 +216,7 @@ export const destinations: Destination[] = [
     description: "Premium glam hub services for EPIC Carnival Experience masqueraders.",
     longDescription:
       "Glam Hub at sea! Carnival Glam Hub is aboard the EPIC Carnival Experience — the luxury floating hotel that sails masqueraders from San Juan, Puerto Rico straight to Trinidad Carnival. Book your makeup, hair, photoshoot, and get-dressed services exclusively for EPIC cruise masqueraders.",
-    image: "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&dl=1",
+    image: "https://www.dropbox.com/scl/fi/i9atucg76ieovbmkkqupg/IMG_8522.jpg?rlkey=b74ambfqu21fjbadhidkcy6u7&st=rmucsn19&dl=1",
     cta: "Book Epic Cruise Glam",
     objectPosition: "50% 20%",
     highlights: [
