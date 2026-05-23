@@ -50,7 +50,7 @@ export const destinations: Destination[] = [
       "Our Saint Lucia Carnival glam hub is set up across the island with packages for road march, j'ouvert and fete looks. Get matched with a senior artist for your full carnival glam experience.",
     image: "https://www.dropbox.com/scl/fi/ns7h0tq44hyuwyyon6ruc/IMG_5720.jpg?rlkey=s5hqgzch1y0xzoeguewdpbgoa&st=n467bmwi&dl=1",
     cta: "Book Saint Lucia Glam",
-    objectPosition: "50% 80%",
+    objectPosition: "50% 20%",
     highlights: [
       "Road march full glam",
       "J'ouvert paint and shimmer",
@@ -71,7 +71,7 @@ export const destinations: Destination[] = [
       "Antigua Carnival is one of the Caribbean's most colorful festivals — and our glam hub keeps you camera-ready from j'ouvert to last lap. Premium makeup, hair, gems and body art available across the island.",
     image: "https://www.dropbox.com/scl/fi/6wchhafesmdhwkthgq8kc/IMG_4191.jpg?rlkey=jxnusfdwug3rivkyefbm0ca7r&st=v64m5fm9&dl=1",
     cta: "Book Antigua Glam",
-    objectPosition: "50% 30%",
+    objectPosition: "50% 20%",
     highlights: [
       "Full carnival makeup",
       "Gem & rhinestone designs",
@@ -92,6 +92,7 @@ export const destinations: Destination[] = [
       "Spicemas is unmatched — and our Grenada Carnival glam hub matches the energy. Full makeup, hair, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists.",
     image: "https://www.dropbox.com/scl/fi/gp844obtxs5q8anwcgkyo/IMG_0862.jpg?rlkey=62ry19g8xfwdt1vi6zafhs3dz&st=5gpzahht&dl=1",
     cta: "Book Grenada Glam",
+    objectPosition: "50% 20%",
     highlights: [
       "Spicemas full glam",
       "J'ouvert paint and oil packages",
@@ -112,7 +113,7 @@ export const destinations: Destination[] = [
       "Crop Over is the Caribbean's biggest summer carnival — and our Barbados glam hub is fully booked every season for a reason. Get the full road experience with sweat-proof makeup, festival hair, gems and j'ouvert paint by our top artists.",
     image: "https://www.dropbox.com/scl/fi/dhwh4i4ho8bos4bg5uzxl/IMG_0864.jpg?rlkey=qev6rmd0tzcwcofagybin38o7&st=csylmxx2&dl=1",
     cta: "Book Barbados Glam",
-    objectPosition: "50% 80%",
+    objectPosition: "50% 20%",
     highlights: [
       "Grand Kadooment full glam",
       "Foreday Morning paint",
@@ -133,6 +134,7 @@ export const destinations: Destination[] = [
       "Our Miami Carnival glam hub serves the entire Miami Carnival season — from pre-carnival fetes through Columbus Day weekend. Full makeup, hair, gems and body art by our pro carnival team.",
     image: "https://www.dropbox.com/scl/fi/3hdshv8hz52v8nabwqrxz/IMG_0863.jpg?rlkey=ae86g6b4cy7rs80vw53iwdmdg&st=q3g11n1x&dl=1",
     cta: "Book Miami Glam",
+    objectPosition: "50% 20%",
     highlights: [
       "Full road glam packages",
       "Fete-ready makeup",
@@ -153,6 +155,7 @@ export const destinations: Destination[] = [
       "Caribana is North America's biggest Caribbean carnival, and our Toronto glam hub is on the road with you. Full makeup, hair, festival gems and body art for the Grand Parade and weekend fetes.",
     image: "https://www.dropbox.com/scl/fi/q3mh3zhg71mzki5vfitvn/IMG_4436.jpg?rlkey=hd46hy1efelzaz35e0g6ghdgh&st=em1s3ddw&dl=1",
     cta: "Book Toronto Glam",
+    objectPosition: "50% 20%",
     highlights: [
       "Grand Parade full glam",
       "Fete makeup packages",
@@ -174,7 +177,7 @@ export const destinations: Destination[] = [
     image: "https://www.dropbox.com/scl/fi/mlgtv0pf50ycb39biy6ze/IMG_4432.jpg?rlkey=elsa6avxrnq2xnxx8obzzd73j&st=dv20matm&dl=1",
     cta: "Book Trinidad Glam",
     upcoming: false,
-    objectPosition: "50% 80%",
+    objectPosition: "50% 20%",
     highlights: [
       "Carnival Monday & Tuesday road glam",
       "J'ouvert paint packages",
