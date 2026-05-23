@@ -16,6 +16,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
+import logoImg from "@/assets/logo.png";
 
 const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const params = useParams();
@@ -163,6 +164,27 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
       <main className="pt-20">
         {/* Hero */}
+        {dest.slug === "grenada" ? (
+          <section className="relative w-full overflow-hidden bg-[#0a1a3a]">
+            <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24 flex flex-col items-center text-center">
+              <img
+                src={logoImg}
+                alt="Carnival Glam Hub"
+                className="w-40 sm:w-56 mb-8"
+                loading="eager"
+              />
+              <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-4">
+                Where We Glam
+              </p>
+              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold italic text-white max-w-3xl">
+                Grenada — Carnival Glam Hub 2026
+              </h1>
+              <p className="font-body text-sm sm:text-base text-white/80 mt-4">
+                10 – 11 August 2026
+              </p>
+            </div>
+          </section>
+        ) : (
         <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
           <img
             src={dest.image}
@@ -185,6 +207,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <p className="font-body text-sm sm:text-base text-white/80 mt-3">{dest.date}</p>
           </div>
         </section>
+        )}
 
         {/* Live MasOS booking embed */}
         {embedUrl && (
