@@ -90,7 +90,7 @@ export const destinations: Destination[] = [
     slug: "grenada",
     name: "Grenada Carnival",
     shortName: "Grenada",
-    date: "11 August 2026",
+    date: "10 – 11 August 2026",
     description: "Premium glam services for Grenada Spicemas.",
     longDescription:
       "Spicemas is unmatched — and our Grenada Carnival glam hub matches the energy. Full makeup, hair, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists.",
