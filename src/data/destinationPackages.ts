@@ -136,6 +136,7 @@ export const destinationPackages: Record<string, DestinationPackages> = {
           { name: "Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/462x578` },
           { name: "Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/462x578` },
           { name: "Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/59439c7d-8c5b-4950-8c5f-7f4338e365d9/462x578` },
+          { name: "Tuesday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/462x578` },
         ],
       },
     ],
