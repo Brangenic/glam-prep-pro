@@ -191,7 +191,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           <img
             src={dest.image}
             alt={`${dest.name} — Carnival Glam Hub destination`}
-            className="absolute inset-0 h-full w-full object-cover object-top"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: dest.objectPosition || "center top" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
           <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full flex flex-col justify-end pb-10 sm:pb-16">
