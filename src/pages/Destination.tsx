@@ -204,19 +204,29 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
         {/* Season ended banner — Jamaica only */}
         {dest.slug === "jamaica" && (
-          <section aria-label="Jamaica Carnival 2026 season ended" className="bg-secondary/15 border-y-2 border-secondary">
-            <div className="container mx-auto px-4 sm:px-6 max-w-5xl py-6 sm:py-8 text-center">
-              <p className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug text-foreground">
+          <section
+            aria-label="Jamaica Carnival 2026 season ended"
+            className="relative bg-gradient-to-br from-primary via-primary to-primary/90 border-y-4 border-primary-foreground/10 shadow-lg shadow-primary/20"
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,_currentColor_1px,_transparent_0)] [background-size:18px_18px] text-primary-foreground"
+            />
+            <div className="relative container mx-auto px-4 sm:px-6 max-w-5xl py-8 sm:py-10 text-center">
+              <span className="inline-block bg-primary-foreground/15 text-primary-foreground font-body text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 rounded-full mb-4 backdrop-blur-sm">
+                Season Ended
+              </span>
+              <p className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug text-primary-foreground">
                 🎉 Jamaica Carnival 2026 has wrapped — see you next year! In the meantime, explore our other active destinations:
               </p>
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                 {destinations
                   .filter((d) => d.slug !== "jamaica")
                   .map((d) => (
                     <Link
                       key={d.slug}
                       to={`/destinations/${d.slug}`}
-                      className="inline-block bg-background border border-primary/30 text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary font-body font-semibold text-xs sm:text-sm px-4 py-2 rounded-full transition-all"
+                      className="inline-block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-105 font-body font-semibold text-xs sm:text-sm px-4 py-2 rounded-full shadow-md transition-all"
                     >
                       {d.shortName}
                     </Link>
