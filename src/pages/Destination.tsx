@@ -200,6 +200,33 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
+        {/* Season ended banner — Jamaica only */}
+        {dest.slug === "jamaica" && (
+          <section aria-label="Jamaica Carnival 2026 season ended" className="bg-secondary/15 border-y-2 border-secondary">
+            <div className="container mx-auto px-4 sm:px-6 max-w-5xl py-6 sm:py-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-center sm:text-left">
+                <div>
+                  <p className="font-body text-[11px] uppercase tracking-[0.25em] text-secondary font-semibold mb-1.5">
+                    Jamaica Carnival 2026 — Season Ended
+                  </p>
+                  <h2 className="font-display text-xl sm:text-2xl font-bold leading-tight">
+                    Thank you to every masquerader who glammed with us.
+                  </h2>
+                  <p className="font-body text-sm sm:text-base text-muted-foreground mt-1.5">
+                    Bookings for Jamaica Carnival 2027 open soon. Join the waitlist to be first in line.
+                  </p>
+                </div>
+                <a
+                  href="mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist"
+                  className="inline-block whitespace-nowrap bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                >
+                  Join 2027 Waitlist
+                </a>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Packages */}
         {packagesData && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
