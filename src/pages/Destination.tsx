@@ -315,12 +315,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 </ul>
 
                 <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={seasonEnded ? waitlistHref : bookingUrl}
+                  target={seasonEnded ? undefined : "_blank"}
+                  rel={seasonEnded ? undefined : "noopener noreferrer"}
                   className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                 >
-                  Book Your Glam
+                  {seasonEnded ? "Join 2027 Waitlist" : "Book Your Glam"}
                 </a>
               </div>
 
