@@ -1,4 +1,3 @@
-import jamaicaImg from "@/assets/dest-jamaica-new.jpg";
 import guyanaImg from "@/assets/carnival-4.jpg";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
