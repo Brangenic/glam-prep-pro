@@ -159,6 +159,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
+  const seasonEnded = dest.slug === "jamaica";
+  const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
 
   return (
     <div className="min-h-screen bg-background">
@@ -225,7 +227,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         )}
 
         {/* Packages */}
-        {packagesData && (
+        {packagesData && !seasonEnded && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
             <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
               <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3 text-center">
