@@ -27,6 +27,12 @@ const WixPostRedirect = () => {
 // Render the Destination landing page for a fixed slug (short SEO aliases).
 const DestinationAlias = ({ slug }: { slug: string }) => <Destination slugOverride={slug} />;
 
+// Redirect /destinations/:slug → /:slug (short SEO slug)
+const DestinationsSlugRedirect = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/${slug ?? ""}`} replace />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
