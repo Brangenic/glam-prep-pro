@@ -46,7 +46,13 @@ const App = () => (
           <Route path="/blog" element={<Navigate to="/blogs" replace />} />
           <Route path="/blog/post/:slug" element={<WixPostRedirect />} />
           <Route path="/blog/:slug" element={<WixPostRedirect />} />
-          <Route path="/destinations/:slug" element={<Destination />} />
+          {/* /destinations/:slug → redirect to short slug */}
+          <Route
+            path="/destinations/:slug"
+            element={<DestinationsSlugRedirect />}
+          />
+          {/* Locale-prefixed legacy URLs */}
+          <Route path="/fr/toronto" element={<Navigate to="/toronto" replace />} />
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<DestinationAlias slug="jamaica" />} />
           <Route path="/trinidad" element={<DestinationAlias slug="trinidad" />} />
