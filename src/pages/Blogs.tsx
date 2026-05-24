@@ -23,6 +23,16 @@ const Blogs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, follow";
+    document.head.appendChild(meta);
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+
+  useEffect(() => {
     let isMounted = true;
 
     const load = async () => {
