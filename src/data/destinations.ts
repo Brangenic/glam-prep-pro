@@ -29,6 +29,7 @@ export const destinations: Destination[] = [
       "Our Jamaica Carnival glam hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-proof carnival looks built for the Jamaica heat.",
     image: "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
     cta: "Book Jamaica Glam",
+    objectPosition: "center 30%",
     highlights: [
       "Full carnival makeup with sweat-proof finish",
       "Gem & feather application",
