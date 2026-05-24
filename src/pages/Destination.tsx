@@ -48,9 +48,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       canonical.setAttribute("rel", "canonical");
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute("href", `https://www.carnivalglamhub.com/destinations/${dest.slug}`);
+    canonical.setAttribute("href", `https://carnivalglamhub.com/${dest.slug}`);
 
-    const pageUrl = `https://www.carnivalglamhub.com/destinations/${dest.slug}`;
+    const pageUrl = `https://carnivalglamhub.com/${dest.slug}`;
 
     // Barbados-only Google Analytics property (G-9RFDZYBJ5Q)
     let gaScript: HTMLScriptElement | null = null;

@@ -27,6 +27,12 @@ const WixPostRedirect = () => {
 // Render the Destination landing page for a fixed slug (short SEO aliases).
 const DestinationAlias = ({ slug }: { slug: string }) => <Destination slugOverride={slug} />;
 
+// Redirect /destinations/:slug → /:slug (short SEO slug)
+const DestinationsSlugRedirect = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/${slug ?? ""}`} replace />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -46,7 +52,13 @@ const App = () => (
           <Route path="/blog" element={<Navigate to="/blogs" replace />} />
           <Route path="/blog/post/:slug" element={<WixPostRedirect />} />
           <Route path="/blog/:slug" element={<WixPostRedirect />} />
-          <Route path="/destinations/:slug" element={<Destination />} />
+          {/* /destinations/:slug → redirect to short slug */}
+          <Route
+            path="/destinations/:slug"
+            element={<DestinationsSlugRedirect />}
+          />
+          {/* Locale-prefixed legacy URLs */}
+          <Route path="/fr/toronto" element={<Navigate to="/toronto" replace />} />
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<DestinationAlias slug="jamaica" />} />
           <Route path="/trinidad" element={<DestinationAlias slug="trinidad" />} />
