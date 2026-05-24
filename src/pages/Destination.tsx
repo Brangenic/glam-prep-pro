@@ -219,18 +219,25 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               <p className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug text-primary-foreground">
                 🎉 Jamaica Carnival 2026 has wrapped — see you next year! In the meantime, explore our other active destinations:
               </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                {destinations
-                  .filter((d) => d.slug !== "jamaica")
-                  .map((d) => (
-                    <Link
-                      key={d.slug}
-                      to={`/destinations/${d.slug}`}
-                      className="inline-block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-105 font-body font-semibold text-xs sm:text-sm px-4 py-2 rounded-full shadow-md transition-all"
-                    >
-                      {d.shortName}
-                    </Link>
-                  ))}
+              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto">
+                {[
+                  { slug: "miami", label: "Miami" },
+                  { slug: "barbados", label: "Barbados" },
+                  { slug: "trinidad", label: "Trinidad" },
+                  { slug: "antigua", label: "Antigua" },
+                  { slug: "grenada", label: "Grenada" },
+                  { slug: "saint-lucia", label: "Saint Lucia" },
+                  { slug: "toronto", label: "Toronto" },
+                  { slug: "epic-cruise", label: "Epic Cruise" },
+                ].map((d) => (
+                  <Link
+                    key={d.slug}
+                    to={`/${d.slug}`}
+                    className="block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-[1.03] font-body font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-md text-center transition-all"
+                  >
+                    {d.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </section>
