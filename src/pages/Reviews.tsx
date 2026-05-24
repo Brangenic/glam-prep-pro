@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import PressBar from "@/components/landing/PressBar";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Carnival Makeup Testimonials";
