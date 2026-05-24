@@ -330,20 +330,39 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 </p>
                 <p className="font-display text-xl font-bold mb-6">{dest.date}</p>
 
-                <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
-                  Reserve your slot
-                </p>
-                <p className="font-body text-sm text-muted-foreground mb-4">
-                  Limited availability. Booking closes early every season.
-                </p>
-                <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
-                >
-                  Book Your Glam
-                </a>
+                {seasonEnded ? (
+                  <>
+                    <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
+                      Season Ended
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      Bookings for Jamaica 2027 opening soon — join our waitlist to be first in line.
+                    </p>
+                    <a
+                      href={waitlistHref}
+                      className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                    >
+                      Join 2027 Waitlist
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
+                      Reserve your slot
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      Limited availability. Booking closes early every season.
+                    </p>
+                    <a
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                    >
+                      Book Your Glam
+                    </a>
+                  </>
+                )}
               </aside>
             </div>
           </div>
