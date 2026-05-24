@@ -27,7 +27,7 @@ export const destinations: Destination[] = [
     date: "12 April 2026",
     description: "Premium glam hub services for Jamaica Carnival.",
     longDescription:
-      "From Kingston to Ocho Rios, our Jamaica Carnival glam hub delivers full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialize in long-wear, sweat-proof carnival looks built for the Jamaica heat.",
+      "Our Jamaica Carnival glam hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-proof carnival looks built for the Jamaica heat.",
     image: jamaicaImg,
     cta: "Book Jamaica Glam",
     highlights: [
