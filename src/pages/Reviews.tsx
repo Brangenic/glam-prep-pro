@@ -125,6 +125,7 @@ const Reviews = () => {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <main className="pt-28 sm:pt-32">
+        <PressBar compact />
         <section className="pt-4 pb-8 sm:pb-12" aria-labelledby="google-ratings-heading">
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <div className="text-center mb-8 sm:mb-10">
