@@ -159,6 +159,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
+  const seasonEnded = dest.slug === "jamaica";
+  const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
 
   return (
     <div className="min-h-screen bg-background">
@@ -225,7 +227,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         )}
 
         {/* Packages */}
-        {packagesData && (
+        {packagesData && !seasonEnded && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
             <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
               <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3 text-center">
@@ -313,12 +315,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 </ul>
 
                 <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={seasonEnded ? waitlistHref : bookingUrl}
+                  target={seasonEnded ? undefined : "_blank"}
+                  rel={seasonEnded ? undefined : "noopener noreferrer"}
                   className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                 >
-                  Book Your Glam
+                  {seasonEnded ? "Join 2027 Waitlist" : "Book Your Glam"}
                 </a>
               </div>
 
@@ -328,20 +330,39 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 </p>
                 <p className="font-display text-xl font-bold mb-6">{dest.date}</p>
 
-                <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
-                  Reserve your slot
-                </p>
-                <p className="font-body text-sm text-muted-foreground mb-4">
-                  Limited availability. Booking closes early every season.
-                </p>
-                <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
-                >
-                  Book Your Glam
-                </a>
+                {seasonEnded ? (
+                  <>
+                    <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
+                      Season Ended
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      Bookings for Jamaica 2027 opening soon — join our waitlist to be first in line.
+                    </p>
+                    <a
+                      href={waitlistHref}
+                      className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                    >
+                      Join 2027 Waitlist
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
+                      Reserve your slot
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      Limited availability. Booking closes early every season.
+                    </p>
+                    <a
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                    >
+                      Book Your Glam
+                    </a>
+                  </>
+                )}
               </aside>
             </div>
           </div>
@@ -379,12 +400,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
             <div className="text-center mt-10">
               <a
-                href={bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={seasonEnded ? waitlistHref : bookingUrl}
+                target={seasonEnded ? undefined : "_blank"}
+                rel={seasonEnded ? undefined : "noopener noreferrer"}
                 className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
               >
-                Book Your Glam
+                {seasonEnded ? "Join 2027 Waitlist" : "Book Your Glam"}
               </a>
             </div>
           </div>
