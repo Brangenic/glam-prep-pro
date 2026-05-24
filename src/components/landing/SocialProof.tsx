@@ -1,5 +1,5 @@
 const stats = [
-  { value: "Since 2017", label: "Carnival Morning Specialists" },
+  { value: "15,000+", label: "Clients Served" },
   { value: "Trusted", label: "By Carnival Bands & Influencers" },
   { value: "Pro Artists", label: "Professional Glam Team" },
   { value: "Premium", label: "Carnival Morning Experience" },
