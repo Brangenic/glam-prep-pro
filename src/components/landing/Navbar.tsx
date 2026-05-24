@@ -41,7 +41,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between min-h-24 py-4">
         <a href={isHome ? "#hero" : "/"} className="inline-flex items-center" aria-label="Carnival Glam Hub — Home">
-          <img src={brandLogo} alt="Carnival Glam Hub logo" className="h-16 w-auto sm:h-20 lg:h-24" />
+          <img src={brandLogo} alt="Carnival Glam Hub" className="h-16 w-auto sm:h-20 lg:h-24" />
         </a>
         <div className="hidden lg:flex items-center gap-8">
           {links.map((l) => (
