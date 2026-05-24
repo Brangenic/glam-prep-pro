@@ -1,4 +1,3 @@
-import jamaicaImg from "@/assets/dest-jamaica-new.jpg";
 import guyanaImg from "@/assets/carnival-4.jpg";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -28,7 +27,7 @@ export const destinations: Destination[] = [
     description: "Premium glam hub services for Jamaica Carnival.",
     longDescription:
       "Our Jamaica Carnival glam hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-proof carnival looks built for the Jamaica heat.",
-    image: jamaicaImg,
+    image: "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
     cta: "Book Jamaica Glam",
     highlights: [
       "Full carnival makeup with sweat-proof finish",
