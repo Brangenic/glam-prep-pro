@@ -78,12 +78,17 @@ const PressBar = ({ compact = false }: PressBarProps) => (
       {!compact && (
         <div className="text-center mb-8 sm:mb-10">
           <p className="font-body text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-primary/70 font-semibold mb-2">
-            Featured In
+            As Featured In
           </p>
           <p className="font-display italic text-lg sm:text-xl text-foreground/70">
             Trusted by the Caribbean&rsquo;s leading press &amp; culture publications
           </p>
         </div>
+      )}
+      {compact && (
+        <p className="text-center font-body text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-primary/70 font-semibold mb-4">
+          As Featured In
+        </p>
       )}
       <div
         className={`flex flex-wrap items-center justify-center ${
