@@ -130,7 +130,7 @@ const Reviews = () => {
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <div className="text-center mb-8 sm:mb-10">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
-                Google Business Profiles
+                Client Reviews
               </p>
               <h2 id="google-ratings-heading" className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold">
                 Rated <span className="italic text-gradient-primary">4.8 stars</span> across the Caribbean
