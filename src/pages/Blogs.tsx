@@ -22,6 +22,17 @@ const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const EXCLUDED_AUTHORS = [
+    "Krystal Angelique",
+    "Melissa Chung",
+    "Shadge Henry",
+    "Marissa Williams",
+    "Tamika Campbell",
+    "Mala Morrison",
+    "Antoinette Dixon",
+    "Jade Amiel",
+  ];
+
   useEffect(() => {
     let isMounted = true;
 
@@ -36,7 +47,10 @@ const Blogs = () => {
         .order("synced_at", { ascending: false });
 
       if (isMounted) {
-        setPosts((data as BlogPost[]) ?? []);
+        const filtered = ((data as BlogPost[]) ?? []).filter(
+          (p) => !p.author_name || !EXCLUDED_AUTHORS.includes(p.author_name.trim())
+        );
+        setPosts(filtered);
         setLoading(false);
       }
     };
