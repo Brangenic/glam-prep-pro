@@ -1,0 +1,1 @@
+CREATE POLICY "allow_anon_insert_blog_posts" ON public.blog_posts FOR INSERT TO anon WITH CHECK (true);
