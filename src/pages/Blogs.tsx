@@ -31,6 +31,9 @@ const Blogs = () => {
     "Mala Morrison",
     "Antoinette Dixon",
     "Jade Amiel",
+    "Shadae Henry",
+    "Snowwhite Hogie",
+    "Daydrie Burke",
   ];
 
   useEffect(() => {
