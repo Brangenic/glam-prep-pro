@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export const PRESS_OUTLETS = [
   { name: "Teen Vogue", url: "https://www.teenvogue.com", domain: "teenvogue.com" },
-  { name: "The Grio", url: "https://thegrio.com", domain: "thegrio.com" },
   { name: "Jamaica Observer", url: "https://jamaicaobserver.com", domain: "jamaicaobserver.com" },
   { name: "Jamaica Gleaner", url: "https://jamaica-gleaner.com", domain: "jamaica-gleaner.com" },
   { name: "Haute People", url: "https://hautepeople.com", domain: "hautepeople.com" },
@@ -70,9 +69,7 @@ interface PressBarProps {
 const PressBar = ({ compact = false }: PressBarProps) => (
   <section
     aria-label="Featured in"
-    className={`border-y border-primary/10 bg-primary/[0.02] ${
-      compact ? "py-6 sm:py-8" : "py-12 sm:py-16"
-    }`}
+    className={`border-y border-primary/10 bg-primary/[0.02] ${compact ? "py-6 sm:py-8" : "py-12 sm:py-16"}`}
   >
     <div className="container mx-auto px-4 sm:px-6">
       {!compact && (
