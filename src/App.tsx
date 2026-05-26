@@ -14,6 +14,7 @@ import BlogPost from "./pages/BlogPost.tsx";
 import Destination from "./pages/Destination.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
+import BookingConfirmed from "./pages/BookingConfirmed.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -80,6 +81,8 @@ const App = () => (
           <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/booking-confirmed" element={<BookingConfirmed />} />
+          <Route path="/thank-you" element={<BookingConfirmed />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
