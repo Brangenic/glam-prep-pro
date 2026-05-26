@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { trackPageView, installOutboundClickTracking } from "@/lib/tracking";
 
@@ -8,12 +8,21 @@ import { trackPageView, installOutboundClickTracking } from "@/lib/tracking";
  */
 const RouteTracker = () => {
   const location = useLocation();
+  // The initial pageview is already counted by the gtag('config', ...) calls
+  // and fbq('track','PageView') in index.html. Skip the first mount here so
+  // we don't double-count the landing pageview, then fire on every SPA
+  // navigation afterwards.
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     installOutboundClickTracking();
   }, []);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     trackPageView(location.pathname + location.search);
   }, [location.pathname, location.search]);
 
