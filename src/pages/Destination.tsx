@@ -52,26 +52,6 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
     const pageUrl = `https://carnivalglamhub.com/${dest.slug}`;
 
-    // Barbados-only Google Analytics property (G-9RFDZYBJ5Q)
-    let gaScript: HTMLScriptElement | null = null;
-    let gaInline: HTMLScriptElement | null = null;
-    if (dest.slug === "barbados") {
-      const GA_ID = "G-9RFDZYBJ5Q";
-      if (!document.getElementById("ga-barbados-loader")) {
-        gaScript = document.createElement("script");
-        gaScript.id = "ga-barbados-loader";
-        gaScript.async = true;
-        gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-        document.head.appendChild(gaScript);
-      }
-      if (!document.getElementById("ga-barbados-init")) {
-        gaInline = document.createElement("script");
-        gaInline.id = "ga-barbados-init";
-        gaInline.text = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','${GA_ID}');`;
-        document.head.appendChild(gaInline);
-      }
-    }
-
     const upsertJsonLd = (id: string, data: unknown) => {
       let el = document.getElementById(id) as HTMLScriptElement | null;
       if (!el) {
@@ -145,9 +125,6 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       document.title = prevTitle;
       ["destination-service-jsonld", "destination-faq-jsonld", "destination-breadcrumb-jsonld"].forEach(
         (id) => document.getElementById(id)?.remove(),
-      );
-      ["ga-barbados-loader", "ga-barbados-init"].forEach((id) =>
-        document.getElementById(id)?.remove(),
       );
     };
   }, [dest, faqs, bookingUrl]);
