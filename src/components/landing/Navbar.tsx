@@ -18,7 +18,7 @@ const links = [
   { label: "Reviews", href: "/reviews" },
   { label: "Amazon Store", href: "/amazon-store" },
   { label: "Blog", href: "/blogs" },
-  { label: "FAQ", href: "#faq" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 const Navbar = () => {
