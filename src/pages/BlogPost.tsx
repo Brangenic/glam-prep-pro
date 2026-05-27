@@ -34,16 +34,57 @@ type BlogPostData = {
   meta_description: string | null;
 };
 
+const BANNED_SLUG_PATTERNS: RegExp[] = [
+  /^atlanta-/i,
+  /^antigua-/i,
+  /^spicemas-/i,
+  /^crop-over-/i,
+  /^chatgpt-/i,
+  /-gpt-/i,
+  /^gpt-/i,
+  /^ai-/i,
+  /^artificial-/i,
+];
+
+const isBannedSlug = (slug: string | undefined | null) => {
+  if (!slug) return false;
+  return BANNED_SLUG_PATTERNS.some((re) => re.test(slug));
+};
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Synchronously mark known-deleted slugs as noindex on first paint, before
+  // the database roundtrip resolves. True 410/404 status codes are not
+  // achievable from a static SPA host; this is the strongest signal we can
+  // emit for JS-executing crawlers.
+  useEffect(() => {
+    if (!isBannedSlug(slug)) return;
+    const robots = document.createElement("meta");
+    robots.setAttribute("name", "robots");
+    robots.setAttribute("content", "noindex, nofollow");
+    document.head.appendChild(robots);
+    const canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    canonical.setAttribute("href", "https://www.carnivalglamhub.com/blogs");
+    document.head.appendChild(canonical);
+    setLoading(false);
+    setPost(null);
+    return () => {
+      robots.remove();
+      canonical.remove();
+    };
+  }, [slug]);
 
   useEffect(() => {
     if (!slug) {
       setLoading(false);
       return;
     }
+    // Skip the DB roundtrip entirely for banned slugs; they are gone.
+    if (isBannedSlug(slug)) return;
 
     setLoading(true);
     let isMounted = true;
@@ -113,11 +154,16 @@ const BlogPost = () => {
     // 410-style handling: when load is complete and no post resolved,
     // mark this URL as noindex so search engines drop the stale slug.
     let robotsTag: HTMLMetaElement | null = null;
+    let canonicalTag: HTMLLinkElement | null = null;
     if (!loading && !post) {
       robotsTag = document.createElement("meta");
       robotsTag.setAttribute("name", "robots");
-      robotsTag.setAttribute("content", "noindex");
+      robotsTag.setAttribute("content", "noindex, nofollow");
       document.head.appendChild(robotsTag);
+      canonicalTag = document.createElement("link");
+      canonicalTag.setAttribute("rel", "canonical");
+      canonicalTag.setAttribute("href", "https://www.carnivalglamhub.com/blogs");
+      document.head.appendChild(canonicalTag);
     }
 
     // Extract and inject FAQ schema from AI-generated content
@@ -139,6 +185,7 @@ const BlogPost = () => {
       document.title = "Carnival Glam Hub";
       if (faqScript) faqScript.remove();
       if (robotsTag) robotsTag.remove();
+      if (canonicalTag) canonicalTag.remove();
     };
   }, [post, loading]);
 
@@ -172,12 +219,20 @@ const BlogPost = () => {
                 <p className="font-body text-muted-foreground mb-6">
                   The URL you followed is no longer available.
                 </p>
-                <Link
-                  to="/blogs"
-                  className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-body text-sm font-semibold text-primary-foreground"
-                >
-                  Back to Blog
-                </Link>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <Link
+                    to="/blogs"
+                    className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-body text-sm font-semibold text-primary-foreground"
+                  >
+                    Back to journal
+                  </Link>
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 font-body text-sm font-semibold hover:bg-card transition-colors"
+                  >
+                    About Carnival Glam Hub
+                  </Link>
+                </div>
               </div>
             ) : (
               <>
