@@ -31,6 +31,7 @@ Deno.serve(async (req) => {
       { loc: "/services/carnival-makeup", priority: "0.8", changefreq: "monthly" },
       { loc: "/services/carnival-photoshoot", priority: "0.8", changefreq: "monthly" },
       { loc: "/services/carnival-hair", priority: "0.8", changefreq: "monthly" },
+      { loc: "/services/getting-dressed", priority: "0.8", changefreq: "monthly" },
       { loc: "/trinidad-carnival-2027", priority: "0.9", changefreq: "weekly" },
       { loc: "/amazon-store", priority: "0.7", changefreq: "weekly" },
     ];
