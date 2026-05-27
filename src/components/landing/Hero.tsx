@@ -21,7 +21,7 @@ const Hero = () => {
       />
       <div className="absolute inset-0 bg-black/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30" />
-      <div className="relative z-10 container mx-auto px-5 sm:px-6 py-24 sm:py-32 lg:py-0 text-center flex flex-col items-center">
+      <div className="relative z-10 container mx-auto px-5 sm:px-6 pt-32 pb-16 sm:pt-36 sm:pb-24 lg:pt-32 lg:pb-16 text-center flex flex-col items-center">
         <div className="max-w-2xl flex flex-col items-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
