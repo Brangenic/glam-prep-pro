@@ -67,6 +67,32 @@ const organizationSchema = {
   ],
 };
 
+const founderPersonSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Gabrielle Waite",
+  jobTitle: "Founder",
+  worksFor: {
+    "@type": "Organization",
+    name: "Carnival Glam Hub",
+    url: "https://www.carnivalglamhub.com",
+  },
+  url: "https://www.carnivalglamhub.com/about",
+  sameAs: [
+    "https://www.instagram.com/carnivalglamhub",
+  ],
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Company", item: "https://www.carnivalglamhub.com/about" },
+    { "@type": "ListItem", position: 3, name: "About", item: "https://www.carnivalglamhub.com/about" },
+  ],
+};
+
 const SCHEMA_ID = "about-page-jsonld";
 const ORG_SCHEMA_ID = "about-org-jsonld";
 
@@ -140,6 +166,14 @@ const About = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(founderPersonSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -151,8 +185,10 @@ const About = () => {
               About <span className="italic text-gradient-primary">Carnival Glam Hub</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub is the Caribbean&apos;s premium Carnival beauty concierge.
-              Since 2017 we have prepared more than 15,000 masqueraders for the road,
+              Carnival Glam Hub is a premium Carnival morning concierge that prepares
+              travelling masqueraders for the road with sweat-resistant makeup, hair
+              styling, getting-dressed assistance, photoshoot and shuttle, all under
+              one roof. Since 2017 we have prepared more than 15,000 masqueraders,
               turning the most chaotic morning of the year into a calm, organised,
               professionally run experience. One location. One schedule. Everything
               handled.
