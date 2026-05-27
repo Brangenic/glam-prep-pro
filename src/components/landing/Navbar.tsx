@@ -7,6 +7,7 @@ const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 const links = [
   { label: "Services", href: "#services" },
   { label: "Makeup", href: "/services/carnival-makeup" },
+  { label: "Photoshoot", href: "/services/carnival-photoshoot" },
   { label: "Destinations", href: "#destinations" },
   { label: "Gallery", href: "#gallery" },
   { label: "About", href: "/about" },
