@@ -29,6 +29,7 @@ Deno.serve(async (req) => {
       { loc: "/reviews", priority: "0.8", changefreq: "weekly" },
       { loc: "/about", priority: "0.7", changefreq: "monthly" },
       { loc: "/services/carnival-makeup", priority: "0.8", changefreq: "monthly" },
+      { loc: "/services/carnival-photoshoot", priority: "0.8", changefreq: "monthly" },
       { loc: "/amazon-store", priority: "0.7", changefreq: "weekly" },
     ];
 
