@@ -38,6 +38,16 @@ const serviceSchema = {
 
 const SCHEMA_ID = "service-getting-dressed-jsonld";
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
+    { "@type": "ListItem", position: 3, name: "Getting-Dressed Assistance", item: CANONICAL },
+  ],
+};
+
 const GettingDressed = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -98,6 +108,10 @@ const GettingDressed = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -110,14 +124,14 @@ const GettingDressed = () => {
               <span className="italic text-gradient-primary">done properly</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Modern Carnival costumes are technical pieces. Wire bras, monokini
-              bases, harnesses, backpacks and standing collars need to be fitted,
-              balanced and secured by someone who has done it thousands of times.{" "}
+              Getting-dressed assistance at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              includes professional getting-dressed assistance in every concierge
-              package.
+              is hands-on help fitting your modern Carnival costume, by trained
+              dressers who balance wire bras, monokini bases, harnesses,
+              backpacks and standing collars so nothing shifts on the road. It
+              is included in every concierge package.
             </p>
           </header>
 
@@ -164,15 +178,19 @@ const GettingDressed = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Getting-dressed assistance is included in every Carnival Glam Hub
               concierge package across{" "}
-              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">
-                Trinidad
-              </a>
-              , Jamaica, Barbados, Grenada and Antigua. It can also be booked as a
+              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">Trinidad</a>,{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
+              <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
+              <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. It can also be booked as a
               stand-alone service for masqueraders already booked for{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 Carnival makeup
               </a>{" "}
-              elsewhere.
+              elsewhere. See the <a href="/faq" className="text-primary hover:underline">FAQ</a> for details.
             </p>
           </section>
         </article>

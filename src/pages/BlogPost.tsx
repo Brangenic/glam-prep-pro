@@ -168,6 +168,52 @@ const BlogPost = () => {
 
     // Extract and inject FAQ schema from AI-generated content
     let faqScript: HTMLScriptElement | null = null;
+    let articleScript: HTMLScriptElement | null = null;
+    let breadcrumbScript: HTMLScriptElement | null = null;
+
+    if (post && slug && !isBannedSlug(slug)) {
+      const postUrl = `https://www.carnivalglamhub.com/blogs/${slug}`;
+      const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.title,
+        image: post.image_url ? [post.image_url] : undefined,
+        datePublished: post.published_date ?? undefined,
+        dateModified: post.published_date ?? undefined,
+        author: post.author_name
+          ? { "@type": "Person", name: post.author_name }
+          : { "@type": "Organization", name: "Carnival Glam Hub" },
+        publisher: {
+          "@type": "Organization",
+          name: "Carnival Glam Hub",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://www.carnivalglamhub.com/logo.png",
+          },
+        },
+        mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+        description: post.meta_description ?? post.excerpt ?? undefined,
+      };
+      articleScript = document.createElement("script");
+      articleScript.type = "application/ld+json";
+      articleScript.textContent = JSON.stringify(articleSchema);
+      document.head.appendChild(articleScript);
+
+      const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+          { "@type": "ListItem", position: 2, name: "Journal", item: "https://www.carnivalglamhub.com/blogs" },
+          { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
+        ],
+      };
+      breadcrumbScript = document.createElement("script");
+      breadcrumbScript.type = "application/ld+json";
+      breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+      document.head.appendChild(breadcrumbScript);
+    }
+
     if (post?.content) {
       const faqMatch = post.content.match(/<!-- FAQ_SCHEMA_JSON\n([\s\S]*?)\n-->/);
       if (faqMatch?.[1]) {
@@ -184,10 +230,12 @@ const BlogPost = () => {
     return () => {
       document.title = "Carnival Glam Hub";
       if (faqScript) faqScript.remove();
+      if (articleScript) articleScript.remove();
+      if (breadcrumbScript) breadcrumbScript.remove();
       if (robotsTag) robotsTag.remove();
       if (canonicalTag) canonicalTag.remove();
     };
-  }, [post, loading]);
+  }, [post, loading, slug]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

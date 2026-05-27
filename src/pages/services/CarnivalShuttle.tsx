@@ -38,6 +38,16 @@ const serviceSchema = {
 
 const SCHEMA_ID = "service-carnival-shuttle-jsonld";
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
+    { "@type": "ListItem", position: 3, name: "Carnival Shuttle", item: CANONICAL },
+  ],
+};
+
 const CarnivalShuttle = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -98,6 +108,10 @@ const CarnivalShuttle = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -110,14 +124,13 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">from the lounge to the road</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival mornings are not the time to be stuck in traffic in a
-              costume.{" "}
+              The Carnival shuttle service at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              runs a private shuttle service from our lounge to your band's
-              start point, so you arrive on time, in costume, and ready for the
-              road.
+              is private, scheduled transport from our air-conditioned lounge
+              to your band's start point on Carnival morning, so you arrive
+              on time, in costume, and ready for the road.
             </p>
           </header>
 
@@ -130,8 +143,16 @@ const CarnivalShuttle = () => {
               <a href="/trinidad-carnival-2027" className="text-primary hover:underline">
                 Trinidad Carnival 2027
               </a>
-              . Availability in Jamaica, Barbados, Grenada and Antigua varies
-              by season and band partnerships; confirm at booking.
+              . Availability in{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
+              <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
+              <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a> varies
+              by season and band partnerships; see the{" "}
+              <a href="/faq" className="text-primary hover:underline">FAQ</a> or confirm at booking.
             </p>
           </section>
 
