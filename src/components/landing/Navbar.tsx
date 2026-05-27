@@ -8,6 +8,7 @@ const links = [
   { label: "Services", href: "#services" },
   { label: "Destinations", href: "#destinations" },
   { label: "Gallery", href: "#gallery" },
+  { label: "About", href: "/about" },
   { label: "Reviews", href: "/reviews" },
   { label: "Amazon Store", href: "/amazon-store" },
   { label: "Blog", href: "/blogs" },
