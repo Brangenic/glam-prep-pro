@@ -9,6 +9,7 @@ import RouteTracker from "@/components/RouteTracker";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import About from "./pages/About.tsx";
+import CarnivalMakeup from "./pages/services/CarnivalMakeup.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/about" element={<About />} />
+          <Route path="/services/carnival-makeup" element={<CarnivalMakeup />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogPost />} />
