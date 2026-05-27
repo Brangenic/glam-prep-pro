@@ -219,12 +219,20 @@ const BlogPost = () => {
                 <p className="font-body text-muted-foreground mb-6">
                   The URL you followed is no longer available.
                 </p>
-                <Link
-                  to="/blogs"
-                  className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-body text-sm font-semibold text-primary-foreground"
-                >
-                  Back to Blog
-                </Link>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <Link
+                    to="/blogs"
+                    className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-body text-sm font-semibold text-primary-foreground"
+                  >
+                    Back to journal
+                  </Link>
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 font-body text-sm font-semibold hover:bg-card transition-colors"
+                  >
+                    About Carnival Glam Hub
+                  </Link>
+                </div>
               </div>
             ) : (
               <>
