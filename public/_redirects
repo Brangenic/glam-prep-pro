@@ -1,0 +1,3 @@
+/sitemap.xml https://bvrejdrsrmvdknzoskxi.supabase.co/functions/v1/generate-sitemap 200!
+/blogs/:slug https://bvrejdrsrmvdknzoskxi.supabase.co/functions/v1/blog-post-gate/:slug 200!
+/* /index.html 200
