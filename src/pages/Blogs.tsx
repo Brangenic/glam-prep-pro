@@ -48,6 +48,8 @@ const getSlugFromPostUrl = (postUrl: string) => {
 const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 9;
 
   const EXCLUDED_AUTHORS = [
     "Krystal Angelique",
@@ -137,6 +139,11 @@ const Blogs = () => {
 
   const featured = posts[0];
   const rest = posts.slice(1);
+  const usePagination = posts.length > PAGE_SIZE;
+  const totalPages = usePagination ? Math.ceil(rest.length / (PAGE_SIZE - 1)) : 1;
+  const pageItems = usePagination
+    ? rest.slice((page - 1) * (PAGE_SIZE - 1), page * (PAGE_SIZE - 1))
+    : rest;
 
   const getPostLink = (post: BlogPost) => {
     const resolvedSlug = post.slug || getSlugFromPostUrl(post.post_url) || post.external_id;
@@ -184,7 +191,7 @@ const Blogs = () => {
                 <span className="italic text-gradient-primary">journal</span>
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                Editorial notes on Carnival beauty, hair, costume care and travel from across the region.
+                <Link to="/about" className="text-primary hover:underline">Carnival Glam Hub</Link>'s editorial notes on Carnival mornings, beauty, hair, costume care and travel. Read by masqueraders preparing for Carnival across Trinidad, Jamaica, Barbados, Grenada and Antigua.
               </p>
             </header>
 
@@ -264,9 +271,9 @@ const Blogs = () => {
                 )}
 
                 {/* Post grid */}
-                {rest.length > 0 && (
+                {pageItems.length > 0 && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {rest.map((post) => (
+                    {pageItems.map((post) => (
                       <PostCardLink
                         key={post.external_id}
                         href={getPostLink(post)}
@@ -310,8 +317,48 @@ const Blogs = () => {
                     ))}
                   </div>
                 )}
+
+                {usePagination && totalPages > 1 && (
+                  <nav className="flex items-center justify-center gap-2 mt-10" aria-label="Pagination">
+                    <button
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={page === 1}
+                      className="px-4 py-2 rounded-full border border-border font-body text-sm disabled:opacity-40 hover:bg-card transition-colors"
+                    >
+                      Previous
+                    </button>
+                    <span className="font-body text-sm text-muted-foreground px-2">
+                      Page {page} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={page === totalPages}
+                      className="px-4 py-2 rounded-full border border-border font-body text-sm disabled:opacity-40 hover:bg-card transition-colors"
+                    >
+                      Next
+                    </button>
+                  </nav>
+                )}
               </>
             )}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl pb-16 sm:pb-24">
+          <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-8 sm:p-12 text-center gold-glow">
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
+              Ready to book your{" "}
+              <span className="italic text-gradient-primary">Carnival morning?</span>
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
+              Spaces sell out months before Carnival.
+            </p>
+            <Link
+              to="/booking"
+              className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+            >
+              Book now
+            </Link>
           </div>
         </section>
       </main>
