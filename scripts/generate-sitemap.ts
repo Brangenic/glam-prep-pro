@@ -44,6 +44,8 @@ const staticEntries: StaticEntry[] = [
   { path: "/barbados", priority: "0.8", changefreq: "weekly" },
   { path: "/miami", priority: "0.8", changefreq: "weekly" },
   { path: "/toronto", priority: "0.8", changefreq: "weekly" },
+  { path: "/guyana", priority: "0.8", changefreq: "weekly" },
+  { path: "/epic-cruise", priority: "0.8", changefreq: "weekly" },
 ];
 
 const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
@@ -75,6 +77,13 @@ const EXCLUDED_AUTHORS = new Set([
 const isExcludedSlug = (slug: string | null | undefined) => {
   if (!slug) return true;
   return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
+};
+
+const isPublished = (row: { published_date?: string | null; raw_payload?: Record<string, unknown> | null }) => {
+  const status = typeof row.raw_payload?.status === "string" ? row.raw_payload.status.toLowerCase() : null;
+  if (status) return status === "published";
+  if (typeof row.raw_payload?.published === "boolean") return row.raw_payload.published;
+  return Boolean(row.published_date);
 };
 
 const getSlugFromPostUrl = (postUrl: string | null | undefined) => {
@@ -113,7 +122,7 @@ async function main() {
   try {
     const { data, error } = await supabase
       .from("blog_posts")
-      .select("slug, post_url, author_name, updated_at, published_date")
+      .select("slug, post_url, author_name, updated_at, published_date, raw_payload")
       .order("synced_at", { ascending: false })
       .limit(500);
 
@@ -121,6 +130,7 @@ async function main() {
 
     const seen = new Set<string>();
     for (const row of data ?? []) {
+      if (!isPublished(row)) continue;
       const slug = row.slug || getSlugFromPostUrl(row.post_url);
       if (!slug) continue;
       if (isExcludedSlug(slug)) continue;
