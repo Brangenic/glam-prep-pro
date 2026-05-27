@@ -11,6 +11,7 @@ import Reviews from "./pages/Reviews.tsx";
 import About from "./pages/About.tsx";
 import CarnivalMakeup from "./pages/services/CarnivalMakeup.tsx";
 import CarnivalPhotoshoot from "./pages/services/CarnivalPhotoshoot.tsx";
+import TrinidadCarnival2027 from "./pages/TrinidadCarnival2027.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/services/carnival-makeup" element={<CarnivalMakeup />} />
           <Route path="/services/carnival-photoshoot" element={<CarnivalPhotoshoot />} />
+          <Route path="/trinidad-carnival-2027" element={<TrinidadCarnival2027 />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogPost />} />
