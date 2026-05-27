@@ -175,6 +175,19 @@ const Blogs = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+              { "@type": "ListItem", position: 2, name: "Journal", item: CANONICAL },
+            ],
+          }),
+        }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32">
         <section className="py-14 sm:py-18 lg:py-20" aria-labelledby="blog-page-heading">
