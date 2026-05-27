@@ -40,6 +40,11 @@ const isExcludedSlug = (slug: string | null | undefined) => {
   return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
 
+const getSlugFromPostUrl = (postUrl: string) => {
+  const match = postUrl.match(/\/post\/([^/?#]+)/i);
+  return match?.[1] ? decodeURIComponent(match[1]) : null;
+};
+
 const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
