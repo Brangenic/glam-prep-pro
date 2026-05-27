@@ -52,7 +52,7 @@ const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
   /^atlanta-/i,
   /^antigua-/i,
   /^spicemas-/i,
-  /^crop-over-/i,
+  /crop-over-/i,
   /^chatgpt/i,
   /gpt/i,
   /^ai-/i,

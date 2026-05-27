@@ -44,7 +44,7 @@ const excludedSlugPatterns = [
   /^atlanta-/i,
   /^antigua-/i,
   /^spicemas-/i,
-  /^crop-over-/i,
+  /crop-over-/i,
   /^chatgpt/i,
   /gpt/i,
   /^ai-/i,
