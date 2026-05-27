@@ -110,6 +110,16 @@ const BlogPost = () => {
       metaDesc.setAttribute("content", post.meta_description);
     }
 
+    // 410-style handling: when load is complete and no post resolved,
+    // mark this URL as noindex so search engines drop the stale slug.
+    let robotsTag: HTMLMetaElement | null = null;
+    if (!loading && !post) {
+      robotsTag = document.createElement("meta");
+      robotsTag.setAttribute("name", "robots");
+      robotsTag.setAttribute("content", "noindex");
+      document.head.appendChild(robotsTag);
+    }
+
     // Extract and inject FAQ schema from AI-generated content
     let faqScript: HTMLScriptElement | null = null;
     if (post?.content) {
@@ -128,8 +138,9 @@ const BlogPost = () => {
     return () => {
       document.title = "Carnival Glam Hub";
       if (faqScript) faqScript.remove();
+      if (robotsTag) robotsTag.remove();
     };
-  }, [post?.title, post?.meta_description, post?.content]);
+  }, [post, loading]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -157,9 +168,9 @@ const BlogPost = () => {
               </div>
             ) : !post ? (
               <div className="text-center py-20">
-                <h1 className="font-display text-3xl font-bold mb-4">Post Not Found</h1>
+                <h1 className="font-display text-3xl font-bold mb-4">This post has been removed.</h1>
                 <p className="font-body text-muted-foreground mb-6">
-                  This blog post doesn't exist or may have been removed.
+                  The URL you followed is no longer available.
                 </p>
                 <Link
                   to="/blogs"

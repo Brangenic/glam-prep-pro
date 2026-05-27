@@ -28,12 +28,25 @@ Deno.serve(async (req) => {
       { loc: "/blogs", priority: "0.9", changefreq: "daily" },
       { loc: "/reviews", priority: "0.8", changefreq: "weekly" },
       { loc: "/about", priority: "0.7", changefreq: "monthly" },
+      { loc: "/faq", priority: "0.5", changefreq: "monthly" },
       { loc: "/services/carnival-makeup", priority: "0.8", changefreq: "monthly" },
       { loc: "/services/carnival-photoshoot", priority: "0.8", changefreq: "monthly" },
       { loc: "/services/carnival-hair", priority: "0.8", changefreq: "monthly" },
+      { loc: "/services/carnival-shuttle", priority: "0.8", changefreq: "monthly" },
       { loc: "/services/getting-dressed", priority: "0.8", changefreq: "monthly" },
       { loc: "/trinidad-carnival-2027", priority: "0.9", changefreq: "weekly" },
       { loc: "/amazon-store", priority: "0.7", changefreq: "weekly" },
+    ];
+
+    const EXCLUDED_SLUG_PATTERNS = [
+      /^atlanta-/i,
+      /^antigua-/i,
+      /^spicemas-/i,
+      /^crop-over-/i,
+      /^chatgpt-/i,
+      /gpt/i,
+      /^ai-/i,
+      /^artificial-/i,
     ];
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -54,6 +67,7 @@ Deno.serve(async (req) => {
     if (posts) {
       for (const post of posts) {
         if (!post.slug) continue;
+        if (EXCLUDED_SLUG_PATTERNS.some((re) => re.test(post.slug))) continue;
         const lastmod = post.updated_at ? new Date(post.updated_at).toISOString().split("T")[0] : new Date().toISOString().split("T")[0];
         xml += `  <url>
     <loc>${baseUrl}/blogs/${post.slug}</loc>

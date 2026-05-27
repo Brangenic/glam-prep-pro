@@ -18,6 +18,33 @@ type BlogPost = {
   read_time: string | null;
 };
 
+const PAGE_TITLE =
+  "Carnival Glam Hub Journal | Carnival Beauty, Hair and Travel Notes";
+const PAGE_DESCRIPTION =
+  "Editorial notes from Carnival Glam Hub on Carnival beauty, hair, costume care and travel.";
+const CANONICAL = "https://www.carnivalglamhub.com/blogs";
+
+const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
+  /^atlanta-/i,
+  /^antigua-/i,
+  /^spicemas-/i,
+  /^crop-over-/i,
+  /^chatgpt-/i,
+  /gpt/i,
+  /^ai-/i,
+  /^artificial-/i,
+];
+
+const isExcludedSlug = (slug: string | null | undefined) => {
+  if (!slug) return false;
+  return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
+};
+
+const getSlugFromPostUrl = (postUrl: string) => {
+  const match = postUrl.match(/\/post\/([^/?#]+)/i);
+  return match?.[1] ? decodeURIComponent(match[1]) : null;
+};
+
 const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +78,10 @@ const Blogs = () => {
 
       if (isMounted) {
         const filtered = ((data as BlogPost[]) ?? []).filter(
-          (p) => !p.author_name || !EXCLUDED_AUTHORS.includes(p.author_name.trim())
+          (p) =>
+            (!p.author_name || !EXCLUDED_AUTHORS.includes(p.author_name.trim())) &&
+            !isExcludedSlug(p.slug) &&
+            !isExcludedSlug(getSlugFromPostUrl(p.post_url))
         );
         setPosts(filtered);
         setLoading(false);
@@ -62,38 +92,99 @@ const Blogs = () => {
     return () => { isMounted = false; };
   }, []);
 
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = PAGE_TITLE;
+
+    const setMeta = (selector: string, attr: string, name: string, content: string) => {
+      let tag = document.head.querySelector<HTMLMetaElement>(selector);
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute(attr, name);
+        document.head.appendChild(tag);
+      }
+      const prev = tag.getAttribute("content");
+      tag.setAttribute("content", content);
+      return () => {
+        if (prev === null) tag?.remove();
+        else tag?.setAttribute("content", prev);
+      };
+    };
+
+    const restorers: Array<() => void> = [];
+    restorers.push(setMeta('meta[name="description"]', "name", "description", PAGE_DESCRIPTION));
+    restorers.push(setMeta('meta[property="og:title"]', "property", "og:title", PAGE_TITLE));
+    restorers.push(setMeta('meta[property="og:description"]', "property", "og:description", PAGE_DESCRIPTION));
+    restorers.push(setMeta('meta[property="og:url"]', "property", "og:url", CANONICAL));
+    restorers.push(setMeta('meta[property="og:type"]', "property", "og:type", "website"));
+
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const previousCanonical = canonical?.getAttribute("href") ?? null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", CANONICAL);
+
+    return () => {
+      document.title = previousTitle;
+      restorers.forEach((r) => r());
+      if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
+      else canonical?.remove();
+    };
+  }, []);
+
   const featured = posts[0];
   const rest = posts.slice(1);
-
-  const getSlugFromPostUrl = (postUrl: string) => {
-    const match = postUrl.match(/\/post\/([^/?#]+)/i);
-    return match?.[1] ? decodeURIComponent(match[1]) : null;
-  };
 
   const getPostLink = (post: BlogPost) => {
     const resolvedSlug = post.slug || getSlugFromPostUrl(post.post_url) || post.external_id;
     return `/blogs/${encodeURIComponent(resolvedSlug)}`;
   };
 
+  const truncate = (s: string, n: number) =>
+    s.length > n ? `${s.slice(0, n - 1).trimEnd()}…` : s;
+
+  const blogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Carnival Glam Hub Journal",
+    url: CANONICAL,
+    description: PAGE_DESCRIPTION,
+    blogPost: posts.slice(0, 25).map((p) => ({
+      "@type": "BlogPosting",
+      headline: p.title,
+      url: `https://www.carnivalglamhub.com${getPostLink(p)}`,
+      datePublished: p.published_date ?? undefined,
+      image: p.image_url ?? undefined,
+      author: p.author_name ? { "@type": "Person", name: p.author_name } : undefined,
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32">
         <section className="py-14 sm:py-18 lg:py-20" aria-labelledby="blog-page-heading">
           <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
             <header className="mb-10 sm:mb-14">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
-                Carnival Glam Hub Blog
+                Carnival Glam Hub Journal
               </p>
               <h1
                 id="blog-page-heading"
                 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4"
               >
-                Stories, Tips &amp;{" "}
-                <span className="italic text-gradient-primary">Carnival Culture</span>
+                The Carnival Glam Hub{" "}
+                <span className="italic text-gradient-primary">journal</span>
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                Stay in the loop with carnival news, glam tips, destination guides, and behind-the-scenes stories from the Carnival Glam Hub team.
+                Editorial notes on Carnival beauty, hair, costume care and travel from across the region.
               </p>
             </header>
 
@@ -112,9 +203,15 @@ const Blogs = () => {
               </div>
             ) : posts.length === 0 ? (
               <div className="rounded-2xl border border-border bg-card p-10 text-center">
-                <p className="font-body text-muted-foreground">
-                  Blog posts are syncing. Check back shortly!
+                <p className="font-body text-base sm:text-lg text-muted-foreground mb-6">
+                  We are rebuilding the journal. New editorial notes coming soon.
                 </p>
+                <Link
+                  to="/about"
+                  className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+                >
+                  About Carnival Glam Hub
+                </Link>
               </div>
             ) : (
               <>
@@ -144,7 +241,7 @@ const Blogs = () => {
                         </h2>
                         {featured.excerpt && (
                           <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
-                            {featured.excerpt}
+                            {truncate(featured.excerpt, 160)}
                           </p>
                         )}
                         <div className="flex items-center gap-3 mt-auto">
@@ -191,7 +288,7 @@ const Blogs = () => {
                           </h2>
                           {post.excerpt && (
                             <p className="font-body text-sm text-muted-foreground line-clamp-2 mb-3">
-                              {post.excerpt}
+                              {truncate(post.excerpt, 160)}
                             </p>
                           )}
                           <div className="flex items-center gap-2">
