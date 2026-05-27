@@ -38,6 +38,16 @@ const serviceSchema = {
 
 const SCHEMA_ID = "service-carnival-photoshoot-jsonld";
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
+    { "@type": "ListItem", position: 3, name: "Carnival Photoshoot", item: CANONICAL },
+  ],
+};
+
 const CarnivalPhotoshoot = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -98,6 +108,10 @@ const CarnivalPhotoshoot = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -110,12 +124,14 @@ const CarnivalPhotoshoot = () => {
               <span className="italic text-gradient-primary">captured before the road</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              A Carnival photoshoot at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              photographs more than 15,000 masqueraders a year while makeup, hair and
-              costume are at their peak. Photos are captured on-site the morning of
-              the parade and delivered in a private gallery.
+              is a professional photography session of you in full costume,
+              captured on-site the morning of the parade while makeup, hair and
+              costume are at their peak, and delivered to a private gallery
+              after Carnival.
             </p>
           </header>
 
@@ -171,8 +187,16 @@ const CarnivalPhotoshoot = () => {
               >
                 getting-dressed
               </a>
-              . Pricing varies by territory; confirm at
-              booking.
+              . Available across{" "}
+              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">Trinidad</a>,{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
+              <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
+              <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. Pricing
+              varies by territory; see the <a href="/faq" className="text-primary hover:underline">FAQ</a>.
             </p>
           </section>
         </article>
