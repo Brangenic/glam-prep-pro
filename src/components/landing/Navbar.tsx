@@ -4,21 +4,38 @@ import brandLogo from "@/assets/gabby-glam-logo.png";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
-const links = [
-  { label: "Services", href: "#services" },
-  { label: "Makeup", href: "/services/carnival-makeup" },
-  { label: "Hair", href: "/services/carnival-hair" },
-  { label: "Getting Dressed", href: "/services/getting-dressed" },
-  { label: "Photoshoot", href: "/services/carnival-photoshoot" },
-  { label: "Shuttle", href: "/services/carnival-shuttle" },
+type NavItem = {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+};
+
+const links: NavItem[] = [
+  {
+    label: "Services",
+    href: "#services",
+    children: [
+      { label: "Carnival Makeup", href: "/services/carnival-makeup" },
+      { label: "Carnival Hair", href: "/services/carnival-hair" },
+      { label: "Getting Dressed", href: "/services/getting-dressed" },
+      { label: "Carnival Photoshoot", href: "/services/carnival-photoshoot" },
+      { label: "Carnival Shuttle", href: "/services/carnival-shuttle" },
+    ],
+  },
   { label: "Destinations", href: "#destinations" },
   { label: "Trinidad 2027", href: "/trinidad-carnival-2027" },
-  { label: "Gallery", href: "#gallery" },
   { label: "About", href: "/about" },
-  { label: "Reviews", href: "/reviews" },
-  { label: "Amazon Store", href: "/amazon-store" },
   { label: "Blog", href: "/blogs" },
-  { label: "FAQ", href: "/faq" },
+  {
+    label: "More",
+    href: "#",
+    children: [
+      { label: "Gallery", href: "#gallery" },
+      { label: "Reviews", href: "/reviews" },
+      { label: "Amazon Store", href: "/amazon-store" },
+      { label: "FAQ", href: "/faq" },
+    ],
+  },
 ];
 
 const Navbar = () => {
@@ -46,20 +63,47 @@ const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-background/50" : "bg-transparent"}`}
       aria-label="Main navigation"
     >
-      <div className="container mx-auto px-6 flex items-center justify-between min-h-24 py-4">
+      <div className="container mx-auto px-6 flex items-center justify-between min-h-20 py-3">
         <a href={isHome ? "#hero" : "/"} className="inline-flex items-center" aria-label="Carnival Glam Hub — Home">
-          <img src={brandLogo} alt="Carnival Glam Hub" className="h-16 w-auto sm:h-20 lg:h-24" />
+          <img src={brandLogo} alt="Carnival Glam Hub" className="h-12 w-auto sm:h-14 lg:h-16" />
         </a>
-        <div className="hidden lg:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={getLinkHref(l.href)}
-              className="font-body text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+        <div className="hidden lg:flex items-center gap-6">
+          {links.map((l) =>
+            l.children ? (
+              <div key={l.label} className="relative group">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 font-body text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {l.label}
+                  <svg width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all">
+                  <div className="min-w-[200px] bg-background/98 backdrop-blur-md border border-border rounded-xl shadow-xl py-2">
+                    {l.children.map((c) => (
+                      <a
+                        key={c.href}
+                        href={getLinkHref(c.href)}
+                        className="block px-4 py-2 font-body text-sm text-muted-foreground hover:text-primary hover:bg-muted/50 transition-colors"
+                      >
+                        {c.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a
+                key={l.href}
+                href={getLinkHref(l.href)}
+                className="font-body text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                {l.label}
+              </a>
+            ),
+          )}
           <a
             href={BOOKING_URL}
             target="_blank"
@@ -102,16 +146,34 @@ const Navbar = () => {
       </div>
       {open && (
         <div className="lg:hidden bg-background/98 backdrop-blur-md border-t border-border px-6 py-6 space-y-4">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={getLinkHref(l.href)}
-              onClick={() => setOpen(false)}
-              className="block font-body text-base text-muted-foreground hover:text-primary transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) =>
+            l.children ? (
+              <div key={l.label} className="space-y-2">
+                <div className="font-body text-xs uppercase tracking-widest text-primary/80 font-semibold pt-2">
+                  {l.label}
+                </div>
+                {l.children.map((c) => (
+                  <a
+                    key={c.href}
+                    href={getLinkHref(c.href)}
+                    onClick={() => setOpen(false)}
+                    className="block pl-3 font-body text-base text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {c.label}
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <a
+                key={l.href}
+                href={getLinkHref(l.href)}
+                onClick={() => setOpen(false)}
+                className="block font-body text-base text-muted-foreground hover:text-primary transition-colors"
+              >
+                {l.label}
+              </a>
+            ),
+          )}
           <a
             href={BOOKING_URL}
             target="_blank"
