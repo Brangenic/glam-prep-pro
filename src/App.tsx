@@ -14,6 +14,7 @@ import CarnivalPhotoshoot from "./pages/services/CarnivalPhotoshoot.tsx";
 import CarnivalHair from "./pages/services/CarnivalHair.tsx";
 import GettingDressed from "./pages/services/GettingDressed.tsx";
 import CarnivalShuttle from "./pages/services/CarnivalShuttle.tsx";
+import FAQ from "./pages/FAQ.tsx";
 import TrinidadCarnival2027 from "./pages/TrinidadCarnival2027.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
@@ -57,7 +58,7 @@ const App = () => (
           <Route path="/services/carnival-hair" element={<CarnivalHair />} />
           <Route path="/services/getting-dressed" element={<GettingDressed />} />
           <Route path="/services/carnival-shuttle" element={<CarnivalShuttle />} />
-          <Route path="/faq" element={<Navigate to="/#faq" replace />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/trinidad-carnival-2027" element={<TrinidadCarnival2027 />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
