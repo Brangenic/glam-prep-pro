@@ -164,7 +164,14 @@ const CarnivalPhotoshoot = () => {
               >
                 Carnival makeup
               </a>
-              , hair and getting-dressed. Pricing varies by territory; confirm at
+              , hair and{" "}
+              <a
+                href="/services/getting-dressed"
+                className="text-primary hover:underline"
+              >
+                getting-dressed
+              </a>
+              . Pricing varies by territory; confirm at
               booking.
             </p>
           </section>
