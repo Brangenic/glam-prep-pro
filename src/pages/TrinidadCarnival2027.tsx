@@ -62,6 +62,16 @@ const serviceSchema = {
 const EVENT_SCHEMA_ID = "trinidad-carnival-2027-event-jsonld";
 const SERVICE_SCHEMA_ID = "trinidad-carnival-2027-service-jsonld";
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Destinations", item: "https://www.carnivalglamhub.com/#destinations" },
+    { "@type": "ListItem", position: 3, name: "Trinidad Carnival 2027", item: CANONICAL },
+  ],
+};
+
 const TrinidadCarnival2027 = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -131,6 +141,10 @@ const TrinidadCarnival2027 = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -143,11 +157,12 @@ const TrinidadCarnival2027 = () => {
               <span className="italic text-gradient-primary">Carnival Glam Hub</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Trinidad Carnival 2027 falls on Monday 15 February and Tuesday 16
-              February 2027. Carnival Glam Hub is the territory&apos;s premium beauty
-              concierge for masqueraders travelling in from the United States, Canada,
-              the United Kingdom and the wider Caribbean diaspora. Pre-register your
-              slot now; the 2027 calendar is already filling.
+              Trinidad Carnival 2027 is the two-day Carnival Monday and Tuesday
+              parade in Port of Spain on 15 and 16 February 2027. Carnival Glam
+              Hub is the territory&apos;s premium morning concierge for
+              masqueraders travelling in from the United States, Canada, the
+              United Kingdom and the wider Caribbean diaspora. Pre-register
+              your slot now; the 2027 calendar is already filling.
             </p>
           </header>
 
@@ -234,7 +249,10 @@ const TrinidadCarnival2027 = () => {
                 /booking
               </a>{" "}
               and a member of the Carnival Glam Hub team will confirm your slot, your
-              services and your shuttle within 48 hours.
+              services and your shuttle within 48 hours. See the{" "}
+              <a href="/faq" className="text-primary hover:underline">FAQ</a> for
+              what is included and read more{" "}
+              <a href="/about" className="text-primary hover:underline">about us</a>.
             </p>
           </section>
         </article>
