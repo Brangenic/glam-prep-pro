@@ -38,6 +38,16 @@ const serviceSchema = {
 
 const SCHEMA_ID = "service-carnival-hair-jsonld";
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
+    { "@type": "ListItem", position: 3, name: "Carnival Hair Styling", item: CANONICAL },
+  ],
+};
+
 const CarnivalHair = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -98,6 +108,10 @@ const CarnivalHair = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -110,12 +124,14 @@ const CarnivalHair = () => {
               <span className="italic text-gradient-primary">holds through the road</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Carnival hair styling at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              styles Carnival hair the way it needs to be styled for the road:
-              sculpted, secured, and built around the headpiece. Every style is
-              finished inside the air-conditioned lounge before you leave.
+              is sculpted, secured, headpiece-ready hair built to hold under
+              feathers, wires and tropical heat, finished by professional
+              stylists inside our air-conditioned lounge before you leave for
+              the road.
             </p>
           </header>
 
@@ -160,10 +176,16 @@ const CarnivalHair = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival hair styling is available at every Carnival Glam Hub
               location:{" "}
-              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">
-                Trinidad
-              </a>
-              , Jamaica, Barbados, Grenada and Antigua.
+              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">Trinidad</a>,{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
+              <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
+              <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. Read more{" "}
+              <a href="/about" className="text-primary hover:underline">about us</a> or check
+              the <a href="/faq" className="text-primary hover:underline">FAQ</a>.
             </p>
           </section>
         </article>
