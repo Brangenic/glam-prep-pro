@@ -15,4 +15,17 @@ Allow: /
 
 Disallow: /api/
 
+# Removed AI-generated blog posts — do not recrawl.
+# True HTTP 410 is served by the Supabase edge function when the host routes
+# /blogs/:slug through it. Until that routing is wired at the CDN, these
+# Disallow rules stop Googlebot wasting crawl budget on the dead slugs.
+Disallow: /blogs/atlanta-
+Disallow: /blogs/antigua-
+Disallow: /blogs/spicemas-
+Disallow: /blogs/crop-over-
+Disallow: /blogs/chatgpt-
+Disallow: /blogs/gpt-
+Disallow: /blogs/ai-
+Disallow: /blogs/artificial-
+
 Sitemap: https://www.carnivalglamhub.com/sitemap.xml
