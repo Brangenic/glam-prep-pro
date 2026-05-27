@@ -6,7 +6,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 const PAGE_TITLE =
   "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival shuttle from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed for 2027; additional territories seasonal.";
+  "Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-shuttle";
 
 const serviceSchema = {
@@ -110,12 +110,14 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">from the lounge to the road</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Carnival mornings are not the time to be stuck in traffic in a
+              costume.{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              runs a dedicated Carnival shuttle so masqueraders move from the
-              air-conditioned lounge to their band's start point with the costume
-              intact and the morning on schedule.
+              runs a private shuttle service from our lounge to your band's
+              start point, so you arrive on time, in costume, and ready for the
+              road.
             </p>
           </header>
 
@@ -124,13 +126,12 @@ const CarnivalShuttle = () => {
               Where the shuttle runs
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Confirmed for{" "}
+              The Carnival shuttle is confirmed in Trinidad for{" "}
               <a href="/trinidad-carnival-2027" className="text-primary hover:underline">
                 Trinidad Carnival 2027
-              </a>{" "}
-              between the Carnival Glam Hub lounge and each major band's stated
-              start point. Additional territories (Jamaica, Barbados, Grenada,
-              Antigua) are seasonal and confirmed at booking.
+              </a>
+              . Availability in Jamaica, Barbados, Grenada and Antigua varies
+              by season and band partnerships; confirm at booking.
             </p>
           </section>
 
@@ -139,11 +140,14 @@ const CarnivalShuttle = () => {
               How it works
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Your shuttle slot is tied to your glam appointment. After makeup,
-              hair and getting-dressed, you are escorted directly to a private
-              vehicle and dropped at your band's meeting point. Drivers are
-              briefed on the road schedule so departures are timed against the
-              parade, not the clock alone.
+              Shuttle departures are aligned to your band's road march
+              schedule. We collect you from the Carnival Glam Hub lounge after
+              glam and{" "}
+              <a href="/services/getting-dressed" className="text-primary hover:underline">
+                getting-dressed
+              </a>
+              , drive directly to your band's start point, and drop off as
+              close as the police cordon permits.
             </p>
           </section>
 
@@ -152,9 +156,10 @@ const CarnivalShuttle = () => {
               Group capacity
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Solo seats, paired seats, and small private group bookings up to
-              six. Larger crews can request a dedicated vehicle at booking;
-              availability depends on territory and date.
+              Vehicles range from private cars for two to four masqueraders, up
+              to mini-coaches for a full group of friends booked together.
+              Reserve the full vehicle to keep your group together on the
+              morning.
             </p>
           </section>
 
@@ -163,10 +168,9 @@ const CarnivalShuttle = () => {
               Booking and confirmation
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              The shuttle is bookable as an add-on to any Carnival Glam Hub
-              package. Routes and pick-up windows are confirmed by email at
-              least two weeks before Carnival, with a final confirmation the
-              evening before the road.
+              Shuttle is an add-on at booking. Departure times are confirmed
+              by email the week of Carnival once your band's road march
+              schedule is locked in.
             </p>
           </section>
         </article>
@@ -174,11 +178,11 @@ const CarnivalShuttle = () => {
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-12 sm:mt-16">
           <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-8 sm:p-12 text-center gold-glow">
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
-              Add the{" "}
-              <span className="italic text-gradient-primary">shuttle</span> to your booking.
+              Reserve your{" "}
+              <span className="italic text-gradient-primary">Carnival shuttle.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Capacity is limited and shuttle slots close before glam slots.
+              Vehicles fill before glam slots; book together with your group.
             </p>
             <a
               href="/booking"
