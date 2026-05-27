@@ -78,6 +78,16 @@ const faqSchema = {
   })),
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
+    { "@type": "ListItem", position: 2, name: "Support", item: "https://www.carnivalglamhub.com/faq" },
+    { "@type": "ListItem", position: 3, name: "FAQ", item: "https://www.carnivalglamhub.com/faq" },
+  ],
+};
+
 const SCHEMA_ID = "faq-page-jsonld";
 
 const FAQ = () => {
@@ -140,6 +150,10 @@ const FAQ = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -152,10 +166,11 @@ const FAQ = () => {
               <span className="italic text-gradient-primary">questions</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub handles the most demanding morning of Carnival
-              weekend for masqueraders across the Caribbean and the diaspora.
-              Below are the questions we are asked most often. If yours is not
-              here, message us directly.
+              The Carnival Glam Hub FAQ answers the most common questions about
+              booking sweat-resistant Carnival makeup, hair styling,
+              getting-dressed assistance, photoshoot and shuttle for masqueraders
+              across the Caribbean and the diaspora. Below are the questions we
+              are asked most often. If yours is not here, message us directly.
             </p>
           </header>
 
