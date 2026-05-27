@@ -2,3 +2,9 @@ project_id = "bvrejdrsrmvdknzoskxi"
 
 [functions.sync-public-content]
 verify_jwt = false
+
+[functions.generate-sitemap]
+verify_jwt = false
+
+[functions.blog-post-gate]
+verify_jwt = false
