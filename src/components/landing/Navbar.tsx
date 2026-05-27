@@ -8,6 +8,7 @@ const links = [
   { label: "Services", href: "#services" },
   { label: "Makeup", href: "/services/carnival-makeup" },
   { label: "Hair", href: "/services/carnival-hair" },
+  { label: "Getting Dressed", href: "/services/getting-dressed" },
   { label: "Photoshoot", href: "/services/carnival-photoshoot" },
   { label: "Destinations", href: "#destinations" },
   { label: "Trinidad 2027", href: "/trinidad-carnival-2027" },
