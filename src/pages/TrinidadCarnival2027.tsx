@@ -12,17 +12,17 @@ const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 const eventSchema = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "Trinidad Carnival 2027",
-  startDate: "2027-02-15",
-  endDate: "2027-02-16",
+  name: "Trinidad Carnival 2027 Morning Concierge with Carnival Glam Hub",
+  startDate: "2027-02-08T04:00:00-04:00",
+  endDate: "2027-02-09T20:00:00-04:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   url: CANONICAL,
   description:
-    "Trinidad Carnival 2027 Monday and Tuesday: 15 and 16 February 2027. Pre-register for makeup, hair, getting-dressed, photoshoot and shuttle with Carnival Glam Hub.",
+    "Carnival Glam Hub morning concierge for Trinidad Carnival 2027 in Port of Spain: makeup, hair, getting-dressed, photoshoot and shuttle.",
   location: {
     "@type": "Place",
-    name: "Port of Spain, Trinidad",
+    name: "Port of Spain, Trinidad and Tobago",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Port of Spain",
@@ -33,6 +33,14 @@ const eventSchema = {
     "@type": "Organization",
     name: "Carnival Glam Hub",
     url: "https://www.carnivalglamhub.com",
+  },
+  offers: {
+    "@type": "Offer",
+    url: "https://www.carnivalglamhub.com/booking",
+    availability: "https://schema.org/PreOrder",
+    priceCurrency: "USD",
+    price: "0",
+    validFrom: "2026-05-01",
   },
 };
 
@@ -61,6 +69,62 @@ const serviceSchema = {
 
 const EVENT_SCHEMA_ID = "trinidad-carnival-2027-event-jsonld";
 const SERVICE_SCHEMA_ID = "trinidad-carnival-2027-service-jsonld";
+const FAQ_SCHEMA_ID = "trinidad-carnival-2027-faq-jsonld";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How do I book?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Select your destination and choose your glam package. You will receive confirmation after booking.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How far in advance should I book?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is included in my appointment?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Services depend on the package selected but typically include makeup, hair styling, and costume dressing assistance.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where does the glam take place?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Each destination has a designated glam hub location shared after booking confirmation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I book for a group?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Group bookings are available and recommended for friends or band sections.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do slots sell out?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. We limit appointments per carnival morning to maintain a premium experience. Early booking is strongly recommended.",
+      },
+    },
+  ],
+};
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -120,6 +184,7 @@ const TrinidadCarnival2027 = () => {
     };
     addSchema(EVENT_SCHEMA_ID, eventSchema);
     addSchema(SERVICE_SCHEMA_ID, serviceSchema);
+    addSchema(FAQ_SCHEMA_ID, faqSchema);
 
     return () => {
       document.title = previousTitle;
@@ -128,6 +193,7 @@ const TrinidadCarnival2027 = () => {
       else canonical?.remove();
       document.getElementById(EVENT_SCHEMA_ID)?.remove();
       document.getElementById(SERVICE_SCHEMA_ID)?.remove();
+      document.getElementById(FAQ_SCHEMA_ID)?.remove();
     };
   }, []);
 
@@ -144,6 +210,10 @@ const TrinidadCarnival2027 = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
