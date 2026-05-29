@@ -19,6 +19,7 @@ import TrinidadCarnival2027 from "./pages/TrinidadCarnival2027.tsx";
 import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import AirliftProblem from "./pages/blog/AirliftProblem.tsx";
 import Destination from "./pages/Destination.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
@@ -62,6 +63,10 @@ const App = () => (
           <Route path="/trinidad-carnival-2027" element={<TrinidadCarnival2027 />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route
+            path="/blogs/caribbean-carnival-has-an-airlift-problem"
+            element={<AirliftProblem />}
+          />
           <Route path="/blogs/:slug" element={<BlogPost />} />
           {/* Wix legacy URL pattern → new blog URLs */}
           <Route path="/post/:slug" element={<WixPostRedirect />} />
