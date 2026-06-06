@@ -66,6 +66,7 @@ export type Database = {
           external_id: string
           id: string
           image_url: string | null
+          image_url_legacy: string | null
           meta_description: string | null
           post_url: string
           published_date: string | null
@@ -86,6 +87,7 @@ export type Database = {
           external_id: string
           id?: string
           image_url?: string | null
+          image_url_legacy?: string | null
           meta_description?: string | null
           post_url: string
           published_date?: string | null
@@ -106,6 +108,7 @@ export type Database = {
           external_id?: string
           id?: string
           image_url?: string | null
+          image_url_legacy?: string | null
           meta_description?: string | null
           post_url?: string
           published_date?: string | null
