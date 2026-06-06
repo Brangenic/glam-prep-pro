@@ -8,7 +8,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 
-const LOCKED_SHA256 = "e6e9c6e0cf2e3a8f6a4d2f6f8f3a1e5d3b9c7e1f4a6b2c8d0e7f9a3b5c1d2e4f"; // placeholder updated on first run
+const LOCKED_SHA256 = "ad46cf0392facbe320bb3e6f1031c49b1ee1888ed3f25ba2c9c9fe8a816eaf8e";
 
 const robotsPath = resolve("public/robots.txt");
 if (!existsSync(robotsPath)) {
