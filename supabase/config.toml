@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.rehost-blog-images]
 verify_jwt = false
+
+[functions.rehost-blog-inline-images]
+verify_jwt = false
