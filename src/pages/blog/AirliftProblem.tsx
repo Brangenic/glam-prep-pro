@@ -7,22 +7,42 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 const SLUG = "caribbean-carnival-has-an-airlift-problem";
 const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
 const TITLE =
-  "The Caribbean Carnival economy doesnt have a demand problem. It has an airlift problem.";
+  "The Caribbean Carnival economy doesn\u2019t have a demand problem. It has an airlift problem.";
+const META_TITLE = "The Caribbean Carnival airlift problem | Carnival Glam Hub";
 const DESCRIPTION =
-  "Working across 10 Carnival territories, the same constraint keeps showing up. Demand isnt the bottleneck. Seats are.";
+  "From inside the Caribbean Carnival economy, demand for Trinidad, Jamaica, Crop Over, Spice Mas, Caribana, Miami, and other regional Carnivals is strong. What\u2019s broken is the air capacity moving masqueraders between them.";
+const META_DESCRIPTION =
+  "Demand for Caribbean Carnival is strong. What\u2019s broken is inter-island air capacity. Kibwe McGann on the airlift problem stalling Carnival growth.";
 const AUTHOR = "Kibwe McGann";
 const DATE_PUBLISHED = "2026-05-29";
 const FEATURED_IMAGE = "/linkedin-carnival-air-travel-post.svg";
-const TAGS = ["Carnival Economy", "Caribbean Travel", "Airlift", "Carnival Glam Hub"];
+const TAGS = [
+  "Carnival Economy",
+  "Caribbean Travel",
+  "Airlift",
+  "Carnival Infrastructure",
+  "Carnival Glam Hub",
+  "Trinidad Carnival",
+  "Crop Over",
+  "Spice Mas",
+  "Caribana",
+  "Miami Carnival",
+  "Jamaica Carnival",
+  "Saint Lucia Carnival",
+  "Antigua Carnival",
+];
 
 const BODY_PARAGRAPHS: string[] = [
-  "Working across 10 Carnival territories with __CGH__ has given me a clear view of what actually limits this market. The headlines focus on costume sales, fete sell-outs and influencer attendance numbers. The real bottleneck is upstream of all of that. It is the seat on the plane.",
-  "Demand for Caribbean Carnival is healthy. Diaspora masqueraders in London, Toronto, New York, Atlanta, Miami and Lagos book costumes months in advance. __TRINIDAD__'s section leaders cap registration windows because they sell out. __STLUCIA__ and Grenada are running at capacity for hotel inventory during peak. Antigua, Barbados and Jamaica each report year-on-year visitor growth tied to their Carnival weekends. Promoters are not struggling to fill rooms. Bands are not struggling to fill sections. The constraint sits at the airport.",
-  "Adam Smith made the point two and a half centuries ago. The size of the market is limited by the extent of the division of labour, and the division of labour is limited by the size of the market. Translate that to Carnival. Every additional masquerader landing in a territory creates a new buyer for a hotelier, a driver, a hairstylist, a photographer, a vendor, a makeup artist, a costume designer, a feather supplier and a band administrator. Each of those roles deepens and specialises as demand thickens. Cut the inbound seats and you do not just lose a tourist. You shrink the entire local economy that organises itself around that visitor.",
-  "__STLUCIA__ made this concrete for me last year. British Airways direct service into Saint Lucia was suspended. The workaround for masqueraders flying in from the United Kingdom was to route through Tobago. That is a full extra flight, an extra fare, an extra night and a separate immigration queue. A premium service like ours is supposed to absorb friction for the masquerader. We were instead writing apology emails for what an airline schedule had done. A handful of bookings cancelled outright. Others downgraded packages because budget had been eaten by airfare. Saint Lucia Carnival did not lose appetite. Saint Lucia Carnival lost capacity.",
-  "__TRINIDAD__ has the same shape of problem at a larger scale. Carnival weekend airlift into Piarco is finite. Caribbean Airlines, American, JetBlue, BA, Air Canada and Copa are not adding aircraft because Carnival demands it. So fares climb, routes via Miami or New York become the default and many would-be masqueraders simply pick a different territory or sit the year out. Toronto's Caribana ships visitors out into the Caribbean rather than absorbing them, which makes seat supply on northbound legs the same kind of pinch point.",
-  "The fix is not a marketing campaign. It is a sustained, coordinated push to expand and protect inbound airlift around Carnival dates. That means tourism authorities, ministries and airline commercial teams sitting in the same room twelve months ahead of each Carnival, treating airlift like infrastructure. Block charters where the schedule does not exist. Negotiate guaranteed-seat allotments on commercial carriers. Publish the routes early so the diaspora can plan and so band administrators can size their sections to confirmed inbound capacity rather than hope.",
-  "Caribbean Carnival is one of the few cultural products in the world that consistently pulls hard currency back to the region every year. Treating it as a serious export means treating the gateway like infrastructure. The gateway is airlift.",
+  "Working across 10 Carnival territories with __CGH__ has given me a clear view of how masqueraders plan their year. The industry spends a lot of time discussing costumes, events, sponsorship and tourism campaigns. One challenge receives surprisingly little attention.",
+  "Getting people to the Carnival.",
+  "The Caribbean has proven there is demand. Every year travellers spend thousands attending __TRINIDAD__ Carnival, Crop Over, Spice Mas, __STLUCIA__ Carnival, Antigua Carnival, Jamaica Carnival and others throughout the region. They buy costumes, book hotels, attend fetes, hire makeup, eat in restaurants. The demand exists. What is becoming difficult is moving people around the region efficiently enough to support it.",
+  "One example that regularly surprises travellers is the Trinidad to Saint Lucia route. It is often cheaper to fly Port of Spain to Tobago and connect onto a British Airways service into Saint Lucia than to book a direct regional flight. Some travellers from Jamaica find more competitive options routing through Miami before returning to another Caribbean destination. When travellers create workarounds to avoid direct regional travel, that is a signal the market is not functioning efficiently.",
+  "The issue isn\u2019t only airfare. Frequency and connectivity matter equally. Many regional routes don\u2019t operate daily, forcing travellers to extend trips beyond the actual event. A four-day Carnival can easily become a seven-day trip once flight schedules, accommodation costs and logistics are considered. For many visitors, that additional cost decides which Carnival they attend.",
+  "What concerns me is that the wider economic impact rarely enters the conversation. Airlines understandably make decisions based on profitability. Governments have a different responsibility. They must weigh the economic value generated by the visitor once they arrive. That visitor doesn\u2019t just buy a plane ticket. They support hotels, restaurants, transport providers, costume designers, photographers, makeup artists, event promoters and countless small businesses.",
+  "This is why governments and tourism authorities need to take a more active role in Carnival airlift discussions. Too often, additional flights appear only after demand has already peaked. By then, costume sections have closed, accommodation is limited, and travellers have committed elsewhere. The airline may benefit from higher fares. The wider economy loses spending.",
+  "We have largely relied on market forces to solve this. Adam Smith\u2019s invisible hand is an important principle, but even free markets experience failures. When an industry as economically significant as Carnival is affected by limited competition, constrained capacity and inadequate connectivity, governments have a legitimate role to play in ensuring the market serves the broader interests of the country, not just the commercial interests of individual carriers.",
+  "The Caribbean does not have a Carnival demand problem. It has an airlift problem. If we are serious about growing Carnival tourism, governments, tourism boards and airlines need to treat airlift as part of Carnival infrastructure rather than someone else\u2019s responsibility.",
+  "Because no matter how strong the Carnival product becomes, its growth will always be limited by how easily people can get there.",
 ];
 
 const PLAIN_BODY =
@@ -65,7 +85,7 @@ const tokeniseParagraph = (paragraph: string): Segment[] => {
 const AirliftProblem = () => {
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = `${TITLE} | Carnival Glam Hub Journal`;
+    document.title = META_TITLE;
 
     const setMeta = (
       selector: string,
@@ -90,7 +110,7 @@ const AirliftProblem = () => {
     };
 
     const restorers: Array<() => void> = [];
-    restorers.push(setMeta('meta[name="description"]', "name", "description", DESCRIPTION));
+    restorers.push(setMeta('meta[name="description"]', "name", "description", META_DESCRIPTION));
     restorers.push(setMeta('meta[property="og:title"]', "property", "og:title", TITLE));
     restorers.push(setMeta('meta[property="og:description"]', "property", "og:description", DESCRIPTION));
     restorers.push(setMeta('meta[property="og:url"]', "property", "og:url", URL));
