@@ -4,9 +4,9 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "Trinidad Carnival 2027 | Pre-Register With Carnival Glam Hub";
+  "Trinidad Carnival 2027 | Premium Morning Concierge | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Trinidad Carnival 2027 Monday and Tuesday: 15 and 16 February 2027. Pre-register for makeup, hair, getting-dressed, photoshoot and shuttle with Carnival Glam Hub. Spaces fill months in advance.";
+  "Trinidad Carnival 2027 is Monday 8 and Tuesday 9 February. Premium Carnival morning concierge in Port of Spain: sweat-proof makeup, hair, photoshoot, shuttle. Book at carnivalglamhub.com.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 
 const eventSchema = {
