@@ -24,6 +24,7 @@ import Destination from "./pages/Destination.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import BookingConfirmed from "./pages/BookingConfirmed.tsx";
+import BookingCalculator from "./pages/BookingCalculator.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -104,6 +105,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/booking-confirmed" element={<BookingConfirmed />} />
           <Route path="/thank-you" element={<BookingConfirmed />} />
+          <Route path="/booking-calculator" element={<BookingCalculator />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
