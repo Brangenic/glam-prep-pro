@@ -48,9 +48,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       canonical.setAttribute("rel", "canonical");
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute("href", `https://carnivalglamhub.com/${dest.slug}`);
+    canonical.setAttribute("href", `https://www.carnivalglamhub.com/${dest.slug}`);
 
-    const pageUrl = `https://carnivalglamhub.com/${dest.slug}`;
+    const pageUrl = `https://www.carnivalglamhub.com/${dest.slug}`;
 
     const upsertJsonLd = (id: string, data: unknown) => {
       let el = document.getElementById(id) as HTMLScriptElement | null;
