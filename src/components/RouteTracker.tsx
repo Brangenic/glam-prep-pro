@@ -30,7 +30,12 @@ const RouteTracker = () => {
     const origin = "https://www.carnivalglamhub.com";
     const path = location.pathname === "/" ? "/" : location.pathname.replace(/\/+$/, "");
     const href = `${origin}${path}`;
-    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    // Remove any stray duplicate canonical links so there is exactly one.
+    const canonicals = document.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]');
+    canonicals.forEach((node, idx) => {
+      if (idx > 0) node.parentNode?.removeChild(node);
+    });
+    let canonical = canonicals[0] as HTMLLinkElement | undefined;
     if (!canonical) {
       canonical = document.createElement("link");
       canonical.setAttribute("rel", "canonical");
@@ -48,6 +53,17 @@ const RouteTracker = () => {
       tag.setAttribute("content", content);
     };
     setOg("og:url", href);
+
+    const setNamedMeta = (name: string, content: string) => {
+      let tag = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute("name", name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+    };
+    setNamedMeta("twitter:url", href);
   }, [location.pathname]);
 
   return null;
