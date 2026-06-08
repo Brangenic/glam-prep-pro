@@ -24,6 +24,7 @@ const links: NavItem[] = [
   },
   { label: "Destinations", href: "#destinations" },
   { label: "Trinidad 2027", href: "/trinidad-carnival-2027" },
+  { label: "Quote", href: "/booking-calculator" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blogs" },
   {

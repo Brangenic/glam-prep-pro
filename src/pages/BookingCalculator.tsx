@@ -13,23 +13,37 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Get an instant Carnival glam quote for Trinidad, Jamaica, Miami, Toronto, Crop Over, Spice Mas, Saint Lucia, and Antigua. Sweat-proof makeup, hair, photoshoot, shuttle. Plan your Carnival morning.";
+  "Get a personalised Carnival morning quote in three steps. Sweat-proof makeup, hair, dressing, photoshoot and shuttle, priced for your party size and territory.";
 const CANONICAL = "https://www.carnivalglamhub.com/booking-calculator";
+const MASOS_URL = "https://carnivalglamhub.masos.app";
 
-const TERRITORIES = [
-  "Trinidad",
-  "Jamaica",
-  "Miami",
-  "Toronto (Caribana)",
-  "Grenada (Spice Mas)",
-  "Barbados (Crop Over)",
-  "Saint Lucia",
-  "Antigua",
-  "Other",
+type Territory = {
+  value: string;
+  label: string;
+  nextDate?: string; // YYYY-MM-DD
+};
+
+const TERRITORIES: Territory[] = [
+  { value: "trinidad", label: "Trinidad", nextDate: "2027-02-08" },
+  { value: "jamaica", label: "Jamaica", nextDate: "2027-04-11" },
+  { value: "saint-lucia", label: "Saint Lucia", nextDate: "2026-07-20" },
+  { value: "grenada", label: "Grenada (Spice Mas)", nextDate: "2026-08-10" },
+  { value: "antigua", label: "Antigua", nextDate: "2026-08-03" },
+  { value: "barbados", label: "Barbados (Crop Over)", nextDate: "2026-08-03" },
+  { value: "miami", label: "Miami", nextDate: "2026-10-11" },
+  { value: "toronto", label: "Toronto (Caribana)", nextDate: "2026-08-01" },
+  { value: "guyana", label: "Guyana", nextDate: "2027-02-22" },
+  { value: "epic-cruise", label: "Epic Cruise" },
+  { value: "other", label: "Other" },
+];
+
+const COUNTRY_CODES = [
+  "+1", "+1-868", "+1-876", "+1-246", "+1-473", "+1-758", "+1-268",
+  "+44", "+61", "+49", "+33", "+34", "+39", "+31", "+32", "+353",
+  "+592", "+597", "+509", "+507", "+52",
 ];
 
 type ServiceKey =
@@ -38,66 +52,69 @@ type ServiceKey =
   | "dressing"
   | "photoshoot"
   | "shuttle"
-  | "photoAddon";
+  | "refreshments";
 
 type Service = {
   key: ServiceKey;
   label: string;
   price: number;
-  perPerson: boolean;
 };
 
 const SERVICES: Service[] = [
-  { key: "makeup", label: "Sweat-proof Carnival makeup", price: 200, perPerson: true },
-  { key: "hair", label: "Carnival hair styling", price: 150, perPerson: true },
-  { key: "dressing", label: "Getting-dressed assistance", price: 75, perPerson: true },
-  { key: "photoshoot", label: "Professional Carnival photoshoot", price: 350, perPerson: true },
-  { key: "shuttle", label: "Shuttle to band meeting point", price: 100, perPerson: false },
-  { key: "photoAddon", label: "Additional photography add-on", price: 200, perPerson: true },
+  { key: "makeup", label: "Carnival makeup (sweat-proof)", price: 280 },
+  { key: "hair", label: "Carnival hair styling", price: 180 },
+  { key: "dressing", label: "Getting-dressed assistance", price: 80 },
+  { key: "photoshoot", label: "Photoshoot add-on", price: 220 },
+  { key: "shuttle", label: "Shuttle to your band", price: 60 },
+  { key: "refreshments", label: "Refreshments and lounge access", price: 45 },
 ];
 
-const PARTY_SIZES = ["1", "2", "3", "4", "5 or more"];
+const PARTY_OPTIONS = [1, 2, 3, 4, 5];
 
 const BookingCalculator = () => {
-  const navigate = useNavigate();
   const [territory, setTerritory] = useState("");
   const [eventDate, setEventDate] = useState("");
-  const [partySize, setPartySize] = useState("1");
+  const [partySize, setPartySize] = useState(1);
   const [selectedServices, setSelectedServices] = useState<Record<ServiceKey, boolean>>({
     makeup: true,
-    hair: false,
+    hair: true,
     dressing: false,
     photoshoot: false,
     shuttle: false,
-    photoAddon: false,
+    refreshments: false,
   });
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
   const [whatsapp, setWhatsapp] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const partyCount = useMemo(() => {
-    if (partySize === "5 or more") return 5;
-    return Number.parseInt(partySize, 10) || 1;
-  }, [partySize]);
+  // Default event date when territory changes
+  useEffect(() => {
+    const t = TERRITORIES.find((x) => x.value === territory);
+    if (t?.nextDate && !eventDate) setEventDate(t.nextDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [territory]);
 
-  const { base, low, high, mid, included } = useMemo(() => {
-    let total = 0;
+  const { subtotal, low, high, mid, included, discountPct } = useMemo(() => {
+    let raw = 0;
     const inc: { label: string; subtotal: number }[] = [];
     SERVICES.forEach((s) => {
       if (!selectedServices[s.key]) return;
-      const subtotal = s.perPerson ? s.price * partyCount : s.price;
-      total += subtotal;
-      inc.push({ label: s.label, subtotal });
+      const line = s.price * partySize;
+      raw += line;
+      inc.push({ label: s.label, subtotal: line });
     });
+    const discount = partySize >= 4 ? 0.1 : 0;
+    const sub = Math.round(raw * (1 - discount));
     return {
-      base: total,
-      low: Math.round(total * 0.85),
-      high: Math.round(total * 1.15),
-      mid: Math.round(total),
+      subtotal: sub,
+      low: sub,
+      high: Math.round(sub * 1.15),
+      mid: Math.round(sub * 1.075),
       included: inc,
+      discountPct: discount * 100,
     };
-  }, [selectedServices, partyCount]);
+  }, [selectedServices, partySize]);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -133,11 +150,28 @@ const BookingCalculator = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
+    const ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      serviceType: "Carnival morning concierge",
+      areaServed: "Caribbean",
+      provider: {
+        "@type": "Organization",
+        name: "Carnival Glam Hub",
+        url: "https://www.carnivalglamhub.com",
+      },
+      url: CANONICAL,
+    });
+    document.head.appendChild(ld);
+
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (prevCanonical !== null) canonical?.setAttribute("href", prevCanonical);
       else canonical?.remove();
+      ld.remove();
     };
   }, []);
 
@@ -146,14 +180,14 @@ const BookingCalculator = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !whatsapp.trim()) {
+    if (!email.trim() || !whatsapp.trim()) {
       toast({
         title: "A few details missing",
-        description: "Please add your name, email and WhatsApp so we can confirm your slot.",
+        description: "Please add your email and WhatsApp so we can confirm your slot.",
       });
       return;
     }
-    if (base === 0) {
+    if (subtotal === 0) {
       toast({
         title: "Choose at least one service",
         description: "Tick the services you would like included in your morning.",
@@ -169,26 +203,33 @@ const BookingCalculator = () => {
       gtag?: (...args: unknown[]) => void;
     };
     w.dataLayer = w.dataLayer || [];
-    w.dataLayer.push({
-      event: "booking_calculator_submit",
-      territory,
-      party_size: partyCount,
-      services,
-      quote_midpoint: mid,
-    });
-
     if (typeof w.gtag === "function") {
       w.gtag("event", "conversion", {
         send_to: "AW-10894663311/7s1DCKX357McEI-9_coo",
         value: mid,
         currency: "USD",
       });
+      w.gtag("event", "generate_lead", {
+        territory,
+        services_count: services.length,
+        party_size: partySize,
+        estimated_total: mid,
+        currency: "USD",
+      });
     }
+
+    const params = new URLSearchParams();
+    if (territory) params.set("territory", territory);
+    if (eventDate) params.set("date", eventDate);
+    params.set("party_size", String(partySize));
+    params.set("email", email);
+    params.set("whatsapp", `${countryCode}${whatsapp}`);
+    const target = `${MASOS_URL}/events?${params.toString()}`;
 
     setTimeout(() => {
       setSubmitting(false);
-      navigate("/thank-you");
-    }, 350);
+      window.location.href = target;
+    }, 250);
   };
 
   return (
@@ -201,11 +242,10 @@ const BookingCalculator = () => {
               Quote calculator
             </p>
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 leading-tight">
-              Carnival Glam{" "}
-              <span className="italic text-gradient-primary">Quote Calculator</span>
+              Carnival Glam Quote Calculator
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Pick your territory, party size and services. Your quote range updates as you build your Carnival morning.
+              Three quick questions. Your personalised Carnival morning quote.
             </p>
           </header>
 
@@ -223,7 +263,7 @@ const BookingCalculator = () => {
                     </SelectTrigger>
                     <SelectContent>
                       {TERRITORIES.map((t) => (
-                        <SelectItem key={t} value={t}>{t}</SelectItem>
+                        <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -240,17 +280,34 @@ const BookingCalculator = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="party-size">Party size</Label>
-                  <Select value={partySize} onValueChange={setPartySize}>
-                    <SelectTrigger id="party-size">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PARTY_SIZES.map((p) => (
-                        <SelectItem key={p} value={p}>{p}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label>Number of masqueraders</Label>
+                  <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Number of masqueraders">
+                    {PARTY_OPTIONS.map((n) => {
+                      const active = partySize === n;
+                      const label = n === 5 ? "5+" : String(n);
+                      return (
+                        <button
+                          key={n}
+                          type="button"
+                          role="radio"
+                          aria-checked={active}
+                          onClick={() => setPartySize(n)}
+                          className={`min-w-[3rem] h-11 px-4 rounded-full border font-body text-sm font-medium transition-all ${
+                            active
+                              ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20"
+                              : "bg-background border-border text-foreground hover:border-primary/60"
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {partySize >= 5 && (
+                    <p className="font-body text-xs text-muted-foreground mt-2">
+                      For groups of 5 or more, we will confirm pricing on a call.
+                    </p>
+                  )}
                 </div>
 
                 <fieldset className="space-y-3">
@@ -270,7 +327,7 @@ const BookingCalculator = () => {
                       <span className="font-body text-sm leading-snug">
                         {s.label}
                         <span className="block text-muted-foreground text-xs mt-0.5">
-                          From ${s.price}{s.perPerson ? " per person" : " per booking"}
+                          From ${s.price} per masquerader
                         </span>
                       </span>
                     </label>
@@ -281,20 +338,11 @@ const BookingCalculator = () => {
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4">
                 <h2 className="font-display text-xl font-bold">Your details</h2>
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full name</Label>
-                  <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    autoComplete="name"
-                    maxLength={100}
-                  />
-                </div>
-                <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
@@ -303,15 +351,29 @@ const BookingCalculator = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="whatsapp">WhatsApp number</Label>
-                  <Input
-                    id="whatsapp"
-                    type="tel"
-                    value={whatsapp}
-                    onChange={(e) => setWhatsapp(e.target.value)}
-                    autoComplete="tel"
-                    maxLength={32}
-                    placeholder="+1 868 ..."
-                  />
+                  <div className="flex gap-2">
+                    <Select value={countryCode} onValueChange={setCountryCode}>
+                      <SelectTrigger className="w-[110px]" aria-label="Country code">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {COUNTRY_CODES.map((c) => (
+                          <SelectItem key={c} value={c}>{c}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      id="whatsapp"
+                      type="tel"
+                      required
+                      value={whatsapp}
+                      onChange={(e) => setWhatsapp(e.target.value.replace(/[^\d\s-]/g, ""))}
+                      autoComplete="tel"
+                      maxLength={20}
+                      placeholder="868 555 0100"
+                      className="flex-1"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -325,18 +387,26 @@ const BookingCalculator = () => {
                 <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
                   Your quote range
                 </p>
-                {base === 0 ? (
+                {subtotal === 0 ? (
                   <p className="font-display text-2xl sm:text-3xl font-bold mb-4">
                     Choose services to see your quote
                   </p>
                 ) : (
-                  <p className="font-display text-3xl sm:text-4xl font-bold mb-4">
-                    ${low.toLocaleString()} <span className="text-muted-foreground font-normal text-xl">to</span> ${high.toLocaleString()}{" "}
-                    <span className="text-muted-foreground font-normal text-base">USD</span>
-                  </p>
+                  <>
+                    <p className="font-display text-3xl sm:text-4xl font-bold mb-2">
+                      ${low.toLocaleString()} <span className="text-muted-foreground font-normal text-xl">to</span> ${high.toLocaleString()}{" "}
+                      <span className="text-muted-foreground font-normal text-base">USD</span>
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      Estimated time at the lounge: 3 to 4 hours
+                      {discountPct > 0 && (
+                        <span className="block text-primary mt-1">Group discount applied: {discountPct}% off</span>
+                      )}
+                    </p>
+                  </>
                 )}
                 <p className="font-body text-sm text-muted-foreground mb-5">
-                  Estimate for {territory || "your territory"}, party of {partyCount}. Final price confirmed by our team within 48 hours.
+                  Estimate for {TERRITORIES.find((t) => t.value === territory)?.label || "your territory"}, party of {partySize === 5 ? "5+" : partySize}. Final price confirmed by our team within 48 hours.
                 </p>
 
                 {included.length > 0 && (
@@ -387,7 +457,7 @@ const BookingCalculator = () => {
           className="w-full rounded-full bg-primary text-primary-foreground"
           size="lg"
         >
-          {base > 0 ? `Reserve from $${low.toLocaleString()}` : "Reserve Your Carnival Morning"}
+          {subtotal > 0 ? `Reserve from $${low.toLocaleString()}` : "Reserve Your Carnival Morning"}
         </Button>
       </div>
 
