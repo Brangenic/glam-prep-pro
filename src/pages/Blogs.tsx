@@ -19,9 +19,9 @@ type BlogPost = {
 };
 
 const PAGE_TITLE =
-  "Carnival Glam Hub Journal | Carnival Beauty, Hair and Travel Notes";
+  "Carnival Beauty and Travel Journal | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Editorial notes from Carnival Glam Hub on Carnival beauty, hair, costume care and travel.";
+  "Guides, tips and stories on Carnival makeup, hair, costumes and travel for masqueraders across the Caribbean and the diaspora. Read the journal.";
 const CANONICAL = "https://www.carnivalglamhub.com/blogs";
 
 const EXCLUDED_SLUG_PATTERNS: RegExp[] = [

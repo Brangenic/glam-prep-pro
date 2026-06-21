@@ -70,6 +70,19 @@ const websiteSchema = {
   },
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "How do I book Carnival Glam Hub?", acceptedAnswer: { "@type": "Answer", text: "Select your destination and choose your glam package. You will receive confirmation after booking." } },
+    { "@type": "Question", name: "How far in advance should I book carnival makeup?", acceptedAnswer: { "@type": "Answer", text: "Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time." } },
+    { "@type": "Question", name: "What is included in a Carnival Glam Hub appointment?", acceptedAnswer: { "@type": "Answer", text: "Services depend on the package selected but typically include makeup, hair styling, and costume dressing assistance." } },
+    { "@type": "Question", name: "Where does the carnival glam take place?", acceptedAnswer: { "@type": "Answer", text: "Each destination has a designated glam hub location shared after booking confirmation." } },
+    { "@type": "Question", name: "Can I book carnival glam for a group?", acceptedAnswer: { "@type": "Answer", text: "Yes. Group bookings are available and recommended for friends or band sections." } },
+    { "@type": "Question", name: "Do carnival glam slots sell out?", acceptedAnswer: { "@type": "Answer", text: "Yes. We limit appointments per carnival morning to maintain a premium experience. Early booking is strongly recommended." } },
+  ],
+};
+
 const Index = () => (
   <div className="min-h-screen bg-background text-foreground">
     <script
@@ -79,6 +92,10 @@ const Index = () => (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+    />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
     />
     <Navbar />
     <main>

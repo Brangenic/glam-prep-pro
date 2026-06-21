@@ -5,7 +5,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE = "Sweat-Resistant Carnival Makeup | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ masqueraders since 2017.";
+  "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ since 2017.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-makeup";
 
 const serviceSchema = {
@@ -83,21 +83,11 @@ const CarnivalMakeup = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    let script = document.getElementById(SCHEMA_ID) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement("script");
-      script.id = SCHEMA_ID;
-      script.type = "application/ld+json";
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(serviceSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(SCHEMA_ID)?.remove();
     };
   }, []);
 
