@@ -1,25 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Check, Play } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import { buildDestinationUrl } from "@/lib/destinations";
+import photoGabby from "@/assets/trinidad-2027-p1.webp";
+import photoDania from "@/assets/trinidad-2027-p2.webp";
+import photoChontelle from "@/assets/trinidad-2027-p3.webp";
 
-const PAGE_TITLE =
-  "Trinidad Carnival Makeup and Glam 2027 | Glam Hub";
+const PAGE_TITLE = "Trinidad Carnival 2027 Makeup & Hair | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Trinidad Carnival 2027 is Monday 8 and Tuesday 9 February. Premium Carnival morning concierge in Port of Spain: sweat-proof makeup, hair, photoshoot, shuttle. Book at carnivalglamhub.com.";
+  "Book your Trinidad Carnival 2027 makeup, hair and photoshoot with the team trusted by 15,000+ masqueraders since 2017. Only US$50 secures your slot.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
+const YT_ID = "IHUJsYg0GhI";
 
 const eventSchema = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "Trinidad Carnival 2027 Morning Concierge with Carnival Glam Hub",
-  startDate: "2027-02-08T04:00:00-04:00",
-  endDate: "2027-02-09T20:00:00-04:00",
+  name: "Trinidad Carnival 2027 — Glam Hub Morning Concierge",
+  startDate: "2027-02-15T04:00:00-04:00",
+  endDate: "2027-02-16T20:00:00-04:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   url: CANONICAL,
   description:
-    "Carnival Glam Hub morning concierge for Trinidad Carnival 2027 in Port of Spain: makeup, hair, getting-dressed, photoshoot and shuttle.",
+    "Trinidad Carnival 2027 makeup, hair, photoshoot, getting-dressed, seamstress and shuttle — by Carnival Glam Hub.",
   location: {
     "@type": "Place",
     name: "Port of Spain, Trinidad and Tobago",
@@ -36,94 +41,12 @@ const eventSchema = {
   },
   offers: {
     "@type": "Offer",
-    url: "https://www.carnivalglamhub.com/booking",
-    availability: "https://schema.org/PreOrder",
+    url: "https://www.carnivalglamhub.com/trinidad-carnival-2027",
+    availability: "https://schema.org/InStock",
     priceCurrency: "USD",
-    price: "0",
+    price: "50",
     validFrom: "2026-05-01",
   },
-};
-
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Carnival Glam Hub Services for Trinidad Carnival 2027",
-  serviceType: "Carnival morning beauty concierge",
-  url: CANONICAL,
-  description:
-    "Sweat-resistant Carnival makeup, hair styling, getting-dressed assistance, photoshoot and shuttle for Trinidad Carnival 2027.",
-  provider: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  areaServed: "Trinidad and Tobago",
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    availability: "https://schema.org/InStock",
-    url: "https://www.carnivalglamhub.com/booking",
-    validThrough: "2027-02-16",
-  },
-};
-
-const EVENT_SCHEMA_ID = "trinidad-carnival-2027-event-jsonld";
-const SERVICE_SCHEMA_ID = "trinidad-carnival-2027-service-jsonld";
-const FAQ_SCHEMA_ID = "trinidad-carnival-2027-faq-jsonld";
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How do I book?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Select your destination and choose your glam package. You will receive confirmation after booking.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How far in advance should I book?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What is included in my appointment?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Services depend on the package selected but typically include makeup, hair styling, and costume dressing assistance.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Where does the glam take place?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Each destination has a designated glam hub location shared after booking confirmation.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can I book for a group?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. Group bookings are available and recommended for friends or band sections.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do slots sell out?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. We limit appointments per carnival morning to maintain a premium experience. Early booking is strongly recommended.",
-      },
-    },
-  ],
 };
 
 const breadcrumbSchema = {
@@ -131,12 +54,26 @@ const breadcrumbSchema = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
-    { "@type": "ListItem", position: 2, name: "Destinations", item: "https://www.carnivalglamhub.com/#destinations" },
-    { "@type": "ListItem", position: 3, name: "Trinidad Carnival 2027", item: CANONICAL },
+    { "@type": "ListItem", position: 2, name: "Trinidad Carnival 2027", item: CANONICAL },
   ],
 };
 
+const TICKS = [
+  "Makeup",
+  "Hair",
+  "Photoshoot",
+  "Getting Dressed",
+  "Seamstress Support",
+  "Shuttle Service",
+  "Breakfast & Refreshments",
+  "Air Conditioned Lounge",
+  "Overnight Bag Check",
+];
+
 const TrinidadCarnival2027 = () => {
+  const bookingUrl = useMemo(() => buildDestinationUrl("trinidad", "trinidad_2027_page"), []);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   useEffect(() => {
     const previousTitle = document.title;
     document.title = PAGE_TITLE;
@@ -180,164 +117,205 @@ const TrinidadCarnival2027 = () => {
     };
   }, []);
 
+  const photos = [
+    { src: photoGabby, caption: "Gabby — hair and makeup by Glam Hub", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
+    { src: photoDania, caption: "Dania Duntin — hair and makeup by Glam Hub", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
+    { src: photoChontelle, caption: "Chontelle — hair by Glam Hub, makeup by Chontelle", alt: "Chontelle — Trinidad Carnival hair by Glam Hub, makeup by Chontelle" },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
+
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
-        <article className="container mx-auto px-4 sm:px-6 max-w-3xl">
-          <header className="mb-10 sm:mb-14 text-center">
-            <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4">
-              Destination
-            </p>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Trinidad Carnival 2027 with{" "}
-              <span className="italic text-gradient-primary">Carnival Glam Hub</span>
-            </h1>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Trinidad Carnival 2027 is the two-day Carnival Monday and Tuesday
-              parade in Port of Spain on 15 and 16 February 2027. Carnival Glam
-              Hub is the territory&apos;s premium morning concierge for
-              masqueraders travelling in from the United States, Canada, the
-              United Kingdom and the wider Caribbean diaspora. Pre-register
-              your slot now; the 2027 calendar is already filling.
-            </p>
-          </header>
+        {/* Above the fold */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl text-center">
+          <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4">
+            Trinidad Carnival 2027
+          </p>
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 leading-tight">
+            Trinidad Carnival 2027{" "}
+            <span className="italic text-gradient-primary">Makeup, Hair & Photoshoots</span>
+          </h1>
+          <p className="font-body text-lg sm:text-xl text-muted-foreground mb-6">
+            Book your Carnival morning with the team trusted by 15,000+ masqueraders since 2017.
+          </p>
+          <p className="font-body text-base sm:text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
+            Trinidad Carnival is the big one. Your makeup and hair have to hold up from the first lap to the last, and that is exactly what we do.
+          </p>
 
-          <section className="mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Trinidad Carnival 2027 dates
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Monday is 15 February 2027. Carnival Tuesday is 16 February
-              2027. J&apos;Ouvert runs in the early hours of Monday morning. Most fete
-              and Carnival activity begins in the week prior. Confirm your costume
-              collection schedule with your band as soon as it is published.
-            </p>
-          </section>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-left max-w-xl mx-auto mb-10">
+            {TICKS.map((t) => (
+              <li key={t} className="flex items-start gap-3 font-body text-base">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                  <Check className="h-4 w-4" />
+                </span>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
 
-          <section className="mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              What we deliver for Trinidad Carnival 2027
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Sweat-resistant{" "}
-              <a href="/services/carnival-makeup" className="text-primary hover:underline">
-                Carnival makeup
-              </a>
-              ,{" "}
-              <a href="/services/carnival-hair" className="text-primary hover:underline">
-                Carnival hair styling
-              </a>
-              ,{" "}
-              <a href="/services/getting-dressed" className="text-primary hover:underline">
-                getting-dressed assistance
-              </a>{" "}
-              for your costume, optional{" "}
-              <a
-                href="/services/carnival-photoshoot"
-                className="text-primary hover:underline"
-              >
-                Carnival photoshoot
-              </a>
-              , optional{" "}
-              <a
-                href="/services/carnival-shuttle"
-                className="text-primary hover:underline"
-              >
-                Carnival shuttle
-              </a>{" "}
-              to your band&apos;s start point, refreshments, and an air-conditioned
-              waiting lounge. Every booking runs on a confirmed schedule so the
-              morning never slips.
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 px-6 py-5 mb-8 gold-glow">
+            <p className="font-display text-xl sm:text-2xl font-bold">
+              Only <span className="text-gradient-primary">US$50</span> secures your appointment.
             </p>
-          </section>
+          </div>
 
-          <section className="mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Why pre-register now
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Trinidad slots are the most contested in the Caribbean Carnival
-              calendar. By the time costumes are fully distributed, glam slots are
-              usually gone. Pre-registration secures your time, your team and your
-              shuttle.
-            </p>
-          </section>
+          <a
+            href={bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-primary text-primary-foreground font-body font-bold tracking-wider text-sm px-10 py-4 rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all"
+          >
+            BOOK NOW
+          </a>
+        </section>
 
-          <section className="mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Who we serve
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub serves travelling masqueraders booked with the major
-              Trinidad bands as well as local clients. We co-ordinate with your
-              costume collection and band start times so your morning is choreographed
-              end-to-end.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              How to pre-register
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Add your details at{" "}
-              <a href="/booking" className="text-primary hover:underline">
-                /booking
-              </a>{" "}
-              and a member of the Carnival Glam Hub team will confirm your slot, your
-              services and your shuttle within 48 hours. See the{" "}
-              <a href="/faq" className="text-primary hover:underline">FAQ</a> for
-              what is included and read more{" "}
-              <a href="/about" className="text-primary hover:underline">about us</a>.
-            </p>
-          </section>
-        </article>
-
-        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-12 sm:mt-16">
-          <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-8 sm:p-12 text-center gold-glow">
-            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
-              Pre-register for{" "}
-              <span className="italic text-gradient-primary">
-                Trinidad Carnival 2027.
-              </span>
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Secure your morning before costume collection opens.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="/booking"
-                className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
-              >
-                Pre-register now
-              </a>
-              <a
-                href="/about"
-                className="font-body text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-              >
-                Read about us →
-              </a>
+        {/* Dates */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-6 text-center">
+            Trinidad Carnival 2027
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="rounded-2xl border border-border bg-card p-6 text-center">
+              <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-2">Carnival Monday</p>
+              <p className="font-display text-xl font-bold">15 February 2027</p>
+            </div>
+            <div className="rounded-2xl border border-border bg-card p-6 text-center">
+              <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-2">Carnival Tuesday</p>
+              <p className="font-display text-xl font-bold">16 February 2027</p>
             </div>
           </div>
         </section>
+
+        {/* Why Glam Hub */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Why Glam Hub</h2>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+            We have glammed more than 15,000 masqueraders since 2017. Our work has been featured internationally and trusted by Carnival models, influencers and everyday masqueraders who just want to look incredible on the road. We have been doing this across multiple Carnival territories for years, so we know exactly what it takes to keep your Trinidad Carnival glam flawless from your first photo to your last lap.
+          </p>
+        </section>
+
+        {/* Morning services */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8">Your Carnival Morning</h2>
+          <div className="space-y-6">
+            {[
+              ["Makeup", "Sweat-proof Trinidad Carnival makeup built to last the full day, through the heat, the wine and the sweat. Soft glam to full drama, by a pro MUA who gets Carnival."],
+              ["Hair", "Trinidad Carnival hair styled to survive the road and complement your costume, done fast and done right."],
+              ["Photoshoots", "Step into our garden for a pre-road shoot so your look is captured before the sun and the crowd."],
+              ["Getting Dressed", "A dedicated assistant fits and secures your costume so nothing slips once you hit the road."],
+              ["Seamstress Support", "Popped wire, fallen gem, loose strap? Our on-site seamstress fixes it on the spot."],
+              ["Shuttle Service", "Walk straight out to your band or hop on our shuttle. No traffic, no parking stress."],
+            ].map(([title, body]) => (
+              <div key={title} className="rounded-2xl border border-border bg-card p-6">
+                <h3 className="font-display text-lg font-bold mb-2">{title}</h3>
+                <p className="font-body text-base text-muted-foreground leading-relaxed">{body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Why book early */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Why Book Early</h2>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            The best appointment times run from 4:00am to 8:00am, and they go first. Those early slots give you enough time to get ready, take your photos and reach your band comfortably before you cross the stage.
+          </p>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+            Most experienced masqueraders lock in their glam the moment they pay their costume deposit. Do the same and skip the morning scramble.
+          </p>
+        </section>
+
+        {/* Media */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-4xl mt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">See the Glam in Action</h2>
+
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-border bg-card mb-10">
+            {videoLoaded ? (
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${YT_ID}?autoplay=1&rel=0`}
+                title="Carnival Glam Hub — see the glam in action"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setVideoLoaded(true)}
+                className="absolute inset-0 group"
+                aria-label="Play video"
+              >
+                <img
+                  src={`https://i.ytimg.com/vi/${YT_ID}/hqdefault.jpg`}
+                  alt="Carnival Glam Hub Trinidad Carnival glam highlights"
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <span className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="inline-flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-primary text-primary-foreground shadow-lg group-hover:scale-105 transition-transform">
+                    <Play className="h-8 w-8 sm:h-10 sm:w-10 ml-1" fill="currentColor" />
+                  </span>
+                </span>
+              </button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {photos.map((p) => (
+              <figure key={p.caption} className="rounded-2xl overflow-hidden border border-border bg-card">
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading="lazy"
+                  className="w-full aspect-[3/4] object-cover"
+                />
+                <figcaption className="p-4 font-body text-sm text-muted-foreground text-center">
+                  {p.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="text-center mt-6">
+            <a
+              href="https://www.carnivalglamhub.com/#gallery"
+              className="font-body text-sm font-medium text-primary hover:underline"
+            >
+              View the full gallery →
+            </a>
+          </div>
+        </section>
+
+        {/* Strong CTA */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
+          <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-8 sm:p-12 text-center gold-glow">
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
+              Your Costume Isn&apos;t The Only Thing{" "}
+              <span className="italic text-gradient-primary">That Sells Out.</span>
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground mb-3">
+              Flights sell out. Hotels sell out. Costumes sell out. The best glam appointments do too.
+            </p>
+            <p className="font-body text-base sm:text-lg text-foreground/85 mb-8">
+              Secure your Trinidad Carnival 2027 appointment today. Only US$50 holds your slot.
+            </p>
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-primary text-primary-foreground font-body font-bold tracking-wider text-base px-12 py-5 rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all"
+            >
+              BOOK NOW
+            </a>
+          </div>
+        </section>
       </main>
+
       <Footer />
       <StickyMobileCTA />
     </div>
