@@ -281,39 +281,6 @@ const Blogs = () => {
               </p>
             </header>
 
-            {/* Pinned editorial post */}
-            <Link
-              to="/blogs/caribbean-carnival-has-an-airlift-problem"
-              className="block rounded-3xl border border-border bg-card overflow-hidden mb-10 sm:mb-14 group hover:shadow-lg hover:shadow-primary/10 transition-all"
-            >
-              <div className="grid md:grid-cols-2">
-                <div className="w-full h-64 md:h-full overflow-hidden">
-                  <img
-                    src={airliftHero}
-                    alt="Caribbean Carnival airlift and air travel"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
-                  <span className="inline-block font-body text-xs uppercase tracking-[0.15em] text-secondary font-medium mb-3">
-                    Featured · Editorial
-                  </span>
-                  <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 group-hover:text-primary transition-colors">
-                    The Caribbean Carnival economy doesnt have a demand problem. It has an airlift problem.
-                  </h2>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
-                    Working across 10 Carnival territories, the same constraint keeps showing up. Demand isnt the bottleneck. Seats are.
-                  </p>
-                  <div className="font-body text-xs text-muted-foreground">
-                    <span className="font-medium text-foreground">Kibwe McGann</span>
-                    <span> · 29 May 2026 · 5 min read</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
