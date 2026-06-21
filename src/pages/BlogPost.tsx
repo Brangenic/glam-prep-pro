@@ -20,6 +20,11 @@ const cleanMarkdown = (md: string): string => {
     // Remove blurred thumbnail previews that immediately precede the full
     // resolution version of the same Wix image (q_30,blur_30 placeholders).
     .replace(/!\[[^\]]*\]\([^)]*?q_30,blur_30[^)]*?\)\s*\\?\s*/g, '')
+    // Strip stray literal backslashes that leak in from Wix markdown exports.
+    // These render as visible "\" characters next to images and captions.
+    // Only strip backslashes that aren't escaping a markdown-meaningful char.
+    .replace(/\\(?=\s|$)/g, '')
+    .replace(/^\s*\\\s*$/gm, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 };
