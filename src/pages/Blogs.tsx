@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import airliftHero from "@/assets/blog-airlift-hero.webp";
 import worthItHero from "@/assets/blog-carnival-makeup-worth-it-hero-v2.webp";
 import bookEarlyHero from "@/assets/blog-book-early-hero.webp";
+import { RECOVERED_POSTS_META } from "@/data/recoveredPostsMeta";
 
 type BlogPost = {
   external_id: string;
@@ -38,8 +39,15 @@ const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
   /^artificial-/i,
 ];
 
+// Slugs that bypass the exclusion patterns and the EXCLUDED_AUTHORS filter.
+// Used for legacy Wix posts we have intentionally restored.
+const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
+  RECOVERED_POSTS_META.map((p) => p.slug),
+);
+
 const isExcludedSlug = (slug: string | null | undefined) => {
   if (!slug) return false;
+  if (slug && ALLOWED_OVERRIDE_SLUGS.has(slug)) return false;
   return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
 
@@ -91,6 +99,18 @@ const MANUAL_POSTS: BlogPost[] = [
     published_date: "2026-05-29",
     read_time: "7 min read",
   },
+  ...RECOVERED_POSTS_META.map((p) => ({
+    external_id: `manual-${p.slug}`,
+    title: p.title,
+    excerpt: p.excerpt,
+    image_url: p.coverImage,
+    slug: p.slug,
+    post_url: `/blogs/${p.slug}`,
+    author_name: p.author,
+    author_avatar_url: null,
+    published_date: p.publishedDate,
+    read_time: p.readTime,
+  })),
 ];
 
 const FEATURED_SLUG = "is-professional-carnival-makeup-worth-it";
@@ -147,7 +167,11 @@ const Blogs = () => {
       if (isMounted) {
         const filtered = ((data as BlogPost[]) ?? []).filter(
           (p) =>
-            (!p.author_name || !EXCLUDED_AUTHORS.includes(p.author_name.trim())) &&
+            (
+              (p.slug && ALLOWED_OVERRIDE_SLUGS.has(p.slug)) ||
+              !p.author_name ||
+              !EXCLUDED_AUTHORS.includes(p.author_name.trim())
+            ) &&
             !isExcludedSlug(p.slug) &&
             !isExcludedSlug(getSlugFromPostUrl(p.post_url))
         );
