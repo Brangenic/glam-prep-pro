@@ -5,6 +5,8 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { supabase } from "@/integrations/supabase/client";
 import airliftHero from "@/assets/blog-airlift-hero.webp";
+import worthItHero from "@/assets/blog-carnival-makeup-worth-it-hero-v2.webp";
+import bookEarlyHero from "@/assets/blog-book-early-hero.webp";
 
 type BlogPost = {
   external_id: string;
@@ -46,6 +48,55 @@ const getSlugFromPostUrl = (postUrl: string) => {
   return match?.[1] ? decodeURIComponent(match[1]) : null;
 };
 
+const TODAY_ISO = new Date().toISOString().slice(0, 10);
+
+const MANUAL_POSTS: BlogPost[] = [
+  {
+    external_id: "manual-is-professional-carnival-makeup-worth-it",
+    title: "Is Professional Carnival Makeup Worth It?",
+    excerpt:
+      "Professional Carnival makeup costs US$200 to US$300. Here is what you are really paying for, and whether it is worth it once Carnival is over.",
+    image_url: worthItHero,
+    slug: "is-professional-carnival-makeup-worth-it",
+    post_url: "/blogs/is-professional-carnival-makeup-worth-it",
+    author_name: "Carnival Glam Hub",
+    author_avatar_url: null,
+    published_date: TODAY_ISO,
+    read_time: "6 min read",
+  },
+  {
+    external_id: "manual-how-far-in-advance-to-book-carnival-makeup",
+    title: "How Far In Advance Should I Book My Carnival Makeup Artist?",
+    excerpt:
+      "When to book your Carnival makeup artist, why the 4am to 8am slots go first, and how to lock in a smooth Carnival morning. A Glam Hub guide.",
+    image_url: bookEarlyHero,
+    slug: "how-far-in-advance-to-book-carnival-makeup",
+    post_url: "/blogs/how-far-in-advance-to-book-carnival-makeup",
+    author_name: "Carnival Glam Hub",
+    author_avatar_url: null,
+    published_date: TODAY_ISO,
+    read_time: "5 min read",
+  },
+];
+
+const FEATURED_SLUG = "is-professional-carnival-makeup-worth-it";
+const MANUAL_GRID_ORDER: string[] = [
+  "how-far-in-advance-to-book-carnival-makeup",
+  "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips",
+  "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing",
+  "caribbean-carnival-has-an-airlift-problem",
+  "2025-carnival-makeup-guide-50-looks-to-show-your-mua",
+  "what-is-jouvert-and-why-should-you-do-it-at-least-once",
+  "what-people-say-about-carnival-glam-hub",
+  "jab-jab-grenada-2026-guide",
+  "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival",
+  "should-the-makeup-match-your-costume",
+  "genx-miami-carnival-2024-costumes",
+];
+
+const resolveSlug = (post: BlogPost) =>
+  post.slug || getSlugFromPostUrl(post.post_url) || post.external_id;
+
 const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -86,7 +137,28 @@ const Blogs = () => {
             !isExcludedSlug(p.slug) &&
             !isExcludedSlug(getSlugFromPostUrl(p.post_url))
         );
-        setPosts(filtered);
+        // Merge manual posts, deduping by slug in case the synced source
+        // ever picks them up later.
+        const existingSlugs = new Set(filtered.map((p) => resolveSlug(p)));
+        const manuals = MANUAL_POSTS.filter((p) => !existingSlugs.has(resolveSlug(p)));
+        const merged = [...manuals, ...filtered];
+
+        // Apply explicit display order: featured first, then MANUAL_GRID_ORDER,
+        // then any remaining posts by published date desc.
+        const orderIndex = (slug: string) => {
+          if (slug === FEATURED_SLUG) return -1;
+          const i = MANUAL_GRID_ORDER.indexOf(slug);
+          return i === -1 ? Number.POSITIVE_INFINITY : i;
+        };
+        const sorted = [...merged].sort((a, b) => {
+          const ai = orderIndex(resolveSlug(a));
+          const bi = orderIndex(resolveSlug(b));
+          if (ai !== bi) return ai - bi;
+          const ad = a.published_date ? Date.parse(a.published_date) : 0;
+          const bd = b.published_date ? Date.parse(b.published_date) : 0;
+          return bd - ad;
+        });
+        setPosts(sorted);
         setLoading(false);
       }
     };
