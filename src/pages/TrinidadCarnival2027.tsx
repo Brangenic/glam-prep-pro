@@ -2,11 +2,17 @@ import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import { useMemo, useState } from "react";
+import { Check, Play } from "lucide-react";
+import { buildDestinationUrl } from "@/lib/destinations";
+import photoGabby from "@/assets/trinidad-2027-p1.webp";
+import photoDania from "@/assets/trinidad-2027-p2.webp";
+import photoChontelle from "@/assets/trinidad-2027-p3.webp";
 
 const PAGE_TITLE =
-  "Trinidad Carnival Makeup and Glam 2027 | Glam Hub";
+  "Trinidad Carnival 2027 Makeup & Hair | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Trinidad Carnival 2027 is Monday 8 and Tuesday 9 February. Premium Carnival morning concierge in Port of Spain: sweat-proof makeup, hair, photoshoot, shuttle. Book at carnivalglamhub.com.";
+  "Book your Trinidad Carnival 2027 makeup, hair and photoshoot with the team trusted by 15,000+ masqueraders since 2017. Only US$50 secures your slot.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 
 const eventSchema = {
