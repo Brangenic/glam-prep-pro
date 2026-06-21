@@ -4,6 +4,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { supabase } from "@/integrations/supabase/client";
+import airliftHero from "@/assets/blog-airlift-hero.webp";
 
 type BlogPost = {
   external_id: string;
