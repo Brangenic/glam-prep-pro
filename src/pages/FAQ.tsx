@@ -66,6 +66,18 @@ const FAQS: Array<{ q: string; a: string }> = [
     q: "How should I prep my skin and hair the night before?",
     a: "Cleanse and moisturise the skin. Avoid heavy actives in the 48 hours before. Wash, deep condition and stretch the hair so it sits well under heat styling. Sleep early. Hydrate.",
   },
+  {
+    q: "How much does professional Carnival makeup cost?",
+    a: "Professional Carnival makeup typically costs between US$200 and US$300. This is not everyday makeup. The look is built to last a full day on the road and to complement your costume, so it usually involves dramatic eye work, gems, specialist skin prep and setting techniques that hold up in heat and sweat. At Carnival Glam Hub, pricing depends on your chosen look and territory, and every package is designed for long wear and photography.",
+  },
+  {
+    q: "Can I do my own Carnival makeup without experience?",
+    a: "You can, but there is a real risk. Without sweat-proof technique, even beautiful makeup can slide by midday once the sun is high and you start to sweat heavily. Carnival makeup is a different discipline from everyday makeup. Our MUAs are sweat-proof trained, so your look holds from the morning through the last lap. If you are experienced, go ahead and do your own. If you want it to last all day without worry, leave it to a trained Carnival artist.",
+  },
+  {
+    q: "What is the difference between regular makeup and Carnival makeup?",
+    a: "The technique. Carnival makeup is built to survive heavy sweat and an eight-hour day on the road. It puts far more focus on the eyes and lips, using methods such as cut crease and sweat-proof application, and adds drama through the application of gems. Regular makeup is made for a few hours in controlled conditions. Carnival makeup is made for the road.",
+  },
 ];
 
 const faqSchema = {
