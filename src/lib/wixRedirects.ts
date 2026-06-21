@@ -77,6 +77,45 @@ export const WIX_REDIRECTS: Record<string, string> = {
   "saint-lucia-carnival-an-unforgettable-girls-trip":
     "/blogs/saint-lucia-carnival-2024-review",
   "barbados-crop-over-2025-what-to-know-before-you-go": "/barbados",
+  "top-10-must-attend-fetes-at-trinidad-carnival-2024": "/trinidad",
+  "comfort-queen-or-hot-gyal": "/blogs",
+  "carnival-glam-hub-miami": "/miami",
+  "tobago-carnival-2022-what-to-do-who-to-play-with-where-to-go": "/blogs",
+  "why-celebrities-are-rethinking-jamaica-carnival": "/jamaica",
+  "carnival-makeup-then-photoshoot": "/services/carnival-photoshoot",
+  "carnival-glam-hub-trinidad-2024": "/trinidad",
+  "miami-s-genx-carnival-costumes-2022": "/miami",
+  "carnival-without-the-hassle-carnival-glam-hub": "/about",
+  "toronto-carnival-2024-glam-hub-kayla-martone-team-up-to-offer-caribana-makeup-hair-and-photosho":
+    "/toronto",
+  "fete-republic-night-carnival-jamaica": "/jamaica",
+  "my-miami-carnival-experience-feat-ton-travels": "/miami",
+  "elle-smith-trinidad-carnival-2024-it-girl": "/trinidad",
+  "don-t-make-these-5-rookie-mistakes-trinidad-carnival-2026":
+    "/blogs/ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips",
+  "carnival-week-2022-in-jamaica": "/jamaica",
+  "carnival-is-woman": "/blogs",
+  "burna-boy-for-crop-over": "/barbados",
+  "what-is-carnival-glam-hub-what-is-all-the-fuss-about": "/about",
+  "faces-of-bella-rogue-confirmed-for-jamaica": "/jamaica",
+  "jouvert-hair-tips":
+    "/blogs/how-to-protect-your-hair-at-jouvert-without-looking-crazy",
+  "is-trinidad-carnival-safe-the-real-talk-you-never-knew-you-needed": "/trinidad",
+  "how-to-put-on-your-carnival-wire-bra": "/blogs",
+  "essential-pointers-for-those-attending-carnival-in-trinidad-and-tobago": "/trinidad",
+  "yardmas-jamaica-carnival-band-launch-2024": "/jamaica",
+  "my-miami-carnival-experience": "/miami",
+  "carnival-dos-and-donts": "/blogs",
+  "up-next-bun-up-the-road-with-genxs-carnival": "/jamaica",
+  "10-tips-for-trinidad-carnival-jouvert": "/trinidad",
+  "xodus-jamaica-carnival-band-launch-a-celebration-of-mas-couture": "/jamaica",
+  "carnival-in-the-caribbean-what-you-need-to-know": "/blogs",
+  "how-did-we-get-here-carnival-glam-hub": "/about",
+  "genxs-drops-first-costume-look-and-unveils-carnival-theme": "/jamaica",
+  "caribbean-beauties-carnival-glam-hub": "/about",
+  "get-ready-to-roar-genx-miami-carnival-launch-2024-ravage-unleashed": "/miami",
+  "your-carnival-hair-is-not-a-joke-jouvert-essentials-you-ll-thank-yourself-for":
+    "/blogs/dont-skip-jouvert-because-of-your-hair-tips-to-keep-it-fabulous",
 };
 
 export function getWixRedirectTarget(slug: string | null | undefined): string | null {
