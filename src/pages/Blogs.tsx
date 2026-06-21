@@ -101,7 +101,7 @@ const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const PAGE_SIZE = 9;
+  const PAGE_SIZE = 24;
 
   const EXCLUDED_AUTHORS = [
     "Krystal Angelique",
