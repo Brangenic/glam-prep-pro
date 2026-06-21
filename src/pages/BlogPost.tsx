@@ -375,7 +375,11 @@ const BlogPost = () => {
                     prose-hr:border-border prose-hr:my-10
                   ">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {cleanMarkdown(post.content)}
+                      {(() => {
+                        const base = cleanMarkdown(post.content);
+                        const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
+                        return slugCleaner ? slugCleaner(base) : base;
+                      })()}
                     </ReactMarkdown>
                   </div>
                 ) : post.excerpt ? (
