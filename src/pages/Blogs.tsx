@@ -77,6 +77,20 @@ const MANUAL_POSTS: BlogPost[] = [
     published_date: TODAY_ISO,
     read_time: "5 min read",
   },
+  {
+    external_id: "manual-caribbean-carnival-has-an-airlift-problem",
+    title:
+      "The Caribbean Carnival economy doesn't have a demand problem. It has an airlift problem.",
+    excerpt:
+      "Masqueraders are ready to spend, but flights into the region are the bottleneck. An editorial on Carnival's airlift problem.",
+    image_url: airliftHero,
+    slug: "caribbean-carnival-has-an-airlift-problem",
+    post_url: "/blogs/caribbean-carnival-has-an-airlift-problem",
+    author_name: "Carnival Glam Hub",
+    author_avatar_url: null,
+    published_date: "2026-05-29",
+    read_time: "7 min read",
+  },
 ];
 
 const FEATURED_SLUG = "is-professional-carnival-makeup-worth-it";
