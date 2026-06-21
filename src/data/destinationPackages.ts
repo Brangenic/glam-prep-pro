@@ -149,7 +149,7 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       {
         title: "Monday 8 February 2027",
         packages: [
-          { name: "Gabby Glam Team Monday Makeup Only", price: "$250 USD", image: `${IMG}/ec4fe656-22ef-4f5d-94ac-88caad314d98/462x578` },
+          { name: "Gabby Glam Team Monday Makeup Only", price: "$200 USD", image: `${IMG}/ec4fe656-22ef-4f5d-94ac-88caad314d98/462x578` },
           { name: "Gabby Glam Team Monday Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/e67cf4d5-6cb6-415e-bb85-a63772402f1e/462x578` },
           { name: "Trinidad Monday Makeup Only", price: "$180 USD", image: `${IMG}/7cc50573-b1af-423a-b00f-da2abaf1896e/462x578` },
           { name: "Trinidad Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/b6e9cb02-ea71-4bd4-8a3f-fd31e30a483e/462x578` },
@@ -166,14 +166,14 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       {
         title: "Tuesday 9 February 2027",
         packages: [
-          { name: "Gabby Glam Team Tuesday Makeup Only", price: "$250 USD", image: `${IMG}/cd5ca635-209b-4185-82c3-580be33fddac/462x578` },
+          { name: "Gabby Glam Team Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/cd5ca635-209b-4185-82c3-580be33fddac/462x578` },
           { name: "Gabby Glam Team Tuesday Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/1acf94cd-ca39-4200-b409-62428403d5b9/462x578` },
           { name: "Trinidad Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/80ed37c5-125b-4c29-832f-9c4016feb014/462x578` },
           { name: "Trinidad Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/79ce4fac-414f-4cfe-95fa-e31ad5de18fc/462x578` },
           { name: "Trinidad Tuesday Full Glam", price: "$440 USD", image: `${IMG}/8255cfa7-1c9c-415d-a4c6-ae0628625a36/462x578` },
           { name: "Trinidad Tuesday Makeup & Photoshoot + Bronzing", price: "$480 USD", image: `${IMG}/f832281b-cd40-442e-8d7d-a8075c52bd56/462x578` },
           { name: "Tuesday Chontelle Sewett MUA", price: "$350 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
-          { name: "Tuesday Chontelle Sewett MUA Team", price: "$250 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
+          { name: "Tuesday Chontelle Sewett MUA Team", price: "$200 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
           { name: "Trinidad Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/d60f1246-a372-4bc4-aec7-9cfe760d01b6/462x578` },
           { name: "Tuesday Bronzing", price: "$160 USD", image: `${IMG}/dc8c705a-26fe-4373-b869-5d738180b664/462x578` },
           { name: "Trinidad Tuesday Hair Only", price: "$120 USD", image: `${IMG}/dcfa0d3f-e8a0-4c3a-a5cc-90b5dd4a61e5/462x578` },
