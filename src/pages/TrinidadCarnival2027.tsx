@@ -12,7 +12,7 @@ import reviewsImage from "@/assets/trinidad-2027-reviews.webp";
 
 const PAGE_TITLE = "Trinidad Carnival 2027 Makeup & Hair | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Book your Trinidad Carnival 2027 makeup, hair and photoshoot with the team trusted by 15,000+ masqueraders since 2017. Only US$50 secures your slot.";
+  "Trinidad Carnival 2027 hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Shuttle, getting dressed, refreshments and snacks included. Book now.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 const YT_ID = "IHUJsYg0GhI";
 
@@ -20,8 +20,8 @@ const eventSchema = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: "Trinidad Carnival 2027 — Glam Hub Morning Concierge",
-  startDate: "2027-02-15T04:00:00-04:00",
-  endDate: "2027-02-16T20:00:00-04:00",
+  startDate: "2027-02-08T04:00:00-04:00",
+  endDate: "2027-02-09T20:00:00-04:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   url: CANONICAL,
@@ -156,6 +156,14 @@ const TrinidadCarnival2027 = () => {
               className="w-full h-auto sm:rounded-2xl border border-border"
             />
           </div>
+          <div className="mb-8 max-w-2xl mx-auto rounded-2xl border border-primary/30 bg-primary/5 px-6 py-5 text-left">
+            <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2 text-center">
+              Bookings Are Open Now
+            </p>
+            <p className="font-body text-base sm:text-lg text-foreground/85 leading-relaxed text-center">
+              Hair, makeup and photos from the <strong>Hilton Hotel</strong>, two minutes from the Savannah. Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Carnival Monday 8 February and Carnival Tuesday 9 February 2027.
+            </p>
+          </div>
           <p className="font-body text-base sm:text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
             Trinidad Carnival is the big one. The heat is real, the road is long, and your makeup and hair have to hold up from the first lap to the last. That is exactly what we do. Booking a Trinidad Carnival makeup artist who actually understands the road is the difference between glam that fades by lunchtime and a face that still looks fresh in your sunset photos.
           </p>
@@ -195,11 +203,11 @@ const TrinidadCarnival2027 = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="rounded-2xl border border-border bg-card p-6 text-center">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-2">Carnival Monday</p>
-              <p className="font-display text-xl font-bold">15 February 2027</p>
+              <p className="font-display text-xl font-bold">8 February 2027</p>
             </div>
             <div className="rounded-2xl border border-border bg-card p-6 text-center">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary mb-2">Carnival Tuesday</p>
-              <p className="font-display text-xl font-bold">16 February 2027</p>
+              <p className="font-display text-xl font-bold">9 February 2027</p>
             </div>
           </div>
         </section>
