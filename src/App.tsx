@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import FloatingWhatsApp from "@/components/landing/FloatingWhatsApp";
 import ChatWidget from "@/components/landing/ChatWidget";
 import RouteTracker from "@/components/RouteTracker";
+import { getWixRedirectTarget } from "@/lib/wixRedirects";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
 import About from "./pages/About.tsx";
@@ -31,10 +32,13 @@ import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
-// Redirect Wix legacy /post/:slug URLs to the new blog path
+// Redirect Wix legacy /post/:slug URLs. Curated map first (high-traffic
+// posts mapped to their current canonical target); fall back to the
+// generic /blogs/:slug pattern for slugs not in the map.
 const WixPostRedirect = () => {
   const { slug } = useParams();
-  return <Navigate to={`/blogs/${slug ?? ""}`} replace />;
+  const mapped = getWixRedirectTarget(slug);
+  return <Navigate to={mapped ?? `/blogs/${slug ?? ""}`} replace />;
 };
 
 // Render the Destination landing page for a fixed slug (short SEO aliases).
