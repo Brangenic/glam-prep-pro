@@ -20,6 +20,7 @@ import AmazonStore from "./pages/AmazonStore.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import AirliftProblem from "./pages/blog/AirliftProblem.tsx";
+import CarnivalMakeupWorthIt from "./pages/blog/CarnivalMakeupWorthIt.tsx";
 import Destination from "./pages/Destination.tsx";
 import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
@@ -67,6 +68,10 @@ const App = () => (
           <Route
             path="/blogs/caribbean-carnival-has-an-airlift-problem"
             element={<AirliftProblem />}
+          />
+          <Route
+            path="/blogs/is-professional-carnival-makeup-worth-it"
+            element={<CarnivalMakeupWorthIt />}
           />
           <Route path="/blogs/:slug" element={<BlogPost />} />
           {/* Wix legacy URL pattern → new blog URLs */}
