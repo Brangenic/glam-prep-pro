@@ -21,6 +21,37 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { supabase } from "@/integrations/supabase/client";
+import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
+
+// Bundled hero overrides: replace unreliable storage-bucket URLs with
+// reliable bundled WebP imports for specific slugs.
+const SLUG_HERO_OVERRIDES: Record<string, string> = {
+  "2025-carnival-makeup-guide-50-looks-to-show-your-mua": makeupGuide2026Cover,
+};
+
+// Per-slug meta title overrides, kept under 60 characters for SEO.
+const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
+  "2025-carnival-makeup-guide-50-looks-to-show-your-mua":
+    "2026 Carnival Makeup Guide: 50 Looks | Glam Hub",
+};
+
+// Per-slug body content cleanup: strip broken images (and their orphan
+// caption lines) that should no longer appear in the article body.
+const slugContentCleaners: Record<string, (md: string) => string> = {
+  "2025-carnival-makeup-guide-50-looks-to-show-your-mua": (md) => {
+    return md
+      // Remove the broken 2026 makeup-guide cover image at the top of the body
+      .replace(/!\[[^\]]*\]\(https:\/\/[^)]*blog-images\/[^)]*2026[^)]*\)\s*/gi, '')
+      // Orphan caption that belonged only to that removed cover image
+      .replace(/^\s*Luxurios Soft Glam\s*$/gim, '')
+      // Remove the Pinterest-linked AI-generated woman image
+      .replace(/\[!\[[^\]]*\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*\)\]\([^)]*pinterest[^)]*\)\s*/gi, '')
+      // Orphan caption that belonged only to that removed Pinterest image
+      .replace(/^\s*[“"]Whatever you think looks good[”"][^\n]*\n?/gim, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  },
+};
 
 type BlogPostData = {
   title: string;
@@ -122,6 +153,9 @@ const BlogPost = () => {
       }
 
       if (isMounted) {
+        if (resolvedPost && slug && SLUG_HERO_OVERRIDES[slug]) {
+          resolvedPost = { ...resolvedPost, image_url: SLUG_HERO_OVERRIDES[slug] };
+        }
         setPost(resolvedPost);
         setLoading(false);
       }
@@ -144,7 +178,8 @@ const BlogPost = () => {
 
   useEffect(() => {
     if (post?.title) {
-      document.title = `${post.title} | Carnival Glam Hub Blog`;
+      const override = slug ? SLUG_META_TITLE_OVERRIDES[slug] : undefined;
+      document.title = override ?? `${post.title} | Carnival Glam Hub Blog`;
     }
     const metaDesc = document.querySelector('meta[name="description"]');
     if (post?.meta_description && metaDesc) {
@@ -347,7 +382,11 @@ const BlogPost = () => {
                     prose-hr:border-border prose-hr:my-10
                   ">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {cleanMarkdown(post.content)}
+                      {(() => {
+                        const base = cleanMarkdown(post.content);
+                        const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
+                        return slugCleaner ? slugCleaner(base) : base;
+                      })()}
                     </ReactMarkdown>
                   </div>
                 ) : post.excerpt ? (
