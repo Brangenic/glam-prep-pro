@@ -179,6 +179,32 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
+        {/* Trinidad-only intro */}
+        {dest.slug === "trinidad" && (
+          <section className="border-t border-border bg-primary/5">
+            <div className="container mx-auto px-4 sm:px-6 max-w-4xl py-10 sm:py-14 text-center">
+              <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3">
+                Trinidad Carnival 2027 — Bookings Are Open
+              </p>
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-4">
+                Hair, makeup and photos from the{" "}
+                <span className="text-gradient-primary italic">Hilton Hotel</span>, two minutes from the Savannah.
+              </h2>
+              <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
+                Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Carnival Monday 8 February and Carnival Tuesday 9 February 2027.
+              </p>
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-8 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+              >
+                Book Now
+              </a>
+            </div>
+          </section>
+        )}
+
         {/* Season ended banner — Jamaica only */}
         {dest.slug === "jamaica" && (
           <section
