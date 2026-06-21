@@ -4,7 +4,7 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "Trinidad Carnival 2027 | Premium Morning Concierge | Carnival Glam Hub";
+  "Trinidad Carnival Makeup and Glam 2027 | Glam Hub";
 const PAGE_DESCRIPTION =
   "Trinidad Carnival 2027 is Monday 8 and Tuesday 9 February. Premium Carnival morning concierge in Port of Spain: sweat-proof makeup, hair, photoshoot, shuttle. Book at carnivalglamhub.com.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
@@ -172,28 +172,11 @@ const TrinidadCarnival2027 = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    const addSchema = (id: string, data: unknown) => {
-      let script = document.getElementById(id) as HTMLScriptElement | null;
-      if (!script) {
-        script = document.createElement("script");
-        script.id = id;
-        script.type = "application/ld+json";
-        document.head.appendChild(script);
-      }
-      script.textContent = JSON.stringify(data);
-    };
-    addSchema(EVENT_SCHEMA_ID, eventSchema);
-    addSchema(SERVICE_SCHEMA_ID, serviceSchema);
-    addSchema(FAQ_SCHEMA_ID, faqSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(EVENT_SCHEMA_ID)?.remove();
-      document.getElementById(SERVICE_SCHEMA_ID)?.remove();
-      document.getElementById(FAQ_SCHEMA_ID)?.remove();
     };
   }, []);
 
