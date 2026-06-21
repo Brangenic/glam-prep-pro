@@ -25,6 +25,9 @@ const cleanMarkdown = (md: string): string => {
     // Only strip backslashes that aren't escaping a markdown-meaningful char.
     .replace(/\\(?=\s|$)/g, '')
     .replace(/^\s*\\\s*$/gm, '')
+    // Strip any remaining stray backslashes that aren't escaping a markdown
+    // special character (so we keep \* \_ \[ \] \( \) \# \` \\ \! intact).
+    .replace(/\\(?![*_\[\]()#`\\!])/g, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 };
