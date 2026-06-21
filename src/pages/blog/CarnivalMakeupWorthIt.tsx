@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
-import heroImage from "@/assets/blog-carnival-makeup-worth-it-hero.webp";
+import heroImage from "@/assets/blog-carnival-makeup-worth-it-hero-v2.webp";
 import diyImage from "@/assets/blog-carnival-makeup-worth-it-diy.webp";
 
 const SLUG = "is-professional-carnival-makeup-worth-it";
@@ -189,8 +189,8 @@ const CarnivalMakeupWorthIt = () => {
               <img
                 src={heroImage}
                 alt="Close-up of dramatic Carnival makeup with gems by Carnival Glam Hub"
-                width={1600}
-                height={1067}
+                width={986}
+                height={558}
                 className="w-full h-auto rounded-none sm:rounded-2xl object-cover aspect-[3/2]"
                 loading="eager"
                 fetchPriority="high"
