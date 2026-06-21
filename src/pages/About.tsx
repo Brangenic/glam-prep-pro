@@ -4,9 +4,9 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "About Carnival Glam Hub | Caribbean Carnival Beauty Concierge Since 2017";
+  "About Carnival Glam Hub | Caribbean Beauty Concierge";
 const PAGE_DESCRIPTION =
-  "Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica, Barbados, Grenada and Antigua.";
+  "The Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica and beyond.";
 const CANONICAL = "https://www.carnivalglamhub.com/about";
 
 const aboutPageSchema = {
@@ -132,26 +132,11 @@ const About = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    const addSchema = (id: string, data: unknown) => {
-      let script = document.getElementById(id) as HTMLScriptElement | null;
-      if (!script) {
-        script = document.createElement("script");
-        script.id = id;
-        script.type = "application/ld+json";
-        document.head.appendChild(script);
-      }
-      script.textContent = JSON.stringify(data);
-    };
-    addSchema(SCHEMA_ID, aboutPageSchema);
-    addSchema(ORG_SCHEMA_ID, organizationSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(SCHEMA_ID)?.remove();
-      document.getElementById(ORG_SCHEMA_ID)?.remove();
     };
   }, []);
 
