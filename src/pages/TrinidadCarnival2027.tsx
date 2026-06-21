@@ -203,7 +203,7 @@ const TrinidadCarnival2027 = () => {
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8">Your Carnival Morning</h2>
           <div className="space-y-6">
             {[
-              ["Makeup", "Sweat-proof Trinidad Carnival makeup built to last the full day, through the heat, the wine and the sweat. Soft glam to full drama, by a pro MUA who gets Carnival."],
+              ["Makeup", "Sweat-proof Trinidad Carnival makeup built to last the full day, through the heat, the wine and the sweat. Soft glam to full drama, by a pro Trinidad Carnival MUA who gets the road and knows exactly how to make your look photograph."],
               ["Hair", "Trinidad Carnival hair styled to survive the road and complement your costume, done fast and done right."],
               ["Photoshoots", "Step into our garden for a pre-road shoot so your look is captured before the sun and the crowd."],
               ["Getting Dressed", "A dedicated assistant fits and secures your costume so nothing slips once you hit the road."],
