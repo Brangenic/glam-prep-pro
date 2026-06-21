@@ -143,7 +143,7 @@ const TrinidadCarnival2027 = () => {
             Book your Carnival morning with the team trusted by 15,000+ masqueraders since 2017.
           </p>
           <p className="font-body text-base sm:text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
-            Trinidad Carnival is the big one. Your makeup and hair have to hold up from the first lap to the last, and that is exactly what we do.
+            Trinidad Carnival is the big one. The heat is real, the road is long, and your makeup and hair have to hold up from the first lap to the last. That is exactly what we do. Booking a Trinidad Carnival makeup artist who actually understands the road is the difference between glam that fades by lunchtime and a face that still looks fresh in your sunset photos.
           </p>
 
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-left max-w-xl mx-auto mb-10">
@@ -203,7 +203,7 @@ const TrinidadCarnival2027 = () => {
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8">Your Carnival Morning</h2>
           <div className="space-y-6">
             {[
-              ["Makeup", "Sweat-proof Trinidad Carnival makeup built to last the full day, through the heat, the wine and the sweat. Soft glam to full drama, by a pro MUA who gets Carnival."],
+              ["Makeup", "Sweat-proof Trinidad Carnival makeup built to last the full day, through the heat, the wine and the sweat. Soft glam to full drama, by a pro Trinidad Carnival MUA who gets the road and knows exactly how to make your look photograph."],
               ["Hair", "Trinidad Carnival hair styled to survive the road and complement your costume, done fast and done right."],
               ["Photoshoots", "Step into our garden for a pre-road shoot so your look is captured before the sun and the crowd."],
               ["Getting Dressed", "A dedicated assistant fits and secures your costume so nothing slips once you hit the road."],
@@ -223,6 +223,12 @@ const TrinidadCarnival2027 = () => {
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Why Book Early</h2>
           <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
             The best appointment times run from 4:00am to 8:00am, and they go first. Those early slots give you enough time to get ready, take your photos and reach your band comfortably before you cross the stage.
+          </p>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            A relaxed morning is the whole game. You want time to eat, time to enjoy your photos in the garden and time to actually meet your section before the first truck pulls off. The masqueraders who book late end up rushing in heels at sunrise, and it shows in the photos.
+          </p>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            Locking in a great Trinidad Carnival makeup artist early also means you get to choose your look in advance, send your costume colours through and arrive knowing exactly what you are walking out with. No last-minute compromises.
           </p>
           <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
             Most experienced masqueraders lock in their glam the moment they pay their costume deposit. Do the same and skip the morning scramble.
