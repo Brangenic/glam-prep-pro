@@ -5,6 +5,27 @@ import { destinations } from "@/data/destinations";
 const Destinations = () => {
   const { ref, isVisible } = useScrollReveal();
 
+  // Homepage-only ordering and label overrides. Does not affect destination
+  // pages, routes, sitemap or shared data.
+  const HOMEPAGE_ORDER = [
+    "saint-lucia",
+    "toronto",
+    "barbados",
+    "antigua",
+    "grenada",
+    "miami",
+    "trinidad",
+    "epic-cruise",
+  ];
+  const HOMEPAGE_OVERRIDES: Record<string, { name?: string; date?: string }> = {
+    trinidad: { name: "Trinidad Carnival 2027" },
+    "epic-cruise": { date: "Returns 2028" },
+  };
+  const orderedDestinations = HOMEPAGE_ORDER
+    .map((slug) => destinations.find((d) => d.slug === slug))
+    .filter((d): d is NonNullable<typeof d> => Boolean(d))
+    .map((d) => ({ ...d, ...HOMEPAGE_OVERRIDES[d.slug] }));
+
   return (
     <section id="destinations" className="py-16 sm:py-24 lg:py-32 bg-card/50" aria-labelledby="destinations-heading">
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
@@ -30,7 +51,7 @@ const Destinations = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {destinations.map((d, i) => (
+          {orderedDestinations.map((d, i) => (
             <Link
               key={d.slug}
               to={`/destinations/${d.slug}`}
