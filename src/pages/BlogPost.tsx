@@ -384,8 +384,8 @@ const BlogPost = () => {
                 {post.content ? (
                   <div className="prose prose-base max-w-none dark:prose-invert
                     prose-headings:font-display prose-headings:text-foreground prose-headings:tracking-tight
-                    prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
-                    prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-3
+                    prose-h2:text-2xl [&_h2]:!mt-14 [&_h2]:!mb-5
+                    prose-h3:text-xl [&_h3]:!mt-10 [&_h3]:!mb-4
                     prose-p:font-body prose-p:text-foreground/80 prose-p:leading-[1.8] prose-p:mb-6
                     prose-a:text-primary prose-a:underline prose-a:underline-offset-2 prose-a:decoration-primary/30 hover:prose-a:decoration-primary
                     prose-blockquote:border-l-primary prose-blockquote:bg-primary/5 prose-blockquote:rounded-r-lg prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:text-muted-foreground prose-blockquote:italic prose-blockquote:not-italic prose-blockquote:font-body
