@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import airliftHero from "@/assets/blog-airlift-hero.webp";
 
 const SLUG = "caribbean-carnival-has-an-airlift-problem";
 const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
@@ -15,7 +16,7 @@ const META_DESCRIPTION =
   "Demand for Caribbean Carnival is strong. What\u2019s broken is inter-island air capacity. Kibwe McGann on the airlift problem stalling Carnival growth.";
 const AUTHOR = "Kibwe McGann";
 const DATE_PUBLISHED = "2026-05-29";
-const FEATURED_IMAGE = "/linkedin-carnival-air-travel-post.svg";
+const FEATURED_IMAGE = airliftHero;
 const TAGS = [
   "Carnival Economy",
   "Caribbean Travel",
@@ -270,19 +271,18 @@ const AirliftProblem = () => {
               </div>
             </div>
 
-            {/* Featured image placeholder (asset not yet uploaded) */}
-            <div
-              className="mb-10 -mx-4 sm:mx-0 rounded-none sm:rounded-2xl border border-dashed border-primary/40 bg-primary/5 px-6 py-16 text-center"
-              role="img"
-              aria-label="Featured image placeholder awaiting upload from Kibwe"
-            >
-              <p className="font-body text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-2">
-                Featured Image Placeholder
-              </p>
-              <p className="font-body text-sm text-muted-foreground">
-                Awaiting upload from Kibwe — image will be swapped in once delivered.
-              </p>
-            </div>
+            <figure className="mb-10 -mx-4 sm:mx-0">
+              <img
+                src={airliftHero}
+                alt="Caribbean Carnival airlift and air travel"
+                width={1600}
+                height={1067}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="w-full h-auto rounded-none sm:rounded-2xl object-cover"
+              />
+            </figure>
 
             <div>
               {BODY_PARAGRAPHS.map((p, i) => renderParagraph(p, i))}
