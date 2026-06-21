@@ -7,6 +7,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
+import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -29,8 +30,14 @@ const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
   /^artificial/i,
 ];
 
+const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
+  RECOVERED_POSTS_META.map((p) => p.slug),
+);
+
 const isExcludedSlug = (slug: string | null | undefined) =>
-  !slug || EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
+  !slug ||
+  (!ALLOWED_OVERRIDE_SLUGS.has(slug) &&
+    EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug)));
 
 const isPublished = (row: { published_date?: string | null; raw_payload?: Record<string, unknown> | null }) => {
   const status =
@@ -91,6 +98,14 @@ function manualPosts(): Post[] {
     "blog-airlift-hero",
     `${BASE_URL}/og-image.png`,
   );
+  for (const p of RECOVERED_POSTS_META) {
+    out.push({
+      slug: p.slug,
+      title: p.title,
+      description: p.metaDescription,
+      image: p.coverImage,
+    });
+  }
   return out;
 }
 
