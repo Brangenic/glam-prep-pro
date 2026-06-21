@@ -143,7 +143,7 @@ const TrinidadCarnival2027 = () => {
             Book your Carnival morning with the team trusted by 15,000+ masqueraders since 2017.
           </p>
           <p className="font-body text-base sm:text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
-            Trinidad Carnival is the big one. Your makeup and hair have to hold up from the first lap to the last, and that is exactly what we do.
+            Trinidad Carnival is the big one. The heat is real, the road is long, and your makeup and hair have to hold up from the first lap to the last. That is exactly what we do. Booking a Trinidad Carnival makeup artist who actually understands the road is the difference between glam that fades by lunchtime and a face that still looks fresh in your sunset photos.
           </p>
 
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-left max-w-xl mx-auto mb-10">
