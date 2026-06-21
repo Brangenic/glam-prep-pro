@@ -8,7 +8,7 @@
     "dev": "vite",
     "prebuild": "bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/check-robots-lock.ts",
     "build": "vite build",
-    "postbuild": "bunx tsx scripts/prerender-blog-meta.ts",
+    "postbuild": "bunx tsx scripts/prerender-blog-meta.ts && bunx tsx scripts/prerender-wix-redirects.ts",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
