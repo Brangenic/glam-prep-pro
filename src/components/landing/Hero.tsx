@@ -1,4 +1,7 @@
-import heroBg from "@/assets/hero-new.jpg";
+import heroBg from "@/assets/hero-new-1280.webp";
+import heroBg768 from "@/assets/hero-new-768.webp";
+import heroBg1280 from "@/assets/hero-new-1280.webp";
+import heroBg1920 from "@/assets/hero-new-1920.webp";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -14,9 +17,14 @@ const Hero = () => {
     >
       <img
         src={heroBg}
+        srcSet={`${heroBg768} 768w, ${heroBg1280} 1280w, ${heroBg1920} 1920w`}
+        sizes="100vw"
+        width={1920}
+        height={1080}
         alt="Carnival masquerader with golden feather headdress and rhinestone costume — Carnival Glam Hub"
         className="absolute inset-0 w-full h-full object-cover object-top"
         loading="eager"
+        decoding="async"
         fetchPriority="high"
       />
       <div className="absolute inset-0 bg-black/60" />
