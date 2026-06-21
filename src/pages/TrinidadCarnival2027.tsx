@@ -224,6 +224,12 @@ const TrinidadCarnival2027 = () => {
           <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
             The best appointment times run from 4:00am to 8:00am, and they go first. Those early slots give you enough time to get ready, take your photos and reach your band comfortably before you cross the stage.
           </p>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            A relaxed morning is the whole game. You want time to eat, time to enjoy your photos in the garden and time to actually meet your section before the first truck pulls off. The masqueraders who book late end up rushing in heels at sunrise, and it shows in the photos.
+          </p>
+          <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+            Locking in a great Trinidad Carnival makeup artist early also means you get to choose your look in advance, send your costume colours through and arrive knowing exactly what you are walking out with. No last-minute compromises.
+          </p>
           <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
             Most experienced masqueraders lock in their glam the moment they pay their costume deposit. Do the same and skip the morning scramble.
           </p>
