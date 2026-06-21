@@ -116,8 +116,32 @@ const AirliftProblem = () => {
     restorers.push(setMeta('meta[property="og:description"]', "property", "og:description", DESCRIPTION));
     restorers.push(setMeta('meta[property="og:url"]', "property", "og:url", URL));
     restorers.push(setMeta('meta[property="og:type"]', "property", "og:type", "article"));
+    restorers.push(
+      setMeta(
+        'meta[property="og:image"]',
+        "property",
+        "og:image",
+        `https://www.carnivalglamhub.com${FEATURED_IMAGE}`
+      )
+    );
     restorers.push(setMeta('meta[name="twitter:title"]', "name", "twitter:title", TITLE));
     restorers.push(setMeta('meta[name="twitter:description"]', "name", "twitter:description", DESCRIPTION));
+    restorers.push(
+      setMeta(
+        'meta[name="twitter:image"]',
+        "name",
+        "twitter:image",
+        `https://www.carnivalglamhub.com${FEATURED_IMAGE}`
+      )
+    );
+    restorers.push(
+      setMeta(
+        'meta[name="twitter:card"]',
+        "name",
+        "twitter:card",
+        "summary_large_image"
+      )
+    );
 
     // Canonical
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');

@@ -4,6 +4,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { supabase } from "@/integrations/supabase/client";
+import airliftHero from "@/assets/blog-airlift-hero.webp";
 
 type BlogPost = {
   external_id: string;
@@ -214,10 +215,14 @@ const Blogs = () => {
               className="block rounded-3xl border border-border bg-card overflow-hidden mb-10 sm:mb-14 group hover:shadow-lg hover:shadow-primary/10 transition-all"
             >
               <div className="grid md:grid-cols-2">
-                <div className="w-full h-64 md:h-full bg-gradient-to-br from-primary/15 via-secondary/10 to-background flex items-center justify-center p-8">
-                  <p className="font-display text-xl sm:text-2xl text-foreground/70 text-center italic">
-                    Editorial
-                  </p>
+                <div className="w-full h-64 md:h-full overflow-hidden">
+                  <img
+                    src={airliftHero}
+                    alt="Caribbean Carnival airlift and air travel"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
                   <span className="inline-block font-body text-xs uppercase tracking-[0.15em] text-secondary font-medium mb-3">
