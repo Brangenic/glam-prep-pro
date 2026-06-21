@@ -7,6 +7,8 @@ import { buildDestinationUrl } from "@/lib/destinations";
 import photoGabby from "@/assets/trinidad-2027-p1.webp";
 import photoDania from "@/assets/trinidad-2027-p2.webp";
 import photoChontelle from "@/assets/trinidad-2027-p3.webp";
+import heroCover from "@/assets/trinidad-2027-hero.webp";
+import reviewsImage from "@/assets/trinidad-2027-reviews.webp";
 
 const PAGE_TITLE = "Trinidad Carnival 2027 Makeup & Hair | Glam Hub";
 const PAGE_DESCRIPTION =
@@ -142,6 +144,18 @@ const TrinidadCarnival2027 = () => {
           <p className="font-body text-lg sm:text-xl text-muted-foreground mb-6">
             Book your Carnival morning with the team trusted by 15,000+ masqueraders since 2017.
           </p>
+          <div className="mb-8 -mx-4 sm:mx-0">
+            <img
+              src={heroCover}
+              alt="Carnival Glam Hub Trinidad Carnival 2027 cover"
+              width={1220}
+              height={846}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl border border-border"
+            />
+          </div>
           <p className="font-body text-base sm:text-lg text-foreground/80 mb-10 max-w-2xl mx-auto">
             Trinidad Carnival is the big one. The heat is real, the road is long, and your makeup and hair have to hold up from the first lap to the last. That is exactly what we do. Booking a Trinidad Carnival makeup artist who actually understands the road is the difference between glam that fades by lunchtime and a face that still looks fresh in your sunset photos.
           </p>
