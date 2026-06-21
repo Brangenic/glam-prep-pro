@@ -36,7 +36,7 @@ export const destinations: Destination[] = [
       "Hair styling and braiding",
       "Lash application and body paint",
     ],
-    metaTitle: "Jamaica Carnival Makeup & Glam Services 2026 | Carnival Glam Hub",
+    metaTitle: "Jamaica Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Book premium Jamaica Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists for 12 April 2026.",
   },
@@ -57,7 +57,7 @@ export const destinations: Destination[] = [
       "Festival hair styling",
       "Eye gems & festival lashes",
     ],
-    metaTitle: "Saint Lucia Carnival Makeup & Glam 2026 | Carnival Glam Hub",
+    metaTitle: "Saint Lucia Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Saint Lucia Carnival 2026 glam hub: full makeup, hair, gems and j'ouvert paint by professional artists. Reserve your slot for 20–21 July 2026.",
   },
@@ -78,7 +78,7 @@ export const destinations: Destination[] = [
       "Hair braids and styling",
       "Body paint and shimmer",
     ],
-    metaTitle: "Antigua Carnival Makeup & Glam Services 2026 | Carnival Glam Hub",
+    metaTitle: "Antigua Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Premium Antigua Carnival makeup, hair and body art. Book your full glam package for 4 August 2026 with Carnival Glam Hub.",
   },
@@ -99,7 +99,7 @@ export const destinations: Destination[] = [
       "Hair styling and braiding",
       "Festival gems & lashes",
     ],
-    metaTitle: "Grenada Spicemas Carnival Makeup 2026 | Carnival Glam Hub",
+    metaTitle: "Grenada Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Spicemas 2026 glam hub in Grenada — full carnival makeup, hair, gems and j'ouvert paint. Book your spot for 11 August 2026.",
   },
@@ -120,7 +120,7 @@ export const destinations: Destination[] = [
       "Festival hair & braids",
       "Gems, lashes and shimmer",
     ],
-    metaTitle: "Barbados Carnival Glam & Makeup Services | Carnival Glam Hub",
+    metaTitle: "Barbados Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Carnival Glam Hub brings expert carnival makeup to Barbados. Caribbean-inspired glam for diaspora women ready to shine. Book your Cropover look today.",
   },
@@ -141,7 +141,7 @@ export const destinations: Destination[] = [
       "Festival hair styling",
       "Gems, lashes and body paint",
     ],
-    metaTitle: "Miami Carnival Makeup Artist | Carnival Glam Hub 2026",
+    metaTitle: "Miami Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Book your Miami Carnival glam look with Carnival Glam Hub. Makeup and styling for diaspora women ready to shine. Miami Caribbean carnival specialists.",
   },
@@ -162,7 +162,7 @@ export const destinations: Destination[] = [
       "Festival hair & braids",
       "Gems, lashes and shimmer",
     ],
-    metaTitle: "Toronto Carnival Makeup & Glam Services | Carnival Glam Hub",
+    metaTitle: "Toronto Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Toronto Caribbean carnival glam from Carnival Glam Hub. Expert carnival makeup for Caribana and the diaspora. Book your look for Toronto Carnival now.",
   },
@@ -184,7 +184,7 @@ export const destinations: Destination[] = [
       "Festival hair styling",
       "Gems, lashes and body art",
     ],
-    metaTitle: "Trinidad Carnival Makeup & Glam Services 2027 | Carnival Glam Hub",
+    metaTitle: "Trinidad Carnival Makeup & Glam 2027 | Glam Hub",
     metaDescription:
       "Trinidad Carnival 2027 glam hub waitlist — full road makeup, hair, gems and j'ouvert paint in Port of Spain. Reserve early.",
   },
@@ -204,7 +204,7 @@ export const destinations: Destination[] = [
       "Gem & rhinestone application",
       "Body paint and shimmer",
     ],
-    metaTitle: "Guyana Carnival Makeup & Glam Services 2026 | Carnival Glam Hub",
+    metaTitle: "Guyana Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
       "Book premium Guyana Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists.",
   },
@@ -225,7 +225,7 @@ export const destinations: Destination[] = [
       "Full makeup, hair & photoshoot",
       "Get Dressed assistance included",
     ],
-    metaTitle: "EPIC Cruise Carnival Glam Hub 2027 | Carnival Glam Hub",
+    metaTitle: "Epic Cruise Carnival Makeup & Glam 2027 | Glam Hub",
     metaDescription:
       "Book your carnival glam services on the EPIC Cruise. Carnival Glam Hub is aboard the EPIC Carnival Experience for Trinidad Carnival 2027.",
   },
