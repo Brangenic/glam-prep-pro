@@ -36,6 +36,7 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { supabase } from "@/integrations/supabase/client";
 import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
+import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
 
 // Bundled hero overrides: replace unreliable storage-bucket URLs with
 // reliable bundled WebP imports for specific slugs.
@@ -96,6 +97,8 @@ const BANNED_SLUG_PATTERNS: RegExp[] = [
 
 const isBannedSlug = (slug: string | undefined | null) => {
   if (!slug) return false;
+  // Recovered legacy posts always render — never treat as banned.
+  if (slug in RECOVERED_POST_BY_SLUG) return false;
   return BANNED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
 
@@ -133,6 +136,24 @@ const BlogPost = () => {
     }
     // Skip the DB roundtrip entirely for banned slugs; they are gone.
     if (isBannedSlug(slug)) return;
+
+    // Code-resident recovered posts: render directly, no DB roundtrip.
+    const recovered = RECOVERED_POST_BY_SLUG[slug];
+    if (recovered) {
+      setPost({
+        title: recovered.title,
+        content: recovered.content,
+        excerpt: recovered.excerpt,
+        image_url: recovered.coverImage,
+        author_name: recovered.author,
+        author_avatar_url: null,
+        published_date: recovered.publishedDate,
+        read_time: recovered.readTime,
+        meta_description: recovered.metaDescription,
+      });
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
     let isMounted = true;
