@@ -311,6 +311,45 @@ const TrinidadCarnival2027 = () => {
           </div>
         </section>
 
+        {/* Reviews */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4 text-center">
+            Glam Hub Reviews for Trinidad Carnival
+          </h2>
+          <p className="font-body text-base sm:text-lg text-muted-foreground text-center mb-3 max-w-2xl mx-auto">
+            Hear straight from masqueraders who trusted us with their Trinidad Carnival glam.
+          </p>
+          <p className="font-body text-base sm:text-lg text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+            Read what Trinidad clients say about their morning, their look and how it held up on the road.
+          </p>
+          <a
+            href="https://www.google.com/maps/search/Carnival+Glam+Hub+Trinidad+Port+of+Spain"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-2xl overflow-hidden border border-border bg-card mb-6 hover:shadow-lg transition-shadow"
+          >
+            <img
+              src={reviewsImage}
+              alt="Carnival Glam Hub Trinidad Carnival reviews"
+              width={1280}
+              height={720}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto"
+            />
+          </a>
+          <div className="text-center">
+            <a
+              href="https://www.google.com/maps/search/Carnival+Glam+Hub+Trinidad+Port+of+Spain"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-primary text-primary-foreground font-body font-bold tracking-wider text-sm px-10 py-4 rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all"
+            >
+              READ OUR GOOGLE REVIEWS
+            </a>
+          </div>
+        </section>
+
         {/* Strong CTA */}
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
           <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-8 sm:p-12 text-center gold-glow">
