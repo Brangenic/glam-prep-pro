@@ -14,6 +14,12 @@ const cleanMarkdown = (md: string): string => {
     .replace(/loadbalancer\.visitor-analytics\.io[\s\S]*?ERR_BLOCKED_BY_CLIENT[\s\S]*?Reload\s*/gi, '')
     .replace(/!\[\]\(data:image\/svg\+xml[^\n]*\n?/g, '')
     .replace(/!\[Close Button Icon\][^\n]*\n?/gi, '')
+    // Strip leftover Wix comments/ratings block at the bottom of any post
+    .replace(/##\s*Comments[\s\S]*$/i, '')
+    .replace(/!\[\]\(<Base64-Image-Removed>\)/g, '')
+    // Remove blurred thumbnail previews that immediately precede the full
+    // resolution version of the same Wix image (q_30,blur_30 placeholders).
+    .replace(/!\[[^\]]*\]\([^)]*?q_30,blur_30[^)]*?\)\s*\\?\s*/g, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 };
@@ -48,6 +54,9 @@ const slugContentCleaners: Record<string, (md: string) => string> = {
       .replace(/\[!\[[^\]]*\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*\)\]\([^)]*pinterest[^)]*\)\s*/gi, '')
       // Orphan caption that belonged only to that removed Pinterest image
       .replace(/^\s*[“"]Whatever you think looks good[”"][^\n]*\n?/gim, '')
+      // Promote standalone bold lines to h2 headings so they get generous
+      // top spacing from the prose styles.
+      .replace(/^\*\*([^\n*][^\n]*?)\*\*\s*$/gm, '## $1')
       .replace(/\n{3,}/g, '\n\n')
       .trim();
   },
