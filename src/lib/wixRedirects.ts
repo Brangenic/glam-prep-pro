@@ -69,14 +69,15 @@ export const WIX_REDIRECTS: Record<string, string> = {
   "epic-welcomes-carnival-glam-hub-aboard-for-trinidad-carnival-2026":
     "/blogs/epic-welcomes-carnival-glam-hub-aboard-for-trinidad-carnival-2026",
   "chatgpt-picks-the-top-5-best-caribbean-carnivals-here-s-my-wild-take":
-    "/blogs/top-5-caribbean-carnival-jouvert-bands-experiences",
+    "/blogs/chatgpt-picks-the-top-5-best-caribbean-carnivals",
   "carnival-queen-rihanna-s-stunning-return-to-crop-over-2024":
-    "/blogs/rihannas-carnival-looks-over-the-years-50-photos",
+    "/blogs/carnival-queen-rihannas-stunning-return-to-crop-over-2024",
   "your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know":
-    "/jamaica",
+    "/blogs/your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know",
   "saint-lucia-carnival-an-unforgettable-girls-trip":
     "/blogs/saint-lucia-carnival-2024-review",
-  "barbados-crop-over-2025-what-to-know-before-you-go": "/barbados",
+  "barbados-crop-over-2025-what-to-know-before-you-go":
+    "/blogs/barbados-crop-over-2025-what-to-know-before-you-go",
   "top-10-must-attend-fetes-at-trinidad-carnival-2024": "/trinidad",
   "comfort-queen-or-hot-gyal": "/blogs",
   "carnival-glam-hub-miami": "/miami",

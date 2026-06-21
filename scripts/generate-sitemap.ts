@@ -74,8 +74,15 @@ const EXCLUDED_AUTHORS = new Set([
   "Daydrie Burke",
 ]);
 
+import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+
+const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
+  RECOVERED_POSTS_META.map((p) => p.slug),
+);
+
 const isExcludedSlug = (slug: string | null | undefined) => {
   if (!slug) return true;
+  if (ALLOWED_OVERRIDE_SLUGS.has(slug)) return false;
   return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
 
@@ -129,12 +136,27 @@ async function main() {
     if (error) throw error;
 
     const seen = new Set<string>();
+    // Always include recovered code-resident posts.
+    for (const p of RECOVERED_POSTS_META) {
+      if (seen.has(p.slug)) continue;
+      seen.add(p.slug);
+      entries.push({
+        loc: `${BASE_URL}/blogs/${p.slug}`,
+        lastmod: p.publishedDate,
+        changefreq: "monthly",
+        priority: "0.7",
+      });
+    }
     for (const row of data ?? []) {
       if (!isPublished(row)) continue;
       const slug = row.slug || getSlugFromPostUrl(row.post_url);
       if (!slug) continue;
       if (isExcludedSlug(slug)) continue;
-      if (row.author_name && EXCLUDED_AUTHORS.has(row.author_name.trim())) continue;
+      if (
+        row.author_name &&
+        EXCLUDED_AUTHORS.has(row.author_name.trim()) &&
+        !ALLOWED_OVERRIDE_SLUGS.has(slug)
+      ) continue;
       if (seen.has(slug)) continue;
       seen.add(slug);
 
