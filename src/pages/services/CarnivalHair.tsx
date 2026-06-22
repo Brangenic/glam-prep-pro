@@ -4,9 +4,9 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "Carnival Hair Styling | Sleek, Sculpted, Headpiece-Ready | Carnival Glam Hub";
+  "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival hair styling built to hold under feathers, wires and tropical heat. Sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
+  "Carnival hair and Carnival hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-hair";
 
 const serviceSchema = {
