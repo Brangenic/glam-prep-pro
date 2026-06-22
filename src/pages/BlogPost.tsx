@@ -526,7 +526,7 @@ const BlogPost = () => {
                                       rel="noopener noreferrer"
                                       className="inline-block rounded-full bg-primary px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-primary/90 no-underline"
                                     >
-                                      {children}
+                                      {text || "Book Now"}
                                     </a>
                                   </p>
                                 );
