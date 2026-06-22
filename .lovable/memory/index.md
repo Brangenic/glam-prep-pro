@@ -25,3 +25,5 @@ Blogs: NEVER generate AI images. Hero/body images must come only from the curate
 - [Destination Redirects](mem://navigation/destination-redirects) — SEO and fallback redirects for location paths
 - [Legal Compliance](mem://constraints/legal-compliance) — Strict constraint for removing specific individuals from assets
 - [No AI Blog Images](mem://constraints/no-ai-blog-images) — Blog images must come only from user-provided pool, never AI-generated
+- [Blog Social-Share Image](mem://constraints/blog-social-share-image) — og:image must transcode article hero to 1200x630 JPEG, never serve generic logo
+- [Blog Content Standards](mem://constraints/blog-content-standards) — H2 styling, link colors, Amazon-link highlight, booking-CTA dedup, Wix cleanup
