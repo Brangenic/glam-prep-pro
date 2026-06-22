@@ -3,6 +3,84 @@ import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+// Extract a YouTube video id from any common URL form. Strips tracking
+// params like ?si=, &t=. Returns { id, kind } or null. kind="shorts" gets
+// rendered vertically.
+const parseYouTube = (
+  raw: string,
+): { id: string; kind: "video" | "shorts" } | null => {
+  if (!raw) return null;
+  let url: URL;
+  try {
+    url = new URL(raw.trim());
+  } catch {
+    return null;
+  }
+  const host = url.hostname.replace(/^www\./, "");
+  const clean = (id: string) => id.replace(/[^A-Za-z0-9_-]/g, "");
+  if (host === "youtu.be") {
+    const id = clean(url.pathname.slice(1));
+    return id ? { id, kind: "video" } : null;
+  }
+  if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
+    const shorts = url.pathname.match(/^\/shorts\/([^/?#]+)/);
+    if (shorts) {
+      const id = clean(shorts[1]);
+      return id ? { id, kind: "shorts" } : null;
+    }
+    if (url.pathname === "/watch") {
+      const id = clean(url.searchParams.get("v") ?? "");
+      return id ? { id, kind: "video" } : null;
+    }
+    const embed = url.pathname.match(/^\/embed\/([^/?#]+)/);
+    if (embed) {
+      const id = clean(embed[1]);
+      return id ? { id, kind: "video" } : null;
+    }
+  }
+  return null;
+};
+
+const YouTubeEmbed = ({
+  id,
+  kind,
+}: {
+  id: string;
+  kind: "video" | "shorts";
+}) => {
+  const src = `https://www.youtube-nocookie.com/embed/${id}`;
+  if (kind === "shorts") {
+    return (
+      <div className="my-8 mx-auto" style={{ maxWidth: 360 }}>
+        <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "9 / 16" }}>
+          <iframe
+            src={src}
+            title="YouTube short"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="my-8">
+      <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "16 / 9" }}>
+        <iframe
+          src={src}
+          title="YouTube video"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+        />
+      </div>
+    </div>
+  );
+};
+
 const cleanMarkdown = (md: string): string => {
   return md
     .replace(/\[!\[.*?\]\(https:\/\/smartarget\.online[^\]]*\)\]\([^)]*\)\s*/g, '')
@@ -419,7 +497,28 @@ const BlogPost = () => {
                     prose-ul:my-6 prose-ol:my-6
                     prose-hr:border-border prose-hr:my-10
                   ">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        p: ({ node, children, ...props }) => {
+                          // If the paragraph has a single anchor child that
+                          // is a standalone YouTube URL, replace with embed.
+                          const kids = (node?.children ?? []).filter(
+                            (c: any) => !(c.type === "text" && /^\s*$/.test(c.value ?? "")),
+                          );
+                          if (kids.length === 1 && kids[0].type === "element" && (kids[0] as any).tagName === "a") {
+                            const href = ((kids[0] as any).properties?.href ?? "") as string;
+                            const text = ((kids[0] as any).children?.[0]?.value ?? "") as string;
+                            // Treat as standalone only when link text equals the URL (autolink).
+                            if (href && text && href === text) {
+                              const yt = parseYouTube(href);
+                              if (yt) return <YouTubeEmbed id={yt.id} kind={yt.kind} />;
+                            }
+                          }
+                          return <p {...props}>{children}</p>;
+                        },
+                      }}
+                    >
                       {(() => {
                         const base = cleanMarkdown(post.content);
                         const slugCleaner = slug ? slugContentCleaners[slug] : undefined;

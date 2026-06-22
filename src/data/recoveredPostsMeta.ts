@@ -165,6 +165,26 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027 — block heels, peep-toe booties, platforms and the half-and-half move.",
     readTime: "4 min read",
   },
+  {
+    slug: "trinidad-carnival-2027-first-time-masquerader-guide",
+    title:
+      "Trinidad Carnival 2027: Dates, Costumes, Hotels, Makeup & What First-Time Masqueraders Need to Know",
+    author: "Carnival Glam Hub",
+    publishedDate: "2026-06-22",
+    coverImage: "/blog/trinidad-2027/road-1.jpg",
+    excerpt:
+      "Planning Trinidad Carnival 2027? Dates, bands, hotels, budgets and how to plan your Carnival-morning makeup, hair and photos. A first-timer's guide from Carnival Glam Hub.",
+    category: "Trinidad Carnival",
+    tags: [
+      "Trinidad Carnival",
+      "Carnival Tips",
+      "Carnival Glam Hub",
+      "Trinidad Carnival 2027",
+    ],
+    metaDescription:
+      "Planning Trinidad Carnival 2027? Dates, bands, hotels, budgets and how to plan your Carnival-morning makeup, hair and photos. A first-timer's guide from Carnival Glam Hub.",
+    readTime: "8 min read",
+  },
 ];
 
 export const RECOVERED_POST_SLUGS: Set<string> = new Set(
