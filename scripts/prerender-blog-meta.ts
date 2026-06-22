@@ -7,6 +7,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
+import sharp from "sharp";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
@@ -71,6 +72,75 @@ type Post = {
   image: string;
 };
 
+type ResolvedImage = {
+  url: string;
+  width: number;
+  height: number;
+  type: string; // image/jpeg | image/png
+};
+
+const FB_W = 1200;
+const FB_H = 630;
+const FALLBACK_OG = `${BASE_URL}/og-image.png`;
+
+function rewriteWixToJpeg(url: string): string | null {
+  // https://static.wixstatic.com/media/<file>[/...rest]
+  const m = url.match(/^(https?:\/\/static\.wixstatic\.com\/media\/)([^/?#]+)/i);
+  if (!m) return null;
+  const file = m[2];
+  return `${m[1]}${file}/v1/fill/w_${FB_W},h_${FB_H},al_c,q_90/${file}`;
+}
+
+async function generateLocalJpeg(slug: string, sourceUrl: string): Promise<string | null> {
+  // Accept absolute (BASE_URL/assets/...) or root-relative (/assets/...).
+  const path = sourceUrl.startsWith(BASE_URL)
+    ? sourceUrl.slice(BASE_URL.length)
+    : sourceUrl;
+  if (!path.startsWith("/assets/")) return null;
+  const localFile = join(DIST, path.replace(/^\//, ""));
+  if (!existsSync(localFile)) return null;
+  const outDir = join(DIST, "og");
+  mkdirSync(outDir, { recursive: true });
+  const outFile = join(outDir, `${slug}.jpg`);
+  await sharp(localFile)
+    .resize(FB_W, FB_H, { fit: "cover", position: "centre" })
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(outFile);
+  return `${BASE_URL}/og/${slug}.jpg`;
+}
+
+async function resolveOgImage(slug: string, image: string): Promise<ResolvedImage> {
+  const fallback: ResolvedImage = {
+    url: FALLBACK_OG,
+    width: FB_W,
+    height: FB_H,
+    type: "image/png",
+  };
+  if (!image) return fallback;
+
+  const wix = rewriteWixToJpeg(image);
+  if (wix) return { url: wix, width: FB_W, height: FB_H, type: "image/jpeg" };
+
+  const isLocal =
+    image.startsWith(`${BASE_URL}/assets/`) || image.startsWith("/assets/");
+  if (isLocal) {
+    try {
+      const generated = await generateLocalJpeg(slug, image);
+      if (generated)
+        return { url: generated, width: FB_W, height: FB_H, type: "image/jpeg" };
+    } catch (err) {
+      console.warn(`prerender-blog-meta: sharp failed for ${slug}:`, err);
+    }
+    return fallback;
+  }
+
+  // Other absolute URL. Reject WebP outright (Facebook doesn't render it).
+  if (/\.webp(\?|$)/i.test(image)) return fallback;
+  // Trust as-is, but still advertise FB dimensions/type best-guess.
+  const type = /\.png(\?|$)/i.test(image) ? "image/png" : "image/jpeg";
+  return { url: image, width: FB_W, height: FB_H, type };
+}
+
 function manualPosts(): Post[] {
   const out: Post[] = [];
   const push = (slug: string, title: string, description: string, basename: string, fallback: string) => {
@@ -119,11 +189,11 @@ const escapeAttr = (s: string) =>
 const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-function rewriteHead(template: string, post: Post): string {
+function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
   const url = `${BASE_URL}/blogs/${post.slug}`;
   const title = `${post.title} | Carnival Glam Hub Blog`;
   const desc = post.description;
-  const image = post.image;
+  const image = img.url;
 
   let html = template;
 
@@ -175,10 +245,26 @@ function rewriteHead(template: string, post: Post): string {
     /<meta\s+property="og:image:alt"[^>]*>/i,
     `<meta property="og:image:alt" content="${escapeAttr(post.title)}" />`,
   );
-  // Drop fixed image:type/width/height — cover images vary.
-  html = html.replace(/\s*<meta\s+property="og:image:type"[^>]*>\n?/i, "\n");
-  html = html.replace(/\s*<meta\s+property="og:image:width"[^>]*>\n?/i, "\n");
-  html = html.replace(/\s*<meta\s+property="og:image:height"[^>]*>\n?/i, "\n");
+  // Explicit Facebook-friendly dimensions/type.
+  const setOrAppend = (re: RegExp, tag: string) => {
+    if (re.test(html)) {
+      html = html.replace(re, tag);
+    } else {
+      html = html.replace("</head>", `    ${tag}\n  </head>`);
+    }
+  };
+  setOrAppend(
+    /<meta\s+property="og:image:type"[^>]*>/i,
+    `<meta property="og:image:type" content="${img.type}" />`,
+  );
+  setOrAppend(
+    /<meta\s+property="og:image:width"[^>]*>/i,
+    `<meta property="og:image:width" content="${img.width}" />`,
+  );
+  setOrAppend(
+    /<meta\s+property="og:image:height"[^>]*>/i,
+    `<meta property="og:image:height" content="${img.height}" />`,
+  );
 
   // twitter:url
   html = html.replace(
@@ -194,6 +280,29 @@ function rewriteHead(template: string, post: Post): string {
     /<meta\s+name="twitter:image:alt"[^>]*>/i,
     `<meta name="twitter:image:alt" content="${escapeAttr(post.title)}" />`,
   );
+  // Twitter image dimensions/type for parity with og:*.
+  if (/<meta\s+name="twitter:image:width"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+name="twitter:image:width"[^>]*>/i,
+      `<meta name="twitter:image:width" content="${img.width}" />`,
+    );
+  } else {
+    html = html.replace(
+      "</head>",
+      `    <meta name="twitter:image:width" content="${img.width}" />\n  </head>`,
+    );
+  }
+  if (/<meta\s+name="twitter:image:height"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+name="twitter:image:height"[^>]*>/i,
+      `<meta name="twitter:image:height" content="${img.height}" />`,
+    );
+  } else {
+    html = html.replace(
+      "</head>",
+      `    <meta name="twitter:image:height" content="${img.height}" />\n  </head>`,
+    );
+  }
   // twitter:title / description (these live near the bottom of head)
   if (/<meta\s+name="twitter:title"[^>]*>/i.test(html)) {
     html = html.replace(
@@ -273,7 +382,8 @@ async function main() {
 
   let written = 0;
   for (const post of posts) {
-    const html = rewriteHead(template, post);
+    const resolved = await resolveOgImage(post.slug, post.image);
+    const html = rewriteHead(template, post, resolved);
     const dir = join(DIST, "blogs", post.slug);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);
