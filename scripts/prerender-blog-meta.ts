@@ -72,6 +72,75 @@ type Post = {
   image: string;
 };
 
+type ResolvedImage = {
+  url: string;
+  width: number;
+  height: number;
+  type: string; // image/jpeg | image/png
+};
+
+const FB_W = 1200;
+const FB_H = 630;
+const FALLBACK_OG = `${BASE_URL}/og-image.png`;
+
+function rewriteWixToJpeg(url: string): string | null {
+  // https://static.wixstatic.com/media/<file>[/...rest]
+  const m = url.match(/^(https?:\/\/static\.wixstatic\.com\/media\/)([^/?#]+)/i);
+  if (!m) return null;
+  const file = m[2];
+  return `${m[1]}${file}/v1/fill/w_${FB_W},h_${FB_H},al_c,q_90/${file}`;
+}
+
+async function generateLocalJpeg(slug: string, sourceUrl: string): Promise<string | null> {
+  // Accept absolute (BASE_URL/assets/...) or root-relative (/assets/...).
+  const path = sourceUrl.startsWith(BASE_URL)
+    ? sourceUrl.slice(BASE_URL.length)
+    : sourceUrl;
+  if (!path.startsWith("/assets/")) return null;
+  const localFile = join(DIST, path.replace(/^\//, ""));
+  if (!existsSync(localFile)) return null;
+  const outDir = join(DIST, "og");
+  mkdirSync(outDir, { recursive: true });
+  const outFile = join(outDir, `${slug}.jpg`);
+  await sharp(localFile)
+    .resize(FB_W, FB_H, { fit: "cover", position: "centre" })
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(outFile);
+  return `${BASE_URL}/og/${slug}.jpg`;
+}
+
+async function resolveOgImage(slug: string, image: string): Promise<ResolvedImage> {
+  const fallback: ResolvedImage = {
+    url: FALLBACK_OG,
+    width: FB_W,
+    height: FB_H,
+    type: "image/png",
+  };
+  if (!image) return fallback;
+
+  const wix = rewriteWixToJpeg(image);
+  if (wix) return { url: wix, width: FB_W, height: FB_H, type: "image/jpeg" };
+
+  const isLocal =
+    image.startsWith(`${BASE_URL}/assets/`) || image.startsWith("/assets/");
+  if (isLocal) {
+    try {
+      const generated = await generateLocalJpeg(slug, image);
+      if (generated)
+        return { url: generated, width: FB_W, height: FB_H, type: "image/jpeg" };
+    } catch (err) {
+      console.warn(`prerender-blog-meta: sharp failed for ${slug}:`, err);
+    }
+    return fallback;
+  }
+
+  // Other absolute URL. Reject WebP outright (Facebook doesn't render it).
+  if (/\.webp(\?|$)/i.test(image)) return fallback;
+  // Trust as-is, but still advertise FB dimensions/type best-guess.
+  const type = /\.png(\?|$)/i.test(image) ? "image/png" : "image/jpeg";
+  return { url: image, width: FB_W, height: FB_H, type };
+}
+
 function manualPosts(): Post[] {
   const out: Post[] = [];
   const push = (slug: string, title: string, description: string, basename: string, fallback: string) => {
