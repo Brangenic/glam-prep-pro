@@ -90,6 +90,81 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Planning Crop Over 2025? From where to stay and what to eat to glam tips and road-day hacks, here's your ultimate guide to enjoying Barbados' biggest carnival like a pro.",
     readTime: "6 min read",
   },
+  {
+    slug: "10-tips-for-trinidad-carnival-jouvert",
+    title: "10 Tips for Trinidad Carnival J'ouvert",
+    author: "Carnival Chaser",
+    publishedDate: "2026-06-19",
+    coverImage:
+      "https://static.wixstatic.com/media/477465_3333540afbef4f60a48b009fbc85bc60~mv2.jpg",
+    excerpt:
+      "First time doing J'ouvert at Trinidad Carnival 2027? Here's how to survive and enjoy Trinidad's wildest Carnival event, from outfits to safety and glam that lasts.",
+    category: "Carnival Tips",
+    tags: ["Carnival Tips", "Jouvert", "Trinidad Carnival", "Carnival Do's and Don'ts"],
+    metaDescription:
+      "First time doing J'ouvert at Trinidad Carnival 2027? Here's how to survive and enjoy Trinidad's wildest Carnival event, from outfits to safety and glam that lasts.",
+    readTime: "5 min read",
+  },
+  {
+    slug: "dont-make-these-5-rookie-mistakes-trinidad-carnival-2027",
+    title: "Don't Make These 5 Rookie Mistakes: Trinidad Carnival 2027",
+    author: "Shanique Singh",
+    publishedDate: "2026-06-20",
+    coverImage:
+      "https://static.wixstatic.com/media/477465_8616a66eef5a4afaaff222aa9ba5a238~mv2.jpg",
+    excerpt:
+      "Insider tips for Trinidad Carnival 2027 first-timers. From shoe choices to fete essentials, learn the ropes from a seasoned masquerader and model, and avoid the rookie pitfalls.",
+    category: "Carnival Tips",
+    tags: ["Carnival Tips", "Trinidad Carnival", "Carnival Do's and Don'ts", "Carnival Glam Hub"],
+    metaDescription:
+      "Insider tips for Trinidad Carnival 2027 first-timers. From shoe choices to fete essentials, learn the ropes from a seasoned masquerader and model, and avoid the rookie pitfalls.",
+    readTime: "5 min read",
+  },
+  {
+    slug: "is-trinidad-carnival-safe",
+    title: "Is Trinidad Carnival Safe? The Real Talk You Never Knew You Needed",
+    author: "Carnival Glam Hub",
+    publishedDate: "2026-06-17",
+    coverImage:
+      "https://static.wixstatic.com/media/477465_d867c068593945b4999d3ae7c72d3ef6~mv2.jpg",
+    excerpt:
+      "Is Trinidad Carnival 2027 safe? We cut through the noise with real, practical safety advice for masqueraders, from cash tactics to ride-share moves and squad goals.",
+    category: "Carnival Tips",
+    tags: ["Carnival Tips", "Trinidad Carnival", "Travel Tips", "Carnival Do's and Don'ts"],
+    metaDescription:
+      "Is Trinidad Carnival 2027 safe? We cut through the noise with real, practical safety advice for masqueraders, from cash tactics to ride-share moves and squad goals.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "how-to-put-on-your-carnival-wire-bra",
+    title: "How to Put On Your Carnival Wire Bra",
+    author: "Carnival Glam Hub",
+    publishedDate: "2026-06-16",
+    coverImage:
+      "https://static.wixstatic.com/media/477465_ae49750d61e4486c9bb571455a196957~mv2.jpg",
+    excerpt:
+      "Carnival wire bras cause 90% of costume malfunctions. Here are four must-know tips to put yours on right and avoid wardrobe disasters on the road.",
+    category: "Carnival Tips",
+    tags: ["Carnival Tips", "Carnival Wire Bra", "Trinidad Carnival", "Carnival Do's and Don'ts"],
+    metaDescription:
+      "Carnival wire bras cause 90% of costume malfunctions. Here are four must-know tips to put yours on right and avoid wardrobe disasters on the road.",
+    readTime: "4 min read",
+  },
+  {
+    slug: "comfort-queen-or-hot-gyal",
+    title: "Comfort Queen or Hot Gyal? A Carnival Footwear Guide",
+    author: "Mary Esdelle",
+    publishedDate: "2026-06-18",
+    coverImage:
+      "https://static.wixstatic.com/media/477465_25db9dd2b93b40089c6a0adf739f9e08~mv2.jpg",
+    excerpt:
+      "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027 — block heels, peep-toe booties, platforms and the half-and-half move.",
+    category: "Carnival Tips",
+    tags: ["Carnival Tips", "Trinidad Carnival", "Carnival Shoes", "Carnival Do's and Don'ts"],
+    metaDescription:
+      "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027 — block heels, peep-toe booties, platforms and the half-and-half move.",
+    readTime: "4 min read",
+  },
 ];
 
 export const RECOVERED_POST_SLUGS: Set<string> = new Set(
