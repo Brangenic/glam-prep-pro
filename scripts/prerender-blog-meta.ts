@@ -70,6 +70,9 @@ type Post = {
   title: string;
   description: string;
   image: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+  author?: string;
 };
 
 type ResolvedImage = {
@@ -175,6 +178,9 @@ function manualPosts(): Post[] {
       title: p.title,
       description: p.metaDescription,
       image: p.coverImage,
+      publishedDate: p.publishedDate,
+      modifiedDate: p.publishedDate,
+      author: p.author,
     });
   }
   return out;
