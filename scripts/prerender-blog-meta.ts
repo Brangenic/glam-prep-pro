@@ -9,6 +9,7 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+import { RECOVERED_POSTS } from "../src/data/recoveredPosts";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -73,6 +74,7 @@ type Post = {
   publishedDate?: string;
   modifiedDate?: string;
   author?: string;
+  content?: string;
 };
 
 type ResolvedImage = {
@@ -85,14 +87,6 @@ type ResolvedImage = {
 const FB_W = 1200;
 const FB_H = 630;
 const FALLBACK_OG = `${BASE_URL}/og-image.png`;
-
-function rewriteWixToJpeg(url: string): string | null {
-  // https://static.wixstatic.com/media/<file>[/...rest]
-  const m = url.match(/^(https?:\/\/static\.wixstatic\.com\/media\/)([^/?#]+)/i);
-  if (!m) return null;
-  const file = m[2];
-  return `${m[1]}${file}/v1/fill/w_${FB_W},h_${FB_H},al_c,q_90/${file}`;
-}
 
 async function generateLocalJpeg(slug: string, sourceUrl: string): Promise<string | null> {
   // Accept absolute (BASE_URL/...) or root-relative (/...) paths that map to
@@ -113,36 +107,68 @@ async function generateLocalJpeg(slug: string, sourceUrl: string): Promise<strin
   return `${BASE_URL}/og/${slug}.jpg`;
 }
 
-async function resolveOgImage(slug: string, image: string): Promise<ResolvedImage> {
+async function generateRemoteJpeg(slug: string, sourceUrl: string): Promise<string | null> {
+  // Download any remote image and transcode to a 1200x630 JPEG. Works for
+  // Supabase Storage WebP, wixstatic, or any other absolute URL. Returns
+  // a site-hosted /og/<slug>.jpg URL on success.
+  try {
+    const res = await fetch(sourceUrl);
+    if (!res.ok) return null;
+    const buf = Buffer.from(await res.arrayBuffer());
+    const outDir = join(DIST, "og");
+    mkdirSync(outDir, { recursive: true });
+    const outFile = join(outDir, `${slug}.jpg`);
+    await sharp(buf)
+      .resize(FB_W, FB_H, { fit: "cover", position: "centre" })
+      .jpeg({ quality: 85, mozjpeg: true })
+      .toFile(outFile);
+    return `${BASE_URL}/og/${slug}.jpg`;
+  } catch (err) {
+    console.warn(`prerender-blog-meta: remote transcode failed for ${slug} (${sourceUrl}):`, err);
+    return null;
+  }
+}
+
+function firstBodyImageUrl(content: string | undefined): string | null {
+  if (!content) return null;
+  const m = content.match(/!\[[^\]]*\]\((https?:[^)\s]+)\)/);
+  return m?.[1] ?? null;
+}
+
+async function resolveOgImage(slug: string, image: string, content?: string): Promise<ResolvedImage> {
   const fallback: ResolvedImage = {
     url: FALLBACK_OG,
     width: FB_W,
     height: FB_H,
     type: "image/png",
   };
-  if (!image) return fallback;
 
-  const wix = rewriteWixToJpeg(image);
-  if (wix) return { url: wix, width: FB_W, height: FB_H, type: "image/jpeg" };
+  const candidates: string[] = [];
+  if (image) candidates.push(image);
+  const bodyImg = firstBodyImageUrl(content);
+  if (bodyImg && bodyImg !== image) candidates.push(bodyImg);
 
-  const isLocal =
-    image.startsWith(`${BASE_URL}/`) || image.startsWith("/");
-  if (isLocal) {
-    try {
-      const generated = await generateLocalJpeg(slug, image);
-      if (generated)
-        return { url: generated, width: FB_W, height: FB_H, type: "image/jpeg" };
-    } catch (err) {
-      console.warn(`prerender-blog-meta: sharp failed for ${slug}:`, err);
+  for (const candidate of candidates) {
+    const isLocal =
+      candidate.startsWith(`${BASE_URL}/`) || candidate.startsWith("/");
+    if (isLocal) {
+      try {
+        const generated = await generateLocalJpeg(slug, candidate);
+        if (generated)
+          return { url: generated, width: FB_W, height: FB_H, type: "image/jpeg" };
+      } catch (err) {
+        console.warn(`prerender-blog-meta: sharp failed for ${slug}:`, err);
+      }
+      continue;
     }
-    return fallback;
+    // Any remote http(s) image — always transcode to JPEG, never reject by
+    // format. Generic /og-image.png is the absolute last resort.
+    const generated = await generateRemoteJpeg(slug, candidate);
+    if (generated)
+      return { url: generated, width: FB_W, height: FB_H, type: "image/jpeg" };
   }
 
-  // Other absolute URL. Reject WebP outright (Facebook doesn't render it).
-  if (/\.webp(\?|$)/i.test(image)) return fallback;
-  // Trust as-is, but still advertise FB dimensions/type best-guess.
-  const type = /\.png(\?|$)/i.test(image) ? "image/png" : "image/jpeg";
-  return { url: image, width: FB_W, height: FB_H, type };
+  return fallback;
 }
 
 function manualPosts(): Post[] {
@@ -181,6 +207,7 @@ function manualPosts(): Post[] {
       publishedDate: p.publishedDate,
       modifiedDate: p.publishedDate,
       author: p.author,
+      content: RECOVERED_POSTS.find((r) => r.slug === p.slug)?.content,
     });
   }
   return out;
@@ -398,7 +425,7 @@ async function main() {
   try {
     const { data, error } = await supabase
       .from("blog_posts")
-      .select("slug, post_url, title, excerpt, meta_description, image_url, published_date, author_name, raw_payload")
+      .select("slug, post_url, title, excerpt, meta_description, image_url, content, published_date, author_name, raw_payload")
       .order("synced_at", { ascending: false })
       .limit(1000);
     if (error) throw error;
@@ -420,6 +447,7 @@ async function main() {
         publishedDate: (row.published_date ?? "").toString() || undefined,
         modifiedDate: (row.published_date ?? "").toString() || undefined,
         author: (row.author_name ?? "").toString() || undefined,
+        content: (row.content ?? "").toString() || undefined,
       });
     }
   } catch (err) {
@@ -428,7 +456,7 @@ async function main() {
 
   let written = 0;
   for (const post of posts) {
-    const resolved = await resolveOgImage(post.slug, post.image);
+    const resolved = await resolveOgImage(post.slug, post.image, post.content);
     const html = rewriteHead(template, post, resolved);
     const dir = join(DIST, "blogs", post.slug);
     mkdirSync(dir, { recursive: true });
