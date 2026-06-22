@@ -1,20 +1,43 @@
 # Carnival Glam Hub
 
-Carnival Glam Hub is a premium Carnival morning concierge for travelling masqueraders in Trinidad, Jamaica, Miami, Toronto, Grenada (Spice Mas), Saint Lucia, Antigua, and Barbados (Crop Over). Founded 2017 by Gabrielle Waite. Trusted by 15,000+ masqueraders.
-
-## Booking
-Book at https://www.carnivalglamhub.com/#booking. Email bookings@carnivalglamhub.com.
+> Premium Carnival-morning concierge for travelling masqueraders across Trinidad, Jamaica, Miami, Toronto, Grenada (Spice Mas), Saint Lucia, Antigua, and Barbados (Crop Over). Founded 2017 by Gabrielle Waite. Trusted by 15,000+ masqueraders.
 
 ## Core Pages
-About https://www.carnivalglamhub.com/about. FAQ https://www.carnivalglamhub.com/faq. Blogs https://www.carnivalglamhub.com/blogs.
+
+- [Home](https://www.carnivalglamhub.com/)
+- [About](https://www.carnivalglamhub.com/about)
+- [FAQ](https://www.carnivalglamhub.com/faq)
+- [Blogs](https://www.carnivalglamhub.com/blogs)
+- [Reviews](https://www.carnivalglamhub.com/reviews)
 
 ## Services
-Carnival Makeup https://www.carnivalglamhub.com/services/carnival-makeup. Carnival Hair https://www.carnivalglamhub.com/services/carnival-hair. Getting Dressed Assistance https://www.carnivalglamhub.com/services/getting-dressed. Carnival Photoshoot https://www.carnivalglamhub.com/services/carnival-photoshoot. Carnival Shuttle https://www.carnivalglamhub.com/services/carnival-shuttle.
+
+- [Carnival Makeup](https://www.carnivalglamhub.com/services/carnival-makeup)
+- [Carnival Hair](https://www.carnivalglamhub.com/services/carnival-hair)
+- [Getting Dressed Assistance](https://www.carnivalglamhub.com/services/getting-dressed)
+- [Carnival Photoshoot](https://www.carnivalglamhub.com/services/carnival-photoshoot)
+- [Carnival Shuttle](https://www.carnivalglamhub.com/services/carnival-shuttle)
 
 ## Destinations
-Trinidad Carnival 2027 https://www.carnivalglamhub.com/trinidad-carnival-2027.
 
-## Owner
-Founder Gabrielle Waite. Founded 2017. HQ Kingston, Jamaica.
+- [Trinidad Carnival 2027](https://www.carnivalglamhub.com/trinidad-carnival-2027)
 
-End of llms.txt body.
+## Blog
+
+- [Trinidad Carnival 2027: First-Time Masquerader Guide](https://www.carnivalglamhub.com/blogs/trinidad-carnival-2027-first-time-masquerader-guide)
+- [Don't Make These 5 Rookie Mistakes: Trinidad Carnival 2027](https://www.carnivalglamhub.com/blogs/dont-make-these-5-rookie-mistakes-trinidad-carnival-2027)
+- [10 Tips for Trinidad Carnival J'ouvert](https://www.carnivalglamhub.com/blogs/10-tips-for-trinidad-carnival-jouvert)
+- [Is Trinidad Carnival Safe?](https://www.carnivalglamhub.com/blogs/is-trinidad-carnival-safe)
+- [How to Put On Your Carnival Wire Bra](https://www.carnivalglamhub.com/blogs/how-to-put-on-your-carnival-wire-bra)
+- [Comfort Queen or Hot Gyal? A Carnival Footwear Guide](https://www.carnivalglamhub.com/blogs/comfort-queen-or-hot-gyal)
+- [Your Ultimate Guide to Jamaica Carnival 2025](https://www.carnivalglamhub.com/blogs/your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know)
+- [Barbados Crop Over 2025: What to Know Before You Go](https://www.carnivalglamhub.com/blogs/barbados-crop-over-2025-what-to-know-before-you-go)
+- [Carnival Queen: Rihanna's Stunning Return to Crop Over 2024](https://www.carnivalglamhub.com/blogs/carnival-queen-rihannas-stunning-return-to-crop-over-2024)
+- [Is Professional Carnival Makeup Worth It?](https://www.carnivalglamhub.com/blogs/is-professional-carnival-makeup-worth-it)
+- [How Far In Advance Should I Book My Carnival Makeup Artist?](https://www.carnivalglamhub.com/blogs/how-far-in-advance-to-book-carnival-makeup)
+- [The Caribbean Carnival Airlift Problem](https://www.carnivalglamhub.com/blogs/caribbean-carnival-has-an-airlift-problem)
+
+## Contact
+
+- Bookings: bookings@carnivalglamhub.com
+- Founder: Gabrielle Waite (founded 2017, HQ Kingston, Jamaica)
