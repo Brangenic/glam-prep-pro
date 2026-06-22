@@ -189,11 +189,11 @@ const escapeAttr = (s: string) =>
 const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-function rewriteHead(template: string, post: Post): string {
+function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
   const url = `${BASE_URL}/blogs/${post.slug}`;
   const title = `${post.title} | Carnival Glam Hub Blog`;
   const desc = post.description;
-  const image = post.image;
+  const image = img.url;
 
   let html = template;
 
@@ -245,10 +245,26 @@ function rewriteHead(template: string, post: Post): string {
     /<meta\s+property="og:image:alt"[^>]*>/i,
     `<meta property="og:image:alt" content="${escapeAttr(post.title)}" />`,
   );
-  // Drop fixed image:type/width/height — cover images vary.
-  html = html.replace(/\s*<meta\s+property="og:image:type"[^>]*>\n?/i, "\n");
-  html = html.replace(/\s*<meta\s+property="og:image:width"[^>]*>\n?/i, "\n");
-  html = html.replace(/\s*<meta\s+property="og:image:height"[^>]*>\n?/i, "\n");
+  // Explicit Facebook-friendly dimensions/type.
+  const setOrAppend = (re: RegExp, tag: string) => {
+    if (re.test(html)) {
+      html = html.replace(re, tag);
+    } else {
+      html = html.replace("</head>", `    ${tag}\n  </head>`);
+    }
+  };
+  setOrAppend(
+    /<meta\s+property="og:image:type"[^>]*>/i,
+    `<meta property="og:image:type" content="${img.type}" />`,
+  );
+  setOrAppend(
+    /<meta\s+property="og:image:width"[^>]*>/i,
+    `<meta property="og:image:width" content="${img.width}" />`,
+  );
+  setOrAppend(
+    /<meta\s+property="og:image:height"[^>]*>/i,
+    `<meta property="og:image:height" content="${img.height}" />`,
+  );
 
   // twitter:url
   html = html.replace(
@@ -264,6 +280,29 @@ function rewriteHead(template: string, post: Post): string {
     /<meta\s+name="twitter:image:alt"[^>]*>/i,
     `<meta name="twitter:image:alt" content="${escapeAttr(post.title)}" />`,
   );
+  // Twitter image dimensions/type for parity with og:*.
+  if (/<meta\s+name="twitter:image:width"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+name="twitter:image:width"[^>]*>/i,
+      `<meta name="twitter:image:width" content="${img.width}" />`,
+    );
+  } else {
+    html = html.replace(
+      "</head>",
+      `    <meta name="twitter:image:width" content="${img.width}" />\n  </head>`,
+    );
+  }
+  if (/<meta\s+name="twitter:image:height"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+name="twitter:image:height"[^>]*>/i,
+      `<meta name="twitter:image:height" content="${img.height}" />`,
+    );
+  } else {
+    html = html.replace(
+      "</head>",
+      `    <meta name="twitter:image:height" content="${img.height}" />\n  </head>`,
+    );
+  }
   // twitter:title / description (these live near the bottom of head)
   if (/<meta\s+name="twitter:title"[^>]*>/i.test(html)) {
     html = html.replace(
@@ -343,7 +382,8 @@ async function main() {
 
   let written = 0;
   for (const post of posts) {
-    const html = rewriteHead(template, post);
+    const resolved = await resolveOgImage(post.slug, post.image);
+    const html = rewriteHead(template, post, resolved);
     const dir = join(DIST, "blogs", post.slug);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);
