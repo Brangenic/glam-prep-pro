@@ -113,8 +113,9 @@ const MANUAL_POSTS: BlogPost[] = [
   })),
 ];
 
-const FEATURED_SLUG = "is-professional-carnival-makeup-worth-it";
+const FEATURED_SLUG = "trinidad-carnival-2027-first-time-masquerader-guide";
 const MANUAL_GRID_ORDER: string[] = [
+  "is-professional-carnival-makeup-worth-it",
   "how-far-in-advance-to-book-carnival-makeup",
   "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips",
   "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing",
