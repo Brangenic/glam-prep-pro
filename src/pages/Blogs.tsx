@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import Fuse from "fuse.js";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -132,10 +133,44 @@ const MANUAL_GRID_ORDER: string[] = [
 const resolveSlug = (post: BlogPost) =>
   post.slug || getSlugFromPostUrl(post.post_url) || post.external_id;
 
+// Synonym groups for meaning-aware search. A query that matches any
+// term in a group expands to include every other term in the group, so
+// "jab jab" also finds "jouvert", "makeup" also finds "glam", etc.
+const SYNONYM_GROUPS: string[][] = [
+  ["jouvert", "j'ouvert", "jab jab", "jab", "oil", "paint", "mud"],
+  ["makeup", "glam", "beauty", "mua", "face", "lashes"],
+  ["hair", "braids", "wig", "cornrows", "silk press", "ponytail", "hairstyle"],
+  ["shoes", "footwear", "boots", "heels", "sneakers"],
+  ["costume", "mas", "band", "wire bra"],
+  ["trinidad", "tt", "trini", "port of spain"],
+  ["tobago"],
+  ["grenada", "spicemas"],
+  ["st lucia", "saint lucia"],
+  ["barbados", "crop over", "bim"],
+  ["antigua"],
+  ["miami", "miami carnival"],
+  ["toronto", "caribana"],
+  ["jamaica"],
+  ["guyana"],
+];
+
+const expandQuery = (q: string): string => {
+  const lower = q.toLowerCase();
+  const extras = new Set<string>();
+  for (const group of SYNONYM_GROUPS) {
+    if (group.some((term) => lower.includes(term))) {
+      group.forEach((t) => extras.add(t));
+    }
+  }
+  if (extras.size === 0) return q;
+  return `${q} ${Array.from(extras).join(" ")}`;
+};
+
 const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
   const PAGE_SIZE = 24;
 
   const EXCLUDED_AUTHORS = [
@@ -249,9 +284,30 @@ const Blogs = () => {
     };
   }, []);
 
-  const featured = posts[0];
-  const rest = posts.slice(1);
-  const usePagination = posts.length > PAGE_SIZE;
+  const fuse = useMemo(
+    () =>
+      new Fuse(posts, {
+        keys: [
+          { name: "title", weight: 0.7 },
+          { name: "excerpt", weight: 0.3 },
+        ],
+        threshold: 0.4,
+        ignoreLocation: true,
+        minMatchCharLength: 2,
+      }),
+    [posts],
+  );
+
+  const trimmedQuery = query.trim();
+  const filteredPosts = useMemo(() => {
+    if (!trimmedQuery) return posts;
+    const expanded = expandQuery(trimmedQuery);
+    return fuse.search(expanded).map((r) => r.item);
+  }, [trimmedQuery, fuse, posts]);
+
+  const featured = filteredPosts[0];
+  const rest = filteredPosts.slice(1);
+  const usePagination = !trimmedQuery && filteredPosts.length > PAGE_SIZE;
   const totalPages = usePagination ? Math.ceil(rest.length / (PAGE_SIZE - 1)) : 1;
   const pageItems = usePagination
     ? rest.slice((page - 1) * (PAGE_SIZE - 1), page * (PAGE_SIZE - 1))
@@ -320,6 +376,21 @@ const Blogs = () => {
               </p>
             </header>
 
+            {/* Smart search */}
+            <div className="mb-8 sm:mb-10">
+              <label htmlFor="blog-search" className="sr-only">
+                Search the journal
+              </label>
+              <input
+                id="blog-search"
+                type="search"
+                value={query}
+                onChange={(e) => { setQuery(e.target.value); setPage(1); }}
+                placeholder="Search the journal — try ‘jouvert’, ‘makeup’, ‘Trinidad’…"
+                className="w-full max-w-2xl rounded-full border border-border bg-card px-5 py-3 font-body text-sm sm:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
@@ -344,6 +415,21 @@ const Blogs = () => {
                 >
                   About Carnival Glam Hub
                 </Link>
+              </div>
+            ) : filteredPosts.length === 0 ? (
+              <div className="rounded-2xl border border-border bg-card p-10 text-center">
+                <p className="font-body text-base sm:text-lg text-foreground mb-2">
+                  No journal posts match “{trimmedQuery}”.
+                </p>
+                <p className="font-body text-sm text-muted-foreground mb-6">
+                  Try a broader word — like ‘makeup’, ‘jouvert’ or a Carnival name.
+                </p>
+                <button
+                  onClick={() => setQuery("")}
+                  className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+                >
+                  Clear search
+                </button>
               </div>
             ) : (
               <>
