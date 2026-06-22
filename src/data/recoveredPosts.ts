@@ -7,6 +7,11 @@ import bodyChatGPT from "./recovered/chatgpt-picks-the-top-5-best-caribbean-carn
 import bodyJamaica from "./recovered/your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know.md?raw";
 import bodyRihanna from "./recovered/carnival-queen-rihannas-stunning-return-to-crop-over-2024.md?raw";
 import bodyBarbados from "./recovered/barbados-crop-over-2025-what-to-know-before-you-go.md?raw";
+import bodyJouvertTips from "./recovered/10-tips-for-trinidad-carnival-jouvert.md?raw";
+import bodyRookie from "./recovered/dont-make-these-5-rookie-mistakes-trinidad-carnival-2027.md?raw";
+import bodySafe from "./recovered/is-trinidad-carnival-safe.md?raw";
+import bodyWireBra from "./recovered/how-to-put-on-your-carnival-wire-bra.md?raw";
+import bodyComfort from "./recovered/comfort-queen-or-hot-gyal.md?raw";
 
 export type RecoveredPost = RecoveredPostMeta & { content: string };
 
@@ -15,6 +20,11 @@ const BODIES: Record<string, string> = {
   "your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know": bodyJamaica,
   "carnival-queen-rihannas-stunning-return-to-crop-over-2024": bodyRihanna,
   "barbados-crop-over-2025-what-to-know-before-you-go": bodyBarbados,
+  "10-tips-for-trinidad-carnival-jouvert": bodyJouvertTips,
+  "dont-make-these-5-rookie-mistakes-trinidad-carnival-2027": bodyRookie,
+  "is-trinidad-carnival-safe": bodySafe,
+  "how-to-put-on-your-carnival-wire-bra": bodyWireBra,
+  "comfort-queen-or-hot-gyal": bodyComfort,
 };
 
 export const RECOVERED_POSTS: RecoveredPost[] = RECOVERED_POSTS_META.map(
