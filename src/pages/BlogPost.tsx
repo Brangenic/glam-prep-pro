@@ -514,6 +514,24 @@ const BlogPost = () => {
                               const yt = parseYouTube(href);
                               if (yt) return <YouTubeEmbed id={yt.id} kind={yt.kind} />;
                             }
+                            // Standalone booking link → render as prominent CTA button.
+                            try {
+                              const u = new URL(href);
+                              if (u.hostname.endsWith("carnivalglamhub.masos.app")) {
+                                return (
+                                  <p className="my-8 flex justify-center">
+                                    <a
+                                      href={href}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-block rounded-full bg-primary px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-primary/90 no-underline"
+                                    >
+                                      {children}
+                                    </a>
+                                  </p>
+                                );
+                              }
+                            } catch {}
                           }
                           return <p {...props}>{children}</p>;
                         },
