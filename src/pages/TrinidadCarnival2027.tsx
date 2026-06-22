@@ -215,6 +215,23 @@ const TrinidadCarnival2027 = () => {
         {/* Why Glam Hub */}
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Why Glam Hub</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+            {[
+              { src: photoGabby, name: "Gabby", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
+              { src: photoDania, name: "Dania", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
+              { src: photoChontelle, name: "Chontelle", alt: "Chontelle — Trinidad Carnival hair by Glam Hub" },
+            ].map((m) => (
+              <figure key={m.name} className="flex flex-col">
+                <img
+                  src={m.src}
+                  alt={m.alt}
+                  loading="lazy"
+                  className="w-full aspect-[3/4] object-cover rounded-2xl"
+                />
+                <figcaption className="mt-2 text-center font-body text-sm text-muted-foreground">{m.name}</figcaption>
+              </figure>
+            ))}
+          </div>
           <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
             We have glammed more than 15,000 masqueraders since 2017. Our work has been featured internationally and trusted by Carnival models, influencers and everyday masqueraders who just want to look incredible on the road. We have been doing this across multiple Carnival territories for years, so we know exactly what it takes to keep your Trinidad Carnival glam flawless from your first photo to your last lap.
           </p>
