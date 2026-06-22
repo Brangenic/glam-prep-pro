@@ -82,7 +82,7 @@ const YouTubeEmbed = ({
 };
 
 const cleanMarkdown = (md: string): string => {
-  return md
+  let out = md
     .replace(/\[!\[.*?\]\(https:\/\/smartarget\.online[^\]]*\)\]\([^)]*\)\s*/g, '')
     .replace(/Skip to Main Content\s*/gi, '')
     .replace(/!\[\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*?fill\/w_\d+,h_1200[^)]*\)\s*/g, '')
@@ -108,6 +108,22 @@ const cleanMarkdown = (md: string): string => {
     .replace(/\\(?![*_\[\]()#`\\!])/g, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
+  // De-duplicate consecutive/repeated standalone booking CTA links to
+  // carnivalglamhub.masos.app — keep only the FIRST occurrence so we
+  // never stack 3+ identical "Book Now" buttons at the foot of a post.
+  const bookingLineRe =
+    /^\s*\[[^\]]*\]\(\s*https?:\/\/(?:[^/)\s]*\.)?carnivalglamhub\.masos\.app[^)\s]*\)\s*$/i;
+  const lines = out.split(/\r?\n/);
+  let seenBooking = false;
+  const kept: string[] = [];
+  for (const line of lines) {
+    if (bookingLineRe.test(line)) {
+      if (seenBooking) continue;
+      seenBooking = true;
+    }
+    kept.push(line);
+  }
+  return kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 };
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -487,10 +503,10 @@ const BlogPost = () => {
                 {post.content ? (
                   <div className="prose prose-base max-w-none dark:prose-invert
                     prose-headings:font-display prose-headings:text-foreground prose-headings:tracking-tight
-                    prose-h2:text-2xl [&_h2]:!mt-14 [&_h2]:!mb-5
-                    prose-h3:text-xl [&_h3]:!mt-10 [&_h3]:!mb-4
+                    [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:!mt-16 [&_h2]:!mb-6
+                    [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:!mt-12 [&_h3]:!mb-4
                     prose-p:font-body prose-p:text-foreground/80 prose-p:leading-[1.8] prose-p:mb-6
-                    prose-a:text-primary prose-a:underline prose-a:underline-offset-2 prose-a:decoration-primary/30 hover:prose-a:decoration-primary
+                    [&_a]:text-[#1d4ed8] [&_a]:underline [&_a]:underline-offset-2 [&_a]:decoration-[#1d4ed8]/40 hover:[&_a]:decoration-[#1d4ed8] [&_a]:font-medium
                     prose-blockquote:border-l-primary prose-blockquote:bg-primary/5 prose-blockquote:rounded-r-lg prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:text-muted-foreground prose-blockquote:italic prose-blockquote:not-italic prose-blockquote:font-body
                     [&_img]:block [&_img]:w-full [&_img]:h-auto [&_img]:max-w-full [&_img]:object-contain [&_img]:rounded-2xl [&_img]:mx-auto [&_img]:my-10
                     [&_p:has(>img)]:my-10 [&_p:has(>img)]:py-1
@@ -502,6 +518,33 @@ const BlogPost = () => {
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
+                        a: ({ node, href, children, ...props }) => {
+                          let isAmazon = false;
+                          try {
+                            if (href) {
+                              const h = new URL(href).hostname.toLowerCase();
+                              isAmazon = /(^|\.)amazon\.[a-z.]+$/.test(h);
+                            }
+                          } catch {}
+                          if (isAmazon) {
+                            return (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer sponsored"
+                                className="!text-[#FF9900] !decoration-[#FF9900] font-bold underline underline-offset-2"
+                                {...props}
+                              >
+                                {children}
+                              </a>
+                            );
+                          }
+                          return (
+                            <a href={href} {...props}>
+                              {children}
+                            </a>
+                          );
+                        },
                         p: ({ node, children, ...props }) => {
                           // If the paragraph has a single anchor child that
                           // is a standalone YouTube URL, replace with embed.
