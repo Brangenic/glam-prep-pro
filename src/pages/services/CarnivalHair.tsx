@@ -124,11 +124,11 @@ const CarnivalHair = () => {
               <span className="italic text-gradient-primary">holds through the road</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival hair styling at{" "}
+              Carnival hair and Carnival hairstyles at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              is sculpted, secured, headpiece-ready hair built to hold under
+              are sculpted, secured and headpiece-ready — built to hold under
               feathers, wires and tropical heat, finished by professional
               stylists inside our air-conditioned lounge before you leave for
               the road.
