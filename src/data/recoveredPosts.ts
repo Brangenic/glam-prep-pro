@@ -12,6 +12,7 @@ import bodyRookie from "./recovered/dont-make-these-5-rookie-mistakes-trinidad-c
 import bodySafe from "./recovered/is-trinidad-carnival-safe.md?raw";
 import bodyWireBra from "./recovered/how-to-put-on-your-carnival-wire-bra.md?raw";
 import bodyComfort from "./recovered/comfort-queen-or-hot-gyal.md?raw";
+import bodyTT2027Guide from "./recovered/trinidad-carnival-2027-first-time-masquerader-guide.md?raw";
 
 export type RecoveredPost = RecoveredPostMeta & { content: string };
 
@@ -25,6 +26,7 @@ const BODIES: Record<string, string> = {
   "is-trinidad-carnival-safe": bodySafe,
   "how-to-put-on-your-carnival-wire-bra": bodyWireBra,
   "comfort-queen-or-hot-gyal": bodyComfort,
+  "trinidad-carnival-2027-first-time-masquerader-guide": bodyTT2027Guide,
 };
 
 export const RECOVERED_POSTS: RecoveredPost[] = RECOVERED_POSTS_META.map(
