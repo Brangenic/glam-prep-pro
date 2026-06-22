@@ -377,6 +377,9 @@ const TrinidadCarnival2027 = () => {
         </section>
 
         {/* Strong CTA */}
+        <TrinidadGuidesBlock />
+
+        {/* Strong CTA */}
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
           <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-8 sm:p-12 text-center gold-glow">
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
