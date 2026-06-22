@@ -92,11 +92,12 @@ function rewriteWixToJpeg(url: string): string | null {
 }
 
 async function generateLocalJpeg(slug: string, sourceUrl: string): Promise<string | null> {
-  // Accept absolute (BASE_URL/assets/...) or root-relative (/assets/...).
+  // Accept absolute (BASE_URL/...) or root-relative (/...) paths that map to
+  // a file under dist/.
   const path = sourceUrl.startsWith(BASE_URL)
     ? sourceUrl.slice(BASE_URL.length)
     : sourceUrl;
-  if (!path.startsWith("/assets/")) return null;
+  if (!path.startsWith("/")) return null;
   const localFile = join(DIST, path.replace(/^\//, ""));
   if (!existsSync(localFile)) return null;
   const outDir = join(DIST, "og");
@@ -122,7 +123,7 @@ async function resolveOgImage(slug: string, image: string): Promise<ResolvedImag
   if (wix) return { url: wix, width: FB_W, height: FB_H, type: "image/jpeg" };
 
   const isLocal =
-    image.startsWith(`${BASE_URL}/assets/`) || image.startsWith("/assets/");
+    image.startsWith(`${BASE_URL}/`) || image.startsWith("/");
   if (isLocal) {
     try {
       const generated = await generateLocalJpeg(slug, image);
