@@ -10,6 +10,7 @@ import Testimonials from "@/components/landing/Testimonials";
 import Founder from "@/components/landing/Founder";
 import FAQ from "@/components/landing/FAQ";
 import AmazonStoreFeature from "@/components/landing/AmazonStoreFeature";
+import CarnivalGuides from "@/components/landing/CarnivalGuides";
 import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -109,6 +110,7 @@ const Index = () => (
       <Testimonials />
       <Founder />
       <AmazonStoreFeature />
+      <CarnivalGuides />
       <FAQ />
       <FinalCTA />
     </main>
