@@ -18,6 +18,7 @@ import {
 import { buildDestinationUrl } from "@/lib/destinations";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
+import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 
 const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const params = useParams();
@@ -464,6 +465,11 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             </div>
           </div>
         </section>
+        {dest.slug === "trinidad" && (
+          <div className="pb-12 sm:pb-20">
+            <TrinidadGuidesBlock />
+          </div>
+        )}
       </main>
 
       <Footer />
