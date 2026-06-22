@@ -341,6 +341,37 @@ function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
     );
   }
 
+  // BlogPosting JSON-LD
+  const authorName = (post.author ?? "").trim();
+  const isOrgAuthor =
+    !authorName || /carnival\s+glam\s+hub/i.test(authorName);
+  const blogPosting: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: desc,
+    image: [image],
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: isOrgAuthor
+      ? { "@type": "Organization", name: "Carnival Glam Hub" }
+      : { "@type": "Person", name: authorName },
+    publisher: {
+      "@type": "Organization",
+      name: "Carnival Glam Hub",
+      logo: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/og-image.png`,
+      },
+    },
+  };
+  if (post.publishedDate) blogPosting.datePublished = post.publishedDate;
+  blogPosting.dateModified = post.modifiedDate ?? post.publishedDate ?? undefined;
+  const jsonLd = `<script type="application/ld+json" data-prerender="blogposting">${JSON.stringify(
+    blogPosting,
+  ).replace(/</g, "\\u003c")}</script>`;
+  html = html.replace("</head>", `    ${jsonLd}\n  </head>`);
+
   return html;
 }
 
@@ -367,7 +398,7 @@ async function main() {
   try {
     const { data, error } = await supabase
       .from("blog_posts")
-      .select("slug, post_url, title, excerpt, meta_description, image_url, published_date, raw_payload")
+      .select("slug, post_url, title, excerpt, meta_description, image_url, published_date, author_name, raw_payload")
       .order("synced_at", { ascending: false })
       .limit(1000);
     if (error) throw error;
@@ -381,7 +412,15 @@ async function main() {
       const description = (row.meta_description ?? row.excerpt ?? "").toString().trim();
       const image = (row.image_url ?? "").toString().trim() || `${BASE_URL}/og-image.png`;
       seen.add(slug);
-      posts.push({ slug, title, description, image });
+      posts.push({
+        slug,
+        title,
+        description,
+        image,
+        publishedDate: (row.published_date ?? "").toString() || undefined,
+        modifiedDate: (row.published_date ?? "").toString() || undefined,
+        author: (row.author_name ?? "").toString() || undefined,
+      });
     }
   } catch (err) {
     console.warn("prerender-blog-meta: failed to fetch blog posts.", err);
