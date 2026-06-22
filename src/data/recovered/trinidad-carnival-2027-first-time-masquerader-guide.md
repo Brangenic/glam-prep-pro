@@ -2,6 +2,8 @@ Planning Trinidad Carnival 2027? You're not alone. Every year thousands of visit
 
 https://www.youtube.com/watch?v=DWuZ147fSbU
 
+[Book Your Trinidad Carnival 2027 Morning — US$50](https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb)
+
 ## When Is Trinidad Carnival 2027?
 Trinidad Carnival 2027 takes place on:
 - **Carnival Monday: February 8, 2027**
