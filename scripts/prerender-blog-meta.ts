@@ -9,7 +9,6 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
-import { RECOVERED_POSTS } from "../src/data/recoveredPosts";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -199,6 +198,8 @@ function manualPosts(): Post[] {
     `${BASE_URL}/og-image.png`,
   );
   for (const p of RECOVERED_POSTS_META) {
+    const mdPath = resolve("src/data/recovered", `${p.slug}.md`);
+    const content = existsSync(mdPath) ? readFileSync(mdPath, "utf8") : undefined;
     out.push({
       slug: p.slug,
       title: p.title,
@@ -207,7 +208,7 @@ function manualPosts(): Post[] {
       publishedDate: p.publishedDate,
       modifiedDate: p.publishedDate,
       author: p.author,
-      content: RECOVERED_POSTS.find((r) => r.slug === p.slug)?.content,
+      content,
     });
   }
   return out;
