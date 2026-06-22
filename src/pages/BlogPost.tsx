@@ -115,6 +115,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { supabase } from "@/integrations/supabase/client";
 import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
 import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
+import RelatedGuides from "@/components/RelatedGuides";
 
 // Bundled hero overrides: replace unreliable storage-bucket URLs with
 // reliable bundled WebP imports for specific slugs.
@@ -550,6 +551,23 @@ const BlogPost = () => {
                     {post.excerpt}
                   </p>
                 ) : null}
+
+                {/* Related guides — internal linking for SEO */}
+                {slug && (
+                  <RelatedGuides
+                    currentSlug={slug}
+                    currentTags={
+                      slug && RECOVERED_POST_BY_SLUG[slug]
+                        ? RECOVERED_POST_BY_SLUG[slug].tags
+                        : []
+                    }
+                    currentCategory={
+                      slug && RECOVERED_POST_BY_SLUG[slug]
+                        ? RECOVERED_POST_BY_SLUG[slug].category
+                        : null
+                    }
+                  />
+                )}
 
                 {/* Bottom CTA */}
                 <div className="mt-16 pt-8 border-t border-border flex items-center justify-between">

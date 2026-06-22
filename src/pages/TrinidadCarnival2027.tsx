@@ -3,6 +3,7 @@ import { Check, Play } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 import { buildDestinationUrl } from "@/lib/destinations";
 import photoGabby from "@/assets/trinidad-2027-p1.webp";
 import photoDania from "@/assets/trinidad-2027-p2.webp";
@@ -12,7 +13,7 @@ import reviewsImage from "@/assets/trinidad-2027-reviews.webp";
 
 const PAGE_TITLE = "Trinidad Carnival 2027 Makeup & Hair | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Trinidad Carnival 2027 hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Shuttle, getting dressed, refreshments and snacks included. Book now.";
+  "Trinidad Carnival 2027 dates: Carnival Monday 8 and Tuesday 9 February 2027. Hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Book early from US$50.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 const YT_ID = "IHUJsYg0GhI";
 
@@ -374,6 +375,9 @@ const TrinidadCarnival2027 = () => {
             </a>
           </div>
         </section>
+
+        {/* Strong CTA */}
+        <TrinidadGuidesBlock />
 
         {/* Strong CTA */}
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">

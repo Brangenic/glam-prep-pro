@@ -4,9 +4,9 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "Carnival Hair Styling | Sleek, Sculpted, Headpiece-Ready | Carnival Glam Hub";
+  "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival hair styling built to hold under feathers, wires and tropical heat. Sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
+  "Carnival hair and Carnival hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-hair";
 
 const serviceSchema = {
@@ -124,11 +124,11 @@ const CarnivalHair = () => {
               <span className="italic text-gradient-primary">holds through the road</span>
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival hair styling at{" "}
+              Carnival hair and Carnival hairstyles at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              is sculpted, secured, headpiece-ready hair built to hold under
+              are sculpted, secured and headpiece-ready — built to hold under
               feathers, wires and tropical heat, finished by professional
               stylists inside our air-conditioned lounge before you leave for
               the road.
