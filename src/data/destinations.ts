@@ -36,9 +36,10 @@ export const destinations: Destination[] = [
       "Hair styling and braiding",
       "Lash application and body paint",
     ],
-    metaTitle: "Jamaica Carnival Makeup & Glam 2026 | Glam Hub",
+    metaTitle:
+      "Jamaica Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Book premium Jamaica Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists for 12 April 2026.",
+      "Book sweat-proof Jamaica Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "saint-lucia",
@@ -141,9 +142,10 @@ export const destinations: Destination[] = [
       "Festival hair styling",
       "Gems, lashes and body paint",
     ],
-    metaTitle: "Miami Carnival Makeup & Glam 2026 | Glam Hub",
+    metaTitle:
+      "Miami Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Book your Miami Carnival glam look with Carnival Glam Hub. Makeup and styling for diaspora women ready to shine. Miami Caribbean carnival specialists.",
+      "Book sweat-proof Miami Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "toronto",
