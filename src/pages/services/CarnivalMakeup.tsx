@@ -32,6 +32,14 @@ const serviceSchema = {
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
     url: "https://www.carnivalglamhub.com/booking",
+    description:
+      "Professional Carnival makeup from US$160; celebrity-artist glam US$250–US$350; premium looks up to US$2,000.",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "USD",
+      minPrice: "160",
+      maxPrice: "2000",
+    },
   },
 };
 
@@ -121,6 +129,13 @@ const CarnivalMakeup = () => {
               professional MUAs in our air-conditioned lounge. It is engineered
               for tropical heat, hours of dancing and full-day costume wear,
               and has been tested by 15,000+ masqueraders since 2017.
+            </p>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
+              Professional Carnival makeup at Carnival Glam Hub starts from
+              US$160. Most masqueraders spend US$200 to US$300, with
+              celebrity-artist and premium looks ranging up to US$2,000. A
+              road-ready access package (getting dressed, shuttle and lounge)
+              starts at US$35.
             </p>
           </header>
 

@@ -51,6 +51,7 @@ const organizationSchema = {
   url: "https://www.carnivalglamhub.com",
   description:
     "Premium Carnival morning concierge. Trusted by 15,000+ masqueraders since 2017.",
+  priceRange: "$35–$2,000",
   founder: [
     { "@type": "Person", name: "Gabby Glam", alternateName: "Gabrielle Waite" },
     { "@type": "Person", name: "Kibwe McGann" },
