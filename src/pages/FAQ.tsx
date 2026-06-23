@@ -24,7 +24,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Why does Carnival makeup need to be sweat-resistant?",
-    a: "Caribbean Carnival happens in tropical heat with hours of dancing on the road. Standard wedding or event makeup will not survive. We use a layered, sweat-resistant system built for the road and tested by 15,000 masqueraders.",
+    a: "Caribbean Carnival happens in tropical heat with hours of dancing on the road. Standard wedding or event makeup will not survive. We use a layered, sweat-resistant system built for the road and tested by 15,000+ masqueraders.",
   },
   {
     q: "What hair options do you offer?",
@@ -138,21 +138,11 @@ const FAQ = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    let script = document.getElementById(SCHEMA_ID) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement("script");
-      script.id = SCHEMA_ID;
-      script.type = "application/ld+json";
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(faqSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(SCHEMA_ID)?.remove();
     };
   }, []);
 
