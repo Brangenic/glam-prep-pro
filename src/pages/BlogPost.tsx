@@ -145,6 +145,20 @@ const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
     "2026 Carnival Makeup Guide: 50 Looks | Glam Hub",
   "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips":
     "Trinidad Carnival 2027: Dates, Bands, Costumes & First-Timer Guide | Carnival Glam Hub",
+  "what-is-jouvert-and-why-should-you-do-it-at-least-once":
+    "What Is J'ouvert? The Pre-Dawn Carnival Ritual Explained | Carnival Glam Hub",
+  "10-tips-for-trinidad-carnival-jouvert":
+    "10 J'ouvert Tips for Trinidad Carnival, From People Who Have Played | Carnival Glam Hub",
+  "top-seven-best-carnival-hairstyles":
+    "The Best Carnival Hairstyles That Survive the Road | Carnival Glam Hub",
+  "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival":
+    "Jab Jab 101: What You Need to Know About Grenada Spicemas | Carnival Glam Hub",
+  "top-5-caribbean-carnival-jouvert-bands-experiences":
+    "The 5 Best Caribbean Carnival J'ouvert Bands and Experiences | Carnival Glam Hub",
+  "strut-or-struggle-the-ultimate-guide-to-carnival-shoes":
+    "The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle | Carnival Glam Hub",
+  "carnival-queen-rihannas-stunning-return-to-crop-over-2024":
+    "Rihanna's Crop Over Looks: The Carnival Queen Returns to Barbados | Carnival Glam Hub",
 };
 
 // Per-slug body content cleanup: strip broken images (and their orphan
