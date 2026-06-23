@@ -287,7 +287,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               <h2 id="packages-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center">
                 {seo ? (
                   <span className="text-gradient-primary italic">
-                    {seo.territory} Carnival makeup prices and packages
+                    {seo.event} makeup prices and packages
                   </span>
                 ) : (
                   <span className="text-gradient-primary italic">Choose Your Package</span>
@@ -356,7 +356,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               <div className="lg:col-span-2">
                 <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">
                   {seo
-                    ? `Where to get your makeup done for ${seo.territory} Carnival`
+                    ? `Where to get your makeup done for ${seo.event}`
                     : `About ${dest.shortName} Glam`}
                 </h2>
                 <p className="font-body text-base text-muted-foreground leading-relaxed mb-8">
@@ -365,7 +365,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
                 <h3 className="font-display text-xl font-bold mb-4">
                   {seo
-                    ? `What's included in your ${seo.territory} Carnival glam morning`
+                    ? `What's included in your ${seo.event} glam morning`
                     : "What's included"}
                 </h3>
                 <ul className="space-y-3 mb-8">
@@ -448,7 +448,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 <>
                   How to book your{" "}
                   <span className="text-gradient-primary italic">
-                    {seo.territory} Carnival glam slot
+                    {seo.event} glam slot
                   </span>
                 </>
               ) : (
