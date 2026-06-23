@@ -33,6 +33,12 @@ const serviceSchema = {
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
     url: "https://www.carnivalglamhub.com/booking",
+    description: "Included in full concierge packages; available from US$80 as a stand-alone add-on.",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "USD",
+      minPrice: "80",
+    },
   },
 };
 
@@ -133,29 +139,40 @@ const GettingDressed = () => {
               backpacks and standing collars so nothing shifts on the road. It
               is included in every concierge package.
             </p>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
+              An on-site seamstress works alongside the dressing team for the
+              things a hotel room cannot fix: a wire bra that pinches, a gem
+              that has fallen off overnight, a strap that needs shortening, a
+              zip that gives way an hour before the band leaves. You walk in
+              with a costume; you walk out road-ready.
+            </p>
           </header>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Why it matters
+              Why getting-dressed help matters
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              A costume that is not fitted properly will shift, dig, ride up or come
-              apart on the road. A poorly seated backpack or collar will hurt within
-              the first hour. Our team adjusts every piece for fit and movement
-              before you leave the lounge.
+              A costume that is not fitted properly will shift, dig, ride up or
+              come apart on the road. A poorly seated backpack or collar will
+              hurt within the first hour. Gem fixes, zip breaks and last-minute
+              alterations are the most common reasons masqueraders miss their
+              band's start. Our team adjusts every piece for fit and movement —
+              and our seamstress repairs anything that needs a needle — before
+              you leave the lounge.
             </p>
           </section>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              What is included
+              What's included in your getting-dressed appointment
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Full assembly of all costume pieces, padding and tape adjustments
               where needed, harness and backpack seating, collar and headpiece
-              balancing, double-checking of every closure, and a final road-ready
-              inspection.
+              balancing, on-site seamstress for gem replacement, strap
+              shortening and emergency zip and seam repairs, double-checking of
+              every closure, and a final road-ready inspection.
             </p>
           </section>
 
@@ -173,24 +190,43 @@ const GettingDressed = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Included with concierge packages
+              How much does getting-dressed help cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Getting-dressed assistance is included in every Carnival Glam Hub
-              concierge package across{" "}
-              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">Trinidad</a>,{" "}
-              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              concierge package at no additional cost. It is also available as
+              a stand-alone add-on from US$80 for masqueraders who have booked
+              their makeup elsewhere and just need the costume fitted and any
+              last-minute repairs handled before the road.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Where can I book getting-dressed help?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Available at every Carnival Glam Hub location. The most booked
+              are{" "}
+              <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>;
+              we also operate in{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
-              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
-              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
-              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. It can also be booked as a
-              stand-alone service for masqueraders already booked for{" "}
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a> and{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. It pairs
+              with{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 Carnival makeup
               </a>{" "}
-              elsewhere. See the <a href="/faq" className="text-primary hover:underline">FAQ</a> for details.
+              and the{" "}
+              <a href="/services/carnival-photoshoot" className="text-primary hover:underline">
+                Carnival photoshoot
+              </a>{" "}
+              in the same morning slot. See the{" "}
+              <a href="/faq" className="text-primary hover:underline">FAQ</a> for details.
             </p>
           </section>
         </article>
