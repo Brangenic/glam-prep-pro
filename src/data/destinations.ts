@@ -37,9 +37,9 @@ export const destinations: Destination[] = [
       "Lash application and body paint",
     ],
     metaTitle:
-      "Jamaica Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Book sweat-proof Jamaica Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-proof Jamaica Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "saint-lucia",
