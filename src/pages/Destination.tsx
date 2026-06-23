@@ -29,7 +29,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
   const seoOverrides: Record<string, { territory: string; year: string }> = {
     trinidad: { territory: "Trinidad", year: "2027" },
-    jamaica: { territory: "Jamaica", year: "2026" },
+    jamaica: { territory: "Jamaica", year: "2027" },
     miami: { territory: "Miami", year: "2026" },
   };
   const seo = dest ? seoOverrides[dest.slug] : undefined;
