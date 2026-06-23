@@ -17,27 +17,38 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "BeautySalon"],
   name: "Carnival Glam Hub",
   legalName: "Carnival Glam Hub",
   url: "https://www.carnivalglamhub.com",
   logo: "https://www.carnivalglamhub.com/logo.png",
   description:
-    "Premium Carnival morning concierge for travelling masqueraders",
+    "Premium Carnival morning concierge for travelling masqueraders. Trusted by 15,000+ masqueraders since 2017.",
   foundingDate: "2017-01-01",
-  founder: {
-    "@type": "Person",
-    name: "Gabrielle Waite",
+  founder: [
+    { "@type": "Person", name: "Gabby Glam", alternateName: "Gabrielle Waite" },
+    { "@type": "Person", name: "Kibwe McGann" },
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    reviewCount: "43",
+    bestRating: "5",
   },
   areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Miami",
-    "Toronto",
-    "Grenada",
-    "Saint Lucia",
-    "Antigua and Barbuda",
-    "Barbados",
+    { "@type": "Place", name: "Trinidad" },
+    { "@type": "Place", name: "Jamaica" },
+    { "@type": "Place", name: "Barbados" },
+    { "@type": "Place", name: "Grenada" },
+    { "@type": "Place", name: "Saint Lucia" },
+    { "@type": "Place", name: "Antigua" },
+    { "@type": "Place", name: "Miami" },
+    { "@type": "Place", name: "Toronto" },
+    { "@type": "Place", name: "Guyana" },
+    { "@type": "Place", name: "Saint Vincent" },
+    { "@type": "Place", name: "Cayman Islands" },
+    { "@type": "Place", name: "Atlanta" },
+    { "@type": "Place", name: "United Kingdom" },
   ],
   contactPoint: {
     "@type": "ContactPoint",
@@ -52,6 +63,7 @@ const organizationSchema = {
     "https://www.tiktok.com/@carnivalglamhub",
     "https://www.youtube.com/@carnivalglamhub",
     "https://www.pinterest.com/carnivalglamhub",
+    "https://www.amazon.com/shop/carnivalglamhub",
   ],
 };
 
@@ -81,6 +93,34 @@ const faqSchema = {
     { "@type": "Question", name: "Where does the carnival glam take place?", acceptedAnswer: { "@type": "Answer", text: "Each destination has a designated glam hub location shared after booking confirmation." } },
     { "@type": "Question", name: "Can I book carnival glam for a group?", acceptedAnswer: { "@type": "Answer", text: "Yes. Group bookings are available and recommended for friends or band sections." } },
     { "@type": "Question", name: "Do carnival glam slots sell out?", acceptedAnswer: { "@type": "Answer", text: "Yes. We limit appointments per carnival morning to maintain a premium experience. Early booking is strongly recommended." } },
+    { "@type": "Question", name: "How much does professional Carnival makeup cost?", acceptedAnswer: { "@type": "Answer", text: "Carnival Glam Hub offers tiered options to suit every masquerader, from an entry road-ready access package through to full celebrity-artist glam. Makeup packages and add-ons are listed on each service page and in our quote calculator." } },
+    { "@type": "Question", name: "Can I do my own Carnival makeup without experience?", acceptedAnswer: { "@type": "Answer", text: "You can, but Carnival makeup must survive heat, sweat, and hours on the road. Most masqueraders choose a professional for sweat-resistant, photo-ready results that last all day." } },
+    { "@type": "Question", name: "What is the difference between regular makeup and Carnival makeup?", acceptedAnswer: { "@type": "Answer", text: "Carnival makeup is built for endurance: sweat-resistant, long-wear, and designed for bright outdoor light and constant photography, unlike everyday makeup which is not made to last through a full day of dancing in the sun." } },
+  ],
+};
+
+const founderPersonSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Gabby Glam",
+  alternateName: "Gabrielle Waite",
+  jobTitle: "Celebrity Makeup Artist and Co-Founder",
+  description:
+    "Jamaican celebrity makeup artist, founder of Gabby Glam Cosmetics, and co-founder of Carnival Glam Hub. Known for soft-glam looks on public figures including Sheryl Lee Ralph and Davina Bennett.",
+  worksFor: {
+    "@type": "BeautySalon",
+    name: "Carnival Glam Hub",
+    url: "https://www.carnivalglamhub.com",
+  },
+  knowsAbout: [
+    "Carnival makeup",
+    "Celebrity makeup",
+    "Soft glam",
+    "Sweat-resistant makeup",
+  ],
+  sameAs: [
+    "https://gabbyglamcosmetics.com",
+    "https://www.instagram.com/carnivalglamhub",
   ],
 };
 
@@ -97,6 +137,10 @@ const Index = () => (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+    />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(founderPersonSchema) }}
     />
     <Navbar />
     <main>

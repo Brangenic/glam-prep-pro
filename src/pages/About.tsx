@@ -46,17 +46,36 @@ const aboutPageSchema = {
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "BeautySalon"],
   name: "Carnival Glam Hub",
   url: "https://www.carnivalglamhub.com",
-  founder: { "@type": "Person", name: "Gabrielle Waite" },
+  description:
+    "Premium Carnival morning concierge. Trusted by 15,000+ masqueraders since 2017.",
+  founder: [
+    { "@type": "Person", name: "Gabby Glam", alternateName: "Gabrielle Waite" },
+    { "@type": "Person", name: "Kibwe McGann" },
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    reviewCount: "43",
+    bestRating: "5",
+  },
   foundingDate: "2017",
   areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Barbados",
-    "Grenada",
-    "Antigua and Barbuda",
+    { "@type": "Place", name: "Trinidad" },
+    { "@type": "Place", name: "Jamaica" },
+    { "@type": "Place", name: "Barbados" },
+    { "@type": "Place", name: "Grenada" },
+    { "@type": "Place", name: "Saint Lucia" },
+    { "@type": "Place", name: "Antigua" },
+    { "@type": "Place", name: "Miami" },
+    { "@type": "Place", name: "Toronto" },
+    { "@type": "Place", name: "Guyana" },
+    { "@type": "Place", name: "Saint Vincent" },
+    { "@type": "Place", name: "Cayman Islands" },
+    { "@type": "Place", name: "Atlanta" },
+    { "@type": "Place", name: "United Kingdom" },
   ],
   sameAs: [
     "https://www.instagram.com/carnivalglamhub",
@@ -64,21 +83,32 @@ const organizationSchema = {
     "https://www.tiktok.com/@carnivalglamhub",
     "https://www.youtube.com/@carnivalglamhub",
     "https://www.pinterest.com/carnivalglamhub",
+    "https://www.amazon.com/shop/carnivalglamhub",
   ],
 };
 
 const founderPersonSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Gabrielle Waite",
-  jobTitle: "Founder",
+  name: "Gabby Glam",
+  alternateName: "Gabrielle Waite",
+  jobTitle: "Celebrity Makeup Artist and Co-Founder",
+  description:
+    "Jamaican celebrity makeup artist, founder of Gabby Glam Cosmetics, and co-founder of Carnival Glam Hub. Known for soft-glam looks on public figures including Sheryl Lee Ralph and Davina Bennett.",
   worksFor: {
-    "@type": "Organization",
+    "@type": "BeautySalon",
     name: "Carnival Glam Hub",
     url: "https://www.carnivalglamhub.com",
   },
+  knowsAbout: [
+    "Carnival makeup",
+    "Celebrity makeup",
+    "Soft glam",
+    "Sweat-resistant makeup",
+  ],
   url: "https://www.carnivalglamhub.com/about",
   sameAs: [
+    "https://gabbyglamcosmetics.com",
     "https://www.instagram.com/carnivalglamhub",
   ],
 };

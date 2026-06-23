@@ -120,7 +120,7 @@ const CarnivalMakeup = () => {
               is sweat-resistant makeup designed for the road, applied by
               professional MUAs in our air-conditioned lounge. It is engineered
               for tropical heat, hours of dancing and full-day costume wear,
-              and has been tested by more than 15,000 masqueraders since 2017.
+              and has been tested by 15,000+ masqueraders since 2017.
             </p>
           </header>
 
