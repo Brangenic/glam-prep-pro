@@ -143,6 +143,8 @@ const SLUG_HERO_OVERRIDES: Record<string, string> = {
 const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
   "2025-carnival-makeup-guide-50-looks-to-show-your-mua":
     "2026 Carnival Makeup Guide: 50 Looks | Glam Hub",
+  "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips":
+    "Trinidad Carnival 2027: Dates, Bands, Costumes & First-Timer Guide | Carnival Glam Hub",
 };
 
 // Per-slug body content cleanup: strip broken images (and their orphan
