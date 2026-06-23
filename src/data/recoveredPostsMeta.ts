@@ -72,7 +72,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Soca Music",
     ],
     metaDescription:
-      "Rihanna's stunning return to the 2024 Crop Over Festival in Barbados, in a custom costume by Lauren Austin of Aura Experience. Why Crop Over is a must-do for every Carnival Chaser.",
+      "Rihanna's showstopping Crop Over return, broken down look by look — the costumes, the beauty, and why she is Carnival royalty.",
     readTime: "5 min read",
   },
   {
@@ -102,7 +102,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     category: "Carnival Tips",
     tags: ["Carnival Tips", "Jouvert", "Trinidad Carnival", "Carnival Do's and Don'ts"],
     metaDescription:
-      "First time doing J'ouvert at Trinidad Carnival 2027? Here's how to survive and enjoy Trinidad's wildest Carnival event, from outfits to safety and glam that lasts.",
+      "Ten things to know before your first Trinidad J'ouvert: what to wear, how to protect your hair and skin, what to bring, and how to survive the pre-dawn mud and paint.",
     readTime: "5 min read",
   },
   {
