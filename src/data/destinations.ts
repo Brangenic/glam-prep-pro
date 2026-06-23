@@ -187,9 +187,10 @@ export const destinations: Destination[] = [
       "Refreshments and snacks included",
       "Carnival Monday 8 & Tuesday 9 February 2027",
     ],
-    metaTitle: "Trinidad Carnival Makeup & Glam 2027 | Glam Hub",
+    metaTitle:
+      "Trinidad Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Trinidad Carnival 2027 hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Shuttle, getting dressed, refreshments and snacks included. Book now.",
+      "Book sweat-proof Trinidad Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "guyana",

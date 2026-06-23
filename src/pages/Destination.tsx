@@ -43,6 +43,25 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     };
     setMeta("description", dest.metaDescription);
 
+    if (dest.slug === "trinidad") {
+      const setProp = (property: string, content: string) => {
+        let el = document.querySelector<HTMLMetaElement>(
+          `meta[property="${property}"]`,
+        );
+        if (!el) {
+          el = document.createElement("meta");
+          el.setAttribute("property", property);
+          document.head.appendChild(el);
+        }
+        el.setAttribute("content", content);
+      };
+      const ogTitle = "Trinidad Carnival Makeup 2027 | Carnival Glam Hub";
+      setProp("og:title", ogTitle);
+      setProp("og:description", dest.metaDescription);
+      setMeta("twitter:title", ogTitle);
+      setMeta("twitter:description", dest.metaDescription);
+    }
+
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
@@ -188,8 +207,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 Trinidad Carnival 2027 — Bookings Are Open
               </p>
               <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-4">
-                Hair, makeup and photos from the{" "}
-                <span className="text-gradient-primary italic">Hilton Hotel</span>, two minutes from the Savannah.
+                Carnival makeup, hair and photos for{" "}
+                <span className="text-gradient-primary italic">Trinidad Carnival 2027</span>
               </h2>
               <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
                 Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Carnival Monday 8 February and Carnival Tuesday 9 February 2027.
@@ -255,7 +274,13 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 {packagesData.eventDate}
               </p>
               <h2 id="packages-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center">
-                <span className="text-gradient-primary italic">Choose Your Package</span>
+                {dest.slug === "trinidad" ? (
+                  <span className="text-gradient-primary italic">
+                    Trinidad Carnival makeup prices and packages
+                  </span>
+                ) : (
+                  <span className="text-gradient-primary italic">Choose Your Package</span>
+                )}
               </h2>
 
               {packagesData.sections.map((section, idx) => (
@@ -319,13 +344,19 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
                 <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">
-                  About {dest.shortName} Glam
+                  {dest.slug === "trinidad"
+                    ? "Where to get your makeup done for Trinidad Carnival"
+                    : `About ${dest.shortName} Glam`}
                 </h2>
                 <p className="font-body text-base text-muted-foreground leading-relaxed mb-8">
                   {dest.longDescription}
                 </p>
 
-                <h3 className="font-display text-xl font-bold mb-4">What's included</h3>
+                <h3 className="font-display text-xl font-bold mb-4">
+                  {dest.slug === "trinidad"
+                    ? "What's included in your Trinidad Carnival glam morning"
+                    : "What's included"}
+                </h3>
                 <ul className="space-y-3 mb-8">
                   {dest.highlights.map((h) => (
                     <li key={h} className="flex items-start gap-3 font-body text-sm sm:text-base">
@@ -402,8 +433,19 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               id={`${dest.slug}-faq-heading`}
               className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-center"
             >
-              {dest.shortName} Carnival Glam{" "}
-              <span className="text-gradient-primary italic">Questions</span>
+              {dest.slug === "trinidad" ? (
+                <>
+                  How to book your{" "}
+                  <span className="text-gradient-primary italic">
+                    Trinidad Carnival glam slot
+                  </span>
+                </>
+              ) : (
+                <>
+                  {dest.shortName} Carnival Glam{" "}
+                  <span className="text-gradient-primary italic">Questions</span>
+                </>
+              )}
             </h2>
 
             <Accordion type="single" collapsible className="w-full">
