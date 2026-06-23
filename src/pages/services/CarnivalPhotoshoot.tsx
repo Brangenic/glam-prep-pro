@@ -188,6 +188,46 @@ const CarnivalPhotoshoot = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Who is behind the camera?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Carnival Glam Hub works with a small bench of in-house Carnival
+              photographers who shoot the morning every year. They know how to
+              direct posing for wire bras and backpacks, where to stand so
+              feathers do not eat the frame, and how to read the early-morning
+              light outside the lounge. You are not handing your costume to
+              someone shooting their first parade.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Can we do couples, group or band-section shoots?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Yes. Couples and small groups are common — best friends, sister
+              duos, full sections. Group shoots are scheduled into the morning
+              timeline so glam finishes in sequence and everyone hits the
+              camera together at peak. Larger band-section shoots need to be
+              flagged at booking so we hold the photographer and the shoot
+              window.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              What should I bring?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Your costume, your headpiece, any reference shots you want to
+              recreate, and a charged phone for the quick-turn selects. The
+              lounge handles styling tape, pins and small repairs, so you do
+              not need to bring those.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               How much does the Carnival photoshoot cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">

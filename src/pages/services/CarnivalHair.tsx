@@ -200,6 +200,50 @@ const CarnivalHair = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How long does the appointment take?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Plan for 60 to 120 minutes in the chair, depending on the style.
+              A sleek high pony or slick-back base for a heavy headpiece is at
+              the faster end. Voluminous curl sets, braided crowns and feed-in
+              braids sit in the middle. Full clip-in or sewn-in installs are
+              the longest. Hair is scheduled in sequence with makeup and
+              getting-dressed so the morning runs to time and you leave with
+              the band, not after it.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How should I prep my hair before the appointment?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Wash and fully dry your hair the day before — not the morning of
+              — so it has a little grip for pins and braids. Skip heavy
+              leave-ins and oils; they make holds fail in heat. Bring your
+              headpiece, any extensions or wefts you want used, and a clear
+              reference image of the style you want. If you are unsure which
+              style suits your costume, our stylists will walk through options
+              when you arrive and pick the one that will photograph best with
+              your headpiece in place.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Can you work around my headpiece?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Yes — and we expect to. Most road-day headpieces are heavy,
+              front-loaded and pinned in from below. Bring it. The stylist
+              will build the base specifically to seat it, balance the weight
+              across the crown and back, and anchor the pins so the piece
+              stays put when you jump, wine and bend through the route.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               Where can I book carnival hair?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">

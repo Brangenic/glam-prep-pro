@@ -190,6 +190,35 @@ const GettingDressed = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              What if a costume piece breaks at the lounge?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              That is exactly what the on-site seamstress is there for. The
+              most common morning-of failures — a wire bra cup that has
+              collapsed, a gem cluster that has dropped overnight, a strap
+              that is too long, a zip that splits when you raise your arms —
+              all get handled in the lounge before you leave. We keep
+              matching gem packs, thread, elastic and trim on hand so the
+              repair looks like part of the costume, not a patch job.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              What should I bring to my appointment?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Every piece of your costume, in the original packaging if you
+              still have it — including the headpiece, arm and leg pieces,
+              stockings, any padding and the standing collar. Bring road shoes
+              you have already broken in, plus a change of clothes for after.
+              We supply tape, pins, padding and small repair kit; you do not
+              need to bring those.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               How much does getting-dressed help cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
