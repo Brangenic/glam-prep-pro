@@ -58,9 +58,10 @@ export const destinations: Destination[] = [
       "Festival hair styling",
       "Eye gems & festival lashes",
     ],
-    metaTitle: "Saint Lucia Carnival Makeup & Glam 2026 | Glam Hub",
+    metaTitle:
+      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Saint Lucia Carnival 2026 glam hub: full makeup, hair, gems and j'ouvert paint by professional artists. Reserve your slot for 20–21 July 2026.",
+      "Book sweat-proof Saint Lucia Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "antigua",
@@ -79,9 +80,10 @@ export const destinations: Destination[] = [
       "Hair braids and styling",
       "Body paint and shimmer",
     ],
-    metaTitle: "Antigua Carnival Makeup & Glam 2026 | Glam Hub",
+    metaTitle:
+      "Antigua Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Premium Antigua Carnival makeup, hair and body art. Book your full glam package for 4 August 2026 with Carnival Glam Hub.",
+      "Book sweat-proof Antigua Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "grenada",
@@ -100,9 +102,10 @@ export const destinations: Destination[] = [
       "Hair styling and braiding",
       "Festival gems & lashes",
     ],
-    metaTitle: "Grenada Carnival Makeup & Glam 2026 | Glam Hub",
+    metaTitle:
+      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Spicemas 2026 glam hub in Grenada — full carnival makeup, hair, gems and j'ouvert paint. Book your spot for 11 August 2026.",
+      "Book sweat-proof Grenada Spicemas 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "barbados",
@@ -121,9 +124,10 @@ export const destinations: Destination[] = [
       "Festival hair & braids",
       "Gems, lashes and shimmer",
     ],
-    metaTitle: "Barbados Carnival Makeup & Glam 2026 | Glam Hub",
+    metaTitle:
+      "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     metaDescription:
-      "Carnival Glam Hub brings expert carnival makeup to Barbados. Caribbean-inspired glam for diaspora women ready to shine. Book your Cropover look today.",
+      "Book sweat-proof Barbados Crop Over 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "miami",
