@@ -43,6 +43,25 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     };
     setMeta("description", dest.metaDescription);
 
+    if (dest.slug === "trinidad") {
+      const setProp = (property: string, content: string) => {
+        let el = document.querySelector<HTMLMetaElement>(
+          `meta[property="${property}"]`,
+        );
+        if (!el) {
+          el = document.createElement("meta");
+          el.setAttribute("property", property);
+          document.head.appendChild(el);
+        }
+        el.setAttribute("content", content);
+      };
+      const ogTitle = "Trinidad Carnival Makeup 2027 | Carnival Glam Hub";
+      setProp("og:title", ogTitle);
+      setProp("og:description", dest.metaDescription);
+      setMeta("twitter:title", ogTitle);
+      setMeta("twitter:description", dest.metaDescription);
+    }
+
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
