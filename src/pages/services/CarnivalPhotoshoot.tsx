@@ -33,6 +33,12 @@ const serviceSchema = {
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
     url: "https://www.carnivalglamhub.com/booking",
+    description: "Carnival photoshoot from US$220.",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "USD",
+      minPrice: "220",
+    },
   },
 };
 
@@ -133,11 +139,19 @@ const CarnivalPhotoshoot = () => {
               costume are at their peak, and delivered to a private gallery
               after Carnival.
             </p>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
+              This is the only window of the day your costume, glam and energy
+              all look exactly the way you imagined when you bought the
+              section. Phone snaps in a hotel mirror will not do it justice.
+              Our in-house photographers are set up in the lounge to capture
+              the morning properly — directed posing, the right light, full
+              editorial post-production — before you step into the band.
+            </p>
           </header>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              What is included
+              What's included in your Carnival photoshoot
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               A dedicated photography session immediately after glam, directed posing
@@ -149,18 +163,22 @@ const CarnivalPhotoshoot = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Where the shoot happens
+              When does the shoot happen?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              In the Carnival Glam Hub lounge against a styled backdrop, with an
-              optional outdoor set close to the venue. The photographer works around
-              the road departure schedule so nothing is rushed.
+              Before you hit the road. The shoot is scheduled into the
+              concierge timeline immediately after makeup, hair and
+              getting-dressed, while the look is at its absolute peak and
+              before anything has been touched by the sun. The photographer
+              works around your band's departure window so nothing is rushed.
+              Most masqueraders are in front of the camera between 5am and
+              8am, depending on territory and band.
             </p>
           </section>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Turnaround on the photos
+              How long until you see the photos?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Edited galleries are delivered within two to three weeks of Carnival,
@@ -170,10 +188,80 @@ const CarnivalPhotoshoot = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Packages
+              Who is behind the camera?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Stand-alone Carnival photoshoot session, or add-on bundled with{" "}
+              Carnival Glam Hub works with a small bench of in-house Carnival
+              photographers who shoot the morning every year. They know how to
+              direct posing for wire bras and backpacks, where to stand so
+              feathers do not eat the frame, and how to read the early-morning
+              light outside the lounge. You are not handing your costume to
+              someone shooting their first parade.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Can we do couples, group or band-section shoots?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Yes. Couples and small groups are common — best friends, sister
+              duos, full sections. Group shoots are scheduled into the morning
+              timeline so glam finishes in sequence and everyone hits the
+              camera together at peak. Larger band-section shoots need to be
+              flagged at booking so we hold the photographer and the shoot
+              window.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              What should I bring?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Your costume, your headpiece, any reference shots you want to
+              recreate, and a charged phone for the quick-turn selects. The
+              lounge handles styling tape, pins and small repairs, so you do
+              not need to bring those.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Why a pre-road shoot beats road snaps
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              On the road the light is harsh, the costume is dusty by midday,
+              the makeup is past its peak and you are surrounded by thousands
+              of other masqueraders. Phone snaps from friends are great for
+              memories but they will not match what the section looked like
+              when you put it on at 5am. The lounge shoot exists for that
+              window: controlled light, a directed photographer, the headpiece
+              seated properly, every gem still in place. It is the difference
+              between a frame you will reprint and a camera roll you will
+              scroll past.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How is the gallery delivered?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              You receive a private online gallery link with the full edited
+              set in high-resolution and web-ready sizes. Downloads are
+              unlimited and the gallery stays live for 90 days after delivery.
+              Print orders and additional retouching are available on request.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How much does the Carnival photoshoot cost?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              The Carnival photoshoot starts from US$220 as a stand-alone
+              session and is discounted when bundled with{" "}
               <a
                 href="/services/carnival-makeup"
                 className="text-primary hover:underline"
@@ -187,16 +275,27 @@ const CarnivalPhotoshoot = () => {
               >
                 getting-dressed
               </a>
-              . Available across{" "}
-              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">Trinidad</a>,{" "}
-              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              . Final pricing varies by territory and photographer.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Where can I book the Carnival photoshoot?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Available across every Carnival Glam Hub location. The most
+              booked photoshoots are{" "}
+              <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>;
+              we also shoot{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
-              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
-              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
-              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. Pricing
-              varies by territory; see the <a href="/faq" className="text-primary hover:underline">FAQ</a>.
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a> and{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. See the{" "}
+              <a href="/faq" className="text-primary hover:underline">FAQ</a> for territory-specific details.
             </p>
           </section>
         </article>

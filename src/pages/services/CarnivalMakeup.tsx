@@ -141,7 +141,7 @@ const CarnivalMakeup = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              What is included
+              What's included in your Carnival makeup
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Skin prep and priming, full base with sweat-resistant foundation and
@@ -150,6 +150,74 @@ const CarnivalMakeup = () => {
               hold through the parade. Each session runs around 90 minutes per
               masquerader and is delivered inside the Carnival Glam Hub
               air-conditioned lounge.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How much does Carnival makeup cost?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Pricing is tiered so you can choose the level of artistry you want
+              for the morning. The road-ready access package — getting-dressed
+              help, shuttle and the lounge — starts at US$35. Professional
+              Carnival makeup starts from US$160, which is what most first-time
+              masqueraders book. Celebrity-artist glam, with one of our senior
+              MUAs who works with soca artists and band launches, runs US$250 to
+              US$350. Premium and editorial looks — heavy beadwork, crystal
+              application, custom skin art — go up to US$2,000. Add-ons such as
+              airbrush, body shimmer and second-day touch-ups are quoted
+              separately on booking.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Airbrush vs traditional Carnival makeup
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Both work for the road; the right choice depends on your skin and
+              your costume. Traditional application, layered with a long-wear
+              foundation and locked down with a setting spray, gives a fuller,
+              more sculpted finish and is easier to touch up mid-route. Airbrush
+              gives a lighter, second-skin finish that photographs beautifully
+              and tends to suit oilier skin in extreme heat, but it is harder
+              to repair if a feather brushes your cheek. Our artists will
+              recommend the right route once they see your costume, skin type
+              and the kind of photos you want.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How long does Carnival makeup actually last?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              A properly built road look is designed to hold for ten to twelve
+              hours of dancing in tropical heat — from your morning departure
+              through the last truck. The base is the part that matters most:
+              priming, layering and setting are what stop the foundation
+              breaking up around the nose, forehead and chest by midday. Eye
+              looks, lashes and lips are reinforced with road-tested products
+              and locked down at the end. We pack a small touch-up kit on
+              request for blot-and-go fixes on the route, but most masqueraders
+              never reach for it.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How do I prepare for my appointment?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Arrive on a clean face — no SPF, no primer, no leftover product.
+              Eat something before you get to the lounge; sessions run around
+              90 minutes and you will sit through hair and getting-dressed
+              after. Bring your headpiece, any reference photos you want the
+              artist to see, and your costume so the artist can match base
+              tones and shimmer to it. If you wear contact lenses, put them in
+              before the eye look. Lash strips and adhesives are provided; if
+              you have a preferred brand, bring it.
             </p>
           </section>
 
@@ -196,17 +264,19 @@ const CarnivalMakeup = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Where you can book it
+              Where can I book Carnival makeup?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Available at every Carnival Glam Hub location:{" "}
-              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">Trinidad</a>,{" "}
-              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
+              Available at every Carnival Glam Hub location. The three most
+              booked are{" "}
+              <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
+              <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>;
+              we also operate in{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
-              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
-              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
+              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a> and{" "}
               <a href="/toronto" className="text-primary hover:underline">Toronto</a>. See the{" "}
               <a href="/faq" className="text-primary hover:underline">FAQ</a> for booking
               details and{" "}
