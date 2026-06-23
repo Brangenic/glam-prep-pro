@@ -27,6 +27,13 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const faqs = useMemo(() => (dest ? getDestinationFaqs(dest) : []), [dest]);
   const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
 
+  const seoOverrides: Record<string, { territory: string; year: string }> = {
+    trinidad: { territory: "Trinidad", year: "2027" },
+    jamaica: { territory: "Jamaica", year: "2026" },
+    miami: { territory: "Miami", year: "2026" },
+  };
+  const seo = dest ? seoOverrides[dest.slug] : undefined;
+
   useEffect(() => {
     if (!dest) return;
     const prevTitle = document.title;
@@ -43,7 +50,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     };
     setMeta("description", dest.metaDescription);
 
-    if (dest.slug === "trinidad") {
+    if (seo) {
       const setProp = (property: string, content: string) => {
         let el = document.querySelector<HTMLMetaElement>(
           `meta[property="${property}"]`,
@@ -55,7 +62,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         }
         el.setAttribute("content", content);
       };
-      const ogTitle = "Trinidad Carnival Makeup 2027 | Carnival Glam Hub";
+      const ogTitle = `${seo.territory} Carnival Makeup ${seo.year} | Carnival Glam Hub`;
       setProp("og:title", ogTitle);
       setProp("og:description", dest.metaDescription);
       setMeta("twitter:title", ogTitle);
@@ -274,9 +281,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 {packagesData.eventDate}
               </p>
               <h2 id="packages-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center">
-                {dest.slug === "trinidad" ? (
+                {seo ? (
                   <span className="text-gradient-primary italic">
-                    Trinidad Carnival makeup prices and packages
+                    {seo.territory} Carnival makeup prices and packages
                   </span>
                 ) : (
                   <span className="text-gradient-primary italic">Choose Your Package</span>
@@ -344,8 +351,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
                 <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">
-                  {dest.slug === "trinidad"
-                    ? "Where to get your makeup done for Trinidad Carnival"
+                  {seo
+                    ? `Where to get your makeup done for ${seo.territory} Carnival`
                     : `About ${dest.shortName} Glam`}
                 </h2>
                 <p className="font-body text-base text-muted-foreground leading-relaxed mb-8">
@@ -353,8 +360,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 </p>
 
                 <h3 className="font-display text-xl font-bold mb-4">
-                  {dest.slug === "trinidad"
-                    ? "What's included in your Trinidad Carnival glam morning"
+                  {seo
+                    ? `What's included in your ${seo.territory} Carnival glam morning`
                     : "What's included"}
                 </h3>
                 <ul className="space-y-3 mb-8">
@@ -433,11 +440,11 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               id={`${dest.slug}-faq-heading`}
               className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-center"
             >
-              {dest.slug === "trinidad" ? (
+              {seo ? (
                 <>
                   How to book your{" "}
                   <span className="text-gradient-primary italic">
-                    Trinidad Carnival glam slot
+                    {seo.territory} Carnival glam slot
                   </span>
                 </>
               ) : (
