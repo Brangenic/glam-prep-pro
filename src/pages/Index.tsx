@@ -24,6 +24,7 @@ const organizationSchema = {
   logo: "https://www.carnivalglamhub.com/logo.png",
   description:
     "Premium Carnival morning concierge for travelling masqueraders. Trusted by 15,000+ masqueraders since 2017.",
+  priceRange: "$35–$2,000",
   foundingDate: "2017-01-01",
   founder: [
     { "@type": "Person", name: "Gabby Glam", alternateName: "Gabrielle Waite" },
@@ -93,7 +94,7 @@ const faqSchema = {
     { "@type": "Question", name: "Where does the carnival glam take place?", acceptedAnswer: { "@type": "Answer", text: "Each destination has a designated glam hub location shared after booking confirmation." } },
     { "@type": "Question", name: "Can I book carnival glam for a group?", acceptedAnswer: { "@type": "Answer", text: "Yes. Group bookings are available and recommended for friends or band sections." } },
     { "@type": "Question", name: "Do carnival glam slots sell out?", acceptedAnswer: { "@type": "Answer", text: "Yes. We limit appointments per carnival morning to maintain a premium experience. Early booking is strongly recommended." } },
-    { "@type": "Question", name: "How much does professional Carnival makeup cost?", acceptedAnswer: { "@type": "Answer", text: "Carnival Glam Hub offers tiered options to suit every masquerader, from an entry road-ready access package through to full celebrity-artist glam. Makeup packages and add-ons are listed on each service page and in our quote calculator." } },
+    { "@type": "Question", name: "How much does professional Carnival makeup cost?", acceptedAnswer: { "@type": "Answer", text: "Professional Carnival makeup at Carnival Glam Hub starts from US$160, with most masqueraders spending US$200 to US$300. Celebrity-artist glam ranges US$250 to US$350, and premium looks go up to US$2,000. A road-ready access package — getting dressed, shuttle and lounge — starts at US$35." } },
     { "@type": "Question", name: "Can I do my own Carnival makeup without experience?", acceptedAnswer: { "@type": "Answer", text: "You can, but Carnival makeup must survive heat, sweat, and hours on the road. Most masqueraders choose a professional for sweat-resistant, photo-ready results that last all day." } },
     { "@type": "Question", name: "What is the difference between regular makeup and Carnival makeup?", acceptedAnswer: { "@type": "Answer", text: "Carnival makeup is built for endurance: sweat-resistant, long-wear, and designed for bright outdoor light and constant photography, unlike everyday makeup which is not made to last through a full day of dancing in the sun." } },
   ],
