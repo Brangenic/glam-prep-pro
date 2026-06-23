@@ -27,6 +27,13 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const faqs = useMemo(() => (dest ? getDestinationFaqs(dest) : []), [dest]);
   const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
 
+  const seoOverrides: Record<string, { territory: string; year: string }> = {
+    trinidad: { territory: "Trinidad", year: "2027" },
+    jamaica: { territory: "Jamaica", year: "2026" },
+    miami: { territory: "Miami", year: "2026" },
+  };
+  const seo = dest ? seoOverrides[dest.slug] : undefined;
+
   useEffect(() => {
     if (!dest) return;
     const prevTitle = document.title;
@@ -43,7 +50,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     };
     setMeta("description", dest.metaDescription);
 
-    if (dest.slug === "trinidad") {
+    if (seo) {
       const setProp = (property: string, content: string) => {
         let el = document.querySelector<HTMLMetaElement>(
           `meta[property="${property}"]`,
@@ -55,7 +62,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         }
         el.setAttribute("content", content);
       };
-      const ogTitle = "Trinidad Carnival Makeup 2027 | Carnival Glam Hub";
+      const ogTitle = `${seo.territory} Carnival Makeup ${seo.year} | Carnival Glam Hub`;
       setProp("og:title", ogTitle);
       setProp("og:description", dest.metaDescription);
       setMeta("twitter:title", ogTitle);
