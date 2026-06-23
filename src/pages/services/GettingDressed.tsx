@@ -219,6 +219,21 @@ const GettingDressed = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Can the seamstress alter a costume that does not fit?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              For most modern band costumes, yes — within reason. Straps can
+              be shortened, padding added, wire bras re-shaped, monokini
+              bases taken in slightly, and gem clusters re-attached or
+              replaced. Full re-cuts of a beaded panel or structural changes
+              to a backpack are not road-morning jobs; flag those at the
+              fitting in advance. The aim is a costume that holds its shape
+              and does not bite into you for ten hours, not a rebuild.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               How much does getting-dressed help cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">

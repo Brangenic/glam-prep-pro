@@ -228,6 +228,35 @@ const CarnivalPhotoshoot = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              Why a pre-road shoot beats road snaps
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              On the road the light is harsh, the costume is dusty by midday,
+              the makeup is past its peak and you are surrounded by thousands
+              of other masqueraders. Phone snaps from friends are great for
+              memories but they will not match what the section looked like
+              when you put it on at 5am. The lounge shoot exists for that
+              window: controlled light, a directed photographer, the headpiece
+              seated properly, every gem still in place. It is the difference
+              between a frame you will reprint and a camera roll you will
+              scroll past.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
+              How is the gallery delivered?
+            </h2>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              You receive a private online gallery link with the full edited
+              set in high-resolution and web-ready sizes. Downloads are
+              unlimited and the gallery stays live for 90 days after delivery.
+              Print orders and additional retouching are available on request.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               How much does the Carnival photoshoot cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
