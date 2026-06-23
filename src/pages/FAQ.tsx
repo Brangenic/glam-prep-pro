@@ -100,8 +100,6 @@ const breadcrumbSchema = {
   ],
 };
 
-const SCHEMA_ID = "faq-page-jsonld";
-
 const FAQ = () => {
   useEffect(() => {
     const previousTitle = document.title;
