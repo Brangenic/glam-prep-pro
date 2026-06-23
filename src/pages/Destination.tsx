@@ -27,10 +27,14 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const faqs = useMemo(() => (dest ? getDestinationFaqs(dest) : []), [dest]);
   const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
 
-  const seoOverrides: Record<string, { territory: string; year: string }> = {
-    trinidad: { territory: "Trinidad", year: "2027" },
-    jamaica: { territory: "Jamaica", year: "2027" },
-    miami: { territory: "Miami", year: "2026" },
+  const seoOverrides: Record<string, { territory: string; year: string; event: string }> = {
+    trinidad: { territory: "Trinidad", year: "2027", event: "Trinidad Carnival" },
+    jamaica: { territory: "Jamaica", year: "2027", event: "Jamaica Carnival" },
+    miami: { territory: "Miami", year: "2026", event: "Miami Carnival" },
+    "saint-lucia": { territory: "Saint Lucia", year: "2026", event: "Saint Lucia Carnival" },
+    antigua: { territory: "Antigua", year: "2026", event: "Antigua Carnival" },
+    barbados: { territory: "Barbados", year: "2026", event: "Barbados Crop Over" },
+    grenada: { territory: "Grenada", year: "2026", event: "Grenada Spicemas" },
   };
   const seo = dest ? seoOverrides[dest.slug] : undefined;
 
@@ -62,7 +66,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         }
         el.setAttribute("content", content);
       };
-      const ogTitle = `${seo.territory} Carnival Makeup ${seo.year} | Carnival Glam Hub`;
+      const ogTitle = `${seo.event} Makeup ${seo.year} | Carnival Glam Hub`;
       setProp("og:title", ogTitle);
       setProp("og:description", dest.metaDescription);
       setMeta("twitter:title", ogTitle);
