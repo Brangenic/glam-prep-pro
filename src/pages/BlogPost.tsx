@@ -193,6 +193,7 @@ type BlogPostData = {
   published_date: string | null;
   read_time: string | null;
   meta_description: string | null;
+  updated_at: string | null;
 };
 
 const BANNED_SLUG_PATTERNS: RegExp[] = [
