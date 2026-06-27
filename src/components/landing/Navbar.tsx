@@ -60,11 +60,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav
+    <header
+      role="banner"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-background/50" : "bg-transparent"}`}
-      aria-label="Main navigation"
     >
-      <div className="container mx-auto px-6 flex items-center justify-between min-h-20 py-3">
+      <nav aria-label="Primary" className="container mx-auto px-6 flex items-center justify-between min-h-20 py-3">
         <a href={isHome ? "#hero" : "/"} className="inline-flex items-center" aria-label="Carnival Glam Hub — Home">
           <img src={brandLogo} alt="Carnival Glam Hub" className="h-12 w-auto sm:h-14 lg:h-16" />
         </a>
@@ -144,7 +144,7 @@ const Navbar = () => {
             )}
           </svg>
         </button>
-      </div>
+      </nav>
       {open && (
         <div className="lg:hidden bg-background/98 backdrop-blur-md border-t border-border px-6 py-6 space-y-4">
           {links.map((l) =>
@@ -195,7 +195,7 @@ const Navbar = () => {
           </a>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 

@@ -77,8 +77,11 @@ const Services = () => {
             <img
               src={servicesImg}
               alt="Close-up carnival glam makeup and jewelry"
+              width={1000}
+              height={1250}
               className="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 

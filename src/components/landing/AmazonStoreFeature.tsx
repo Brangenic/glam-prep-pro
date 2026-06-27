@@ -125,8 +125,11 @@ const AmazonStoreFeature = () => {
                         <img
                           src={product.image_url}
                           alt={product.title}
+                          width={56}
+                          height={56}
                           className="h-14 w-14 shrink-0 rounded-lg object-cover border border-border"
                           loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="h-14 w-14 shrink-0 rounded-lg border border-border bg-muted" aria-hidden="true" />
