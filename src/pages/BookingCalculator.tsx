@@ -252,13 +252,20 @@ const BookingCalculator = () => {
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10"
+            data-mcp-action="get-quote"
+            data-mcp-description="Get a price quote for Carnival Glam Hub services for a chosen Carnival territory, party size and add-ons."
+            data-mcp-params='{"required":["destination","people","email"],"optional":["addons","date","phone","country_code"]}'
           >
             <div className="space-y-6">
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="territory">Territory</Label>
-                  <Select value={territory} onValueChange={setTerritory}>
-                    <SelectTrigger id="territory">
+                  <Select value={territory} onValueChange={setTerritory} name="destination">
+                    <SelectTrigger
+                      id="territory"
+                      aria-label="Carnival destination"
+                      data-mcp-param="destination"
+                    >
                       <SelectValue placeholder="Choose your Carnival" />
                     </SelectTrigger>
                     <SelectContent>
@@ -274,6 +281,9 @@ const BookingCalculator = () => {
                   <Input
                     id="event-date"
                     type="date"
+                    name="date"
+                    aria-label="Carnival event date"
+                    data-mcp-param="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
                   />
@@ -281,7 +291,12 @@ const BookingCalculator = () => {
 
                 <div className="space-y-2">
                   <Label>Number of masqueraders</Label>
-                  <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Number of masqueraders">
+                  <div
+                    className="flex flex-wrap gap-2"
+                    role="radiogroup"
+                    aria-label="Number of masqueraders"
+                    data-mcp-param="people"
+                  >
                     {PARTY_OPTIONS.map((n) => {
                       const active = partySize === n;
                       const label = n === 5 ? "5+" : String(n);
@@ -290,6 +305,9 @@ const BookingCalculator = () => {
                           key={n}
                           type="button"
                           role="radio"
+                          name="people"
+                          value={n}
+                          aria-label={`${label} masquerader${n === 1 ? "" : "s"}`}
                           aria-checked={active}
                           onClick={() => setPartySize(n)}
                           className={`min-w-[3rem] h-11 px-4 rounded-full border font-body text-sm font-medium transition-all ${
@@ -320,6 +338,10 @@ const BookingCalculator = () => {
                     >
                       <Checkbox
                         id={`svc-${s.key}`}
+                        name={`addon_${s.key}`}
+                        value={s.key}
+                        aria-label={`Add ${s.label}`}
+                        data-mcp-param={`addon_${s.key}`}
                         checked={selectedServices[s.key]}
                         onCheckedChange={() => toggleService(s.key)}
                         className="mt-1"
@@ -342,6 +364,9 @@ const BookingCalculator = () => {
                   <Input
                     id="email"
                     type="email"
+                    name="email"
+                    aria-label="Email address"
+                    data-mcp-param="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -352,8 +377,12 @@ const BookingCalculator = () => {
                 <div className="space-y-2">
                   <Label htmlFor="whatsapp">WhatsApp number</Label>
                   <div className="flex gap-2">
-                    <Select value={countryCode} onValueChange={setCountryCode}>
-                      <SelectTrigger className="w-[110px]" aria-label="Country code">
+                    <Select value={countryCode} onValueChange={setCountryCode} name="country_code">
+                      <SelectTrigger
+                        className="w-[110px]"
+                        aria-label="Country dialling code"
+                        data-mcp-param="country_code"
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -365,6 +394,9 @@ const BookingCalculator = () => {
                     <Input
                       id="whatsapp"
                       type="tel"
+                      name="phone"
+                      aria-label="WhatsApp phone number"
+                      data-mcp-param="phone"
                       required
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value.replace(/[^\d\s-]/g, ""))}
