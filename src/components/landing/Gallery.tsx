@@ -97,6 +97,10 @@ const Gallery = () => {
 
   return (
     <section id="gallery" className="py-16 sm:py-24 lg:py-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectSchema) }}
+      />
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-16">
           <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
