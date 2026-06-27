@@ -10,7 +10,6 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
-import { destinations } from "../src/data/destinations";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -25,16 +24,80 @@ type RouteMeta = {
   ogType?: "website" | "article" | "profile";
 };
 
-// Per-destination meta sourced from src/data/destinations.ts (metaTitle /
+// Per-destination meta mirrors src/data/destinations.ts (metaTitle /
 // metaDescription). The Destination route renders for each of these slugs
 // at "/<slug>". Atlanta and similar redirect-only routes are intentionally
-// excluded.
-const destinationRoutes: RouteMeta[] = destinations.map((d) => ({
-  path: `/${d.slug}`,
-  title: d.metaTitle,
-  description: d.metaDescription,
-  ogImage: typeof d.image === "string" && /^https?:\/\//.test(d.image) ? d.image : DEFAULT_OG,
-}));
+// excluded. Kept inline (not imported) so this script stays free of the
+// app's runtime asset imports.
+const destinationRoutes: RouteMeta[] = [
+  {
+    path: "/jamaica",
+    title:
+      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+    description:
+      "Book sweat-proof Jamaica Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    path: "/saint-lucia",
+    title:
+      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+    description:
+      "Book sweat-proof Saint Lucia Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    path: "/antigua",
+    title:
+      "Antigua Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+    description:
+      "Book sweat-proof Antigua Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    path: "/grenada",
+    title:
+      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+    description:
+      "Book sweat-proof Grenada Spicemas 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    path: "/barbados",
+    title:
+      "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+    description:
+      "Book sweat-proof Barbados Crop Over 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    path: "/miami",
+    title:
+      "Miami Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+    description:
+      "Book sweat-proof Miami Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    path: "/toronto",
+    title: "Toronto Carnival Makeup & Glam 2026 | Glam Hub",
+    description:
+      "Toronto Caribbean carnival glam from Carnival Glam Hub. Expert carnival makeup for Caribana and the diaspora. Book your look for Toronto Carnival now.",
+  },
+  {
+    path: "/trinidad",
+    title:
+      "Trinidad Carnival Makeup, Hair & Photoshoots | Carnival Glam Hub",
+    description:
+      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
+  },
+  {
+    path: "/guyana",
+    title: "Guyana Carnival Makeup & Glam 2026 | Glam Hub",
+    description:
+      "Book premium Guyana Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists.",
+  },
+  {
+    path: "/epic-cruise",
+    title: "Epic Cruise Carnival Makeup & Glam 2027 | Glam Hub",
+    description:
+      "Book your carnival glam services on the EPIC Cruise. Carnival Glam Hub is aboard the EPIC Carnival Experience for Trinidad Carnival 2027.",
+  },
+];
 
 // Service + core routes. Title and description must match what each page
 // component sets at runtime so Helmet/effect updates don't conflict with
