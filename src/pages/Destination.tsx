@@ -20,6 +20,19 @@ import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 
+const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
+  trinidad: { city: "Port of Spain", country: "TT" },
+  "trinidad-carnival-2027": { city: "Port of Spain", country: "TT" },
+  jamaica: { city: "Kingston", country: "JM" },
+  barbados: { city: "Bridgetown", country: "BB" },
+  grenada: { city: "St. George's", country: "GD" },
+  "saint-lucia": { city: "Castries", country: "LC" },
+  antigua: { city: "St. John's", country: "AG" },
+  miami: { city: "Miami", country: "US" },
+  toronto: { city: "Toronto", country: "CA" },
+  guyana: { city: "Georgetown", country: "GY" },
+};
+
 const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const params = useParams();
   const slug = slugOverride ?? params.slug ?? "";
@@ -97,6 +110,19 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       el.textContent = JSON.stringify(data);
     };
 
+    const place = TERRITORY_PLACE[dest.slug];
+    const locationBlock = place
+      ? {
+          "@type": "Place",
+          name: place.city,
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: place.city,
+            addressCountry: place.country,
+          },
+        }
+      : undefined;
+
     upsertJsonLd("destination-service-jsonld", {
       "@context": "https://schema.org",
       "@type": "Service",
@@ -105,6 +131,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       description: dest.metaDescription,
       url: pageUrl,
       areaServed: { "@type": "Place", name: dest.shortName },
+      ...(locationBlock ? { location: locationBlock } : {}),
       provider: {
         "@type": "Organization",
         name: "Carnival Glam Hub",
