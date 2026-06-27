@@ -31,8 +31,9 @@ const serviceSchema = {
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
+    price: "220",
     availability: "https://schema.org/InStock",
-    url: "https://www.carnivalglamhub.com/booking",
+    url: "https://carnivalglamhub.masos.app/events",
     description: "Carnival photoshoot from US$220.",
     priceSpecification: {
       "@type": "PriceSpecification",

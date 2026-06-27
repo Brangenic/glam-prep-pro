@@ -31,8 +31,15 @@ const serviceSchema = {
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
+    price: "35",
     availability: "https://schema.org/InStock",
-    url: "https://www.carnivalglamhub.com/booking",
+    url: "https://carnivalglamhub.masos.app/events",
+    description: "Carnival shuttle service from US$35.",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "USD",
+      minPrice: "35",
+    },
   },
 };
 

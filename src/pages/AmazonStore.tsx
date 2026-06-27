@@ -42,6 +42,39 @@ const AmazonStore = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!items.length) return;
+    const itemListSchema = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Carnival Glam Hub Amazon Storefront",
+      itemListElement: items.map((item, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        item: {
+          "@type": "Product",
+          name: item.title,
+          image: item.image_url ?? undefined,
+          brand: { "@type": "Brand", name: "Carnival Glam Hub" },
+          offers: {
+            "@type": "Offer",
+            url: item.product_url,
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+          },
+        },
+      })),
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "amazon-store-itemlist-jsonld";
+    script.textContent = JSON.stringify(itemListSchema);
+    document.head.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, [items]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />

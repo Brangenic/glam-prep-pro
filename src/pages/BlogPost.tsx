@@ -364,7 +364,14 @@ const BlogPost = () => {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: post.title,
-        image: post.image_url ? [post.image_url] : undefined,
+        image: post.image_url
+          ? {
+              "@type": "ImageObject",
+              url: post.image_url,
+              width: 1200,
+              height: 630,
+            }
+          : undefined,
         datePublished: post.published_date ?? undefined,
         dateModified: post.updated_at ?? post.published_date ?? undefined,
         author: post.author_name

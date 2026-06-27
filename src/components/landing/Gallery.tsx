@@ -72,11 +72,35 @@ const glamHubVideos = [
   },
 ];
 
+const videoObjectSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: "Carnival Glam Hub in Action",
+  description:
+    "See the Carnival Glam Hub morning concierge in action — sweat-resistant makeup, hair, getting dressed, photos and shuttle, all in one lounge.",
+  thumbnailUrl: "https://www.carnivalglamhub.com/og-image.png",
+  uploadDate: "2024-01-01",
+  contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
+  embedUrl: "https://www.youtube.com/embed/W4b98oLRTCE",
+  publisher: {
+    "@type": "Organization",
+    name: "Carnival Glam Hub",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.carnivalglamhub.com/logo.png",
+    },
+  },
+};
+
 const Gallery = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
     <section id="gallery" className="py-16 sm:py-24 lg:py-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectSchema) }}
+      />
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-16">
           <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
