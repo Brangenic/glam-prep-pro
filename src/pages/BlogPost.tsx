@@ -132,6 +132,7 @@ import { supabase } from "@/integrations/supabase/client";
 import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
 import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
 import RelatedGuides from "@/components/RelatedGuides";
+import BlogCTA from "@/components/BlogCTA";
 
 // Bundled hero overrides: replace unreliable storage-bucket URLs with
 // reliable bundled WebP imports for specific slugs.
@@ -627,6 +628,21 @@ const BlogPost = () => {
                     }
                   />
                 )}
+
+                {/* Conversion CTA — pushes to MasOS booking page */}
+                <BlogCTA
+                  slug={slug}
+                  tags={
+                    slug && RECOVERED_POST_BY_SLUG[slug]
+                      ? RECOVERED_POST_BY_SLUG[slug].tags
+                      : []
+                  }
+                  category={
+                    slug && RECOVERED_POST_BY_SLUG[slug]
+                      ? RECOVERED_POST_BY_SLUG[slug].category
+                      : null
+                  }
+                />
 
                 {/* Bottom CTA */}
                 <div className="mt-16 pt-8 border-t border-border flex items-center justify-between">
