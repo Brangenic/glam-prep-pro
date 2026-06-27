@@ -220,6 +220,9 @@ const CarnivalPhotoshoot = () => {
               Professional Carnival photoshoot,{" "}
               <span className="italic text-gradient-primary">captured before the road</span>
             </h1>
+            <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
+              Carnival Glam Hub provides on-site professional Carnival photoshoots from US$220, captured the morning of the parade in our lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+            </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               A Carnival photoshoot at{" "}
               <a href="/about" className="text-primary hover:underline">
