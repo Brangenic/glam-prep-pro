@@ -118,6 +118,16 @@ const Footer = () => (
         </div>
       </div>
       <div className="border-t border-border mt-10 sm:mt-12 pt-6 sm:pt-8 text-center">
+        <p className="font-body text-xs text-muted-foreground mb-3">
+          <a
+            href="https://www.google.com/preferences/source?q=https://www.carnivalglamhub.com"
+            target="_blank"
+            rel="noopener"
+            className="hover:text-primary transition-colors"
+          >
+            Follow us on Google — add Carnival Glam Hub as a preferred source →
+          </a>
+        </p>
         <p className="font-body text-xs text-muted-foreground">
           © {new Date().getFullYear()} Carnival Glam Hub. All rights reserved.
         </p>
