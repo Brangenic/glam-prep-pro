@@ -31,8 +31,9 @@ const serviceSchema = {
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
+    price: "180",
     availability: "https://schema.org/InStock",
-    url: "https://www.carnivalglamhub.com/booking",
+    url: "https://carnivalglamhub.masos.app/events",
     description: "Carnival hair styling from US$180.",
     priceSpecification: {
       "@type": "PriceSpecification",

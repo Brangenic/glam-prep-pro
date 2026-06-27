@@ -31,8 +31,9 @@ const serviceSchema = {
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
+    price: "80",
     availability: "https://schema.org/InStock",
-    url: "https://www.carnivalglamhub.com/booking",
+    url: "https://carnivalglamhub.masos.app/events",
     description: "Included in full concierge packages; available from US$80 as a stand-alone add-on.",
     priceSpecification: {
       "@type": "PriceSpecification",

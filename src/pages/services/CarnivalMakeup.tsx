@@ -30,8 +30,9 @@ const serviceSchema = {
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
+    price: "160",
     availability: "https://schema.org/InStock",
-    url: "https://www.carnivalglamhub.com/booking",
+    url: "https://carnivalglamhub.masos.app/events",
     description:
       "Professional Carnival makeup from US$160; celebrity-artist glam US$250–US$350; premium looks up to US$2,000.",
     priceSpecification: {
