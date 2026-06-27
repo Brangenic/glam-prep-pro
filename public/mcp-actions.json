@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "site": "https://www.carnivalglamhub.com",
+  "actions": [
+    {
+      "id": "register-event",
+      "name": "Register for a Carnival event",
+      "description": "Register and pay a deposit for a Carnival Glam Hub event by territory and date",
+      "method": "link",
+      "endpoint": "https://carnivalglamhub.masos.app/events"
+    },
+    {
+      "id": "get-quote",
+      "name": "Get a price quote",
+      "description": "Get a price quote for Carnival Glam Hub services",
+      "method": "declarative",
+      "endpoint": "/booking-calculator",
+      "parameters": { "required": ["destination", "people", "email"] }
+    },
+    {
+      "id": "contact",
+      "name": "Contact Carnival Glam Hub",
+      "description": "Message Carnival Glam Hub on WhatsApp",
+      "method": "link",
+      "endpoint": "https://wa.me/18765090997"
+    }
+  ]
+}
