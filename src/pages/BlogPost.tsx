@@ -133,6 +133,7 @@ import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
 import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
 import RelatedGuides from "@/components/RelatedGuides";
 import BlogCTA from "@/components/BlogCTA";
+import { buildFaqSchema } from "@/lib/faqSchema";
 
 // Bundled hero overrides: replace unreliable storage-bucket URLs with
 // reliable bundled WebP imports for specific slugs.
@@ -418,6 +419,17 @@ const BlogPost = () => {
           faqScript.textContent = JSON.stringify(faqSchema);
           document.head.appendChild(faqScript);
         } catch {}
+      }
+      // Generic fallback: derive FAQPage schema from a `## Frequently Asked
+      // Questions` section if no embedded JSON was provided.
+      if (!faqScript) {
+        const derived = buildFaqSchema(post.content);
+        if (derived) {
+          faqScript = document.createElement("script");
+          faqScript.type = "application/ld+json";
+          faqScript.textContent = JSON.stringify(derived);
+          document.head.appendChild(faqScript);
+        }
       }
     }
 
