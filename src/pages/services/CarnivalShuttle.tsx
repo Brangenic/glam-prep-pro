@@ -166,6 +166,9 @@ const CarnivalShuttle = () => {
               Carnival shuttle,{" "}
               <span className="italic text-gradient-primary">from the lounge to the road</span>
             </h1>
+            <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
+              Carnival Glam Hub provides private Carnival shuttle transport from our air-conditioned lounge to your band start-point, included in road-ready concierge packages from US$35, available across Trinidad, Jamaica, Barbados, Grenada and Antigua.
+            </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               The Carnival shuttle service at{" "}
               <a href="/about" className="text-primary hover:underline">

@@ -194,9 +194,9 @@ export const destinations: Destination[] = [
       "Carnival Monday 8 & Tuesday 9 February 2027",
     ],
     metaTitle:
-      "Trinidad Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Trinidad Carnival Makeup, Hair & Photoshoots | Carnival Glam Hub",
     metaDescription:
-      "Book sweat-proof Trinidad Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
   },
   {
     slug: "guyana",

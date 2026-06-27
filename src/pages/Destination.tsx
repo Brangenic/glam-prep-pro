@@ -28,7 +28,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
 
   const seoOverrides: Record<string, { territory: string; year: string; event: string }> = {
-    trinidad: { territory: "Trinidad", year: "2027", event: "Trinidad Carnival" },
+    // Trinidad evergreen hub — no year. The dated edition lives at /trinidad-carnival-2027.
+    trinidad: { territory: "Trinidad", year: "", event: "Trinidad Carnival" },
     jamaica: { territory: "Jamaica", year: "2027", event: "Jamaica Carnival" },
     miami: { territory: "Miami", year: "2026", event: "Miami Carnival" },
     "saint-lucia": { territory: "Saint Lucia", year: "2026", event: "Saint Lucia Carnival" },
@@ -66,7 +67,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         }
         el.setAttribute("content", content);
       };
-      const ogTitle = `${seo.event} Makeup ${seo.year} | Carnival Glam Hub`;
+      const ogTitle = seo.year
+        ? `${seo.event} Makeup ${seo.year} | Carnival Glam Hub`
+        : `${seo.event} Makeup, Hair & Photoshoots | Carnival Glam Hub`;
       setProp("og:title", ogTitle);
       setProp("og:description", dest.metaDescription);
       setMeta("twitter:title", ogTitle);
@@ -210,20 +213,31 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
-        {/* Trinidad-only intro */}
+        {/* Trinidad evergreen hub intro + cross-link to dated edition */}
         {dest.slug === "trinidad" && (
           <section className="border-t border-border bg-primary/5">
             <div className="container mx-auto px-4 sm:px-6 max-w-4xl py-10 sm:py-14 text-center">
               <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3">
-                Trinidad Carnival 2027 — Bookings Are Open
+                Trinidad Carnival Glam Hub
               </p>
               <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-4">
                 Carnival makeup, hair and photos for{" "}
-                <span className="text-gradient-primary italic">Trinidad Carnival 2027</span>
+                <span className="text-gradient-primary italic">Trinidad Carnival</span>
               </h2>
               <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-                Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Carnival Monday 8 February and Carnival Tuesday 9 February 2027.
+                Sweat-resistant makeup, road-ready hair, getting-dressed help, on-site photos and shuttle from our Port of Spain lounge — by the team trusted by 15,000+ masqueraders since 2017.
               </p>
+              <div className="mb-6 rounded-2xl border border-primary/30 bg-background/60 px-5 py-4 max-w-2xl mx-auto">
+                <p className="font-body text-sm sm:text-base text-foreground/85">
+                  Booking for Trinidad Carnival 2027?{" "}
+                  <a
+                    href="/trinidad-carnival-2027"
+                    className="font-semibold text-primary hover:underline"
+                  >
+                    See our Trinidad Carnival 2027 page →
+                  </a>
+                </p>
+              </div>
               <a
                 href={bookingUrl}
                 target="_blank"

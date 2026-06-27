@@ -196,6 +196,9 @@ const CarnivalHair = () => {
               Carnival hair styling that{" "}
               <span className="italic text-gradient-primary">holds through the road</span>
             </h1>
+            <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
+              Carnival Glam Hub provides headpiece-ready professional Carnival hair styling from US$180, delivered in our air-conditioned lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+            </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival hair and Carnival hairstyles at{" "}
               <a href="/about" className="text-primary hover:underline">

@@ -61,6 +61,56 @@ const breadcrumbSchema = {
   ],
 };
 
+// Real Trinidad reviews from our public Google profile, also rendered visibly on this page.
+const VISIBLE_REVIEWS = [
+  {
+    author: "Ashley Trini S",
+    rating: 5,
+    body:
+      "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam Hub and will be using them for both days next year for 2027 Carnival.",
+  },
+  {
+    author: "Kerra Denel",
+    rating: 5,
+    body:
+      "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time — which is everything during Carnival season — and the entire process was professional and organised.",
+  },
+] as const;
+
+const aggregateRatingValue = (
+  VISIBLE_REVIEWS.reduce((s, r) => s + r.rating, 0) / VISIBLE_REVIEWS.length
+).toFixed(1);
+
+const reviewSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${CANONICAL}#business`,
+  name: "Carnival Glam Hub — Trinidad Carnival",
+  url: CANONICAL,
+  image: "https://www.carnivalglamhub.com/og/trinidad-carnival-2027.jpg",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Port of Spain",
+    addressCountry: "TT",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: aggregateRatingValue,
+    reviewCount: VISIBLE_REVIEWS.length,
+    bestRating: "5",
+  },
+  review: VISIBLE_REVIEWS.map((r) => ({
+    "@type": "Review",
+    author: { "@type": "Person", name: r.author },
+    reviewBody: r.body,
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: r.rating,
+      bestRating: "5",
+    },
+  })),
+};
+
 const TICKS = [
   "Makeup",
   "Hair",
@@ -130,6 +180,7 @@ const TrinidadCarnival2027 = () => {
     <div className="min-h-screen bg-background text-foreground">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
       <Navbar />
 
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
@@ -348,6 +399,19 @@ const TrinidadCarnival2027 = () => {
           <p className="font-body text-base sm:text-lg text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
             Read what Trinidad clients say about their morning, their look and how it held up on the road.
           </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            {VISIBLE_REVIEWS.map((r) => (
+              <figure key={r.author} className="rounded-2xl border border-border bg-card p-6 text-left">
+                <div className="font-body text-sm text-secondary mb-2" aria-label={`Rated ${r.rating} out of 5`}>
+                  ★★★★★
+                </div>
+                <blockquote className="font-body text-base text-foreground/85 leading-relaxed mb-3">
+                  “{r.body}”
+                </blockquote>
+                <figcaption className="font-body text-sm text-muted-foreground">— {r.author}</figcaption>
+              </figure>
+            ))}
+          </div>
           <a
             href="https://www.google.com/maps/search/Carnival+Glam+Hub+Trinidad+Port+of+Spain"
             target="_blank"
@@ -400,6 +464,12 @@ const TrinidadCarnival2027 = () => {
             >
               BOOK NOW
             </a>
+          <p className="mt-6 font-body text-sm text-muted-foreground">
+            Looking for the evergreen Trinidad hub?{" "}
+            <a href="/trinidad" className="font-semibold text-primary hover:underline">
+              Visit our Trinidad Carnival page →
+            </a>
+          </p>
           </div>
         </section>
       </main>

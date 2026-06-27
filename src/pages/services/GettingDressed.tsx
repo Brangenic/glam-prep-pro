@@ -204,6 +204,9 @@ const GettingDressed = () => {
               Carnival costume getting-dressed,{" "}
               <span className="italic text-gradient-primary">done properly</span>
             </h1>
+            <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
+              Carnival Glam Hub provides hands-on Carnival costume getting-dressed and on-site seamstress support — included in concierge packages from US$35 and available stand-alone from US$80 — across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+            </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Getting-dressed assistance at{" "}
               <a href="/about" className="text-primary hover:underline">
