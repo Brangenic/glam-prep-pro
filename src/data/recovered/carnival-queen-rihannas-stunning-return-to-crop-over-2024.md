@@ -1,4 +1,4 @@
-**RIHANNA!** The Queen herself graced the annual Crop Over Festival with her presence at 36, looking flawless as always. RiRi made a dazzling return to the streets of Barbados for the 2024 Crop Over Festival, also known as the Grand Kadooment parade. On August 5th, the "Diamonds" singer appeared in a breathtaking custom costume adorned with intricate gold and bronze jewels and a matching headpiece, perfectly complementing her chestnut and blonde-highlighted hair. Naturally, she wore a custom super backpack to complete the look.
+**RIHANNA!** The Queen herself graced the annual Crop Over Festival with her presence at 36, looking flawless as always. RiRi made a dazzling return to the streets of [Barbados](https://www.carnivalglamhub.com/barbados) for the 2024 Crop Over Festival, also known as the Grand Kadooment parade. On August 5th, the "Diamonds" singer appeared in a breathtaking custom costume adorned with intricate gold and bronze jewels and a matching headpiece, perfectly complementing her chestnut and blonde-highlighted hair. Naturally, she wore a custom super backpack to complete the look.
 
 ![Rihanna at Crop Over 2024](https://static.wixstatic.com/media/477465_076b9f9d715742fca2bdfeeac5951d48~mv2.jpg)
 *Rihanna — Crop Over 2024. Photo: Just Jared*
@@ -21,6 +21,6 @@ For six weeks, Crop Over festivities take over Barbados with Caribbean music, pa
 
 Speaking of celebrity sightings, Caribbean Carnivals are attracting more and more of them. We recently saw Chloe Bailey in Saint Lucia, Winnie Harlow in Jamaica (makeup by Glam Hub), and in the past Nicki Minaj and Ashanti in Trinidad.
 
-*Carnival Glam Hub is celebrating its fifth year in Barbados.* Don't miss our luxurious eye makeup, waterproof applications, and amenities including complimentary refreshments, snacks, changing rooms with dressing assistants, seamstresses, and a shuttle service — in Trinidad, Jamaica, Barbados, Saint Lucia, Miami, Toronto, Antigua, Atlanta, Grenada, Cayman, Saint Vincent, Tobago, and Notting Hill (UK). Visit [carnivalglamhub.com](https://www.carnivalglamhub.com).
+*Carnival Glam Hub is celebrating its fifth year in Barbados.* Don't miss our [luxurious eye makeup](https://www.carnivalglamhub.com/services/carnival-makeup), waterproof applications, and amenities including complimentary refreshments, snacks, changing rooms with dressing assistants, seamstresses, and a shuttle service — in Trinidad, Jamaica, Barbados, Saint Lucia, Miami, Toronto, Antigua, Atlanta, Grenada, Cayman, Saint Vincent, Tobago, and Notting Hill (UK). Visit [carnivalglamhub.com](https://carnivalglamhub.masos.app/events).
 
 *Disclaimer: Glam Hub did not provide makeup or hair services for Rihanna. This is Carnival Glam Hub's 5th year doing Crop Over.*

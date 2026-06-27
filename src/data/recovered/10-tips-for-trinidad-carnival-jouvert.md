@@ -1,5 +1,5 @@
 ## First of all, what is J'ouvert?
-J'ouvert is the French Creole term meaning **"dawn" or "daybreak"** — the time at which the celebration is held, signalling the start of Carnival. For Trinidad Carnival 2027, J'ouvert hits in the early hours before Carnival Monday. Here's how to do it right.
+J'ouvert is the French Creole term meaning **"dawn" or "daybreak"** — the time at which the celebration is held, signalling the start of Carnival. For [Trinidad Carnival 2027](https://www.carnivalglamhub.com/trinidad-carnival-2027), J'ouvert hits in the early hours before Carnival Monday. Here's how to do it right.
 
 **1. Prep the car.** If you're renting, borrowing or driving your own, protect the upholstery — think water party, but with paint, mud, oil and chocolate. Use big garbage bags over the seat backs and towels on the base. Keep large water bottles in the trunk and a change of old clothes.
 
@@ -7,9 +7,9 @@ J'ouvert is the French Creole term meaning **"dawn" or "daybreak"** — the time
 
 **3. Wear sunblock.** You start in the dark, but you'll be in the blazing Caribbean sun by 10am. Sunblock first, then baby oil.
 
-**4. Protect your phone.** If you must carry it, invest in a waterproof case with a lanyard, or swap your SIM into an old phone. No live story is worth losing your phone before Carnival morning.
+**4. Protect your phone.** If you must carry it, invest in a waterproof case with a lanyard, or swap your SIM into an old phone. No live story is worth losing your phone before [Carnival morning](https://carnivalglamhub.masos.app/events).
 
-**5. Pace yourself.** There's no shortage of rum, but J'ouvert ends just hours before the big pump — usually the day before Road March. You don't want to show up to your [makeup appointment](https://www.carnivalglamhub.com/trinidad) trashed and hungover.
+**5. Pace yourself.** There's no shortage of rum, but J'ouvert ends just hours before the big pump — usually the day before Road March. You don't want to show up to your [makeup appointment](https://www.carnivalglamhub.com/services/carnival-makeup) trashed and hungover.
 
 **6. Embrace the mess.** This is where you get stink and dutty. Don't be stush. Strangers will jam on you uninvited, paint will fly. As the song says, "Cyah play Mas if you 'fraid powda." Have fun with it.
 
