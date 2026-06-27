@@ -77,16 +77,14 @@ const VISIBLE_REVIEWS = [
   },
 ] as const;
 
-const aggregateRatingValue = (
-  VISIBLE_REVIEWS.reduce((s, r) => s + r.rating, 0) / VISIBLE_REVIEWS.length
-).toFixed(1);
-
 const reviewSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": `${CANONICAL}#business`,
-  name: "Carnival Glam Hub — Trinidad Carnival",
+  name: "Carnival Glam Hub",
+  alternateName: "Carnival Glam Hub — Trinidad Carnival",
   url: CANONICAL,
+  sameAs: ["https://www.wikidata.org/wiki/Q140323641"],
   image: "https://www.carnivalglamhub.com/og/trinidad-carnival-2027.jpg",
   address: {
     "@type": "PostalAddress",
@@ -95,8 +93,8 @@ const reviewSchema = {
   },
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: aggregateRatingValue,
-    reviewCount: VISIBLE_REVIEWS.length,
+    ratingValue: "4.8",
+    reviewCount: "43",
     bestRating: "5",
   },
   review: VISIBLE_REVIEWS.map((r) => ({
