@@ -73,8 +73,11 @@ const Destinations = () => {
               <img
                 src={d.image}
                 alt={`${d.name} — Carnival Glam Hub destination`}
+                width={600}
+                height={800}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
               {d.upcoming && (

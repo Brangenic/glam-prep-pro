@@ -94,8 +94,11 @@ const Problem = () => {
           <img
             src={solutionImg}
             alt="Masquerader getting glam at Carnival Glam Hub"
+            width={1600}
+            height={900}
             className="w-full h-full object-cover object-[center_60%]"
             loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
           <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-auto">

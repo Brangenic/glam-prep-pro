@@ -15,58 +15,8 @@ import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": ["Organization", "BeautySalon"],
-  name: "Carnival Glam Hub",
-  legalName: "Carnival Glam Hub",
-  url: "https://www.carnivalglamhub.com",
-  logo: "https://www.carnivalglamhub.com/logo.png",
-  description:
-    "Premium Carnival morning concierge for travelling masqueraders. Trusted by 15,000+ masqueraders since 2017.",
-  priceRange: "$35–$2,000",
-  foundingDate: "2017-01-01",
-  founder: [
-    { "@type": "Person", name: "Gabby Glam", alternateName: "Gabrielle Waite" },
-    { "@type": "Person", name: "Kibwe McGann" },
-  ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    reviewCount: "43",
-    bestRating: "5",
-  },
-  areaServed: [
-    { "@type": "Place", name: "Trinidad" },
-    { "@type": "Place", name: "Jamaica" },
-    { "@type": "Place", name: "Barbados" },
-    { "@type": "Place", name: "Grenada" },
-    { "@type": "Place", name: "Saint Lucia" },
-    { "@type": "Place", name: "Antigua" },
-    { "@type": "Place", name: "Miami" },
-    { "@type": "Place", name: "Toronto" },
-    { "@type": "Place", name: "Guyana" },
-    { "@type": "Place", name: "Saint Vincent" },
-    { "@type": "Place", name: "Cayman Islands" },
-    { "@type": "Place", name: "Atlanta" },
-    { "@type": "Place", name: "United Kingdom" },
-  ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    email: "bookings@carnivalglamhub.com",
-    contactType: "customer service",
-    areaServed: "Caribbean",
-    availableLanguage: ["English"],
-  },
-  sameAs: [
-    "https://www.instagram.com/carnivalglamhub",
-    "https://www.facebook.com/carnivalglamhub",
-    "https://www.tiktok.com/@carnivalglamhub",
-    "https://www.youtube.com/@carnivalglamhub",
-    "https://www.pinterest.com/carnivalglamhub",
-    "https://www.amazon.com/shop/carnivalglamhub",
-  ],
-};
+// BeautySalon (Organization) JSON-LD is rendered statically in index.html
+// to avoid duplicate structured-data on the homepage.
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -100,37 +50,11 @@ const faqSchema = {
   ],
 };
 
-const founderPersonSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Gabby Glam",
-  alternateName: "Gabrielle Waite",
-  jobTitle: "Celebrity Makeup Artist and Co-Founder",
-  description:
-    "Jamaican celebrity makeup artist, founder of Gabby Glam Cosmetics, and co-founder of Carnival Glam Hub. Known for soft-glam looks on public figures including Sheryl Lee Ralph and Davina Bennett.",
-  worksFor: {
-    "@type": "BeautySalon",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  knowsAbout: [
-    "Carnival makeup",
-    "Celebrity makeup",
-    "Soft glam",
-    "Sweat-resistant makeup",
-  ],
-  sameAs: [
-    "https://gabbyglamcosmetics.com",
-    "https://www.instagram.com/carnivalglamhub",
-  ],
-};
+// Founder Person JSON-LD is rendered statically in index.html to avoid
+// duplicate structured-data on the homepage.
 
 const Index = () => (
   <div className="min-h-screen bg-background text-foreground">
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-    />
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
@@ -138,10 +62,6 @@ const Index = () => (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-    />
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(founderPersonSchema) }}
     />
     <Navbar />
     <main>

@@ -36,7 +36,10 @@ const PublicationLink = ({
           <img
             src={logoSrc}
             alt={`${name} logo`}
+            width={28}
+            height={28}
             loading="lazy"
+            decoding="async"
             onError={() => setShowFallback(true)}
             className={compact ? "h-5 w-5 object-contain" : "h-6 w-6 sm:h-7 sm:w-7 object-contain"}
           />

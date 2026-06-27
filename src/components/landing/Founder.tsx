@@ -43,8 +43,11 @@ const Founder = () => {
               <img
                 src={founderImg}
                 alt="Carnival Glam Hub founder"
+                width={800}
+                height={800}
                 className="w-full h-full object-cover object-top"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>

@@ -16,8 +16,11 @@ const Solution = () => {
             <img
               src={solutionImg}
               alt="Makeup artist preparing masquerader"
+              width={1000}
+              height={1000}
               className="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md rounded-2xl p-4 border border-primary/10">
