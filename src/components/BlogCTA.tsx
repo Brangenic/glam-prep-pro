@@ -115,6 +115,8 @@ const BlogCTA = ({ slug, tags, category }: BlogCTAProps) => {
           href={BOOKING_URL}
           target="_blank"
           rel="noopener noreferrer"
+          data-mcp-action="register-event"
+          data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
           onClick={() => {
             if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
               window.gtag("event", "conversion", {
