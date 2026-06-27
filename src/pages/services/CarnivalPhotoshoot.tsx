@@ -54,6 +54,93 @@ const breadcrumbSchema = {
   ],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What's included in your Carnival photoshoot",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A dedicated photography session immediately after glam, directed posing for the costume, multiple set-ups inside the air-conditioned lounge and outside if light and timing allow, professional post-production, and private gallery delivery after Carnival.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "When does the shoot happen?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Before you hit the road. The shoot is scheduled into the concierge timeline immediately after makeup, hair and getting-dressed, while the look is at its absolute peak and before anything has been touched by the sun. The photographer works around your band's departure window so nothing is rushed. Most masqueraders are in front of the camera between 5am and 8am, depending on territory and band.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long until you see the photos?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Edited galleries are delivered within two to three weeks of Carnival, with quick-turn web-ready selects available within 72 hours on request.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Who is behind the camera?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Carnival Glam Hub works with a small bench of in-house Carnival photographers who shoot the morning every year. They know how to direct posing for wire bras and backpacks, where to stand so feathers do not eat the frame, and how to read the early-morning light outside the lounge. You are not handing your costume to someone shooting their first parade.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can we do couples, group or band-section shoots?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Couples and small groups are common — best friends, sister duos, full sections. Group shoots are scheduled into the morning timeline so glam finishes in sequence and everyone hits the camera together at peak. Larger band-section shoots need to be flagged at booking so we hold the photographer and the shoot window.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What should I bring?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Your costume, your headpiece, any reference shots you want to recreate, and a charged phone for the quick-turn selects. The lounge handles styling tape, pins and small repairs, so you do not need to bring those.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why a pre-road shoot beats road snaps",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "On the road the light is harsh, the costume is dusty by midday, the makeup is past its peak and you are surrounded by thousands of other masqueraders. Phone snaps from friends are great for memories but they will not match what the section looked like when you put it on at 5am. The lounge shoot exists for that window: controlled light, a directed photographer, the headpiece seated properly, every gem still in place. It is the difference between a frame you will reprint and a camera roll you will scroll past.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How is the gallery delivered?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "You receive a private online gallery link with the full edited set in high-resolution and web-ready sizes. Downloads are unlimited and the gallery stays live for 90 days after delivery. Print orders and additional retouching are available on request.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does the Carnival photoshoot cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The Carnival photoshoot starts from US$220 as a stand-alone session and is discounted when bundled with Carnival makeup, hair and getting-dressed. Final pricing varies by territory and photographer.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where can I book the Carnival photoshoot?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Available across every Carnival Glam Hub location. The most booked photoshoots are Trinidad Carnival, Jamaica Carnival and Miami Carnival; we also shoot Barbados, Grenada, Antigua, Saint Lucia and Toronto.",
+      },
+    },
+  ],
+};
+
 const CarnivalPhotoshoot = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -117,6 +204,10 @@ const CarnivalPhotoshoot = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">

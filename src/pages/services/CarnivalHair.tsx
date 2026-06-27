@@ -54,6 +54,69 @@ const breadcrumbSchema = {
   ],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What hair styles do you offer?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sleek high pony, voluminous curl set, braided crown and feed-in braids, slick-back base for elaborate headpieces, half-up half-down with a secured front, and clean clip-in or sewn-in installs. Bring your headpiece so we can fit and balance the style around it.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why carnival hair has to last",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Standard salon styling is built to last an evening. Carnival hair has to last a full day on the road, plus the after-party. Each style is built in layers: cleansed and stretched base, secured foundation, the visible style, and a hold layer that resists humidity, sweat and movement. Pins are anchored so wires and feathers stay put for the full route, and the front is set so sweat does not pull it down by midday.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does carnival hair cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Carnival hair styling starts from US$180. Most road-day styles fall between US$180 and US$280 depending on length, density and complexity. Feed-in braids, custom installs and heavy headpiece integrations are quoted on consultation. Add-ons — clip-in lengths, custom partings, edge styling and a touch-up kit for the road — are priced separately on booking.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long does the appointment take?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Plan for 60 to 120 minutes in the chair, depending on the style. A sleek high pony or slick-back base for a heavy headpiece is at the faster end. Voluminous curl sets, braided crowns and feed-in braids sit in the middle. Full clip-in or sewn-in installs are the longest. Hair is scheduled in sequence with makeup and getting-dressed so the morning runs to time and you leave with the band, not after it.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How should I prep my hair before the appointment?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Wash and fully dry your hair the day before — not the morning of — so it has a little grip for pins and braids. Skip heavy leave-ins and oils; they make holds fail in heat. Bring your headpiece, any extensions or wefts you want used, and a clear reference image of the style you want. If you are unsure which style suits your costume, our stylists will walk through options when you arrive and pick the one that will photograph best with your headpiece in place.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can you work around my headpiece?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes — and we expect to. Most road-day headpieces are heavy, front-loaded and pinned in from below. Bring it. The stylist will build the base specifically to seat it, balance the weight across the crown and back, and anchor the pins so the piece stays put when you jump, wine and bend through the route.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where can I book carnival hair?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Carnival hair styling is available at every Carnival Glam Hub location. The most booked destinations are Trinidad Carnival, Jamaica Carnival and Miami Carnival; we also work Barbados, Grenada, Antigua, Saint Lucia and Toronto.",
+      },
+    },
+  ],
+};
+
 const CarnivalHair = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -117,6 +180,10 @@ const CarnivalHair = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">

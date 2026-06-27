@@ -48,6 +48,45 @@ const breadcrumbSchema = {
   ],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Where the shuttle runs",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The Carnival shuttle is confirmed in Trinidad for Trinidad Carnival 2027. Availability in Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami and Toronto varies by season and band partnerships; see the FAQ or confirm at booking.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How it works",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Shuttle departures are aligned to your band's road march schedule. We collect you from the Carnival Glam Hub lounge after glam and getting-dressed, drive directly to your band's start point, and drop off as close as the police cordon permits.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Group capacity",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Vehicles range from private cars for two to four masqueraders, up to mini-coaches for a full group of friends booked together. Reserve the full vehicle to keep your group together on the morning.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Booking and confirmation",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Shuttle is an add-on at booking. Departure times are confirmed by email the week of Carnival once your band's road march schedule is locked in.",
+      },
+    },
+  ],
+};
+
 const CarnivalShuttle = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -111,6 +150,10 @@ const CarnivalShuttle = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
