@@ -54,6 +54,77 @@ const breadcrumbSchema = {
   ],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Why getting-dressed help matters",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A costume that is not fitted properly will shift, dig, ride up or come apart on the road. A poorly seated backpack or collar will hurt within the first hour. Gem fixes, zip breaks and last-minute alterations are the most common reasons masqueraders miss their band's start. Our team adjusts every piece for fit and movement — and our seamstress repairs anything that needs a needle — before you leave the lounge.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What's included in your getting-dressed appointment",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Full assembly of all costume pieces, padding and tape adjustments where needed, harness and backpack seating, collar and headpiece balancing, on-site seamstress for gem replacement, strap shortening and emergency zip and seam repairs, double-checking of every closure, and a final road-ready inspection.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How it speeds up the morning",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Self-dressing in a hotel room typically takes 45 to 90 minutes and ends in a panic. With Carnival Glam Hub, getting-dressed happens in sequence after glam and is completed in 20 to 30 minutes. You leave on time, fitted correctly.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What if a costume piece breaks at the lounge?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "That is exactly what the on-site seamstress is there for. The most common morning-of failures — a wire bra cup that has collapsed, a gem cluster that has dropped overnight, a strap that is too long, a zip that splits when you raise your arms — all get handled in the lounge before you leave. We keep matching gem packs, thread, elastic and trim on hand so the repair looks like part of the costume, not a patch job.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What should I bring to my appointment?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Every piece of your costume, in the original packaging if you still have it — including the headpiece, arm and leg pieces, stockings, any padding and the standing collar. Bring road shoes you have already broken in, plus a change of clothes for after. We supply tape, pins, padding and small repair kit; you do not need to bring those.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can the seamstress alter a costume that does not fit?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "For most modern band costumes, yes — within reason. Straps can be shortened, padding added, wire bras re-shaped, monokini bases taken in slightly, and gem clusters re-attached or replaced. Full re-cuts of a beaded panel or structural changes to a backpack are not road-morning jobs; flag those at the fitting in advance. The aim is a costume that holds its shape and does not bite into you for ten hours, not a rebuild.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does getting-dressed help cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Getting-dressed assistance is included in every Carnival Glam Hub concierge package at no additional cost. It is also available as a stand-alone add-on from US$80 for masqueraders who have booked their makeup elsewhere and just need the costume fitted and any last-minute repairs handled before the road.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where can I book getting-dressed help?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Available at every Carnival Glam Hub location. The most booked are Trinidad Carnival, Jamaica Carnival and Miami Carnival; we also operate in Barbados, Grenada, Antigua, Saint Lucia and Toronto. It pairs with Carnival makeup and the Carnival photoshoot in the same morning slot.",
+      },
+    },
+  ],
+};
+
 const GettingDressed = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -117,6 +188,10 @@ const GettingDressed = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">

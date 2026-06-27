@@ -55,6 +55,63 @@ const breadcrumbSchema = {
   ],
 };
 
+// FAQ pairs mirror the visible question H2s and the answer paragraphs
+// rendered below. Keep these in sync with the on-page copy.
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What's included in your Carnival makeup",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Skin prep and priming, full base with sweat-resistant foundation and concealer, contour and highlight, eye look with adhesive lash or strip lash, brow shaping, lip finish, and a final setting layer designed to hold through the parade. Each session runs around 90 minutes per masquerader and is delivered inside the Carnival Glam Hub air-conditioned lounge.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does Carnival makeup cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Pricing is tiered so you can choose the level of artistry you want for the morning. The road-ready access package — getting-dressed help, shuttle and the lounge — starts at US$35. Professional Carnival makeup starts from US$160, which is what most first-time masqueraders book. Celebrity-artist glam, with one of our senior MUAs who works with soca artists and band launches, runs US$250 to US$350. Premium and editorial looks — heavy beadwork, crystal application, custom skin art — go up to US$2,000. Add-ons such as airbrush, body shimmer and second-day touch-ups are quoted separately on booking.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Airbrush vs traditional Carnival makeup",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Both work for the road; the right choice depends on your skin and your costume. Traditional application, layered with a long-wear foundation and locked down with a setting spray, gives a fuller, more sculpted finish and is easier to touch up mid-route. Airbrush gives a lighter, second-skin finish that photographs beautifully and tends to suit oilier skin in extreme heat, but it is harder to repair if a feather brushes your cheek. Our artists will recommend the right route once they see your costume, skin type and the kind of photos you want.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long does Carnival makeup actually last?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat — from your morning departure through the last truck. The base is the part that matters most: priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday. Eye looks, lashes and lips are reinforced with road-tested products and locked down at the end. We pack a small touch-up kit on request for blot-and-go fixes on the route, but most masqueraders never reach for it.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I prepare for my appointment?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Arrive on a clean face — no SPF, no primer, no leftover product. Eat something before you get to the lounge; sessions run around 90 minutes and you will sit through hair and getting-dressed after. Bring your headpiece, any reference photos you want the artist to see, and your costume so the artist can match base tones and shimmer to it. If you wear contact lenses, put them in before the eye look. Lash strips and adhesives are provided; if you have a preferred brand, bring it.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Where can I book Carnival makeup?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Available at every Carnival Glam Hub location. The three most booked are Trinidad Carnival, Jamaica Carnival and Miami Carnival; we also operate in Barbados, Grenada, Antigua, Saint Lucia and Toronto. See the FAQ for booking details and about us for the story.",
+      },
+    },
+  ],
+};
+
 const CarnivalMakeup = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -108,6 +165,10 @@ const CarnivalMakeup = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar />
       <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
