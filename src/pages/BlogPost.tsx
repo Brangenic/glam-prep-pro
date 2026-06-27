@@ -133,6 +133,7 @@ import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
 import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
 import RelatedGuides from "@/components/RelatedGuides";
 import BlogCTA from "@/components/BlogCTA";
+import { buildFaqSchema } from "@/lib/faqSchema";
 
 // Bundled hero overrides: replace unreliable storage-bucket URLs with
 // reliable bundled WebP imports for specific slugs.
@@ -419,6 +420,17 @@ const BlogPost = () => {
           document.head.appendChild(faqScript);
         } catch {}
       }
+      // Generic fallback: derive FAQPage schema from a `## Frequently Asked
+      // Questions` section if no embedded JSON was provided.
+      if (!faqScript) {
+        const derived = buildFaqSchema(post.content);
+        if (derived) {
+          faqScript = document.createElement("script");
+          faqScript.type = "application/ld+json";
+          faqScript.textContent = JSON.stringify(derived);
+          document.head.appendChild(faqScript);
+        }
+      }
     }
 
     return () => {
@@ -546,12 +558,30 @@ const BlogPost = () => {
                       components={{
                         a: ({ node, href, children, ...props }) => {
                           let isAmazon = false;
+                          let isGoogleReview = false;
                           try {
                             if (href) {
                               const h = new URL(href).hostname.toLowerCase();
                               isAmazon = /(^|\.)amazon\.[a-z.]+$/.test(h);
+                              isGoogleReview = h === "g.page" || h.endsWith(".g.page");
                             }
                           } catch {}
+                          if (isGoogleReview) {
+                            return (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="!no-underline inline-flex items-center gap-2 rounded-full bg-[#1a73e8] hover:bg-[#1765c9] !text-white px-5 py-2.5 font-semibold shadow-sm transition-colors"
+                                {...props}
+                              >
+                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                                  <path fill="#fff" d="M12 2l2.39 7.36H22l-6.19 4.5L18.2 21 12 16.5 5.8 21l2.39-7.14L2 9.36h7.61L12 2z"/>
+                                </svg>
+                                {children}
+                              </a>
+                            );
+                          }
                           if (isAmazon) {
                             return (
                               <a
