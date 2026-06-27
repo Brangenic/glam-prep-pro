@@ -51,3 +51,4 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://www.carnivalglamhub.com/sitemap.xml
+Sitemap: https://www.carnivalglamhub.com/sitemap-news.xml
