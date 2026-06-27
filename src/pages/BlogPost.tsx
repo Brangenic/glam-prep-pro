@@ -193,6 +193,7 @@ type BlogPostData = {
   published_date: string | null;
   read_time: string | null;
   meta_description: string | null;
+  updated_at: string | null;
 };
 
 const BANNED_SLUG_PATTERNS: RegExp[] = [
@@ -262,6 +263,7 @@ const BlogPost = () => {
         published_date: recovered.publishedDate,
         read_time: recovered.readTime,
         meta_description: recovered.metaDescription,
+        updated_at: recovered.publishedDate,
       });
       setLoading(false);
       return;
@@ -272,7 +274,7 @@ const BlogPost = () => {
 
     const load = async () => {
       const normalizedSlug = decodeURIComponent(slug);
-      const selectColumns = "title, content, excerpt, image_url, author_name, author_avatar_url, published_date, read_time, meta_description";
+      const selectColumns = "title, content, excerpt, image_url, author_name, author_avatar_url, published_date, read_time, meta_description, updated_at";
 
       const { data: bySlug } = await supabase
         .from("blog_posts")
@@ -364,7 +366,7 @@ const BlogPost = () => {
         headline: post.title,
         image: post.image_url ? [post.image_url] : undefined,
         datePublished: post.published_date ?? undefined,
-        dateModified: post.published_date ?? undefined,
+        dateModified: post.updated_at ?? post.published_date ?? undefined,
         author: post.author_name
           ? { "@type": "Person", name: post.author_name }
           : { "@type": "Organization", name: "Carnival Glam Hub" },

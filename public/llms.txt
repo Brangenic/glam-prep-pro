@@ -2,10 +2,11 @@
 
 Carnival Glam Hub is an award-winning premium Carnival beauty concierge for travelling masqueraders. One location, one schedule, everything handled: sweat-resistant Carnival makeup, hair styling, getting-dressed assistance, professional photoshoots, refreshments, an air-conditioned waiting lounge, and shuttle service in select territories. Founded in 2017 by Gabrielle Waite (celebrity makeup artist, "Gabby Glam") and Kibwe McGann. Headquartered in Kingston, Jamaica. Trusted by 15,000+ masqueraders since 2017.
 
-## Contact
+## Booking and Registration
+Register and pay your deposit by territory and date at the official booking page: https://carnivalglamhub.masos.app/events
+Get an instant price quote: https://www.carnivalglamhub.com/booking-calculator
 Email: bookings@carnivalglamhub.com
-Phone / WhatsApp: +1 876 368 6940
-Booking: https://www.carnivalglamhub.com/#booking
+Phone / WhatsApp: +1 876 509 0997
 
 ## Pricing (from)
 Road-ready access (getting dressed + shuttle + lounge): from US$35.
@@ -15,13 +16,6 @@ Premium packages: up to US$2,000.
 
 ## Reputation
 Rated 4.8 out of 5 across 43 Google reviews.
-
-## Core Pages
-About https://www.carnivalglamhub.com/about
-FAQ https://www.carnivalglamhub.com/faq
-Reviews https://www.carnivalglamhub.com/reviews
-Blog and Guides https://www.carnivalglamhub.com/blogs
-Amazon Store (prep list) https://www.carnivalglamhub.com/amazon-store
 
 ## Services
 Carnival Makeup https://www.carnivalglamhub.com/services/carnival-makeup
@@ -43,9 +37,30 @@ Barbados Crop Over https://www.carnivalglamhub.com/barbados
 Guyana https://www.carnivalglamhub.com/guyana
 Epic Cruise Trinidad Carnival https://www.carnivalglamhub.com/epic-cruise
 
+## Important Guides
+Ultimate Guide to Trinidad Carnival 2027 https://www.carnivalglamhub.com/blogs/ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips
+What is J'ouvert https://www.carnivalglamhub.com/blogs/what-is-jouvert-and-why-should-you-do-it-at-least-once
+Jab Jab 101 (Grenada Carnival) https://www.carnivalglamhub.com/blogs/jab-jab-101-what-you-really-need-to-know-about-grenada-carnival
+Best Carnival Hairstyles https://www.carnivalglamhub.com/blogs/top-seven-best-carnival-hairstyles
+The Ultimate Guide to Carnival Shoes https://www.carnivalglamhub.com/blogs/strut-or-struggle-the-ultimate-guide-to-carnival-shoes
+
+## Core Pages
+About https://www.carnivalglamhub.com/about
+FAQ https://www.carnivalglamhub.com/faq
+Reviews https://www.carnivalglamhub.com/reviews
+Blog and Guides https://www.carnivalglamhub.com/blogs
+
+## Resources
+Amazon Store (Carnival prep list) https://www.carnivalglamhub.com/amazon-store
+Quote calculator https://www.carnivalglamhub.com/booking-calculator
+Agent actions (WebMCP) https://www.carnivalglamhub.com/mcp-actions.json
+
+## Images
+Brand image: https://www.carnivalglamhub.com/og-image.png
+
 ## Owners and Founders
 Gabrielle Waite (Gabby Glam), celebrity makeup artist, co-founder. Wikidata Q140323762.
-Kibwe McGann, co-founder.
+Kibwe McGann, co-founder. Wikidata Q140323799.
 Company Wikidata entity Q140323641. Founded 2017. HQ Kingston, Jamaica.
 
 ## Policies
