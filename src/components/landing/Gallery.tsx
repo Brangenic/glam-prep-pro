@@ -72,6 +72,26 @@ const glamHubVideos = [
   },
 ];
 
+const videoObjectSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: "Carnival Glam Hub in Action",
+  description:
+    "See the Carnival Glam Hub morning concierge in action — sweat-resistant makeup, hair, getting dressed, photos and shuttle, all in one lounge.",
+  thumbnailUrl: "https://www.carnivalglamhub.com/og-image.png",
+  uploadDate: "2024-01-01",
+  contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
+  embedUrl: "https://www.youtube.com/embed/W4b98oLRTCE",
+  publisher: {
+    "@type": "Organization",
+    name: "Carnival Glam Hub",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.carnivalglamhub.com/logo.png",
+    },
+  },
+};
+
 const Gallery = () => {
   const { ref, isVisible } = useScrollReveal();
 
