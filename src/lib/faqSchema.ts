@@ -20,7 +20,7 @@
 
 export type FaqItem = { question: string; answer: string };
 
-const SECTION_RE = /^##\s+(?:Frequently\s+Asked\s+Questions|FAQ|FAQs)\b[^\n]*\n([\s\S]*?)(?=\n##\s|$)/im;
+const SECTION_RE = /(?:^|\n)##\s+(?:Frequently\s+Asked\s+Questions|FAQ|FAQs)\b[^\n]*\n([\s\S]*?)(?=\n##\s|$(?![\r\n]))/i;
 
 export function extractFaqItems(markdown: string | null | undefined): FaqItem[] {
   if (!markdown) return [];
