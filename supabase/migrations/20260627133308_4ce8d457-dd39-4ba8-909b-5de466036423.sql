@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "allow_anon_insert_blog_posts" ON public.blog_posts;
