@@ -9,6 +9,7 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+import { buildFaqSchema } from "../src/lib/faqSchema";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -399,6 +400,16 @@ function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
     blogPosting,
   ).replace(/</g, "\\u003c")}</script>`;
   html = html.replace("</head>", `    ${jsonLd}\n  </head>`);
+
+  // Generic FAQPage schema, parsed from a "## Frequently Asked Questions"
+  // section in the post body when present.
+  const faqSchema = buildFaqSchema(post.content);
+  if (faqSchema) {
+    const faqLd = `<script type="application/ld+json" data-prerender="faqpage">${JSON.stringify(
+      faqSchema,
+    ).replace(/</g, "\\u003c")}</script>`;
+    html = html.replace("</head>", `    ${faqLd}\n  </head>`);
+  }
 
   return html;
 }
