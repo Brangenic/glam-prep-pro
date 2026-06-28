@@ -403,6 +403,33 @@ const CarnivalPhotoshoot = () => {
               <a href="/faq" className="text-primary hover:underline">FAQ</a> for territory-specific details.
             </p>
           </section>
+
+          <section className="mb-12">
+            <h2 className="sr-only">Carnival photoshoot gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <img
+                src="/images/services/photoshoot-1.jpg"
+                alt="Masquerader in full costume during a Carnival Glam Hub pre-road photoshoot"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+              <img
+                src="/images/services/photoshoot-2.jpg"
+                alt="Carnival costume portrait captured in the Carnival Glam Hub photoshoot garden"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+              <img
+                src="/images/services/photoshoot-3.jpg"
+                alt="Content-ready Carnival photoshoot before hitting the road, by Carnival Glam Hub"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+            </div>
+          </section>
         </article>
 
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-12 sm:mt-16">
