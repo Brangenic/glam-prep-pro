@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE =
   "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub";
@@ -187,6 +188,15 @@ const CarnivalShuttle = () => {
             </p>
           </header>
 
+          <div className="mb-12 text-center">
+            <a
+              href="/booking"
+              className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+            >
+              Book now
+            </a>
+          </div>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               Where the shuttle runs
@@ -246,6 +256,13 @@ const CarnivalShuttle = () => {
               by email the week of Carnival once your band's road march
               schedule is locked in.
             </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5 text-center">
+              See it in action
+            </h2>
+            <YouTubeEmbed videoId="K6xz7db1W3c" title="Carnival Glam Hub shuttle to your band" />
           </section>
         </article>
 
