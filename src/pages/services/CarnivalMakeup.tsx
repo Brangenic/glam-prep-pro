@@ -204,6 +204,16 @@ const CarnivalMakeup = () => {
             </p>
           </header>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/makeup-hero.jpg"
+              alt="Carnival Glam Hub makeup artist finishing sweat-proof full glam on masquerader Marissa Williams at Miami Carnival"
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What's included in your Carnival makeup
@@ -347,6 +357,33 @@ const CarnivalMakeup = () => {
               details and{" "}
               <a href="/about" className="text-primary hover:underline">about us</a> for the story.
             </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="sr-only">Carnival makeup gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <img
+                src="/images/services/makeup-1.jpg"
+                alt="Bold Carnival eye makeup with gems and glitter by Carnival Glam Hub"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+              <img
+                src="/images/services/makeup-2.jpg"
+                alt="Masquerader Kalefia in full Carnival glam makeup by Carnival Glam Hub"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+              <img
+                src="/images/services/makeup-3.jpg"
+                alt="Sweat-proof Carnival makeup look ready for the road by Carnival Glam Hub"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+            </div>
           </section>
         </article>
 
