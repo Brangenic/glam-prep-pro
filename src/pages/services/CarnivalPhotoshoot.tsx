@@ -244,6 +244,16 @@ const CarnivalPhotoshoot = () => {
             </p>
           </header>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/photoshoot-hero.jpg"
+              alt="Pre-road Carnival photoshoot at Saint Lucia Carnival by Carnival Glam Hub"
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What's included in your Carnival photoshoot
@@ -392,6 +402,33 @@ const CarnivalPhotoshoot = () => {
               <a href="/toronto" className="text-primary hover:underline">Toronto</a>. See the{" "}
               <a href="/faq" className="text-primary hover:underline">FAQ</a> for territory-specific details.
             </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="sr-only">Carnival photoshoot gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <img
+                src="/images/services/photoshoot-1.jpg"
+                alt="Masquerader in full costume during a Carnival Glam Hub pre-road photoshoot"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+              <img
+                src="/images/services/photoshoot-2.jpg"
+                alt="Carnival costume portrait captured in the Carnival Glam Hub photoshoot garden"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+              <img
+                src="/images/services/photoshoot-3.jpg"
+                alt="Content-ready Carnival photoshoot before hitting the road, by Carnival Glam Hub"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
+              />
+            </div>
           </section>
         </article>
 
