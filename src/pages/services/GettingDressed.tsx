@@ -227,6 +227,16 @@ const GettingDressed = () => {
             </p>
           </header>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/getting-dressed-hero.jpg"
+              alt="Carnival Glam Hub dressing assistant helping a masquerader into her costume"
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               Why getting-dressed help matters
@@ -351,6 +361,18 @@ const GettingDressed = () => {
               in the same morning slot. See the{" "}
               <a href="/faq" className="text-primary hover:underline">FAQ</a> for details.
             </p>
+          </section>
+
+          <section className="mb-12">
+            <figure>
+              <img
+                src="/images/services/getting-dressed-1.jpg"
+                alt="On-site costume fitting and getting-dressed assistance at Carnival Glam Hub"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto rounded-xl shadow-sm"
+              />
+            </figure>
           </section>
         </article>
 
