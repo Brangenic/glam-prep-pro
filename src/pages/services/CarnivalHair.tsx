@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE =
   "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub";
@@ -229,6 +230,15 @@ const CarnivalHair = () => {
             />
           </figure>
 
+          <div className="mb-12 text-center">
+            <a
+              href="/booking"
+              className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+            >
+              Book now
+            </a>
+          </div>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What hair styles do you offer?
@@ -368,6 +378,16 @@ const CarnivalHair = () => {
                 decoding="async"
                 className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
               />
+            </div>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5 text-center">
+              See it in action
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+              <YouTubeEmbed videoId="Hlv934xGNr0" title="Carnival hair styling at Carnival Glam Hub" />
+              <YouTubeEmbed videoId="le5YvuahX9o" title="Carnival hair by Cookie Hair Queen Trinidad for Carnival Glam Hub" vertical />
             </div>
           </section>
         </article>
