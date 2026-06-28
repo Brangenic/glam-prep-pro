@@ -244,6 +244,16 @@ const CarnivalPhotoshoot = () => {
             </p>
           </header>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/photoshoot-hero.jpg"
+              alt="Pre-road Carnival photoshoot at Saint Lucia Carnival by Carnival Glam Hub"
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What's included in your Carnival photoshoot
