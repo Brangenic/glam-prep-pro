@@ -7,7 +7,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Photoshoot | Professional Costume Photography | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
+  "Professional Carnival photoshoot shot outdoors in the garden or by the water, with 3 professionally edited photos delivered in 36 to 48 hours. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-photoshoot";
 
 const serviceSchema = {
@@ -65,7 +65,7 @@ const faqSchema = {
       name: "What's included in your Carnival photoshoot",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A dedicated photography session immediately after glam, directed posing for the costume, multiple set-ups inside the air-conditioned lounge and outside if light and timing allow, professional post-production, and private gallery delivery after Carnival.",
+        text: "A dedicated outdoor photography session on the morning of Carnival with directed posing for your costume. Every shoot is done outdoors, in the garden or by a water feature such as a hotel pool or the beach, depending on your location, with professional editing afterward. You receive 3 professionally edited photos delivered within 36 to 48 hours.",
       },
     },
     {
@@ -81,7 +81,7 @@ const faqSchema = {
       name: "How long until you see the photos?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Edited galleries are delivered within two to three weeks of Carnival, with quick-turn web-ready selects available within 72 hours on request.",
+        text: "Fast. You receive 3 professionally edited photos within 36 to 48 hours of your shoot.",
       },
     },
     {
@@ -113,15 +113,15 @@ const faqSchema = {
       name: "Why a pre-road shoot beats road snaps",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "On the road the light is harsh, the costume is dusty by midday, the makeup is past its peak and you are surrounded by thousands of other masqueraders. Phone snaps from friends are great for memories but they will not match what the section looked like when you put it on at 5am. The lounge shoot exists for that window: controlled light, a directed photographer, the headpiece seated properly, every gem still in place. It is the difference between a frame you will reprint and a camera roll you will scroll past.",
+        text: "On the road the light is harsh, the costume is dusty by midday, the makeup is past its peak and you are surrounded by thousands of other masqueraders. Phone snaps from friends are great for memories but they will not match what the section looked like when you put it on at 5am. The shoot exists for that window: directed posing outdoors, the right light, the headpiece seated properly, every gem still in place. It is the difference between a frame you will reprint and a camera roll you will scroll past.",
       },
     },
     {
       "@type": "Question",
-      name: "How is the gallery delivered?",
+      name: "How are the photos delivered?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "You receive a private online gallery link with the full edited set in high-resolution and web-ready sizes. Downloads are unlimited and the gallery stays live for 90 days after delivery. Print orders and additional retouching are available on request.",
+        text: "You receive 3 professionally edited, high-resolution photos delivered digitally within 36 to 48 hours of your shoot, ready to post and to print. Additional edited images from your session are available on request.",
       },
     },
     {
@@ -239,9 +239,9 @@ const CarnivalPhotoshoot = () => {
               This is the only window of the day your costume, glam and energy
               all look exactly the way you imagined when you bought the
               section. Phone snaps in a hotel mirror will not do it justice.
-              Our in-house photographers are set up in the lounge to capture
-              the morning properly — directed posing, the right light, full
-              editorial post-production — before you step into the band.
+              Our in-house photographers capture you outdoors, in the garden
+              or by a water feature, with directed posing, the right light
+              and full editorial editing, before you step into the band.
             </p>
           </header>
 
@@ -269,11 +269,37 @@ const CarnivalPhotoshoot = () => {
               What's included in your Carnival photoshoot
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              A dedicated photography session immediately after glam, directed posing
-              for the costume, multiple set-ups inside the air-conditioned lounge and
-              outside if light and timing allow, professional post-production, and
-              private gallery delivery after Carnival.
+              A dedicated outdoor photography session on the morning of Carnival with
+              directed posing for your costume. Every shoot is done outdoors, in the
+              garden or by a water feature such as a hotel pool or the beach, depending
+              on your location, with professional editing afterward. You receive 3
+              professionally edited photos delivered within 36 to 48 hours.
             </p>
+          </section>
+
+          <figure className="mb-8 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/photoshoot-1.jpg"
+              alt="Masquerader in full costume during a Carnival Glam Hub pre-road photoshoot"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
+          <div className="mb-12 text-center">
+            <a
+              href="https://carnivalglamhub.masos.app/events"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+            >
+              Book your photoshoot
+            </a>
+          </div>
+
+          <section className="mb-12">
+            <YouTubeEmbed videoId="141z_Vbm_S4" title="Carnival Glam Hub photoshoot content" />
           </section>
 
           <section className="mb-12">
@@ -291,13 +317,23 @@ const CarnivalPhotoshoot = () => {
             </p>
           </section>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/photoshoot-2.jpg"
+              alt="Carnival costume portrait captured in the Carnival Glam Hub photoshoot garden"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               How long until you see the photos?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Edited galleries are delivered within two to three weeks of Carnival,
-              with quick-turn web-ready selects available within 72 hours on request.
+              Fast. You receive 3 professionally edited photos within 36 to 48 hours
+              of your shoot.
             </p>
           </section>
 
@@ -350,23 +386,33 @@ const CarnivalPhotoshoot = () => {
               the makeup is past its peak and you are surrounded by thousands
               of other masqueraders. Phone snaps from friends are great for
               memories but they will not match what the section looked like
-              when you put it on at 5am. The lounge shoot exists for that
-              window: controlled light, a directed photographer, the headpiece
+              when you put it on at 5am. The shoot exists for that
+              window: directed posing outdoors, the right light, the headpiece
               seated properly, every gem still in place. It is the difference
               between a frame you will reprint and a camera roll you will
               scroll past.
             </p>
           </section>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img
+              src="/images/services/photoshoot-3.jpg"
+              alt="Content-ready Carnival photoshoot before hitting the road, by Carnival Glam Hub"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+            />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              How is the gallery delivered?
+              How are the photos delivered?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              You receive a private online gallery link with the full edited
-              set in high-resolution and web-ready sizes. Downloads are
-              unlimited and the gallery stays live for 90 days after delivery.
-              Print orders and additional retouching are available on request.
+              You receive 3 professionally edited, high-resolution photos delivered
+              digitally within 36 to 48 hours of your shoot, ready to post and to
+              print. Additional edited images from your session are available on
+              request.
             </p>
           </section>
 
@@ -415,39 +461,11 @@ const CarnivalPhotoshoot = () => {
           </section>
 
           <section className="mb-12">
-            <h2 className="sr-only">Carnival photoshoot gallery</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <img
-                src="/images/services/photoshoot-1.jpg"
-                alt="Masquerader in full costume during a Carnival Glam Hub pre-road photoshoot"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
-              />
-              <img
-                src="/images/services/photoshoot-2.jpg"
-                alt="Carnival costume portrait captured in the Carnival Glam Hub photoshoot garden"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
-              />
-              <img
-                src="/images/services/photoshoot-3.jpg"
-                alt="Content-ready Carnival photoshoot before hitting the road, by Carnival Glam Hub"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-64 sm:h-72 object-cover rounded-xl shadow-sm"
-              />
-            </div>
-          </section>
-
-          <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5 text-center">
               See it in action
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+            <div className="max-w-sm mx-auto">
               <YouTubeEmbed videoId="lUvAC3soq_g" title="Pre-road Carnival photoshoot at Carnival Glam Hub" vertical />
-              <YouTubeEmbed videoId="141z_Vbm_S4" title="Carnival Glam Hub photoshoot content" />
             </div>
           </section>
         </article>
