@@ -301,10 +301,6 @@ const GettingDressed = () => {
             </p>
           </section>
 
-          <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/getting-dressed-5.webp" alt="Getting-dressed assistance for a feathered Carnival costume at Carnival Glam Hub" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
-          </figure>
-
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What should I bring to my appointment?
