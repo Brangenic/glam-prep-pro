@@ -14,6 +14,18 @@ import { resolve, join } from "path";
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
 const DEFAULT_OG = `${BASE_URL}/og-image.png`;
+const DEFAULT_OG_TYPE = "image/png";
+const DEFAULT_OG_W = 1200;
+const DEFAULT_OG_H = 630;
+const HERO_FALLBACK = `${BASE_URL}/hero-1920.webp`;
+
+function imageTypeFor(url: string): string {
+  const ext = url.split("?")[0].split("#")[0].toLowerCase();
+  if (ext.endsWith(".webp")) return "image/webp";
+  if (ext.endsWith(".png")) return "image/png";
+  if (ext.endsWith(".jpg") || ext.endsWith(".jpeg")) return "image/jpeg";
+  return "image/jpeg";
+}
 
 type RouteMeta = {
   /** Absolute path beginning with "/" — used for canonical and file path. */
@@ -36,6 +48,7 @@ const destinationRoutes: RouteMeta[] = [
       "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     description:
       "Book sweat-proof Jamaica Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/saint-lucia",
@@ -43,6 +56,7 @@ const destinationRoutes: RouteMeta[] = [
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     description:
       "Book sweat-proof Saint Lucia Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/antigua",
@@ -50,6 +64,7 @@ const destinationRoutes: RouteMeta[] = [
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     description:
       "Book sweat-proof Antigua Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/grenada",
@@ -57,6 +72,7 @@ const destinationRoutes: RouteMeta[] = [
       "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     description:
       "Book sweat-proof Grenada Spicemas 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/barbados",
@@ -64,6 +80,7 @@ const destinationRoutes: RouteMeta[] = [
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     description:
       "Book sweat-proof Barbados Crop Over 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/miami",
@@ -71,12 +88,14 @@ const destinationRoutes: RouteMeta[] = [
       "Miami Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
     description:
       "Book sweat-proof Miami Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/toronto",
     title: "Toronto Carnival Makeup & Glam 2026 | Glam Hub",
     description:
       "Toronto Caribbean carnival glam from Carnival Glam Hub. Expert carnival makeup for Caribana and the diaspora. Book your look for Toronto Carnival now.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/trinidad",
@@ -84,18 +103,21 @@ const destinationRoutes: RouteMeta[] = [
       "Trinidad Carnival Makeup, Hair & Photoshoots | Carnival Glam Hub",
     description:
       "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/guyana",
     title: "Guyana Carnival Makeup & Glam 2026 | Glam Hub",
     description:
       "Book premium Guyana Carnival makeup, hair, gems and body paint. Sweat-proof carnival glam by professional Caribbean artists.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/epic-cruise",
     title: "Epic Cruise Carnival Makeup & Glam 2027 | Glam Hub",
     description:
       "Book your carnival glam services on the EPIC Cruise. Carnival Glam Hub is aboard the EPIC Carnival Experience for Trinidad Carnival 2027.",
+    ogImage: HERO_FALLBACK,
   },
 ];
 
@@ -108,36 +130,42 @@ const staticRoutes: RouteMeta[] = [
     title: "Sweat-Resistant Carnival Makeup | Carnival Glam Hub",
     description:
       "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ since 2017.",
+    ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
   },
   {
     path: "/services/carnival-hair",
     title: "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub",
     description:
       "Carnival hair and Carnival hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Trinidad, Jamaica, Barbados, Grenada, Antigua.",
+    ogImage: `${BASE_URL}/images/services/hair-hero.jpg`,
   },
   {
     path: "/services/carnival-photoshoot",
     title: "Carnival Photoshoot | Professional Costume Photography | Carnival Glam Hub",
     description:
       "Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Trinidad, Jamaica, Barbados, Grenada, Antigua.",
+    ogImage: `${BASE_URL}/images/services/photoshoot-hero.jpg`,
   },
   {
     path: "/services/getting-dressed",
     title: "Carnival Costume Getting-Dressed Assistance | Carnival Glam Hub",
     description:
       "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Included in concierge packages across Trinidad, Jamaica, Barbados, Grenada and Antigua.",
+    ogImage: `${BASE_URL}/images/services/getting-dressed-hero.jpg`,
   },
   {
     path: "/services/carnival-shuttle",
     title: "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub",
     description:
       "Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.",
+    ogImage: `${BASE_URL}/images/services/carnival-shuttle.webp`,
   },
   {
     path: "/about",
     title: "About Carnival Glam Hub | Caribbean Beauty Concierge",
     description:
       "The Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica and beyond.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/faq",
@@ -151,6 +179,7 @@ const staticRoutes: RouteMeta[] = [
     title: "Carnival Glam Hub Reviews | Real Client Carnival Makeup Testimonials",
     description:
       "Read real reviews from Carnival Glam Hub clients. Authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.",
+    ogImage: HERO_FALLBACK,
   },
   {
     path: "/amazon-store",
@@ -169,6 +198,7 @@ const staticRoutes: RouteMeta[] = [
     title: "Trinidad Carnival 2027 Makeup & Hair | Glam Hub",
     description:
       "Trinidad Carnival 2027 dates: Carnival Monday 8 and Tuesday 9 February 2027. Hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Book early from US$50.",
+    ogImage: HERO_FALLBACK,
   },
 ];
 
@@ -188,7 +218,9 @@ function rewriteHead(template: string, route: RouteMeta): string {
   const url = `${BASE_URL}${route.path}`;
   const title = route.title;
   const desc = route.description;
+  const hasCustomImage = Boolean(route.ogImage);
   const image = route.ogImage ?? DEFAULT_OG;
+  const imageType = hasCustomImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
   const ogType = route.ogType ?? "website";
 
   let html = template;
@@ -236,6 +268,20 @@ function rewriteHead(template: string, route: RouteMeta): string {
     /<meta\s+property="og:image:alt"[^>]*>/i,
     `<meta property="og:image:alt" content="${escapeAttr(title)}" />`,
   );
+
+  // og:image:type — match the real file extension for custom hero images.
+  if (/<meta\s+property="og:image:type"[^>]*>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+property="og:image:type"[^>]*>/i,
+      `<meta property="og:image:type" content="${imageType}" />`,
+    );
+  }
+  // When the route has its own hero image, strip the placeholder's
+  // hardcoded 1200x630 dimensions so platforms read real dimensions.
+  if (hasCustomImage) {
+    html = html.replace(/\s*<meta\s+property="og:image:width"[^>]*>/i, "");
+    html = html.replace(/\s*<meta\s+property="og:image:height"[^>]*>/i, "");
+  }
 
   html = html.replace(
     /<meta\s+name="twitter:url"[^>]*>/i,
