@@ -7,7 +7,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival hair and Carnival hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
+  "Carnival hair styling from US$120, built to hold under feathers, wires and tropical heat: ponytails, front braided ponytails, half-up half-down and wig installs. Available in Jamaica, Miami, Trinidad and Saint Lucia.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-hair";
 
 const serviceSchema = {
@@ -32,14 +32,14 @@ const serviceSchema = {
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
-    price: "180",
+    price: "120",
     availability: "https://schema.org/InStock",
     url: "https://carnivalglamhub.masos.app/events",
-    description: "Carnival hair styling from US$180.",
+    description: "Carnival hair styling from US$120.",
     priceSpecification: {
       "@type": "PriceSpecification",
       priceCurrency: "USD",
-      minPrice: "180",
+      minPrice: "120",
     },
   },
 };
@@ -65,7 +65,7 @@ const faqSchema = {
       name: "What hair styles do you offer?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sleek high pony, voluminous curl set, braided crown and feed-in braids, slick-back base for elaborate headpieces, half-up half-down with a secured front, and clean clip-in or sewn-in installs. Bring your headpiece so we can fit and balance the style around it.",
+        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Not every style is available in every territory — hair styling runs at our full-service lounges in Jamaica, Miami, Trinidad and Saint Lucia.",
       },
     },
     {
@@ -81,7 +81,7 @@ const faqSchema = {
       name: "How much does carnival hair cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Carnival hair styling starts from US$180. Most road-day styles fall between US$180 and US$280 depending on length, density and complexity. Feed-in braids, custom installs and heavy headpiece integrations are quoted on consultation. Add-ons — clip-in lengths, custom partings, edge styling and a touch-up kit for the road — are priced separately on booking.",
+        text: "Carnival hair styling starts from US$120 for a ponytail, provided for you or using your own hair. A front braided ponytail is US$185 and a half-up half-down ponytail is US$220. Wig installs are quoted on consultation. Not all styles are offered in every territory.",
       },
     },
     {
@@ -89,7 +89,7 @@ const faqSchema = {
       name: "How long does the appointment take?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Plan for 60 to 120 minutes in the chair, depending on the style. A sleek high pony or slick-back base for a heavy headpiece is at the faster end. Voluminous curl sets, braided crowns and feed-in braids sit in the middle. Full clip-in or sewn-in installs are the longest. Hair is scheduled in sequence with makeup and getting-dressed so the morning runs to time and you leave with the band, not after it.",
+        text: "Plan for 60 to 120 minutes in the chair, depending on the style. A ponytail or front braided ponytail is at the faster end; a half-up half-down or a wig install takes longer. Hair is scheduled in sequence with makeup and getting-dressed so the morning runs to time and you leave with the band, not after it.",
       },
     },
     {
@@ -199,7 +199,7 @@ const CarnivalHair = () => {
               <span className="italic text-gradient-primary">holds through the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides headpiece-ready professional Carnival hair styling from US$180, delivered in our air-conditioned lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+              Carnival Glam Hub provides headpiece-ready professional Carnival hair styling from US$120, delivered in our air-conditioned lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival hair and Carnival hairstyles at{" "}
@@ -244,19 +244,18 @@ const CarnivalHair = () => {
               What hair styles do you offer?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Sleek high pony, voluminous curl set, braided crown and feed-in
-              braids, slick-back base for elaborate headpieces, half-up
-              half-down with a secured front, and clean clip-in or sewn-in
-              installs. Bring your headpiece so we can fit and balance the
-              style around it. For inspiration, our{" "}
+              The style depends on the service you book: a ponytail, a front
+              braided ponytail, half-up half-down, or a wig install. Ponytails
+              can be provided for you, or you can bring your own hair. Not
+              every style is available in every territory — hair styling runs
+              at our full-service lounges in Jamaica, Miami, Trinidad and
+              Saint Lucia. For inspiration, see our{" "}
               <a
                 href="/blogs/top-seven-best-carnival-hairstyles"
                 className="text-primary hover:underline"
               >
                 guide to the best carnival hairstyles
-              </a>{" "}
-              walks through what each style looks like on the road and which
-              costume types it suits.
+              </a>.
             </p>
           </section>
 
@@ -280,12 +279,11 @@ const CarnivalHair = () => {
               How much does carnival hair cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival hair styling starts from US$180. Most road-day styles
-              fall between US$180 and US$280 depending on length, density and
-              complexity. Feed-in braids, custom installs and heavy headpiece
-              integrations are quoted on consultation. Add-ons — clip-in
-              lengths, custom partings, edge styling and a touch-up kit for the
-              road — are priced separately on booking.
+              Carnival hair styling starts from US$120 for a ponytail, provided
+              for you or using your own hair. A front braided ponytail is
+              US$185 and a half-up half-down ponytail is US$220. Wig installs
+              are quoted on consultation. Not all styles are offered in every
+              territory.
             </p>
           </section>
 
@@ -295,12 +293,10 @@ const CarnivalHair = () => {
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Plan for 60 to 120 minutes in the chair, depending on the style.
-              A sleek high pony or slick-back base for a heavy headpiece is at
-              the faster end. Voluminous curl sets, braided crowns and feed-in
-              braids sit in the middle. Full clip-in or sewn-in installs are
-              the longest. Hair is scheduled in sequence with makeup and
-              getting-dressed so the morning runs to time and you leave with
-              the band, not after it.
+              A ponytail or front braided ponytail is at the faster end; a
+              half-up half-down or a wig install takes longer. Hair is
+              scheduled in sequence with makeup and getting-dressed so the
+              morning runs to time and you leave with the band, not after it.
             </p>
           </section>
 
