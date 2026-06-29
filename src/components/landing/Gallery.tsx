@@ -76,11 +76,11 @@ const glamHubVideos = [
 const videoObjectSchema = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  name: "Carnival Glam Hub in Action",
+  name: "Carnival Glam Hub Reviews from Trinidad, Jamaica and Miami Masqueraders",
   description:
-    "See the Carnival Glam Hub morning concierge in action — sweat-resistant makeup, hair, getting dressed, photos and shuttle, all in one lounge.",
+    "Real masquerader reviews and testimonials of Carnival Glam Hub from Trinidad, Jamaica and Miami. Hear directly from women who booked their Carnival morning with the original Carnival morning concierge for sweat-resistant makeup, hair, getting dressed, photos and shuttle.",
   thumbnailUrl: "https://www.carnivalglamhub.com/og-image.png",
-  uploadDate: toSchemaDateTime("2024-01-01"),
+  uploadDate: toSchemaDateTime("2024-07-02T04:06:01-07:00"),
   contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
   embedUrl: "https://www.youtube.com/embed/W4b98oLRTCE",
   publisher: {
