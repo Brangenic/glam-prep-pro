@@ -72,7 +72,7 @@ const Destinations = () => {
             >
               <img
                 src={d.image}
-                alt={`${d.name} — Carnival Glam Hub destination`}
+                alt={`${d.name} masquerader in costume — ${d.description}`}
                 width={600}
                 height={800}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

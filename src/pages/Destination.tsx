@@ -209,7 +209,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
           <img
             src={dest.image}
-            alt={`${dest.name} — Carnival Glam Hub destination`}
+            alt={`${dest.name} masquerader in full costume — ${dest.description}`}
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: dest.objectPosition || "center top" }}
           />
@@ -541,7 +541,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 >
                   <img
                     src={o.image}
-                    alt={`${o.name} — Carnival Glam Hub destination`}
+                    alt={`${o.name} masquerader in costume — Carnival Glam Hub destination`}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />

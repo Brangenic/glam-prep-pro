@@ -42,7 +42,7 @@ const Founder = () => {
             <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-square max-w-sm sm:max-w-md mx-auto gold-glow">
               <img
                 src={founderImg}
-                alt="Carnival Glam Hub founder"
+                alt="Gabrielle Waite, founder of Carnival Glam Hub"
                 width={800}
                 height={800}
                 className="w-full h-full object-cover object-top"
