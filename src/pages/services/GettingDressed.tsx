@@ -257,6 +257,10 @@ const GettingDressed = () => {
             </p>
           </section>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img src="/images/services/getting-dressed-2.webp" alt="Carnival Glam Hub dresser securing a masquerader's costume before the road" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What's included in your getting-dressed appointment
@@ -269,6 +273,10 @@ const GettingDressed = () => {
               every closure, and a final road-ready inspection.
             </p>
           </section>
+
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img src="/images/services/getting-dressed-3.webp" alt="Masquerader being fitted into her Carnival costume at the Carnival Glam Hub lounge" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+          </figure>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
@@ -297,6 +305,10 @@ const GettingDressed = () => {
             </p>
           </section>
 
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img src="/images/services/getting-dressed-5.webp" alt="Getting-dressed assistance for a feathered Carnival costume at Carnival Glam Hub" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+          </figure>
+
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               What should I bring to my appointment?
@@ -310,6 +322,10 @@ const GettingDressed = () => {
               need to bring those.
             </p>
           </section>
+
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img src="/images/services/getting-dressed-6.webp" alt="Final road-ready costume check during getting-dressed at Carnival Glam Hub" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+          </figure>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
@@ -325,6 +341,10 @@ const GettingDressed = () => {
               and does not bite into you for ten hours, not a rebuild.
             </p>
           </section>
+
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img src="/images/services/getting-dressed-7.webp" alt="Masquerader fully dressed and road-ready after Carnival Glam Hub getting-dressed assistance" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+          </figure>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
@@ -382,10 +402,7 @@ const GettingDressed = () => {
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5 text-center">
               See it in action
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
-              <YouTubeEmbed videoId="pHGdlC2jyLw" title="Getting dressed for Carnival with Carnival Glam Hub" />
-              <YouTubeEmbed videoId="Nw_SmFcH2u4" title="Costume dressing assistance at Carnival Glam Hub" vertical />
-            </div>
+            <YouTubeEmbed videoId="pHGdlC2jyLw" title="Getting dressed for Carnival with Carnival Glam Hub" />
           </section>
         </article>
 
