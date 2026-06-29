@@ -17,7 +17,7 @@ const DEFAULT_OG = `${BASE_URL}/og-image.png`;
 const DEFAULT_OG_TYPE = "image/png";
 const DEFAULT_OG_W = 1200;
 const DEFAULT_OG_H = 630;
-const HERO_FALLBACK = `${BASE_URL}/hero-1920.webp`;
+const HERO_FALLBACK = `${BASE_URL}/og-home.jpg`;
 
 function imageTypeFor(url: string): string {
   const ext = url.split("?")[0].split("#")[0].toLowerCase();
@@ -158,7 +158,7 @@ const staticRoutes: RouteMeta[] = [
     title: "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub",
     description:
       "Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.",
-    ogImage: `${BASE_URL}/images/services/carnival-shuttle.webp`,
+    ogImage: `${BASE_URL}/images/services/carnival-shuttle-og.jpg`,
   },
   {
     path: "/about",
