@@ -7,7 +7,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.";
+  "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point, included with any Carnival Glam Hub service. Available in select territories and confirmed when you book.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-shuttle";
 
 const serviceSchema = {
@@ -22,25 +22,13 @@ const serviceSchema = {
     name: "Carnival Glam Hub",
     url: "https://www.carnivalglamhub.com",
   },
-  areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Barbados",
-    "Grenada",
-    "Antigua and Barbuda",
-  ],
   offers: {
     "@type": "Offer",
     priceCurrency: "USD",
-    price: "35",
+    price: "0",
     availability: "https://schema.org/InStock",
     url: "https://carnivalglamhub.masos.app/events",
-    description: "Carnival shuttle service from US$35.",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      priceCurrency: "USD",
-      minPrice: "35",
-    },
+    description: "Complimentary one-way Carnival shuttle pick-up, included with any Carnival Glam Hub service booking.",
   },
 };
 
@@ -65,7 +53,7 @@ const faqSchema = {
       name: "Where the shuttle runs",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Carnival shuttle is confirmed in Trinidad for Trinidad Carnival 2027. Availability in Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami and Toronto varies by season and band partnerships; see the FAQ or confirm at booking.",
+        text: "The Carnival shuttle is available in select territories and confirmed when you book.",
       },
     },
     {
@@ -73,15 +61,7 @@ const faqSchema = {
       name: "How it works",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Shuttle departures are aligned to your band's road march schedule. We collect you from the Carnival Glam Hub lounge after glam and getting-dressed, drive directly to your band's start point, and drop off as close as the police cordon permits.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Group capacity",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Vehicles range from private cars for two to four masqueraders, up to mini-coaches for a full group of friends booked together. Reserve the full vehicle to keep your group together on the morning.",
+        text: "The shuttle is a one-way pick-up. Departures are aligned to your band's road march schedule. We collect you from the Carnival Glam Hub lounge after glam and getting-dressed, drive directly to your band's start point, and drop off as close as the police cordon permits. There is no return leg.",
       },
     },
     {
@@ -89,7 +69,7 @@ const faqSchema = {
       name: "Booking and confirmation",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Shuttle is an add-on at booking. Departure times are confirmed by email the week of Carnival once your band's road march schedule is locked in.",
+        text: "The shuttle is complimentary with any Carnival Glam Hub service you book. Departure times are confirmed by email the week of Carnival once your band's road march schedule is locked in.",
       },
     },
   ],
@@ -175,16 +155,16 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">from the lounge to the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides private Carnival shuttle transport from our air-conditioned lounge to your band start-point, included in road-ready concierge packages from US$35, available across Trinidad, Jamaica, Barbados, Grenada and Antigua.
+              Carnival Glam Hub provides a complimentary one-way Carnival shuttle pick-up from our air-conditioned lounge to your band's start point, included with any Carnival Glam Hub service you book. Available in select territories and confirmed when you book.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               The Carnival shuttle service at{" "}
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              is private, scheduled transport from our air-conditioned lounge
-              to your band's start point on Carnival morning, so you arrive
-              on time, in costume, and ready for the road.
+              is a private, scheduled one-way pick-up from our air-conditioned
+              lounge to your band's start point on Carnival morning, so you
+              arrive on time, in costume, and ready for the road.
             </p>
           </header>
 
@@ -202,20 +182,8 @@ const CarnivalShuttle = () => {
               Where the shuttle runs
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              The Carnival shuttle is confirmed in Trinidad for{" "}
-              <a href="/trinidad-carnival-2027" className="text-primary hover:underline">
-                Trinidad Carnival 2027
-              </a>
-              . Availability in{" "}
-              <a href="/jamaica" className="text-primary hover:underline">Jamaica</a>,{" "}
-              <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
-              <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
-              <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
-              <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a>,{" "}
-              <a href="/miami" className="text-primary hover:underline">Miami</a> and{" "}
-              <a href="/toronto" className="text-primary hover:underline">Toronto</a> varies
-              by season and band partnerships; see the{" "}
-              <a href="/faq" className="text-primary hover:underline">FAQ</a> or confirm at booking.
+              The Carnival shuttle is available in select territories and
+              confirmed when you book.
             </p>
           </section>
 
@@ -224,26 +192,14 @@ const CarnivalShuttle = () => {
               How it works
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Shuttle departures are aligned to your band's road march
-              schedule. We collect you from the Carnival Glam Hub lounge after
-              glam and{" "}
+              The shuttle is a one-way pick-up. Departures are aligned to your
+              band's road march schedule. We collect you from the Carnival
+              Glam Hub lounge after glam and{" "}
               <a href="/services/getting-dressed" className="text-primary hover:underline">
                 getting-dressed
               </a>
               , drive directly to your band's start point, and drop off as
-              close as the police cordon permits.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Group capacity
-            </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Vehicles range from private cars for two to four masqueraders, up
-              to mini-coaches for a full group of friends booked together.
-              Reserve the full vehicle to keep your group together on the
-              morning.
+              close as the police cordon permits. There is no return leg.
             </p>
           </section>
 
@@ -252,9 +208,9 @@ const CarnivalShuttle = () => {
               Booking and confirmation
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Shuttle is an add-on at booking. Departure times are confirmed
-              by email the week of Carnival once your band's road march
-              schedule is locked in.
+              The shuttle is complimentary with any Carnival Glam Hub service
+              you book. Departure times are confirmed by email the week of
+              Carnival once your band's road march schedule is locked in.
             </p>
           </section>
 
@@ -273,7 +229,7 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">Carnival shuttle.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Vehicles fill before glam slots; book together with your group.
+              Complimentary with any Carnival Glam Hub service you book. Available in select territories and confirmed when you book.
             </p>
             <a
               href="/booking"
