@@ -197,7 +197,7 @@ const TrinidadCarnival2027 = () => {
           <div className="mb-8 -mx-4 sm:mx-0">
             <img
               src={heroCover}
-              alt="Carnival Glam Hub Trinidad Carnival 2027 cover"
+              alt="Trinidad Carnival 2027 masquerader in full costume styled by Carnival Glam Hub"
               width={1220}
               height={846}
               loading="eager"
@@ -418,7 +418,7 @@ const TrinidadCarnival2027 = () => {
           >
             <img
               src={reviewsImage}
-              alt="Carnival Glam Hub Trinidad Carnival reviews"
+              alt="Five-star Google reviews from Trinidad Carnival masqueraders styled by Carnival Glam Hub"
               width={1280}
               height={720}
               loading="lazy"

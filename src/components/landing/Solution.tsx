@@ -15,7 +15,7 @@ const Solution = () => {
           >
             <img
               src={solutionImg}
-              alt="Makeup artist preparing masquerader"
+              alt="Carnival Glam Hub makeup artist applying sweat-proof glam on a masquerader before the road"
               width={1000}
               height={1000}
               className="w-full h-full object-cover"
