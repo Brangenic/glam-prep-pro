@@ -258,10 +258,6 @@ const GettingDressed = () => {
           </section>
 
           <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/getting-dressed-7.webp" alt="Masquerader fully dressed and road-ready at the Carnival Glam Hub lounge" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
-          </figure>
-
-          <figure className="mb-12 -mx-4 sm:mx-0">
             <img src="/images/services/getting-dressed-2.webp" alt="Carnival Glam Hub dresser securing a masquerader's costume before the road" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
           </figure>
 
@@ -278,10 +274,6 @@ const GettingDressed = () => {
             </p>
           </section>
 
-          <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/getting-dressed-3.webp" alt="Masquerader being fitted into her Carnival costume at the Carnival Glam Hub lounge" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
-          </figure>
-
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               How it speeds up the morning
@@ -293,10 +285,6 @@ const GettingDressed = () => {
               on time, fitted correctly.
             </p>
           </section>
-
-          <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/getting-dressed-4.webp" alt="On-site seamstress adjusting straps and fit at Carnival Glam Hub" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
-          </figure>
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
