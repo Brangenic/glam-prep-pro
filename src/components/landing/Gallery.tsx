@@ -44,6 +44,7 @@ import g14_480 from "@/assets/gallery-14-480.webp";
 import g14_960 from "@/assets/gallery-14-960.webp";
 import g14_1400 from "@/assets/gallery-14-1400.webp";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { toSchemaDateTime } from "@/lib/schemaDate";
 
 const set = (s: string, m: string, l: string) => `${s} 480w, ${m} 960w, ${l} 1400w`;
 
@@ -79,7 +80,7 @@ const videoObjectSchema = {
   description:
     "See the Carnival Glam Hub morning concierge in action — sweat-resistant makeup, hair, getting dressed, photos and shuttle, all in one lounge.",
   thumbnailUrl: "https://www.carnivalglamhub.com/og-image.png",
-  uploadDate: "2024-01-01",
+  uploadDate: toSchemaDateTime("2024-01-01"),
   contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
   embedUrl: "https://www.youtube.com/embed/W4b98oLRTCE",
   publisher: {
