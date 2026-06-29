@@ -222,7 +222,10 @@ const CarnivalShuttle = () => {
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5 text-center">
               See it in action
             </h2>
-            <YouTubeEmbed videoId="K6xz7db1W3c" title="Carnival Glam Hub shuttle to your band" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+              <YouTubeEmbed videoId="K6xz7db1W3c" title="Carnival Glam Hub shuttle to your band" />
+              <YouTubeEmbed videoId="5DaXapfF8IA" title="Carnival Glam Hub shuttle service" vertical />
+            </div>
           </section>
         </article>
 
