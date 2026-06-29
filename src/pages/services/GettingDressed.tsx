@@ -234,8 +234,8 @@ const GettingDressed = () => {
 
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
-              src="/images/services/getting-dressed-7.webp"
-              alt="Masquerader fully dressed and road-ready at the Carnival Glam Hub lounge"
+              src="/images/services/getting-dressed-hero.jpg"
+              alt="Carnival Glam Hub dressing assistant helping a masquerader into her costume"
               loading="eager"
               decoding="async"
               className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
@@ -256,6 +256,10 @@ const GettingDressed = () => {
               you leave the lounge.
             </p>
           </section>
+
+          <figure className="mb-12 -mx-4 sm:mx-0">
+            <img src="/images/services/getting-dressed-7.webp" alt="Masquerader fully dressed and road-ready at the Carnival Glam Hub lounge" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+          </figure>
 
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img src="/images/services/getting-dressed-2.webp" alt="Carnival Glam Hub dresser securing a masquerader's costume before the road" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
