@@ -97,8 +97,10 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     }
     canonical.setAttribute("href", `https://www.carnivalglamhub.com/${dest.slug}`);
 
-    const pageUrl = `https://www.carnivalglamhub.com/${dest.slug}`;
-
+    // Service + BreadcrumbList JSON-LD for destinations is emitted at
+    // build time in scripts/prerender-routes.ts so crawlers see it in
+    // the static <head>. FAQPage stays runtime-injected because its
+    // content is generated from per-destination data.
     const upsertJsonLd = (id: string, data: unknown) => {
       let el = document.getElementById(id) as HTMLScriptElement | null;
       if (!el) {
@@ -110,43 +112,6 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       el.textContent = JSON.stringify(data);
     };
 
-    const place = TERRITORY_PLACE[dest.slug];
-    const locationBlock = place
-      ? {
-          "@type": "Place",
-          name: place.city,
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: place.city,
-            addressCountry: place.country,
-          },
-        }
-      : undefined;
-
-    upsertJsonLd("destination-service-jsonld", {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: `${dest.name} Glam Services`,
-      serviceType: `${dest.shortName} Carnival Makeup, Hair & Body Art`,
-      description: dest.metaDescription,
-      url: pageUrl,
-      areaServed: { "@type": "Place", name: dest.shortName },
-      ...(locationBlock ? { location: locationBlock } : {}),
-      provider: {
-        "@type": "Organization",
-        name: "Carnival Glam Hub",
-        url: "https://www.carnivalglamhub.com",
-        telephone: "+1-876-509-0997",
-        email: "Bookings@carnivalglamhub.com",
-      },
-      offers: {
-        "@type": "Offer",
-        url: bookingUrl,
-        availability: "https://schema.org/InStock",
-        category: `${dest.shortName} Carnival Glam`,
-      },
-    });
-
     upsertJsonLd("destination-faq-jsonld", {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -157,36 +122,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       })),
     });
 
-    upsertJsonLd("destination-breadcrumb-jsonld", {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://www.carnivalglamhub.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Destinations",
-          item: "https://www.carnivalglamhub.com/#destinations",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: dest.name,
-          item: pageUrl,
-        },
-      ],
-    });
-
     return () => {
       document.title = prevTitle;
-      ["destination-service-jsonld", "destination-faq-jsonld", "destination-breadcrumb-jsonld"].forEach(
-        (id) => document.getElementById(id)?.remove(),
-      );
+      document.getElementById("destination-faq-jsonld")?.remove();
     };
   }, [dest, faqs, bookingUrl]);
 

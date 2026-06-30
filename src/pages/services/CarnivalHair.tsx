@@ -11,51 +11,8 @@ const PAGE_DESCRIPTION =
   "Carnival hair styling from US$120, built to hold under feathers, wires and tropical heat: ponytails, front braided ponytails, half-up half-down and wig installs. Available in Jamaica, Miami, Trinidad and Saint Lucia.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-hair";
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Carnival Hair Styling",
-  serviceType: "Carnival hair styling",
-  url: CANONICAL,
-  description: PAGE_DESCRIPTION,
-  provider: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Barbados",
-    "Grenada",
-    "Antigua and Barbuda",
-  ],
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "120",
-    availability: "https://schema.org/InStock",
-    url: "https://carnivalglamhub.masos.app/events",
-    description: "Carnival hair styling from US$120.",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      priceCurrency: "USD",
-      minPrice: "120",
-    },
-  },
-};
 
-const SCHEMA_ID = "service-carnival-hair-jsonld";
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
-    { "@type": "ListItem", position: 3, name: "Carnival Hair Styling", item: CANONICAL },
-  ],
-};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -156,34 +113,16 @@ const CarnivalHair = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    let script = document.getElementById(SCHEMA_ID) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement("script");
-      script.id = SCHEMA_ID;
-      script.type = "application/ld+json";
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(serviceSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(SCHEMA_ID)?.remove();
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

@@ -24,17 +24,6 @@
     </news:news>
   </url>
   <url>
-    <loc>https://www.carnivalglamhub.com/blogs/strut-or-struggle-the-ultimate-guide-to-carnival-shoes</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Carnival Glam Hub</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-09-21T00:00:00.000Z</news:publication_date>
-      <news:title>The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle</news:title>
-    </news:news>
-  </url>
-  <url>
     <loc>https://www.carnivalglamhub.com/blogs/carnival-icon-beyond-the-bacchanal</loc>
     <news:news>
       <news:publication>
@@ -43,6 +32,17 @@
       </news:publication>
       <news:publication_date>2024-09-21T00:00:00.000Z</news:publication_date>
       <news:title>Carnival ICON: Beyond the Bacchanal</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.carnivalglamhub.com/blogs/strut-or-struggle-the-ultimate-guide-to-carnival-shoes</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2024-09-21T00:00:00.000Z</news:publication_date>
+      <news:title>The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle</news:title>
     </news:news>
   </url>
   <url>
@@ -164,6 +164,28 @@
       </news:publication>
       <news:publication_date>2026-06-27T00:00:00.000Z</news:publication_date>
       <news:title>Trinidad Carnival vs Grenada Carnival: Which One Should You Actually Do?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.carnivalglamhub.com/blogs/what-to-bring-for-carnival</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-06-27T00:00:00.000Z</news:publication_date>
+      <news:title>What to Bring for Carnival: The No-Nonsense Packing List</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.carnivalglamhub.com/blogs/trinidad-carnival-vs-jamaica-carnival</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-06-27T00:00:00.000Z</news:publication_date>
+      <news:title>Trinidad Carnival vs Jamaica Carnival: The Honest Guide to Choosing</news:title>
     </news:news>
   </url>
   <url>
@@ -321,17 +343,6 @@
     </news:news>
   </url>
   <url>
-    <loc>https://www.carnivalglamhub.com/blogs/youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Carnival Glam Hub</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-07-12T00:00:00.000Z</news:publication_date>
-      <news:title>You&apos;re Outside for Trinidad Jouvert… But Your Hair? What&apos;s She Doing?</news:title>
-    </news:news>
-  </url>
-  <url>
     <loc>https://www.carnivalglamhub.com/blogs/how-to-protect-your-hair-at-jouvert-without-looking-crazy</loc>
     <news:news>
       <news:publication>
@@ -340,6 +351,17 @@
       </news:publication>
       <news:publication_date>2025-07-12T00:00:00.000Z</news:publication_date>
       <news:title>How to Protect Your Hair at Jouvert (Without Looking Crazy)</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.carnivalglamhub.com/blogs/youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2025-07-12T00:00:00.000Z</news:publication_date>
+      <news:title>You&apos;re Outside for Trinidad Jouvert… But Your Hair? What&apos;s She Doing?</news:title>
     </news:news>
   </url>
   <url>
@@ -354,17 +376,6 @@
     </news:news>
   </url>
   <url>
-    <loc>https://www.carnivalglamhub.com/blogs/should-the-makeup-match-your-costume</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Carnival Glam Hub</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-26T00:00:00.000Z</news:publication_date>
-      <news:title>Should the Makeup Match Your Costume</news:title>
-    </news:news>
-  </url>
-  <url>
     <loc>https://www.carnivalglamhub.com/blogs/de-fete-need-rules-fete-etiquette</loc>
     <news:news>
       <news:publication>
@@ -373,6 +384,17 @@
       </news:publication>
       <news:publication_date>2025-01-26T00:00:00.000Z</news:publication_date>
       <news:title>De Fete Need Rules: Fete Etiquette</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.carnivalglamhub.com/blogs/should-the-makeup-match-your-costume</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2025-01-26T00:00:00.000Z</news:publication_date>
+      <news:title>Should the Makeup Match Your Costume</news:title>
     </news:news>
   </url>
   <url>

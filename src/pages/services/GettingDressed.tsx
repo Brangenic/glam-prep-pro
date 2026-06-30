@@ -11,46 +11,8 @@ const PAGE_DESCRIPTION =
   "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Flat US$35 across Trinidad, Jamaica, Barbados, Grenada and Antigua.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/getting-dressed";
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Carnival Costume Getting-Dressed Assistance",
-  serviceType: "Carnival costume getting-dressed assistance",
-  url: CANONICAL,
-  description: PAGE_DESCRIPTION,
-  provider: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Barbados",
-    "Grenada",
-    "Antigua and Barbuda",
-  ],
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "35",
-    availability: "https://schema.org/InStock",
-    url: "https://carnivalglamhub.masos.app/events",
-    description: "Getting-dressed assistance is a flat US$35.",
-  },
-};
 
-const SCHEMA_ID = "service-getting-dressed-jsonld";
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
-    { "@type": "ListItem", position: 3, name: "Getting-Dressed Assistance", item: CANONICAL },
-  ],
-};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -159,34 +121,16 @@ const GettingDressed = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    let script = document.getElementById(SCHEMA_ID) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement("script");
-      script.id = SCHEMA_ID;
-      script.type = "application/ld+json";
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(serviceSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(SCHEMA_ID)?.remove();
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
