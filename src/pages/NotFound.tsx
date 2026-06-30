@@ -14,7 +14,7 @@ const NotFound = () => {
     document.title = "Page not found | Carnival Glam Hub";
     const robots = document.createElement("meta");
     robots.setAttribute("name", "robots");
-    robots.setAttribute("content", "noindex, nofollow");
+    robots.setAttribute("content", "noindex, follow");
     document.head.appendChild(robots);
     const canonical = document.createElement("link");
     canonical.setAttribute("rel", "canonical");

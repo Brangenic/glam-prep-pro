@@ -194,6 +194,13 @@ const staticRoutes: RouteMeta[] = [
       "Get a personalised Carnival morning quote in three steps. Sweat-proof makeup, hair, dressing, photoshoot and shuttle, priced for your party size and territory.",
   },
   {
+    path: "/blogs",
+    title: "Carnival Beauty and Travel Journal | Carnival Glam Hub",
+    description:
+      "Guides, tips and stories on Carnival makeup, hair, costumes and travel for masqueraders across the Caribbean and the diaspora. Read the journal.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
     path: "/trinidad-carnival-2027",
     title: "Trinidad Carnival 2027 Makeup & Hair | Glam Hub",
     description:

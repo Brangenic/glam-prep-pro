@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { BOOKING_URL } from "@/lib/constants";
 import Fuse from "fuse.js";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -564,12 +565,14 @@ const Blogs = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
               Spaces sell out months before Carnival.
             </p>
-            <Link
-              to="/booking"
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener"
               className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
             >
               Book now
-            </Link>
+            </a>
           </div>
         </section>
       </main>

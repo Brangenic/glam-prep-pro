@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNoindex } from "@/hooks/useNoindex";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,6 +16,7 @@ import AdminChat from "@/components/admin/AdminChat";
 import AutopilotTab from "@/components/admin/AutopilotTab";
 
 export default function Admin() {
+  useNoindex();
   const { user, loading, isAdmin, signOut } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
