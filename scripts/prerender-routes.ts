@@ -34,6 +34,8 @@ type RouteMeta = {
   description: string;
   ogImage?: string;
   ogType?: "website" | "article" | "profile";
+  /** Optional JSON-LD blocks to inject as <script type="application/ld+json"> before </head>. */
+  jsonLd?: object[];
 };
 
 // Per-destination meta mirrors src/data/destinations.ts (metaTitle /
@@ -211,6 +213,272 @@ const staticRoutes: RouteMeta[] = [
 
 const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes];
 
+// ============================================================
+// JSON-LD enrichment
+// Attach BreadcrumbList + (Service / Event / Reviewed Business)
+// schemas to each prerendered route so crawlers see them in the
+// static HEAD. The runtime React copies of these schemas have
+// been removed from the page components to prevent duplicates
+// after hydration.
+// ============================================================
+
+const ORG_ID = `${BASE_URL}/#organization`;
+const PROVIDER = {
+  "@type": "BeautySalon",
+  "@id": ORG_ID,
+  name: "Carnival Glam Hub",
+  url: BASE_URL,
+};
+const CARIBBEAN_AREAS = [
+  "Trinidad and Tobago",
+  "Jamaica",
+  "Barbados",
+  "Grenada",
+  "Antigua and Barbuda",
+  "Saint Lucia",
+];
+
+function homeCrumb(name: string, path: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+      { "@type": "ListItem", position: 2, name, item: `${BASE_URL}${path}` },
+    ],
+  };
+}
+
+function sectionCrumb(section: string, name: string, path: string) {
+  // Sections (Services, Destinations) don't have their own index URL —
+  // anchor them to the homepage so position 2 still resolves.
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+      { "@type": "ListItem", position: 2, name: section, item: `${BASE_URL}/#${section.toLowerCase()}` },
+      { "@type": "ListItem", position: 3, name, item: `${BASE_URL}${path}` },
+    ],
+  };
+}
+
+type ServiceMeta = {
+  name: string;
+  serviceType: string;
+  crumb: string;
+  extraOffer?: object;
+};
+
+const SERVICE_META: Record<string, ServiceMeta> = {
+  "/services/carnival-makeup": {
+    name: "Sweat-Resistant Carnival Makeup",
+    serviceType: "Carnival Makeup",
+    crumb: "Carnival Makeup",
+    extraOffer: {
+      "@type": "AggregateOffer",
+      priceCurrency: "USD",
+      lowPrice: "160",
+      highPrice: "2000",
+      offerCount: "4",
+      availability: "https://schema.org/InStock",
+      url: "https://carnivalglamhub.masos.app/events",
+    },
+  },
+  "/services/carnival-hair": {
+    name: "Carnival Hair Styling",
+    serviceType: "Carnival Hair Styling",
+    crumb: "Carnival Hair",
+  },
+  "/services/carnival-photoshoot": {
+    name: "Carnival Photoshoot",
+    serviceType: "Carnival Photoshoot",
+    crumb: "Carnival Photoshoot",
+  },
+  "/services/getting-dressed": {
+    name: "Carnival Costume Getting-Dressed Assistance",
+    serviceType: "Costume Dressing",
+    crumb: "Getting Dressed",
+  },
+  "/services/carnival-shuttle": {
+    name: "Carnival Shuttle Service",
+    serviceType: "Carnival Shuttle",
+    crumb: "Carnival Shuttle",
+  },
+};
+
+const DEST_AREA: Record<string, object> = {
+  "/jamaica": { "@type": "Country", name: "Jamaica" },
+  "/saint-lucia": { "@type": "Country", name: "Saint Lucia" },
+  "/antigua": { "@type": "Country", name: "Antigua and Barbuda" },
+  "/grenada": { "@type": "Country", name: "Grenada" },
+  "/barbados": { "@type": "Country", name: "Barbados" },
+  "/miami": {
+    "@type": "City",
+    name: "Miami",
+    containedInPlace: { "@type": "Country", name: "United States" },
+  },
+  "/toronto": {
+    "@type": "City",
+    name: "Toronto",
+    containedInPlace: { "@type": "Country", name: "Canada" },
+  },
+  "/trinidad": { "@type": "Country", name: "Trinidad and Tobago" },
+  "/guyana": { "@type": "Country", name: "Guyana" },
+  "/epic-cruise": { "@type": "Place", name: "EPIC Carnival Experience cruise" },
+  "/trinidad-carnival-2027": { "@type": "Country", name: "Trinidad and Tobago" },
+};
+
+const DEST_CRUMB: Record<string, string> = {
+  "/jamaica": "Jamaica Carnival",
+  "/saint-lucia": "Saint Lucia Carnival",
+  "/antigua": "Antigua Carnival",
+  "/grenada": "Grenada Spicemas",
+  "/barbados": "Barbados Crop Over",
+  "/miami": "Miami Carnival",
+  "/toronto": "Toronto Caribana",
+  "/trinidad": "Trinidad Carnival",
+  "/guyana": "Guyana Carnival",
+  "/epic-cruise": "Epic Cruise — Trinidad Carnival",
+  "/trinidad-carnival-2027": "Trinidad Carnival 2027",
+};
+
+function buildJsonLd(route: RouteMeta): object[] {
+  const url = `${BASE_URL}${route.path}`;
+  const blocks: object[] = [];
+
+  // 1) BreadcrumbList for every route.
+  if (route.path.startsWith("/services/")) {
+    const meta = SERVICE_META[route.path];
+    blocks.push(sectionCrumb("Services", meta?.crumb ?? route.title, route.path));
+  } else if (DEST_AREA[route.path]) {
+    blocks.push(sectionCrumb("Destinations", DEST_CRUMB[route.path] ?? route.title, route.path));
+  } else {
+    // Map known static routes to friendly crumb names.
+    const NAME: Record<string, string> = {
+      "/about": "About",
+      "/faq": "FAQ",
+      "/reviews": "Reviews",
+      "/amazon-store": "Amazon Storefront",
+      "/booking-calculator": "Quote Calculator",
+      "/blogs": "Journal",
+    };
+    blocks.push(homeCrumb(NAME[route.path] ?? route.title, route.path));
+  }
+
+  // 2) Service node for /services/* and destinations.
+  if (route.path.startsWith("/services/")) {
+    const meta = SERVICE_META[route.path];
+    if (meta) {
+      const service: Record<string, unknown> = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: meta.name,
+        serviceType: meta.serviceType,
+        url,
+        description: route.description,
+        provider: PROVIDER,
+        areaServed: CARIBBEAN_AREAS,
+      };
+      if (meta.extraOffer) service.offers = meta.extraOffer;
+      blocks.push(service);
+    }
+  } else if (DEST_AREA[route.path]) {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: `${DEST_CRUMB[route.path]} Glam Concierge`,
+      serviceType: "Carnival morning concierge (makeup, hair, dressing, photoshoot, shuttle)",
+      url,
+      description: route.description,
+      provider: PROVIDER,
+      areaServed: DEST_AREA[route.path],
+    });
+  }
+
+  // 3) Trinidad 2027 gets its real Event + reviewed-business schemas in
+  // the static head as well (moved out of the page component).
+  if (route.path === "/trinidad-carnival-2027") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: "Trinidad Carnival 2027 — Glam Hub Morning Concierge",
+      startDate: "2027-02-08T04:00:00-04:00",
+      endDate: "2027-02-09T20:00:00-04:00",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      url,
+      description:
+        "Trinidad Carnival 2027 makeup, hair, photoshoot, getting-dressed, seamstress and shuttle — by Carnival Glam Hub.",
+      location: {
+        "@type": "Place",
+        name: "Port of Spain, Trinidad and Tobago",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Port of Spain",
+          addressCountry: "TT",
+        },
+      },
+      organizer: {
+        "@type": "Organization",
+        name: "Carnival Glam Hub",
+        url: BASE_URL,
+      },
+      offers: {
+        "@type": "Offer",
+        url,
+        availability: "https://schema.org/InStock",
+        priceCurrency: "USD",
+        price: "50",
+        validFrom: "2026-05-01",
+      },
+    });
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": `${url}#business`,
+      name: "Carnival Glam Hub",
+      alternateName: "Carnival Glam Hub — Trinidad Carnival",
+      url,
+      sameAs: ["https://www.wikidata.org/wiki/Q140323641"],
+      image: `${BASE_URL}/og/trinidad-carnival-2027.jpg`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Port of Spain",
+        addressCountry: "TT",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        reviewCount: "43",
+        bestRating: "5",
+      },
+      review: [
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Ashley Trini S" },
+          reviewBody:
+            "5 stars across the board for the experience! I chose Carnival Glam Hub for Carnival Monday and went with a different service on Tuesday. I completely prefer Glam Hub and will be using them for both days next year for 2027 Carnival.",
+          reviewRating: { "@type": "Rating", ratingValue: 5, bestRating: "5" },
+        },
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Kerra Denel" },
+          reviewBody:
+            "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time — which is everything during Carnival season — and the entire process was professional and organised.",
+          reviewRating: { "@type": "Rating", ratingValue: 5, bestRating: "5" },
+        },
+      ],
+    });
+  }
+
+  return blocks;
+}
+
+for (const r of allRoutes) {
+  r.jsonLd = buildJsonLd(r);
+}
+
 const escapeAttr = (s: string) =>
   s
     .replace(/&/g, "&amp;")
@@ -323,6 +591,20 @@ function rewriteHead(template: string, route: RouteMeta): string {
       "</head>",
       `    <meta name="twitter:description" content="${escapeAttr(desc)}">\n  </head>`,
     );
+  }
+
+  // JSON-LD: inject per-route blocks just before </head>. Escape "<" as
+  // \u003c so the script body cannot terminate the surrounding tag.
+  if (route.jsonLd && route.jsonLd.length > 0) {
+    const scripts = route.jsonLd
+      .map(
+        (block) =>
+          `    <script type="application/ld+json" data-prerender="route">${JSON.stringify(
+            block,
+          ).replace(/</g, "\\u003c")}</script>`,
+      )
+      .join("\n");
+    html = html.replace("</head>", `${scripts}\n  </head>`);
   }
 
   return html;
