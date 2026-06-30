@@ -99,21 +99,21 @@ const App = () => (
           {/* Direct slug aliases for SEO */}
           <Route path="/jamaica" element={<DestinationAlias slug="jamaica" />} />
           <Route path="/trinidad" element={<DestinationAlias slug="trinidad" />} />
-          <Route path="/trinidad-and-tobago" element={<DestinationAlias slug="trinidad" />} />
-          <Route path="/tobago" element={<DestinationAlias slug="trinidad" />} />
+          <Route path="/trinidad-and-tobago" element={<Navigate to="/trinidad" replace />} />
+          <Route path="/tobago" element={<Navigate to="/trinidad" replace />} />
           <Route path="/antigua" element={<DestinationAlias slug="antigua" />} />
-          <Route path="/antigua-and-barbuda" element={<DestinationAlias slug="antigua" />} />
+          <Route path="/antigua-and-barbuda" element={<Navigate to="/antigua" replace />} />
           <Route path="/barbados" element={<DestinationAlias slug="barbados" />} />
           <Route path="/grenada" element={<DestinationAlias slug="grenada" />} />
-          <Route path="/st-lucia" element={<DestinationAlias slug="saint-lucia" />} />
+          <Route path="/st-lucia" element={<Navigate to="/saint-lucia" replace />} />
           <Route path="/saint-lucia" element={<DestinationAlias slug="saint-lucia" />} />
-          <Route path="/stlucia" element={<DestinationAlias slug="saint-lucia" />} />
-          <Route path="/saintlucia" element={<DestinationAlias slug="saint-lucia" />} />
+          <Route path="/stlucia" element={<Navigate to="/saint-lucia" replace />} />
+          <Route path="/saintlucia" element={<Navigate to="/saint-lucia" replace />} />
           <Route path="/miami" element={<DestinationAlias slug="miami" />} />
           <Route path="/toronto" element={<DestinationAlias slug="toronto" />} />
           <Route path="/guyana" element={<DestinationAlias slug="guyana" />} />
           <Route path="/epic-cruise" element={<DestinationAlias slug="epic-cruise" />} />
-          <Route path="/epic" element={<DestinationAlias slug="epic-cruise" />} />
+          <Route path="/epic" element={<Navigate to="/epic-cruise" replace />} />
           <Route path="/atlanta" element={<Navigate to="/#destinations" replace />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
