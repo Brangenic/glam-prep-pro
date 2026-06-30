@@ -36,7 +36,7 @@ const SERVICE_DEFAULTS: Record<string, { destinations: LinkRef[]; guides: LinkRe
     ],
     guides: [
       { to: "/blogs/top-seven-best-carnival-hairstyles", label: "Top seven Carnival hairstyles" },
-      { to: "/blogs/carnival-ponytails", label: "Carnival ponytails that hold" },
+      { to: "/blogs/carnival-ponytails-bald-spots-what-no-one-tells-you", label: "Carnival ponytails that hold" },
     ],
   },
   "/services/carnival-photoshoot": {
@@ -54,8 +54,8 @@ const SERVICE_DEFAULTS: Record<string, { destinations: LinkRef[]; guides: LinkRe
       { to: "/grenada", label: "Grenada Spicemas dressing" },
     ],
     guides: [
-      { to: "/blogs/strut-or-struggle", label: "Strut or struggle: Carnival shoes" },
-      { to: "/blogs/what-shoes-to-wear-to-carnival", label: "What shoes to wear to Carnival" },
+      { to: "/blogs/strut-or-struggle-the-ultimate-guide-to-carnival-shoes", label: "Strut or struggle: Carnival shoes" },
+      { to: "/blogs/what-shoes-to-wear-for-trinidad-carnival-monday-tuesday-no-not-heels", label: "What shoes to wear to Carnival" },
     ],
   },
   "/services/carnival-shuttle": {
@@ -122,7 +122,7 @@ const DEST_GUIDES: Record<string, LinkRef[]> = {
     { to: "/blogs/trinidad-carnival-vs-jamaica-carnival", label: "Trinidad vs Jamaica Carnival" },
   ],
   grenada: [
-    { to: "/blogs/jab-jab-101", label: "Jab Jab 101" },
+    { to: "/blogs/jab-jab-101-what-you-really-need-to-know-about-grenada-carnival", label: "Jab Jab 101" },
   ],
 };
 
