@@ -45,7 +45,6 @@ const serviceSchema = {
   },
 };
 
-const SCHEMA_ID = "service-carnival-hair-jsonld";
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -156,34 +155,16 @@ const CarnivalHair = () => {
     }
     canonical.setAttribute("href", CANONICAL);
 
-    let script = document.getElementById(SCHEMA_ID) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement("script");
-      script.id = SCHEMA_ID;
-      script.type = "application/ld+json";
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(serviceSchema);
-
     return () => {
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
       else canonical?.remove();
-      document.getElementById(SCHEMA_ID)?.remove();
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
