@@ -54,6 +54,53 @@ const openExternalLink = (href: string) => {
 const Footer = () => (
   <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
     <div className="container mx-auto px-4 sm:px-6">
+      {/* Hub sitemap — every primary route is reachable from the footer */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-8 sm:gap-10 mb-10 sm:mb-12 pb-10 sm:pb-12 border-b border-border">
+        <div>
+          <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
+            Services
+          </h4>
+          <ul className="space-y-2 font-body text-sm text-muted-foreground">
+            <li><a href="/services/carnival-makeup" className="hover:text-primary transition-colors">Carnival makeup</a></li>
+            <li><a href="/services/carnival-hair" className="hover:text-primary transition-colors">Carnival hair</a></li>
+            <li><a href="/services/carnival-photoshoot" className="hover:text-primary transition-colors">Carnival photoshoot</a></li>
+            <li><a href="/services/getting-dressed" className="hover:text-primary transition-colors">Getting dressed</a></li>
+            <li><a href="/services/carnival-shuttle" className="hover:text-primary transition-colors">Carnival shuttle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
+            Destinations
+          </h4>
+          <ul className="space-y-2 font-body text-sm text-muted-foreground">
+            <li><a href="/trinidad" className="hover:text-primary transition-colors">Trinidad Carnival</a></li>
+            <li><a href="/trinidad-carnival-2027" className="hover:text-primary transition-colors">Trinidad Carnival 2027</a></li>
+            <li><a href="/jamaica" className="hover:text-primary transition-colors">Jamaica Carnival</a></li>
+            <li><a href="/barbados" className="hover:text-primary transition-colors">Barbados Crop Over</a></li>
+            <li><a href="/grenada" className="hover:text-primary transition-colors">Grenada Spicemas</a></li>
+            <li><a href="/saint-lucia" className="hover:text-primary transition-colors">Saint Lucia Carnival</a></li>
+            <li><a href="/antigua" className="hover:text-primary transition-colors">Antigua Carnival</a></li>
+            <li><a href="/miami" className="hover:text-primary transition-colors">Miami Carnival</a></li>
+            <li><a href="/toronto" className="hover:text-primary transition-colors">Toronto Caribana</a></li>
+            <li><a href="/guyana" className="hover:text-primary transition-colors">Guyana Carnival</a></li>
+            <li><a href="/epic-cruise" className="hover:text-primary transition-colors">Epic Cruise</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
+            Explore
+          </h4>
+          <ul className="space-y-2 font-body text-sm text-muted-foreground">
+            <li><a href="/" className="hover:text-primary transition-colors">Home</a></li>
+            <li><a href="/blogs" className="hover:text-primary transition-colors">Journal</a></li>
+            <li><a href="/about" className="hover:text-primary transition-colors">About</a></li>
+            <li><a href="/faq" className="hover:text-primary transition-colors">FAQ</a></li>
+            <li><a href="/reviews" className="hover:text-primary transition-colors">Reviews</a></li>
+            <li><a href="/amazon-store" className="hover:text-primary transition-colors">Amazon Store</a></li>
+            <li><a href="/booking-calculator" className="hover:text-primary transition-colors">Booking Calculator</a></li>
+          </ul>
+        </div>
+      </div>
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
         <div className="col-span-2 sm:col-span-1">
           <a href="/" className="inline-flex mb-4" aria-label="Carnival Glam Hub home">

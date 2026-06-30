@@ -2,6 +2,7 @@ import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import RelatedLinks from "@/components/RelatedLinks";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 
@@ -326,6 +327,7 @@ const CarnivalHair = () => {
               <YouTubeEmbed videoId="le5YvuahX9o" title="Carnival hair by Cookie Hair Queen Trinidad for Carnival Glam Hub" vertical />
             </div>
           </section>
+          <RelatedLinks />
         </article>
 
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-12 sm:mt-16">

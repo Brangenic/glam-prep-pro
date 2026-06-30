@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import RelatedLinks from "@/components/RelatedLinks";
 import MasosEmbed from "@/components/MasosEmbed";
 import { getDestination as getMasosDestination } from "@/lib/destinations";
 import {
@@ -502,6 +503,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <TrinidadGuidesBlock />
           </div>
         )}
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-12 sm:pb-20">
+          <RelatedLinks />
+        </div>
       </main>
 
       <Footer />

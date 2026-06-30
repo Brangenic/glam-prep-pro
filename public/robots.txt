@@ -36,6 +36,12 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
 User-agent: Bingbot
 Allow: /
 
@@ -47,7 +53,6 @@ Allow: /
 
 User-agent: *
 Allow: /
-
 Disallow: /api/
 
 Sitemap: https://www.carnivalglamhub.com/sitemap.xml

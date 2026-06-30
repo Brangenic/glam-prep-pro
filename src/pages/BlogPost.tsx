@@ -132,6 +132,7 @@ import { supabase } from "@/integrations/supabase/client";
 import makeupGuide2026Cover from "@/assets/blog-2026-makeup-guide-cover.webp";
 import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
 import RelatedGuides from "@/components/RelatedGuides";
+import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
 import { buildFaqSchema } from "@/lib/faqSchema";
 
@@ -667,6 +668,40 @@ const BlogPost = () => {
                     }
                   />
                 )}
+
+                {/* Related service + destination links — push readers to money pages */}
+                {slug && (() => {
+                  const s = slug.toLowerCase();
+                  const service = /hair|hairstyle|ponytail|braid|wig/.test(s)
+                    ? { to: "/services/carnival-hair", label: "Carnival hair and hairstyles" }
+                    : /photo|shoot/.test(s)
+                    ? { to: "/services/carnival-photoshoot", label: "Carnival photoshoot" }
+                    : /shoe|getting-dressed|costume/.test(s)
+                    ? { to: "/services/getting-dressed", label: "Costume getting-dressed help" }
+                    : /shuttle|transport/.test(s)
+                    ? { to: "/services/carnival-shuttle", label: "Carnival shuttle service" }
+                    : { to: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" };
+                  const dest = /trinidad/.test(s)
+                    ? { to: "/trinidad", label: "Trinidad Carnival" }
+                    : /jamaica/.test(s)
+                    ? { to: "/jamaica", label: "Jamaica Carnival" }
+                    : /grenada|spicemas|jab/.test(s)
+                    ? { to: "/grenada", label: "Grenada Spicemas" }
+                    : /barbados|crop[- ]?over/.test(s)
+                    ? { to: "/barbados", label: "Barbados Crop Over" }
+                    : /saint[- ]?lucia|st[- ]?lucia/.test(s)
+                    ? { to: "/saint-lucia", label: "Saint Lucia Carnival" }
+                    : /miami/.test(s)
+                    ? { to: "/miami", label: "Miami Carnival" }
+                    : /toronto|caribana/.test(s)
+                    ? { to: "/toronto", label: "Toronto Caribana" }
+                    : /antigua/.test(s)
+                    ? { to: "/antigua", label: "Antigua Carnival" }
+                    : { to: "/trinidad", label: "Trinidad Carnival" };
+                  return (
+                    <RelatedLinks services={[service]} destinations={[dest]} guides={[]} />
+                  );
+                })()}
 
                 {/* Conversion CTA — pushes to MasOS booking page */}
                 <BlogCTA
