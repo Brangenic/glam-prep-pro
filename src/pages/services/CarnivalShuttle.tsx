@@ -11,38 +11,8 @@ const PAGE_DESCRIPTION =
   "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point, included with any Carnival Glam Hub service. Available in select territories and confirmed when you book.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-shuttle";
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Carnival Shuttle Service",
-  serviceType: "Carnival shuttle service",
-  url: CANONICAL,
-  description: PAGE_DESCRIPTION,
-  provider: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "0",
-    availability: "https://schema.org/InStock",
-    url: "https://carnivalglamhub.masos.app/events",
-    description: "Complimentary one-way Carnival shuttle pick-up, included with any Carnival Glam Hub service booking.",
-  },
-};
 
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
-    { "@type": "ListItem", position: 3, name: "Carnival Shuttle", item: CANONICAL },
-  ],
-};
 
 const faqSchema = {
   "@context": "https://schema.org",

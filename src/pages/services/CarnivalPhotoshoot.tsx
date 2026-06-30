@@ -11,50 +11,8 @@ const PAGE_DESCRIPTION =
   "Professional Carnival photoshoot shot outdoors in the garden or by the water, with 3 professionally edited photos delivered in 36 to 48 hours. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-photoshoot";
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Carnival Photoshoot",
-  serviceType: "Carnival photoshoot",
-  url: CANONICAL,
-  description: PAGE_DESCRIPTION,
-  provider: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Barbados",
-    "Grenada",
-    "Antigua and Barbuda",
-  ],
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "220",
-    availability: "https://schema.org/InStock",
-    url: "https://carnivalglamhub.masos.app/events",
-    description: "Carnival photoshoot from US$220.",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      priceCurrency: "USD",
-      minPrice: "220",
-    },
-  },
-};
 
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
-    { "@type": "ListItem", position: 3, name: "Carnival Photoshoot", item: CANONICAL },
-  ],
-};
 
 const faqSchema = {
   "@context": "https://schema.org",

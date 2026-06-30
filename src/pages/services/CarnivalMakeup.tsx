@@ -10,53 +10,9 @@ const PAGE_DESCRIPTION =
   "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ since 2017.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-makeup";
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Sweat-Resistant Carnival Makeup",
-  serviceType: "Carnival makeup",
-  url: CANONICAL,
-  description: PAGE_DESCRIPTION,
-  provider: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  areaServed: [
-    "Trinidad and Tobago",
-    "Jamaica",
-    "Barbados",
-    "Grenada",
-    "Antigua and Barbuda",
-  ],
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "160",
-    availability: "https://schema.org/InStock",
-    url: "https://carnivalglamhub.masos.app/events",
-    description:
-      "Professional Carnival makeup from US$160; celebrity-artist glam US$250–US$350; premium looks up to US$2,000.",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      priceCurrency: "USD",
-      minPrice: "160",
-      maxPrice: "2000",
-    },
-  },
-};
 
 const SCHEMA_ID = "service-carnival-makeup-jsonld";
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.carnivalglamhub.com/" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.carnivalglamhub.com/#services" },
-    { "@type": "ListItem", position: 3, name: "Carnival Makeup", item: CANONICAL },
-  ],
-};
 
 // FAQ pairs mirror the visible question H2s and the answer paragraphs
 // rendered below. Keep these in sync with the on-page copy.
