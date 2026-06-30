@@ -82,6 +82,7 @@
     {
       "@context": "https://schema.org",
       "@type": ["Organization", "BeautySalon"],
+      "@id": "https://www.carnivalglamhub.com/#organization",
       "name": "Carnival Glam Hub",
       "legalName": "Carnival Glam Hub",
       "description": "Premium Carnival morning concierge for travelling masqueraders. Sweat-resistant makeup, hair, getting-dressed, photoshoot and shuttle, all under one roof. Trusted by 15,000+ masqueraders since 2017.",
@@ -170,6 +171,22 @@
             "itemOffered": { "@type": "Service", "name": "Concierge Carnival Prep", "description": "Full-service carnival morning coordination" }
           }
         ]
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Carnival Glam Hub",
+      "url": "https://www.carnivalglamhub.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.carnivalglamhub.com/blogs?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
       }
     }
     </script>
