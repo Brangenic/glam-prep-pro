@@ -2,6 +2,7 @@ import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import RelatedLinks from "@/components/RelatedLinks";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 
@@ -325,6 +326,7 @@ const GettingDressed = () => {
             </h2>
             <YouTubeEmbed videoId="pHGdlC2jyLw" title="Getting dressed for Carnival with Carnival Glam Hub" />
           </section>
+          <RelatedLinks />
         </article>
 
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-12 sm:mt-16">

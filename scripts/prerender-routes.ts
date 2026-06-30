@@ -10,6 +10,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
+import sharp from "sharp";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -18,6 +19,73 @@ const DEFAULT_OG_TYPE = "image/png";
 const DEFAULT_OG_W = 1200;
 const DEFAULT_OG_H = 630;
 const HERO_FALLBACK = `${BASE_URL}/og-home.jpg`;
+
+const OG_W = 1200;
+const OG_H = 630;
+
+// Destination → real hero image source (mirrors src/data/destinations.ts).
+// Kept inline to avoid importing the app's runtime asset modules.
+const DESTINATION_HERO_SOURCES: Record<string, string> = {
+  "/jamaica":
+    "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
+  "/saint-lucia":
+    "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
+  "/antigua":
+    "https://www.dropbox.com/scl/fi/zj9aswskvl80vunhkhdcf/Chloe%20J.png?rlkey=yxp73i1uv8pcwpuink46ty6mv&raw=1",
+  "/grenada":
+    "https://www.dropbox.com/scl/fi/taonoqg2p6faph4jipzhr/AALiyah.png?rlkey=jwxhfig9y16l6kn2573nkuggh&raw=1",
+  "/barbados":
+    "https://www.dropbox.com/scl/fi/4a52okz83gxh171qyhfjc/Dania.png?rlkey=q3figf3ty5abs9gdie4rtjcow&raw=1",
+  "/miami":
+    "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&raw=1",
+  "/toronto":
+    "https://www.dropbox.com/scl/fi/tnghsl2n83e111g3b6ffs/Krystal%20Pitt.png?rlkey=nyhzn9cf43lwlsqjpa0hif5pk&raw=1",
+  "/trinidad":
+    "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
+  "/epic-cruise":
+    "https://www.dropbox.com/scl/fi/i9atucg76ieovbmkkqupg/IMG_8522.jpg?rlkey=b74ambfqu21fjbadhidkcy6u7&raw=1",
+  // /guyana uses a bundled local asset (carnival-4.jpg). Resolve from dist
+  // assets at transcode time so we don't depend on the hashed filename here.
+  "/guyana": "asset:carnival-4",
+};
+
+async function transcodeOgImage(slug: string, source: string): Promise<string | null> {
+  try {
+    const outDir = join(DIST, "og");
+    mkdirSync(outDir, { recursive: true });
+    const outFile = join(outDir, `route-${slug}.jpg`);
+    let buf: Buffer;
+    if (source.startsWith("asset:")) {
+      const basename = source.slice("asset:".length);
+      const assetsDir = join(DIST, "assets");
+      if (!existsSync(assetsDir)) return null;
+      const { readdirSync } = await import("fs");
+      const files = readdirSync(assetsDir);
+      const re = new RegExp(
+        `^${basename.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}-[A-Za-z0-9_-]+\\.(webp|png|jpe?g)$`,
+      );
+      const hit = files.find((f) => re.test(f));
+      if (!hit) return null;
+      buf = readFileSync(join(assetsDir, hit));
+    } else if (source.startsWith("/")) {
+      const localFile = join(DIST, source.replace(/^\//, ""));
+      if (!existsSync(localFile)) return null;
+      buf = readFileSync(localFile);
+    } else {
+      const res = await fetch(source);
+      if (!res.ok) return null;
+      buf = Buffer.from(await res.arrayBuffer());
+    }
+    await sharp(buf)
+      .resize(OG_W, OG_H, { fit: "cover", position: "centre" })
+      .jpeg({ quality: 85, mozjpeg: true })
+      .toFile(outFile);
+    return `${BASE_URL}/og/route-${slug}.jpg`;
+  } catch (err) {
+    console.warn(`prerender-routes: og transcode failed for ${slug}:`, err);
+    return null;
+  }
+}
 
 function imageTypeFor(url: string): string {
   const ext = url.split("?")[0].split("#")[0].toLowerCase();
@@ -610,13 +678,23 @@ function rewriteHead(template: string, route: RouteMeta): string {
   return html;
 }
 
-function main() {
+async function main() {
   const indexPath = join(DIST, "index.html");
   if (!existsSync(indexPath)) {
     console.warn("prerender-routes: dist/index.html not found, skipping.");
     return;
   }
   const template = readFileSync(indexPath, "utf8");
+
+  // Transcode destination hero images to per-route OG JPEGs. Falls back
+  // gracefully to HERO_FALLBACK so a transcode failure never breaks the build.
+  for (const route of destinationRoutes) {
+    const source = DESTINATION_HERO_SOURCES[route.path];
+    if (!source) continue;
+    const slug = route.path.replace(/^\//, "");
+    const transcoded = await transcodeOgImage(slug, source);
+    if (transcoded) route.ogImage = transcoded;
+  }
 
   let written = 0;
   for (const route of allRoutes) {
@@ -629,9 +707,7 @@ function main() {
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 }
 
-try {
-  main();
-} catch (err) {
+main().catch((err) => {
   console.error("prerender-routes failed:", err);
   process.exit(0); // never block the build
-}
+});
