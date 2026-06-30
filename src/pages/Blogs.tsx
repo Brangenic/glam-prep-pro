@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { BOOKING_URL } from "@/lib/constants";
 import Fuse from "fuse.js";
 import Navbar from "@/components/landing/Navbar";
@@ -171,7 +171,22 @@ const Blogs = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
+  // Search state is mirrored to the URL ?q= param so the WebSite
+  // SearchAction in JSON-LD is a real, shareable target.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQueryState] = useState(() => searchParams.get("q") ?? "");
+  const setQuery = (next: string) => {
+    setQueryState(next);
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev);
+        if (next.trim()) params.set("q", next);
+        else params.delete("q");
+        return params;
+      },
+      { replace: true },
+    );
+  };
   const PAGE_SIZE = 24;
 
   const EXCLUDED_AUTHORS = [
@@ -385,6 +400,7 @@ const Blogs = () => {
               <input
                 id="blog-search"
                 type="search"
+                name="q"
                 value={query}
                 onChange={(e) => { setQuery(e.target.value); setPage(1); }}
                 placeholder="Search the journal — try ‘jouvert’, ‘makeup’, ‘Trinidad’…"
