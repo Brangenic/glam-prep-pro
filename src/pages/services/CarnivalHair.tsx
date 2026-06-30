@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -232,7 +233,7 @@ const CarnivalHair = () => {
 
           <div className="mb-12 text-center">
             <a
-              href="/booking"
+              href={BOOKING_URL} target="_blank" rel="noopener"
               className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
             >
               Book now
@@ -399,7 +400,7 @@ const CarnivalHair = () => {
               Slots close two to three months before Carnival.
             </p>
             <a
-              href="/booking"
+              href={BOOKING_URL} target="_blank" rel="noopener"
               className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
             >
               Book now
