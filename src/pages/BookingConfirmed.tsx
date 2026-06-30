@@ -1,7 +1,9 @@
 import { useEffect, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import { useNoindex } from "@/hooks/useNoindex";
 
 const BookingConfirmed = () => {
+  useNoindex();
   const [params] = useSearchParams();
 
   const { total, id, currency } = useMemo(() => {
