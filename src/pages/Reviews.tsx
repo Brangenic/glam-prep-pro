@@ -94,6 +94,35 @@ const googleProfiles = [
 ];
 
 const Reviews = () => {
+  const ORG_ID = "https://www.carnivalglamhub.com/#organization";
+  const ORG_REF = { "@type": "BeautySalon", "@id": ORG_ID, name: "Carnival Glam Hub" };
+
+  // AggregateRating (matches the sitewide Organization 4.8/43) plus
+  // each visible Google review as an individual schema.org Review,
+  // all itemReviewed against the existing Organization @id so no
+  // duplicate Organization node is emitted.
+  const aggregateRatingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AggregateRating",
+    itemReviewed: ORG_REF,
+    ratingValue: "4.8",
+    reviewCount: String(googleProfiles.reduce((n, p) => n + p.count, 0)),
+    bestRating: "5",
+  };
+
+  const reviewListJsonLd = realReviews.map((r) => ({
+    "@context": "https://schema.org",
+    "@type": "Review",
+    itemReviewed: ORG_REF,
+    author: { "@type": "Person", name: r.name },
+    reviewBody: r.text,
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: r.stars,
+      bestRating: "5",
+    },
+  }));
+
   useEffect(() => {
     const previousTitle = document.title;
     document.title = PAGE_TITLE;
@@ -123,6 +152,17 @@ const Reviews = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingJsonLd) }}
+      />
+      {reviewListJsonLd.map((node, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
       <Navbar />
       <main className="pt-28 sm:pt-32">
         <PressBar compact />
