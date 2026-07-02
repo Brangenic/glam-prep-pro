@@ -233,9 +233,32 @@ const Blogs = () => {
         const manuals = MANUAL_POSTS.filter((p) => !existingSlugs.has(resolveSlug(p)));
         const merged = [...manuals, ...filtered];
 
-        // Apply explicit display order: featured first, then MANUAL_GRID_ORDER,
-        // then any remaining posts by published date desc.
+        // Parse published_date defensively; unparseable/missing → null so those
+        // posts can never win the "Latest Post" hero slot.
+        const parseDate = (v: string | null | undefined): number | null => {
+          if (!v) return null;
+          const t = Date.parse(v);
+          return Number.isFinite(t) ? t : null;
+        };
+
+        // Find the newest post across the merged set (DB + manual). This slug
+        // is always pinned to the hero regardless of the curated grid order,
+        // so any future post with a newer date automatically takes the slot.
+        let newestSlug: string | null = null;
+        let newestTime = -Infinity;
+        for (const p of merged) {
+          const t = parseDate(p.published_date);
+          if (t !== null && t > newestTime) {
+            newestTime = t;
+            newestSlug = resolveSlug(p);
+          }
+        }
+
+        // Display order: newest post first (hero), then the old FEATURED_SLUG,
+        // then MANUAL_GRID_ORDER, then everything else by published_date desc.
+        // The hero post is excluded from later buckets so it never repeats.
         const orderIndex = (slug: string) => {
+          if (newestSlug && slug === newestSlug) return -2;
           if (slug === FEATURED_SLUG) return -1;
           const i = MANUAL_GRID_ORDER.indexOf(slug);
           return i === -1 ? Number.POSITIVE_INFINITY : i;
@@ -244,8 +267,8 @@ const Blogs = () => {
           const ai = orderIndex(resolveSlug(a));
           const bi = orderIndex(resolveSlug(b));
           if (ai !== bi) return ai - bi;
-          const ad = a.published_date ? Date.parse(a.published_date) : 0;
-          const bd = b.published_date ? Date.parse(b.published_date) : 0;
+          const ad = parseDate(a.published_date) ?? 0;
+          const bd = parseDate(b.published_date) ?? 0;
           return bd - ad;
         });
         setPosts(sorted);
