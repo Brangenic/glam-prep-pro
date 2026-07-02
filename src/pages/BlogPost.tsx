@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import PromoBookingCard from "@/components/PromoBookingCard";
 
 // Extract a YouTube video id from any common URL form. Strips tracking
 // params like ?si=, &t=. Returns { id, kind } or null. kind="shorts" gets
@@ -608,6 +609,15 @@ const BlogPost = () => {
                           const kids = (node?.children ?? []).filter(
                             (c: any) => !(c.type === "text" && /^\s*$/.test(c.value ?? "")),
                           );
+                          // Promo marker: a paragraph that is exactly [[PROMO_BOOKING]]
+                          if (
+                            kids.length === 1 &&
+                            kids[0].type === "text" &&
+                            typeof (kids[0] as any).value === "string" &&
+                            (kids[0] as any).value.trim() === "[[PROMO_BOOKING]]"
+                          ) {
+                            return <PromoBookingCard />;
+                          }
                           if (kids.length === 1 && kids[0].type === "element" && (kids[0] as any).tagName === "a") {
                             const href = ((kids[0] as any).properties?.href ?? "") as string;
                             const text = ((kids[0] as any).children?.[0]?.value ?? "") as string;
