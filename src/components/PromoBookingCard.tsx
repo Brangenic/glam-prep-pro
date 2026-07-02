@@ -17,7 +17,7 @@ const PromoBookingCard = () => {
           height={400}
           loading="lazy"
           decoding="async"
-          className="w-full sm:w-40 md:w-48 aspect-[4/5] object-cover rounded-xl shrink-0"
+          className="!w-full sm:!w-40 md:!w-48 !max-w-full aspect-[4/5] !object-cover !rounded-xl shrink-0 !my-0 !mx-0"
         />
         <div className="flex-1">
           <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground leading-snug mb-2">
@@ -31,7 +31,7 @@ const PromoBookingCard = () => {
             target="_blank"
             rel="noopener noreferrer"
             data-mcp-action="register-event"
-            className="inline-block rounded-full bg-primary px-7 py-3 text-sm sm:text-base font-bold text-white shadow-md transition-transform hover:scale-[1.02] hover:bg-primary/90 no-underline"
+            className="inline-block rounded-full bg-primary px-7 py-3 text-sm sm:text-base font-bold !text-white !no-underline !decoration-transparent whitespace-nowrap shadow-md transition-transform hover:scale-[1.02] hover:bg-primary/90"
           >
             Reserve My Spot
           </a>
