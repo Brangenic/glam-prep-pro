@@ -14,12 +14,19 @@ const escapeAttr = (s: string) =>
 
 function buildHtml(targetAbs: string): string {
   const t = escapeAttr(targetAbs);
+  // Derive a unique title from the target path so redirect stubs never
+  // share the same <title>. Fixes duplicate-title errors in audits.
+  let targetPath = "/";
+  try {
+    targetPath = new URL(targetAbs).pathname || "/";
+  } catch {}
+  const title = `Redirecting to ${escapeAttr(targetPath)} | Carnival Glam Hub`;
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Redirecting…</title>
+    <title>${title}</title>
     <meta name="robots" content="noindex,follow" />
     <link rel="canonical" href="${t}" />
     <meta http-equiv="refresh" content="0; url=${t}" />
