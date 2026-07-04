@@ -291,12 +291,7 @@ const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes];
 // ============================================================
 
 const ORG_ID = `${BASE_URL}/#organization`;
-const PROVIDER = {
-  "@type": "BeautySalon",
-  "@id": ORG_ID,
-  name: "Carnival Glam Hub",
-  url: BASE_URL,
-};
+const PROVIDER = { "@id": ORG_ID };
 const CARIBBEAN_AREAS = [
   "Trinidad and Tobago",
   "Jamaica",
