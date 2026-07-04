@@ -669,22 +669,53 @@ const BlogPost = () => {
                       remarkPlugins={[remarkGfm]}
                       components={{
                         a: ({ node, href, children, ...props }) => {
+                          const rewritten = rewriteHref(href);
+                          // Drop anchors to dead internal placeholder domains
+                          // (solution.mini / happen.mini) — render children only.
+                          if (isDeadLinkHref(rewritten)) {
+                            return <>{children}</>;
+                          }
+                          const finalHref = rewritten;
                           let isAmazon = false;
                           let isGoogleReview = false;
                           try {
-                            if (href) {
-                              const h = new URL(href).hostname.toLowerCase();
+                            if (finalHref) {
+                              const h = new URL(finalHref).hostname.toLowerCase();
                               isAmazon = /(^|\.)amazon\.[a-z.]+$/.test(h);
                               isGoogleReview = h === "g.page" || h.endsWith(".g.page");
                             }
                           } catch {}
+                          // If the anchor's only child is an image with no
+                          // text, derive an aria-label from the image alt or
+                          // destination host so it isn't flagged as "no anchor
+                          // text" by SEO audits.
+                          let derivedAriaLabel: string | undefined;
+                          const kids = (node?.children ?? []) as any[];
+                          const nonWs = kids.filter(
+                            (c) => !(c.type === "text" && /^\s*$/.test(c.value ?? "")),
+                          );
+                          const hasText = nonWs.some(
+                            (c) =>
+                              c.type === "text" && ((c.value ?? "").toString().trim().length > 0),
+                          );
+                          const onlyImage =
+                            !hasText &&
+                            nonWs.length === 1 &&
+                            nonWs[0].type === "element" &&
+                            nonWs[0].tagName === "img";
+                          if (onlyImage) {
+                            const alt = (nonWs[0].properties?.alt ?? "").toString().trim();
+                            derivedAriaLabel =
+                              alt || labelForHost(finalHref ?? "") || undefined;
+                          }
                           if (isGoogleReview) {
                             return (
                               <a
-                                href={href}
+                                href={finalHref}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="!no-underline inline-flex items-center gap-2 rounded-full bg-[#1a73e8] hover:bg-[#1765c9] !text-white px-5 py-2.5 font-semibold shadow-sm transition-colors"
+                                aria-label={derivedAriaLabel}
                                 {...props}
                               >
                                 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
@@ -697,10 +728,11 @@ const BlogPost = () => {
                           if (isAmazon) {
                             return (
                               <a
-                                href={href}
+                                href={finalHref}
                                 target="_blank"
                                 rel="noopener noreferrer sponsored"
                                 className="!text-[#FF9900] !decoration-[#FF9900] font-bold underline underline-offset-2"
+                                aria-label={derivedAriaLabel}
                                 {...props}
                               >
                                 {children}
@@ -708,7 +740,7 @@ const BlogPost = () => {
                             );
                           }
                           return (
-                            <a href={href} {...props}>
+                            <a href={finalHref} aria-label={derivedAriaLabel} {...props}>
                               {children}
                             </a>
                           );
