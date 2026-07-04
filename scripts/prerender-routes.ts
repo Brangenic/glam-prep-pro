@@ -115,7 +115,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/jamaica",
     title:
-      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     description:
       "Book sweat-proof Jamaica Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
@@ -123,7 +123,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/saint-lucia",
     title:
-      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
       "Book sweat-proof Saint Lucia Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
@@ -131,7 +131,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/antigua",
     title:
-      "Antigua Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
       "Book sweat-proof Antigua Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
@@ -139,7 +139,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/grenada",
     title:
-      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
       "Book sweat-proof Grenada Spicemas 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
@@ -147,7 +147,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/barbados",
     title:
-      "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
       "Book sweat-proof Barbados Crop Over 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
@@ -155,7 +155,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/miami",
     title:
-      "Miami Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Miami Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
       "Book sweat-proof Miami Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
@@ -211,7 +211,7 @@ const staticRoutes: RouteMeta[] = [
   },
   {
     path: "/services/carnival-photoshoot",
-    title: "Carnival Photoshoot | Professional Costume Photography | Carnival Glam Hub",
+    title: "Carnival Photoshoot | Costume Photography | Glam Hub",
     description:
       "Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Trinidad, Jamaica, Barbados, Grenada, Antigua.",
     ogImage: `${BASE_URL}/images/services/photoshoot-hero.jpg`,
@@ -225,7 +225,7 @@ const staticRoutes: RouteMeta[] = [
   },
   {
     path: "/services/carnival-shuttle",
-    title: "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub",
+    title: "Carnival Shuttle Service | Trinidad Transport | Glam Hub",
     description:
       "Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.",
     ogImage: `${BASE_URL}/images/services/carnival-shuttle-og.jpg`,
@@ -240,7 +240,7 @@ const staticRoutes: RouteMeta[] = [
   {
     path: "/faq",
     title:
-      "Carnival Glam Hub FAQ | Carnival Makeup, Hair, Shuttle and Booking Answers",
+      "Carnival Glam Hub FAQ | Booking, Makeup & Shuttle Answers",
     description:
       "Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.",
   },

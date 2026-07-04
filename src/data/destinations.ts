@@ -37,7 +37,7 @@ export const destinations: Destination[] = [
       "Lash application and body paint",
     ],
     metaTitle:
-      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-proof Jamaica Carnival 2027 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
@@ -59,7 +59,7 @@ export const destinations: Destination[] = [
       "Eye gems & festival lashes",
     ],
     metaTitle:
-      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-proof Saint Lucia Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
@@ -81,7 +81,7 @@ export const destinations: Destination[] = [
       "Body paint and shimmer",
     ],
     metaTitle:
-      "Antigua Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-proof Antigua Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
@@ -103,7 +103,7 @@ export const destinations: Destination[] = [
       "Festival gems & lashes",
     ],
     metaTitle:
-      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-proof Grenada Spicemas 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
@@ -125,7 +125,7 @@ export const destinations: Destination[] = [
       "Gems, lashes and shimmer",
     ],
     metaTitle:
-      "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-proof Barbados Crop Over 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
@@ -147,7 +147,7 @@ export const destinations: Destination[] = [
       "Gems, lashes and body paint",
     ],
     metaTitle:
-      "Miami Carnival Makeup 2026 | Sweat-Proof Glam, Hair & Photos | Carnival Glam Hub",
+      "Miami Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-proof Miami Carnival 2026 makeup, hair, costume dressing, photoshoot and shuttle in one location. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
