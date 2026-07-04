@@ -14,6 +14,63 @@ import { buildFaqSchema } from "../src/lib/faqSchema";
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
 
+// SEO title overrides (slug → final <title> tag). When present, this
+// value is used verbatim (no " | Carnival Glam Hub Blog" suffix). Kept
+// in sync with SLUG_META_TITLE_OVERRIDES / buildTitleForSlug in
+// src/pages/BlogPost.tsx so static and runtime titles match.
+export const SEO_TITLE_OVERRIDES: Record<string, string> = {
+  "trinidad-carnival-2027-first-time-masquerader-guide":
+    "Trinidad Carnival 2027: First-Time Masquerader Guide",
+  "rihannas-carnival-looks-over-the-years-50-photos":
+    "Rihanna's Carnival Looks Over the Years: 50 Photos",
+  "jab-jab-grenada-2026-guide":
+    "Jab Jab Grenada 2026: What to Wear, Bring & How to Clean Up",
+  "chloe-baileys-saint-lucia-carnival-costume-breaks-the-internet":
+    "Chloe Bailey's Saint Lucia Carnival Costume Breaks the Internet",
+  "behind-the-scenes-with-hoppy-how-stink-dutty-became-a-global-phenomenon":
+    "Behind the Scenes with Hoppy: Stink & Dutty Goes Global",
+  "carnival-ponytails-bald-spots-what-no-one-tells-you":
+    "Carnival Ponytails & Bald Spots: Road Day Hair Truths",
+  "serenas-trinidad-carnival-2025-journey-an-inspiration-for-all-masqueraders":
+    "Serena's Trinidad Carnival 2025 Journey",
+  "what-shoes-to-wear-for-trinidad-carnival-monday-tuesday-no-not-heels":
+    "What Shoes to Wear for Trinidad Carnival (No, Not Heels)",
+  "winnie-harlow-turns-heads-at-jamaica-carnival-a-genxs-glam-hub-experience":
+    "Winnie Harlow Turns Heads at Jamaica Carnival",
+  "epic-welcomes-carnival-glam-hub-aboard-for-trinidad-carnival-2026":
+    "EPIC Cruise x Carnival Glam Hub: Trinidad Carnival",
+  "epic-carnival-cruise-partners-with-carnival-glam-hub-for-trinidad-carnival-2026":
+    "EPIC Cruise Partners with Carnival Glam Hub",
+  "your-no-nonsense-jab-jab-survival-kit-straight-from-someone-whos-been-baptized-in-oil":
+    "Your No-Nonsense Jab Jab Survival Kit",
+  "from-brushes-to-baddie-dolls-glam-hub-launches-first-ever-mondaywear-store":
+    "Glam Hub Launches Its First-Ever Mondaywear Store",
+  "chloe-bailey-just-broke-the-internet-again-at-saint-lucia-carnival-2025":
+    "Chloe Bailey Breaks the Internet at Saint Lucia Carnival 2025",
+  "bianca-manzano-on-hibiscus-bloom-designing-for-iconic-mas-and-why-tobago-carnival-matters":
+    "Bianca Manzano on Hibiscus Bloom & Tobago Carnival",
+  "chatgpt-picks-the-top-5-best-caribbean-carnivals":
+    "ChatGPT Picks the Top 5 Best Caribbean Carnivals",
+  "your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know":
+    "Jamaica Carnival 2025 Guide: Everything You Need to Know",
+  "trinidad-carnival-vs-grenada-carnival":
+    "Trinidad Carnival vs Grenada Carnival: Which One to Do?",
+  "is-trinidad-carnival-safe": "Is Trinidad Carnival Safe? The Real Talk",
+  "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival":
+    "Jab Jab 101: What to Know About Grenada Spicemas",
+};
+
+const SUFFIX = " | Carnival Glam Hub Blog";
+
+export function buildBlogTitle(slug: string, postTitle: string): string {
+  const override = SEO_TITLE_OVERRIDES[slug];
+  if (override) return override;
+  const withSuffix = `${postTitle}${SUFFIX}`;
+  if (withSuffix.length <= 70) return withSuffix;
+  if (postTitle.length <= 70) return postTitle;
+  return postTitle;
+}
+
 const SUPABASE_URL =
   process.env.VITE_SUPABASE_URL ?? "https://bvrejdrsrmvdknzoskxi.supabase.co";
 const SUPABASE_ANON_KEY =
@@ -227,7 +284,7 @@ const escapeHtml = (s: string) =>
 
 function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
   const url = `${BASE_URL}/blogs/${post.slug}`;
-  const title = `${post.title} | Carnival Glam Hub Blog`;
+  const title = buildBlogTitle(post.slug, post.title);
   const desc = post.description;
   const image = img.url;
 
