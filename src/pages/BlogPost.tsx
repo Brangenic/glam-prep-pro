@@ -792,7 +792,7 @@ const BlogPost = () => {
                       }}
                     >
                       {(() => {
-                        const base = cleanMarkdown(post.content);
+                        const base = sanitizeLinksInMarkdown(cleanMarkdown(post.content));
                         const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
                         return slugCleaner ? slugCleaner(base) : base;
                       })()}
