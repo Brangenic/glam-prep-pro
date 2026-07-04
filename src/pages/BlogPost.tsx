@@ -136,7 +136,6 @@ import RelatedGuides from "@/components/RelatedGuides";
 import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
 import { buildFaqSchema } from "@/lib/faqSchema";
-import { useNoindex } from "@/hooks/useNoindex";
 
 // Slug rewrite map: some old post bodies link to slugs that don't exist.
 // Rewrite the href at render time to the real slug so we don't emit 404s.
