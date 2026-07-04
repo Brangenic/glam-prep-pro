@@ -137,6 +137,108 @@ import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
 import { buildFaqSchema } from "@/lib/faqSchema";
 
+// Slug rewrite map: some old post bodies link to slugs that don't exist.
+// Rewrite the href at render time to the real slug so we don't emit 404s.
+const SLUG_LINK_REWRITES: Record<string, string> = {
+  "/blogs/carnival-glam-hub-reviews":
+    "/blogs/what-people-say-about-carnival-glam-hub",
+  "/blogs/barbados-crop-over-2026-what-to-know-before-you-go":
+    "/blogs/barbados-crop-over-2025-what-to-know-before-you-go",
+  "/blogs/saint-lucia-carnival-2026-travel-tips-for-international-visitors":
+    "/blogs/saint-lucia-carnival-2025-travel-tips-for-international-visitors",
+};
+
+const HOST_LABELS: Array<[RegExp, string]> = [
+  [/(?:^|\.)pinterest\.[a-z.]+$/i, "View on Pinterest"],
+  [/(?:^|\.)instagram\.com$/i, "View on Instagram"],
+  [/(?:^|\.)tiktok\.com$/i, "View on TikTok"],
+  [/(?:^|\.)youtube\.com$|(?:^|\.)youtu\.be$/i, "Watch on YouTube"],
+  [/(?:^|\.)facebook\.com$/i, "View on Facebook"],
+  [/carnivalglamhub\.masos\.app$/i, "Book on MasOS"],
+  [/(?:^|\.)amazon\.[a-z.]+$/i, "View on Amazon"],
+];
+
+function labelForHost(href: string): string | null {
+  try {
+    const host = new URL(href).hostname.toLowerCase();
+    for (const [re, label] of HOST_LABELS) if (re.test(host)) return label;
+    return `Visit ${host.replace(/^www\./, "")}`;
+  } catch {
+    return null;
+  }
+}
+
+// Sanitise link hrefs found in post bodies before render:
+//   - HTTP → HTTPS on our own domain
+//   - .club → .com
+//   - Rewrite three phantom blog slugs to their real slugs
+// Also drop anchors pointing at http://solution.mini / http://happen.mini
+// while preserving their inner content.
+function sanitizeLinksInMarkdown(md: string): string {
+  let out = md;
+  // http(s)://[www.]carnivalglamhub.com/... → https://www.carnivalglamhub.com/...
+  out = out.replace(
+    /https?:\/\/(?:www\.)?carnivalglamhub\.com/gi,
+    "https://www.carnivalglamhub.com",
+  );
+  // *.carnivalglamhub.club → carnivalglamhub.com
+  out = out.replace(
+    /https?:\/\/(?:www\.)?carnivalglamhub\.club/gi,
+    "https://www.carnivalglamhub.com",
+  );
+  // Phantom slugs
+  for (const [bad, good] of Object.entries(SLUG_LINK_REWRITES)) {
+    const abs = `https://www.carnivalglamhub.com${bad}`;
+    out = out.split(abs).join(`https://www.carnivalglamhub.com${good}`);
+    // Bare relative form inside markdown links: ](/blogs/...)
+    out = out.split(`](${bad})`).join(`](${good})`);
+    out = out.split(`](${bad}/)`).join(`](${good})`);
+  }
+  // Drop anchors pointing at solution.mini / happen.mini, keep inner text/image.
+  // Matches markdown [inner](http://solution.mini/...) or (http://happen.mini/...)
+  out = out.replace(
+    /\[((?:[^\[\]]|\[[^\]]*\])*?)\]\(https?:\/\/(?:solution|happen)\.mini[^)]*\)/g,
+    "$1",
+  );
+  return out;
+}
+
+function isDeadLinkHref(href: string | undefined | null): boolean {
+  if (!href) return false;
+  try {
+    const h = new URL(href).hostname.toLowerCase();
+    return h === "solution.mini" || h === "happen.mini";
+  } catch {
+    return false;
+  }
+}
+
+function rewriteHref(href: string | undefined): string | undefined {
+  if (!href) return href;
+  let out = href;
+  out = out.replace(
+    /^https?:\/\/(?:www\.)?carnivalglamhub\.com/i,
+    "https://www.carnivalglamhub.com",
+  );
+  out = out.replace(
+    /^https?:\/\/(?:www\.)?carnivalglamhub\.club/i,
+    "https://www.carnivalglamhub.com",
+  );
+  for (const [bad, good] of Object.entries(SLUG_LINK_REWRITES)) {
+    if (
+      out === bad ||
+      out === `${bad}/` ||
+      out === `https://www.carnivalglamhub.com${bad}` ||
+      out === `https://www.carnivalglamhub.com${bad}/`
+    ) {
+      return out.startsWith("http")
+        ? `https://www.carnivalglamhub.com${good}`
+        : good;
+    }
+  }
+  return out;
+}
+
 // Bundled hero overrides: replace unreliable storage-bucket URLs with
 // reliable bundled WebP imports for specific slugs.
 const SLUG_HERO_OVERRIDES: Record<string, string> = {
