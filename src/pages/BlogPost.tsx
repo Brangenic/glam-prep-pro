@@ -436,7 +436,14 @@ const BlogPost = () => {
   useEffect(() => {
     if (post?.title) {
       const override = slug ? SLUG_META_TITLE_OVERRIDES[slug] : undefined;
-      document.title = override ?? `${post.title} | Carnival Glam Hub Blog`;
+      if (override) {
+        document.title = override;
+      } else {
+        const suffix = " | Carnival Glam Hub Blog";
+        const withSuffix = `${post.title}${suffix}`;
+        document.title =
+          withSuffix.length <= 70 ? withSuffix : post.title;
+      }
     }
     const metaDesc = document.querySelector('meta[name="description"]');
     if (post?.meta_description && metaDesc) {
@@ -448,6 +455,7 @@ const BlogPost = () => {
     let robotsTag: HTMLMetaElement | null = null;
     let canonicalTag: HTMLLinkElement | null = null;
     if (!loading && !post) {
+      document.title = "Post not found | Carnival Glam Hub";
       robotsTag = document.createElement("meta");
       robotsTag.setAttribute("name", "robots");
       robotsTag.setAttribute("content", "noindex, nofollow");
