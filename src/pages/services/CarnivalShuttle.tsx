@@ -7,7 +7,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE =
-  "Carnival Shuttle Service | Trinidad Carnival Transport | Carnival Glam Hub";
+  "Carnival Shuttle Service | Trinidad Transport | Glam Hub";
 const PAGE_DESCRIPTION =
   "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point, included with any Carnival Glam Hub service. Available in select territories and confirmed when you book.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-shuttle";

@@ -5,7 +5,7 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "Carnival Glam Hub FAQ | Carnival Makeup, Hair, Shuttle and Booking Answers";
+  "Carnival Glam Hub FAQ | Booking, Makeup & Shuttle Answers";
 const PAGE_DESCRIPTION =
   "Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.";
 const CANONICAL = "https://www.carnivalglamhub.com/faq";

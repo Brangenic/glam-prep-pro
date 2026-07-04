@@ -1,10 +1,6 @@
-const WHATSAPP_MOBILE_URL = "https://wa.me/18765090997?text=Hi%20Carnival%20Glam%20Hub";
-const WHATSAPP_DESKTOP_URL = "https://web.whatsapp.com/send?phone=18765090997&text=Hi%20Carnival%20Glam%20Hub";
+const WHATSAPP_URL = "https://wa.me/18765090997?text=Hi%20Carnival%20Glam%20Hub";
 
-const getWhatsAppUrl = () => {
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  return isMobile ? WHATSAPP_MOBILE_URL : WHATSAPP_DESKTOP_URL;
-};
+const getWhatsAppUrl = () => WHATSAPP_URL;
 
 const openWhatsApp = (event: React.MouseEvent<HTMLAnchorElement>) => {
   event.preventDefault();
@@ -28,9 +24,11 @@ const openWhatsApp = (event: React.MouseEvent<HTMLAnchorElement>) => {
 
 const FloatingWhatsApp = () => (
   <a
-    href={WHATSAPP_DESKTOP_URL}
+    href={WHATSAPP_URL}
     onClick={openWhatsApp}
     aria-label="Chat with Carnival Glam Hub on WhatsApp"
+    rel="nofollow noopener"
+    target="_blank"
     className="fixed right-4 top-1/2 z-50 -translate-y-1/2 rounded-full border p-3 shadow-lg backdrop-blur-md transition-all duration-300 lg:right-6 hover:scale-105"
     style={{
       backgroundColor: "hsl(var(--whatsapp))",

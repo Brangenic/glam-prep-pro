@@ -7,7 +7,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE =
-  "Carnival Photoshoot | Professional Costume Photography | Carnival Glam Hub";
+  "Carnival Photoshoot | Costume Photography | Glam Hub";
 const PAGE_DESCRIPTION =
   "Professional Carnival photoshoot shot outdoors in the garden or by the water, with 3 professionally edited photos delivered in 36 to 48 hours. Trinidad, Jamaica, Barbados, Grenada, Antigua.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-photoshoot";
