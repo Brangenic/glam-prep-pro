@@ -126,6 +126,35 @@ const cleanMarkdown = (md: string): string => {
   }
   return kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 };
+
+// Merge consecutive standalone CTA button links (masos.app booking +
+// wa.me WhatsApp) into a single paragraph so the renderer can lay them
+// out side by side instead of stacking vertically.
+function groupCtaButtons(md: string): string {
+  const ctaLineRe =
+    /^\s*\[[^\]]+\]\(\s*https?:\/\/(?:(?:[^/)\s]*\.)?carnivalglamhub\.masos\.app|(?:[^/)\s]*\.)?wa\.me)[^)\s]*\)\s*$/i;
+  const lines = md.split(/\r?\n/);
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const cur = lines[i];
+    if (ctaLineRe.test(cur)) {
+      const group: string[] = [cur.trim()];
+      let j = i + 1;
+      while (j < lines.length) {
+        if (lines[j].trim() === "") { j++; continue; }
+        if (ctaLineRe.test(lines[j])) { group.push(lines[j].trim()); j++; continue; }
+        break;
+      }
+      if (group.length > 1) {
+        out.push(group.join(" "));
+        i = j - 1;
+        continue;
+      }
+    }
+    out.push(cur);
+  }
+  return out.join("\n");
+}
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -666,6 +695,9 @@ const BlogPost = () => {
                     prose-li:font-body prose-li:text-foreground/80 prose-li:leading-[1.8]
                     prose-ul:my-6 prose-ol:my-6
                     prose-hr:border-border prose-hr:my-10
+                    [&_table]:my-8 [&_table]:w-full [&_table]:border-collapse [&_table]:border [&_table]:border-border
+                    [&_th]:border [&_th]:border-border [&_th]:bg-muted [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold
+                    [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:align-top
                   ">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
@@ -762,6 +794,73 @@ const BlogPost = () => {
                           ) {
                             return <PromoBookingCard />;
                           }
+                          // Helper: render a CTA anchor as a styled button when
+                          // the href matches the booking or WhatsApp CTA hosts.
+                          const renderCtaButton = (href: string, text: string, key?: string | number) => {
+                            try {
+                              const u = new URL(href);
+                              if (u.hostname.endsWith("carnivalglamhub.masos.app")) {
+                                return (
+                                  <a
+                                    key={key}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block rounded-full bg-primary px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-primary/90 no-underline"
+                                  >
+                                    {text || "Book Now"}
+                                  </a>
+                                );
+                              }
+                              if (u.hostname === "wa.me" || u.hostname.endsWith(".wa.me")) {
+                                return (
+                                  <a
+                                    key={key}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-8 py-4 text-base font-bold !text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-[#1ebe5b] no-underline"
+                                  >
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                      <path d="M20.52 3.48A11.94 11.94 0 0012.02 0C5.4 0 .04 5.36.04 11.98c0 2.11.55 4.17 1.6 5.99L0 24l6.2-1.62a11.96 11.96 0 005.82 1.49h.01c6.62 0 11.98-5.36 11.98-11.98 0-3.2-1.25-6.21-3.49-8.41zM12.03 21.3h-.01a9.3 9.3 0 01-4.74-1.3l-.34-.2-3.68.96.98-3.59-.22-.37a9.32 9.32 0 01-1.42-4.92c0-5.15 4.19-9.34 9.35-9.34 2.5 0 4.85.97 6.62 2.74a9.29 9.29 0 012.74 6.62c0 5.16-4.19 9.4-9.28 9.4zm5.36-6.99c-.29-.15-1.74-.86-2.01-.96-.27-.1-.47-.15-.66.15-.2.29-.76.96-.93 1.16-.17.19-.34.22-.63.07-.29-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.6-.91-2.19-.24-.58-.48-.5-.66-.51h-.56c-.19 0-.51.07-.78.36-.27.29-1.02.99-1.02 2.42s1.04 2.8 1.19 2.99c.15.2 2.06 3.15 5 4.42.7.3 1.25.48 1.68.62.71.23 1.35.19 1.86.12.57-.08 1.74-.71 1.98-1.4.24-.68.24-1.27.17-1.4-.07-.12-.27-.19-.56-.34z"/>
+                                    </svg>
+                                    {text || "WhatsApp Us"}
+                                  </a>
+                                );
+                              }
+                            } catch {}
+                            return null;
+                          };
+                          // Paragraph containing only CTA anchor(s) (with optional
+                          // whitespace) → render as a centered horizontal button row.
+                          const anchorKids = kids.filter(
+                            (c: any) => c.type === "element" && c.tagName === "a",
+                          );
+                          const onlyAnchors =
+                            anchorKids.length >= 1 &&
+                            kids.every(
+                              (c: any) =>
+                                (c.type === "element" && c.tagName === "a") ||
+                                (c.type === "text" && /^\s*$/.test(c.value ?? "")),
+                            );
+                          if (onlyAnchors) {
+                            const buttons: React.ReactNode[] = [];
+                            for (let i = 0; i < anchorKids.length; i++) {
+                              const a: any = anchorKids[i];
+                              const href = (a.properties?.href ?? "") as string;
+                              const text = (a.children?.[0]?.value ?? "") as string;
+                              const btn = renderCtaButton(href, text, i);
+                              if (!btn) { buttons.length = 0; break; }
+                              buttons.push(btn);
+                            }
+                            if (buttons.length === anchorKids.length && buttons.length > 0) {
+                              return (
+                                <div className="not-prose my-8 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
+                                  {buttons}
+                                </div>
+                              );
+                            }
+                          }
                           if (kids.length === 1 && kids[0].type === "element" && (kids[0] as any).tagName === "a") {
                             const href = ((kids[0] as any).properties?.href ?? "") as string;
                             const text = ((kids[0] as any).children?.[0]?.value ?? "") as string;
@@ -770,48 +869,13 @@ const BlogPost = () => {
                               const yt = parseYouTube(href);
                               if (yt) return <YouTubeEmbed id={yt.id} kind={yt.kind} />;
                             }
-                            // Standalone booking link → render as prominent CTA button.
-                            try {
-                              const u = new URL(href);
-                              if (u.hostname.endsWith("carnivalglamhub.masos.app")) {
-                                return (
-                                  <p className="my-8 flex justify-center">
-                                    <a
-                                      href={href}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-block rounded-full bg-primary px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-primary/90 no-underline"
-                                    >
-                                      {text || "Book Now"}
-                                    </a>
-                                  </p>
-                                );
-                              }
-                              if (u.hostname === "wa.me" || u.hostname.endsWith(".wa.me")) {
-                                return (
-                                  <p className="my-8 flex justify-center">
-                                    <a
-                                      href={href}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-8 py-4 text-base font-bold !text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-[#1ebe5b] no-underline"
-                                    >
-                                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                        <path d="M20.52 3.48A11.94 11.94 0 0012.02 0C5.4 0 .04 5.36.04 11.98c0 2.11.55 4.17 1.6 5.99L0 24l6.2-1.62a11.96 11.96 0 005.82 1.49h.01c6.62 0 11.98-5.36 11.98-11.98 0-3.2-1.25-6.21-3.49-8.41zM12.03 21.3h-.01a9.3 9.3 0 01-4.74-1.3l-.34-.2-3.68.96.98-3.59-.22-.37a9.32 9.32 0 01-1.42-4.92c0-5.15 4.19-9.34 9.35-9.34 2.5 0 4.85.97 6.62 2.74a9.29 9.29 0 012.74 6.62c0 5.16-4.19 9.4-9.28 9.4zm5.36-6.99c-.29-.15-1.74-.86-2.01-.96-.27-.1-.47-.15-.66.15-.2.29-.76.96-.93 1.16-.17.19-.34.22-.63.07-.29-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.6-.91-2.19-.24-.58-.48-.5-.66-.51h-.56c-.19 0-.51.07-.78.36-.27.29-1.02.99-1.02 2.42s1.04 2.8 1.19 2.99c.15.2 2.06 3.15 5 4.42.7.3 1.25.48 1.68.62.71.23 1.35.19 1.86.12.57-.08 1.74-.71 1.98-1.4.24-.68.24-1.27.17-1.4-.07-.12-.27-.19-.56-.34z"/>
-                                      </svg>
-                                      {text || "WhatsApp Us"}
-                                    </a>
-                                  </p>
-                                );
-                              }
-                            } catch {}
                           }
                           return <p {...props}>{children}</p>;
                         },
                       }}
                     >
                       {(() => {
-                        const base = sanitizeLinksInMarkdown(cleanMarkdown(post.content));
+                        const base = groupCtaButtons(sanitizeLinksInMarkdown(cleanMarkdown(post.content)));
                         const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
                         return slugCleaner ? slugCleaner(base) : base;
                       })()}
