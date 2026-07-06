@@ -695,6 +695,9 @@ const BlogPost = () => {
                     prose-li:font-body prose-li:text-foreground/80 prose-li:leading-[1.8]
                     prose-ul:my-6 prose-ol:my-6
                     prose-hr:border-border prose-hr:my-10
+                    [&_table]:my-8 [&_table]:w-full [&_table]:border-collapse [&_table]:border [&_table]:border-border
+                    [&_th]:border [&_th]:border-border [&_th]:bg-muted [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold
+                    [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:align-top
                   ">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
