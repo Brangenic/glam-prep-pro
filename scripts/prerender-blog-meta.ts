@@ -19,6 +19,8 @@ const DIST = resolve("dist");
 // in sync with SLUG_META_TITLE_OVERRIDES / buildTitleForSlug in
 // src/pages/BlogPost.tsx so static and runtime titles match.
 export const SEO_TITLE_OVERRIDES: Record<string, string> = {
+  "tribe-carnival-2027-elysia-band-launch":
+    "TRIBE Carnival 2027 Elysia Band Launch: Full Guide & Trends",
   "trinidad-carnival-2027-first-time-masquerader-guide":
     "Trinidad Carnival 2027: First-Time Masquerader Guide",
   "rihannas-carnival-looks-over-the-years-50-photos":
