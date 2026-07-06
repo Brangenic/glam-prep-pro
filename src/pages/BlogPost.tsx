@@ -875,7 +875,7 @@ const BlogPost = () => {
                       }}
                     >
                       {(() => {
-                        const base = sanitizeLinksInMarkdown(cleanMarkdown(post.content));
+                        const base = groupCtaButtons(sanitizeLinksInMarkdown(cleanMarkdown(post.content)));
                         const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
                         return slugCleaner ? slugCleaner(base) : base;
                       })()}
