@@ -126,6 +126,35 @@ const cleanMarkdown = (md: string): string => {
   }
   return kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 };
+
+// Merge consecutive standalone CTA button links (masos.app booking +
+// wa.me WhatsApp) into a single paragraph so the renderer can lay them
+// out side by side instead of stacking vertically.
+function groupCtaButtons(md: string): string {
+  const ctaLineRe =
+    /^\s*\[[^\]]+\]\(\s*https?:\/\/(?:(?:[^/)\s]*\.)?carnivalglamhub\.masos\.app|(?:[^/)\s]*\.)?wa\.me)[^)\s]*\)\s*$/i;
+  const lines = md.split(/\r?\n/);
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const cur = lines[i];
+    if (ctaLineRe.test(cur)) {
+      const group: string[] = [cur.trim()];
+      let j = i + 1;
+      while (j < lines.length) {
+        if (lines[j].trim() === "") { j++; continue; }
+        if (ctaLineRe.test(lines[j])) { group.push(lines[j].trim()); j++; continue; }
+        break;
+      }
+      if (group.length > 1) {
+        out.push(group.join(" "));
+        i = j - 1;
+        continue;
+      }
+    }
+    out.push(cur);
+  }
+  return out.join("\n");
+}
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
