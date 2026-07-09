@@ -28,6 +28,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 
 const DIST = resolve("dist");
+const DEST_SRC = resolve("src/data/destinations.ts");
 
 // ---------------------------------------------------------------
 // Route content authors
@@ -48,159 +49,139 @@ function wrap(c: Content): string {
 
 const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`;
 
-// Destinations — mirrors src/data/destinations.ts (name, date, longDescription, highlights).
-// Duplicated here (not imported) so this script has no dependency on
-// the app's @/ alias or asset imports.
-const DESTINATIONS: Array<{
+// ---------------------------------------------------------------
+// Destinations — parsed at build time from src/data/destinations.ts
+// so the injected copy always matches the app's real data. We cannot
+// import that file here (it uses the @/ alias and imports image
+// assets), so we regex-parse its source text and extract only the
+// plain string fields we need: slug, name, date, longDescription,
+// highlights. If a field is missing, we omit it — never invent one.
+// ---------------------------------------------------------------
+
+type ParsedDest = {
   slug: string;
   name: string;
-  date: string;
-  long: string;
+  date?: string;
+  longDescription?: string;
   highlights: string[];
-}> = [
-  {
-    slug: "jamaica",
-    name: "Jamaica Carnival",
-    date: "12 April 2026",
-    long:
-      "Our Jamaica Carnival glam hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-proof carnival looks built for the Jamaica heat.",
-    highlights: [
-      "Full carnival makeup with sweat-proof finish",
-      "Gem & feather application",
-      "Hair styling and braiding",
-      "Lash application and body paint",
-    ],
-  },
-  {
-    slug: "saint-lucia",
-    name: "Saint Lucia Carnival",
-    date: "20–21 July 2026",
-    long:
-      "Our Saint Lucia Carnival glam hub is set up across the island with packages for road march, j'ouvert and fete looks. Get matched with a senior artist for your full carnival glam experience.",
-    highlights: [
-      "Road march full glam",
-      "J'ouvert paint and shimmer",
-      "Festival hair styling",
-      "Eye gems & festival lashes",
-    ],
-  },
-  {
-    slug: "antigua",
-    name: "Antigua Carnival",
-    date: "4 August 2026",
-    long:
-      "Antigua Carnival is one of the Caribbean's most colorful festivals — and our glam hub keeps you camera-ready from j'ouvert to last lap. Premium makeup, hair, gems and body art available across the island.",
-    highlights: [
-      "Full carnival makeup",
-      "Gem & rhinestone designs",
-      "Hair braids and styling",
-      "Body paint and shimmer",
-    ],
-  },
-  {
-    slug: "grenada",
-    name: "Grenada Spicemas",
-    date: "10–11 August 2026",
-    long:
-      "Spicemas is unmatched — and our Grenada Carnival glam hub matches the energy. Full makeup, hair, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists.",
-    highlights: [
-      "Spicemas full glam",
-      "J'ouvert paint and oil packages",
-      "Hair styling and braiding",
-      "Festival gems & lashes",
-    ],
-  },
-  {
-    slug: "barbados",
-    name: "Barbados Crop Over",
-    date: "3 August 2026",
-    long:
-      "Crop Over is the Caribbean's biggest summer carnival — and our Barbados glam hub is fully booked every season for a reason. Get the full road experience with sweat-proof makeup, festival hair, gems and j'ouvert paint by our top artists.",
-    highlights: [
-      "Grand Kadooment full glam",
-      "Foreday Morning paint",
-      "Festival hair & braids",
-      "Gems, lashes and shimmer",
-    ],
-  },
-  {
-    slug: "miami",
-    name: "Miami Carnival",
-    date: "11 October 2026",
-    long:
-      "Our Miami Carnival glam hub serves the entire Miami Carnival season — from pre-carnival fetes through Columbus Day weekend. Full makeup, hair, gems and body art by our pro carnival team.",
-    highlights: [
-      "Full road glam packages",
-      "Fete-ready makeup",
-      "Festival hair styling",
-      "Gems, lashes and body paint",
-    ],
-  },
-  {
-    slug: "toronto",
-    name: "Toronto Caribana",
-    date: "1 August 2026",
-    long:
-      "Caribana is North America's biggest Caribbean carnival, and our Toronto glam hub is on the road with you. Full makeup, hair, festival gems and body art for the Grand Parade and weekend fetes.",
-    highlights: [
-      "Grand Parade full glam",
-      "Fete makeup packages",
-      "Festival hair & braids",
-      "Gems, lashes and shimmer",
-    ],
-  },
-  {
-    slug: "trinidad",
-    name: "Trinidad Carnival",
-    date: "Monday 8 & Tuesday 9 February 2027",
-    long:
-      "Trinidad Carnival hair, makeup and photos from the Hilton Hotel, two minutes from the Savannah. Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Bookings are open — book now for Carnival Monday 8 February and Carnival Tuesday 9 February 2027.",
-    highlights: [
-      "Hair, makeup and photos from the Hilton Hotel",
-      "Two minutes from the Savannah",
-      "Shuttle service from the Hilton",
-      "Getting dressed assistance",
-      "Refreshments and snacks included",
-      "Carnival Monday 8 & Tuesday 9 February 2027",
-    ],
-  },
-  {
-    slug: "guyana",
-    name: "Guyana Carnival",
-    date: "May 2026",
-    long:
-      "Guyana Carnival brings Mashramani energy to the road — and our Guyana glam hub keeps you flawless from fete to road march. Full makeup, hair, gems, lashes and body art by our Caribbean-trained carnival artists.",
-    highlights: [
-      "Full road carnival glam",
-      "Festival hair styling",
-      "Gem & rhinestone application",
-      "Body paint and shimmer",
-    ],
-  },
-  {
-    slug: "epic-cruise",
-    name: "Epic Cruise — Trinidad Carnival",
-    date: "8–9 February 2027",
-    long:
-      "Glam Hub at sea! Carnival Glam Hub is aboard the EPIC Carnival Experience — the luxury floating hotel that sails masqueraders from San Juan, Puerto Rico straight to Trinidad Carnival. Book your makeup, hair, photoshoot, and get-dressed services exclusively for EPIC cruise masqueraders.",
-    highlights: [
-      "Glam hub aboard the EPIC cruise ship",
-      "Carnival Monday & Tuesday coverage",
-      "Full makeup, hair & photoshoot",
-      "Get Dressed assistance included",
-    ],
-  },
-];
+};
 
-function destinationBody(d: (typeof DESTINATIONS)[number]): string {
-  const hl = d.highlights.map((h) => `<li>${h}</li>`).join("");
-  return `<p><strong>${d.name}</strong> — ${d.date}</p>
-<p>${d.long}</p>
-<h2>What's included</h2>
-<ul>${hl}</ul>
-<h2>Book ${d.name} glam</h2>
-<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Sweat-resistant, road-ready makeup, hair, costume dressing, photoshoot and shuttle from one lounge.</p>
-${CTA}`;
+function stripEscapes(s: string): string {
+  // Only literal escapes that legally appear in TS string literals here.
+  return s
+    .replace(/\\n/g, " ")
+    .replace(/\\'/g, "'")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, "\\")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractString(block: string, key: string): string | undefined {
+  // Matches:  key: "value"  or  key:\n    "value"
+  // Value cannot contain an unescaped double quote.
+  const re = new RegExp(
+    `\\b${key}\\s*:\\s*"((?:\\\\.|[^"\\\\])*)"`,
+    "m",
+  );
+  const m = block.match(re);
+  return m ? stripEscapes(m[1]) : undefined;
+}
+
+function extractStringArray(block: string, key: string): string[] {
+  const re = new RegExp(`\\b${key}\\s*:\\s*\\[([\\s\\S]*?)\\]`, "m");
+  const m = block.match(re);
+  if (!m) return [];
+  const inner = m[1];
+  const items: string[] = [];
+  const itemRe = /"((?:\\.|[^"\\])*)"/g;
+  let mm: RegExpExecArray | null;
+  while ((mm = itemRe.exec(inner)) !== null) {
+    items.push(stripEscapes(mm[1]));
+  }
+  return items;
+}
+
+function parseDestinations(): ParsedDest[] {
+  if (!existsSync(DEST_SRC)) return [];
+  const src = readFileSync(DEST_SRC, "utf8");
+
+  // Grab the `destinations: Destination[] = [ ... ];` array body.
+  const arrMatch = src.match(
+    /destinations\s*:\s*Destination\[\]\s*=\s*\[([\s\S]*?)\n\];/,
+  );
+  if (!arrMatch) return [];
+  const body = arrMatch[1];
+
+  // Split into top-level object blocks. Track brace depth so nested
+  // braces in strings (none expected) or object shapes don't confuse us.
+  const blocks: string[] = [];
+  let depth = 0;
+  let start = -1;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (ch === "{") {
+      if (depth === 0) start = i;
+      depth++;
+    } else if (ch === "}") {
+      depth--;
+      if (depth === 0 && start >= 0) {
+        blocks.push(body.slice(start, i + 1));
+        start = -1;
+      }
+    }
+  }
+
+  const out: ParsedDest[] = [];
+  for (const block of blocks) {
+    const slug = extractString(block, "slug");
+    const name = extractString(block, "name");
+    if (!slug || !name) continue;
+    out.push({
+      slug,
+      name,
+      date: extractString(block, "date"),
+      longDescription:
+        extractString(block, "longDescription") ??
+        extractString(block, "description"),
+      highlights: extractStringArray(block, "highlights"),
+    });
+  }
+  return out;
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function destinationBody(d: ParsedDest): string {
+  const parts: string[] = [];
+  // Header line — include date only if present in source data.
+  if (d.date) {
+    parts.push(
+      `<p><strong>${escapeHtml(d.name)}</strong> — ${escapeHtml(d.date)}</p>`,
+    );
+  } else {
+    parts.push(`<p><strong>${escapeHtml(d.name)}</strong></p>`);
+  }
+  if (d.longDescription) {
+    parts.push(`<p>${escapeHtml(d.longDescription)}</p>`);
+  }
+  if (d.highlights.length) {
+    const hl = d.highlights
+      .map((h) => `<li>${escapeHtml(h)}</li>`)
+      .join("");
+    parts.push(`<h2>What's included</h2>\n<ul>${hl}</ul>`);
+  }
+  parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
+  parts.push(
+    `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Sweat-resistant, road-ready makeup, hair, costume dressing, photoshoot and shuttle from one lounge.</p>`,
+  );
+  parts.push(CTA);
+  return parts.join("\n");
 }
 
 // Services
@@ -335,29 +316,25 @@ ${CTA}`,
 </ul>
 ${CTA}`,
   },
-  "/trinidad-carnival-2027": {
-    title: "Trinidad Carnival 2027 Makeup & Hair",
-    body: `<p>Trinidad Carnival 2027 dates: Carnival Monday 8 and Tuesday 9 February 2027. Hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Book early from US$50.</p>
-<h2>What's included</h2>
-<ul>
-  <li>Hair, makeup and photos from the Hilton Hotel</li>
-  <li>Two minutes from the Savannah</li>
-  <li>Shuttle service from the Hilton</li>
-  <li>Getting dressed assistance</li>
-  <li>Refreshments and snacks included</li>
-  <li>Carnival Monday 8 & Tuesday 9 February 2027</li>
-</ul>
-<h2>Book Trinidad Carnival 2027</h2>
-<p>Trusted by 15,000+ masqueraders since 2017. Sweat-resistant makeup that holds through the road.</p>
-${CTA}`,
-  },
+  // /trinidad-carnival-2027 body is derived at runtime from the
+  // parsed Trinidad destination record — see buildRouteMap().
 };
 
 function buildRouteMap(): Record<string, Content> {
   const map: Record<string, Content> = { ...CORE, ...SERVICES };
-  for (const d of DESTINATIONS) {
+  const dests = parseDestinations();
+  for (const d of dests) {
     const path = `/${d.slug}`;
     map[path] = { title: d.name, body: destinationBody(d) };
+  }
+  // Alias page: /trinidad-carnival-2027 mirrors the Trinidad record
+  // (uses only fields from destinations.ts — no invented copy).
+  const trinidad = dests.find((d) => d.slug === "trinidad");
+  if (trinidad) {
+    map["/trinidad-carnival-2027"] = {
+      title: `${trinidad.name}${trinidad.date ? ` — ${trinidad.date}` : ""}`,
+      body: destinationBody(trinidad),
+    };
   }
   return map;
 }
