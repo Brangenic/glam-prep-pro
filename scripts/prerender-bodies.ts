@@ -1,283 +1,478 @@
-// Postbuild: snapshots the fully rendered <body> of each public route
-// against the built app and writes it back into dist/<route>/index.html.
-// This gives non-JS crawlers (GPTBot, PerplexityBot, ClaudeBot, CCBot,
-// and older search bots) real visible page content — not just <head>.
+// Postbuild: browserless per-route content injection.
 //
-// Runs AFTER prerender-blog-meta and prerender-routes, so each route
-// already has its correct head (title, meta, canonical, og/twitter,
-// JSON-LD). We only rewrite the empty `<div id="root"></div>` slot with
-// the rendered React tree. Because the app boots with createRoot() (not
-// hydrateRoot), the SPA still fully re-renders on load — the static
-// tree is simply the pre-hydration snapshot crawlers see.
+// The deploy environment does NOT have Chromium available, so any
+// Playwright-based prerender silently no-ops in production and every
+// route ships with an empty `<div id="root"></div>`, which is invisible
+// to non-JS crawlers (GPTBot, PerplexityBot, ClaudeBot, CCBot, older
+// search bots).
 //
-// Failures never block the build (process.exit(0)). If Playwright /
-// Chromium is unavailable in the build environment, the script no-ops
-// and every route falls back to the head-only prerender behavior.
+// This script fixes that by injecting a curated static content block
+// into the empty root div of each per-route dist HTML file. It is:
+//
+//   - Pure Node (no Playwright, no jsdom, no headless browser) so it
+//     runs anywhere Node runs, including the Lovable deploy pipeline.
+//   - Deterministic. Content is authored per route from the same source
+//     data the runtime React uses (destinations.ts, page meta), so the
+//     visible copy the crawler sees matches the page.
+//   - Safe. The SPA boots with createRoot() (NOT hydrateRoot), so React
+//     replaces `#root`'s children on mount; the static markup is only
+//     visible pre-hydration and to crawlers. GTM/gtag/Meta Pixel are
+//     unaffected and still fire once on real loads.
+//   - Non-blocking. Any error is swallowed; the build is never failed.
+//   - Head-preserving. We only rewrite the empty root div; the head
+//     that prerender-routes / prerender-blog-meta wrote (title, meta,
+//     canonical, og/twitter, JSON-LD) is left untouched. No canonical
+//     or JSON-LD is duplicated.
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "fs";
-import { resolve, join, extname } from "path";
-import { createServer } from "http";
-import type { AddressInfo } from "net";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
+import { resolve, join } from "path";
 
 const DIST = resolve("dist");
 
-// Routes we snapshot. Blog posts are discovered from dist/blogs/*.
-// Intentionally excluded: /auth, /admin, /booking-calculator,
-// /booking-confirmed, /thank-you (interactive / auth-gated).
-const SNAPSHOT_ROUTES: string[] = [
-  "/",
-  "/about",
-  "/faq",
-  "/reviews",
-  "/amazon-store",
-  "/blogs",
-  "/trinidad-carnival-2027",
-  "/services/carnival-makeup",
-  "/services/carnival-hair",
-  "/services/carnival-photoshoot",
-  "/services/getting-dressed",
-  "/services/carnival-shuttle",
-  "/jamaica",
-  "/trinidad",
-  "/saint-lucia",
-  "/grenada",
-  "/barbados",
-  "/antigua",
-  "/miami",
-  "/toronto",
-  "/guyana",
-  "/epic-cruise",
+// ---------------------------------------------------------------
+// Route content authors
+// Each function returns the innerHTML to inject into <div id="root">.
+// Content is intentionally lightweight: real headings + paragraphs so
+// crawlers see substantive visible text. Bullet lists preserved where
+// they carry keyword signal (destination highlights, service inclusions).
+// ---------------------------------------------------------------
+
+type Content = { title: string; body: string };
+
+function wrap(c: Content): string {
+  // Wrapping div carries data-prerender so it's obvious in view-source
+  // that this is the static snapshot. React's createRoot().render()
+  // clears it on hydration.
+  return `<div data-prerender="static">\n<h1>${c.title}</h1>\n${c.body}\n</div>`;
+}
+
+const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`;
+
+// Destinations — mirrors src/data/destinations.ts (name, date, longDescription, highlights).
+// Duplicated here (not imported) so this script has no dependency on
+// the app's @/ alias or asset imports.
+const DESTINATIONS: Array<{
+  slug: string;
+  name: string;
+  date: string;
+  long: string;
+  highlights: string[];
+}> = [
+  {
+    slug: "jamaica",
+    name: "Jamaica Carnival",
+    date: "12 April 2026",
+    long:
+      "Our Jamaica Carnival glam hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-proof carnival looks built for the Jamaica heat.",
+    highlights: [
+      "Full carnival makeup with sweat-proof finish",
+      "Gem & feather application",
+      "Hair styling and braiding",
+      "Lash application and body paint",
+    ],
+  },
+  {
+    slug: "saint-lucia",
+    name: "Saint Lucia Carnival",
+    date: "20–21 July 2026",
+    long:
+      "Our Saint Lucia Carnival glam hub is set up across the island with packages for road march, j'ouvert and fete looks. Get matched with a senior artist for your full carnival glam experience.",
+    highlights: [
+      "Road march full glam",
+      "J'ouvert paint and shimmer",
+      "Festival hair styling",
+      "Eye gems & festival lashes",
+    ],
+  },
+  {
+    slug: "antigua",
+    name: "Antigua Carnival",
+    date: "4 August 2026",
+    long:
+      "Antigua Carnival is one of the Caribbean's most colorful festivals — and our glam hub keeps you camera-ready from j'ouvert to last lap. Premium makeup, hair, gems and body art available across the island.",
+    highlights: [
+      "Full carnival makeup",
+      "Gem & rhinestone designs",
+      "Hair braids and styling",
+      "Body paint and shimmer",
+    ],
+  },
+  {
+    slug: "grenada",
+    name: "Grenada Spicemas",
+    date: "10–11 August 2026",
+    long:
+      "Spicemas is unmatched — and our Grenada Carnival glam hub matches the energy. Full makeup, hair, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists.",
+    highlights: [
+      "Spicemas full glam",
+      "J'ouvert paint and oil packages",
+      "Hair styling and braiding",
+      "Festival gems & lashes",
+    ],
+  },
+  {
+    slug: "barbados",
+    name: "Barbados Crop Over",
+    date: "3 August 2026",
+    long:
+      "Crop Over is the Caribbean's biggest summer carnival — and our Barbados glam hub is fully booked every season for a reason. Get the full road experience with sweat-proof makeup, festival hair, gems and j'ouvert paint by our top artists.",
+    highlights: [
+      "Grand Kadooment full glam",
+      "Foreday Morning paint",
+      "Festival hair & braids",
+      "Gems, lashes and shimmer",
+    ],
+  },
+  {
+    slug: "miami",
+    name: "Miami Carnival",
+    date: "11 October 2026",
+    long:
+      "Our Miami Carnival glam hub serves the entire Miami Carnival season — from pre-carnival fetes through Columbus Day weekend. Full makeup, hair, gems and body art by our pro carnival team.",
+    highlights: [
+      "Full road glam packages",
+      "Fete-ready makeup",
+      "Festival hair styling",
+      "Gems, lashes and body paint",
+    ],
+  },
+  {
+    slug: "toronto",
+    name: "Toronto Caribana",
+    date: "1 August 2026",
+    long:
+      "Caribana is North America's biggest Caribbean carnival, and our Toronto glam hub is on the road with you. Full makeup, hair, festival gems and body art for the Grand Parade and weekend fetes.",
+    highlights: [
+      "Grand Parade full glam",
+      "Fete makeup packages",
+      "Festival hair & braids",
+      "Gems, lashes and shimmer",
+    ],
+  },
+  {
+    slug: "trinidad",
+    name: "Trinidad Carnival",
+    date: "Monday 8 & Tuesday 9 February 2027",
+    long:
+      "Trinidad Carnival hair, makeup and photos from the Hilton Hotel, two minutes from the Savannah. Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Bookings are open — book now for Carnival Monday 8 February and Carnival Tuesday 9 February 2027.",
+    highlights: [
+      "Hair, makeup and photos from the Hilton Hotel",
+      "Two minutes from the Savannah",
+      "Shuttle service from the Hilton",
+      "Getting dressed assistance",
+      "Refreshments and snacks included",
+      "Carnival Monday 8 & Tuesday 9 February 2027",
+    ],
+  },
+  {
+    slug: "guyana",
+    name: "Guyana Carnival",
+    date: "May 2026",
+    long:
+      "Guyana Carnival brings Mashramani energy to the road — and our Guyana glam hub keeps you flawless from fete to road march. Full makeup, hair, gems, lashes and body art by our Caribbean-trained carnival artists.",
+    highlights: [
+      "Full road carnival glam",
+      "Festival hair styling",
+      "Gem & rhinestone application",
+      "Body paint and shimmer",
+    ],
+  },
+  {
+    slug: "epic-cruise",
+    name: "Epic Cruise — Trinidad Carnival",
+    date: "8–9 February 2027",
+    long:
+      "Glam Hub at sea! Carnival Glam Hub is aboard the EPIC Carnival Experience — the luxury floating hotel that sails masqueraders from San Juan, Puerto Rico straight to Trinidad Carnival. Book your makeup, hair, photoshoot, and get-dressed services exclusively for EPIC cruise masqueraders.",
+    highlights: [
+      "Glam hub aboard the EPIC cruise ship",
+      "Carnival Monday & Tuesday coverage",
+      "Full makeup, hair & photoshoot",
+      "Get Dressed assistance included",
+    ],
+  },
 ];
 
-const MIME: Record<string, string> = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".mjs": "text/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".webp": "image/webp",
-  ".gif": "image/gif",
-  ".ico": "image/x-icon",
-  ".woff": "font/woff",
-  ".woff2": "font/woff2",
-  ".ttf": "font/ttf",
-  ".txt": "text/plain; charset=utf-8",
-  ".xml": "application/xml; charset=utf-8",
+function destinationBody(d: (typeof DESTINATIONS)[number]): string {
+  const hl = d.highlights.map((h) => `<li>${h}</li>`).join("");
+  return `<p><strong>${d.name}</strong> — ${d.date}</p>
+<p>${d.long}</p>
+<h2>What's included</h2>
+<ul>${hl}</ul>
+<h2>Book ${d.name} glam</h2>
+<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Sweat-resistant, road-ready makeup, hair, costume dressing, photoshoot and shuttle from one lounge.</p>
+${CTA}`;
+}
+
+// Services
+const SERVICES: Record<string, Content> = {
+  "/services/carnival-makeup": {
+    title: "Sweat-Resistant Carnival Makeup",
+    body: `<p>Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ masqueraders since 2017.</p>
+<h2>What's included in your Carnival makeup</h2>
+<p>Skin prep and priming, full base with sweat-resistant foundation and concealer, contour and highlight, eye look with adhesive lash or strip lash, brow shaping, lip finish, and a final setting layer designed to hold through the parade. Each session runs around 90 minutes per masquerader and is delivered inside the air-conditioned Carnival Glam Hub lounge.</p>
+<h2>How much does Carnival makeup cost?</h2>
+<p>Pricing is tiered. The road-ready access package — getting-dressed help, shuttle and the lounge — starts at US$35. Professional Carnival makeup starts from US$160. Celebrity-artist glam runs US$250 to US$350. Premium and editorial looks — heavy beadwork, crystal application, custom skin art — go up to US$2,000.</p>
+<h2>Airbrush vs traditional Carnival makeup</h2>
+<p>Both work for the road. Traditional application, layered with a long-wear foundation and locked down with a setting spray, gives a fuller, more sculpted finish and is easier to touch up mid-route. Airbrush gives a lighter, second-skin finish that photographs beautifully and tends to suit oilier skin in extreme heat.</p>
+<h2>How long does Carnival makeup last?</h2>
+<p>A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat — from your morning departure through the last truck. Priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday.</p>
+${CTA}`,
+  },
+  "/services/carnival-hair": {
+    title: "Carnival Hair & Hairstyles",
+    body: `<p>Carnival hair and hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua.</p>
+<h2>Headpiece-ready installs</h2>
+<p>Every style is anchored so your headpiece sits secure from the truck to the last lap. Slick-back ponies with lay-down edges, sculpted buns, braided crowns and sew-in installs with a Carnival-safe finish.</p>
+<h2>Curls, braids and updos</h2>
+<p>Voluminous carnival curls with silicone finish for heat and humidity, boho braids with beads, and sculpted updos for stage-front sections.</p>
+${CTA}`,
+  },
+  "/services/carnival-photoshoot": {
+    title: "Carnival Photoshoot",
+    body: `<p>Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua.</p>
+<h2>In-lounge and outdoor sets</h2>
+<p>Editorial-lit portraits inside the air-conditioned lounge, plus outdoor sets on carnival morning — Savannah light, the Hilton grounds, or a curated backdrop matched to your costume.</p>
+<h2>Fast turnaround, private gallery</h2>
+<p>Edited highlights delivered same day for social; full gallery within 72 hours to a private link.</p>
+${CTA}`,
+  },
+  "/services/getting-dressed": {
+    title: "Carnival Costume Getting-Dressed Assistance",
+    body: `<p>Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Included in concierge packages across Trinidad, Jamaica, Barbados, Grenada and Antigua.</p>
+<h2>Wire bras, monokinis, backpacks</h2>
+<p>Correct positioning, hidden padding for support, waist and hip strap tuning, hardware secured so nothing shifts on the road.</p>
+<h2>Collars, harnesses and headpieces</h2>
+<p>Locked into your hair install so it sits high and stays put. Backup pins, tape and touch-up strap kit on hand.</p>
+${CTA}`,
+  },
+  "/services/carnival-shuttle": {
+    title: "Carnival Shuttle Service",
+    body: `<p>Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.</p>
+<h2>Lounge to your band</h2>
+<p>Air-conditioned transport with your section, so you arrive fresh, dry and on time. Route pre-mapped to avoid Carnival morning gridlock.</p>
+<h2>Group capacity</h2>
+<p>Private shuttles for sections and friend groups. Book with your glam package or standalone.</p>
+${CTA}`,
+  },
 };
 
-function serveDist(): Promise<{ port: number; close: () => Promise<void> }> {
-  return new Promise((resolvePromise, reject) => {
-    const server = createServer((req, res) => {
-      try {
-        const urlPath = decodeURIComponent((req.url ?? "/").split("?")[0]);
-        // Try direct file
-        const direct = join(DIST, urlPath.replace(/^\/+/, ""));
-        const directIndex = join(direct, "index.html");
-        let filePath: string | null = null;
-        if (existsSync(direct) && statSync(direct).isFile()) filePath = direct;
-        else if (existsSync(directIndex) && statSync(directIndex).isFile())
-          filePath = directIndex;
-        else {
-          // SPA fallback
-          filePath = join(DIST, "index.html");
-        }
-        const ext = extname(filePath).toLowerCase();
-        res.setHeader("Content-Type", MIME[ext] ?? "application/octet-stream");
-        res.end(readFileSync(filePath));
-      } catch (err) {
-        res.statusCode = 500;
-        res.end(String(err));
-      }
-    });
-    server.on("error", reject);
-    server.listen(0, "127.0.0.1", () => {
-      const port = (server.address() as AddressInfo).port;
-      resolvePromise({
-        port,
-        close: () => new Promise<void>((r) => server.close(() => r())),
-      });
-    });
-  });
+// Other core routes
+const CORE: Record<string, Content> = {
+  "/": {
+    title: "Carnival Glam Hub — Caribbean Carnival Beauty Concierge",
+    body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle from one air-conditioned lounge on Carnival morning.</p>
+<h2>Trusted by 15,000+ masqueraders since 2017</h2>
+<p>Founded by Gabrielle Waite. Booked across Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</p>
+<h2>Services</h2>
+<ul>
+  <li><a href="/services/carnival-makeup">Sweat-Resistant Carnival Makeup</a></li>
+  <li><a href="/services/carnival-hair">Carnival Hair</a></li>
+  <li><a href="/services/carnival-photoshoot">Carnival Photoshoot</a></li>
+  <li><a href="/services/getting-dressed">Getting Dressed</a></li>
+  <li><a href="/services/carnival-shuttle">Carnival Shuttle</a></li>
+</ul>
+<h2>Destinations</h2>
+<ul>
+  <li><a href="/trinidad">Trinidad Carnival</a></li>
+  <li><a href="/jamaica">Jamaica Carnival</a></li>
+  <li><a href="/barbados">Barbados Crop Over</a></li>
+  <li><a href="/grenada">Grenada Spicemas</a></li>
+  <li><a href="/antigua">Antigua Carnival</a></li>
+  <li><a href="/saint-lucia">Saint Lucia Carnival</a></li>
+  <li><a href="/miami">Miami Carnival</a></li>
+  <li><a href="/toronto">Toronto Caribana</a></li>
+  <li><a href="/guyana">Guyana Carnival</a></li>
+  <li><a href="/epic-cruise">EPIC Cruise</a></li>
+</ul>
+${CTA}`,
+  },
+  "/about": {
+    title: "About Carnival Glam Hub",
+    body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge, founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica and beyond.</p>
+<h2>Our story</h2>
+<p>Started in Port of Spain to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. Now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
+<h2>What we do</h2>
+<p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle — from one location, on the morning of the parade.</p>
+${CTA}`,
+  },
+  "/faq": {
+    title: "Carnival Glam Hub FAQ",
+    body: `<p>Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.</p>
+<h2>How do I book Carnival Glam Hub?</h2>
+<p>Select your destination and choose your glam package at carnivalglamhub.masos.app/events. You'll receive confirmation after booking.</p>
+<h2>How far in advance should I book carnival makeup?</h2>
+<p>Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time — at least 4–6 weeks ahead for peak weekends.</p>
+<h2>What is included in a Carnival Glam Hub appointment?</h2>
+<p>Services depend on the package selected but typically include sweat-resistant makeup, hair styling, and costume dressing assistance.</p>
+<h2>How much does professional Carnival makeup cost?</h2>
+<p>Starts from US$160, with most masqueraders spending US$200 to US$300. Celebrity-artist glam ranges US$250 to US$350, and premium looks go up to US$2,000. A road-ready access package — getting dressed, shuttle and lounge — starts at US$35.</p>
+<h2>Can I do my own Carnival makeup without experience?</h2>
+<p>You can, but Carnival makeup must survive heat, sweat, and hours on the road. Most masqueraders choose a professional for sweat-resistant, photo-ready results that last all day.</p>
+<h2>What is the difference between regular makeup and Carnival makeup?</h2>
+<p>Carnival makeup is built for endurance: sweat-resistant, long-wear, and designed for bright outdoor light and constant photography, unlike everyday makeup which is not made to last through a full day of dancing in the sun.</p>
+${CTA}`,
+  },
+  "/reviews": {
+    title: "Carnival Glam Hub Reviews",
+    body: `<p>Real reviews from Carnival Glam Hub clients — authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.</p>
+<p>Reviews are synced daily from Google. Read more about our team on the <a href="/about">About</a> page or browse frequently asked questions on the <a href="/faq">FAQ</a>.</p>
+${CTA}`,
+  },
+  "/amazon-store": {
+    title: "Carnival Glam Hub Amazon Storefront",
+    body: `<p>Shop the Carnival Glam Hub Amazon storefront — curated Carnival makeup, hair, costume and lounge essentials hand-picked by our team.</p>
+<p>Collections are updated daily. Includes long-wear foundation, setting spray, waterproof mascara, festival gems, adhesive lashes and body shimmer.</p>
+${CTA}`,
+  },
+  "/blogs": {
+    title: "Carnival Beauty and Travel Journal",
+    body: `<p>Guides, tips and stories on Carnival makeup, hair, costumes and travel for masqueraders across the Caribbean and the diaspora.</p>
+<h2>Popular guides</h2>
+<ul>
+  <li><a href="/blogs/is-professional-carnival-makeup-worth-it">Is professional Carnival makeup worth it?</a></li>
+  <li><a href="/blogs/how-far-in-advance-to-book-carnival-makeup">How far in advance to book Carnival makeup</a></li>
+  <li><a href="/blogs/caribbean-carnival-has-an-airlift-problem">Caribbean Carnival has an airlift problem</a></li>
+</ul>
+${CTA}`,
+  },
+  "/trinidad-carnival-2027": {
+    title: "Trinidad Carnival 2027 Makeup & Hair",
+    body: `<p>Trinidad Carnival 2027 dates: Carnival Monday 8 and Tuesday 9 February 2027. Hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Book early from US$50.</p>
+<h2>What's included</h2>
+<ul>
+  <li>Hair, makeup and photos from the Hilton Hotel</li>
+  <li>Two minutes from the Savannah</li>
+  <li>Shuttle service from the Hilton</li>
+  <li>Getting dressed assistance</li>
+  <li>Refreshments and snacks included</li>
+  <li>Carnival Monday 8 & Tuesday 9 February 2027</li>
+</ul>
+<h2>Book Trinidad Carnival 2027</h2>
+<p>Trusted by 15,000+ masqueraders since 2017. Sweat-resistant makeup that holds through the road.</p>
+${CTA}`,
+  },
+};
+
+function buildRouteMap(): Record<string, Content> {
+  const map: Record<string, Content> = { ...CORE, ...SERVICES };
+  for (const d of DESTINATIONS) {
+    const path = `/${d.slug}`;
+    map[path] = { title: d.name, body: destinationBody(d) };
+  }
+  return map;
+}
+
+// ---------------------------------------------------------------
+// Injection
+// ---------------------------------------------------------------
+
+function replaceRoot(html: string, inner: string): string | null {
+  const empty = /<div\s+id="root"[^>]*>\s*<\/div>/i;
+  if (empty.test(html)) {
+    return html.replace(empty, `<div id="root">${inner}</div>`);
+  }
+  return null;
+}
+
+function writeRoute(route: string, content: Content): boolean {
+  const targetFile =
+    route === "/"
+      ? join(DIST, "index.html")
+      : join(DIST, route.replace(/^\//, ""), "index.html");
+  if (!existsSync(targetFile)) return false;
+  const existing = readFileSync(targetFile, "utf8");
+  const inner = wrap(content);
+  const next = replaceRoot(existing, inner);
+  if (!next || next === existing) return false;
+  writeFileSync(targetFile, next);
+  return true;
+}
+
+// Author minimal per-post content for blog posts by extracting the
+// existing <title> and <meta name="description"> from the file (already
+// written by prerender-blog-meta). This gives crawlers a real headline
+// + description in the body without duplicating the full article text.
+function blogContentFromHtml(html: string, slug: string): Content | null {
+  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  const descMatch = html.match(
+    /<meta\s+name="description"\s+content="([^"]+)"/i,
+  );
+  if (!titleMatch) return null;
+  const title = titleMatch[1].replace(/\s+\|\s+.*$/, "").trim();
+  const desc = descMatch ? descMatch[1] : "";
+  return {
+    title,
+    body: `<p>${desc}</p>
+<p>Read the full guide from the Carnival Glam Hub journal. Guides, tips and stories on Carnival makeup, hair, costumes and travel for masqueraders across the Caribbean and the diaspora.</p>
+<p><a href="/blogs">Back to the journal</a> · <a href="/">Home</a> · <a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a></p>
+<!-- slug:${slug} -->`,
+  };
 }
 
 function discoverBlogSlugs(): string[] {
   const blogsDir = join(DIST, "blogs");
   if (!existsSync(blogsDir)) return [];
-  return readdirSync(blogsDir).filter((name) => {
-    const p = join(blogsDir, name, "index.html");
-    return existsSync(p);
-  });
+  return readdirSync(blogsDir, { withFileTypes: true })
+    .filter((e) => e.isDirectory())
+    .map((e) => e.name)
+    .filter((slug) => existsSync(join(blogsDir, slug, "index.html")));
 }
 
-function replaceRootInHtml(html: string, rootHtml: string): string {
-  // Match the empty root div in the built template.
-  const rootRe = /<div\s+id="root"[^>]*>\s*<\/div>/i;
-  if (rootRe.test(html)) return html.replace(rootRe, rootHtml);
-  // Fallback: replace any <div id="root">...</div> block.
-  const anyRootRe = /<div\s+id="root"[\s\S]*?<\/div>\s*(?=<script)/i;
-  if (anyRootRe.test(html)) return html.replace(anyRootRe, rootHtml + "\n    ");
-  return html;
-}
-
-async function main() {
-  const indexPath = join(DIST, "index.html");
-  if (!existsSync(indexPath)) {
+function main() {
+  if (!existsSync(join(DIST, "index.html"))) {
     console.warn("prerender-bodies: dist/index.html not found, skipping.");
     return;
   }
 
-  // Load Playwright lazily so a missing/broken chromium doesn't crash import.
-  let chromium: typeof import("playwright").chromium;
-  try {
-    ({ chromium } = await import("playwright"));
-  } catch (err) {
-    console.warn("prerender-bodies: playwright not available, skipping.", err);
-    return;
-  }
-
-  // Try a few executablePath candidates for environments where the
-  // browsers Playwright expects aren't in the standard cache path.
-  const candidates: (string | undefined)[] = [undefined];
-  try {
-    const roots = readdirSync("/").filter((n) =>
-      /^chromium(-|_headless_shell-)/.test(n),
-    );
-    for (const r of roots) {
-      const p = `/${r}/chrome-linux/chrome`;
-      const s = `/${r}/chrome-linux/headless_shell`;
-      if (existsSync(p)) candidates.push(p);
-      if (existsSync(s)) candidates.push(s);
-    }
-  } catch { /* ignore */ }
-
-  let browser: Awaited<ReturnType<typeof chromium.launch>> | null = null;
-  for (const executablePath of candidates) {
-    try {
-      browser = await chromium.launch({
-        headless: true,
-        ...(executablePath ? { executablePath } : {}),
-      });
-      break;
-    } catch (err) {
-      console.warn(
-        `prerender-bodies: chromium launch failed (${executablePath ?? "default"}):`,
-        (err as Error).message,
-      );
-    }
-  }
-  if (!browser) {
-    console.warn("prerender-bodies: no chromium available, skipping.");
-    return;
-  }
-
-  const server = await serveDist();
-  const origin = `http://127.0.0.1:${server.port}`;
-  const blogSlugs = discoverBlogSlugs();
-  const routes = [
-    ...SNAPSHOT_ROUTES,
-    ...blogSlugs.map((slug) => `/blogs/${slug}`),
-  ];
-
-  const context = await browser.newContext({
-    viewport: { width: 1280, height: 1800 },
-    userAgent:
-      "Mozilla/5.0 (compatible; CarnivalGlamHubPrerender/1.0; +https://www.carnivalglamhub.com/)",
-  });
-  // Never let a slow third-party (GTM, pixel, chat) block the snapshot.
-  await context.route("**/*", (route) => {
-    const url = route.request().url();
-    if (
-      /googletagmanager\.com|google-analytics\.com|googleadservices\.com|facebook\.net|connect\.facebook|doubleclick\.net|clarity\.ms|hotjar|fullstory/.test(
-        url,
-      )
-    ) {
-      return route.abort();
-    }
-    return route.continue();
-  });
-
+  const routes = buildRouteMap();
   let written = 0;
-  let failed = 0;
+  let skipped = 0;
 
-  for (const route of routes) {
+  for (const [route, content] of Object.entries(routes)) {
     try {
-      const page = await context.newPage();
-      page.on("pageerror", () => {
-        /* ignore — never fail the build on runtime errors */
-      });
-      await page.goto(`${origin}${route}`, {
-        waitUntil: "domcontentloaded",
-        timeout: 20_000,
-      });
-      // Wait for React to mount and render real content into #root.
-      await page
-        .waitForFunction(
-          () => {
-            const root = document.getElementById("root");
-            if (!root) return false;
-            const text = (root.textContent || "").trim();
-            return text.length > 200 && root.children.length > 0;
-          },
-          { timeout: 15_000 },
-        )
-        .catch(() => {
-          /* fall through — capture whatever rendered */
-        });
-      // Give React a beat to finish any pending effects (data fetch,
-      // scroll-reveal, images swap) but cap it so builds stay fast.
-      await page.waitForLoadState("networkidle", { timeout: 8_000 }).catch(() => {});
-
-      const rootHtml = await page.evaluate(() => {
-        const root = document.getElementById("root");
-        return root ? root.outerHTML : "";
-      });
-      await page.close();
-
-      if (!rootHtml || rootHtml.length < 200) {
-        failed++;
-        continue;
-      }
-
-      // Preserve the head that prerender-routes / prerender-blog-meta
-      // already wrote — only swap the empty root div for the rendered
-      // tree.
-      const targetDir = join(DIST, route.replace(/^\//, ""));
-      const targetFile =
-        route === "/"
-          ? join(DIST, "index.html")
-          : join(targetDir, "index.html");
-      if (!existsSync(targetFile)) {
-        failed++;
-        continue;
-      }
-      const existing = readFileSync(targetFile, "utf8");
-      const next = replaceRootInHtml(existing, rootHtml);
-      if (next === existing) {
-        failed++;
-        continue;
-      }
-      writeFileSync(targetFile, next);
-      written++;
+      if (writeRoute(route, content)) written++;
+      else skipped++;
     } catch (err) {
-      failed++;
+      skipped++;
       console.warn(`prerender-bodies: ${route} failed:`, (err as Error).message);
     }
   }
 
-  await context.close();
-  await browser.close();
-  await server.close();
+  // Blog posts — use head metadata already written by prerender-blog-meta.
+  for (const slug of discoverBlogSlugs()) {
+    const file = join(DIST, "blogs", slug, "index.html");
+    try {
+      const existing = readFileSync(file, "utf8");
+      const c = blogContentFromHtml(existing, slug);
+      if (!c) {
+        skipped++;
+        continue;
+      }
+      const next = replaceRoot(existing, wrap(c));
+      if (!next || next === existing) {
+        skipped++;
+        continue;
+      }
+      writeFileSync(file, next);
+      written++;
+    } catch (err) {
+      skipped++;
+      console.warn(
+        `prerender-bodies: /blogs/${slug} failed:`,
+        (err as Error).message,
+      );
+    }
+  }
 
   console.log(
-    `prerender-bodies: snapshotted ${written} routes (${failed} skipped) of ${routes.length}.`,
+    `prerender-bodies: injected ${written} routes (${skipped} skipped).`,
   );
 }
 
-main().catch((err) => {
+try {
+  main();
+} catch (err) {
   console.error("prerender-bodies failed:", err);
-  process.exit(0); // never block the build
-});
+}
+// Never block the build.
+process.exit(0);
