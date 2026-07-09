@@ -16,16 +16,16 @@ const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
 const DEFAULT_OG = `${BASE_URL}/og-image.png`;
 const DEFAULT_OG_TYPE = "image/png";
-const DEFAULT_OG_W = 1200;
-const DEFAULT_OG_H = 630;
 const HERO_FALLBACK = `${BASE_URL}/og-home.jpg`;
 
 const OG_W = 1200;
 const OG_H = 630;
 
-// Destination → real hero image source (mirrors src/data/destinations.ts).
-// Kept inline to avoid importing the app's runtime asset modules.
-const DESTINATION_HERO_SOURCES: Record<string, string> = {
+// Route path → real hero image source. Kept inline (not imported) so this
+// script stays free of the app's runtime asset modules.  Every entry is
+// transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
+// social crawlers always see a page-specific preview in the raw HTML.
+const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/jamaica":
     "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
   "/saint-lucia":
@@ -47,7 +47,29 @@ const DESTINATION_HERO_SOURCES: Record<string, string> = {
   // /guyana uses a bundled local asset (carnival-4.jpg). Resolve from dist
   // assets at transcode time so we don't depend on the hashed filename here.
   "/guyana": "asset:carnival-4",
+  // Trinidad Carnival 2027 uses the same hero as the Trinidad destination.
+  "/trinidad-carnival-2027":
+    "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
+  // Services already ship 1200-ish source images under /images/services/.
+  // We still transcode them to 1200×630 so previews render correctly.
+  "/services/carnival-makeup": "/images/services/makeup-hero.jpg",
+  "/services/carnival-hair": "/images/services/hair-hero.jpg",
+  "/services/carnival-photoshoot": "/images/services/photoshoot-hero.jpg",
+  "/services/getting-dressed": "/images/services/getting-dressed-hero.jpg",
+  "/services/carnival-shuttle": "/images/services/carnival-shuttle-og.jpg",
+  // Section / utility routes — pick a relevant on-brand photo per page so
+  // no important route falls back to the generic logo card.
+  "/about": "/images/services/makeup-hero.jpg",
+  "/faq": "/images/services/hair-hero.jpg",
+  "/reviews": "/images/services/photoshoot-hero.jpg",
+  "/blogs": "/images/services/photoshoot-hero.jpg",
+  "/amazon-store": "/images/services/makeup-hero.jpg",
+  "/booking-calculator": "/images/services/makeup-hero.jpg",
 };
+
+function slugForRoute(path: string): string {
+  return path.replace(/^\//, "").replace(/\//g, "-");
+}
 
 async function transcodeOgImage(slug: string, source: string): Promise<string | null> {
   try {
@@ -556,9 +578,8 @@ function rewriteHead(template: string, route: RouteMeta): string {
   const url = `${BASE_URL}${route.path}`;
   const title = route.title;
   const desc = route.description;
-  const hasCustomImage = Boolean(route.ogImage);
   const image = route.ogImage ?? DEFAULT_OG;
-  const imageType = hasCustomImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
+  const imageType = route.ogImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
   const ogType = route.ogType ?? "website";
 
   let html = template;
@@ -614,12 +635,17 @@ function rewriteHead(template: string, route: RouteMeta): string {
       `<meta property="og:image:type" content="${imageType}" />`,
     );
   }
-  // When the route has its own hero image, strip the placeholder's
-  // hardcoded 1200x630 dimensions so platforms read real dimensions.
-  if (hasCustomImage) {
-    html = html.replace(/\s*<meta\s+property="og:image:width"[^>]*>/i, "");
-    html = html.replace(/\s*<meta\s+property="og:image:height"[^>]*>/i, "");
-  }
+  // Every prerendered OG image is a 1200×630 JPEG (either transcoded here
+  // or the pre-existing /og-home.jpg / /og-image.png), so keep explicit
+  // dimensions so Facebook/WhatsApp render them without cropping.
+  html = html.replace(
+    /<meta\s+property="og:image:width"[^>]*>/i,
+    `<meta property="og:image:width" content="${OG_W}" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:image:height"[^>]*>/i,
+    `<meta property="og:image:height" content="${OG_H}" />`,
+  );
 
   html = html.replace(
     /<meta\s+name="twitter:url"[^>]*>/i,
@@ -633,6 +659,13 @@ function rewriteHead(template: string, route: RouteMeta): string {
     /<meta\s+name="twitter:image:alt"[^>]*>/i,
     `<meta name="twitter:image:alt" content="${escapeAttr(title)}" />`,
   );
+  // twitter:card must be summary_large_image
+  if (!/<meta\s+name="twitter:card"[^>]*>/i.test(html)) {
+    html = html.replace(
+      "</head>",
+      `    <meta name="twitter:card" content="summary_large_image" />\n  </head>`,
+    );
+  }
   if (/<meta\s+name="twitter:title"[^>]*>/i.test(html)) {
     html = html.replace(
       /<meta\s+name="twitter:title"[^>]*>/i,
@@ -681,13 +714,13 @@ async function main() {
   }
   const template = readFileSync(indexPath, "utf8");
 
-  // Transcode destination hero images to per-route OG JPEGs. Falls back
-  // gracefully to HERO_FALLBACK so a transcode failure never breaks the build.
-  for (const route of destinationRoutes) {
-    const source = DESTINATION_HERO_SOURCES[route.path];
+  // Transcode every route's hero to a 1200×630 JPEG so social crawlers
+  // never fall back to the generic brand logo. Failures leave the route
+  // on its declared ogImage (or HERO_FALLBACK) — never blocks the build.
+  for (const route of allRoutes) {
+    const source = ROUTE_HERO_SOURCES[route.path];
     if (!source) continue;
-    const slug = route.path.replace(/^\//, "");
-    const transcoded = await transcodeOgImage(slug, source);
+    const transcoded = await transcodeOgImage(slugForRoute(route.path), source);
     if (transcoded) route.ogImage = transcoded;
   }
 
@@ -698,6 +731,18 @@ async function main() {
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);
     written++;
+
+    // Destinations are also linked as /destinations/<slug> in older
+    // content. The SPA redirects those to /<slug> client-side, but the
+    // initial HTML social crawlers fetch is the homepage fallback with
+    // generic metadata. Emit the same per-route HTML under
+    // /destinations/<slug>/ so previews are correct on either URL.
+    if (DEST_AREA[route.path]) {
+      const aliasDir = join(DIST, "destinations", route.path.replace(/^\//, ""));
+      mkdirSync(aliasDir, { recursive: true });
+      writeFileSync(join(aliasDir, "index.html"), html);
+      written++;
+    }
   }
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 }
