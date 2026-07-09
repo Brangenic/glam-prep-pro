@@ -578,9 +578,8 @@ function rewriteHead(template: string, route: RouteMeta): string {
   const url = `${BASE_URL}${route.path}`;
   const title = route.title;
   const desc = route.description;
-  const hasCustomImage = Boolean(route.ogImage);
   const image = route.ogImage ?? DEFAULT_OG;
-  const imageType = hasCustomImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
+  const imageType = route.ogImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
   const ogType = route.ogType ?? "website";
 
   let html = template;
@@ -636,12 +635,17 @@ function rewriteHead(template: string, route: RouteMeta): string {
       `<meta property="og:image:type" content="${imageType}" />`,
     );
   }
-  // When the route has its own hero image, strip the placeholder's
-  // hardcoded 1200x630 dimensions so platforms read real dimensions.
-  if (hasCustomImage) {
-    html = html.replace(/\s*<meta\s+property="og:image:width"[^>]*>/i, "");
-    html = html.replace(/\s*<meta\s+property="og:image:height"[^>]*>/i, "");
-  }
+  // Every prerendered OG image is a 1200×630 JPEG (either transcoded here
+  // or the pre-existing /og-home.jpg / /og-image.png), so keep explicit
+  // dimensions so Facebook/WhatsApp render them without cropping.
+  html = html.replace(
+    /<meta\s+property="og:image:width"[^>]*>/i,
+    `<meta property="og:image:width" content="${OG_W}" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:image:height"[^>]*>/i,
+    `<meta property="og:image:height" content="${OG_H}" />`,
+  );
 
   html = html.replace(
     /<meta\s+name="twitter:url"[^>]*>/i,
@@ -655,6 +659,13 @@ function rewriteHead(template: string, route: RouteMeta): string {
     /<meta\s+name="twitter:image:alt"[^>]*>/i,
     `<meta name="twitter:image:alt" content="${escapeAttr(title)}" />`,
   );
+  // twitter:card must be summary_large_image
+  if (!/<meta\s+name="twitter:card"[^>]*>/i.test(html)) {
+    html = html.replace(
+      "</head>",
+      `    <meta name="twitter:card" content="summary_large_image" />\n  </head>`,
+    );
+  }
   if (/<meta\s+name="twitter:title"[^>]*>/i.test(html)) {
     html = html.replace(
       /<meta\s+name="twitter:title"[^>]*>/i,
