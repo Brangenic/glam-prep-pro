@@ -714,13 +714,13 @@ async function main() {
   }
   const template = readFileSync(indexPath, "utf8");
 
-  // Transcode destination hero images to per-route OG JPEGs. Falls back
-  // gracefully to HERO_FALLBACK so a transcode failure never breaks the build.
-  for (const route of destinationRoutes) {
-    const source = DESTINATION_HERO_SOURCES[route.path];
+  // Transcode every route's hero to a 1200×630 JPEG so social crawlers
+  // never fall back to the generic brand logo. Failures leave the route
+  // on its declared ogImage (or HERO_FALLBACK) — never blocks the build.
+  for (const route of allRoutes) {
+    const source = ROUTE_HERO_SOURCES[route.path];
     if (!source) continue;
-    const slug = route.path.replace(/^\//, "");
-    const transcoded = await transcodeOgImage(slug, source);
+    const transcoded = await transcodeOgImage(slugForRoute(route.path), source);
     if (transcoded) route.ogImage = transcoded;
   }
 
@@ -731,6 +731,18 @@ async function main() {
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);
     written++;
+
+    // Destinations are also linked as /destinations/<slug> in older
+    // content. The SPA redirects those to /<slug> client-side, but the
+    // initial HTML social crawlers fetch is the homepage fallback with
+    // generic metadata. Emit the same per-route HTML under
+    // /destinations/<slug>/ so previews are correct on either URL.
+    if (DEST_AREA[route.path]) {
+      const aliasDir = join(DIST, "destinations", route.path.replace(/^\//, ""));
+      mkdirSync(aliasDir, { recursive: true });
+      writeFileSync(join(aliasDir, "index.html"), html);
+      written++;
+    }
   }
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 }
