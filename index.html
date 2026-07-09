@@ -3,6 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Canonical host redirect: send published *.lovable.app mirrors to www.carnivalglamhub.com.
+         Runs before any other script so visitors never see the mirror. Excludes the
+         Lovable editor preview host (id-preview--*.lovable.app), localhost, and the
+         real domain. -->
+    <script>
+      (function () {
+        try {
+          var h = window.location.hostname;
+          if (
+            h.endsWith(".lovable.app") &&
+            !h.startsWith("id-preview--")
+          ) {
+            var target =
+              "https://www.carnivalglamhub.com" +
+              window.location.pathname +
+              window.location.search +
+              window.location.hash;
+            window.location.replace(target);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        var h = window.location.hostname;
+        if (h.endsWith(".lovable.app") && !h.startsWith("id-preview--")) {
+          var m = document.createElement("meta");
+          m.name = "robots";
+          m.content = "noindex, nofollow";
+          document.head.appendChild(m);
+        }
+      })();
+    </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
