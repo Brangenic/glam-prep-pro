@@ -139,14 +139,38 @@ async function main() {
     return;
   }
 
-  let browser;
+  // Try a few executablePath candidates for environments where the
+  // browsers Playwright expects aren't in the standard cache path.
+  const candidates: (string | undefined)[] = [undefined];
   try {
-    browser = await chromium.launch({ headless: true });
-  } catch (err) {
-    console.warn(
-      "prerender-bodies: chromium launch failed, skipping full-body prerender.",
-      err,
+    const roots = readdirSync("/").filter((n) =>
+      /^chromium(-|_headless_shell-)/.test(n),
     );
+    for (const r of roots) {
+      const p = `/${r}/chrome-linux/chrome`;
+      const s = `/${r}/chrome-linux/headless_shell`;
+      if (existsSync(p)) candidates.push(p);
+      if (existsSync(s)) candidates.push(s);
+    }
+  } catch { /* ignore */ }
+
+  let browser: Awaited<ReturnType<typeof chromium.launch>> | null = null;
+  for (const executablePath of candidates) {
+    try {
+      browser = await chromium.launch({
+        headless: true,
+        ...(executablePath ? { executablePath } : {}),
+      });
+      break;
+    } catch (err) {
+      console.warn(
+        `prerender-bodies: chromium launch failed (${executablePath ?? "default"}):`,
+        (err as Error).message,
+      );
+    }
+  }
+  if (!browser) {
+    console.warn("prerender-bodies: no chromium available, skipping.");
     return;
   }
 
