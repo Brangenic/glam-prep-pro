@@ -16,16 +16,16 @@ const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
 const DEFAULT_OG = `${BASE_URL}/og-image.png`;
 const DEFAULT_OG_TYPE = "image/png";
-const DEFAULT_OG_W = 1200;
-const DEFAULT_OG_H = 630;
 const HERO_FALLBACK = `${BASE_URL}/og-home.jpg`;
 
 const OG_W = 1200;
 const OG_H = 630;
 
-// Destination → real hero image source (mirrors src/data/destinations.ts).
-// Kept inline to avoid importing the app's runtime asset modules.
-const DESTINATION_HERO_SOURCES: Record<string, string> = {
+// Route path → real hero image source. Kept inline (not imported) so this
+// script stays free of the app's runtime asset modules.  Every entry is
+// transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
+// social crawlers always see a page-specific preview in the raw HTML.
+const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/jamaica":
     "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
   "/saint-lucia":
@@ -47,7 +47,29 @@ const DESTINATION_HERO_SOURCES: Record<string, string> = {
   // /guyana uses a bundled local asset (carnival-4.jpg). Resolve from dist
   // assets at transcode time so we don't depend on the hashed filename here.
   "/guyana": "asset:carnival-4",
+  // Trinidad Carnival 2027 uses the same hero as the Trinidad destination.
+  "/trinidad-carnival-2027":
+    "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
+  // Services already ship 1200-ish source images under /images/services/.
+  // We still transcode them to 1200×630 so previews render correctly.
+  "/services/carnival-makeup": "/images/services/makeup-hero.jpg",
+  "/services/carnival-hair": "/images/services/hair-hero.jpg",
+  "/services/carnival-photoshoot": "/images/services/photoshoot-hero.jpg",
+  "/services/getting-dressed": "/images/services/getting-dressed-hero.jpg",
+  "/services/carnival-shuttle": "/images/services/carnival-shuttle-og.jpg",
+  // Section / utility routes — pick a relevant on-brand photo per page so
+  // no important route falls back to the generic logo card.
+  "/about": "/images/services/makeup-hero.jpg",
+  "/faq": "/images/services/hair-hero.jpg",
+  "/reviews": "/images/services/photoshoot-hero.jpg",
+  "/blogs": "/images/services/photoshoot-hero.jpg",
+  "/amazon-store": "/images/services/makeup-hero.jpg",
+  "/booking-calculator": "/images/services/makeup-hero.jpg",
 };
+
+function slugForRoute(path: string): string {
+  return path.replace(/^\//, "").replace(/\//g, "-");
+}
 
 async function transcodeOgImage(slug: string, source: string): Promise<string | null> {
   try {
