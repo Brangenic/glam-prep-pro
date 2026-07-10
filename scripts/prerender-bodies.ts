@@ -649,8 +649,10 @@ function blogContentFromHtml(html: string, slug: string): Content | null {
 // OFF so raw HTML in markdown is escaped by micromark itself.
 function markdownToSafeHtml(md: string): string {
   const cleaned = md
-    // Data URI placeholder images that Wix uses — remove them.
-    .replace(/!\[[^\]]*\]\(data:[^)]+\)\s*/g, "")
+    // Data URI placeholder images that Wix uses — remove them. The
+    // data URI itself may contain `)` chars (encoded SVG paths), so
+    // consume greedily up to the last `)` on the same line.
+    .replace(/!\[[^\]]*\]\(data:[^\n]*\)\s*/g, "")
     // Strip footnote/anchor artefacts that break in a static shell.
     .replace(/\{#[^}]+\}/g, "");
   let html = micromark(cleaned, {
