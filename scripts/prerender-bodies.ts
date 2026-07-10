@@ -889,10 +889,10 @@ async function main() {
   );
 }
 
-try {
-  await main();
-} catch (err) {
-  console.error("prerender-bodies failed:", err);
-}
-// Never block the build.
-process.exit(0);
+main()
+  .catch((err) => {
+    console.error("prerender-bodies failed:", err);
+  })
+  .finally(() => {
+    process.exit(0);
+  });
