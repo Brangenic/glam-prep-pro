@@ -65,6 +65,12 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/blogs": "/images/services/photoshoot-hero.jpg",
   "/amazon-store": "/images/services/makeup-hero.jpg",
   "/booking-calculator": "/images/services/makeup-hero.jpg",
+  "/best-carnival-makeup-trinidad":
+    "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
+  "/best-carnival-makeup-jamaica":
+    "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
+  "/best-carnival-makeup-miami":
+    "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&raw=1",
 };
 
 function slugForRoute(path: string): string {
@@ -301,7 +307,32 @@ const staticRoutes: RouteMeta[] = [
   },
 ];
 
-const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes];
+// Answer-first commercial pages targeting "best carnival makeup artist in <territory>".
+const answerRoutes: RouteMeta[] = [
+  {
+    path: "/best-carnival-makeup-trinidad",
+    title: "Best Carnival Makeup Artist in Trinidad | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub is the best carnival makeup artist in Trinidad — sweat-resistant makeup, hair, dressing, photos and shuttle from the Hilton, two minutes from the Savannah. Trusted by 15,000+ since 2017.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
+    path: "/best-carnival-makeup-jamaica",
+    title: "Best Carnival Makeup Artist in Jamaica | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub is the best carnival makeup artist in Jamaica — sweat-resistant road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle in one location.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
+    path: "/best-carnival-makeup-miami",
+    title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival — sweat-resistant road glam plus hair, dressing, photos and shuttle in one location.",
+    ogImage: HERO_FALLBACK,
+  },
+];
+
+const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes, ...answerRoutes];
 
 // ============================================================
 // JSON-LD enrichment
@@ -428,6 +459,81 @@ const DEST_CRUMB: Record<string, string> = {
   "/trinidad-carnival-2027": "Trinidad Carnival 2027",
 };
 
+// ---------- Answer-page metadata (Task 1) ----------
+type AnswerMeta = {
+  crumb: string;
+  territoryName: string;
+  areaServed: object;
+  destPath: string;
+  faqs: { q: string; a: string }[];
+};
+const ANSWER_META: Record<string, AnswerMeta> = {
+  "/best-carnival-makeup-trinidad": {
+    crumb: "Best Carnival Makeup Artist in Trinidad",
+    territoryName: "Trinidad",
+    areaServed: { "@type": "Country", name: "Trinidad and Tobago" },
+    destPath: "/trinidad",
+    faqs: [
+      { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
+      { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
+      { q: "How much does Trinidad carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most masqueraders spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. A US$50 deposit secures the slot; the balance is due 7 days before Carnival." },
+      { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
+    ],
+  },
+  "/best-carnival-makeup-jamaica": {
+    crumb: "Best Carnival Makeup Artist in Jamaica",
+    territoryName: "Jamaica",
+    areaServed: { "@type": "Country", name: "Jamaica" },
+    destPath: "/jamaica",
+    faqs: [
+      { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+      { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything — makeup, hair, dressing, photos, shuttle — happens in one air-conditioned location so you leave with the band." },
+      { q: "How much does Jamaica carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit; balance due 7 days before." },
+      { q: "Does the makeup survive the Jamaica heat?", a: "Yes — the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
+    ],
+  },
+  "/best-carnival-makeup-miami": {
+    crumb: "Best Carnival Makeup Artist in Miami",
+    territoryName: "Miami",
+    areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "Country", name: "United States" } },
+    destPath: "/miami",
+    faqs: [
+      { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise — with the same senior MUA team." },
+      { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend — makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
+      { q: "How much does Miami carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit secures the slot; balance due 7 days before Carnival." },
+      { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events, pay the US$50 deposit, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead." },
+    ],
+  },
+};
+
+function faqPage(faqs: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+// HowTo for /services/carnival-makeup prep — steps match the visible on-page copy.
+const MAKEUP_HOWTO = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to prep for your Carnival makeup appointment",
+  description:
+    "Prep steps for a Carnival Glam Hub makeup appointment so your sweat-resistant look holds all day on the road.",
+  totalTime: "PT10M",
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Arrive on a clean face", text: "Arrive on a clean face — no SPF, no primer, no leftover product." },
+    { "@type": "HowToStep", position: 2, name: "Eat beforehand", text: "Eat something before you get to the lounge; sessions run around 90 minutes and you will sit through hair and getting-dressed after." },
+    { "@type": "HowToStep", position: 3, name: "Bring headpiece, costume and references", text: "Bring your headpiece, any reference photos you want the artist to see, and your costume so the artist can match base tones and shimmer to it." },
+    { "@type": "HowToStep", position: 4, name: "Put contacts in first", text: "If you wear contact lenses, put them in before the eye look. Lash strips and adhesives are provided." },
+  ],
+};
+
 function buildJsonLd(route: RouteMeta): object[] {
   const url = `${BASE_URL}${route.path}`;
   const blocks: object[] = [];
@@ -438,6 +544,8 @@ function buildJsonLd(route: RouteMeta): object[] {
     blocks.push(sectionCrumb("Services", meta?.crumb ?? route.title, route.path));
   } else if (DEST_AREA[route.path]) {
     blocks.push(sectionCrumb("Destinations", DEST_CRUMB[route.path] ?? route.title, route.path));
+  } else if (ANSWER_META[route.path]) {
+    blocks.push(homeCrumb(ANSWER_META[route.path].crumb, route.path));
   } else {
     // Map known static routes to friendly crumb names.
     const NAME: Record<string, string> = {
@@ -468,6 +576,10 @@ function buildJsonLd(route: RouteMeta): object[] {
       if (meta.extraOffer) service.offers = meta.extraOffer;
       blocks.push(service);
     }
+    // HowTo on the makeup service page — prep steps mirror on-page copy.
+    if (route.path === "/services/carnival-makeup") {
+      blocks.push(MAKEUP_HOWTO);
+    }
   } else if (DEST_AREA[route.path]) {
     blocks.push({
       "@context": "https://schema.org",
@@ -479,6 +591,28 @@ function buildJsonLd(route: RouteMeta): object[] {
       provider: PROVIDER,
       areaServed: DEST_AREA[route.path],
     });
+  } else if (ANSWER_META[route.path]) {
+    const a = ANSWER_META[route.path];
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: `Best Carnival Makeup Artist in ${a.territoryName} — Carnival Glam Hub`,
+      serviceType: "Carnival makeup",
+      url,
+      description: route.description,
+      provider: PROVIDER,
+      areaServed: a.areaServed,
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "USD",
+        lowPrice: "35",
+        highPrice: "2000",
+        offerCount: "4",
+        availability: "https://schema.org/InStock",
+        url: "https://carnivalglamhub.masos.app/events",
+      },
+    });
+    blocks.push(faqPage(a.faqs));
   }
 
   // 3) Trinidad 2027 gets its real Event + reviewed-business schemas in

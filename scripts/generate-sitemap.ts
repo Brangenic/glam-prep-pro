@@ -47,6 +47,9 @@ const staticEntries: StaticEntry[] = [
   { path: "/toronto", priority: "0.8", changefreq: "weekly" },
   { path: "/guyana", priority: "0.8", changefreq: "weekly" },
   { path: "/epic-cruise", priority: "0.8", changefreq: "weekly" },
+  { path: "/best-carnival-makeup-trinidad", priority: "0.85", changefreq: "monthly" },
+  { path: "/best-carnival-makeup-jamaica", priority: "0.85", changefreq: "monthly" },
+  { path: "/best-carnival-makeup-miami", priority: "0.85", changefreq: "monthly" },
 ];
 
 const EXCLUDED_SLUG_PATTERNS: RegExp[] = [

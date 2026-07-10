@@ -49,6 +49,136 @@ function wrap(c: Content): string {
 
 const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`;
 
+// Reusable internal-link block. Rendered into the STATIC body so
+// non-JS crawlers see the hub-and-spoke internal links, not just the
+// hydrated React app. Selection is per route.
+const ALL_SERVICE_LINKS = `
+  <li><a href="/services/carnival-makeup">Sweat-resistant Carnival makeup</a></li>
+  <li><a href="/services/carnival-hair">Carnival hair</a></li>
+  <li><a href="/services/carnival-photoshoot">Carnival photoshoot</a></li>
+  <li><a href="/services/getting-dressed">Getting-dressed help</a></li>
+  <li><a href="/services/carnival-shuttle">Carnival shuttle</a></li>`;
+
+function relatedBlock(opts: {
+  services?: { href: string; label: string }[];
+  destinations?: { href: string; label: string }[];
+  guides?: { href: string; label: string }[];
+}): string {
+  const col = (title: string, items?: { href: string; label: string }[]) => {
+    if (!items || !items.length) return "";
+    const lis = items
+      .map((i) => `<li><a href="${i.href}">${escapeHtml(i.label)}</a></li>`)
+      .join("");
+    return `<h3>${title}</h3><ul>${lis}</ul>`;
+  };
+  return `<section data-related-links><h2>Keep exploring</h2>${col("Services", opts.services)}${col("Destinations", opts.destinations)}${col("Guides", opts.guides)}</section>`;
+}
+
+// Hub-and-spoke: service pages → 3 destinations + 2 guides.
+const SERVICE_RELATED: Record<string, string> = {
+  "/services/carnival-makeup": relatedBlock({
+    destinations: [
+      { href: "/trinidad", label: "Trinidad Carnival makeup" },
+      { href: "/jamaica", label: "Jamaica Carnival makeup" },
+      { href: "/barbados", label: "Barbados Crop Over makeup" },
+    ],
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  }),
+  "/services/carnival-hair": relatedBlock({
+    destinations: [
+      { href: "/trinidad", label: "Trinidad Carnival hair" },
+      { href: "/jamaica", label: "Jamaica Carnival hair" },
+      { href: "/miami", label: "Miami Carnival hair" },
+    ],
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  }),
+  "/services/carnival-photoshoot": relatedBlock({
+    destinations: [
+      { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027 photoshoot" },
+      { href: "/jamaica", label: "Jamaica Carnival photoshoot" },
+      { href: "/miami", label: "Miami Carnival photoshoot" },
+    ],
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
+    ],
+  }),
+  "/services/getting-dressed": relatedBlock({
+    destinations: [
+      { href: "/trinidad", label: "Trinidad Carnival dressing" },
+      { href: "/grenada", label: "Grenada Spicemas dressing" },
+      { href: "/barbados", label: "Barbados Crop Over dressing" },
+    ],
+    guides: [
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+      { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
+    ],
+  }),
+  "/services/carnival-shuttle": relatedBlock({
+    destinations: [
+      { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027 shuttle" },
+      { href: "/trinidad", label: "Trinidad Carnival hub" },
+      { href: "/jamaica", label: "Jamaica Carnival hub" },
+    ],
+    guides: [
+      { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  }),
+};
+
+// Destinations link to all 5 services + 2 guides + 2 neighbours.
+const DEST_NEIGHBOURS: Record<string, string[]> = {
+  jamaica: ["trinidad", "miami"],
+  "saint-lucia": ["trinidad", "barbados"],
+  antigua: ["barbados", "trinidad"],
+  grenada: ["trinidad", "barbados"],
+  barbados: ["trinidad", "grenada"],
+  miami: ["jamaica", "trinidad"],
+  toronto: ["miami", "trinidad"],
+  trinidad: ["jamaica", "barbados"],
+  guyana: ["trinidad", "barbados"],
+  "epic-cruise": ["trinidad", "jamaica"],
+};
+const DEST_LABEL: Record<string, string> = {
+  jamaica: "Jamaica Carnival",
+  "saint-lucia": "Saint Lucia Carnival",
+  antigua: "Antigua Carnival",
+  grenada: "Grenada Spicemas",
+  barbados: "Barbados Crop Over",
+  miami: "Miami Carnival",
+  toronto: "Toronto Caribana",
+  trinidad: "Trinidad Carnival",
+  guyana: "Guyana Carnival",
+  "epic-cruise": "Epic Cruise — Trinidad Carnival",
+};
+function destinationRelated(slug: string): string {
+  const neighbours = (DEST_NEIGHBOURS[slug] ?? []).map((s) => ({
+    href: `/${s}`,
+    label: DEST_LABEL[s] ?? s,
+  }));
+  return relatedBlock({
+    services: [
+      { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
+      { href: "/services/carnival-hair", label: "Carnival hair" },
+      { href: "/services/carnival-photoshoot", label: "Carnival photoshoot" },
+      { href: "/services/getting-dressed", label: "Getting-dressed help" },
+      { href: "/services/carnival-shuttle", label: "Carnival shuttle" },
+    ],
+    destinations: neighbours,
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  });
+}
+
 // ---------------------------------------------------------------
 // Destinations — parsed at build time from src/data/destinations.ts
 // so the injected copy always matches the app's real data. We cannot
@@ -181,6 +311,7 @@ function destinationBody(d: ParsedDest): string {
     `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Sweat-resistant, road-ready makeup, hair, costume dressing, photoshoot and shuttle from one lounge.</p>`,
   );
   parts.push(CTA);
+  parts.push(destinationRelated(d.slug));
   return parts.join("\n");
 }
 
@@ -322,6 +453,14 @@ ${CTA}`,
 
 function buildRouteMap(): Record<string, Content> {
   const map: Record<string, Content> = { ...CORE, ...SERVICES };
+  // Append prerendered internal-link blocks to each service body so
+  // non-JS crawlers see the hub-and-spoke internal links, not only
+  // the client-rendered <RelatedLinks /> component.
+  for (const path of Object.keys(SERVICE_RELATED)) {
+    if (map[path]) {
+      map[path] = { ...map[path], body: `${map[path].body}\n${SERVICE_RELATED[path]}` };
+    }
+  }
   const dests = parseDestinations();
   for (const d of dests) {
     const path = `/${d.slug}`;
@@ -336,6 +475,113 @@ function buildRouteMap(): Record<string, Content> {
       body: destinationBody(trinidad),
     };
   }
+
+  // Task 1 answer pages. Sourced from real destination data.
+  const byslug = (s: string) => dests.find((d) => d.slug === s);
+  const answerPages: Array<{
+    path: string;
+    territory: string;
+    slug: string;
+    venueLine: string;
+    faqs: { q: string; a: string }[];
+  }> = [
+    {
+      path: "/best-carnival-makeup-trinidad",
+      territory: "Trinidad",
+      slug: "trinidad",
+      venueLine:
+        "Hilton Hotel, Port of Spain — two minutes from the Savannah. Shuttle to your band included in concierge packages.",
+      faqs: [
+        { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
+        { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
+        { q: "How much does Trinidad carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most masqueraders spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. A US$50 deposit secures the slot; the balance is due 7 days before Carnival." },
+        { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
+      ],
+    },
+    {
+      path: "/best-carnival-makeup-jamaica",
+      territory: "Jamaica",
+      slug: "jamaica",
+      venueLine:
+        byslug("jamaica")?.longDescription ??
+        "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
+      faqs: [
+        { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+        { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything — makeup, hair, dressing, photos, shuttle — happens in one air-conditioned location so you leave with the band." },
+        { q: "How much does Jamaica carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit; balance due 7 days before." },
+        { q: "Does the makeup survive the Jamaica heat?", a: "Yes — the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
+      ],
+    },
+    {
+      path: "/best-carnival-makeup-miami",
+      territory: "Miami",
+      slug: "miami",
+      venueLine:
+        byslug("miami")?.longDescription ??
+        "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
+      faqs: [
+        { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise — with the same senior MUA team." },
+        { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend — makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
+        { q: "How much does Miami carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit secures the slot; balance due 7 days before Carnival." },
+        { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events, pay the US$50 deposit, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead." },
+      ],
+    },
+  ];
+
+  for (const p of answerPages) {
+    const dest = byslug(p.slug);
+    const dateLine = dest?.date
+      ? `<p><strong>${escapeHtml(p.territory)} Carnival date:</strong> ${escapeHtml(dest.date)}.</p>`
+      : "";
+    const faqHtml = p.faqs
+      .map(
+        (f) =>
+          `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`,
+      )
+      .join("");
+    const body = `<p><strong>For ${escapeHtml(p.territory)} Carnival, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road glam built to hold 10–12 hours in the sun, delivered from one air-conditioned lounge alongside hair, getting-dressed, seamstress, photoshoot and shuttle. Trusted by 15,000+ masqueraders since 2017.</p>
+${dateLine}
+<p>${escapeHtml(p.venueLine)}</p>
+<h2>Why Carnival Glam Hub is the answer</h2>
+<ul>
+<li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
+<li>Everything in one location — makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
+<li>Trusted by 15,000+ masqueraders since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
+<li>The only glam service that travels the full Caribbean carnival circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
+</ul>
+<h2>What's included</h2>
+<p>Skin prep and priming, sweat-resistant foundation base, contour and highlight, eye look with lash, brow shaping, lip finish and a road-proof setting layer. Headpiece-ready hair. Full getting-dressed help for wire bras, monokinis, backpacks, collars and harnesses. Optional in-house carnival photoshoot and shuttle to the band.</p>
+<h2>Pricing tiers</h2>
+<ul>
+<li>Road-ready access (getting-dressed, shuttle, lounge) — from US$35.</li>
+<li>Professional carnival makeup — from US$160 (most masqueraders spend US$200–300).</li>
+<li>Celebrity-artist glam — US$250–US$350.</li>
+<li>Premium and editorial looks — up to US$2,000.</li>
+</ul>
+<h2>How booking works</h2>
+<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>, pay the US$50 deposit to secure the appointment, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead.</p>
+<h2>Frequently asked</h2>
+${faqHtml}
+${CTA}
+${relatedBlock({
+  services: [
+    { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
+    { href: "/services/carnival-hair", label: "Carnival hair" },
+  ],
+  destinations: [
+    { href: `/${p.slug}`, label: `${p.territory} Carnival destination` },
+  ],
+  guides: [
+    { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+    { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+  ],
+})}`;
+    map[p.path] = {
+      title: `Best carnival makeup artist in ${p.territory}: Carnival Glam Hub`,
+      body,
+    };
+  }
+
   return map;
 }
 
