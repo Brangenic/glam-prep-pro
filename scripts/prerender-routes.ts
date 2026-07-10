@@ -459,6 +459,81 @@ const DEST_CRUMB: Record<string, string> = {
   "/trinidad-carnival-2027": "Trinidad Carnival 2027",
 };
 
+// ---------- Answer-page metadata (Task 1) ----------
+type AnswerMeta = {
+  crumb: string;
+  territoryName: string;
+  areaServed: object;
+  destPath: string;
+  faqs: { q: string; a: string }[];
+};
+const ANSWER_META: Record<string, AnswerMeta> = {
+  "/best-carnival-makeup-trinidad": {
+    crumb: "Best Carnival Makeup Artist in Trinidad",
+    territoryName: "Trinidad",
+    areaServed: { "@type": "Country", name: "Trinidad and Tobago" },
+    destPath: "/trinidad",
+    faqs: [
+      { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
+      { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
+      { q: "How much does Trinidad carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most masqueraders spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. A US$50 deposit secures the slot; the balance is due 7 days before Carnival." },
+      { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
+    ],
+  },
+  "/best-carnival-makeup-jamaica": {
+    crumb: "Best Carnival Makeup Artist in Jamaica",
+    territoryName: "Jamaica",
+    areaServed: { "@type": "Country", name: "Jamaica" },
+    destPath: "/jamaica",
+    faqs: [
+      { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+      { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything — makeup, hair, dressing, photos, shuttle — happens in one air-conditioned location so you leave with the band." },
+      { q: "How much does Jamaica carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit; balance due 7 days before." },
+      { q: "Does the makeup survive the Jamaica heat?", a: "Yes — the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
+    ],
+  },
+  "/best-carnival-makeup-miami": {
+    crumb: "Best Carnival Makeup Artist in Miami",
+    territoryName: "Miami",
+    areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "Country", name: "United States" } },
+    destPath: "/miami",
+    faqs: [
+      { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise — with the same senior MUA team." },
+      { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend — makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
+      { q: "How much does Miami carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit secures the slot; balance due 7 days before Carnival." },
+      { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events, pay the US$50 deposit, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead." },
+    ],
+  },
+};
+
+function faqPage(faqs: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+// HowTo for /services/carnival-makeup prep — steps match the visible on-page copy.
+const MAKEUP_HOWTO = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to prep for your Carnival makeup appointment",
+  description:
+    "Prep steps for a Carnival Glam Hub makeup appointment so your sweat-resistant look holds all day on the road.",
+  totalTime: "PT10M",
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Arrive on a clean face", text: "Arrive on a clean face — no SPF, no primer, no leftover product." },
+    { "@type": "HowToStep", position: 2, name: "Eat beforehand", text: "Eat something before you get to the lounge; sessions run around 90 minutes and you will sit through hair and getting-dressed after." },
+    { "@type": "HowToStep", position: 3, name: "Bring headpiece, costume and references", text: "Bring your headpiece, any reference photos you want the artist to see, and your costume so the artist can match base tones and shimmer to it." },
+    { "@type": "HowToStep", position: 4, name: "Put contacts in first", text: "If you wear contact lenses, put them in before the eye look. Lash strips and adhesives are provided." },
+  ],
+};
+
 function buildJsonLd(route: RouteMeta): object[] {
   const url = `${BASE_URL}${route.path}`;
   const blocks: object[] = [];
