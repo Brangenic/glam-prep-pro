@@ -26,9 +26,19 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
+import { createClient } from "@supabase/supabase-js";
+import { micromark } from "micromark";
+import { gfm, gfmHtml } from "micromark-extension-gfm";
+import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
 const DIST = resolve("dist");
 const DEST_SRC = resolve("src/data/destinations.ts");
+
+const SUPABASE_URL =
+  process.env.VITE_SUPABASE_URL ?? "https://bvrejdrsrmvdknzoskxi.supabase.co";
+const SUPABASE_ANON_KEY =
+  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2cmVqZHJzcm12ZGtuem9za3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDM2NzQsImV4cCI6MjA4OTQxOTY3NH0.H6KmuQu8xb__RDjPx2ELH92WdhR4rqhfReRm23XSDN4";
 
 // ---------------------------------------------------------------
 // Route content authors
