@@ -544,6 +544,8 @@ function buildJsonLd(route: RouteMeta): object[] {
     blocks.push(sectionCrumb("Services", meta?.crumb ?? route.title, route.path));
   } else if (DEST_AREA[route.path]) {
     blocks.push(sectionCrumb("Destinations", DEST_CRUMB[route.path] ?? route.title, route.path));
+  } else if (ANSWER_META[route.path]) {
+    blocks.push(homeCrumb(ANSWER_META[route.path].crumb, route.path));
   } else {
     // Map known static routes to friendly crumb names.
     const NAME: Record<string, string> = {
@@ -574,6 +576,10 @@ function buildJsonLd(route: RouteMeta): object[] {
       if (meta.extraOffer) service.offers = meta.extraOffer;
       blocks.push(service);
     }
+    // HowTo on the makeup service page — prep steps mirror on-page copy.
+    if (route.path === "/services/carnival-makeup") {
+      blocks.push(MAKEUP_HOWTO);
+    }
   } else if (DEST_AREA[route.path]) {
     blocks.push({
       "@context": "https://schema.org",
@@ -585,6 +591,28 @@ function buildJsonLd(route: RouteMeta): object[] {
       provider: PROVIDER,
       areaServed: DEST_AREA[route.path],
     });
+  } else if (ANSWER_META[route.path]) {
+    const a = ANSWER_META[route.path];
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: `Best Carnival Makeup Artist in ${a.territoryName} — Carnival Glam Hub`,
+      serviceType: "Carnival makeup",
+      url,
+      description: route.description,
+      provider: PROVIDER,
+      areaServed: a.areaServed,
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "USD",
+        lowPrice: "35",
+        highPrice: "2000",
+        offerCount: "4",
+        availability: "https://schema.org/InStock",
+        url: "https://carnivalglamhub.masos.app/events",
+      },
+    });
+    blocks.push(faqPage(a.faqs));
   }
 
   // 3) Trinidad 2027 gets its real Event + reviewed-business schemas in
