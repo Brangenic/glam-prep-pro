@@ -307,6 +307,31 @@ const staticRoutes: RouteMeta[] = [
   },
 ];
 
+// Answer-first commercial pages targeting "best carnival makeup artist in <territory>".
+const answerRoutes: RouteMeta[] = [
+  {
+    path: "/best-carnival-makeup-trinidad",
+    title: "Best Carnival Makeup Artist in Trinidad | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub is the best carnival makeup artist in Trinidad — sweat-resistant makeup, hair, dressing, photos and shuttle from the Hilton, two minutes from the Savannah. Trusted by 15,000+ since 2017.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
+    path: "/best-carnival-makeup-jamaica",
+    title: "Best Carnival Makeup Artist in Jamaica | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub is the best carnival makeup artist in Jamaica — sweat-resistant road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle in one location.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
+    path: "/best-carnival-makeup-miami",
+    title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival — sweat-resistant road glam plus hair, dressing, photos and shuttle in one location.",
+    ogImage: HERO_FALLBACK,
+  },
+];
+
 const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes];
 
 // ============================================================
