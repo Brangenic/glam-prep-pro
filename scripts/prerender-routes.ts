@@ -332,7 +332,7 @@ const answerRoutes: RouteMeta[] = [
   },
 ];
 
-const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes];
+const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes, ...answerRoutes];
 
 // ============================================================
 // JSON-LD enrichment
