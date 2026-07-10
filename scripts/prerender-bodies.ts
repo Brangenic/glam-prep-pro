@@ -49,6 +49,136 @@ function wrap(c: Content): string {
 
 const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`;
 
+// Reusable internal-link block. Rendered into the STATIC body so
+// non-JS crawlers see the hub-and-spoke internal links, not just the
+// hydrated React app. Selection is per route.
+const ALL_SERVICE_LINKS = `
+  <li><a href="/services/carnival-makeup">Sweat-resistant Carnival makeup</a></li>
+  <li><a href="/services/carnival-hair">Carnival hair</a></li>
+  <li><a href="/services/carnival-photoshoot">Carnival photoshoot</a></li>
+  <li><a href="/services/getting-dressed">Getting-dressed help</a></li>
+  <li><a href="/services/carnival-shuttle">Carnival shuttle</a></li>`;
+
+function relatedBlock(opts: {
+  services?: { href: string; label: string }[];
+  destinations?: { href: string; label: string }[];
+  guides?: { href: string; label: string }[];
+}): string {
+  const col = (title: string, items?: { href: string; label: string }[]) => {
+    if (!items || !items.length) return "";
+    const lis = items
+      .map((i) => `<li><a href="${i.href}">${escapeHtml(i.label)}</a></li>`)
+      .join("");
+    return `<h3>${title}</h3><ul>${lis}</ul>`;
+  };
+  return `<section data-related-links><h2>Keep exploring</h2>${col("Services", opts.services)}${col("Destinations", opts.destinations)}${col("Guides", opts.guides)}</section>`;
+}
+
+// Hub-and-spoke: service pages → 3 destinations + 2 guides.
+const SERVICE_RELATED: Record<string, string> = {
+  "/services/carnival-makeup": relatedBlock({
+    destinations: [
+      { href: "/trinidad", label: "Trinidad Carnival makeup" },
+      { href: "/jamaica", label: "Jamaica Carnival makeup" },
+      { href: "/barbados", label: "Barbados Crop Over makeup" },
+    ],
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  }),
+  "/services/carnival-hair": relatedBlock({
+    destinations: [
+      { href: "/trinidad", label: "Trinidad Carnival hair" },
+      { href: "/jamaica", label: "Jamaica Carnival hair" },
+      { href: "/miami", label: "Miami Carnival hair" },
+    ],
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  }),
+  "/services/carnival-photoshoot": relatedBlock({
+    destinations: [
+      { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027 photoshoot" },
+      { href: "/jamaica", label: "Jamaica Carnival photoshoot" },
+      { href: "/miami", label: "Miami Carnival photoshoot" },
+    ],
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
+    ],
+  }),
+  "/services/getting-dressed": relatedBlock({
+    destinations: [
+      { href: "/trinidad", label: "Trinidad Carnival dressing" },
+      { href: "/grenada", label: "Grenada Spicemas dressing" },
+      { href: "/barbados", label: "Barbados Crop Over dressing" },
+    ],
+    guides: [
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+      { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
+    ],
+  }),
+  "/services/carnival-shuttle": relatedBlock({
+    destinations: [
+      { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027 shuttle" },
+      { href: "/trinidad", label: "Trinidad Carnival hub" },
+      { href: "/jamaica", label: "Jamaica Carnival hub" },
+    ],
+    guides: [
+      { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  }),
+};
+
+// Destinations link to all 5 services + 2 guides + 2 neighbours.
+const DEST_NEIGHBOURS: Record<string, string[]> = {
+  jamaica: ["trinidad", "miami"],
+  "saint-lucia": ["trinidad", "barbados"],
+  antigua: ["barbados", "trinidad"],
+  grenada: ["trinidad", "barbados"],
+  barbados: ["trinidad", "grenada"],
+  miami: ["jamaica", "trinidad"],
+  toronto: ["miami", "trinidad"],
+  trinidad: ["jamaica", "barbados"],
+  guyana: ["trinidad", "barbados"],
+  "epic-cruise": ["trinidad", "jamaica"],
+};
+const DEST_LABEL: Record<string, string> = {
+  jamaica: "Jamaica Carnival",
+  "saint-lucia": "Saint Lucia Carnival",
+  antigua: "Antigua Carnival",
+  grenada: "Grenada Spicemas",
+  barbados: "Barbados Crop Over",
+  miami: "Miami Carnival",
+  toronto: "Toronto Caribana",
+  trinidad: "Trinidad Carnival",
+  guyana: "Guyana Carnival",
+  "epic-cruise": "Epic Cruise — Trinidad Carnival",
+};
+function destinationRelated(slug: string): string {
+  const neighbours = (DEST_NEIGHBOURS[slug] ?? []).map((s) => ({
+    href: `/${s}`,
+    label: DEST_LABEL[s] ?? s,
+  }));
+  return relatedBlock({
+    services: [
+      { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
+      { href: "/services/carnival-hair", label: "Carnival hair" },
+      { href: "/services/carnival-photoshoot", label: "Carnival photoshoot" },
+      { href: "/services/getting-dressed", label: "Getting-dressed help" },
+      { href: "/services/carnival-shuttle", label: "Carnival shuttle" },
+    ],
+    destinations: neighbours,
+    guides: [
+      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+    ],
+  });
+}
+
 // ---------------------------------------------------------------
 // Destinations — parsed at build time from src/data/destinations.ts
 // so the injected copy always matches the app's real data. We cannot
