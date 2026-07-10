@@ -29,6 +29,11 @@ import Admin from "./pages/Admin.tsx";
 import BookingConfirmed from "./pages/BookingConfirmed.tsx";
 import BookingCalculator from "./pages/BookingCalculator.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import {
+  BestCarnivalMakeupTrinidad,
+  BestCarnivalMakeupJamaica,
+  BestCarnivalMakeupMiami,
+} from "./pages/BestCarnivalMakeup.tsx";
 
 const queryClient = new QueryClient();
 
@@ -120,6 +125,9 @@ const App = () => (
           <Route path="/booking-confirmed" element={<BookingConfirmed />} />
           <Route path="/thank-you" element={<BookingConfirmed />} />
           <Route path="/booking-calculator" element={<BookingCalculator />} />
+          <Route path="/best-carnival-makeup-trinidad" element={<BestCarnivalMakeupTrinidad />} />
+          <Route path="/best-carnival-makeup-jamaica" element={<BestCarnivalMakeupJamaica />} />
+          <Route path="/best-carnival-makeup-miami" element={<BestCarnivalMakeupMiami />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingWhatsApp />
