@@ -311,6 +311,7 @@ function destinationBody(d: ParsedDest): string {
     `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Sweat-resistant, road-ready makeup, hair, costume dressing, photoshoot and shuttle from one lounge.</p>`,
   );
   parts.push(CTA);
+  parts.push(destinationRelated(d.slug));
   return parts.join("\n");
 }
 
