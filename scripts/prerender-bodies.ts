@@ -26,9 +26,19 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
+import { createClient } from "@supabase/supabase-js";
+import { micromark } from "micromark";
+import { gfm, gfmHtml } from "micromark-extension-gfm";
+import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
 const DIST = resolve("dist");
 const DEST_SRC = resolve("src/data/destinations.ts");
+
+const SUPABASE_URL =
+  process.env.VITE_SUPABASE_URL ?? "https://bvrejdrsrmvdknzoskxi.supabase.co";
+const SUPABASE_ANON_KEY =
+  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2cmVqZHJzcm12ZGtuem9za3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDM2NzQsImV4cCI6MjA4OTQxOTY3NH0.H6KmuQu8xb__RDjPx2ELH92WdhR4rqhfReRm23XSDN4";
 
 // ---------------------------------------------------------------
 // Route content authors
@@ -632,6 +642,184 @@ function blogContentFromHtml(html: string, slug: string): Content | null {
   };
 }
 
+// -------- Blog article body rendering --------
+
+// Sanitise markdown → HTML. Strip any raw <script>/<iframe>/on* handlers
+// that could sneak in through user content. `allowDangerousHtml` is left
+// OFF so raw HTML in markdown is escaped by micromark itself.
+function markdownToSafeHtml(md: string): string {
+  const cleaned = md
+    // Data URI placeholder images that Wix uses — remove them. The
+    // data URI itself may contain `)` chars (encoded SVG paths), so
+    // consume greedily up to the last `)` on the same line.
+    .replace(/!\[[^\]]*\]\(data:[^\n]*\)\s*/g, "")
+    // Strip footnote/anchor artefacts that break in a static shell.
+    .replace(/\{#[^}]+\}/g, "");
+  let html = micromark(cleaned, {
+    extensions: [gfm()],
+    htmlExtensions: [gfmHtml()],
+  });
+  // Defence in depth: kill anything scripty. micromark already escapes
+  // raw HTML, but recovered posts may contain HTML we intentionally
+  // rendered — be paranoid.
+  html = html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+    .replace(/\son[a-z]+="[^"]*"/gi, "")
+    .replace(/\son[a-z]+='[^']*'/gi, "");
+  return html;
+}
+
+// Deterministic sibling selection for related-links block.
+function pickSiblings(slug: string, all: string[], n = 2): string[] {
+  const pool = all.filter((s) => s !== slug);
+  if (pool.length <= n) return pool;
+  // Simple stable hash from slug so the same post always gets the
+  // same siblings (avoids build-to-build churn).
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  const out: string[] = [];
+  const seen = new Set<number>();
+  for (let i = 0; i < n; i++) {
+    let idx = (h + i * 7919) % pool.length;
+    while (seen.has(idx)) idx = (idx + 1) % pool.length;
+    seen.add(idx);
+    out.push(pool[idx]);
+  }
+  return out;
+}
+
+// Best hub link for a blog slug — surface one relevant service or
+// destination page in every article's related block.
+function primaryHubFor(slug: string): { href: string; label: string } {
+  const s = slug.toLowerCase();
+  if (/hair|ponytail|braid/.test(s)) return { href: "/services/carnival-hair", label: "Carnival hair" };
+  if (/shoe|shuttle|transport/.test(s)) return { href: "/services/carnival-shuttle", label: "Carnival shuttle" };
+  if (/photo|shoot/.test(s)) return { href: "/services/carnival-photoshoot", label: "Carnival photoshoot" };
+  if (/dress|costume|fit/.test(s)) return { href: "/services/getting-dressed", label: "Getting-dressed help" };
+  if (/trinidad/.test(s)) return { href: "/trinidad", label: "Trinidad Carnival" };
+  if (/jamaica/.test(s)) return { href: "/jamaica", label: "Jamaica Carnival" };
+  if (/grenada|jab/.test(s)) return { href: "/grenada", label: "Grenada Spicemas" };
+  if (/saint-lucia|st-lucia|st\s+lucia/.test(s)) return { href: "/saint-lucia", label: "Saint Lucia Carnival" };
+  if (/barbados|crop-over/.test(s)) return { href: "/barbados", label: "Barbados Crop Over" };
+  if (/miami/.test(s)) return { href: "/miami", label: "Miami Carnival" };
+  if (/tobago/.test(s)) return { href: "/trinidad", label: "Trinidad & Tobago Carnival" };
+  if (/cruise|epic/.test(s)) return { href: "/epic-cruise", label: "EPIC Cruise Carnival" };
+  return { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" };
+}
+
+type BlogRow = {
+  slug: string;
+  title: string;
+  description: string;
+  content: string;
+};
+
+async function fetchBlogBodies(): Promise<Map<string, BlogRow>> {
+  const out = new Map<string, BlogRow>();
+
+  // 1) Recovered posts from local markdown files (never depend on network).
+  for (const p of RECOVERED_POSTS_META) {
+    const mdPath = resolve("src/data/recovered", `${p.slug}.md`);
+    if (!existsSync(mdPath)) continue;
+    const content = readFileSync(mdPath, "utf8");
+    out.set(p.slug, {
+      slug: p.slug,
+      title: p.title,
+      description: p.metaDescription,
+      content,
+    });
+  }
+
+  // 2) Supabase-backed posts.
+  try {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("slug, post_url, title, excerpt, meta_description, content, published_date, raw_payload")
+      .order("synced_at", { ascending: false })
+      .limit(1000);
+    if (error) throw error;
+    for (const row of (data ?? []) as Array<Record<string, unknown>>) {
+      const status =
+        typeof (row.raw_payload as Record<string, unknown> | null)?.status === "string"
+          ? String((row.raw_payload as Record<string, unknown>).status).toLowerCase()
+          : null;
+      const publishedFlag =
+        typeof (row.raw_payload as Record<string, unknown> | null)?.published === "boolean"
+          ? Boolean((row.raw_payload as Record<string, unknown>).published)
+          : null;
+      const isPub = status ? status === "published" : publishedFlag ?? Boolean(row.published_date);
+      if (!isPub) continue;
+      const slug =
+        (row.slug as string | null) ||
+        (() => {
+          const m = (row.post_url as string | null | undefined)?.match(/\/(?:post|blogs?)\/([^/?#]+)/i);
+          return m?.[1] ? decodeURIComponent(m[1]) : null;
+        })();
+      if (!slug) continue;
+      if (out.has(slug)) continue; // recovered takes precedence
+      const title = String(row.title ?? "").trim();
+      const content = String(row.content ?? "").trim();
+      if (!title || content.length < 60) continue; // avoid empty / stub posts
+      out.set(slug, {
+        slug,
+        title,
+        description: String(row.meta_description ?? row.excerpt ?? "").trim(),
+        content,
+      });
+    }
+  } catch (err) {
+    console.warn("prerender-bodies: blog fetch failed, using stub for uncached posts.", err);
+  }
+
+  return out;
+}
+
+function blogRelatedBlock(slug: string, allSlugs: string[]): string {
+  const hub = primaryHubFor(slug);
+  const siblings = pickSiblings(slug, allSlugs, 2).map((s) => ({
+    href: `/blogs/${s}`,
+    // Human-ish label from slug.
+    label: s
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase()),
+  }));
+  return relatedBlock({
+    services: [hub],
+    guides: siblings,
+    destinations: [
+      { href: "/blogs", label: "All Carnival Glam Hub guides" },
+    ],
+  });
+}
+
+function blogFullContent(post: BlogRow, allSlugs: string[]): Content {
+  const article = markdownToSafeHtml(post.content);
+  const lead = post.description
+    ? `<p><em>${escapeHtml(post.description)}</em></p>\n`
+    : "";
+  return {
+    title: post.title,
+    body: `${lead}<article data-prerender-article="1">
+${article}
+</article>
+<p><a href="/blogs">Back to the Carnival Glam Hub journal</a> · <a href="/">Home</a> · <a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a></p>
+${blogRelatedBlock(post.slug, allSlugs)}
+<!-- slug:${post.slug} -->`,
+  };
+}
+
+// Fallback stub used when no article body is available.
+function blogStubContent(html: string, slug: string, allSlugs: string[]): Content | null {
+  const c = blogContentFromHtml(html, slug);
+  if (!c) return null;
+  return {
+    title: c.title,
+    body: `${c.body}\n${blogRelatedBlock(slug, allSlugs)}`,
+  };
+}
+
 function discoverBlogSlugs(): string[] {
   const blogsDir = join(DIST, "blogs");
   if (!existsSync(blogsDir)) return [];
@@ -641,7 +829,7 @@ function discoverBlogSlugs(): string[] {
     .filter((slug) => existsSync(join(blogsDir, slug, "index.html")));
 }
 
-function main() {
+async function main() {
   if (!existsSync(join(DIST, "index.html"))) {
     console.warn("prerender-bodies: dist/index.html not found, skipping.");
     return;
@@ -661,12 +849,21 @@ function main() {
     }
   }
 
-  // Blog posts — use head metadata already written by prerender-blog-meta.
-  for (const slug of discoverBlogSlugs()) {
+  // Blog posts — inject full article body sourced from Supabase / local
+  // recovered markdown, converted to HTML. Falls back to a stub when a
+  // post has no fetched body (never fails the build).
+  const blogSlugs = discoverBlogSlugs();
+  const blogBodies = await fetchBlogBodies();
+  let blogFull = 0;
+  let blogStub = 0;
+  for (const slug of blogSlugs) {
     const file = join(DIST, "blogs", slug, "index.html");
     try {
       const existing = readFileSync(file, "utf8");
-      const c = blogContentFromHtml(existing, slug);
+      const post = blogBodies.get(slug);
+      const c = post
+        ? blogFullContent(post, blogSlugs)
+        : blogStubContent(existing, slug, blogSlugs);
       if (!c) {
         skipped++;
         continue;
@@ -678,6 +875,8 @@ function main() {
       }
       writeFileSync(file, next);
       written++;
+      if (post) blogFull++;
+      else blogStub++;
     } catch (err) {
       skipped++;
       console.warn(
@@ -688,14 +887,14 @@ function main() {
   }
 
   console.log(
-    `prerender-bodies: injected ${written} routes (${skipped} skipped).`,
+    `prerender-bodies: injected ${written} routes (${skipped} skipped). Blog: ${blogFull} full-body, ${blogStub} stub.`,
   );
 }
 
-try {
-  main();
-} catch (err) {
-  console.error("prerender-bodies failed:", err);
-}
-// Never block the build.
-process.exit(0);
+main()
+  .catch((err) => {
+    console.error("prerender-bodies failed:", err);
+  })
+  .finally(() => {
+    process.exit(0);
+  });
