@@ -866,17 +866,11 @@ async function main() {
     writeFileSync(join(dir, "index.html"), html);
     written++;
 
-    // Destinations are also linked as /destinations/<slug> in older
-    // content. The SPA redirects those to /<slug> client-side, but the
-    // initial HTML social crawlers fetch is the homepage fallback with
-    // generic metadata. Emit the same per-route HTML under
-    // /destinations/<slug>/ so previews are correct on either URL.
-    if (DEST_AREA[route.path]) {
-      const aliasDir = join(DIST, "destinations", route.path.replace(/^\//, ""));
-      mkdirSync(aliasDir, { recursive: true });
-      writeFileSync(join(aliasDir, "index.html"), html);
-      written++;
-    }
+    // /destinations/<slug> aliases are now handled by a real 301 in
+    // dist/_redirects (see scripts/prerender-wix-redirects.ts) so we no
+    // longer emit duplicate HTML for them — the old aliases returned
+    // 200 with a self-canonical to the short URL, which Google was
+    // treating as a duplicate/soft-404 signal.
   }
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 
