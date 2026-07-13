@@ -866,11 +866,21 @@ async function main() {
     writeFileSync(join(dir, "index.html"), html);
     written++;
 
-    // /destinations/<slug> aliases are now handled by a real 301 in
-    // dist/_redirects (see scripts/prerender-wix-redirects.ts) so we no
-    // longer emit duplicate HTML for them — the old aliases returned
-    // 200 with a self-canonical to the short URL, which Google was
-    // treating as a duplicate/soft-404 signal.
+    // Destinations are also linked as /destinations/<slug> in older
+    // content. Lovable hosting has no edge redirect layer, so we must
+    // emit real per-route HTML here — otherwise the SPA fallback
+    // (dist/index.html) is served and non-JS crawlers see the generic
+    // homepage og:image instead of the destination's own hero. The
+    // emitted file self-canonicals to the short /<slug> URL, which is
+    // the correct duplicate-consolidation signal for Google (NOT a
+    // soft-404 — the body is substantive, hydrated by the SPA to the
+    // same destination page).
+    if (DEST_AREA[route.path]) {
+      const aliasDir = join(DIST, "destinations", route.path.replace(/^\//, ""));
+      mkdirSync(aliasDir, { recursive: true });
+      writeFileSync(join(aliasDir, "index.html"), html);
+      written++;
+    }
   }
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 
