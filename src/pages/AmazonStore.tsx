@@ -51,18 +51,13 @@ const AmazonStore = () => {
       itemListElement: items.map((item, idx) => ({
         "@type": "ListItem",
         position: idx + 1,
-        item: {
-          "@type": "Product",
-          name: item.title,
-          image: item.image_url ?? undefined,
-          brand: { "@type": "Brand", name: "Carnival Glam Hub" },
-          offers: {
-            "@type": "Offer",
-            url: item.product_url,
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-          },
-        },
+        // Amazon affiliate items: price is set by Amazon and changes,
+        // so we do NOT emit Product+Offer markup (invalid Offer without a
+        // real `price` is worse for SEO than none). Ship a plain
+        // ItemList of links instead — Rich Results-valid and honest.
+        url: item.product_url,
+        name: item.title,
+        image: item.image_url ?? undefined,
       })),
     };
     const script = document.createElement("script");
