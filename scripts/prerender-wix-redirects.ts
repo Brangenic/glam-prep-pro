@@ -70,6 +70,16 @@ function main() {
     }
   }
 
+  // Same treatment for the /destinations/<slug> aliases — the 301 rule
+  // above is canonical; drop the duplicate HTML that would otherwise be
+  // served (and indexed) with a self-canonical to the short URL.
+  for (const slug of DESTINATION_ALIASES) {
+    const dir = join(DIST, "destinations", slug);
+    if (existsSync(dir)) {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }
+
   console.log(
     `prerender-wix-redirects: wrote ${Object.keys(WIX_REDIRECTS).length} /post/* + ${DESTINATION_ALIASES.length} /destinations/* 301 rules.`,
   );
