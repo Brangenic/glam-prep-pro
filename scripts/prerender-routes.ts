@@ -866,19 +866,41 @@ async function main() {
     writeFileSync(join(dir, "index.html"), html);
     written++;
 
-    // Destinations are also linked as /destinations/<slug> in older
-    // content. The SPA redirects those to /<slug> client-side, but the
-    // initial HTML social crawlers fetch is the homepage fallback with
-    // generic metadata. Emit the same per-route HTML under
-    // /destinations/<slug>/ so previews are correct on either URL.
-    if (DEST_AREA[route.path]) {
-      const aliasDir = join(DIST, "destinations", route.path.replace(/^\//, ""));
-      mkdirSync(aliasDir, { recursive: true });
-      writeFileSync(join(aliasDir, "index.html"), html);
-      written++;
-    }
+    // /destinations/<slug> aliases are now handled by a real 301 in
+    // dist/_redirects (see scripts/prerender-wix-redirects.ts) so we no
+    // longer emit duplicate HTML for them — the old aliases returned
+    // 200 with a self-canonical to the short URL, which Google was
+    // treating as a duplicate/soft-404 signal.
   }
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
+
+  // Homepage-only VideoObject JSON-LD. The "Glam Hub in Action" YouTube
+  // clip is embedded on the home page (src/components/landing/Gallery.tsx)
+  // but the schema.org block was only injected client-side, so Google's
+  // video crawler never saw it. Add it to dist/index.html AFTER per-route
+  // writes so it lands on `/` only, not every subroute.
+  const homeVideo = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: "Carnival Glam Hub Reviews from Trinidad, Jamaica and Miami Masqueraders",
+    description:
+      "Real masquerader reviews and testimonials of Carnival Glam Hub from Trinidad, Jamaica and Miami. Hear directly from women who booked their Carnival morning with the original Carnival morning concierge for sweat-resistant makeup, hair, getting dressed, photos and shuttle.",
+    thumbnailUrl: [`${BASE_URL}/og-home.jpg`],
+    uploadDate: "2024-07-02T04:06:01-07:00",
+    contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
+    embedUrl: "https://www.youtube.com/embed/W4b98oLRTCE",
+    publisher: {
+      "@type": "Organization",
+      name: "Carnival Glam Hub",
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png` },
+    },
+  };
+  const videoScript = `    <script type="application/ld+json" data-prerender="home-video">${JSON.stringify(
+    homeVideo,
+  ).replace(/</g, "\\u003c")}</script>\n  </head>`;
+  const homeHtml = readFileSync(indexPath, "utf8");
+  writeFileSync(indexPath, homeHtml.replace("</head>", videoScript));
+  console.log("prerender-routes: injected homepage VideoObject JSON-LD.");
 }
 
 main().catch((err) => {
