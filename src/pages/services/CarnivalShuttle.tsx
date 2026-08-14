@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Shuttle Service | Trinidad Transport | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point, included with any Carnival Glam Hub service. Available in select territories and confirmed when you book.";
+  "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. There is no shuttle in Miami this season.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-shuttle";
 
 
@@ -24,7 +24,7 @@ const faqSchema = {
       name: "Where the shuttle runs",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Carnival shuttle is available in select territories and confirmed when you book.",
+        text: "Shuttle is a Full Service Glam Hub inclusion. It runs in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not include a shuttle.",
       },
     },
     {
@@ -108,7 +108,7 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">from the lounge to the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides a complimentary one-way Carnival shuttle pick-up from our air-conditioned lounge to your band's start point, included with any Carnival Glam Hub service you book. Available in select territories and confirmed when you book.
+              Carnival Glam Hub provides a complimentary one-way Carnival shuttle pick-up from our air-conditioned lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. There is no shuttle in Miami this season.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               The Carnival shuttle service at{" "}
@@ -139,8 +139,9 @@ const CarnivalShuttle = () => {
               Where the shuttle runs
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              The Carnival shuttle is available in select territories and
-              confirmed when you book.
+              Shuttle is a Full Service Glam Hub inclusion. It runs in
+              Jamaica and Trinidad. There is no shuttle in Miami this season,
+              and Glam Hub Lite territories do not include a shuttle.
             </p>
           </section>
 
@@ -190,7 +191,7 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">Carnival shuttle.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Complimentary with any Carnival Glam Hub service you book. Available in select territories and confirmed when you book.
+              Complimentary with any Full Service Glam Hub booking in Jamaica and Trinidad. Not available in Miami this season or at Glam Hub Lite territories.
             </p>
             <a
               href={BOOKING_URL} target="_blank" rel="noopener"

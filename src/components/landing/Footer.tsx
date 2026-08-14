@@ -84,7 +84,30 @@ const Footer = () => (
             <li><a href="/toronto" className="hover:text-primary transition-colors">Toronto Caribana</a></li>
             <li><a href="/guyana" className="hover:text-primary transition-colors">Guyana Carnival</a></li>
             <li><a href="/epic-cruise" className="hover:text-primary transition-colors">Epic Cruise</a></li>
+            <li>
+              <a
+                href="https://carnivalglamhub.masos.app/events"
+                target="_blank"
+                rel="noopener"
+                className="hover:text-primary transition-colors"
+              >
+                Tobago (Glam Hub Lite)
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://carnivalglamhub.masos.app/events"
+                target="_blank"
+                rel="noopener"
+                className="hover:text-primary transition-colors"
+              >
+                Atlanta (Glam Hub Lite)
+              </a>
+            </li>
           </ul>
+          <p className="mt-4 font-body text-xs text-muted-foreground leading-relaxed">
+            Full Service Glam Hubs: Jamaica, Trinidad, Miami. All other territories are Glam Hub Lite.
+          </p>
         </div>
         <div>
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">

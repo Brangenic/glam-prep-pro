@@ -17,6 +17,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
@@ -132,6 +133,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   if (!dest) return <Navigate to="/#destinations" replace />;
 
   const others = destinations.filter((d) => d.slug !== dest.slug).slice(0, 4);
+  const tier = getHubTier(dest.slug);
+  const inclusions = getHubInclusions(dest.slug) ?? dest.highlights;
   const masosEntry = getMasosDestination(dest.slug);
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
@@ -162,6 +165,11 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
               Where We Glam
             </p>
+            {tier && (
+              <span className="inline-block w-fit bg-white/90 text-foreground font-body text-[11px] sm:text-xs uppercase tracking-wider font-semibold px-3 py-1.5 rounded-full mb-3">
+                {TIER_LABEL[tier]}
+              </span>
+            )}
             {dest.slug === "epic-cruise" && (
               <span className="inline-block w-fit bg-secondary/90 text-secondary-foreground font-body text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
                 🚢 Glam Hub at Sea — exclusively for EPIC Cruise masqueraders
@@ -349,13 +357,30 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                     : "What's included"}
                 </h3>
                 <ul className="space-y-3 mb-8">
-                  {dest.highlights.map((h) => (
+                  {inclusions.map((h) => (
                     <li key={h} className="flex items-start gap-3 font-body text-sm sm:text-base">
                       <span className="mt-1 inline-block h-2 w-2 rounded-full bg-secondary flex-shrink-0" />
                       <span>{h}</span>
                     </li>
                   ))}
                 </ul>
+
+                {dest.slug === "miami" && (
+                  <p className="font-body text-sm text-muted-foreground mb-8">
+                    {MIAMI_SHUTTLE_NOTE}
+                  </p>
+                )}
+
+                {tier === "lite" && (
+                  <p className="font-body text-sm text-muted-foreground mb-8">
+                    {dest.shortName} is a Glam Hub Lite. Our Full Service Glam
+                    Hubs, which add shuttle, bag and wing check, breakfast and
+                    refreshments, alcohol, hair and bronzing, run in{" "}
+                    <Link to="/jamaica" className="text-primary hover:underline">Jamaica</Link>,{" "}
+                    <Link to="/trinidad" className="text-primary hover:underline">Trinidad</Link> and{" "}
+                    <Link to="/miami" className="text-primary hover:underline">Miami</Link>.
+                  </p>
+                )}
 
                 <a
                   href={seasonEnded ? waitlistHref : bookingUrl}

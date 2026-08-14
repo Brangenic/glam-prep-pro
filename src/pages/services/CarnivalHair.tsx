@@ -24,7 +24,7 @@ const faqSchema = {
       name: "What hair styles do you offer?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Not every style is available in every territory — hair styling runs at our full-service lounges in Jamaica, Miami, Trinidad and Saint Lucia.",
+        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Carnival hair is a Full Service Glam Hub inclusion, so it runs in Jamaica, Trinidad and Miami only. Glam Hub Lite territories cover makeup plus photoshoot and reels.",
       },
     },
     {
@@ -40,7 +40,7 @@ const faqSchema = {
       name: "How much does carnival hair cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Carnival hair styling starts from US$120 for a ponytail, provided for you or using your own hair. A front braided ponytail is US$185 and a half-up half-down ponytail is US$220. Wig installs are quoted on consultation. Not all styles are offered in every territory.",
+        text: "Carnival hair styling starts from US$120 for a ponytail, provided for you or using your own hair. A front braided ponytail is US$185 and a half-up half-down ponytail is US$220. Wig installs are quoted on consultation. Hair is available at our Full Service Glam Hubs in Jamaica, Trinidad and Miami.",
       },
     },
     {
@@ -72,7 +72,7 @@ const faqSchema = {
       name: "Where can I book carnival hair?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Carnival hair styling is available at every Carnival Glam Hub location. The most booked destinations are Trinidad Carnival, Jamaica Carnival and Miami Carnival; we also work Barbados, Grenada, Antigua, Saint Lucia and Toronto.",
+        text: "Carnival hair styling is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories such as Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana, Tobago and Atlanta cover makeup plus photoshoot and reels.",
       },
     },
   ],
@@ -187,10 +187,10 @@ const CarnivalHair = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               The style depends on the service you book: a ponytail, a front
               braided ponytail, half-up half-down, or a wig install. Ponytails
-              can be provided for you, or you can bring your own hair. Not
-              every style is available in every territory — hair styling runs
-              at our full-service lounges in Jamaica, Miami, Trinidad and
-              Saint Lucia. For inspiration, see our{" "}
+              can be provided for you, or you can bring your own hair. Carnival
+              hair is a Full Service Glam Hub inclusion, so it runs in Jamaica,
+              Trinidad and Miami only. Glam Hub Lite territories cover makeup
+              plus photoshoot and reels. For inspiration, see our{" "}
               <a
                 href="/blogs/top-seven-best-carnival-hairstyles"
                 className="text-primary hover:underline"
@@ -223,8 +223,8 @@ const CarnivalHair = () => {
               Carnival hair styling starts from US$120 for a ponytail, provided
               for you or using your own hair. A front braided ponytail is
               US$185 and a half-up half-down ponytail is US$220. Wig installs
-              are quoted on consultation. Not all styles are offered in every
-              territory.
+              are quoted on consultation. Hair is available at our Full
+              Service Glam Hubs in Jamaica, Trinidad and Miami.
             </p>
           </section>
 
@@ -275,12 +275,13 @@ const CarnivalHair = () => {
               Where can I book carnival hair?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival hair styling is available at every Carnival Glam Hub
-              location. The most booked destinations are{" "}
+              Carnival hair styling is a Full Service Glam Hub inclusion,
+              available in{" "}
               <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
               <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
-              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>;
-              we also work{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>.
+              Our Glam Hub Lite territories, which cover makeup plus photoshoot
+              and reels, include{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}

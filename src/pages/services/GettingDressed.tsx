@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Costume Getting-Dressed Assistance | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Flat US$35 across Trinidad, Jamaica, Barbados, Grenada and Antigua.";
+  "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Flat US$35 at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/getting-dressed";
 
 
@@ -80,7 +80,7 @@ const faqSchema = {
       name: "Where can I book getting-dressed help?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Available at every Carnival Glam Hub location. The most booked are Trinidad Carnival, Jamaica Carnival and Miami Carnival; we also operate in Barbados, Grenada, Antigua, Saint Lucia and Toronto. It pairs with Carnival makeup and the Carnival photoshoot in the same morning slot.",
+        text: "Getting-dressed assistance is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories cover makeup plus photoshoot and reels. It pairs with Carnival makeup and the Carnival photoshoot in the same morning slot.",
       },
     },
   ],
@@ -148,7 +148,7 @@ const GettingDressed = () => {
               <span className="italic text-gradient-primary">done properly</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides hands-on Carnival costume getting-dressed and on-site seamstress support at a flat US$35, across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+              Carnival Glam Hub provides hands-on Carnival costume getting-dressed and on-site seamstress support at a flat US$35, at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Getting-dressed assistance at{" "}
@@ -296,18 +296,18 @@ const GettingDressed = () => {
               Where can I book getting-dressed help?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Available at every Carnival Glam Hub location. The most booked
-              are{" "}
+              Getting-dressed assistance is a Full Service Glam Hub
+              inclusion, available in{" "}
               <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
               <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
-              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>;
-              we also operate in{" "}
+              <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>.
+              Glam Hub Lite territories such as{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
               <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a> and{" "}
-              <a href="/toronto" className="text-primary hover:underline">Toronto</a>. It pairs
-              with{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a> cover
+              makeup plus photoshoot and reels. It pairs with{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 Carnival makeup
               </a>{" "}

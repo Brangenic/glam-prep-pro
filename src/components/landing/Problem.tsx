@@ -30,7 +30,7 @@ const luxuryFeatures = [
   {
     icon: "🚐",
     title: "Shuttle Service",
-    description: "Walk straight out to your band or hop on our shuttle — we get you where you need to be.",
+    description: "Walk straight out to your band or hop on our shuttle. Shuttle is a Full Service Glam Hub inclusion in Jamaica and Trinidad.",
   },
 ];
 
