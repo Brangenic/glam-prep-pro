@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
+import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES } from "@/data/hubTiers";
+import { BOOKING_URL } from "@/lib/constants";
 
 const Destinations = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -49,6 +51,13 @@ const Destinations = () => {
           >
             Choose your location to view availability and book your glam package.
           </p>
+          <p
+            className={`font-body text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto mt-3 transition-all duration-700 delay-200 ${
+              isVisible ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Full Service Glam Hubs run in Jamaica, Trinidad and Miami. Every other territory is a Glam Hub Lite.
+          </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
           {orderedDestinations.map((d, i) => (
@@ -89,6 +98,11 @@ const Destinations = () => {
               <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white/90 backdrop-blur-sm text-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 sm:px-3 rounded-full">
                 {d.date}
               </div>
+              {getHubTier(d.slug) && (
+                <div className="absolute bottom-[calc(100%-9.5rem)] left-3 sm:left-4 bg-foreground/85 text-background font-body text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full">
+                  {TIER_LABEL[getHubTier(d.slug)!]}
+                </div>
+              )}
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
                 <h3 className="font-display text-lg sm:text-xl lg:text-2xl font-bold mb-1.5 sm:mb-2 italic text-white">
                   {d.name}
@@ -102,6 +116,25 @@ const Destinations = () => {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-8 sm:mt-10 text-center">
+          <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
+            Also glamming, Glam Hub Lite
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {EXTRA_LITE_TERRITORIES.map((t) => (
+              <a
+                key={t.slug}
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener"
+                className="inline-block rounded-full border border-border bg-background px-5 py-2.5 font-body text-sm font-semibold hover:border-primary/60 hover:text-primary transition-colors"
+              >
+                {t.name}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>
