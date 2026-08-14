@@ -28,6 +28,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
+import { getHubInclusions, getHubTier, TIER_LABEL } from "../src/data/hubTiers";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
