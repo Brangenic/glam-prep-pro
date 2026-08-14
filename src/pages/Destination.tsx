@@ -357,9 +357,25 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                     : "What's included"}
                 </h3>
                 <ul className="space-y-3 mb-8">
-                  {inclusions.map((h) => (
+                  {dest.highlights.map((h) => (
                     <li key={h} className="flex items-start gap-3 font-body text-sm sm:text-base">
                       <span className="mt-1 inline-block h-2 w-2 rounded-full bg-secondary flex-shrink-0" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <h3 className="font-display text-xl font-bold mb-4">
+                  What is included at this hub
+                  {tier ? ` (${TIER_LABEL[tier]})` : ""}
+                </h3>
+                <ul className="space-y-3 mb-8">
+                  {inclusions.map((h) => (
+                    <li
+                      key={`inc-${h}`}
+                      className="flex items-start gap-3 font-body text-sm sm:text-base"
+                    >
+                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-primary flex-shrink-0" />
                       <span>{h}</span>
                     </li>
                   ))}
