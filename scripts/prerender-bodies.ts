@@ -318,7 +318,7 @@ function destinationBody(d: ParsedDest): string {
   }
   parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
   parts.push(
-    `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Sweat-resistant, road-ready makeup, hair, costume dressing, photoshoot and shuttle from one lounge.</p>`,
+    `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot and reels, and coffee and tea.</p>`,
   );
   parts.push(CTA);
   parts.push(destinationRelated(d.slug));
@@ -369,7 +369,7 @@ ${CTA}`,
   },
   "/services/carnival-shuttle": {
     title: "Carnival Shuttle Service",
-    body: `<p>Carnival shuttle service from the Carnival Glam Hub lounge to your band's start point. Trinidad confirmed; additional territories available seasonally. Group capacity available.</p>
+    body: `<p>Carnival shuttle from the Carnival Glam Hub lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not include a shuttle.</p>
 <h2>Lounge to your band</h2>
 <p>Air-conditioned transport with your section, so you arrive fresh, dry and on time. Route pre-mapped to avoid Carnival morning gridlock.</p>
 <h2>Group capacity</h2>
