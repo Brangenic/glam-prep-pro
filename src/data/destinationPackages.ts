@@ -223,4 +223,20 @@ export const destinationPackages: Record<string, DestinationPackages> = {
   },
 };
 
-export const getDestinationPackages = (slug: string) => destinationPackages[slug];
+import { getHubTier } from "@/data/hubTiers";
+
+/**
+ * Glam Hub Lite territories only sell makeup and photoshoot based
+ * packages. Hair, bronzing, shuttle and getting-dressed are Full
+ * Service Glam Hub inclusions, so they are never listed on a Lite page.
+ */
+const LITE_EXCLUDED = /hair|bronz|shuttle|get dressed|getting dressed|barber|full glam/i;
+
+export const getDestinationPackages = (slug: string) => {
+  const data = destinationPackages[slug];
+  if (!data || getHubTier(slug) !== "lite") return data;
+  const sections = data.sections
+    .map((s) => ({ ...s, packages: s.packages.filter((p) => !LITE_EXCLUDED.test(p.name)) }))
+    .filter((s) => s.packages.length > 0);
+  return { ...data, sections };
+};
