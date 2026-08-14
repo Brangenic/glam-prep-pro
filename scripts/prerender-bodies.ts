@@ -317,6 +317,14 @@ function destinationBody(d: ParsedDest): string {
       .join("");
     parts.push(`<h2>What's included</h2>\n<ul>${hl}</ul>`);
   }
+  const inclusions = getHubInclusions(d.slug);
+  if (inclusions && inclusions.length) {
+    const tier = getHubTier(d.slug);
+    const inc = inclusions.map((h) => `<li>${escapeHtml(h)}</li>`).join("");
+    parts.push(
+      `<h2>What is included at this hub${tier ? ` (${TIER_LABEL[tier]})` : ""}</h2>\n<ul>${inc}</ul>`,
+    );
+  }
   parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
   parts.push(
     `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot and reels, and coffee and tea.</p>`,
