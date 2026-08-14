@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { getHubTier, TIER_LABEL } from "@/data/hubTiers";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
@@ -36,6 +37,8 @@ const TERRITORIES: Territory[] = [
   { value: "miami", label: "Miami", nextDate: "2026-10-11" },
   { value: "toronto", label: "Toronto (Caribana)", nextDate: "2026-08-01" },
   { value: "guyana", label: "Guyana", nextDate: "2027-02-22" },
+  { value: "tobago", label: "Tobago" },
+  { value: "atlanta", label: "Atlanta" },
   { value: "epic-cruise", label: "Epic Cruise" },
   { value: "other", label: "Other" },
 ];
@@ -71,6 +74,20 @@ const SERVICES: Service[] = [
 
 const PARTY_OPTIONS = [1, 2, 3, 4, 5];
 
+/**
+ * Which add-ons a territory can actually sell. Glam Hub Lite territories
+ * offer makeup plus photoshoot and reels only. Miami is Full Service but
+ * has no shuttle this season.
+ */
+const LITE_SERVICES: ServiceKey[] = ["makeup", "photoshoot"];
+
+function availableServiceKeys(territory: string): ServiceKey[] {
+  const tier = getHubTier(territory);
+  if (tier === "lite") return LITE_SERVICES;
+  if (territory === "miami") return SERVICES.map((s) => s.key).filter((k) => k !== "shuttle");
+  return SERVICES.map((s) => s.key);
+}
+
 const BookingCalculator = () => {
   const [territory, setTerritory] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -88,6 +105,24 @@ const BookingCalculator = () => {
   const [whatsapp, setWhatsapp] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  const territoryTier = getHubTier(territory);
+  const allowedKeys = useMemo(() => availableServiceKeys(territory), [territory]);
+  const visibleServices = useMemo(
+    () => SERVICES.filter((s) => allowedKeys.includes(s.key)),
+    [allowedKeys],
+  );
+
+  // Drop any selection the chosen territory cannot deliver.
+  useEffect(() => {
+    setSelectedServices((prev) => {
+      const next = { ...prev };
+      (Object.keys(next) as ServiceKey[]).forEach((k) => {
+        if (!allowedKeys.includes(k)) next[k] = false;
+      });
+      return next;
+    });
+  }, [allowedKeys]);
+
   // Default event date when territory changes
   useEffect(() => {
     const t = TERRITORIES.find((x) => x.value === territory);
@@ -98,7 +133,7 @@ const BookingCalculator = () => {
   const { subtotal, low, high, mid, included, discountPct } = useMemo(() => {
     let raw = 0;
     const inc: { label: string; subtotal: number }[] = [];
-    SERVICES.forEach((s) => {
+    visibleServices.forEach((s) => {
       if (!selectedServices[s.key]) return;
       const line = s.price * partySize;
       raw += line;
@@ -114,7 +149,7 @@ const BookingCalculator = () => {
       included: inc,
       discountPct: discount * 100,
     };
-  }, [selectedServices, partySize]);
+  }, [selectedServices, partySize, visibleServices]);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -196,7 +231,7 @@ const BookingCalculator = () => {
     }
     setSubmitting(true);
 
-    const services = SERVICES.filter((s) => selectedServices[s.key]).map((s) => s.label);
+    const services = visibleServices.filter((s) => selectedServices[s.key]).map((s) => s.label);
 
     const w = window as unknown as {
       dataLayer?: Array<Record<string, unknown>>;
@@ -330,7 +365,17 @@ const BookingCalculator = () => {
 
                 <fieldset className="space-y-3">
                   <legend className="font-body text-sm font-medium mb-2">Services</legend>
-                  {SERVICES.map((s) => (
+                  {territoryTier && (
+                    <p className="font-body text-xs text-muted-foreground mb-3">
+                      {TIER_LABEL[territoryTier]}
+                      {territoryTier === "lite"
+                        ? ". Makeup, photoshoot and reels, coffee and tea."
+                        : territory === "miami"
+                          ? ". No shuttle in Miami this season."
+                          : ". Shuttle, bag and wing check, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, coffee and tea."}
+                    </p>
+                  )}
+                  {visibleServices.map((s) => (
                     <label
                       key={s.key}
                       htmlFor={`svc-${s.key}`}
