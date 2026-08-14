@@ -99,7 +99,7 @@ const Destinations = () => {
                 {d.date}
               </div>
               {getHubTier(d.slug) && (
-                <div className="absolute bottom-[calc(100%-9.5rem)] left-3 sm:left-4 bg-foreground/85 text-background font-body text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full">
+                <div className="absolute top-11 right-3 sm:top-12 sm:right-4 bg-foreground/85 text-background font-body text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full">
                   {TIER_LABEL[getHubTier(d.slug)!]}
                 </div>
               )}
