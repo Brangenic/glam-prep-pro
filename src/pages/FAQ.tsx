@@ -13,7 +13,11 @@ const CANONICAL = "https://www.carnivalglamhub.com/faq";
 const FAQS: Array<{ q: string; a: string }> = [
   {
     q: "What is included in a Carnival Glam Hub morning?",
-    a: "Every package includes a confirmed time slot, sweat-resistant Carnival makeup, Carnival hair styling, getting-dressed assistance, an air-conditioned waiting lounge, refreshments and snacks, and on-site styling support until you leave for the road. Photoshoot and shuttle service can be added.",
+    a: "It depends on the tier. A Full Service Glam Hub morning includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, and coffee and tea. A Glam Hub Lite morning includes makeup, photoshoot and reels, and coffee and tea. Every package includes a confirmed time slot and on-site styling support until you leave for the road.",
+  },
+  {
+    q: "What is the difference between a Full Service Glam Hub and a Glam Hub Lite?",
+    a: "A Full Service Glam Hub includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, and coffee and tea. Full Service Glam Hubs run in Jamaica, Trinidad and Miami, with one exception: there is no shuttle in Miami this season. A Glam Hub Lite includes makeup, photoshoot and reels, and coffee and tea. Every other territory we serve is a Glam Hub Lite, including Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta.",
   },
   {
     q: "How early should I book?",
@@ -21,7 +25,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do you travel internationally?",
-    a: "Carnival Glam Hub operates on the ground in Trinidad, Jamaica, Barbados, Grenada and Antigua. You travel to the territory; we run the morning.",
+    a: "Carnival Glam Hub operates on the ground in Trinidad, Jamaica and Miami as Full Service Glam Hubs, and in Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta as Glam Hub Lite. You travel to the territory; we run the morning.",
   },
   {
     q: "Why does Carnival makeup need to be sweat-resistant?",
@@ -29,7 +33,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "What hair options do you offer?",
-    a: "Sleek pony, voluminous curl set, braided crown, headpiece-ready installs and clean-pulled styles that hold under feathers and wires. Bring your headpiece to the appointment and we will set the style around it.",
+    a: "Sleek pony, voluminous curl set, braided crown, headpiece-ready installs and clean-pulled styles that hold under feathers and wires. Bring your headpiece to the appointment and we will set the style around it. Hair is a Full Service Glam Hub inclusion, available in Jamaica, Trinidad and Miami.",
   },
   {
     q: "Do you take groups?",
@@ -37,7 +41,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do you provide costume getting-dressed help?",
-    a: "Yes. Modern Carnival costumes use wire bras, monokini bases, harnesses, backpacks and standing collars. Our team dresses you correctly so nothing shifts on the road.",
+    a: "Yes, at our Full Service Glam Hubs in Jamaica, Trinidad and Miami. Modern Carnival costumes use wire bras, monokini bases, harnesses, backpacks and standing collars, and our team dresses you correctly so nothing shifts on the road.",
   },
   {
     q: "Can I add a photoshoot?",
@@ -45,7 +49,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do you offer a shuttle service?",
-    a: "A Carnival shuttle is available in selected territories. Trinidad is confirmed; availability in Jamaica, Barbados, Grenada and Antigua varies by season. Confirm at booking.",
+    a: "Shuttle is a Full Service Glam Hub inclusion and runs in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not include a shuttle.",
   },
   {
     q: "How do deposits and payments work?",
@@ -69,7 +73,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "How much does professional Carnival makeup cost?",
-    a: "Professional Carnival makeup at Carnival Glam Hub starts from US$160, with most masqueraders spending US$200 to US$300. Celebrity-artist glam ranges US$250 to US$350, and premium looks go up to US$2,000. A road-ready access package — getting dressed, shuttle and lounge — starts at US$35.",
+    a: "Professional Carnival makeup at Carnival Glam Hub starts from US$160, with most masqueraders spending US$200 to US$300. Celebrity-artist glam ranges US$250 to US$350, and premium looks go up to US$2,000. At Full Service Glam Hubs, a road-ready access package covering getting dressed, shuttle and the lounge starts at US$35.",
   },
   {
     q: "Can I do my own Carnival makeup without experience?",
