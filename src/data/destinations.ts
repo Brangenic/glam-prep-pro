@@ -291,6 +291,10 @@ export function getDestinationFaqs(d: Destination): Faq[] {
       answer: `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at carnivalglamhub.masos.app/events.`,
     },
     {
+      question: `Do you offer j'ouvert paint and body art for ${event}?`,
+      answer: `Yes. J'ouvert paint, shimmer, oil and body art are part of our ${loc} carnival glam menu at every Carnival Glam Hub, Full Service and Glam Hub Lite alike, because it is makeup work. Our artists use professional, skin-safe carnival paints that hold up to heat, sweat and water on the road.`,
+    },
+    {
       question: `How early should I book ${loc} carnival glam?`,
       answer: `For ${event} (${date}), we recommend booking your ${loc} carnival glam appointment at least 4 to 6 weeks ahead. Peak road march slots sell out first every season.`,
     },
