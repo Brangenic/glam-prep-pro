@@ -1,4 +1,5 @@
 import guyanaImg from "@/assets/carnival-4.jpg";
+import { getHubTier, getHubInclusions, TIER_LABEL } from "@/data/hubTiers";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
