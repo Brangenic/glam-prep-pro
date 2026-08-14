@@ -28,6 +28,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
+import { getHubInclusions, getHubTier, TIER_LABEL } from "../src/data/hubTiers";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
@@ -315,6 +316,14 @@ function destinationBody(d: ParsedDest): string {
       .map((h) => `<li>${escapeHtml(h)}</li>`)
       .join("");
     parts.push(`<h2>What's included</h2>\n<ul>${hl}</ul>`);
+  }
+  const inclusions = getHubInclusions(d.slug);
+  if (inclusions && inclusions.length) {
+    const tier = getHubTier(d.slug);
+    const inc = inclusions.map((h) => `<li>${escapeHtml(h)}</li>`).join("");
+    parts.push(
+      `<h2>What is included at this hub${tier ? ` (${TIER_LABEL[tier]})` : ""}</h2>\n<ul>${inc}</ul>`,
+    );
   }
   parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
   parts.push(
