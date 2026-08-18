@@ -17,7 +17,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
@@ -166,8 +166,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               Where We Glam
             </p>
             {tier && (
-              <span className="inline-block w-fit bg-white/90 text-foreground font-body text-[11px] sm:text-xs uppercase tracking-wider font-semibold px-3 py-1.5 rounded-full mb-3">
-                {TIER_LABEL[tier]}
+              <span className="inline-flex w-fit items-center gap-2 mb-3">
+                <span className="bg-white/90 text-foreground font-body text-[11px] sm:text-xs uppercase tracking-wider font-semibold px-3 py-1.5 rounded-full">
+                  {TIER_LABEL[tier]}
+                </span>
+                {hasBarber(dest.slug) && (
+                  <span className="font-body text-[11px] sm:text-xs uppercase tracking-wider font-medium text-white/80">
+                    {BARBER_LABEL}
+                  </span>
+                )}
               </span>
             )}
             {dest.slug === "epic-cruise" && (
@@ -391,7 +398,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                   <p className="font-body text-sm text-muted-foreground mb-8">
                     {dest.shortName} is a Glam Hub Lite. Our Full Service Glam
                     Hubs, which add shuttle, bag and wing check, breakfast and
-                    refreshments, alcohol, hair and bronzing, run in{" "}
+                    refreshments, alcohol, hair, bronzing, seamstress and
+                    getting-dressed assistance, run in{" "}
                     <Link to="/jamaica" className="text-primary hover:underline">Jamaica</Link>,{" "}
                     <Link to="/trinidad" className="text-primary hover:underline">Trinidad</Link> and{" "}
                     <Link to="/miami" className="text-primary hover:underline">Miami</Link>.
