@@ -24,7 +24,7 @@ const faqSchema = {
       name: "Where the shuttle runs",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Shuttle is a Full Service Glam Hub inclusion. It runs in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not include a shuttle.",
+        text: "Shuttle is a Full Service Glam Hub inclusion. It runs in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not offer a shuttle.",
       },
     },
     {
@@ -141,7 +141,7 @@ const CarnivalShuttle = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Shuttle is a Full Service Glam Hub inclusion. It runs in
               Jamaica and Trinidad. There is no shuttle in Miami this season,
-              and Glam Hub Lite territories do not include a shuttle.
+              and Glam Hub Lite territories do not offer a shuttle.
             </p>
           </section>
 

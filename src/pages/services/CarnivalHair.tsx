@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival hair styling from US$120, built to hold under feathers, wires and tropical heat: ponytails, front braided ponytails, half-up half-down and wig installs. Available in Jamaica, Miami, Trinidad and Saint Lucia.";
+  "Carnival hair styling from US$120, built to hold under feathers, wires and tropical heat: ponytails, front braided ponytails, half-up half-down and wig installs. A Full Service Glam Hub inclusion, available in Jamaica, Trinidad and Miami.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-hair";
 
 
@@ -24,7 +24,7 @@ const faqSchema = {
       name: "What hair styles do you offer?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Carnival hair is a Full Service Glam Hub inclusion, so it runs in Jamaica, Trinidad and Miami only. Glam Hub Lite territories cover makeup plus photoshoot and reels.",
+        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Carnival hair is a Full Service Glam Hub inclusion, so it runs in Jamaica, Trinidad and Miami only. Glam Hub Lite territories do not offer hair; they cover makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments.",
       },
     },
     {
@@ -72,7 +72,7 @@ const faqSchema = {
       name: "Where can I book carnival hair?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Carnival hair styling is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories such as Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana, Tobago and Atlanta cover makeup plus photoshoot and reels.",
+        text: "Carnival hair styling is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories such as Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana, Tobago and Atlanta do not offer hair; they cover makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments.",
       },
     },
   ],
@@ -140,7 +140,7 @@ const CarnivalHair = () => {
               <span className="italic text-gradient-primary">holds through the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides headpiece-ready professional Carnival hair styling from US$120, delivered in our air-conditioned lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+              Carnival Glam Hub provides headpiece-ready professional Carnival hair styling from US$120, delivered in our air-conditioned lounges at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival hair and Carnival hairstyles at{" "}
@@ -189,7 +189,7 @@ const CarnivalHair = () => {
               braided ponytail, half-up half-down, or a wig install. Ponytails
               can be provided for you, or you can bring your own hair. Carnival
               hair is a Full Service Glam Hub inclusion, so it runs in Jamaica,
-              Trinidad and Miami only. Glam Hub Lite territories cover makeup
+              Trinidad and Miami only. Glam Hub Lite territories do not offer hair; they cover makeup
               plus photoshoot and reels. For inspiration, see our{" "}
               <a
                 href="/blogs/top-seven-best-carnival-hairstyles"
@@ -280,8 +280,9 @@ const CarnivalHair = () => {
               <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
               <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
               <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>.
-              Our Glam Hub Lite territories, which cover makeup plus photoshoot
-              and reels, include{" "}
+              Glam Hub Lite territories do not offer hair. They cover makeup,
+              photoshoot and reels, a changing room, and coffee, tea and light
+              refreshments, and they include{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
