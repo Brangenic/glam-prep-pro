@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
-import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES } from "@/data/hubTiers";
+import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
 import { BOOKING_URL } from "@/lib/constants";
 
 const Destinations = () => {
@@ -56,7 +56,7 @@ const Destinations = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            Full Service Glam Hubs run in Jamaica, Trinidad and Miami. Every other territory is a Glam Hub Lite.
+            Full Service Glam Hubs run in Jamaica, Trinidad and Miami. Every other territory is a Glam Hub Lite, covering makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
@@ -99,8 +99,15 @@ const Destinations = () => {
                 {d.date}
               </div>
               {getHubTier(d.slug) && (
-                <div className="absolute top-11 right-3 sm:top-12 sm:right-4 bg-foreground/85 text-background font-body text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full">
-                  {TIER_LABEL[getHubTier(d.slug)!]}
+                <div className="absolute top-11 right-3 sm:top-12 sm:right-4 flex items-center gap-1.5">
+                  <span className="bg-foreground/85 text-background font-body text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full">
+                    {TIER_LABEL[getHubTier(d.slug)!]}
+                  </span>
+                  {hasBarber(d.slug) && (
+                    <span className="text-white/80 font-body text-[10px] uppercase tracking-wider font-medium">
+                      {BARBER_LABEL}
+                    </span>
+                  )}
                 </div>
               )}
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
