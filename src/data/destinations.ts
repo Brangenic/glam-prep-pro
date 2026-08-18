@@ -47,9 +47,9 @@ export const destinations: Destination[] = [
     name: "Saint Lucia Carnival",
     shortName: "Saint Lucia",
     date: "20–21 July 2026",
-    description: "Full-service glam for Saint Lucia Carnival.",
+    description: "Glam Hub Lite for Saint Lucia Carnival.",
     longDescription:
-      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks. Sweat-resistant road makeup, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot and reels. Get matched with a senior artist for your full carnival glam experience.",
+      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks. Sweat-resistant road makeup, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     image: "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&dl=1",
     cta: "Book Saint Lucia Glam",
     objectPosition: "50% 20%",
@@ -113,9 +113,9 @@ export const destinations: Destination[] = [
     name: "Barbados Crop Over",
     shortName: "Barbados",
     date: "3 August 2026",
-    description: "Full glam hub services for Barbados Crop Over.",
+    description: "Glam Hub Lite services for Barbados Crop Over.",
     longDescription:
-      "Crop Over is the Caribbean's biggest summer carnival, and our Barbados Glam Hub Lite is fully booked every season for a reason. Get the full road experience with sweat-resistant Grand Kadooment makeup, Foreday Morning paint, gems, lashes and shimmer, plus a photoshoot and reels in the lounge.",
+      "Crop Over is the Caribbean's biggest summer carnival, and our Barbados Glam Hub Lite is fully booked every season for a reason. Get road-ready with sweat-resistant Grand Kadooment makeup, Foreday Morning paint, gems, lashes and shimmer, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments in the lounge.",
     image: "https://www.dropbox.com/scl/fi/4a52okz83gxh171qyhfjc/Dania.png?rlkey=q3figf3ty5abs9gdie4rtjcow&dl=1",
     cta: "Book Barbados Glam",
     objectPosition: "50% 20%",
@@ -204,9 +204,9 @@ export const destinations: Destination[] = [
     name: "Guyana Carnival",
     shortName: "Guyana",
     date: "May 2026",
-    description: "Full glam hub services for Guyana Carnival.",
+    description: "Glam Hub Lite services for Guyana Carnival.",
     longDescription:
-      "Guyana Carnival brings Mashramani energy to the road, and our Guyana Glam Hub Lite keeps you flawless from fete to road march. Full sweat-resistant makeup, gems, lashes and body art by our Caribbean-trained carnival artists, plus a photoshoot and reels in the lounge.",
+      "Guyana Carnival brings Mashramani energy to the road, and our Guyana Glam Hub Lite keeps you flawless from fete to road march. Sweat-resistant makeup, gems, lashes and body art by our Caribbean-trained carnival artists, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments in the lounge.",
     image: guyanaImg,
     cta: "Book Guyana Glam",
     highlights: [
