@@ -230,7 +230,8 @@ import { getHubTier } from "@/data/hubTiers";
  * packages. Hair, bronzing, shuttle and getting-dressed are Full
  * Service Glam Hub inclusions, so they are never listed on a Lite page.
  */
-const LITE_EXCLUDED = /hair|bronz|shuttle|get dressed|getting dressed|barber|full glam/i;
+const LITE_EXCLUDED =
+  /hair|bronz|shuttle|get dressed|getting dressed|dressing|seamstress|barber|bag and wing|wing check|breakfast|alcohol|full glam/i;
 
 export const getDestinationPackages = (slug: string) => {
   const data = destinationPackages[slug];

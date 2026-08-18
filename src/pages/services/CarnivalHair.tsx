@@ -189,8 +189,9 @@ const CarnivalHair = () => {
               braided ponytail, half-up half-down, or a wig install. Ponytails
               can be provided for you, or you can bring your own hair. Carnival
               hair is a Full Service Glam Hub inclusion, so it runs in Jamaica,
-              Trinidad and Miami only. Glam Hub Lite territories do not offer hair; they cover makeup
-              plus photoshoot and reels. For inspiration, see our{" "}
+              Trinidad and Miami only. Glam Hub Lite territories do not offer hair; they cover
+              makeup, photoshoot and reels, a changing room, and coffee, tea and
+              light refreshments. For inspiration, see our{" "}
               <a
                 href="/blogs/top-seven-best-carnival-hairstyles"
                 className="text-primary hover:underline"
