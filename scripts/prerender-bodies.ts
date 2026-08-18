@@ -327,7 +327,7 @@ function destinationBody(d: ParsedDest): string {
   }
   parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
   parts.push(
-    `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot and reels, and coffee and tea.</p>`,
+    `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments.</p>`,
   );
   parts.push(CTA);
   parts.push(destinationRelated(d.slug));
