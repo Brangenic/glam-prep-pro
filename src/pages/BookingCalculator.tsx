@@ -369,10 +369,10 @@ const BookingCalculator = () => {
                     <p className="font-body text-xs text-muted-foreground mb-3">
                       {TIER_LABEL[territoryTier]}
                       {territoryTier === "lite"
-                        ? ". Makeup, photoshoot and reels, coffee and tea."
+                        ? ". Makeup, photoshoot and reels, changing room, coffee, tea and light refreshments."
                         : territory === "miami"
                           ? ". No shuttle in Miami this season."
-                          : ". Shuttle, bag and wing check, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, coffee and tea."}
+                          : ". Shuttle, bag and wing check, breakfast and refreshments, alcohol, makeup, hair, bronzing, seamstress, changing room, photoshoot and reels, coffee and tea."}
                     </p>
                   )}
                   {visibleServices.map((s) => (

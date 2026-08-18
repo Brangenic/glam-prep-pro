@@ -13,11 +13,11 @@ const CANONICAL = "https://www.carnivalglamhub.com/faq";
 const FAQS: Array<{ q: string; a: string }> = [
   {
     q: "What is included in a Carnival Glam Hub morning?",
-    a: "It depends on the tier. A Full Service Glam Hub morning includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, and coffee and tea. A Glam Hub Lite morning includes makeup, photoshoot and reels, and coffee and tea. Every package includes a confirmed time slot and on-site styling support until you leave for the road.",
+    a: "It depends on the tier. A Full Service Glam Hub morning includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, seamstress, a changing room, photoshoot and reels, and coffee and tea. A Glam Hub Lite morning includes makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments. Every package includes a confirmed time slot and on-site styling support until you leave for the road.",
   },
   {
     q: "What is the difference between a Full Service Glam Hub and a Glam Hub Lite?",
-    a: "A Full Service Glam Hub includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, and coffee and tea. Full Service Glam Hubs run in Jamaica, Trinidad and Miami, with one exception: there is no shuttle in Miami this season. A Glam Hub Lite includes makeup, photoshoot and reels, and coffee and tea. Every other territory we serve is a Glam Hub Lite, including Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta.",
+    a: "A Full Service Glam Hub includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, seamstress, a changing room, photoshoot and reels, and coffee and tea. Full Service Glam Hubs run in Jamaica, Trinidad and Miami, with one exception: there is no shuttle in Miami this season. Jamaica and Trinidad also offer a barber. A Glam Hub Lite includes makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments only. Glam Hub Lite does not offer getting dressed, seamstress, bag and wing check, shuttle, hair, bronzing, alcohol or breakfast. Every other territory we serve is a Glam Hub Lite, including Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta.",
   },
   {
     q: "How early should I book?",

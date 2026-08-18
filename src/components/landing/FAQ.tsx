@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "What is included in my appointment?",
-    a: "A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, photoshoot and reels, and coffee and tea. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot and reels, and coffee and tea.",
+    a: "A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, bag and wing check including overnight, breakfast and refreshments, alcohol, makeup, hair, bronzing, seamstress, a changing room, photoshoot and reels, and coffee and tea. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments.",
   },
   {
     q: "Where does the glam take place?",

@@ -31,8 +31,11 @@ export const TIER_LABEL: Record<HubTier, string> = {
   lite: "Glam Hub Lite",
 };
 
-/** Coffee and tea are included at every hub, Full Service and Lite. */
+/** Refreshment line for Full Service hubs. */
 export const ALWAYS_INCLUDED = "Coffee and tea";
+
+/** Refreshment line for Glam Hub Lite. */
+export const LITE_REFRESHMENTS = "Coffee, tea and light refreshments";
 
 export const FULL_SERVICE_INCLUSIONS = [
   "Shuttle",
@@ -42,6 +45,8 @@ export const FULL_SERVICE_INCLUSIONS = [
   "Makeup",
   "Hair",
   "Bronzing",
+  "Seamstress",
+  "Changing room",
   "Photoshoot and reels",
   ALWAYS_INCLUDED,
 ];
@@ -49,8 +54,34 @@ export const FULL_SERVICE_INCLUSIONS = [
 export const LITE_INCLUSIONS = [
   "Makeup",
   "Photoshoot and reels",
-  ALWAYS_INCLUDED,
+  "Changing room",
+  LITE_REFRESHMENTS,
 ];
+
+/**
+ * Services a Glam Hub Lite explicitly does not offer. Nothing here may
+ * appear as an inclusion, add-on, package, calculator line item or
+ * structured-data offer on a Lite territory.
+ */
+export const LITE_NOT_OFFERED = [
+  "Getting dressed",
+  "Seamstress",
+  "Bag and wing check, including overnight",
+  "Shuttle",
+  "Hair",
+  "Bronzing",
+  "Alcohol",
+  "Breakfast",
+];
+
+/** Territories that also offer a barber. Shown as a quiet marker only. */
+export const BARBER_SLUGS = ["jamaica", "trinidad", "trinidad-carnival-2027"] as const;
+
+export const BARBER_LABEL = "+ Barber";
+
+export function hasBarber(slug: string): boolean {
+  return (BARBER_SLUGS as readonly string[]).includes(slug);
+}
 
 /** Miami is Full Service, but there is no shuttle in Miami this season. */
 export const MIAMI_SHUTTLE_NOTE =

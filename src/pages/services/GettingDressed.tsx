@@ -80,7 +80,7 @@ const faqSchema = {
       name: "Where can I book getting-dressed help?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Getting-dressed assistance is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories cover makeup plus photoshoot and reels. It pairs with Carnival makeup and the Carnival photoshoot in the same morning slot.",
+        text: "Getting-dressed assistance is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories do not offer getting dressed or seamstress support; they cover makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments. It pairs with Carnival makeup and the Carnival photoshoot in the same morning slot.",
       },
     },
   ],
@@ -306,8 +306,9 @@ const GettingDressed = () => {
               <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
               <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a> and{" "}
-              <a href="/toronto" className="text-primary hover:underline">Toronto</a> cover
-              makeup plus photoshoot and reels. It pairs with{" "}
+              <a href="/toronto" className="text-primary hover:underline">Toronto</a> do not
+              offer getting dressed or seamstress support; they cover makeup, photoshoot and
+              reels, a changing room, and coffee, tea and light refreshments. It pairs with{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 Carnival makeup
               </a>{" "}
