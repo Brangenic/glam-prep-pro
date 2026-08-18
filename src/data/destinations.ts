@@ -267,7 +267,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           answer:
             tier === "full"
               ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? ". There is no shuttle in Miami this season" : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
-              : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText}. Our Full Service Glam Hubs, which add shuttle, bag and wing check, breakfast, alcohol, hair and bronzing, run in Jamaica, Trinidad and Miami.`,
+              : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, bag and wing check, shuttle, hair, bronzing, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
         },
       ]
     : [];
