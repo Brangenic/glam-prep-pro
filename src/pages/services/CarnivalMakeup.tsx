@@ -34,7 +34,7 @@ const faqSchema = {
       name: "How much does Carnival makeup cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Pricing is tiered so you can choose the level of artistry you want for the morning. The road-ready access package — getting-dressed help, shuttle and the lounge — starts at US$35. Professional Carnival makeup starts from US$160, which is what most first-time masqueraders book. Celebrity-artist glam, with one of our senior MUAs who works with soca artists and band launches, runs US$250 to US$350. Premium and editorial looks — heavy beadwork, crystal application, custom skin art — go up to US$2,000. Add-ons such as airbrush, body shimmer and second-day touch-ups are quoted separately on booking.",
+        text: "Pricing is tiered so you can choose the level of artistry you want for the morning. The road-ready access package — getting-dressed help, shuttle and the lounge — starts at US$35. Professional Carnival makeup starts from US$170, which is what most first-time masqueraders book. Celebrity-artist glam, with one of our senior MUAs who works with soca artists and band launches, runs US$250 to US$350. Premium and editorial looks — heavy beadwork, crystal application, custom skin art — go up to US$2,000. Add-ons such as airbrush, body shimmer and second-day touch-ups are quoted separately on booking.",
       },
     },
     {
@@ -134,7 +134,7 @@ const CarnivalMakeup = () => {
               <span className="italic text-gradient-primary">built for the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides sweat-resistant professional Carnival makeup from US$160 (road-ready access from US$35), delivered in our air-conditioned lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+              Carnival Glam Hub provides sweat-resistant professional Carnival makeup from US$170 (road-ready access from US$35), delivered in our air-conditioned lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival makeup at{" "}
@@ -148,7 +148,7 @@ const CarnivalMakeup = () => {
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
               Professional Carnival makeup at Carnival Glam Hub starts from
-              US$160. Most masqueraders spend US$200 to US$300, with
+              US$170. Most masqueraders spend US$200 to US$300, with
               celebrity-artist and premium looks ranging up to US$2,000. A
               road-ready access package (getting dressed, shuttle and lounge)
               starts at US$35.
@@ -196,7 +196,7 @@ const CarnivalMakeup = () => {
               Pricing is tiered so you can choose the level of artistry you want
               for the morning. The road-ready access package — getting-dressed
               help, shuttle and the lounge — starts at US$35. Professional
-              Carnival makeup starts from US$160, which is what most first-time
+              Carnival makeup starts from US$170, which is what most first-time
               masqueraders book. Celebrity-artist glam, with one of our senior
               MUAs who works with soca artists and band launches, runs US$250 to
               US$350. Premium and editorial looks — heavy beadwork, crystal

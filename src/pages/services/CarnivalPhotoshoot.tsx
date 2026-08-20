@@ -88,7 +88,7 @@ const faqSchema = {
       name: "How much does the Carnival photoshoot cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Carnival photoshoot starts from US$220 as a stand-alone session and is discounted when bundled with Carnival makeup, hair and getting-dressed. Final pricing varies by territory and photographer.",
+        text: "The Carnival photoshoot starts from US$140 as a stand-alone session and is discounted when bundled with Carnival makeup, hair and getting-dressed. Final pricing varies by territory and photographer.",
       },
     },
     {
@@ -164,7 +164,7 @@ const CarnivalPhotoshoot = () => {
               <span className="italic text-gradient-primary">captured before the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides on-site professional Carnival photoshoots from US$220, captured the morning of the parade in our lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
+              Carnival Glam Hub provides on-site professional Carnival photoshoots from US$140, captured the morning of the parade in our lounges across Trinidad, Jamaica, Barbados, Grenada, Saint Lucia, Antigua, Guyana and Miami.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               A Carnival photoshoot at{" "}
@@ -362,7 +362,7 @@ const CarnivalPhotoshoot = () => {
               How much does the Carnival photoshoot cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              The Carnival photoshoot starts from US$220 as a stand-alone
+              The Carnival photoshoot starts from US$140 as a stand-alone
               session and is discounted when bundled with{" "}
               <a
                 href="/services/carnival-makeup"

@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Costume Getting-Dressed Assistance | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Flat US$35 at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.";
+  "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Free with any Carnival Glam Hub service, US$35 stand-alone, at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/getting-dressed";
 
 
@@ -72,7 +72,7 @@ const faqSchema = {
       name: "How much does getting-dressed help cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Getting-dressed assistance is a flat US$35 at Carnival Glam Hub — the same price whether you book it stand-alone or alongside makeup, hair and the photoshoot.",
+        text: "Getting-dressed assistance is included free with any Carnival Glam Hub service. It is US$35 as a stand-alone for masqueraders who bring their own artist.",
       },
     },
     {
@@ -148,7 +148,7 @@ const GettingDressed = () => {
               <span className="italic text-gradient-primary">done properly</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides hands-on Carnival costume getting-dressed and on-site seamstress support at a flat US$35, at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.
+              Carnival Glam Hub provides hands-on Carnival costume getting-dressed and on-site seamstress support, included free with any Carnival Glam Hub service and US$35 as a stand-alone, at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Getting-dressed assistance at{" "}
@@ -157,8 +157,8 @@ const GettingDressed = () => {
               </a>{" "}
               is hands-on help fitting your modern Carnival costume, by trained
               dressers who balance wire bras, monokini bases, harnesses,
-              backpacks and standing collars so nothing shifts on the road. It
-              is included in every concierge package.
+              backpacks and standing collars so nothing shifts on the road. It is
+              included free with any Carnival Glam Hub service.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
               An on-site seamstress works alongside the dressing team for the
@@ -285,9 +285,9 @@ const GettingDressed = () => {
               How much does getting-dressed help cost?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Getting-dressed assistance is a flat US$35 at Carnival Glam Hub
-              — the same price whether you book it stand-alone or alongside
-              makeup, hair and the photoshoot. No tiers, no add-on surcharges.
+              Getting-dressed assistance is included free with any Carnival
+              Glam Hub service. It is US$35 as a stand-alone for masqueraders
+              who bring their own artist. No tiers, no add-on surcharges.
             </p>
           </section>
 

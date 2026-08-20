@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Check } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,35 +14,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { getHubTier, TIER_LABEL } from "@/data/hubTiers";
+import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
+import {
+  BARBER_PRICE,
+  GETTING_DRESSED_PRICE,
+  TERRITORY_PRICING,
+  getTerritoryPricing,
+  lowestPremiumPrice,
+  standardProducts,
+  type DayKey,
+  type QuoteProduct,
+  type ServiceTag,
+} from "@/data/territoryPricing";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Get a personalised Carnival morning quote in three steps. Sweat-proof makeup, hair, dressing, photoshoot and shuttle, priced for your party size and territory.";
+  "Get a personalised Carnival morning quote in three steps. Real Carnival Glam Hub pricing for makeup, hair, photoshoot and Carnival morning access, by territory.";
 const CANONICAL = "https://www.carnivalglamhub.com/booking-calculator";
-const MASOS_URL = "https://carnivalglamhub.masos.app";
-
-type Territory = {
-  value: string;
-  label: string;
-  nextDate?: string; // YYYY-MM-DD
-};
-
-const TERRITORIES: Territory[] = [
-  { value: "trinidad", label: "Trinidad", nextDate: "2027-02-08" },
-  { value: "jamaica", label: "Jamaica", nextDate: "2027-04-11" },
-  { value: "saint-lucia", label: "Saint Lucia", nextDate: "2026-07-20" },
-  { value: "grenada", label: "Grenada (Spice Mas)", nextDate: "2026-08-10" },
-  { value: "antigua", label: "Antigua", nextDate: "2026-08-03" },
-  { value: "barbados", label: "Barbados (Crop Over)", nextDate: "2026-08-03" },
-  { value: "miami", label: "Miami", nextDate: "2026-10-11" },
-  { value: "toronto", label: "Toronto (Caribana)", nextDate: "2026-08-01" },
-  { value: "guyana", label: "Guyana", nextDate: "2027-02-22" },
-  { value: "tobago", label: "Tobago" },
-  { value: "atlanta", label: "Atlanta" },
-  { value: "epic-cruise", label: "Epic Cruise" },
-  { value: "other", label: "Other" },
-];
+const WHATSAPP_URL = "https://wa.me/18765090997";
+const DISCLAIMER =
+  "Estimated based on current Carnival Glam Hub pricing. Your booking team will confirm availability and final pricing.";
 
 const COUNTRY_CODES = [
   "+1", "+1-868", "+1-876", "+1-246", "+1-473", "+1-758", "+1-268",
@@ -49,107 +41,153 @@ const COUNTRY_CODES = [
   "+592", "+597", "+509", "+507", "+52",
 ];
 
-type ServiceKey =
-  | "makeup"
-  | "hair"
-  | "dressing"
-  | "photoshoot"
-  | "shuttle"
-  | "refreshments";
-
-type Service = {
-  key: ServiceKey;
-  label: string;
-  price: number;
-};
-
-const SERVICES: Service[] = [
-  { key: "makeup", label: "Carnival makeup (sweat-proof)", price: 280 },
-  { key: "hair", label: "Carnival hair styling", price: 180 },
-  { key: "dressing", label: "Getting-dressed assistance", price: 80 },
-  { key: "photoshoot", label: "Photoshoot add-on", price: 220 },
-  { key: "shuttle", label: "Shuttle to your band", price: 60 },
-  { key: "refreshments", label: "Refreshments and lounge access", price: 45 },
-];
-
 const PARTY_OPTIONS = [1, 2, 3, 4, 5];
 
-/**
- * Which add-ons a territory can actually sell. Glam Hub Lite territories
- * offer makeup plus photoshoot and reels only. Miami is Full Service but
- * has no shuttle this season.
- */
-const LITE_SERVICES: ServiceKey[] = ["makeup", "photoshoot"];
+type IntentKey =
+  | "makeup"
+  | "makeup-photoshoot"
+  | "photoshoot"
+  | "hair"
+  | "full-glam"
+  | "road-ready"
+  | "group";
 
-function availableServiceKeys(territory: string): ServiceKey[] {
-  const tier = getHubTier(territory);
-  if (tier === "lite") return LITE_SERVICES;
-  if (territory === "miami") return SERVICES.map((s) => s.key).filter((k) => k !== "shuttle");
-  return SERVICES.map((s) => s.key);
+const INTENT_LABELS: Record<IntentKey, string> = {
+  makeup: "Makeup",
+  "makeup-photoshoot": "Makeup and photoshoot",
+  photoshoot: "Photoshoot only",
+  hair: "Hair",
+  "full-glam": "Full Glam",
+  "road-ready": "I already have glam, I just need Carnival morning access",
+  group: "Group booking",
+};
+
+const sameTags = (p: QuoteProduct, tags: ServiceTag[]) =>
+  p.tags.length === tags.length && tags.every((t) => p.tags.includes(t));
+
+const hasAll = (p: QuoteProduct, tags: ServiceTag[]) => tags.every((t) => p.tags.includes(t));
+
+/** Real products that satisfy a given intent, for a territory and day. */
+function productsForIntent(products: QuoteProduct[], intent: IntentKey): QuoteProduct[] {
+  switch (intent) {
+    case "makeup":
+      return products.filter((p) => sameTags(p, ["makeup"]));
+    case "makeup-photoshoot":
+      return products.filter((p) => sameTags(p, ["makeup", "photoshoot"]));
+    case "photoshoot":
+      return products.filter((p) => sameTags(p, ["photoshoot"]));
+    case "hair":
+      return products.filter((p) => sameTags(p, ["hair"]));
+    case "full-glam":
+      return products.filter((p) => hasAll(p, ["makeup", "hair", "photoshoot"]));
+    default:
+      return [];
+  }
 }
+
+/** Inclusion lines already being charged as the selected product. */
+const TAG_TO_INCLUSION: Partial<Record<ServiceTag, string[]>> = {
+  makeup: ["Makeup"],
+  hair: ["Hair"],
+  photoshoot: ["Photoshoot and reels"],
+  bronzing: ["Bronzing"],
+  breakfast: ["Breakfast and refreshments"],
+};
 
 const BookingCalculator = () => {
   const [territory, setTerritory] = useState("");
-  const [eventDate, setEventDate] = useState("");
+  const [day, setDay] = useState<DayKey>("single");
+  const [intent, setIntent] = useState<IntentKey | "">("");
+  const [productId, setProductId] = useState("");
   const [partySize, setPartySize] = useState(1);
-  const [selectedServices, setSelectedServices] = useState<Record<ServiceKey, boolean>>({
-    makeup: true,
-    hair: true,
-    dressing: false,
-    photoshoot: false,
-    shuttle: false,
-    refreshments: false,
-  });
+  const [addBarber, setAddBarber] = useState(false);
   const [email, setEmail] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
   const [whatsapp, setWhatsapp] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const territoryTier = getHubTier(territory);
-  const allowedKeys = useMemo(() => availableServiceKeys(territory), [territory]);
-  const visibleServices = useMemo(
-    () => SERVICES.filter((s) => allowedKeys.includes(s.key)),
-    [allowedKeys],
+  const config = useMemo(() => getTerritoryPricing(territory), [territory]);
+  const tier = getHubTier(territory);
+
+  // Reset downstream answers whenever the territory changes.
+  useEffect(() => {
+    setDay(config?.askDay ? config.days[0].key : (config?.days[0].key ?? "single"));
+    setIntent("");
+    setProductId("");
+    setAddBarber(false);
+  }, [config]);
+
+  const dayProducts = useMemo(
+    () => (config ? standardProducts(config, day) : []),
+    [config, day],
   );
 
-  // Drop any selection the chosen territory cannot deliver.
+  const intents = useMemo<IntentKey[]>(() => {
+    if (!config || !config.quotable) return [];
+    const list: IntentKey[] = [];
+    (["makeup", "makeup-photoshoot", "photoshoot", "hair", "full-glam"] as IntentKey[]).forEach(
+      (k) => {
+        if (productsForIntent(dayProducts, k).length > 0) list.push(k);
+      },
+    );
+    if (config.roadReady) list.push("road-ready");
+    list.push("group");
+    return list;
+  }, [config, dayProducts]);
+
+  const intentProducts = useMemo(
+    () => (intent && intent !== "road-ready" && intent !== "group"
+      ? productsForIntent(dayProducts, intent)
+      : []),
+    [dayProducts, intent],
+  );
+
+  // Auto-resolve when an intent maps to exactly one real product.
   useEffect(() => {
-    setSelectedServices((prev) => {
-      const next = { ...prev };
-      (Object.keys(next) as ServiceKey[]).forEach((k) => {
-        if (!allowedKeys.includes(k)) next[k] = false;
+    if (intentProducts.length === 1) setProductId(intentProducts[0].id);
+    else setProductId("");
+  }, [intentProducts]);
+
+  const selectedProduct = useMemo(
+    () => intentProducts.find((p) => p.id === productId) ?? null,
+    [intentProducts, productId],
+  );
+
+  const lines = useMemo(() => {
+    const out: { label: string; amount: number }[] = [];
+    if (intent === "road-ready") {
+      out.push({
+        label: "Carnival morning access",
+        amount: GETTING_DRESSED_PRICE * partySize,
       });
-      return next;
-    });
-  }, [allowedKeys]);
+    } else if (selectedProduct) {
+      out.push({ label: selectedProduct.label, amount: selectedProduct.price * partySize });
+    }
+    if (addBarber && config?.barber) {
+      out.push({ label: "Barber", amount: BARBER_PRICE * partySize });
+    }
+    return out;
+  }, [intent, selectedProduct, partySize, addBarber, config]);
 
-  // Default event date when territory changes
-  useEffect(() => {
-    const t = TERRITORIES.find((x) => x.value === territory);
-    if (t?.nextDate && !eventDate) setEventDate(t.nextDate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [territory]);
+  const total = lines.reduce((s, l) => s + l.amount, 0);
+  const isGroup = partySize >= 5 || intent === "group";
+  const quotable = Boolean(config?.quotable) && intent !== "group";
 
-  const { subtotal, low, high, mid, included, discountPct } = useMemo(() => {
-    let raw = 0;
-    const inc: { label: string; subtotal: number }[] = [];
-    visibleServices.forEach((s) => {
-      if (!selectedServices[s.key]) return;
-      const line = s.price * partySize;
-      raw += line;
-      inc.push({ label: s.label, subtotal: line });
-    });
-    const discount = partySize >= 4 ? 0.1 : 0;
-    const sub = Math.round(raw * (1 - discount));
-    return {
-      subtotal: sub,
-      low: sub,
-      high: Math.round(sub * 1.15),
-      mid: Math.round(sub * 1.075),
-      included: inc,
-      discountPct: discount * 100,
-    };
-  }, [selectedServices, partySize, visibleServices]);
+  const inclusions = useMemo(() => {
+    const base = getHubInclusions(territory);
+    if (!base) return [];
+    const charged = new Set<string>();
+    const tags = intent === "road-ready" ? [] : (selectedProduct?.tags ?? []);
+    tags.forEach((t) => (TAG_TO_INCLUSION[t] ?? []).forEach((l) => charged.add(l)));
+    return base.filter((i) => !charged.has(i));
+  }, [territory, selectedProduct, intent]);
+
+  const premiumFrom = useMemo(
+    () => (config && config.quotable ? lowestPremiumPrice(config, day) : null),
+    [config, day],
+  );
+
+  const dayLabel = config?.days.find((d) => d.key === day)?.label ?? "";
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -210,11 +248,15 @@ const BookingCalculator = () => {
     };
   }, []);
 
-  const toggleService = (key: ServiceKey) =>
-    setSelectedServices((prev) => ({ ...prev, [key]: !prev[key] }));
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!config) {
+      toast({
+        title: "Choose your territory",
+        description: "Tell us where you are playing Carnival so we can price your morning.",
+      });
+      return;
+    }
     if (!email.trim() || !whatsapp.trim()) {
       toast({
         title: "A few details missing",
@@ -222,16 +264,22 @@ const BookingCalculator = () => {
       });
       return;
     }
-    if (subtotal === 0) {
+
+    // Enquiry path: group bookings and territories we cannot yet price.
+    if (isGroup || !quotable) {
+      window.location.href = WHATSAPP_URL;
+      return;
+    }
+
+    if (total === 0) {
       toast({
-        title: "Choose at least one service",
-        description: "Tick the services you would like included in your morning.",
+        title: "Choose what you need",
+        description: "Pick what you need for Carnival morning to see your quote.",
       });
       return;
     }
-    setSubmitting(true);
 
-    const services = visibleServices.filter((s) => selectedServices[s.key]).map((s) => s.label);
+    setSubmitting(true);
 
     const w = window as unknown as {
       dataLayer?: Array<Record<string, unknown>>;
@@ -241,25 +289,25 @@ const BookingCalculator = () => {
     if (typeof w.gtag === "function") {
       w.gtag("event", "conversion", {
         send_to: "AW-10894663311/7s1DCKX357McEI-9_coo",
-        value: mid,
+        value: total,
         currency: "USD",
       });
       w.gtag("event", "generate_lead", {
         territory,
-        services_count: services.length,
+        carnival_day: day,
         party_size: partySize,
-        estimated_total: mid,
+        estimated_total: total,
         currency: "USD",
       });
     }
 
     const params = new URLSearchParams();
-    if (territory) params.set("territory", territory);
-    if (eventDate) params.set("date", eventDate);
+    params.set("territory", territory);
+    params.set("day", day);
     params.set("party_size", String(partySize));
     params.set("email", email);
     params.set("whatsapp", `${countryCode}${whatsapp}`);
-    const target = `${MASOS_URL}/events?${params.toString()}`;
+    const target = `${config.bookingUrl}?${params.toString()}`;
 
     setTimeout(() => {
       setSubmitting(false);
@@ -267,10 +315,16 @@ const BookingCalculator = () => {
     }, 250);
   };
 
+  const primaryCtaLabel = isGroup
+    ? "Request Group Quote"
+    : quotable
+      ? "Reserve Your Carnival Morning"
+      : "Speak to Our Team";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <main className="pt-28 sm:pt-32 pb-24">
+      <main className="pt-28 sm:pt-32 pb-28">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <header className="text-center mb-10 sm:mb-14">
             <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4">
@@ -280,7 +334,7 @@ const BookingCalculator = () => {
               Carnival Glam Quote Calculator
             </h1>
             <p className="font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Three quick questions. Your personalised Carnival morning quote.
+              A few quick questions. Real Carnival Glam Hub pricing for your morning.
             </p>
           </header>
 
@@ -288,13 +342,16 @@ const BookingCalculator = () => {
             onSubmit={handleSubmit}
             className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10"
             data-mcp-action="get-quote"
-            data-mcp-description="Get a price quote for Carnival Glam Hub services for a chosen Carnival territory, party size and add-ons."
-            data-mcp-params='{"required":["destination","people","email"],"optional":["addons","date","phone","country_code"]}'
+            data-mcp-description="Get a price quote for Carnival Glam Hub services for a chosen Carnival territory, Carnival day, service intent and party size."
+            data-mcp-params='{"required":["destination","people","email"],"optional":["carnival_day","intent","product","barber","phone","country_code"]}'
           >
             <div className="space-y-6">
-              <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6">
+              <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-7">
+                {/* 1. Territory */}
                 <div className="space-y-2">
-                  <Label htmlFor="territory">Territory</Label>
+                  <Label htmlFor="territory" className="font-body text-sm font-semibold">
+                    Where are you playing Carnival?
+                  </Label>
                   <Select value={territory} onValueChange={setTerritory} name="destination">
                     <SelectTrigger
                       id="territory"
@@ -304,28 +361,144 @@ const BookingCalculator = () => {
                       <SelectValue placeholder="Choose your Carnival" />
                     </SelectTrigger>
                     <SelectContent>
-                      {TERRITORIES.map((t) => (
-                        <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                      {TERRITORY_PRICING.map((t) => (
+                        <SelectItem key={t.slug} value={t.slug}>{t.label}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
+                  {config && tier && (
+                    <p className="font-body text-xs text-muted-foreground">
+                      {TIER_LABEL[tier]}
+                      {territory === "miami" ? `. ${MIAMI_SHUTTLE_NOTE}` : ""}
+                    </p>
+                  )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="event-date">Carnival event date</Label>
-                  <Input
-                    id="event-date"
-                    type="date"
-                    name="date"
-                    aria-label="Carnival event date"
-                    data-mcp-param="date"
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                  />
-                </div>
+                {/* 2. Carnival day */}
+                {config?.askDay && (
+                  <div className="space-y-2">
+                    <Label className="font-body text-sm font-semibold">Carnival day</Label>
+                    <div
+                      className="flex flex-wrap gap-2"
+                      role="radiogroup"
+                      aria-label="Carnival day"
+                      data-mcp-param="carnival_day"
+                    >
+                      {config.days.map((d) => {
+                        const active = day === d.key;
+                        return (
+                          <button
+                            key={d.key}
+                            type="button"
+                            role="radio"
+                            aria-checked={active}
+                            aria-label={d.label}
+                            onClick={() => { setDay(d.key); setIntent(""); }}
+                            className={`h-11 px-5 rounded-full border font-body text-sm font-medium transition-all ${
+                              active
+                                ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20"
+                                : "bg-background border-border text-foreground hover:border-primary/60"
+                            }`}
+                          >
+                            {d.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
+                {config?.eventDate && (
+                  <p className="font-body text-xs text-muted-foreground -mt-3">
+                    {config.label}, {config.eventDate}
+                  </p>
+                )}
+
+                {/* 3. Intent */}
+                {config && config.quotable && (
+                  <div className="space-y-2">
+                    <Label className="font-body text-sm font-semibold">
+                      What do you need for Carnival morning?
+                    </Label>
+                    <div
+                      className="flex flex-col gap-2"
+                      role="radiogroup"
+                      aria-label="What you need for Carnival morning"
+                      data-mcp-param="intent"
+                    >
+                      {intents.map((k) => {
+                        const active = intent === k;
+                        return (
+                          <button
+                            key={k}
+                            type="button"
+                            role="radio"
+                            aria-checked={active}
+                            aria-label={INTENT_LABELS[k]}
+                            onClick={() => setIntent(k)}
+                            className={`text-left px-5 py-3 rounded-2xl border font-body text-sm font-medium transition-all ${
+                              active
+                                ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20"
+                                : "bg-background border-border text-foreground hover:border-primary/60"
+                            }`}
+                          >
+                            {INTENT_LABELS[k]}
+                            {k === "road-ready" && (
+                              <span className={`block text-xs mt-0.5 ${active ? "opacity-80" : "text-muted-foreground"}`}>
+                                US${GETTING_DRESSED_PRICE} per masquerader
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Secondary chooser where a tag has several real options */}
+                    {intentProducts.length > 1 && (
+                      <div className="pt-3 space-y-2" role="radiogroup" aria-label="Choose your option" data-mcp-param="product">
+                        <p className="font-body text-sm font-medium">Choose your option</p>
+                        {intentProducts.map((p) => {
+                          const active = productId === p.id;
+                          return (
+                            <button
+                              key={p.id}
+                              type="button"
+                              role="radio"
+                              aria-checked={active}
+                              aria-label={`${p.label}, US$${p.price}`}
+                              onClick={() => setProductId(p.id)}
+                              className={`w-full flex items-center justify-between gap-4 px-5 py-3 rounded-2xl border font-body text-sm transition-all ${
+                                active
+                                  ? "border-primary bg-primary/10"
+                                  : "border-border bg-background hover:border-primary/60"
+                              }`}
+                            >
+                              <span>{p.label}</span>
+                              <span className="font-semibold whitespace-nowrap">US${p.price}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {intent === "group" && (
+                      <p className="font-body text-xs text-muted-foreground pt-2">
+                        Group bookings are quoted by our team so we can match artists to your party.
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {config && !config.quotable && (
+                  <p className="font-body text-sm text-muted-foreground">
+                    Pricing for {config.label} is confirmed on enquiry. Tell us what you need and our
+                    team will come back to you.
+                  </p>
+                )}
+
+                {/* 4. Party size */}
                 <div className="space-y-2">
-                  <Label>Number of masqueraders</Label>
+                  <Label className="font-body text-sm font-semibold">Number of masqueraders</Label>
                   <div
                     className="flex flex-wrap gap-2"
                     role="radiogroup"
@@ -358,48 +531,31 @@ const BookingCalculator = () => {
                   </div>
                   {partySize >= 5 && (
                     <p className="font-body text-xs text-muted-foreground mt-2">
-                      For groups of 5 or more, we will confirm pricing on a call.
+                      For parties of five or more, our team confirms your quote directly.
                     </p>
                   )}
                 </div>
 
-                <fieldset className="space-y-3">
-                  <legend className="font-body text-sm font-medium mb-2">Services</legend>
-                  {territoryTier && (
-                    <p className="font-body text-xs text-muted-foreground mb-3">
-                      {TIER_LABEL[territoryTier]}
-                      {territoryTier === "lite"
-                        ? ". Makeup, photoshoot and reels, changing room, coffee, tea and light refreshments."
-                        : territory === "miami"
-                          ? ". No shuttle in Miami this season."
-                          : ". Shuttle, bag and wing check, breakfast and refreshments, alcohol, makeup, hair, bronzing, seamstress, changing room, photoshoot and reels, coffee and tea."}
-                    </p>
-                  )}
-                  {visibleServices.map((s) => (
-                    <label
-                      key={s.key}
-                      htmlFor={`svc-${s.key}`}
-                      className="flex items-start gap-3 cursor-pointer"
-                    >
-                      <Checkbox
-                        id={`svc-${s.key}`}
-                        name={`addon_${s.key}`}
-                        value={s.key}
-                        aria-label={`Add ${s.label}`}
-                        data-mcp-param={`addon_${s.key}`}
-                        checked={selectedServices[s.key]}
-                        onCheckedChange={() => toggleService(s.key)}
-                        className="mt-1"
-                      />
-                      <span className="font-body text-sm leading-snug">
-                        {s.label}
-                        <span className="block text-muted-foreground text-xs mt-0.5">
-                          From ${s.price} per masquerader
-                        </span>
+                {/* Optional extra */}
+                {config?.barber && (
+                  <label htmlFor="barber" className="flex items-start gap-3 cursor-pointer">
+                    <Checkbox
+                      id="barber"
+                      name="barber"
+                      aria-label={`Add barber, US$${BARBER_PRICE} per masquerader`}
+                      data-mcp-param="barber"
+                      checked={addBarber}
+                      onCheckedChange={() => setAddBarber((v) => !v)}
+                      className="mt-1"
+                    />
+                    <span className="font-body text-sm leading-snug">
+                      Barber
+                      <span className="block text-muted-foreground text-xs mt-0.5">
+                        US${BARBER_PRICE} per masquerader
                       </span>
-                    </label>
-                  ))}
-                </fieldset>
+                    </span>
+                  </label>
+                )}
               </div>
 
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4">
@@ -455,6 +611,7 @@ const BookingCalculator = () => {
               </div>
             </div>
 
+            {/* Quote card */}
             <aside className="lg:sticky lg:top-28 self-start space-y-4">
               <div
                 aria-live="polite"
@@ -462,62 +619,112 @@ const BookingCalculator = () => {
                 className="rounded-2xl border border-border bg-card p-6 sm:p-8 gold-glow"
               >
                 <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
-                  Your quote range
+                  Your Carnival morning
                 </p>
-                {subtotal === 0 ? (
+
+                {!config ? (
                   <p className="font-display text-2xl sm:text-3xl font-bold mb-4">
-                    Choose services to see your quote
+                    Choose your territory to begin
                   </p>
                 ) : (
                   <>
-                    <p className="font-display text-3xl sm:text-4xl font-bold mb-2">
-                      ${low.toLocaleString()} <span className="text-muted-foreground font-normal text-xl">to</span> ${high.toLocaleString()}{" "}
-                      <span className="text-muted-foreground font-normal text-base">USD</span>
+                    <p className="font-display text-xl sm:text-2xl font-bold leading-snug">
+                      {config.label}
                     </p>
-                    <p className="font-body text-sm text-muted-foreground mb-4">
-                      Estimated time at the lounge: 3 to 4 hours
-                      {discountPct > 0 && (
-                        <span className="block text-primary mt-1">Group discount applied: {discountPct}% off</span>
-                      )}
+                    {config.askDay && dayLabel && (
+                      <p className="font-body text-sm text-muted-foreground mt-1">{dayLabel}</p>
+                    )}
+                    <p className="font-body text-sm text-muted-foreground">
+                      {partySize === 5 ? "5 or more" : partySize} masquerader{partySize === 1 ? "" : "s"}
                     </p>
-                  </>
-                )}
-                <p className="font-body text-sm text-muted-foreground mb-5">
-                  Estimate for {TERRITORIES.find((t) => t.value === territory)?.label || "your territory"}, party of {partySize === 5 ? "5+" : partySize}. Final price confirmed by our team within 48 hours.
-                </p>
 
-                {included.length > 0 && (
-                  <div className="border-t border-border pt-4 mb-5">
-                    <p className="font-body text-sm font-semibold mb-3">What is included</p>
-                    <ul className="space-y-2">
-                      {included.map((i) => (
-                        <li key={i.label} className="flex justify-between font-body text-sm">
-                          <span className="text-muted-foreground">{i.label}</span>
-                          <span>${i.subtotal.toLocaleString()}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    {quotable ? (
+                      <>
+                        {lines.length > 0 ? (
+                          <div className="border-t border-border mt-5 pt-4 space-y-2">
+                            {lines.map((l) => (
+                              <div key={l.label} className="flex justify-between gap-4 font-body text-sm">
+                                <span className="text-muted-foreground">{l.label}</span>
+                                <span className="whitespace-nowrap">US${l.amount.toLocaleString()}</span>
+                              </div>
+                            ))}
+                            <div className="flex justify-between gap-4 items-baseline border-t border-border pt-3 mt-3">
+                              <span className="font-body text-xs uppercase tracking-[0.16em] font-semibold">
+                                Estimated total
+                              </span>
+                              <span className="font-display text-2xl font-bold whitespace-nowrap">
+                                US${total.toLocaleString()}
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="font-body text-sm text-muted-foreground border-t border-border mt-5 pt-4">
+                            Choose what you need for Carnival morning to see your total.
+                          </p>
+                        )}
+
+                        {premiumFrom !== null && (
+                          <p className="font-body text-xs text-muted-foreground mt-3">
+                            Celebrity and Gabby Glam Team artists are available from US${premiumFrom}.
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      <p className="font-body text-sm text-muted-foreground border-t border-border mt-5 pt-4">
+                        {intent === "group"
+                          ? "Group pricing is confirmed on enquiry."
+                          : `Pricing for ${config.label} is confirmed on enquiry.`}
+                      </p>
+                    )}
+
+                    {inclusions.length > 0 && (
+                      <div className="border-t border-border mt-5 pt-4">
+                        <p className="font-body text-xs uppercase tracking-[0.16em] font-semibold mb-3">
+                          Included with your booking
+                        </p>
+                        <ul className="space-y-1.5">
+                          {inclusions.map((i) => (
+                            <li key={i} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
+                              <Check className="h-4 w-4 mt-0.5 shrink-0 text-secondary" aria-hidden="true" />
+                              <span>{i}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {config.provisionalNote && (
+                      <p className="font-body text-xs text-muted-foreground mt-4">
+                        {config.provisionalNote}
+                      </p>
+                    )}
+                    {config.deposit && (
+                      <p className="font-body text-xs text-muted-foreground mt-2">
+                        {config.deposit.note}
+                      </p>
+                    )}
+                  </>
                 )}
 
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="w-full rounded-full bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/20"
+                  className="w-full rounded-full bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/20 mt-6"
                   size="lg"
                 >
-                  {submitting ? "Sending..." : "Reserve Your Carnival Morning"}
+                  {submitting ? "Sending..." : primaryCtaLabel}
                 </Button>
                 <a
-                  href="https://wa.me/18765090997"
+                  href={WHATSAPP_URL}
+                  rel="nofollow noopener"
                   className="block text-center mt-4 font-body text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Speak to our team →
+                  Speak to Our Team →
                 </a>
               </div>
 
               <p className="font-body text-xs text-muted-foreground text-center px-2">
-                Prices are indicative. Carnival Glam Hub will confirm a firm total in writing before any payment.
+                {DISCLAIMER}
               </p>
             </aside>
           </form>
@@ -534,7 +741,9 @@ const BookingCalculator = () => {
           className="w-full rounded-full bg-primary text-primary-foreground"
           size="lg"
         >
-          {subtotal > 0 ? `Reserve from $${low.toLocaleString()}` : "Reserve Your Carnival Morning"}
+          {quotable && total > 0 && !isGroup
+            ? `${primaryCtaLabel} · US$${total.toLocaleString()}`
+            : primaryCtaLabel}
         </Button>
       </div>
 

@@ -73,7 +73,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "How much does professional Carnival makeup cost?",
-    a: "Professional Carnival makeup at Carnival Glam Hub starts from US$160, with most masqueraders spending US$200 to US$300. Celebrity-artist glam ranges US$250 to US$350, and premium looks go up to US$2,000. At Full Service Glam Hubs, a road-ready access package covering getting dressed, shuttle and the lounge starts at US$35.",
+    a: "Professional Carnival makeup at Carnival Glam Hub starts from US$170, with most masqueraders spending US$200 to US$300. Celebrity-artist glam ranges US$250 to US$350, and premium looks go up to US$2,000. At Full Service Glam Hubs, a road-ready access package covering getting dressed, shuttle and the lounge starts at US$35.",
   },
   {
     q: "Can I do my own Carnival makeup without experience?",
