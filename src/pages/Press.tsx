@@ -386,7 +386,7 @@ const Press = () => {
         {/* B. LOGO STRIP */}
         <section aria-label="Publications that have covered Carnival Glam Hub" className="border-y border-primary/10 bg-primary/[0.02] py-8 sm:py-10">
           <div className="container mx-auto px-4 sm:px-6">
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14">
+            <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-5 lg:gap-x-9 xl:gap-x-12">
               {PRESS_OUTLETS.map((o) => (
                 <a
                   key={o.name}
@@ -403,7 +403,7 @@ const Press = () => {
                     decoding="async"
                     className="h-6 w-6 object-contain sm:h-7 sm:w-7"
                   />
-                  <span className="font-display text-base tracking-wide text-foreground/80 transition-colors group-hover:text-primary sm:text-lg">
+                  <span className="font-display text-base tracking-wide text-foreground/80 transition-colors group-hover:text-primary lg:text-lg">
                     {o.name}
                   </span>
                 </a>
