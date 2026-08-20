@@ -349,7 +349,7 @@ const Press = () => {
               id="press-heading"
               className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl"
             >
-              In The <em className="not-italic text-gradient-primary italic">Press</em>
+              In The <em className="italic text-gradient-primary">Press</em>
             </h1>
             <p className="mx-auto mt-6 max-w-3xl font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
               From international fashion titles to leading Caribbean media, Carnival Glam
@@ -533,7 +533,7 @@ const Press = () => {
               id="caribbean-heading"
               className="mb-8 font-display text-2xl font-bold sm:text-3xl"
             >
-              From the <em className="not-italic text-gradient-primary italic">Caribbean</em> press
+              From the <em className="italic text-gradient-primary">Caribbean</em> press
             </h2>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
               {caribbean.map((story, index) => {
