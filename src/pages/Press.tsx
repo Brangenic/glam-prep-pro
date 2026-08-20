@@ -1,20 +1,32 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { BOOKING_URL } from "@/lib/constants";
-import { PRESS_STORIES, type PressStory } from "@/data/pressCoverage";
+import {
+  PRESS_OUTLETS,
+  PRESS_STORIES,
+  PRESS_TIMELINE,
+  storiesByTier,
+  type PressStory,
+} from "@/data/pressCoverage";
 
-const PAGE_TITLE = "Press and Media Coverage | Carnival Glam Hub";
+const PAGE_TITLE = "Carnival Glam Hub in the Press | Media Coverage Since 2019";
 const PAGE_DESCRIPTION =
-  "Carnival Glam Hub in the press. Coverage from Our Today, the Jamaica Observer and the Jamaica Gleaner on the Caribbean's premium Carnival morning concierge.";
+  "Carnival Glam Hub media coverage from Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People. Nine years of Caribbean Carnival beauty press.";
 const CANONICAL = "https://www.carnivalglamhub.com/press";
+const OG_IMAGE = "https://www.carnivalglamhub.com/og-image.png";
 const ORGANISATION = {
   "@type": "Organization",
   name: "Carnival Glam Hub",
   url: "https://www.carnivalglamhub.com",
 };
+
+const ANSWER_SUMMARY =
+  "Carnival Glam Hub has been covered by the press since 2019. Coverage includes Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People, spanning Carnival in Jamaica, Trinidad, Miami, Saint Lucia, Barbados, Grenada and Toronto.";
+
+const favicon = (domain: string) =>
+  `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
 
 const formatDate = (iso: string) => {
   const parsed = new Date(`${iso}T12:00:00Z`);
@@ -27,28 +39,162 @@ const formatDate = (iso: string) => {
   });
 };
 
-const OutletMark = ({ story }: { story: PressStory }) => {
+/* ---------------------------------------------------------------- atoms */
+
+const OutletMark = ({
+  outlet,
+  domain,
+  className = "",
+}: {
+  outlet: string;
+  domain: string;
+  className?: string;
+}) => {
   const [failed, setFailed] = useState(false);
   return (
-    <div className="flex items-center gap-2.5">
+    <div className={`flex items-center gap-2.5 ${className}`}>
       {!failed && (
         <img
-          src={`https://www.google.com/s2/favicons?sz=128&domain=${story.outletDomain}`}
-          alt={`${story.outlet} logo`}
-          width={28}
-          height={28}
+          src={favicon(domain)}
+          alt={`${outlet} logo`}
+          width={24}
+          height={24}
           loading="lazy"
           decoding="async"
           onError={() => setFailed(true)}
-          className="h-6 w-6 object-contain rounded-sm"
+          className="h-5 w-5 rounded-sm object-contain"
         />
       )}
-      <span className="font-display text-base tracking-wide text-foreground/80">
-        {story.outlet}
+      <span className="font-display text-sm tracking-wide text-foreground/75">
+        {outlet}
       </span>
     </div>
   );
 };
+
+const NoteBadge = ({ note }: { note: string }) => (
+  <span className="self-start rounded-full border border-primary/30 bg-primary/5 px-3 py-1 font-body text-[10px] uppercase tracking-[0.14em] text-primary">
+    {note}
+  </span>
+);
+
+const ReadCta = ({ outlet, label = "Read Article" }: { outlet: string; label?: string }) => (
+  <span className="mt-auto pt-4 font-body text-sm font-semibold text-primary">
+    {label} <span aria-hidden="true">→</span>
+    <span className="sr-only"> on {outlet}</span>
+  </span>
+);
+
+const StoryDate = ({ story }: { story: PressStory }) => (
+  <p className="font-body text-xs text-muted-foreground">
+    <time dateTime={story.publishedDate}>{formatDate(story.publishedDate)}</time>
+    {story.author && <span> · {story.author}</span>}
+  </p>
+);
+
+/** Publisher image with a typographic fallback when hotlinking is blocked. */
+const RemoteImage = ({
+  story,
+  ratio,
+  onFail,
+}: {
+  story: PressStory;
+  ratio: string;
+  onFail: () => void;
+}) => (
+  <div className={`overflow-hidden bg-primary/5 ${ratio}`}>
+    <img
+      src={story.image}
+      alt={`${story.outlet} coverage of Carnival Glam Hub: ${story.headline}`}
+      loading="lazy"
+      decoding="async"
+      onError={onFail}
+      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+    />
+  </div>
+);
+
+/* ------------------------------------------------------------ story card */
+
+const StoryCard = ({
+  story,
+  variant,
+}: {
+  story: PressStory;
+  variant: "wide" | "tall" | "compact";
+}) => {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = Boolean(story.image) && !imageFailed;
+  const quoteLed = !showImage && Boolean(story.pullQuote);
+
+  return (
+    <article
+      id={`story-${story.id}`}
+      className="scroll-mt-28 h-full"
+    >
+      <a
+        href={story.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-lg hover:shadow-primary/10"
+      >
+        {showImage && (
+          <RemoteImage
+            story={story}
+            ratio={variant === "tall" ? "aspect-[3/4]" : "aspect-[16/10]"}
+            onFail={() => setImageFailed(true)}
+          />
+        )}
+        <div
+          className={`flex flex-1 flex-col p-6 sm:p-7 ${
+            quoteLed ? "bg-gradient-to-br from-primary/[0.06] to-secondary/[0.05]" : ""
+          }`}
+        >
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <OutletMark outlet={story.outlet} domain={story.outletDomain} />
+            {story.note && <NoteBadge note={story.note} />}
+          </div>
+
+          {quoteLed ? (
+            <>
+              <blockquote className="font-display text-lg italic leading-snug text-foreground sm:text-xl">
+                &ldquo;{story.pullQuote}&rdquo;
+              </blockquote>
+              {story.pullQuoteAttribution && (
+                <p className="mt-3 font-body text-xs uppercase tracking-[0.14em] text-primary/80">
+                  {story.pullQuoteAttribution}
+                </p>
+              )}
+              <h3 className="mt-5 font-display text-base font-bold leading-snug transition-colors group-hover:text-primary">
+                {story.headline}
+              </h3>
+            </>
+          ) : (
+            <>
+              <h3
+                className={`font-display font-bold leading-snug transition-colors group-hover:text-primary ${
+                  variant === "wide" ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
+                }`}
+              >
+                {story.headline}
+              </h3>
+              <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
+                {story.summary}
+              </p>
+            </>
+          )}
+
+          <div className="mt-4">
+            <StoryDate story={story} />
+          </div>
+          <ReadCta outlet={story.outlet} />
+        </div>
+      </a>
+    </article>
+  );
+};
+
+/* ------------------------------------------------------------------ page */
 
 const Press = () => {
   useEffect(() => {
@@ -70,12 +216,18 @@ const Press = () => {
       };
     };
 
-    const restorers: Array<() => void> = [];
-    restorers.push(setMeta('meta[name="description"]', "name", "description", PAGE_DESCRIPTION));
-    restorers.push(setMeta('meta[property="og:title"]', "property", "og:title", PAGE_TITLE));
-    restorers.push(setMeta('meta[property="og:description"]', "property", "og:description", PAGE_DESCRIPTION));
-    restorers.push(setMeta('meta[property="og:url"]', "property", "og:url", CANONICAL));
-    restorers.push(setMeta('meta[property="og:type"]', "property", "og:type", "website"));
+    const restorers: Array<() => void> = [
+      setMeta('meta[name="description"]', "name", "description", PAGE_DESCRIPTION),
+      setMeta('meta[property="og:title"]', "property", "og:title", PAGE_TITLE),
+      setMeta('meta[property="og:description"]', "property", "og:description", PAGE_DESCRIPTION),
+      setMeta('meta[property="og:url"]', "property", "og:url", CANONICAL),
+      setMeta('meta[property="og:type"]', "property", "og:type", "website"),
+      setMeta('meta[property="og:image"]', "property", "og:image", OG_IMAGE),
+      setMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image"),
+      setMeta('meta[name="twitter:title"]', "name", "twitter:title", PAGE_TITLE),
+      setMeta('meta[name="twitter:description"]', "name", "twitter:description", PAGE_DESCRIPTION),
+      setMeta('meta[name="twitter:image"]', "name", "twitter:image", OG_IMAGE),
+    ];
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     const previousCanonical = canonical?.getAttribute("href") ?? null;
@@ -94,15 +246,22 @@ const Press = () => {
     };
   }, []);
 
-  const [featured, ...rest] = PRESS_STORIES;
+  const [hero] = storiesByTier("hero");
+  const features = storiesByTier("feature");
+  const caribbean = storiesByTier("caribbean");
+  const mentions = storiesByTier("mention");
+
+  const [heroFeature, secondFeature] = features;
+  const [caribFailed, setCaribFailed] = useState<Record<string, boolean>>({});
 
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Glam Hub in the news",
+    name: "Carnival Glam Hub in the press",
     url: CANONICAL,
     description: PAGE_DESCRIPTION,
     inLanguage: "en-GB",
+    about: ORGANISATION,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: PRESS_STORIES.map((story, index) => ({
@@ -113,8 +272,11 @@ const Press = () => {
           headline: story.headline,
           url: story.url,
           datePublished: story.publishedDate,
+          ...(story.author ? { author: { "@type": "Person", name: story.author } } : {}),
+          ...(story.image ? { image: story.image } : {}),
           publisher: { "@type": "Organization", name: story.outlet },
           about: ORGANISATION,
+          isBasedOn: ORGANISATION.url,
         },
       })),
     },
@@ -129,6 +291,37 @@ const Press = () => {
     ],
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Has Carnival Glam Hub been featured in the press?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Carnival Glam Hub has been featured in Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People, across more than twenty articles published between 2019 and 2026.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which international publications have covered Carnival Glam Hub?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Teen Vogue covered Carnival Glam Hub in its 2024 report on the Carnival glam machine at Grenada's Spicemas, and theGrio recommended Carnival Glam Hub in its Jamaica Carnival 2024 guide.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When did press coverage of Carnival Glam Hub begin?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The earliest coverage is a Jamaica Gleaner Flair profile of co-founder Gabrielle Waite published on 2 September 2019, followed by coverage of the Trinidad expansion in 2020.",
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <script
@@ -139,121 +332,323 @@ const Press = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar />
+
       <main className="pt-28 sm:pt-32">
-        <section className="py-14 sm:py-18 lg:py-20" aria-labelledby="press-page-heading">
-          <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-            <header className="mb-10 sm:mb-14">
-              <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
-                Press
-              </p>
-              <h1
-                id="press-page-heading"
-                className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4"
-              >
-                Glam Hub in the{" "}
-                <span className="italic text-gradient-primary">news</span>
-              </h1>
-              <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                Carnival Glam Hub is covered by Caribbean and international press for
-                raising the standard of the Carnival morning across the region. Here is
-                where our work has been written about.
-              </p>
-            </header>
+        {/* A. HERO */}
+        <section className="pb-10 pt-6 sm:pb-14" aria-labelledby="press-heading">
+          <div className="container mx-auto max-w-5xl px-4 text-center sm:px-6">
+            <p className="mb-3 font-body text-xs font-medium uppercase tracking-[0.28em] text-secondary">
+              Media
+            </p>
+            <h1
+              id="press-heading"
+              className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl"
+            >
+              In The <em className="not-italic text-gradient-primary italic">Press</em>
+            </h1>
+            <p className="mx-auto mt-6 max-w-3xl font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
+              From international fashion titles to leading Caribbean media, Carnival Glam
+              Hub has become part of the conversation around Carnival beauty, culture and
+              the modern masquerader experience.
+            </p>
 
-            {featured && (
-              <a
-                href={featured.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-3xl border border-border bg-card overflow-hidden mb-10 sm:mb-14 group hover:shadow-lg hover:shadow-primary/10 transition-all"
-              >
-                <div className="p-6 sm:p-10 lg:p-12">
-                  <span className="inline-block font-body text-xs uppercase tracking-[0.15em] text-secondary font-medium mb-4">
-                    Latest coverage
-                  </span>
-                  <div className="mb-4">
-                    <OutletMark story={featured} />
-                  </div>
-                  <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 group-hover:text-primary transition-colors max-w-3xl">
-                    {featured.headline}
-                  </h2>
-                  <p className="font-body text-xs text-muted-foreground mb-4">
-                    <time dateTime={featured.publishedDate}>{formatDate(featured.publishedDate)}</time>
-                    {featured.note && <span> · {featured.note}</span>}
-                  </p>
-                  <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl mb-6">
-                    {featured.excerpt}
-                  </p>
-                  <span className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-2.5 rounded-full group-hover:shadow-lg group-hover:shadow-primary/20 transition-all">
-                    Read on {featured.outlet} →
-                  </span>
+            <dl className="mx-auto mt-9 flex max-w-2xl flex-wrap items-center justify-center gap-x-10 gap-y-5 sm:gap-x-16">
+              {[
+                ["9", "years of coverage"],
+                ["7", "publications"],
+                ["2019", "to 2026"],
+              ].map(([value, label]) => (
+                <div key={label} className="text-center">
+                  <dt className="sr-only">{label}</dt>
+                  <dd>
+                    <span className="block font-display text-2xl font-bold text-gradient-primary sm:text-3xl">
+                      {value}
+                    </span>
+                    <span className="mt-1 block font-body text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                      {label}
+                    </span>
+                  </dd>
                 </div>
-              </a>
-            )}
+              ))}
+            </dl>
 
-            {rest.length > 0 && (
-              <>
-                <h2 className="font-display text-xl sm:text-2xl font-bold mb-6">
-                  More coverage
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {rest.map((story) => (
+            <p className="mx-auto mt-10 max-w-3xl border-t border-primary/15 pt-8 font-body text-sm leading-relaxed text-muted-foreground">
+              {ANSWER_SUMMARY}
+            </p>
+          </div>
+        </section>
+
+        {/* B. LOGO STRIP */}
+        <section aria-label="Publications that have covered Carnival Glam Hub" className="border-y border-primary/10 bg-primary/[0.02] py-8 sm:py-10">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14">
+              {PRESS_OUTLETS.map((o) => (
+                <a
+                  key={o.name}
+                  href={`#story-${o.anchorId}`}
+                  aria-label={`Jump to ${o.name} coverage`}
+                  className="group flex items-center gap-2 opacity-50 grayscale transition-all duration-500 ease-out hover:-translate-y-0.5 hover:opacity-100 hover:grayscale-0"
+                >
+                  <img
+                    src={favicon(o.domain)}
+                    alt={`${o.name} logo`}
+                    width={28}
+                    height={28}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-6 w-6 object-contain sm:h-7 sm:w-7"
+                  />
+                  <span className="font-display text-base tracking-wide text-foreground/80 transition-colors group-hover:text-primary sm:text-lg">
+                    {o.name}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* C. FEATURED COVERAGE */}
+        {hero && (
+          <section className="py-14 sm:py-20" aria-labelledby="featured-heading">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+              <h2 id="featured-heading" className="sr-only">
+                Featured coverage
+              </h2>
+              <article
+                id={`story-${hero.id}`}
+                className="scroll-mt-28 overflow-hidden rounded-3xl border border-primary/20"
+              >
+                <div className="grid lg:grid-cols-2">
+                  <div className="order-2 bg-card p-8 sm:p-12 lg:order-1 lg:p-14">
+                    <span className="mb-5 inline-block font-body text-[11px] font-medium uppercase tracking-[0.22em] text-secondary">
+                      Featured coverage
+                    </span>
+                    <div className="mb-5">
+                      <OutletMark outlet={hero.outlet} domain={hero.outletDomain} />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
+                      {hero.headline}
+                    </h3>
+                    <div className="mt-4">
+                      <StoryDate story={hero} />
+                    </div>
+                    <p className="mt-5 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
+                      {hero.summary}
+                    </p>
                     <a
-                      key={story.id}
-                      href={story.url}
+                      href={hero.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col rounded-2xl border border-border bg-card p-6 group hover:shadow-lg hover:shadow-primary/10 transition-all"
+                      className="mt-8 inline-block rounded-full bg-primary px-7 py-3 font-body text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/20"
                     >
-                      <div className="mb-4">
-                        <OutletMark story={story} />
-                      </div>
-                      <h3 className="font-display text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                        {story.headline}
-                      </h3>
-                      <p className="font-body text-xs text-muted-foreground mb-3">
-                        <time dateTime={story.publishedDate}>{formatDate(story.publishedDate)}</time>
-                      </p>
-                      {story.note && (
-                        <span className="self-start rounded-full border border-primary/30 bg-primary/5 px-3 py-1 font-body text-[11px] uppercase tracking-[0.12em] text-primary mb-3">
-                          {story.note}
-                        </span>
-                      )}
-                      <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
-                        {story.excerpt}
-                      </p>
-                      <span className="mt-auto font-body text-sm font-semibold text-primary">
-                        Read on {story.outlet} →
-                      </span>
+                      Read on {hero.outlet} <span aria-hidden="true">→</span>
                     </a>
-                  ))}
-                </div>
-              </>
-            )}
+                  </div>
 
-            <div className="mt-12 sm:mt-16 rounded-2xl border border-border bg-card p-6 sm:p-10">
-              <h2 className="font-display text-xl sm:text-2xl font-bold mb-3">
+                  {/* Typographic composition: publisher imagery is not licensed. */}
+                  <div
+                    aria-hidden="true"
+                    className="order-1 relative flex min-h-[280px] flex-col justify-between overflow-hidden bg-gradient-to-br from-primary via-primary/85 to-secondary p-8 sm:min-h-[420px] sm:p-12 lg:order-2"
+                  >
+                    <div className="flex items-center justify-between font-body text-[11px] uppercase tracking-[0.3em] text-primary-foreground/80">
+                      <span>{hero.outlet}</span>
+                      <span>October 2024</span>
+                    </div>
+                    <p className="font-display text-4xl font-bold uppercase leading-[0.92] tracking-tight text-primary-foreground sm:text-6xl lg:text-7xl">
+                      Pretty
+                      <br />
+                      <span className="italic">Mas</span>
+                      <br />
+                      Glam
+                    </p>
+                    <div className="border-t border-primary-foreground/25 pt-4 font-body text-[11px] uppercase tracking-[0.24em] text-primary-foreground/80">
+                      Spicemas · Grenada
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        )}
+
+        {/* D. SECONDARY FEATURES */}
+        {features.length > 0 && (
+          <section className="pb-14 sm:pb-20" aria-labelledby="features-heading">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+              <h2
+                id="features-heading"
+                className="mb-8 font-display text-2xl font-bold sm:text-3xl"
+              >
+                In depth
+              </h2>
+              <div className="grid gap-6 lg:grid-cols-2">
+                {heroFeature && (
+                  <article
+                    id={`story-${heroFeature.id}`}
+                    className="scroll-mt-28"
+                  >
+                    <a
+                      href={heroFeature.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex h-full flex-col rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/[0.07] to-secondary/[0.06] p-8 transition-all hover:shadow-lg hover:shadow-primary/10 sm:p-10"
+                    >
+                      <div className="mb-6">
+                        <OutletMark outlet={heroFeature.outlet} domain={heroFeature.outletDomain} />
+                      </div>
+                      <blockquote className="font-display text-xl italic leading-snug text-foreground sm:text-2xl">
+                        &ldquo;{heroFeature.pullQuote}&rdquo;
+                      </blockquote>
+                      <p className="mt-4 font-body text-xs uppercase tracking-[0.16em] text-primary/80">
+                        {heroFeature.pullQuoteAttribution}
+                      </p>
+                      <h3 className="mt-7 font-display text-lg font-bold leading-snug transition-colors group-hover:text-primary">
+                        {heroFeature.headline}
+                      </h3>
+                      <div className="mt-3">
+                        <StoryDate story={heroFeature} />
+                      </div>
+                      <ReadCta outlet={heroFeature.outlet} label={`Read on ${heroFeature.outlet}`} />
+                    </a>
+                  </article>
+                )}
+
+                {secondFeature && (
+                  <StoryCard story={secondFeature} variant="wide" />
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* E. FROM THE CARIBBEAN PRESS */}
+        <section className="pb-14 sm:pb-20" aria-labelledby="caribbean-heading">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+            <h2
+              id="caribbean-heading"
+              className="mb-8 font-display text-2xl font-bold sm:text-3xl"
+            >
+              From the <em className="not-italic text-gradient-primary italic">Caribbean</em> press
+            </h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+              {caribbean.map((story, index) => {
+                const hasImage = Boolean(story.image) && !caribFailed[story.id];
+                // Vary the rhythm: wide image cards, tall portraits, compact text.
+                const span =
+                  hasImage && index % 5 === 0
+                    ? "md:col-span-7"
+                    : hasImage && index % 5 === 1
+                      ? "md:col-span-5"
+                      : hasImage
+                        ? "md:col-span-6"
+                        : "md:col-span-4";
+                const variant: "wide" | "tall" | "compact" =
+                  span === "md:col-span-7" ? "wide" : hasImage ? "tall" : "compact";
+                return (
+                  <div key={story.id} className={span}>
+                    <StoryCardWithFail
+                      story={story}
+                      variant={variant}
+                      onFail={() =>
+                        setCaribFailed((prev) => ({ ...prev, [story.id]: true }))
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* F. TIMELINE */}
+        <section className="border-y border-primary/10 py-12 sm:py-16" aria-labelledby="timeline-heading">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+            <h2
+              id="timeline-heading"
+              className="mb-8 font-display text-xl font-bold sm:text-2xl"
+            >
+              A story built over time
+            </h2>
+            <ol className="flex flex-col gap-6 border-l border-primary/25 pl-6 md:grid md:auto-cols-fr md:grid-flow-col md:gap-0 md:border-l-0 md:border-t md:pl-0 md:pt-6">
+              {PRESS_TIMELINE.map(({ year, outlets }) => (
+                <li key={year} className="relative md:pr-5 md:pt-1">
+                  <span
+                    aria-hidden="true"
+                    className="absolute -left-[1.72rem] top-1.5 h-2 w-2 rounded-full bg-primary md:-top-[1.68rem] md:left-0"
+                  />
+                  <p className="font-display text-base font-bold text-primary">{year}</p>
+                  <p className="mt-1 font-body text-xs leading-relaxed text-muted-foreground">
+                    {outlets.join(", ")}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* G. ALSO MENTIONED IN */}
+        <section className="py-12 sm:py-16" aria-labelledby="mentions-heading">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+            <h2
+              id="mentions-heading"
+              className="mb-6 font-display text-xl font-bold sm:text-2xl"
+            >
+              Also mentioned in
+            </h2>
+            <ul className="grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+              {mentions.map((story) => (
+                <li key={story.id} id={`story-${story.id}`} className="scroll-mt-28 border-b border-border pb-3">
+                  <a
+                    href={story.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-wrap items-baseline gap-x-3"
+                  >
+                    <span className="font-body text-[11px] uppercase tracking-[0.16em] text-primary/80">
+                      {story.outlet}
+                    </span>
+                    <span className="font-body text-sm text-foreground/85 transition-colors group-hover:text-primary">
+                      {story.headline}
+                    </span>
+                    <time
+                      dateTime={story.publishedDate}
+                      className="ml-auto font-body text-xs text-muted-foreground"
+                    >
+                      {story.publishedDate.slice(0, 4)}
+                    </time>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* H. ENQUIRIES + BOOKING */}
+        <section className="pb-16 sm:pb-24" aria-labelledby="enquiries-heading">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="rounded-3xl border border-border bg-card p-6 sm:p-10">
+              <h2 id="enquiries-heading" className="font-display text-xl font-bold sm:text-2xl">
                 Media enquiries
               </h2>
-              <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed mb-8">
+              <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                 For interviews, comment or imagery, write to{" "}
                 <a
                   href="mailto:bookings@carnivalglamhub.com"
-                  className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors"
+                  className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:decoration-primary"
                 >
                   bookings@carnivalglamhub.com
                 </a>
-                . You can also read more{" "}
-                <Link to="/about" className="text-primary hover:underline">
-                  about Carnival Glam Hub
-                </Link>
                 .
               </p>
-              <h3 className="font-display text-lg sm:text-xl font-bold mb-3">
+              <h3 className="mt-8 font-display text-lg font-bold sm:text-xl">
                 Ready when you are
               </h3>
-              <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
+              <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                 Spaces sell out months before Carnival. Secure yours now.
               </p>
               <a
@@ -262,7 +657,7 @@ const Press = () => {
                 rel="noopener noreferrer"
                 data-mcp-action="register-event"
                 data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
-                className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+                className="mt-6 inline-block rounded-full bg-primary px-7 py-3 font-body text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/20"
               >
                 Book your glam
               </a>
@@ -270,9 +665,66 @@ const Press = () => {
           </div>
         </section>
       </main>
+
       <Footer />
       <StickyMobileCTA />
     </div>
+  );
+};
+
+/** Wraps StoryCard so the parent grid can react to a failed publisher image. */
+const StoryCardWithFail = ({
+  story,
+  variant,
+  onFail,
+}: {
+  story: PressStory;
+  variant: "wide" | "tall" | "compact";
+  onFail: () => void;
+}) => {
+  const [failed, setFailed] = useState(false);
+  const showImage = Boolean(story.image) && !failed;
+
+  if (!showImage) return <StoryCard story={{ ...story, image: undefined }} variant={variant} />;
+
+  return (
+    <article id={`story-${story.id}`} className="h-full scroll-mt-28">
+      <a
+        href={story.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-lg hover:shadow-primary/10"
+      >
+        <RemoteImage
+          story={story}
+          ratio={variant === "tall" ? "aspect-[4/3]" : "aspect-[16/10]"}
+          onFail={() => {
+            setFailed(true);
+            onFail();
+          }}
+        />
+        <div className="flex flex-1 flex-col p-6 sm:p-7">
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <OutletMark outlet={story.outlet} domain={story.outletDomain} />
+            {story.note && <NoteBadge note={story.note} />}
+          </div>
+          <h3
+            className={`font-display font-bold leading-snug transition-colors group-hover:text-primary ${
+              variant === "wide" ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
+            }`}
+          >
+            {story.headline}
+          </h3>
+          <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
+            {story.summary}
+          </p>
+          <div className="mt-4">
+            <StoryDate story={story} />
+          </div>
+          <ReadCta outlet={story.outlet} />
+        </div>
+      </a>
+    </article>
   );
 };
 
