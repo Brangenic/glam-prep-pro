@@ -15,6 +15,8 @@ export type Destination = {
   description: string;
   longDescription: string;
   image: string;
+  /** Overrides the generated alt text when the hero is not location specific. */
+  imageAlt?: string;
   cta: string;
   upcoming?: boolean;
   objectPosition?: string;
@@ -122,6 +124,8 @@ export const destinations: Destination[] = [
       "Our Tobago Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     // Placeholder imagery of our own work, not a Tobago location shot.
     image: tobagoImg,
+    imageAlt:
+      "Carnival Glam Hub artist finishing a sweat-resistant road march makeup look with gems and lashes",
     cta: "Book Tobago Glam",
     objectPosition: "50% 20%",
     highlights: [
