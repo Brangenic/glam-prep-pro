@@ -29,6 +29,7 @@ const staticEntries: StaticEntry[] = [
   { path: "/reviews", priority: "0.8", changefreq: "weekly" },
   { path: "/about", priority: "0.7", changefreq: "monthly" },
   { path: "/faq", priority: "0.5", changefreq: "monthly" },
+  { path: "/press", priority: "0.6", changefreq: "monthly" },
   { path: "/services/carnival-makeup", priority: "0.8", changefreq: "monthly" },
   { path: "/services/carnival-hair", priority: "0.8", changefreq: "monthly" },
   { path: "/services/carnival-photoshoot", priority: "0.8", changefreq: "monthly" },

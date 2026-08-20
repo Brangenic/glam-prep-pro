@@ -1,5 +1,6 @@
 import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -217,9 +218,16 @@ const About = () => {
               Press and recognition
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub has been featured in the Jamaica Observer, Jamaica
-              Gleaner and CaribVoxx for its role in raising the standard of Carnival
-              morning experiences across the region.
+              Carnival Glam Hub has been{" "}
+              <Link
+                to="/press"
+                className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors"
+              >
+                featured in
+              </Link>{" "}
+              Our Today, the Jamaica Observer, the Jamaica Gleaner and CaribVoxx for its
+              role in raising the standard of Carnival morning experiences across the
+              region.
             </p>
             <p className="font-body text-sm text-muted-foreground leading-relaxed mt-4">
               <a
