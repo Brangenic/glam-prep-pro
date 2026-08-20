@@ -46,6 +46,7 @@ export const FULL_SERVICE_INCLUSIONS = [
   "Hair",
   "Bronzing",
   "Seamstress",
+  "Getting-dressed assistance",
   "Changing room",
   "Photoshoot and reels",
   ALWAYS_INCLUDED,
@@ -93,6 +94,20 @@ export function getHubTier(slug: string): HubTier | null {
   // Dated Trinidad edition shares the Trinidad hub.
   if (slug === "trinidad-carnival-2027") return "full";
   return null;
+}
+
+/**
+ * Services that are always paid products. They may appear in a hub's
+ * capability list, but they must never be shown as included with a
+ * booking, because each one is charged separately.
+ */
+export const CHARGEABLE_SERVICES = ["Makeup", "Hair", "Bronzing", "Photoshoot and reels"];
+
+/** What is genuinely free with any booking at this hub. */
+export function getFreeInclusions(slug: string): string[] {
+  const all = getHubInclusions(slug);
+  if (!all) return [];
+  return all.filter((i) => !CHARGEABLE_SERVICES.includes(i));
 }
 
 export function getHubInclusions(slug: string): string[] | null {

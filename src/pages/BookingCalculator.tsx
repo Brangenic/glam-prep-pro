@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
+import { getFreeInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
 import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
@@ -84,15 +84,6 @@ function productsForIntent(products: QuoteProduct[], intent: IntentKey): QuotePr
       return [];
   }
 }
-
-/** Inclusion lines already being charged as the selected product. */
-const TAG_TO_INCLUSION: Partial<Record<ServiceTag, string[]>> = {
-  makeup: ["Makeup"],
-  hair: ["Hair"],
-  photoshoot: ["Photoshoot and reels"],
-  bronzing: ["Bronzing"],
-  breakfast: ["Breakfast and refreshments"],
-};
 
 const BookingCalculator = () => {
   const [territory, setTerritory] = useState("");
@@ -174,13 +165,13 @@ const BookingCalculator = () => {
   const quotable = Boolean(config?.quotable) && intent !== "group";
 
   const inclusions = useMemo(() => {
-    const base = getHubInclusions(territory);
-    if (!base) return [];
-    const charged = new Set<string>();
-    const tags = intent === "road-ready" ? [] : (selectedProduct?.tags ?? []);
-    tags.forEach((t) => (TAG_TO_INCLUSION[t] ?? []).forEach((l) => charged.add(l)));
-    return base.filter((i) => !charged.has(i));
-  }, [territory, selectedProduct, intent]);
+    const free = getFreeInclusions(territory);
+    // On the road ready path, getting dressed is the thing being paid for.
+    if (intent === "road-ready") {
+      return free.filter((i) => i !== "Getting-dressed assistance");
+    }
+    return free;
+  }, [territory, intent]);
 
   const premiumFrom = useMemo(
     () => (config && config.quotable ? lowestPremiumPrice(config, day) : null),
