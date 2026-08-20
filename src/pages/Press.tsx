@@ -170,7 +170,7 @@ const StoryCard = ({
             ratio={variant === "tall" ? "aspect-[3/4]" : "aspect-[16/10]"}
             onFail={() => setImageFailed(true)}
           />
-        ) : (
+        ) : quoteLed ? null : (
           <FallbackPanel
             story={story}
             ratio={variant === "tall" ? "aspect-[4/5]" : "aspect-[16/9]"}
@@ -569,17 +569,24 @@ const Press = () => {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
               {caribbean.map((story, index) => {
                 const hasImage = Boolean(story.image) && !caribFailed[story.id];
-                // Vary the rhythm: wide image cards, tall portraits, compact text.
-                const span =
-                  hasImage && index % 5 === 0
-                    ? "md:col-span-7"
-                    : hasImage && index % 5 === 1
-                      ? "md:col-span-5"
-                      : hasImage
-                        ? "md:col-span-6"
-                        : "md:col-span-4";
-                const variant: "wide" | "tall" | "compact" =
-                  span === "md:col-span-7" ? "wide" : hasImage ? "tall" : "compact";
+                // Vary the rhythm by position, not by whether the publisher
+                // image loaded, so a row of fallback panels still alternates
+                // between wide and narrow cards.
+                const SPANS = [
+                  "md:col-span-7",
+                  "md:col-span-5",
+                  "md:col-span-4",
+                  "md:col-span-8",
+                  "md:col-span-6",
+                  "md:col-span-6",
+                ];
+                const span = SPANS[index % SPANS.length];
+                const narrow = span === "md:col-span-4" || span === "md:col-span-5";
+                const variant: "wide" | "tall" | "compact" = narrow
+                  ? hasImage
+                    ? "tall"
+                    : "compact"
+                  : "wide";
                 return (
                   <div key={story.id} className={span}>
                     <StoryCardWithFail
