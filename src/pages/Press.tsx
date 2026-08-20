@@ -112,7 +112,7 @@ const FallbackPanel = ({
       <span className="font-display text-5xl font-bold italic leading-none text-primary-foreground/95 sm:text-6xl">
         {year}
       </span>
-      <span className="border-t border-primary-foreground/25 pt-3 font-display text-sm font-semibold leading-snug text-primary-foreground/90 line-clamp-3">
+      <span className="border-t border-primary-foreground/25 pt-3 font-display text-base font-semibold leading-snug text-primary-foreground/95 line-clamp-3 sm:text-lg">
         {story.headline}
       </span>
     </div>
