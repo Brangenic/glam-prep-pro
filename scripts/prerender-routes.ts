@@ -47,6 +47,9 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   // /guyana uses a bundled local asset (carnival-4.jpg). Resolve from dist
   // assets at transcode time so we don't depend on the hashed filename here.
   "/guyana": "asset:carnival-4",
+  // /tobago uses a bundled local asset (carnival-8.jpg) until we have
+  // real Tobago photography.
+  "/tobago": "asset:carnival-8",
   // Trinidad Carnival 2027 uses the same hero as the Trinidad destination.
   "/trinidad-carnival-2027":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
@@ -201,6 +204,14 @@ const destinationRoutes: RouteMeta[] = [
       "Trinidad Carnival Makeup, Hair & Photoshoots | Carnival Glam Hub",
     description:
       "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
+    path: "/tobago",
+    title:
+      "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+    description:
+      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -447,6 +458,7 @@ const DEST_AREA: Record<string, object> = {
     containedInPlace: { "@type": "Country", name: "Canada" },
   },
   "/trinidad": { "@type": "Country", name: "Trinidad and Tobago" },
+  "/tobago": { "@type": "Country", name: "Trinidad and Tobago" },
   "/guyana": { "@type": "Country", name: "Guyana" },
   "/epic-cruise": { "@type": "Place", name: "EPIC Carnival Experience cruise" },
   "/trinidad-carnival-2027": { "@type": "Country", name: "Trinidad and Tobago" },
@@ -461,6 +473,7 @@ const DEST_CRUMB: Record<string, string> = {
   "/miami": "Miami Carnival",
   "/toronto": "Toronto Caribana",
   "/trinidad": "Trinidad Carnival",
+  "/tobago": "Tobago Carnival",
   "/guyana": "Guyana Carnival",
   "/epic-cruise": "Epic Cruise — Trinidad Carnival",
   "/trinidad-carnival-2027": "Trinidad Carnival 2027",

@@ -17,6 +17,7 @@ const Destinations = () => {
     "grenada",
     "miami",
     "trinidad",
+    "tobago",
     "epic-cruise",
   ];
   const HOMEPAGE_OVERRIDES: Record<string, { name?: string; date?: string }> = {
@@ -81,7 +82,7 @@ const Destinations = () => {
             >
               <img
                 src={d.image}
-                alt={`${d.name} masquerader in costume — ${d.description}`}
+                alt={d.imageAlt ?? `${d.name} masquerader in costume — ${d.description}`}
                 width={600}
                 height={800}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

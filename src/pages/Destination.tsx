@@ -151,7 +151,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
           <img
             src={dest.image}
-            alt={`${dest.name} masquerader in full costume — ${dest.description}`}
+            alt={dest.imageAlt ?? `${dest.name} masquerader in full costume — ${dest.description}`}
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: dest.objectPosition || "center top" }}
           />
