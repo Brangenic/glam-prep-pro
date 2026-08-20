@@ -93,6 +93,32 @@ const StoryDate = ({ story }: { story: PressStory }) => (
 );
 
 /** Publisher image with a typographic fallback when hotlinking is blocked. */
+const FallbackPanel = ({
+  story,
+  ratio,
+}: {
+  story: PressStory;
+  ratio: string;
+}) => {
+  const year = story.publishedDate.slice(0, 4);
+  return (
+    <div
+      aria-hidden="true"
+      className={`relative flex flex-col justify-between overflow-hidden bg-gradient-to-br from-primary via-primary/85 to-secondary p-6 sm:p-7 ${ratio}`}
+    >
+      <span className="font-body text-[10px] uppercase tracking-[0.28em] text-primary-foreground/85">
+        {story.outlet}
+      </span>
+      <span className="font-display text-5xl font-bold italic leading-none text-primary-foreground/95 sm:text-6xl">
+        {year}
+      </span>
+      <span className="border-t border-primary-foreground/25 pt-3 font-display text-sm font-semibold leading-snug text-primary-foreground/90 line-clamp-3">
+        {story.headline}
+      </span>
+    </div>
+  );
+};
+
 const RemoteImage = ({
   story,
   ratio,
@@ -138,11 +164,16 @@ const StoryCard = ({
         rel="noopener noreferrer"
         className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-lg hover:shadow-primary/10"
       >
-        {showImage && (
+        {showImage ? (
           <RemoteImage
             story={story}
             ratio={variant === "tall" ? "aspect-[3/4]" : "aspect-[16/10]"}
             onFail={() => setImageFailed(true)}
+          />
+        ) : (
+          <FallbackPanel
+            story={story}
+            ratio={variant === "tall" ? "aspect-[4/5]" : "aspect-[16/9]"}
           />
         )}
         <div
