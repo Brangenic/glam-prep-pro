@@ -311,12 +311,12 @@ const guyana: TerritoryPricing = {
   label: "Guyana Carnival",
   tier: "lite",
   quotable: false,
-  eventDate: "", // UNCONFIRMED
+  eventDate: "May 2026",
   askDay: false,
   days: SINGLE_DAY,
   roadReady: false,
   barber: false,
-  bookingUrl: "https://carnivalglamhub.masos.app/events/a810f2b9-fce4-46be-9b33-5191863e1805",
+  bookingUrl: BOOKING_URL,
   products: [],
 };
 
@@ -325,7 +325,7 @@ const tobago: TerritoryPricing = {
   label: "Tobago Carnival",
   tier: "lite",
   quotable: false,
-  eventDate: "", // UNCONFIRMED
+  eventDate: "30 October to 1 November 2026",
   askDay: false,
   days: SINGLE_DAY,
   roadReady: false,
