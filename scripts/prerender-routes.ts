@@ -274,9 +274,9 @@ const staticRoutes: RouteMeta[] = [
   },
   {
     path: "/press",
-    title: "Press and Media Coverage | Carnival Glam Hub",
+    title: "Carnival Glam Hub in the Press | Media Coverage Since 2019",
     description:
-      "Carnival Glam Hub in the press. Coverage from Our Today, the Jamaica Observer and the Jamaica Gleaner on the Caribbean's premium Carnival morning concierge.",
+      "Carnival Glam Hub media coverage from Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People. Nine years of Caribbean Carnival beauty press.",
     ogImage: HERO_FALLBACK,
   },
   {
