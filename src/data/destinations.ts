@@ -1,4 +1,8 @@
 import guyanaImg from "@/assets/carnival-4.jpg";
+// Placeholder hero for Tobago: one of our own Glam Hub carnival images,
+// not used as the hero of any other destination. Swap this for real
+// Tobago photography as soon as we have it.
+import tobagoImg from "@/assets/carnival-8.jpg";
 import { getHubTier, getHubInclusions, TIER_LABEL } from "@/data/hubTiers";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
