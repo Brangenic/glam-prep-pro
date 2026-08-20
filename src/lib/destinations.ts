@@ -1,3 +1,5 @@
+import { BOOKING_URL } from "@/lib/constants";
+
 export interface Destination {
   slug: string;
   label: string;
@@ -15,7 +17,8 @@ export const DESTINATIONS: Destination[] = [
   { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events' },
-  { slug: 'guyana', label: 'Guyana', masosUrl: 'https://carnivalglamhub.masos.app/events/a810f2b9-fce4-46be-9b33-5191863e1805' },
+  // Guyana has no confirmed masos event yet, so it points at the generic events listing.
+  { slug: 'guyana', label: 'Guyana', masosUrl: BOOKING_URL },
 ];
 
 export function getDestination(slug: string) {
