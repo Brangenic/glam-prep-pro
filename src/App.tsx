@@ -107,7 +107,7 @@ const App = () => (
           <Route path="/jamaica" element={<DestinationAlias slug="jamaica" />} />
           <Route path="/trinidad" element={<DestinationAlias slug="trinidad" />} />
           <Route path="/trinidad-and-tobago" element={<Navigate to="/trinidad" replace />} />
-          <Route path="/tobago" element={<Navigate to="/trinidad" replace />} />
+          <Route path="/tobago" element={<DestinationAlias slug="tobago" />} />
           <Route path="/antigua" element={<DestinationAlias slug="antigua" />} />
           <Route path="/antigua-and-barbuda" element={<Navigate to="/antigua" replace />} />
           <Route path="/barbados" element={<DestinationAlias slug="barbados" />} />

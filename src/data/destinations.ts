@@ -1,4 +1,8 @@
 import guyanaImg from "@/assets/carnival-4.jpg";
+// Placeholder hero for Tobago: one of our own Glam Hub carnival images,
+// not used as the hero of any other destination. Swap this for real
+// Tobago photography as soon as we have it.
+import tobagoImg from "@/assets/carnival-8.jpg";
 import { getHubTier, getHubInclusions, TIER_LABEL } from "@/data/hubTiers";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -11,6 +15,8 @@ export type Destination = {
   description: string;
   longDescription: string;
   image: string;
+  /** Overrides the generated alt text when the hero is not location specific. */
+  imageAlt?: string;
   cta: string;
   upcoming?: boolean;
   objectPosition?: string;
@@ -107,6 +113,31 @@ export const destinations: Destination[] = [
       "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Book sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+  },
+  {
+    slug: "tobago",
+    name: "Tobago Carnival",
+    shortName: "Tobago",
+    date: "30 October – 1 November 2026",
+    description: "Glam Hub Lite for Tobago Carnival.",
+    longDescription:
+      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+    // Placeholder imagery of our own work, not a Tobago location shot.
+    image: tobagoImg,
+    imageAlt:
+      "Carnival Glam Hub artist finishing a sweat-resistant road march makeup look with gems and lashes",
+    cta: "Book Tobago Glam",
+    objectPosition: "50% 20%",
+    highlights: [
+      "Road march full glam",
+      "J'ouvert paint and shimmer",
+      "Eye gems and festival lashes",
+      "Photoshoot and reels in the lounge",
+    ],
+    metaTitle:
+      "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+    metaDescription:
+      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
   },
   {
     slug: "barbados",

@@ -46,6 +46,7 @@ const staticEntries: StaticEntry[] = [
   { path: "/barbados", priority: "0.8", changefreq: "weekly" },
   { path: "/miami", priority: "0.8", changefreq: "weekly" },
   { path: "/toronto", priority: "0.8", changefreq: "weekly" },
+  { path: "/tobago", priority: "0.8", changefreq: "weekly" },
   { path: "/guyana", priority: "0.8", changefreq: "weekly" },
   { path: "/epic-cruise", priority: "0.8", changefreq: "weekly" },
   { path: "/best-carnival-makeup-trinidad", priority: "0.85", changefreq: "monthly" },

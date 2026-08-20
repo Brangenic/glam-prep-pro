@@ -154,6 +154,7 @@ const DEST_NEIGHBOURS: Record<string, string[]> = {
   miami: ["jamaica", "trinidad"],
   toronto: ["miami", "trinidad"],
   trinidad: ["jamaica", "barbados"],
+  tobago: ["trinidad", "barbados"],
   guyana: ["trinidad", "barbados"],
   "epic-cruise": ["trinidad", "jamaica"],
 };
@@ -166,6 +167,7 @@ const DEST_LABEL: Record<string, string> = {
   miami: "Miami Carnival",
   toronto: "Toronto Caribana",
   trinidad: "Trinidad Carnival",
+  tobago: "Tobago Carnival",
   guyana: "Guyana Carnival",
   "epic-cruise": "Epic Cruise — Trinidad Carnival",
 };
@@ -412,6 +414,7 @@ const CORE: Record<string, Content> = {
   <li><a href="/saint-lucia">Saint Lucia Carnival</a></li>
   <li><a href="/miami">Miami Carnival</a></li>
   <li><a href="/toronto">Toronto Caribana</a></li>
+  <li><a href="/tobago">Tobago Carnival</a></li>
   <li><a href="/guyana">Guyana Carnival</a></li>
   <li><a href="/epic-cruise">EPIC Cruise</a></li>
 </ul>
@@ -712,7 +715,7 @@ function primaryHubFor(slug: string): { href: string; label: string } {
   if (/saint-lucia|st-lucia|st\s+lucia/.test(s)) return { href: "/saint-lucia", label: "Saint Lucia Carnival" };
   if (/barbados|crop-over/.test(s)) return { href: "/barbados", label: "Barbados Crop Over" };
   if (/miami/.test(s)) return { href: "/miami", label: "Miami Carnival" };
-  if (/tobago/.test(s)) return { href: "/trinidad", label: "Trinidad & Tobago Carnival" };
+  if (/tobago/.test(s)) return { href: "/tobago", label: "Tobago Carnival" };
   if (/cruise|epic/.test(s)) return { href: "/epic-cruise", label: "EPIC Cruise Carnival" };
   return { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" };
 }

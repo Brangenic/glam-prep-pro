@@ -74,7 +74,7 @@ const Footer = () => (
           </h4>
           <ul className="space-y-2 font-body text-sm text-muted-foreground">
             <li><a href="/trinidad" className="hover:text-primary transition-colors">Trinidad Carnival</a></li>
-            <li><a href="/trinidad-carnival-2027" className="hover:text-primary transition-colors">Trinidad Carnival 2027</a></li>
+            <li><a href="/trinidad-carnival-2027" className="hover:text-primary transition-colors">Trinidad Carnival 2027 guide</a></li>
             <li><a href="/jamaica" className="hover:text-primary transition-colors">Jamaica Carnival</a></li>
             <li><a href="/barbados" className="hover:text-primary transition-colors">Barbados Crop Over</a></li>
             <li><a href="/grenada" className="hover:text-primary transition-colors">Grenada Spicemas</a></li>
@@ -82,18 +82,9 @@ const Footer = () => (
             <li><a href="/antigua" className="hover:text-primary transition-colors">Antigua Carnival</a></li>
             <li><a href="/miami" className="hover:text-primary transition-colors">Miami Carnival</a></li>
             <li><a href="/toronto" className="hover:text-primary transition-colors">Toronto Caribana</a></li>
+            <li><a href="/tobago" className="hover:text-primary transition-colors">Tobago Carnival</a></li>
             <li><a href="/guyana" className="hover:text-primary transition-colors">Guyana Carnival</a></li>
             <li><a href="/epic-cruise" className="hover:text-primary transition-colors">Epic Cruise</a></li>
-            <li>
-              <a
-                href="https://carnivalglamhub.masos.app/events"
-                target="_blank"
-                rel="noopener"
-                className="hover:text-primary transition-colors"
-              >
-                Tobago (Glam Hub Lite)
-              </a>
-            </li>
             <li>
               <a
                 href="https://carnivalglamhub.masos.app/events"

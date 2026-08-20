@@ -108,10 +108,10 @@ export function getHubInclusions(slug: string): string[] | null {
 /**
  * Lite territories with no dedicated page. They appear in the
  * destinations list, the home page section and the footer, and link
- * straight to the booking flow.
+ * straight to the booking flow. Tobago now has its own page at
+ * /tobago, so it is no longer listed here.
  */
 export const EXTRA_LITE_TERRITORIES = [
-  { name: "Tobago", slug: "tobago" },
   { name: "Atlanta", slug: "atlanta" },
 ] as const;
 
