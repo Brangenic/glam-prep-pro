@@ -1,3 +1,5 @@
+import { BOOKING_URL } from "@/lib/constants";
+
 export interface Destination {
   slug: string;
   label: string;
