@@ -7,50 +7,39 @@ export { PRESS_OUTLETS };
 const PublicationLink = ({
   name,
   domain,
+  anchorId,
   compact = false,
 }: {
   name: string;
   domain: string;
+  anchorId: string;
   compact?: boolean;
 }) => {
   const [showFallback, setShowFallback] = useState(false);
   const logoSrc = `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
+  const labelClass = `font-display tracking-wide text-foreground/80 group-hover:text-primary transition-colors ${
+    compact ? "text-sm" : "text-base sm:text-lg"
+  }`;
 
   return (
     <Link
-      to="/press"
+      to={anchorId ? `/press#story-${anchorId}` : "/press"}
       aria-label={`Read our coverage in ${name}`}
       className="group flex items-center justify-center gap-2 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 ease-out"
     >
-      {!showFallback ? (
-        <>
-          <img
-            src={logoSrc}
-            alt={`${name} logo`}
-            width={28}
-            height={28}
-            loading="lazy"
-            decoding="async"
-            onError={() => setShowFallback(true)}
-            className={compact ? "h-5 w-5 object-contain" : "h-6 w-6 sm:h-7 sm:w-7 object-contain"}
-          />
-          <span
-            className={`font-display tracking-wide text-foreground/80 group-hover:text-primary transition-colors ${
-              compact ? "text-sm" : "text-base sm:text-lg"
-            }`}
-          >
-            {name}
-          </span>
-        </>
-      ) : (
-        <span
-          className={`font-display tracking-wide text-foreground/80 group-hover:text-primary transition-colors ${
-            compact ? "text-sm" : "text-base sm:text-lg"
-          }`}
-        >
-          {name}
-        </span>
+      {!showFallback && (
+        <img
+          src={logoSrc}
+          alt={`${name} logo`}
+          width={28}
+          height={28}
+          loading="lazy"
+          decoding="async"
+          onError={() => setShowFallback(true)}
+          className={compact ? "h-5 w-5 object-contain" : "h-6 w-6 sm:h-7 sm:w-7 object-contain"}
+        />
       )}
+      <span className={labelClass}>{name}</span>
     </Link>
   );
 };
@@ -87,7 +76,13 @@ const PressBar = ({ compact = false }: PressBarProps) => (
         }`}
       >
         {PRESS_OUTLETS.map((o) => (
-          <PublicationLink key={o.name} name={o.name} domain={o.domain} compact={compact} />
+          <PublicationLink
+            key={o.name}
+            name={o.name}
+            domain={o.domain}
+            anchorId={o.anchorId}
+            compact={compact}
+          />
         ))}
       </div>
       {!compact && (
