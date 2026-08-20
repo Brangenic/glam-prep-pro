@@ -273,6 +273,13 @@ const staticRoutes: RouteMeta[] = [
       "Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.",
   },
   {
+    path: "/press",
+    title: "Press and Media Coverage | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub in the press. Coverage from Our Today, the Jamaica Observer and the Jamaica Gleaner on the Caribbean's premium Carnival morning concierge.",
+    ogImage: HERO_FALLBACK,
+  },
+  {
     path: "/reviews",
     title: "Carnival Glam Hub Reviews | Real Client Carnival Makeup Testimonials",
     description:
@@ -551,6 +558,7 @@ function buildJsonLd(route: RouteMeta): object[] {
     const NAME: Record<string, string> = {
       "/about": "About",
       "/faq": "FAQ",
+      "/press": "Press",
       "/reviews": "Reviews",
       "/amazon-store": "Amazon Storefront",
       "/booking-calculator": "Quote Calculator",
