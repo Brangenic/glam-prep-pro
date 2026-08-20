@@ -1,22 +1,15 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { PRESS_OUTLETS } from "@/data/pressCoverage";
 
-export const PRESS_OUTLETS = [
-  { name: "Teen Vogue", url: "https://www.teenvogue.com", domain: "teenvogue.com" },
-  { name: "Jamaica Observer", url: "https://jamaicaobserver.com", domain: "jamaicaobserver.com" },
-  { name: "Jamaica Gleaner", url: "https://jamaica-gleaner.com", domain: "jamaica-gleaner.com" },
-  { name: "Haute People", url: "https://hautepeople.com", domain: "hautepeople.com" },
-  { name: "Our Today", url: "https://our.today", domain: "our.today" },
-  { name: "CaribVoxx", url: "https://caribvoxx.com", domain: "caribvoxx.com" },
-] as const;
+export { PRESS_OUTLETS };
 
 const PublicationLink = ({
   name,
-  url,
   domain,
   compact = false,
 }: {
   name: string;
-  url: string;
   domain: string;
   compact?: boolean;
 }) => {
@@ -24,11 +17,9 @@ const PublicationLink = ({
   const logoSrc = `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Read coverage on ${name}`}
+    <Link
+      to="/press"
+      aria-label={`Read our coverage in ${name}`}
       className="group flex items-center justify-center gap-2 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 ease-out"
     >
       {!showFallback ? (
@@ -60,7 +51,7 @@ const PublicationLink = ({
           {name}
         </span>
       )}
-    </a>
+    </Link>
   );
 };
 
@@ -96,9 +87,19 @@ const PressBar = ({ compact = false }: PressBarProps) => (
         }`}
       >
         {PRESS_OUTLETS.map((o) => (
-          <PublicationLink key={o.name} {...o} compact={compact} />
+          <PublicationLink key={o.name} name={o.name} domain={o.domain} compact={compact} />
         ))}
       </div>
+      {!compact && (
+        <div className="text-center mt-8">
+          <Link
+            to="/press"
+            className="font-body text-sm text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors"
+          >
+            See all coverage →
+          </Link>
+        </div>
+      )}
     </div>
   </section>
 );
