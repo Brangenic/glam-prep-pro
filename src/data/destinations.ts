@@ -168,7 +168,7 @@ export const destinations: Destination[] = [
     date: "11 October 2026",
     description: "Glam hub services for Miami Carnival.",
     longDescription:
-      "Our Miami Carnival Full Service Glam Hub serves the entire Miami Carnival season, from pre-carnival fetes through Columbus Day weekend. Full sweat-resistant makeup, hair, gems and body art by our pro carnival team, with a photoshoot and reels in the lounge. There is no shuttle in Miami this season.",
+      "Our Miami Carnival Full Service Glam Hub serves the entire Miami Carnival season, from pre-carnival fetes through Columbus Day weekend. Full sweat-resistant makeup, hair, gems and body art by our pro carnival team, with a photoshoot and reels in the lounge. There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel.",
     image: "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&dl=1",
     cta: "Book Miami Glam",
     objectPosition: "50% 20%",
@@ -297,7 +297,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           question: `Is ${loc} a Full Service Glam Hub or a Glam Hub Lite?`,
           answer:
             tier === "full"
-              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? ". There is no shuttle in Miami this season" : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
+              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? ". There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel" : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
               : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, bag and wing check, shuttle, hair, bronzing, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
         },
       ]
