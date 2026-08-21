@@ -239,7 +239,7 @@ function manualPosts(): Post[] {
   push(
     "is-professional-carnival-makeup-worth-it",
     "Is Professional Carnival Makeup Worth It?",
-    "Professional Carnival makeup costs US$200 to US$300. Here is what you are really paying for, and whether it is worth it once Carnival is over.",
+    "Makeup only runs US$170 to US$200 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.",
     "blog-carnival-makeup-worth-it-hero-v2",
     `${BASE_URL}/og-image.png`,
   );

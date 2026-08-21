@@ -11,7 +11,7 @@ const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
 const TITLE = "Is Professional Carnival Makeup Worth It?";
 const META_TITLE = "Is Professional Carnival Makeup Worth It? | Glam Hub";
 const DESCRIPTION =
-  "Professional Carnival makeup costs US$200 to US$300. Here is what you are really paying for, and whether it is worth it once Carnival is over.";
+  "Makeup only runs US$170 to US$200 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.";
 const META_DESCRIPTION = DESCRIPTION;
 const AUTHOR = "Carnival Glam Hub";
 const DATE_PUBLISHED = "2026-06-21";
@@ -200,7 +200,7 @@ const CarnivalMakeupWorthIt = () => {
 
             <div>
               <P>
-                Every Carnival season the same question lands in the inboxes of Caribbean masqueraders. Is professional Carnival makeup actually worth it, or is US$200 to US$300 too much to spend on a face that washes off in the shower? It is a fair question. The honest answer depends on what you think you are paying for.
+                Every Carnival season the same question lands in the inboxes of Caribbean masqueraders. Is professional Carnival makeup actually worth it, or is US$170 to US$200 too much to spend on a face that washes off in the shower? It is a fair question. The honest answer depends on what you think you are paying for.
               </P>
               <P>
                 At <Link to="/" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Carnival Glam Hub</Link> we have done thousands of Carnival faces across Trinidad, Jamaica, Grenada, Saint Lucia, Antigua, Barbados, Miami and Toronto. Here is what we have learnt about the real value of professional Carnival makeup, and when it is worth booking.
@@ -208,7 +208,7 @@ const CarnivalMakeupWorthIt = () => {
 
               <H2>How Much Does Professional Carnival Makeup Cost?</H2>
               <P>
-                A professional Carnival makeup application typically costs between US$200 and US$300. The price reflects the artist's training, the calibre of the products used, the time on the chair, and the technical knowledge required to build a face that survives an eight-hour day on the road.
+                At Carnival Glam Hub, makeup only is US$170 to US$200 for a single day, and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. The price reflects the artist's training, the calibre of the products used, the time on the chair, and the technical knowledge required to build a face that survives an eight-hour day on the road.
               </P>
               <P>
                 Cheaper options exist. So do far more expensive ones. The middle band is where most established Carnival MUAs sit, and it is where the value is clearest: a trained artist, sweat-resistant products, and a finish that holds up in photos and on stage.

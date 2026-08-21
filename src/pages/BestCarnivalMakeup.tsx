@@ -53,7 +53,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "How much does Trinidad carnival makeup cost?",
-          a: "Road-ready access from US$35, professional carnival makeup from US$160 (most masqueraders spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. A US$50 deposit secures the slot; the balance is due 7 days before Carnival.",
+          a: "Carnival morning access US$35, makeup only US$170 to US$200 single day and US$380 for both Trinidad days, named and celebrity artists US$200 to US$580, photoshoot only US$140 to US$160, hair US$120 to US$220 and Full Glam US$430 to US$680. A US$50 deposit secures the slot; the balance is due 7 days before Carnival.",
         },
         {
           q: "How long does the makeup last on the road?",
@@ -89,7 +89,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "How much does Jamaica carnival makeup cost?",
-          a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit; balance due 7 days before.",
+          a: "Carnival morning access US$35, makeup only US$170 to US$200 single day and US$380 for both Trinidad days, named and celebrity artists US$200 to US$580, photoshoot only US$140 to US$160, hair US$120 to US$220 and Full Glam US$430 to US$680. US$50 deposit; balance due 7 days before.",
         },
         {
           q: "Does the makeup survive the Jamaica heat?",
@@ -125,7 +125,7 @@ function buildData(territory: Territory): PageData {
       },
       {
         q: "How much does Miami carnival makeup cost?",
-        a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit secures the slot; balance due 7 days before Carnival.",
+        a: "Carnival morning access US$35, makeup only US$170 to US$200 single day and US$380 for both Trinidad days, named and celebrity artists US$200 to US$580, photoshoot only US$140 to US$160, hair US$120 to US$220 and Full Glam US$430 to US$680. US$50 deposit secures the slot; balance due 7 days before Carnival.",
       },
       {
         q: "How does booking work?",
@@ -204,10 +204,10 @@ function BestPage({ territory }: { territory: Territory }) {
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Pricing tiers</h2>
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              <li>Road-ready access (getting-dressed, shuttle, lounge) — from US$35.</li>
-              <li>Professional carnival makeup — from US$160 (most masqueraders spend US$200–300).</li>
-              <li>Celebrity-artist glam — US$250–US$350.</li>
-              <li>Premium and editorial looks — up to US$2,000.</li>
+              <li>Carnival morning access (getting-dressed, lounge, shuttle where it runs) — US$35.</li>
+              <li>Makeup only — US$170 to US$200 single day, US$380 for both Trinidad days.</li>
+              <li>Named and celebrity artists — US$200 to US$580.</li>
+              <li>Photoshoot only US$140 to US$160, hair US$120 to US$220, Full Glam US$430 to US$680.</li>
             </ul>
           </section>
 

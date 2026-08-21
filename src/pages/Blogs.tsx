@@ -65,7 +65,7 @@ const MANUAL_POSTS: BlogPost[] = [
     external_id: "manual-is-professional-carnival-makeup-worth-it",
     title: "Is Professional Carnival Makeup Worth It?",
     excerpt:
-      "Professional Carnival makeup costs US$200 to US$300. Here is what you are really paying for, and whether it is worth it once Carnival is over.",
+      "Makeup only runs US$170 to US$200 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.",
     image_url: worthItHero,
     slug: "is-professional-carnival-makeup-worth-it",
     post_url: "/blogs/is-professional-carnival-makeup-worth-it",
