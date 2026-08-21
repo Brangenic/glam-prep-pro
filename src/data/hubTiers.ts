@@ -84,9 +84,14 @@ export function hasBarber(slug: string): boolean {
   return (BARBER_SLUGS as readonly string[]).includes(slug);
 }
 
-/** Miami is Full Service, but there is no shuttle in Miami this season. */
+/**
+ * Miami is Full Service, but there is no shuttle in Miami this season.
+ * Uber access and overnight bag check cover the Carnival morning logistics.
+ * Bag and wing check is already a Full Service inclusion, so it is never
+ * priced or sold as an add-on.
+ */
 export const MIAMI_SHUTTLE_NOTE =
-  "Shuttle is not available in Miami this season.";
+  "There is no shuttle in Miami this season. The venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel.";
 
 export function getHubTier(slug: string): HubTier | null {
   if ((FULL_SERVICE_SLUGS as readonly string[]).includes(slug)) return "full";
