@@ -49,7 +49,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do you offer a shuttle service?",
-    a: "Shuttle is a Full Service Glam Hub inclusion and runs in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not include a shuttle.",
+    a: "Shuttle is a Full Service Glam Hub inclusion and runs in Jamaica and Trinidad. There is no shuttle in Miami this season: the Miami venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel. Glam Hub Lite territories do not include a shuttle.",
   },
   {
     q: "How do deposits and payments work?",
