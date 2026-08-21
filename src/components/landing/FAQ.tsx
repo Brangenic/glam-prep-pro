@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "How much does professional Carnival makeup cost?",
-    a: "Professional Carnival makeup typically costs between US$200 and US$300. This is not everyday makeup. The look is built to last a full day on the road and to complement your costume, so it usually involves dramatic eye work, gems, specialist skin prep and setting techniques that hold up in heat and sweat. At Carnival Glam Hub, pricing depends on your chosen look and territory, and every package is designed for long wear and photography.",
+    a: "Carnival morning access is US$35, makeup only is US$170 to US$200 for a single day and US$380 for both Trinidad days, named and celebrity artists run US$200 to US$580, and Full Glam is US$430 to US$680. This is not everyday makeup. The look is built to last a full day on the road and to complement your costume, so it usually involves dramatic eye work, gems, specialist skin prep and setting techniques that hold up in heat and sweat. At Carnival Glam Hub, pricing depends on your chosen look and territory, and every package is designed for long wear and photography.",
   },
   {
     q: "Can I do my own Carnival makeup without experience?",
