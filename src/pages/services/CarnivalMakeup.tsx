@@ -147,11 +147,10 @@ const CarnivalMakeup = () => {
               and has been tested by 15,000+ masqueraders since 2017.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
-              Professional Carnival makeup at Carnival Glam Hub starts from
-              US$170. Most masqueraders spend US$200 to US$300, with
-              celebrity-artist and premium looks ranging up to US$2,000. A
-              road-ready access package (getting dressed, shuttle and lounge)
-              starts at US$35.
+              Carnival morning access is US$35. Makeup only is US$170 to
+              US$200 for a single day and US$380 for both Trinidad days, with
+              named and celebrity artists running US$200 to US$580. Full Glam
+              is US$430 to US$680.
             </p>
           </header>
 
