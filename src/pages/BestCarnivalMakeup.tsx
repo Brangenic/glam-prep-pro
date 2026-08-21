@@ -53,7 +53,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "How much does Trinidad carnival makeup cost?",
-          a: "Carnival morning access US$35, makeup only US$170 to US$200 single day and US$380 for both Trinidad days, named and celebrity artists US$200 to US$580, photoshoot only US$140 to US$160, hair US$120 to US$220 and Full Glam US$430 to US$680. A US$50 deposit secures the slot; the balance is due 7 days before Carnival.",
+          a: "Carnival morning access is US$35. Makeup only is US$180 to US$200 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$160, hair is US$120 to US$220 and Full Glam is US$440 to US$680. A US$50 deposit secures the slot.",
         },
         {
           q: "How long does the makeup last on the road?",
@@ -89,7 +89,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "How much does Jamaica carnival makeup cost?",
-          a: "Carnival morning access US$35, makeup only US$170 to US$200 single day and US$380 for both Trinidad days, named and celebrity artists US$200 to US$580, photoshoot only US$140 to US$160, hair US$120 to US$220 and Full Glam US$430 to US$680. US$50 deposit; balance due 7 days before.",
+          a: "Carnival morning access is US$35. Makeup only is US$200, named and celebrity artists run US$200 to US$350, photoshoot only is US$160, hair is US$120 to US$185 and Full Glam is US$440. A barber is available at US$35. Your booking team confirms final pricing before payment.",
         },
         {
           q: "Does the makeup survive the Jamaica heat?",
@@ -125,11 +125,11 @@ function buildData(territory: Territory): PageData {
       },
       {
         q: "How much does Miami carnival makeup cost?",
-        a: "Carnival morning access US$35, makeup only US$170 to US$200 single day and US$380 for both Trinidad days, named and celebrity artists US$200 to US$580, photoshoot only US$140 to US$160, hair US$120 to US$220 and Full Glam US$430 to US$680. US$50 deposit secures the slot; balance due 7 days before Carnival.",
+        a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430.",
       },
       {
         q: "How does booking work?",
-        a: "Choose your Miami slot at carnivalglamhub.masos.app/events, pay the US$50 deposit, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead.",
+        a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Slots are limited and sell out weeks ahead.",
       },
     ],
     destinationPath: "/miami",
@@ -223,7 +223,11 @@ function BestPage({ territory }: { territory: Territory }) {
               >
                 carnivalglamhub.masos.app/events
               </a>
-              , pay the US$50 deposit to secure the appointment, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead of every Carnival weekend.
+              .{" "}
+              {data.slug === "trinidad"
+                ? "A US$50 deposit secures your appointment."
+                : "Your booking team will confirm your appointment and final pricing."}{" "}
+              Slots are limited and sell out weeks ahead.
             </p>
           </section>
 
