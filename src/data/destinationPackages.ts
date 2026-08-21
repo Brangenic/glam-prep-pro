@@ -26,14 +26,13 @@ export const destinationPackages: Record<string, DestinationPackages> = {
     sections: [
       {
         packages: [
-          { name: "Gabby Glam Team Makeup Only", price: "$240 USD", image: `${IMG}/886b1ff3-8a4d-4751-85e4-499826e16f4f/462x578` },
-          { name: "Gabby Glam Team Makeup & Photoshoot", price: "$360 USD", image: `${IMG}/56e1ec62-cc5d-49b9-ba89-d4866e4c5025/462x578` },
           { name: "Makeup Only", price: "$190 USD", image: `${IMG}/95e3c95d-af8b-495d-958a-b99c5ecebe07/462x578` },
           { name: "Makeup and Photoshoot", price: "$310 USD", image: `${IMG}/4e231432-37bd-4ad0-88cc-c6fa3c1edaad/462x578` },
+          { name: "Gabby Glam Team Makeup Only", price: "$240 USD", image: `${IMG}/886b1ff3-8a4d-4751-85e4-499826e16f4f/462x578` },
+          { name: "Gabby Glam Team Makeup & Photoshoot", price: "$360 USD", image: `${IMG}/56e1ec62-cc5d-49b9-ba89-d4866e4c5025/462x578` },
           { name: "Full Glam - Makeup, Hair, Photoshoot, Breakfast", price: "$430 USD", image: `${IMG}/28660f96-318f-413d-9775-c2af3a936725/462x578` },
           { name: "Hair Glam", price: "$130 USD", image: `${IMG}/9a89db39-7597-4c52-9cef-fc8d280dd84d/462x578` },
           { name: "Photoshoot Only", price: "$150 USD", image: `${IMG}/66112a52-fe25-4d93-afb8-f615be833d94/462x578` },
-          { name: "His Glam", price: "$25 USD", image: `${IMG}/ca5d1e5a-5e06-4d17-80ad-b9698a2a06a8/462x578` },
           { name: "Get Dressed", price: "$25 USD", image: `${IMG}/1ca31c94-51b3-49e1-a711-45da60e5c8c4/462x578` },
           { name: "Bring A Friend", price: "$25 USD", image: `${IMG}/ff0a158d-37e6-4ad1-928e-c5eb2cc48ddf/462x578` },
         ],
