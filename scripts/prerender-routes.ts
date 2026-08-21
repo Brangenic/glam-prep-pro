@@ -1,3 +1,11 @@
+// PRICING NOTE: every figure quoted in this file comes from
+// src/data/territoryPricing.ts (masos products). Keep them in step with
+// that file. Never invent a price here.
+// Makeup only US$170 to US$200 single day, US$380 both Trinidad days.
+// Named and celebrity artists US$200 to US$580. Photoshoot only US$140 to US$160.
+// Hair US$120 to US$220. Full Glam US$430 to US$680.
+// Carnival morning access US$35. Barber US$35 (Jamaica and Trinidad only).
+// Highest price of any product anywhere US$680. Deposit US$50, Trinidad only.
 // Postbuild: emits per-route static HTML at dist/<path>/index.html for
 // the app's non-blog routes (destinations, services, /trinidad-carnival-2027,
 // /about, /faq, /reviews, /amazon-store, /booking-calculator) with the
@@ -307,7 +315,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/booking-calculator",
     title: "Carnival Glam Quote Calculator | Carnival Glam Hub",
     description:
-      "Get a personalised Carnival morning quote in three steps. Sweat-proof makeup, hair, dressing, photoshoot and shuttle, priced for your party size and territory.",
+      "Get a personalised Carnival morning quote in three steps. Real Carnival Glam Hub pricing for makeup, hair, photoshoot and Carnival morning access, by territory.",
   },
   {
     path: "/blogs",
@@ -412,8 +420,8 @@ const SERVICE_META: Record<string, ServiceMeta> = {
     extraOffer: {
       "@type": "AggregateOffer",
       priceCurrency: "USD",
-      lowPrice: "160",
-      highPrice: "2000",
+      lowPrice: "170",
+      highPrice: "580",
       offerCount: "4",
       availability: "https://schema.org/InStock",
       url: "https://carnivalglamhub.masos.app/events",
@@ -496,7 +504,7 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     faqs: [
       { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
       { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
-      { q: "How much does Trinidad carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most masqueraders spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. A US$50 deposit secures the slot; the balance is due 7 days before Carnival." },
+      { q: "How much does Trinidad carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$180 to US$200 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$160, hair is US$120 to US$220 and Full Glam is US$440 to US$680. A US$50 deposit secures the slot." },
       { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
     ],
   },
@@ -508,7 +516,7 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     faqs: [
       { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
       { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything — makeup, hair, dressing, photos, shuttle — happens in one air-conditioned location so you leave with the band." },
-      { q: "How much does Jamaica carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit; balance due 7 days before." },
+      { q: "How much does Jamaica carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$200, named and celebrity artists run US$200 to US$350, photoshoot only is US$160, hair is US$120 to US$185 and Full Glam is US$440. A barber is available at US$35. Your booking team confirms final pricing before payment." },
       { q: "Does the makeup survive the Jamaica heat?", a: "Yes — the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
     ],
   },
@@ -520,8 +528,8 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     faqs: [
       { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise — with the same senior MUA team." },
       { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend — makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
-      { q: "How much does Miami carnival makeup cost?", a: "Road-ready access from US$35, professional carnival makeup from US$160 (most spend US$200–300), celebrity-artist US$250–350, premium/editorial up to US$2,000. US$50 deposit secures the slot; balance due 7 days before Carnival." },
-      { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events, pay the US$50 deposit, and settle the balance 7 days before Carnival. Slots are limited and sell out weeks ahead." },
+      { q: "How much does Miami carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430." },
+      { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Slots are limited and sell out weeks ahead." },
     ],
   },
 };
@@ -627,7 +635,7 @@ function buildJsonLd(route: RouteMeta): object[] {
         "@type": "AggregateOffer",
         priceCurrency: "USD",
         lowPrice: "35",
-        highPrice: "2000",
+        highPrice: "680",
         offerCount: "4",
         availability: "https://schema.org/InStock",
         url: "https://carnivalglamhub.masos.app/events",
