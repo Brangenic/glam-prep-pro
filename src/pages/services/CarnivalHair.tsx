@@ -24,7 +24,7 @@ const faqSchema = {
       name: "What hair styles do you offer?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Carnival hair is a Full Service Glam Hub inclusion, so it runs in Jamaica, Trinidad and Miami only. Glam Hub Lite territories do not offer hair; they cover makeup, photoshoot, a changing room, and coffee, tea and light refreshments.",
+        text: "The style depends on the service you book: a ponytail, a front braided ponytail, half-up half-down, or a wig install. Ponytails can be provided for you, or you can bring your own hair. Carnival hair is a Full Service Glam Hub inclusion, so it runs in Jamaica, Trinidad and Miami only. Glam Hub Lite territories do not offer hair; they cover makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.",
       },
     },
     {
@@ -72,7 +72,7 @@ const faqSchema = {
       name: "Where can I book carnival hair?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Carnival hair styling is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories such as Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana, Tobago and Atlanta do not offer hair; they cover makeup, photoshoot, a changing room, and coffee, tea and light refreshments.",
+        text: "Carnival hair styling is a Full Service Glam Hub inclusion, available in Trinidad, Jamaica and Miami. Glam Hub Lite territories such as Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana, Tobago and Atlanta do not offer hair; they cover makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.",
       },
     },
   ],
