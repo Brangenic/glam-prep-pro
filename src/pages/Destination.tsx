@@ -17,7 +17,8 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities } from "@/data/hubTiers";
+import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
@@ -135,6 +136,21 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const others = destinations.filter((d) => d.slug !== dest.slug).slice(0, 4);
   const tier = getHubTier(dest.slug);
   const inclusions = getHubInclusions(dest.slug) ?? dest.highlights;
+  const caps = getCapabilities(dest.slug);
+  const addOns: { label: string; note: string }[] = [
+    ...(caps.overnightBagCheck
+      ? [{
+          label: "Overnight bag check",
+          note: `US$${OVERNIGHT_BAG_CHECK_PRICE} per masquerader. Leave your bag with us while you are on the road and collect it that night or the next day.`,
+        }]
+      : []),
+    ...(caps.reels
+      ? [{ label: "Reels", note: "Price confirmed on booking." }]
+      : []),
+    ...(caps.barber
+      ? [{ label: "Barber", note: `US$${BARBER_PRICE} per masquerader.` }]
+      : []),
+  ];
   const masosEntry = getMasosDestination(dest.slug);
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
@@ -420,9 +436,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 {tier === "lite" && (
                   <p className="font-body text-sm text-muted-foreground mb-8">
                     {dest.shortName} is a Glam Hub Lite. Our Full Service Glam
-                    Hubs, which add shuttle, bag and wing check, breakfast and
-                    refreshments, alcohol, hair, bronzing, seamstress and
-                    getting-dressed assistance, run in{" "}
+                    Hubs, which add shuttle, breakfast and refreshments, alcohol,
+                    hair, seamstress and getting-dressed assistance, run in{" "}
                     <Link to="/jamaica" className="text-primary hover:underline">Jamaica</Link>,{" "}
                     <Link to="/trinidad" className="text-primary hover:underline">Trinidad</Link> and{" "}
                     <Link to="/miami" className="text-primary hover:underline">Miami</Link>.
