@@ -156,7 +156,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book Jamaica Carnival 2027 makeup, hair, bronzing, shuttle, photoshoot and reels at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
+      "Book Jamaica Carnival 2027 makeup, hair, bronzing, shuttle, photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -164,7 +164,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -172,7 +172,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book sweat-resistant Antigua Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -180,7 +180,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -188,7 +188,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -196,14 +196,14 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Miami Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book Miami Carnival 2026 makeup, hair, bronzing, photoshoot and reels at our Full Service Glam Hub. No shuttle in Miami this season. Trusted by 15,000+ masqueraders since 2017.",
+      "Book Miami Carnival 2026 makeup, hair, photoshoot at our Full Service Glam Hub. No shuttle in Miami this season. Trusted by 15,000+ masqueraders since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
     path: "/toronto",
     title: "Toronto Carnival Makeup & Glam 2026 | Glam Hub",
     description:
-      "Toronto Caribana glam from our Glam Hub Lite. Sweat-resistant carnival makeup with a photoshoot and reels. Book your Caribana look now.",
+      "Toronto Caribana glam from our Glam Hub Lite. Sweat-resistant carnival makeup with a photoshoot. Book your Caribana look now.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -219,14 +219,14 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
+      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
     ogImage: HERO_FALLBACK,
   },
   {
     path: "/guyana",
     title: "Guyana Carnival Makeup & Glam 2026 | Glam Hub",
     description:
-      "Book Guyana Carnival makeup with a photoshoot and reels at our Glam Hub Lite. Sweat-resistant carnival glam by professional Caribbean artists.",
+      "Book Guyana Carnival makeup with a photoshoot at our Glam Hub Lite. Sweat-resistant carnival glam by professional Caribbean artists.",
     ogImage: HERO_FALLBACK,
   },
   {

@@ -46,7 +46,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book Jamaica Carnival 2027 makeup, hair, bronzing, shuttle, photoshoot and reels at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
+      "Book Jamaica Carnival 2027 makeup, hair, bronzing, shuttle, photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
   },
   {
     slug: "saint-lucia",
@@ -55,7 +55,7 @@ export const destinations: Destination[] = [
     date: "20–21 July 2026",
     description: "Glam Hub Lite for Saint Lucia Carnival.",
     longDescription:
-      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks. Sweat-resistant road makeup, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks. Sweat-resistant road makeup, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     image: "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&dl=1",
     cta: "Book Saint Lucia Glam",
     objectPosition: "50% 20%",
@@ -63,12 +63,12 @@ export const destinations: Destination[] = [
       "Road march full glam",
       "J'ouvert paint and shimmer",
       "Eye gems and festival lashes",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle:
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "antigua",
@@ -77,7 +77,7 @@ export const destinations: Destination[] = [
     date: "4 August 2026",
     description: "Carnival glam services for Antigua Carnival.",
     longDescription:
-      "Antigua Carnival is one of the Caribbean's most colourful festivals, and our Glam Hub Lite keeps you camera-ready from j'ouvert to last lap. Premium sweat-resistant makeup, gems, body art and shimmer, plus a photoshoot and reels in the lounge.",
+      "Antigua Carnival is one of the Caribbean's most colourful festivals, and our Glam Hub Lite keeps you camera-ready from j'ouvert to last lap. Premium sweat-resistant makeup, gems, body art and shimmer, plus a photoshoot in the lounge.",
     image: "https://www.dropbox.com/scl/fi/zj9aswskvl80vunhkhdcf/Chloe%20J.png?rlkey=yxp73i1uv8pcwpuink46ty6mv&dl=1",
     cta: "Book Antigua Glam",
     objectPosition: "50% 20%",
@@ -85,12 +85,12 @@ export const destinations: Destination[] = [
       "Full carnival makeup",
       "Gem and rhinestone designs",
       "Body paint and shimmer",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle:
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Antigua Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "grenada",
@@ -99,7 +99,7 @@ export const destinations: Destination[] = [
     date: "10 – 11 August 2026",
     description: "Premium glam services for Grenada Spicemas.",
     longDescription:
-      "Spicemas is unmatched, and our Grenada Glam Hub Lite matches the energy. Full sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot and reels in the lounge.",
+      "Spicemas is unmatched, and our Grenada Glam Hub Lite matches the energy. Full sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge.",
     image: "https://www.dropbox.com/scl/fi/taonoqg2p6faph4jipzhr/AALiyah.png?rlkey=jwxhfig9y16l6kn2573nkuggh&dl=1",
     cta: "Book Grenada Glam",
     objectPosition: "50% 20%",
@@ -107,12 +107,12 @@ export const destinations: Destination[] = [
       "Spicemas full glam",
       "J'ouvert paint and oil packages",
       "Festival gems and lashes",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle:
       "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "tobago",
@@ -121,7 +121,7 @@ export const destinations: Destination[] = [
     date: "30 October – 1 November 2026",
     description: "Glam Hub Lite for Tobago Carnival.",
     longDescription:
-      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     // Placeholder imagery of our own work, not a Tobago location shot.
     image: tobagoImg,
     imageAlt:
@@ -132,12 +132,12 @@ export const destinations: Destination[] = [
       "Road march full glam",
       "J'ouvert paint and shimmer",
       "Eye gems and festival lashes",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle:
       "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot and reels at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
+      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
   },
   {
     slug: "barbados",
@@ -146,7 +146,7 @@ export const destinations: Destination[] = [
     date: "3 August 2026",
     description: "Glam Hub Lite services for Barbados Crop Over.",
     longDescription:
-      "Crop Over is the Caribbean's biggest summer carnival, and our Barbados Glam Hub Lite is fully booked every season for a reason. Get road-ready with sweat-resistant Grand Kadooment makeup, Foreday Morning paint, gems, lashes and shimmer, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments in the lounge.",
+      "Crop Over is the Caribbean's biggest summer carnival, and our Barbados Glam Hub Lite is fully booked every season for a reason. Get road-ready with sweat-resistant Grand Kadooment makeup, Foreday Morning paint, gems, lashes and shimmer, plus a photoshoot, a changing room, and coffee, tea and light refreshments in the lounge.",
     image: "https://www.dropbox.com/scl/fi/4a52okz83gxh171qyhfjc/Dania.png?rlkey=q3figf3ty5abs9gdie4rtjcow&dl=1",
     cta: "Book Barbados Glam",
     objectPosition: "50% 20%",
@@ -154,12 +154,12 @@ export const destinations: Destination[] = [
       "Grand Kadooment full glam",
       "Foreday Morning paint",
       "Gems, lashes and shimmer",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle:
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot and reels at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Book sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
   },
   {
     slug: "miami",
@@ -168,7 +168,7 @@ export const destinations: Destination[] = [
     date: "11 October 2026",
     description: "Glam hub services for Miami Carnival.",
     longDescription:
-      "Our Miami Carnival Full Service Glam Hub serves the entire Miami Carnival season, from pre-carnival fetes through Columbus Day weekend. Full sweat-resistant makeup, hair, gems and body art by our pro carnival team, with a photoshoot and reels in the lounge. There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel.",
+      "Our Miami Carnival Full Service Glam Hub serves the entire Miami Carnival season, from pre-carnival fetes through Columbus Day weekend. Full sweat-resistant makeup, hair, gems and body art by our pro carnival team, with a photoshoot in the lounge. There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel.",
     image: "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&dl=1",
     cta: "Book Miami Glam",
     objectPosition: "50% 20%",
@@ -181,7 +181,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Miami Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book Miami Carnival 2026 makeup, hair, bronzing, photoshoot and reels at our Full Service Glam Hub. No shuttle in Miami this season. Trusted by 15,000+ masqueraders since 2017.",
+      "Book Miami Carnival 2026 makeup, hair, photoshoot at our Full Service Glam Hub. No shuttle in Miami this season. Trusted by 15,000+ masqueraders since 2017.",
   },
   {
     slug: "toronto",
@@ -190,7 +190,7 @@ export const destinations: Destination[] = [
     date: "1 August 2026",
     description: "Glam hub services for Toronto Caribana.",
     longDescription:
-      "Caribana is North America's biggest Caribbean carnival, and our Toronto Glam Hub Lite is on the road with you. Sweat-resistant Grand Parade and fete makeup, festival gems, lashes and body art, plus a photoshoot and reels in the lounge.",
+      "Caribana is North America's biggest Caribbean carnival, and our Toronto Glam Hub Lite is on the road with you. Sweat-resistant Grand Parade and fete makeup, festival gems, lashes and body art, plus a photoshoot in the lounge.",
     image: "https://www.dropbox.com/scl/fi/tnghsl2n83e111g3b6ffs/Krystal%20Pitt.png?rlkey=nyhzn9cf43lwlsqjpa0hif5pk&dl=1",
     cta: "Book Toronto Glam",
     objectPosition: "50% 20%",
@@ -198,11 +198,11 @@ export const destinations: Destination[] = [
       "Grand Parade full glam",
       "Fete makeup packages",
       "Gems, lashes and shimmer",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle: "Toronto Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
-      "Toronto Caribana glam from our Glam Hub Lite. Sweat-resistant carnival makeup with a photoshoot and reels. Book your Caribana look now.",
+      "Toronto Caribana glam from our Glam Hub Lite. Sweat-resistant carnival makeup with a photoshoot. Book your Caribana look now.",
   },
   {
     slug: "trinidad",
@@ -237,18 +237,18 @@ export const destinations: Destination[] = [
     date: "May 2026",
     description: "Glam Hub Lite services for Guyana Carnival.",
     longDescription:
-      "Guyana Carnival brings Mashramani energy to the road, and our Guyana Glam Hub Lite keeps you flawless from fete to road march. Sweat-resistant makeup, gems, lashes and body art by our Caribbean-trained carnival artists, plus a photoshoot and reels, a changing room, and coffee, tea and light refreshments in the lounge.",
+      "Guyana Carnival brings Mashramani energy to the road, and our Guyana Glam Hub Lite keeps you flawless from fete to road march. Sweat-resistant makeup, gems, lashes and body art by our Caribbean-trained carnival artists, plus a photoshoot, a changing room, and coffee, tea and light refreshments in the lounge.",
     image: guyanaImg,
     cta: "Book Guyana Glam",
     highlights: [
       "Full road carnival glam",
       "Gem and rhinestone application",
       "Body paint and shimmer",
-      "Photoshoot and reels in the lounge",
+      "Photoshoot in the lounge",
     ],
     metaTitle: "Guyana Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
-      "Book Guyana Carnival makeup with a photoshoot and reels at our Glam Hub Lite. Sweat-resistant carnival glam by professional Caribbean artists.",
+      "Book Guyana Carnival makeup with a photoshoot at our Glam Hub Lite. Sweat-resistant carnival glam by professional Caribbean artists.",
   },
   {
     slug: "epic-cruise",
@@ -297,8 +297,8 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           question: `Is ${loc} a Full Service Glam Hub or a Glam Hub Lite?`,
           answer:
             tier === "full"
-              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? ". There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel" : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
-              : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, bag and wing check, shuttle, hair, bronzing, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
+              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? ". There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel" : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
+              : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
         },
       ]
     : [];
