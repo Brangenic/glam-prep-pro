@@ -37,25 +37,42 @@ export const ALWAYS_INCLUDED = "Coffee and tea";
 /** Refreshment line for Glam Hub Lite. */
 export const LITE_REFRESHMENTS = "Coffee, tea and light refreshments";
 
+/**
+ * The only bag line that may ever appear as an inclusion. Free at every
+ * hub, Full Service and Lite alike, space permitting rather than
+ * guaranteed. Jamaica and Trinidad run a chit system for it.
+ */
+export const DAY_BAG_CHECK = "Wing and bag check while you are with us, space permitting";
+
+/**
+ * Overnight bag check is a paid add-on, never an inclusion. Trinidad,
+ * Jamaica and Miami only. The price lives in `territoryPricing.ts`.
+ */
+export const OVERNIGHT_BAG_CHECK_LABEL = "Overnight bag check";
+
+/** Reels are a paid add-on with no confirmed masos price. Never quote a number. */
+export const REELS_LABEL = "Reels";
+export const REELS_NOTE = "Reels are available in Trinidad and Jamaica, with the price confirmed on booking.";
+
 export const FULL_SERVICE_INCLUSIONS = [
   "Shuttle",
-  "Bag and wing check, including overnight",
+  DAY_BAG_CHECK,
   "Breakfast and refreshments",
   "Alcohol",
   "Makeup",
   "Hair",
-  "Bronzing",
   "Seamstress",
   "Getting-dressed assistance",
   "Changing room",
-  "Photoshoot and reels",
+  "Photoshoot",
   ALWAYS_INCLUDED,
 ];
 
 export const LITE_INCLUSIONS = [
   "Makeup",
-  "Photoshoot and reels",
+  "Photoshoot",
   "Changing room",
+  DAY_BAG_CHECK,
   LITE_REFRESHMENTS,
 ];
 
@@ -67,31 +84,90 @@ export const LITE_INCLUSIONS = [
 export const LITE_NOT_OFFERED = [
   "Getting dressed",
   "Seamstress",
-  "Bag and wing check, including overnight",
+  "Overnight bag check",
   "Shuttle",
   "Hair",
   "Bronzing",
+  "Reels",
   "Alcohol",
   "Breakfast",
 ];
 
-/** Territories that also offer a barber. Shown as a quiet marker only. */
-export const BARBER_SLUGS = ["jamaica", "trinidad", "trinidad-carnival-2027"] as const;
+/* ============================================================
+ * Territory-scoped capabilities.
+ * Four capabilities sit outside the tier model. Three of them are
+ * Trinidad and Jamaica only; overnight bag check adds Miami.
+ * `trinidad-carnival-2027` shares the Trinidad hub, so it carries
+ * exactly the same capabilities as `trinidad`.
+ * ============================================================ */
+
+export type HubCapabilities = {
+  /** Optional paid barber service. */
+  barber: boolean;
+  /** Bronzing artistry. Trinidad and Jamaica only. */
+  bronzing: boolean;
+  /** Paid reels add-on, price confirmed on booking. */
+  reels: boolean;
+  /** Paid overnight bag check add-on. */
+  overnightBagCheck: boolean;
+};
+
+const NO_CAPABILITIES: HubCapabilities = {
+  barber: false,
+  bronzing: false,
+  reels: false,
+  overnightBagCheck: false,
+};
+
+const TRINIDAD_CAPABILITIES: HubCapabilities = {
+  barber: true,
+  bronzing: true,
+  reels: true,
+  overnightBagCheck: true,
+};
+
+export const HUB_CAPABILITIES: Record<string, HubCapabilities> = {
+  trinidad: TRINIDAD_CAPABILITIES,
+  "trinidad-carnival-2027": TRINIDAD_CAPABILITIES,
+  jamaica: { barber: true, bronzing: true, reels: true, overnightBagCheck: true },
+  miami: { barber: false, bronzing: false, reels: false, overnightBagCheck: true },
+};
+
+export function getCapabilities(slug: string): HubCapabilities {
+  return HUB_CAPABILITIES[slug] ?? NO_CAPABILITIES;
+}
+
+/** Kept as a thin wrapper so existing callers keep working. */
+export function hasBarber(slug: string): boolean {
+  return getCapabilities(slug).barber;
+}
+
+export function hasBronzing(slug: string): boolean {
+  return getCapabilities(slug).bronzing;
+}
+
+export function hasReels(slug: string): boolean {
+  return getCapabilities(slug).reels;
+}
+
+export function hasOvernightBagCheck(slug: string): boolean {
+  return getCapabilities(slug).overnightBagCheck;
+}
+
+/** Territories that also offer a barber. Derived, kept for compatibility. */
+export const BARBER_SLUGS = Object.keys(HUB_CAPABILITIES).filter(
+  (s) => HUB_CAPABILITIES[s].barber,
+);
 
 export const BARBER_LABEL = "+ Barber";
 
-export function hasBarber(slug: string): boolean {
-  return (BARBER_SLUGS as readonly string[]).includes(slug);
-}
-
 /**
  * Miami is Full Service, but there is no shuttle in Miami this season.
- * Uber access and overnight bag check cover the Carnival morning logistics.
- * Bag and wing check is already a Full Service inclusion, so it is never
- * priced or sold as an add-on.
+ * Uber access covers the Carnival morning logistics, and overnight bag
+ * check is available as a paid add-on rather than an inclusion.
  */
 export const MIAMI_SHUTTLE_NOTE =
-  "There is no shuttle in Miami this season. The venue has ready Uber access, and overnight bag check is included, so you can leave your bags with us and collect them the next day or that night at your hotel.";
+  "There is no shuttle in Miami this season. The venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel.";
 
 export function getHubTier(slug: string): HubTier | null {
   if ((FULL_SERVICE_SLUGS as readonly string[]).includes(slug)) return "full";
@@ -106,7 +182,7 @@ export function getHubTier(slug: string): HubTier | null {
  * capability list, but they must never be shown as included with a
  * booking, because each one is charged separately.
  */
-export const CHARGEABLE_SERVICES = ["Makeup", "Hair", "Bronzing", "Photoshoot and reels"];
+export const CHARGEABLE_SERVICES = ["Makeup", "Hair", "Bronzing", "Photoshoot"];
 
 /** What is genuinely free with any booking at this hub. */
 export function getFreeInclusions(slug: string): string[] {
@@ -119,10 +195,16 @@ export function getHubInclusions(slug: string): string[] | null {
   const tier = getHubTier(slug);
   if (!tier) return null;
   if (tier === "lite") return [...LITE_INCLUSIONS];
+  let list = [...FULL_SERVICE_INCLUSIONS];
   if (slug === "miami") {
-    return FULL_SERVICE_INCLUSIONS.filter((i) => i !== "Shuttle");
+    list = list.filter((i) => i !== "Shuttle");
   }
-  return [...FULL_SERVICE_INCLUSIONS];
+  if (getCapabilities(slug).bronzing) {
+    // Bronzing sits with the artistry services, straight after hair.
+    const at = list.indexOf("Hair");
+    list.splice(at + 1, 0, "Bronzing");
+  }
+  return list;
 }
 
 /**
