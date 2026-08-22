@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "What is included in my appointment?",
-    a: "A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, bronzing, seamstress, a changing room, photoshoot, and coffee and tea. There is no shuttle in Miami this season: the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, and coffee, tea and light refreshments.",
+    a: "A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica, with the price confirmed on booking. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season: the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, and coffee, tea and light refreshments.",
   },
   {
     q: "Where does the glam take place?",
