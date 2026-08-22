@@ -57,7 +57,7 @@ const Destinations = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            Full Service Glam Hubs run in Jamaica, Trinidad and Miami. Every other territory is a Glam Hub Lite, covering makeup, photoshoot and reels, a changing room, and coffee, tea and light refreshments.
+            Full Service Glam Hubs run in Jamaica, Trinidad and Miami. Every other territory is a Glam Hub Lite, covering makeup, photoshoot, a changing room, and coffee, tea and light refreshments.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
