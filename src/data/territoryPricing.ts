@@ -55,8 +55,21 @@ export type TerritoryPricing = {
 /** Free with any Glam Hub service, US$35 stand-alone. Trinidad, Jamaica, Miami only. */
 export const GETTING_DRESSED_PRICE = 35;
 
-/** Optional extra. Jamaica and Trinidad only, per BARBER_SLUGS. */
+/** Optional extra. Jamaica and Trinidad only, per HUB_CAPABILITIES. */
 export const BARBER_PRICE = 35;
+
+/**
+ * Overnight bag check. A paid add-on, never an inclusion.
+ * Trinidad, Jamaica and Miami only, per HUB_CAPABILITIES.
+ */
+export const OVERNIGHT_BAG_CHECK_PRICE = 35;
+
+/**
+ * Reels are a paid add-on in Trinidad and Jamaica only. There is no
+ * masos reels product, so there is no confirmed price. Never invent one:
+ * the booking team confirms it.
+ */
+export const REELS_PRICE: number | null = null;
 
 const SINGLE_DAY: { key: DayKey; label: string }[] = [{ key: "single", label: "Carnival day" }];
 
