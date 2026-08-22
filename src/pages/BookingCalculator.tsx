@@ -708,8 +708,8 @@ const BookingCalculator = () => {
 
                         {addReels && caps.reels && (
                           <p className="font-body text-xs text-muted-foreground mt-3">
-                            Reels are not priced on masos yet, so they are not in this total. Your booking
-                            team confirms the reels price.
+                            Reels are not included in this total. Your booking team will confirm the
+                            reels price when they confirm your appointment.
                           </p>
                         )}
 

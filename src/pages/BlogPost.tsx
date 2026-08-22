@@ -183,7 +183,7 @@ const HOST_LABELS: Array<[RegExp, string]> = [
   [/(?:^|\.)tiktok\.com$/i, "View on TikTok"],
   [/(?:^|\.)youtube\.com$|(?:^|\.)youtu\.be$/i, "Watch on YouTube"],
   [/(?:^|\.)facebook\.com$/i, "View on Facebook"],
-  [/carnivalglamhub\.masos\.app$/i, "Book on MasOS"],
+  [/carnivalglamhub\.masos\.app$/i, "Book your glam"],
   [/(?:^|\.)amazon\.[a-z.]+$/i, "View on Amazon"],
 ];
 
