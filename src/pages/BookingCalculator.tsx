@@ -14,10 +14,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { getFreeInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
+import { getFreeInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE, getCapabilities } from "@/data/hubTiers";
 import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
+  OVERNIGHT_BAG_CHECK_PRICE,
   TERRITORY_PRICING,
   getTerritoryPricing,
   lowestPremiumPrice,
@@ -92,6 +93,8 @@ const BookingCalculator = () => {
   const [productId, setProductId] = useState("");
   const [partySize, setPartySize] = useState(1);
   const [addBarber, setAddBarber] = useState(false);
+  const [addOvernightBag, setAddOvernightBag] = useState(false);
+  const [addReels, setAddReels] = useState(false);
   const [email, setEmail] = useState("");
   const [countryCode, setCountryCode] = useState("+1");
   const [whatsapp, setWhatsapp] = useState("");
@@ -99,6 +102,7 @@ const BookingCalculator = () => {
 
   const config = useMemo(() => getTerritoryPricing(territory), [territory]);
   const tier = getHubTier(territory);
+  const caps = getCapabilities(territory);
 
   // Reset downstream answers whenever the territory changes.
   useEffect(() => {
@@ -106,6 +110,8 @@ const BookingCalculator = () => {
     setIntent("");
     setProductId("");
     setAddBarber(false);
+    setAddOvernightBag(false);
+    setAddReels(false);
   }, [config]);
 
   const dayProducts = useMemo(
@@ -157,8 +163,14 @@ const BookingCalculator = () => {
     if (addBarber && config?.barber) {
       out.push({ label: "Barber", amount: BARBER_PRICE * partySize });
     }
+    if (addOvernightBag && caps.overnightBagCheck) {
+      out.push({
+        label: "Overnight bag check",
+        amount: OVERNIGHT_BAG_CHECK_PRICE * partySize,
+      });
+    }
     return out;
-  }, [intent, selectedProduct, partySize, addBarber, config]);
+  }, [intent, selectedProduct, partySize, addBarber, addOvernightBag, caps, config]);
 
   const total = lines.reduce((s, l) => s + l.amount, 0);
   const isGroup = partySize >= 5 || intent === "group";
@@ -334,7 +346,7 @@ const BookingCalculator = () => {
             className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10"
             data-mcp-action="get-quote"
             data-mcp-description="Get a price quote for Carnival Glam Hub services for a chosen Carnival territory, Carnival day, service intent and party size."
-            data-mcp-params='{"required":["destination","people","email"],"optional":["carnival_day","intent","product","barber","phone","country_code"]}'
+            data-mcp-params='{"required":["destination","people","email"],"optional":["carnival_day","intent","product","barber","overnight_bag_check","reels","phone","country_code"]}'
           >
             <div className="space-y-6">
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-7">
@@ -547,6 +559,46 @@ const BookingCalculator = () => {
                     </span>
                   </label>
                 )}
+
+                {caps.overnightBagCheck && (
+                  <label htmlFor="overnight-bag" className="flex items-start gap-3 cursor-pointer">
+                    <Checkbox
+                      id="overnight-bag"
+                      name="overnight_bag_check"
+                      aria-label={`Add overnight bag check, US$${OVERNIGHT_BAG_CHECK_PRICE} per masquerader`}
+                      data-mcp-param="overnight_bag_check"
+                      checked={addOvernightBag}
+                      onCheckedChange={() => setAddOvernightBag((v) => !v)}
+                      className="mt-1"
+                    />
+                    <span className="font-body text-sm leading-snug">
+                      Overnight bag check
+                      <span className="block text-muted-foreground text-xs mt-0.5">
+                        US${OVERNIGHT_BAG_CHECK_PRICE} per masquerader. Collect that night or the next day.
+                      </span>
+                    </span>
+                  </label>
+                )}
+
+                {caps.reels && (
+                  <label htmlFor="reels" className="flex items-start gap-3 cursor-pointer">
+                    <Checkbox
+                      id="reels"
+                      name="reels"
+                      aria-label="Add reels, price confirmed on booking"
+                      data-mcp-param="reels"
+                      checked={addReels}
+                      onCheckedChange={() => setAddReels((v) => !v)}
+                      className="mt-1"
+                    />
+                    <span className="font-body text-sm leading-snug">
+                      Reels
+                      <span className="block text-muted-foreground text-xs mt-0.5">
+                        Price confirmed on booking.
+                      </span>
+                    </span>
+                  </label>
+                )}
               </div>
 
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4">
@@ -651,6 +703,13 @@ const BookingCalculator = () => {
                         ) : (
                           <p className="font-body text-sm text-muted-foreground border-t border-border mt-5 pt-4">
                             Choose what you need for Carnival morning to see your total.
+                          </p>
+                        )}
+
+                        {addReels && caps.reels && (
+                          <p className="font-body text-xs text-muted-foreground mt-3">
+                            Reels are not priced on masos yet, so they are not in this total. Your booking
+                            team confirms the reels price.
                           </p>
                         )}
 
