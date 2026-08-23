@@ -564,7 +564,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
                 {dest.slug === "miami" && (
                   <p className="font-body text-sm text-muted-foreground mb-8">
-                    {MIAMI_SHUTTLE_NOTE}
+                    {MIAMI_SHUTTLE_NOTE} {MIAMI_BAG_CHECK_NOTE}
                   </p>
                 )}
 
