@@ -13,9 +13,14 @@ import { toast } from "sonner";
 import { TIER_LABEL } from "@/data/hubTiers";
 import {
   CLOSED_STATION_NAMES,
+  CLIENT_AMENITIES_NOTE,
   FULL_SERVICE_STATION_TERRITORIES,
+  HIGH_CHAIR_RATE_LABEL,
   LITE_STATION_TERRITORIES,
+  STATION_BRING,
   STATION_FAQS,
+  STATION_PAYMENT_NOTE,
+  STATION_PROVIDED,
   STATION_SERVICE_TYPES,
   STATION_TERRITORIES,
   STATION_TERRITORY_NOTES,
@@ -24,6 +29,7 @@ import {
   getStationInclusions,
   getTierRate,
 } from "@/data/stationRentals";
+
 
 const PAGE_TITLE = "Carnival Station Rental for Makeup Artists | Glam Hub";
 const PAGE_DESCRIPTION =
