@@ -170,6 +170,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
   const seasonEnded = dest.slug === "jamaica";
+  const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
   // A passed territory sells nothing. Every booking call to action on the
   // page becomes a Gallery link, derived from the season calendar.
   const ctaHref = seasonPassed ? GALLERY_HREF : seasonEnded ? waitlistHref : bookingUrl;
@@ -179,7 +180,6 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       ? "Join 2027 Waitlist"
       : "Book Your Glam";
   const ctaExternal = !seasonPassed && !seasonEnded;
-  const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
 
   return (
     <div className="min-h-screen bg-background">
