@@ -24,9 +24,6 @@ import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta } from "../src/data/
 import {
   MIAMI_VENUE_NAME,
   MIAMI_VENUE_FAQ,
-  MIAMI_TRAVEL_WARNING,
-  MIAMI_VENUE_NOTE,
-  MIAMI_VENUE_DISTANCES,
 } from "../src/data/hubTiers";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
