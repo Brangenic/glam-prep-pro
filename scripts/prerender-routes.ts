@@ -694,6 +694,18 @@ function buildJsonLd(route: RouteMeta): object[] {
       },
     });
     blocks.push(faqPage(STATION_FAQS.map((f) => ({ q: f.q, a: f.a }))));
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: "Inside a Carnival Glam Hub in Trinidad",
+      description:
+        "A look inside the Carnival Glam Hub in Trinidad on Carnival morning: the air-conditioned beauty lounge, the stations, reception and the room independent makeup artists, hair stylists, barbers, braiders, body-art artists, lash techs and photographers rent a station in.",
+      thumbnailUrl: ["https://i.ytimg.com/vi/HWFyXB1tyIU/maxresdefault.jpg"],
+      uploadDate: "2024-03-01T00:00:00-04:00",
+      contentUrl: "https://www.youtube.com/watch?v=HWFyXB1tyIU",
+      embedUrl: "https://www.youtube.com/embed/HWFyXB1tyIU",
+      publisher: PROVIDER,
+    });
   }
 
   // 3) Trinidad 2027 gets its real Event + reviewed-business schemas in
