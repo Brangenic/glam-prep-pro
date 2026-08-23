@@ -10,13 +10,16 @@ import {
 } from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { TIER_LABEL } from "@/data/hubTiers";
 import {
+  CLOSED_STATION_NAMES,
   FULL_SERVICE_STATION_TERRITORIES,
   LITE_STATION_TERRITORIES,
   STATION_FAQS,
   STATION_SERVICE_TYPES,
   STATION_TERRITORIES,
   STATION_TERRITORY_NOTES,
+  CLOSED_STATION_TERRITORIES,
   formatStationRate,
   getStationInclusions,
   getTierRate,
@@ -24,7 +27,7 @@ import {
 
 const PAGE_TITLE = "Carnival Station Rental for Makeup Artists | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day in Trinidad, Jamaica, Miami, Barbados, Grenada and Saint Lucia.";
+  "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.";
 const CANONICAL = "https://www.carnivalglamhub.com/station-rentals";
 const HERO_IMAGE = "/images/services/makeup-hero.jpg";
 
@@ -188,7 +191,7 @@ const StationRentals = () => {
                   className="rounded-2xl border border-border bg-card/50 p-6 sm:p-8"
                 >
                   <span className="inline-block rounded-full bg-secondary/15 text-secondary font-body text-[11px] uppercase tracking-[0.15em] font-semibold px-3 py-1 mb-4">
-                    {territories[0].tierLabel}
+                    {TIER_LABEL[tier]}
                   </span>
                   <p className="font-body text-sm text-muted-foreground mb-5">
                     {territories.map((t) => t.name).join(", ")}
@@ -257,6 +260,13 @@ const StationRentals = () => {
               </div>
             ))}
           </div>
+          {CLOSED_STATION_TERRITORIES.length > 0 && (
+            <p className="font-body text-sm text-muted-foreground text-center mt-6">
+              {CLOSED_STATION_NAMES} have finished for this season, so stations
+              are not on sale there. They return with next season's dates at the
+              same tier rates.
+            </p>
+          )}
         </section>
 
         {/* How it works */}

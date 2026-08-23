@@ -4,6 +4,7 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
 import { getHubTier, getHubInclusions, TIER_LABEL } from "@/data/hubTiers";
+import { hasSeasonPassed, passedSeasonYear } from "@/data/seasons";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -303,15 +304,22 @@ export function getDestinationFaqs(d: Destination): Faq[] {
       ]
     : [];
 
+  const passed = hasSeasonPassed(d.slug);
+  const year = passedSeasonYear(d.slug);
+
   return [
     {
       question: `Where can I book ${loc} carnival glam?`,
-      answer: `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at carnivalglamhub.masos.app/events. We are the leading carnival glam service for ${event}, delivered by professional Caribbean-trained artists.`,
+      answer: passed
+        ? `${event} ${year} has wrapped, so bookings are closed for this season. You can see the looks our artists created on the road in our gallery at carnivalglamhub.com, and follow Carnival Glam Hub for ${loc} next season.`
+        : `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at carnivalglamhub.masos.app/events. We are the leading carnival glam service for ${event}, delivered by professional Caribbean-trained artists.`,
     },
     ...tierFaq,
     {
       question: `When is ${event} in ${date.includes("2027") ? "2027" : "2026"}?`,
-      answer: `${event} ${d.upcoming ? "takes place" : "is scheduled for"} ${date}. Carnival Glam Hub appointments run across the carnival weekend. Spaces fill quickly, so we recommend booking at least 4 to 6 weeks in advance.`,
+      answer: passed
+        ? `${event} ${year} took place on ${date} and the season has now finished. Carnival Glam Hub ran appointments across the carnival weekend.`
+        : `${event} ${d.upcoming ? "takes place" : "is scheduled for"} ${date}. Carnival Glam Hub appointments run across the carnival weekend. Spaces fill quickly, so we recommend booking at least 4 to 6 weeks in advance.`,
     },
     {
       question: `What's included in a ${loc} carnival glam package?`,
@@ -319,7 +327,9 @@ export function getDestinationFaqs(d: Destination): Faq[] {
     },
     {
       question: `How much does ${loc} carnival makeup cost?`,
-      answer: `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at carnivalglamhub.masos.app/events.`,
+      answer: passed
+        ? `${loc} carnival makeup pricing varies by package. Pricing for the ${year} season is closed. Rates for the next ${loc} season are confirmed when bookings reopen.`
+        : `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at carnivalglamhub.masos.app/events.`,
     },
     {
       question: `Do you offer j'ouvert paint and body art for ${event}?`,
@@ -327,7 +337,9 @@ export function getDestinationFaqs(d: Destination): Faq[] {
     },
     {
       question: `How early should I book ${loc} carnival glam?`,
-      answer: `For ${event} (${date}), we recommend booking your ${loc} carnival glam appointment at least 4 to 6 weeks ahead. Peak road march slots sell out first every season.`,
+      answer: passed
+        ? `Peak road march slots sell out first every season, so when ${loc} bookings reopen we recommend securing your appointment at least 4 to 6 weeks ahead of the parade.`
+        : `For ${event} (${date}), we recommend booking your ${loc} carnival glam appointment at least 4 to 6 weeks ahead. Peak road march slots sell out first every season.`,
     },
     {
       question: `Are your ${loc} carnival makeup artists professional?`,

@@ -20,6 +20,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import sharp from "sharp";
 import { STATION_FAQS, STATION_RATE_HIGH, STATION_RATE_LOW } from "../src/data/stationRentals";
+import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta } from "../src/data/seasons";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -323,7 +324,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/station-rentals",
     title: "Carnival Station Rental for Makeup Artists | Glam Hub",
     description:
-      "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day in Trinidad, Jamaica, Miami, Barbados, Grenada and Saint Lucia.",
+      "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.",
     ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
   },
   {
@@ -495,6 +496,20 @@ const DEST_CRUMB: Record<string, string> = {
   "/epic-cruise": "Epic Cruise — Trinidad Carnival",
   "/trinidad-carnival-2027": "Trinidad Carnival 2027",
 };
+
+// A territory whose season has passed keeps its page, its indexing and
+// its prerendered head, but the head stops selling a Carnival that is
+// over. Title and description are rewritten from the season calendar in
+// src/data/seasons.ts, exactly as the runtime page does, so crawler and
+// human see the same thing. Nothing here is hardcoded per slug.
+for (const route of destinationRoutes) {
+  const slug = route.path.replace(/^\//, "");
+  if (!hasSeasonPassed(slug)) continue;
+  const eventName = DEST_CRUMB[route.path] ?? route.title;
+  const meta = seasonAwareMeta(slug, eventName, route.title, route.description);
+  route.title = meta.title;
+  route.description = meta.description;
+}
 
 // ---------- Answer-page metadata (Task 1) ----------
 type AnswerMeta = {

@@ -21,11 +21,11 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "How early should I book?",
-    a: "Book the moment your costume is collected. Slots typically sell out two to three months before the parade in Trinidad, Jamaica, Barbados, Grenada and Antigua. Late bookings, if available, are charged at a premium.",
+    a: "Book the moment your costume is collected. Slots typically sell out two to three months before the parade in our busiest territories, Trinidad, Jamaica and Miami. Late bookings, if available, are charged at a premium.",
   },
   {
     q: "Do you travel internationally?",
-    a: "Carnival Glam Hub operates on the ground in Trinidad, Jamaica and Miami as Full Service Glam Hubs, and in Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta as Glam Hub Lite. You travel to the territory; we run the morning.",
+    a: "Carnival Glam Hub operates on the ground in Trinidad, Jamaica and Miami as Full Service Glam Hubs, and in Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta as Glam Hub Lite. You travel to the territory; we run the morning. Each territory is only bookable while its Carnival is still ahead of us. Once a season has passed, that territory closes until the next season's dates are confirmed.",
   },
   {
     q: "Why does Carnival makeup need to be sweat-resistant?",
