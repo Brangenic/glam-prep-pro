@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import RelatedLinks from "@/components/RelatedLinks";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Accordion,
   AccordionContent,
@@ -37,6 +39,10 @@ const PAGE_DESCRIPTION =
 const CANONICAL = "https://www.carnivalglamhub.com/station-rentals";
 const HERO_IMAGE = "/images/services/makeup-hero.jpg";
 
+/** Real Carnival Glam Hub footage from Trinidad. Wide cut and vertical short. */
+const HUB_VIDEO_WIDE = "HWFyXB1tyIU";
+const HUB_VIDEO_VERTICAL = "dK5HLseeWYw";
+
 const DAYS_OPTIONS = ["One day", "Both days", "Not sure yet"];
 
 const STEPS = [
@@ -59,6 +65,8 @@ const STEPS = [
 ];
 
 const StationRentals = () => {
+  const isMobile = useIsMobile();
+
   useEffect(() => {
     const previousTitle = document.title;
     document.title = PAGE_TITLE;
