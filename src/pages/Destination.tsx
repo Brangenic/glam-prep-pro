@@ -17,7 +17,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE } from "@/data/hubTiers";
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
