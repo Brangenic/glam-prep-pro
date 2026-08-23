@@ -21,6 +21,13 @@ import { resolve, join } from "path";
 import sharp from "sharp";
 import { STATION_FAQS, STATION_RATE_HIGH, STATION_RATE_LOW } from "../src/data/stationRentals";
 import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta } from "../src/data/seasons";
+import {
+  MIAMI_VENUE_NAME,
+  MIAMI_VENUE_FAQ,
+  MIAMI_TRAVEL_WARNING,
+  MIAMI_VENUE_NOTE,
+  MIAMI_VENUE_DISTANCES,
+} from "../src/data/hubTiers";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -645,6 +652,27 @@ function buildJsonLd(route: RouteMeta): object[] {
       provider: PROVIDER,
       areaServed: DEST_AREA[route.path],
     });
+    // Miami Carnival has moved to Broward County. The announced venue and
+    // the no-shuttle warning ship in the crawler-visible head.
+    if (route.path === "/miami") {
+      blocks.push({
+        "@context": "https://schema.org",
+        "@type": "Place",
+        name: MIAMI_VENUE_NAME,
+        alternateName: "Fort Lauderdale cricket stadium",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "3700 NW 11th Place",
+          addressLocality: "Lauderhill",
+          addressRegion: "FL",
+          postalCode: "33311",
+          addressCountry: "US",
+        },
+      });
+      blocks.push(
+        faqPage([{ q: MIAMI_VENUE_FAQ.question, a: MIAMI_VENUE_FAQ.answer }]),
+      );
+    }
   } else if (ANSWER_META[route.path]) {
     const a = ANSWER_META[route.path];
     blocks.push({
