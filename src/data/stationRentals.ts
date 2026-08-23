@@ -195,3 +195,47 @@ export const STATION_SERVICE_TYPES = [
   "Lash techs",
   "Photographers",
 ];
+
+/**
+ * Page FAQ. Shared by the React page, the prerendered head (FAQPage
+ * JSON-LD) and the prerendered static body, so the three can never drift.
+ * Rates here come from RATES above and must match it.
+ */
+export const STATION_FAQS: { q: string; a: string }[] = [
+  {
+    q: "How much does a Carnival station rental cost?",
+    a: "A station in a Glam Hub Lite territory is US$200 per station per day. A station in a Full Service territory, meaning Trinidad, Jamaica and Miami, is US$250 per station per day or US$400 for both days. Rates are per station, per provider.",
+  },
+  {
+    q: "Which territories can I rent a station in?",
+    a: "Every Carnival Glam Hub territory, Full Service and Lite. That is Trinidad, Jamaica and Miami as Full Service hubs, and Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta as Glam Hub Lite.",
+  },
+  {
+    q: "What is provided with a station?",
+    a: "Your own station with a table and chair inside the air-conditioned beauty lounge, reception and check-in for your clients, a changing room, wing and bag check while your clients are with us space permitting, and the refreshments that territory runs. Full Service hubs add breakfast and refreshments, alcohol, a seamstress on site, getting-dressed assistance available to your clients, and a shuttle in Jamaica and Trinidad.",
+  },
+  {
+    q: "Do I bring my own products and tools?",
+    a: "Yes. You bring your full kit, your products, your tools and anything else your service needs. The station is a table and a chair in our lounge. We do not supply product, equipment or consumables.",
+  },
+  {
+    q: "Can I bring an assistant?",
+    a: "Tell us at enquiry. Space on Carnival morning is finite and every station is allocated, so an assistant has to be agreed in advance rather than assumed on the day.",
+  },
+  {
+    q: "How do my clients find me at the hub?",
+    a: "Our reception checks your clients in and directs them to your station, so you are not managing the door while you are in the chair. You bring your own bookings and keep your own client relationships.",
+  },
+  {
+    q: "When do I need to book a station?",
+    a: "As early as you can. Station numbers are capped by the floor space of each venue and Carnival morning sells out well ahead of the season, so popular territories close first.",
+  },
+  {
+    q: "What happens if I need two days?",
+    a: "In Trinidad, Jamaica and Miami the both-days rate is US$400 per station. In Glam Hub Lite territories there is no fixed both-days rate, so multi-day is confirmed on enquiry.",
+  },
+  {
+    q: "Do you take a cut of what I charge my clients?",
+    a: "No. You pay the station rate and keep what you charge. We provide the location, the lounge, reception and the hub's amenities.",
+  },
+];
