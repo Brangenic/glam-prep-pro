@@ -3,7 +3,7 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // not used as the hero of any other destination. Swap this for real
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
-import { getHubTier, getHubInclusions, TIER_LABEL } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_DISTANCES, MIAMI_VENUE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear } from "@/data/seasons";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
