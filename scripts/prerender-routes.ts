@@ -19,6 +19,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import sharp from "sharp";
+import { STATION_FAQS, STATION_RATE_HIGH, STATION_RATE_LOW } from "../src/data/stationRentals";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -76,6 +77,7 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/blogs": "/images/services/photoshoot-hero.jpg",
   "/amazon-store": "/images/services/makeup-hero.jpg",
   "/booking-calculator": "/images/services/makeup-hero.jpg",
+  "/station-rentals": "/images/services/makeup-hero.jpg",
   "/best-carnival-makeup-trinidad":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
   "/best-carnival-makeup-jamaica":
@@ -316,6 +318,13 @@ const staticRoutes: RouteMeta[] = [
     title: "Carnival Glam Quote Calculator | Carnival Glam Hub",
     description:
       "Get a personalised Carnival morning quote in three steps. Real Carnival Glam Hub pricing for makeup, hair, photoshoot and Carnival morning access, by territory.",
+  },
+  {
+    path: "/station-rentals",
+    title: "Carnival Station Rental for Makeup Artists | Glam Hub",
+    description:
+      "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day in Trinidad, Jamaica, Miami, Barbados, Grenada and Saint Lucia.",
+    ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
   },
   {
     path: "/blogs",
@@ -583,6 +592,7 @@ function buildJsonLd(route: RouteMeta): object[] {
       "/reviews": "Reviews",
       "/amazon-store": "Amazon Storefront",
       "/booking-calculator": "Quote Calculator",
+      "/station-rentals": "Station Rentals",
       "/blogs": "Journal",
     };
     blocks.push(homeCrumb(NAME[route.path] ?? route.title, route.path));
@@ -642,6 +652,33 @@ function buildJsonLd(route: RouteMeta): object[] {
       },
     });
     blocks.push(faqPage(a.faqs));
+  }
+
+  // 2b) Station rentals: B2B Service + AggregateOffer + FAQPage.
+  if (route.path === "/station-rentals") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: "Carnival Glam Hub Station Rental",
+      url,
+      description: route.description,
+      provider: PROVIDER,
+      areaServed: CARIBBEAN_AREAS,
+      audience: {
+        "@type": "BusinessAudience",
+        name: "Independent Carnival service providers: makeup artists, hair stylists, braiders, barbers, body-art and gem artists, lash techs and photographers",
+      },
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "USD",
+        lowPrice: String(STATION_RATE_LOW),
+        highPrice: String(STATION_RATE_HIGH),
+        offerCount: "3",
+        availability: "https://schema.org/InStock",
+        url,
+      },
+    });
+    blocks.push(faqPage(STATION_FAQS.map((f) => ({ q: f.q, a: f.a }))));
   }
 
   // 3) Trinidad 2027 gets its real Event + reviewed-business schemas in

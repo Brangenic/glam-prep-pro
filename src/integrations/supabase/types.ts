@@ -271,6 +271,48 @@ export type Database = {
         }
         Relationships: []
       }
+      station_rental_enquiries: {
+        Row: {
+          business_name: string | null
+          created_at: string
+          days_needed: string
+          email: string
+          full_name: string
+          id: string
+          instagram: string | null
+          message: string | null
+          service_type: string
+          territory: string
+          whatsapp: string
+        }
+        Insert: {
+          business_name?: string | null
+          created_at?: string
+          days_needed: string
+          email: string
+          full_name: string
+          id?: string
+          instagram?: string | null
+          message?: string | null
+          service_type: string
+          territory: string
+          whatsapp: string
+        }
+        Update: {
+          business_name?: string | null
+          created_at?: string
+          days_needed?: string
+          email?: string
+          full_name?: string
+          id?: string
+          instagram?: string | null
+          message?: string | null
+          service_type?: string
+          territory?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       sync_state: {
         Row: {
           last_synced_at: string | null
