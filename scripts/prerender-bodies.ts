@@ -46,6 +46,7 @@ import {
   formatStationRate,
   getStationInclusions,
 } from "../src/data/stationRentals";
+import { hasSeasonPassed, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
@@ -344,11 +345,24 @@ function destinationBody(d: ParsedDest): string {
       `<h2>What is included at this hub${tier ? ` (${TIER_LABEL[tier]})` : ""}</h2>\n<ul>${inc}</ul>`,
     );
   }
-  parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
-  parts.push(
-    `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
-  );
-  parts.push(CTA);
+  // A passed season keeps the page and its rankings, but the static body
+  // must not offer a booking link for a Carnival that is over.
+  if (hasSeasonPassed(d.slug)) {
+    const year = passedSeasonYear(d.slug);
+    parts.push(`<h2>${escapeHtml(d.name)} ${year} has wrapped</h2>`);
+    parts.push(
+      `<p>The ${year} season has finished, so bookings are closed for this territory. You can see the looks our artists created on the road in the <a href="${GALLERY_HREF}">gallery</a>, and follow Carnival Glam Hub for next season's dates.</p>`,
+    );
+    parts.push(
+      `<p><a href="${GALLERY_HREF}">See the ${year} looks</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`,
+    );
+  } else {
+    parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
+    parts.push(
+      `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
+    );
+    parts.push(CTA);
+  }
   parts.push(destinationRelated(d.slug));
   return parts.join("\n");
 }
@@ -357,7 +371,7 @@ function destinationBody(d: ParsedDest): string {
 const SERVICES: Record<string, Content> = {
   "/services/carnival-makeup": {
     title: "Sweat-Resistant Carnival Makeup",
-    body: `<p>Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ masqueraders since 2017.</p>
+    body: `<p>Sweat-resistant Carnival makeup that holds through the road. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami. Trusted by 15,000+ masqueraders since 2017.</p>
 <h2>What's included in your Carnival makeup</h2>
 <p>Skin prep and priming, full base with sweat-resistant foundation and concealer, contour and highlight, eye look with adhesive lash or strip lash, brow shaping, lip finish, and a final setting layer designed to hold through the parade. Each session runs around 90 minutes per masquerader and is delivered inside the air-conditioned Carnival Glam Hub lounge.</p>
 <h2>How much does Carnival makeup cost?</h2>
@@ -370,7 +384,7 @@ ${CTA}`,
   },
   "/services/carnival-hair": {
     title: "Carnival Hair & Hairstyles",
-    body: `<p>Carnival hair and hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua.</p>
+    body: `<p>Carnival hair and hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami.</p>
 <h2>Headpiece-ready installs</h2>
 <p>Every style is anchored so your headpiece sits secure from the truck to the last lap. Slick-back ponies with lay-down edges, sculpted buns, braided crowns and sew-in installs with a Carnival-safe finish.</p>
 <h2>Curls, braids and updos</h2>
@@ -379,7 +393,7 @@ ${CTA}`,
   },
   "/services/carnival-photoshoot": {
     title: "Carnival Photoshoot",
-    body: `<p>Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua.</p>
+    body: `<p>Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami.</p>
 <h2>In-lounge and outdoor sets</h2>
 <p>Editorial-lit portraits inside the air-conditioned lounge, plus outdoor sets on carnival morning — Savannah light, the Hilton grounds, or a curated backdrop matched to your costume.</p>
 <h2>Fast turnaround, private gallery</h2>
@@ -450,7 +464,7 @@ ${CTA}`,
     title: "Carnival Glam Hub FAQ",
     body: `<p>Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.</p>
 <h2>How do I book Carnival Glam Hub?</h2>
-<p>Select your destination and choose your glam package at carnivalglamhub.masos.app/events. You'll receive confirmation after booking.</p>
+<p>Select your destination and choose your glam package at carnivalglamhub.masos.app/events. You'll receive confirmation after booking. Only territories whose Carnival is still ahead of us are bookable. Once a season has passed, that territory closes until next season's dates are confirmed.</p>
 <h2>How far in advance should I book carnival makeup?</h2>
 <p>Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time — at least 4–6 weeks ahead for peak weekends.</p>
 <h2>What is included in a Carnival Glam Hub appointment?</h2>

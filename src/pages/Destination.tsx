@@ -21,6 +21,13 @@ import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
+import {
+  GALLERY_CTA,
+  GALLERY_HREF,
+  hasSeasonPassed,
+  passedSeasonYear,
+  seasonAwareMeta,
+} from "@/data/seasons";
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 
 const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
@@ -55,10 +62,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   };
   const seo = dest ? seoOverrides[dest.slug] : undefined;
 
+  const seasonPassed = hasSeasonPassed(slug);
+  const seasonMeta = dest
+    ? seasonAwareMeta(dest.slug, dest.name, dest.metaTitle, dest.metaDescription)
+    : { title: "", description: "" };
+
   useEffect(() => {
     if (!dest) return;
     const prevTitle = document.title;
-    document.title = dest.metaTitle;
+    document.title = seasonMeta.title;
 
     const setMeta = (name: string, content: string) => {
       let el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
@@ -69,7 +81,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       }
       el.setAttribute("content", content);
     };
-    setMeta("description", dest.metaDescription);
+    setMeta("description", seasonMeta.description);
 
     if (seo) {
       const setProp = (property: string, content: string) => {
@@ -83,13 +95,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         }
         el.setAttribute("content", content);
       };
-      const ogTitle = seo.year
-        ? `${seo.event} Makeup ${seo.year} | Carnival Glam Hub`
-        : `${seo.event} Makeup, Hair & Photoshoots | Carnival Glam Hub`;
+      const ogTitle = seasonPassed
+        ? seasonMeta.title
+        : seo.year
+          ? `${seo.event} Makeup ${seo.year} | Carnival Glam Hub`
+          : `${seo.event} Makeup, Hair & Photoshoots | Carnival Glam Hub`;
       setProp("og:title", ogTitle);
-      setProp("og:description", dest.metaDescription);
+      setProp("og:description", seasonMeta.description);
       setMeta("twitter:title", ogTitle);
-      setMeta("twitter:description", dest.metaDescription);
+      setMeta("twitter:description", seasonMeta.description);
     }
 
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
@@ -129,7 +143,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       document.title = prevTitle;
       document.getElementById("destination-faq-jsonld")?.remove();
     };
-  }, [dest, faqs, bookingUrl]);
+  }, [dest, faqs, bookingUrl, seasonPassed, seasonMeta.title, seasonMeta.description]);
 
   if (!dest) return <Navigate to="/#destinations" replace />;
 
@@ -157,6 +171,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const packagesData = getDestinationPackages(dest.slug);
   const seasonEnded = dest.slug === "jamaica";
   const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
+  // A passed territory sells nothing. Every booking call to action on the
+  // page becomes a Gallery link, derived from the season calendar.
+  const ctaHref = seasonPassed ? GALLERY_HREF : seasonEnded ? waitlistHref : bookingUrl;
+  const ctaLabel = seasonPassed
+    ? GALLERY_CTA
+    : seasonEnded
+      ? "Join 2027 Waitlist"
+      : "Book Your Glam";
+  const ctaExternal = !seasonPassed && !seasonEnded;
 
   return (
     <div className="min-h-screen bg-background">
@@ -173,7 +196,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
           <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full flex flex-col justify-end pb-10 sm:pb-16">
-            {dest.upcoming && (
+            {seasonPassed && (
+              <span className="inline-block w-fit bg-white/90 text-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full mb-3">
+                {passedSeasonYear(dest.slug)} season wrapped
+              </span>
+            )}
+            {dest.upcoming && !seasonPassed && (
               <span className="inline-block w-fit bg-secondary/90 text-secondary-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full mb-3">
                 Coming Soon
               </span>
@@ -288,6 +316,41 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </section>
         )}
 
+        {/* Season wrapped banner — any territory whose date has passed */}
+        {seasonPassed && (
+          <section
+            aria-label={`${dest.name} ${passedSeasonYear(dest.slug)} season ended`}
+            className="border-y border-border bg-card/60"
+          >
+            <div className="container mx-auto px-4 sm:px-6 max-w-4xl py-8 sm:py-10 text-center">
+              <span className="inline-block bg-foreground/85 text-background font-body text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 rounded-full mb-4">
+                Season wrapped
+              </span>
+              <p className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug mb-3">
+                {dest.name} {passedSeasonYear(dest.slug)} has wrapped. Bookings are closed for this season.
+              </p>
+              <p className="font-body text-sm sm:text-base text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Have a look at what our artists created on the road, and follow
+                us for {dest.shortName} next season.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  href={GALLERY_HREF}
+                  className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                >
+                  {GALLERY_CTA}
+                </a>
+                <Link
+                  to="/#destinations"
+                  className="inline-block rounded-full border border-border bg-background px-7 py-3.5 font-body text-sm font-semibold hover:border-primary/60 hover:text-primary transition-colors"
+                >
+                  See the seasons still open
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Packages */}
         {packagesData && !seasonEnded && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
@@ -296,7 +359,11 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 {packagesData.eventDate}
               </p>
               <h2 id="packages-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-12 text-center">
-                {seo ? (
+                {seasonPassed ? (
+                  <span className="text-gradient-primary italic">
+                    {passedSeasonYear(dest.slug)} packages, past season
+                  </span>
+                ) : seo ? (
                   <span className="text-gradient-primary italic">
                     {seo.event} makeup prices and packages
                   </span>
@@ -313,12 +380,18 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                     </h3>
                   )}
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-                    {section.packages.map((pkg) => (
-                      <a
+                    {section.packages.map((pkg) => {
+                      const CardTag = seasonPassed ? "div" : "a";
+                      return (
+                      <CardTag
                         key={pkg.name}
-                        href={packagesData.bookingUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        {...(seasonPassed
+                          ? {}
+                          : {
+                              href: packagesData.bookingUrl,
+                              target: "_blank",
+                              rel: "noopener noreferrer",
+                            })}
                         className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all"
                       >
                         <div className="h-[200px] overflow-hidden bg-muted">
@@ -336,25 +409,47 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                           <p className="font-body text-lg sm:text-xl font-bold text-primary mb-3">
                             {pkg.price}
                           </p>
-                          <span className="mt-auto inline-block text-center bg-primary text-primary-foreground font-body font-semibold text-xs uppercase tracking-wide px-4 py-2 rounded-full group-hover:shadow-lg group-hover:shadow-primary/30 transition-all">
-                            Book Now
-                          </span>
+                          {seasonPassed ? (
+                            <span className="mt-auto inline-block text-center border border-border text-muted-foreground font-body font-semibold text-xs uppercase tracking-wide px-4 py-2 rounded-full">
+                              Past season
+                            </span>
+                          ) : (
+                            <span className="mt-auto inline-block text-center bg-primary text-primary-foreground font-body font-semibold text-xs uppercase tracking-wide px-4 py-2 rounded-full group-hover:shadow-lg group-hover:shadow-primary/30 transition-all">
+                              Book Now
+                            </span>
+                          )}
                         </div>
-                      </a>
-                    ))}
+                      </CardTag>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
 
               <div className="text-center mt-12">
-                <a
-                  href={packagesData.bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-8 py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
-                >
-                  Book Your Glam
-                </a>
+                {seasonPassed ? (
+                  <>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      These were the {passedSeasonYear(dest.slug)} packages. They
+                      are shown for reference only and are not bookable.
+                    </p>
+                    <a
+                      href={GALLERY_HREF}
+                      className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-8 py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
+                    >
+                      {GALLERY_CTA}
+                    </a>
+                  </>
+                ) : (
+                  <a
+                    href={packagesData.bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-8 py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
+                  >
+                    Book Your Glam
+                  </a>
+                )}
               </div>
             </div>
           </section>
@@ -445,12 +540,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 )}
 
                 <a
-                  href={seasonEnded ? waitlistHref : bookingUrl}
-                  target={seasonEnded ? undefined : "_blank"}
-                  rel={seasonEnded ? undefined : "noopener noreferrer"}
+                  href={ctaHref}
+                  target={ctaExternal ? "_blank" : undefined}
+                  rel={ctaExternal ? "noopener noreferrer" : undefined}
                   className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                 >
-                  {seasonEnded ? "Join 2027 Waitlist" : "Book Your Glam"}
+                  {ctaLabel}
                 </a>
               </div>
 
@@ -460,7 +555,24 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 </p>
                 <p className="font-display text-xl font-bold mb-6">{dest.date}</p>
 
-                {seasonEnded ? (
+                {seasonPassed ? (
+                  <>
+                    <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
+                      Season wrapped
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground mb-4">
+                      {dest.name} {passedSeasonYear(dest.slug)} is over and
+                      bookings are closed. See the looks from the road in our
+                      Gallery.
+                    </p>
+                    <a
+                      href={GALLERY_HREF}
+                      className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                    >
+                      {GALLERY_CTA}
+                    </a>
+                  </>
+                ) : seasonEnded ? (
                   <>
                     <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
                       Season Ended
@@ -541,12 +653,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
             <div className="text-center mt-10">
               <a
-                href={seasonEnded ? waitlistHref : bookingUrl}
-                target={seasonEnded ? undefined : "_blank"}
-                rel={seasonEnded ? undefined : "noopener noreferrer"}
+                href={ctaHref}
+                target={ctaExternal ? "_blank" : undefined}
+                rel={ctaExternal ? "noopener noreferrer" : undefined}
                 className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
               >
-                {seasonEnded ? "Join 2027 Waitlist" : "Book Your Glam"}
+                {ctaLabel}
               </a>
             </div>
           </div>
@@ -590,6 +702,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <TrinidadGuidesBlock />
           </div>
         )}
+        {!seasonPassed && (
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-6 text-center">
           <p className="font-body text-sm text-muted-foreground">
             Are you a makeup artist, stylist, barber or photographer working{" "}
@@ -600,6 +713,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             .
           </p>
         </div>
+        )}
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-12 sm:pb-20">
           <RelatedLinks />
         </div>

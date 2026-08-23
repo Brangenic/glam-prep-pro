@@ -27,6 +27,7 @@ import {
   type QuoteProduct,
   type ServiceTag,
 } from "@/data/territoryPricing";
+import { hasSeasonPassed } from "@/data/seasons";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
@@ -67,6 +68,13 @@ const sameTags = (p: QuoteProduct, tags: ServiceTag[]) =>
   p.tags.length === tags.length && tags.every((t) => p.tags.includes(t));
 
 const hasAll = (p: QuoteProduct, tags: ServiceTag[]) => tags.every((t) => p.tags.includes(t));
+
+/**
+ * Only territories whose Carnival is still ahead of us can be quoted.
+ * Derived from the season calendar, so a passed Carnival drops out of
+ * the calculator on its own.
+ */
+const BOOKABLE_TERRITORIES = TERRITORY_PRICING.filter((t) => !hasSeasonPassed(t.slug));
 
 /** Real products that satisfy a given intent, for a territory and day. */
 function productsForIntent(products: QuoteProduct[], intent: IntentKey): QuoteProduct[] {
@@ -364,7 +372,7 @@ const BookingCalculator = () => {
                       <SelectValue placeholder="Choose your Carnival" />
                     </SelectTrigger>
                     <SelectContent>
-                      {TERRITORY_PRICING.map((t) => (
+                      {BOOKABLE_TERRITORIES.map((t) => (
                         <SelectItem key={t.slug} value={t.slug}>{t.label}</SelectItem>
                       ))}
                     </SelectContent>

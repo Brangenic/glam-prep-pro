@@ -14,6 +14,7 @@
  *   Full Service:      US$250 per station per day, US$400 for both days.
  */
 
+import { hasSeasonPassed } from "./seasons";
 import {
   FULL_SERVICE_SLUGS,
   LITE_SLUGS,
@@ -111,16 +112,47 @@ function build(slug: string): StationTerritory {
   };
 }
 
+/**
+ * A station cannot be rented at a Carnival that has already happened, so
+ * the rate card and the enquiry form only ever list territories whose
+ * season is still ahead of us. The tier rates above are untouched and
+ * come straight back the moment a new season date is set.
+ */
+const bookable = (slug: string) => !hasSeasonPassed(slug);
+
 export const FULL_SERVICE_STATION_TERRITORIES: StationTerritory[] = [
   ...FULL_SERVICE_SLUGS,
-].map(build);
+]
+  .filter(bookable)
+  .map(build);
 
-export const LITE_STATION_TERRITORIES: StationTerritory[] = [...LITE_SLUGS].map(build);
+export const LITE_STATION_TERRITORIES: StationTerritory[] = [...LITE_SLUGS]
+  .filter(bookable)
+  .map(build);
 
 export const STATION_TERRITORIES: StationTerritory[] = [
   ...FULL_SERVICE_STATION_TERRITORIES,
   ...LITE_STATION_TERRITORIES,
 ];
+
+/** Territories whose season has passed. Listed as closed, never sold. */
+export const CLOSED_STATION_TERRITORIES: StationTerritory[] = [
+  ...FULL_SERVICE_SLUGS,
+  ...LITE_SLUGS,
+]
+  .filter((slug) => !bookable(slug))
+  .map(build);
+
+/** Comma separated names, used in copy and FAQ answers. */
+function names(list: StationTerritory[]): string {
+  const n = list.map((t) => t.name);
+  if (n.length <= 1) return n[0] ?? "";
+  return `${n.slice(0, -1).join(", ")} and ${n[n.length - 1]}`;
+}
+
+export const BOOKABLE_FULL_NAMES = names(FULL_SERVICE_STATION_TERRITORIES);
+export const BOOKABLE_LITE_NAMES = names(LITE_STATION_TERRITORIES);
+export const CLOSED_STATION_NAMES = names(CLOSED_STATION_TERRITORIES);
 
 /**
  * What the station itself is. Confirmed kit only: a table and a chair.
@@ -204,11 +236,11 @@ export const STATION_SERVICE_TYPES = [
 export const STATION_FAQS: { q: string; a: string }[] = [
   {
     q: "How much does a Carnival station rental cost?",
-    a: "A station in a Glam Hub Lite territory is US$200 per station per day. A station in a Full Service territory, meaning Trinidad, Jamaica and Miami, is US$250 per station per day or US$400 for both days. Rates are per station, per provider.",
+    a: `A station in a Glam Hub Lite territory is US$${RATES.lite.perDay} per station per day. A station in a Full Service territory, meaning Trinidad, Jamaica and Miami, is US$${RATES.full.perDay} per station per day or US$${RATES.full.bothDays} for both days. Rates are per station, per provider.`,
   },
   {
     q: "Which territories can I rent a station in?",
-    a: "Every Carnival Glam Hub territory, Full Service and Lite. That is Trinidad, Jamaica and Miami as Full Service hubs, and Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta as Glam Hub Lite.",
+    a: `Every Carnival Glam Hub territory with a season still to come, Full Service and Lite. Right now that is ${BOOKABLE_FULL_NAMES} as Full Service hubs${BOOKABLE_LITE_NAMES ? `, and ${BOOKABLE_LITE_NAMES} as Glam Hub Lite` : ""}.${CLOSED_STATION_NAMES ? ` ${CLOSED_STATION_NAMES} have finished for this season and return with next season's dates.` : ""}`,
   },
   {
     q: "What is provided with a station?",

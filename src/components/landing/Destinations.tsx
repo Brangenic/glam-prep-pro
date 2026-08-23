@@ -3,6 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
 import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
 import { BOOKING_URL } from "@/lib/constants";
+import { GALLERY_CTA, GALLERY_HREF, hasSeasonPassed, passedSeasonYear } from "@/data/seasons";
 
 const Destinations = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -64,7 +65,7 @@ const Destinations = () => {
           {orderedDestinations.map((d, i) => (
             <Link
               key={d.slug}
-              to={`/destinations/${d.slug}`}
+              to={hasSeasonPassed(d.slug) ? GALLERY_HREF : `/destinations/${d.slug}`}
               onClick={() => {
                 if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
                   window.gtag("event", "destination_click", {
@@ -74,7 +75,11 @@ const Destinations = () => {
                   });
                 }
               }}
-              aria-label={`Book ${d.name} glam services`}
+              aria-label={
+                hasSeasonPassed(d.slug)
+                  ? `${d.name} ${passedSeasonYear(d.slug)} has wrapped, see the gallery`
+                  : `Book ${d.name} glam services`
+              }
               className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] block transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
@@ -90,7 +95,12 @@ const Destinations = () => {
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              {d.upcoming && (
+              {hasSeasonPassed(d.slug) && (
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/90 text-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full">
+                  {passedSeasonYear(d.slug)} wrapped
+                </div>
+              )}
+              {d.upcoming && !hasSeasonPassed(d.slug) && (
                 <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-secondary/90 text-secondary-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full">
                   Coming Soon
                 </div>
@@ -116,10 +126,12 @@ const Destinations = () => {
                   {d.name}
                 </h3>
                 <p className="font-body text-xs text-white/70 mb-4 sm:mb-5">
-                  {d.description}
+                  {hasSeasonPassed(d.slug)
+                    ? `${passedSeasonYear(d.slug)} season has wrapped. Bookings are closed.`
+                    : d.description}
                 </p>
                 <span className="inline-block bg-primary text-primary-foreground font-body font-semibold text-xs px-5 py-2.5 rounded-full group-hover:shadow-lg group-hover:shadow-primary/25 transition-all">
-                  {d.cta}
+                  {hasSeasonPassed(d.slug) ? GALLERY_CTA : d.cta}
                 </span>
               </div>
             </Link>
