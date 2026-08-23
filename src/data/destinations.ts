@@ -298,16 +298,21 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           question: `Is ${loc} a Full Service Glam Hub or a Glam Hub Lite?`,
           answer:
             tier === "full"
-              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? ". There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel" : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
+              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? `. ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_NOTE}` : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
               : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
         },
       ]
     : [];
 
+  // Miami's venue has moved to Broward County, so the venue question
+  // leads its FAQ list and its FAQPage structured data.
+  const venueFaq: Faq[] = d.slug === "miami" ? [MIAMI_VENUE_FAQ] : [];
+
   const passed = hasSeasonPassed(d.slug);
   const year = passedSeasonYear(d.slug);
 
   return [
+    ...venueFaq,
     {
       question: `Where can I book ${loc} carnival glam?`,
       answer: passed
