@@ -384,7 +384,18 @@ const StationRentals = () => {
               same tier rates.
             </p>
           )}
+          <div className="rounded-2xl border border-border bg-card/50 p-6 sm:p-7 mt-8">
+            <h3 className="font-display text-lg font-bold mb-2">Optional extras and payment</h3>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed mb-2">
+              {HIGH_CHAIR_RATE_LABEL}, charged per day like the station.
+            </p>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed">
+              {STATION_PAYMENT_NOTE}
+            </p>
+          </div>
         </section>
+
+
 
         {/* How it works */}
         <section className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16">
