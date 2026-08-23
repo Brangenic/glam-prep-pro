@@ -590,6 +590,16 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             <TrinidadGuidesBlock />
           </div>
         )}
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-6 text-center">
+          <p className="font-body text-sm text-muted-foreground">
+            Are you a makeup artist, stylist, barber or photographer working{" "}
+            {dest.shortName} Carnival?{" "}
+            <a href="/station-rentals" className="text-primary hover:underline">
+              Rent a station inside our Glam Hub
+            </a>
+            .
+          </p>
+        </div>
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-12 sm:pb-20">
           <RelatedLinks />
         </div>
