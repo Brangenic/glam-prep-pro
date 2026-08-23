@@ -155,17 +155,52 @@ export const BOOKABLE_LITE_NAMES = names(LITE_STATION_TERRITORIES);
 export const CLOSED_STATION_NAMES = names(CLOSED_STATION_TERRITORIES);
 
 /**
- * What the station itself is. Confirmed kit only: a table and a chair.
- * Never add mirrors, ring lights, power outlets, product, assistants or
- * Wi-Fi to this list.
+ * The station spec, exactly as confirmed by Kibwe. Identical at both
+ * tiers. Never add anything that is not on these lists.
+ */
+export const STATION_PROVIDED = [
+  "6ft truss table",
+  "Table cloth",
+  "Access to a plug",
+  "2 regular chairs",
+];
+
+export const STATION_BRING = [
+  "High chair",
+  "Ring light",
+  "Extension cord and multiplug. Everyone must carry their own, no exceptions.",
+];
+
+/** Optional extra, charged per day like the station itself. */
+export const HIGH_CHAIR_RATE_PER_DAY = 25;
+export const HIGH_CHAIR_RATE_LABEL = `High chair rental at US$${HIGH_CHAIR_RATE_PER_DAY} per day`;
+
+/**
+ * Accepted payment methods. Details are sent when the station is
+ * confirmed. Never publish a handle, address or link.
+ */
+export const STATION_PAYMENT_METHODS = ["Zelle", "PayPal", "Secure online Stripe link"];
+export const STATION_PAYMENT_NOTE =
+  "We accept Zelle, PayPal or a secure online Stripe link. Payment details are sent to you when your station is confirmed.";
+
+/**
+ * What the station itself is, plus the room around it.
  */
 export const STATION_BASE = [
-  "Your own station with a table and chair",
+  "Your own station with a 6ft truss table, table cloth, access to a plug and 2 regular chairs",
   "Air-conditioned beauty lounge",
   "Reception and check-in for your clients",
   "Changing room",
   "Wing and bag check while your clients are with us, space permitting",
 ];
+
+/**
+ * The pitch: a renter's clients are treated exactly like our own
+ * masqueraders in that territory.
+ */
+export const CLIENT_AMENITIES_NOTE =
+  "Your clients get access to all the hotel and location amenities available to Glam Hub masqueraders in that territory. They are treated exactly like our own.";
+
 
 /**
  * Everything the hub already is, per territory, derived from the tier
