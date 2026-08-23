@@ -40,8 +40,13 @@ import { getHubInclusions, getHubTier, TIER_LABEL } from "../src/data/hubTiers";
 import {
   FULL_SERVICE_STATION_TERRITORIES,
   LITE_STATION_TERRITORIES,
+  STATION_BRING,
   STATION_FAQS,
+  STATION_PAYMENT_NOTE,
+  STATION_PROVIDED,
   STATION_SERVICE_TYPES,
+  HIGH_CHAIR_RATE_LABEL,
+  CLIENT_AMENITIES_NOTE,
   STATION_TERRITORY_NOTES,
   formatStationRate,
   getStationInclusions,
@@ -526,8 +531,19 @@ function stationRentalsBody(): string {
   return `<p>Rent a station inside a Carnival Glam Hub for Carnival morning. You bring your kit and your clients. We bring the location, the air-conditioned lounge, reception and the crowd. Stations are available in every Glam Hub territory, Full Service and Glam Hub Lite.</p>
 <h2>Who station rental is for</h2>
 <ul>${STATION_SERVICE_TYPES.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul>
-<h2>What a station includes</h2>
-<p>The station itself is a table and a chair. Everything around it is the hub. Providers bring their own products, tools and consumables.</p>
+<h2>What a station actually is</h2>
+<p>The station spec is identical in every territory, Full Service and Glam Hub Lite alike. Providers bring their own products, tools and consumables.</p>
+<h3>Provided with every station</h3>
+<ul>${STATION_PROVIDED.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul>
+<h3>You bring your own</h3>
+<ul>${STATION_BRING.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul>
+<p><strong>Everyone must carry their own extension cord and multiplug, no exceptions.</strong></p>
+<h3>Optional extra</h3>
+<ul><li>${escapeHtml(HIGH_CHAIR_RATE_LABEL)}, charged per day like the station itself</li></ul>
+<h2>See inside a Glam Hub</h2>
+<p>Video filmed inside our Trinidad hub on Carnival morning: <a href="https://www.youtube.com/watch?v=HWFyXB1tyIU" rel="noopener">Inside a Carnival Glam Hub in Trinidad</a>.</p>
+<h2>Glam Hub Lite versus Full Service</h2>
+<p>The station spec is the same at both tiers. What differs is the hub around it. ${escapeHtml(CLIENT_AMENITIES_NOTE)}</p>
 <h3>Full Service Glam Hub (Trinidad, Jamaica, Miami)</h3>
 <ul>${incl("trinidad")}</ul>
 <p>The shuttle runs in Jamaica and Trinidad. Trinidad and Jamaica also run bronzing, a barber and reels. ${escapeHtml(STATION_TERRITORY_NOTES.miami)}</p>
@@ -543,6 +559,7 @@ function stationRentalsBody(): string {
   <li>Enquire with your service, your territory and the days you want.</li>
   <li>We confirm your territory, your dates and remaining station availability.</li>
   <li>You pay the station rate and are allocated a station in the lounge.</li>
+  <li>${escapeHtml(STATION_PAYMENT_NOTE)}</li>
   <li>You show up with your kit and your clients, and work.</li>
 </ol>
 <h2>Why a Glam Hub station beats setting up alone</h2>
