@@ -197,9 +197,9 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/miami",
     title:
-      "Miami Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+      "Miami Carnival Makeup 2026 | Broward Venue | Glam Hub",
     description:
-      "Book Miami Carnival 2026 makeup, hair, photoshoot at our Full Service Glam Hub. No shuttle in Miami this season. Trusted by 15,000+ masqueraders since 2017.",
+      "Miami Carnival 2026 has moved to Broward: Central Broward Park, Lauderhill. No shuttle this season, so plan your ride. Book makeup, hair and photoshoot.",
     ogImage: HERO_FALLBACK,
   },
   {
