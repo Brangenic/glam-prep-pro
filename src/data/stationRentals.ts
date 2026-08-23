@@ -279,12 +279,25 @@ export const STATION_FAQS: { q: string; a: string }[] = [
   },
   {
     q: "What is provided with a station?",
-    a: "Your own station with a table and chair inside the air-conditioned beauty lounge, reception and check-in for your clients, a changing room, wing and bag check while your clients are with us space permitting, and the refreshments that territory runs. Full Service hubs add breakfast and refreshments, alcohol, a seamstress on site, getting-dressed assistance available to your clients, and a shuttle in Jamaica and Trinidad.",
+    a: "Every station comes with a 6ft truss table, a table cloth, access to a plug and 2 regular chairs, inside the air-conditioned beauty lounge, with reception and check-in for your clients, a changing room, wing and bag check while your clients are with us space permitting, and the refreshments that territory runs. Full Service hubs add breakfast and refreshments, alcohol, a seamstress on site, getting-dressed assistance available to your clients, and a shuttle in Jamaica and Trinidad.",
   },
   {
-    q: "Do I bring my own products and tools?",
-    a: "Yes. You bring your full kit, your products, your tools and anything else your service needs. The station is a table and a chair in our lounge. We do not supply product, equipment or consumables.",
+    q: "What do I need to bring myself?",
+    a: "Your full kit, your products, your tools, a high chair, a ring light, and an extension cord and multiplug. Everyone must carry their own extension cord and multiplug, no exceptions. We do not supply product, equipment or consumables.",
   },
+  {
+    q: "Can I rent a high chair?",
+    a: `Yes. A high chair is available to rent at US$${HIGH_CHAIR_RATE_PER_DAY} per day, charged per day like the station itself. Ask for it when you enquire so we can set it aside.`,
+  },
+  {
+    q: "How do I pay for my station?",
+    a: STATION_PAYMENT_NOTE,
+  },
+  {
+    q: "Do my clients get the hub's amenities?",
+    a: `${CLIENT_AMENITIES_NOTE} The station spec is identical at both tiers. What changes between a Full Service hub and a Glam Hub Lite is the hub around the station.`,
+  },
+
   {
     q: "Can I bring an assistant?",
     a: "Tell us at enquiry. Space on Carnival morning is finite and every station is allocated, so an assistant has to be agreed in advance rather than assumed on the day.",
