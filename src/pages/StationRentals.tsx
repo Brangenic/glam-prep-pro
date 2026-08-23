@@ -138,7 +138,7 @@ const StationRentals = () => {
               alt="Artist working at a station inside the air-conditioned Carnival Glam Hub lounge"
               loading="eager"
               decoding="async"
-              className="w-full h-auto sm:rounded-2xl object-cover shadow-lg"
+              className="w-full h-[240px] sm:h-[380px] lg:h-[440px] sm:rounded-2xl object-cover object-center shadow-lg"
             />
           </figure>
         </section>
