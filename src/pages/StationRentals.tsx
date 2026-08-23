@@ -152,6 +152,31 @@ const StationRentals = () => {
           </figure>
         </section>
 
+        {/* See inside a Glam Hub */}
+        <section id="inside" className="container mx-auto px-4 sm:px-6 max-w-4xl mb-16 scroll-mt-28">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-center">
+            See inside a <span className="italic text-gradient-primary">Glam Hub</span>
+          </h2>
+          <p className="font-body text-base text-muted-foreground text-center max-w-2xl mx-auto mb-8 leading-relaxed">
+            Filmed inside our Trinidad hub on Carnival morning. This is the room
+            you would be working in.
+          </p>
+          {isMobile ? (
+            <YouTubeEmbed
+              videoId={HUB_VIDEO_VERTICAL}
+              title="Inside the Carnival Glam Hub in Trinidad, vertical tour"
+              vertical
+            />
+          ) : (
+            <YouTubeEmbed
+              videoId={HUB_VIDEO_WIDE}
+              title="Inside the Carnival Glam Hub in Trinidad, full tour"
+            />
+          )}
+        </section>
+
+
+
         {/* Who it is for */}
         <section className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-center">
