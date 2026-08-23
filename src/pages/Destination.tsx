@@ -17,7 +17,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl } from "@/lib/destinations";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES } from "@/data/hubTiers";
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
@@ -350,6 +350,42 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             </div>
           </section>
         )}
+
+        {/* Miami logistics notice — venue move and no shuttle, above packages */}
+        {dest.slug === "miami" && (
+          <section
+            aria-label="Miami Carnival 2026 venue and travel notice"
+            className="border-y border-border bg-card/60"
+          >
+            <div className="container mx-auto px-4 sm:px-6 max-w-4xl py-8 sm:py-10">
+              <span className="inline-block bg-foreground/85 text-background font-body text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 rounded-full mb-4">
+                Plan your travel
+              </span>
+              <h2 className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug mb-3">
+                Miami Carnival has moved to Broward County
+              </h2>
+              <div className="font-body text-sm sm:text-base text-muted-foreground space-y-3">
+                <p>
+                  As announced by Miami Carnival, the Parade of Bands is at{" "}
+                  <strong className="text-foreground">{MIAMI_VENUE_NAME}</strong>,{" "}
+                  {MIAMI_VENUE_ADDRESS}, sometimes listed as the{" "}
+                  {MIAMI_VENUE_ALIAS}. The city is {MIAMI_VENUE_CITY}, not Fort
+                  Lauderdale. Our Glam Hub will be near the stadium.
+                </p>
+                <p>
+                  <strong className="text-foreground">
+                    There is no shuttle this season, so plan your ride.
+                  </strong>{" "}
+                  The venue has ready Uber access, and overnight bag check is
+                  available at US$35 per masquerader.
+                </p>
+                <p>{MIAMI_VENUE_DISTANCES}</p>
+              </div>
+            </div>
+          </section>
+        )}
+
+
 
         {/* Packages */}
         {packagesData && !seasonEnded && (

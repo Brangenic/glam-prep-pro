@@ -169,6 +169,56 @@ export const BARBER_LABEL = "+ Barber";
 export const MIAMI_SHUTTLE_NOTE =
   "There is no shuttle in Miami this season. The venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel.";
 
+/* ============================================================
+ * Miami 2026 logistics. Single source of truth for the venue move
+ * to Broward County and the no-shuttle warning. Every surface, page,
+ * FAQ and prerender script reads these constants rather than
+ * repeating the text.
+ * ============================================================ */
+
+/** Venue name as announced by Miami Carnival. */
+export const MIAMI_VENUE_NAME =
+  "Central Broward Park and Broward County Stadium";
+
+/** Street address of the announced Parade of Bands venue. */
+export const MIAMI_VENUE_ADDRESS =
+  "3700 NW 11th Place, Lauderhill, Florida 33311";
+
+/** The city is Lauderhill. Never Fort Lauderdale. */
+export const MIAMI_VENUE_CITY = "Lauderhill";
+
+/**
+ * The cricket ground inside the park is often marketed as the
+ * "Fort Lauderdale cricket stadium". Mentioned once as a search aid
+ * only, because Lauderhill is the city.
+ */
+export const MIAMI_VENUE_ALIAS = "Fort Lauderdale cricket stadium";
+
+/** Verified orientation distances. No other figures may be added. */
+export const MIAMI_VENUE_DISTANCES =
+  "Lauderhill is about 6 miles from Fort Lauderdale, roughly a 12 minute drive, and about 26 miles from Miami, so Fort Lauderdale is the closer airport and the closer place to stay.";
+
+/**
+ * Miami Carnival says a new Parade and Concert venue is in the
+ * planning stages, so the venue is always worded as the currently
+ * announced location rather than a fixed promise.
+ */
+export const MIAMI_VENUE_NOTE =
+  "Miami Carnival has moved to Broward County. As announced by Miami Carnival, the Parade of Bands is at Central Broward Park and Broward County Stadium, 3700 NW 11th Place, Lauderhill, Florida 33311, sometimes listed as the Fort Lauderdale cricket stadium. Our Glam Hub will be near the stadium.";
+
+/** The planning warning, worded for a masquerader booking travel. */
+export const MIAMI_TRAVEL_WARNING =
+  "There is no shuttle this season, so plan your ride. The venue has ready Uber access. Overnight bag check is available at US$35 per masquerader.";
+
+/** One-paragraph version for crawler-visible copy and FAQs. */
+export const MIAMI_LOGISTICS_SUMMARY = `${MIAMI_VENUE_NOTE} ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_DISTANCES}`;
+
+/** Q and A used on /miami and in the Miami FAQPage structured data. */
+export const MIAMI_VENUE_FAQ = {
+  question: "Where is Miami Carnival 2026 being held?",
+  answer: `Miami Carnival has moved to Broward County. As announced by Miami Carnival, the Parade of Bands is at Central Broward Park and Broward County Stadium, 3700 NW 11th Place, Lauderhill, Florida 33311, sometimes listed as the Fort Lauderdale cricket stadium. The city is Lauderhill, not Fort Lauderdale. ${MIAMI_VENUE_DISTANCES} Our Glam Hub will be near the stadium, and there is no shuttle this season, so plan your ride. The venue has ready Uber access.`,
+};
+
 export function getHubTier(slug: string): HubTier | null {
   if ((FULL_SERVICE_SLUGS as readonly string[]).includes(slug)) return "full";
   if ((LITE_SLUGS as readonly string[]).includes(slug)) return "lite";

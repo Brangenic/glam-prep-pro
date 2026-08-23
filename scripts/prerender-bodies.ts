@@ -36,7 +36,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
-import { getHubInclusions, getHubTier, TIER_LABEL } from "../src/data/hubTiers";
+import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY } from "../src/data/hubTiers";
 import {
   FULL_SERVICE_STATION_TERRITORIES,
   LITE_STATION_TERRITORIES,
@@ -335,6 +335,12 @@ function destinationBody(d: ParsedDest): string {
   }
   if (d.longDescription) {
     parts.push(`<p>${escapeHtml(d.longDescription)}</p>`);
+  }
+  // Miami's venue has moved to Broward County and there is no shuttle,
+  // so the planning notice is crawler-visible, high in the body.
+  if (d.slug === "miami") {
+    parts.push(`<h2>Miami Carnival 2026 venue and travel notice</h2>`);
+    parts.push(`<p>${escapeHtml(MIAMI_LOGISTICS_SUMMARY)}</p>`);
   }
   if (d.highlights.length) {
     const hl = d.highlights
