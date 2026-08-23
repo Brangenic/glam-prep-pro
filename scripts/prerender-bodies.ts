@@ -37,6 +37,15 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
 import { getHubInclusions, getHubTier, TIER_LABEL } from "../src/data/hubTiers";
+import {
+  FULL_SERVICE_STATION_TERRITORIES,
+  LITE_STATION_TERRITORIES,
+  STATION_FAQS,
+  STATION_SERVICE_TYPES,
+  STATION_TERRITORY_NOTES,
+  formatStationRate,
+  getStationInclusions,
+} from "../src/data/stationRentals";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
@@ -481,8 +490,72 @@ ${CTA}`,
   // parsed Trinidad destination record — see buildRouteMap().
 };
 
+
+// Station rentals (B2B). Every rate and inclusion is derived from
+// src/data/stationRentals.ts, which derives its tier from hubTiers.ts.
+function stationRentalsBody(): string {
+  const rateRows = (list: typeof FULL_SERVICE_STATION_TERRITORIES) =>
+    list
+      .map(
+        (t) =>
+          `<li><strong>${escapeHtml(t.name)}</strong> — ${escapeHtml(formatStationRate(t.slug))}</li>`,
+      )
+      .join("");
+  const incl = (slug: string) =>
+    getStationInclusions(slug)
+      .map((i) => `<li>${escapeHtml(i)}</li>`)
+      .join("");
+  const faqs = STATION_FAQS.map(
+    (f) => `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`,
+  ).join("");
+
+  return `<p>Rent a station inside a Carnival Glam Hub for Carnival morning. You bring your kit and your clients. We bring the location, the air-conditioned lounge, reception and the crowd. Stations are available in every Glam Hub territory, Full Service and Glam Hub Lite.</p>
+<h2>Who station rental is for</h2>
+<ul>${STATION_SERVICE_TYPES.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul>
+<h2>What a station includes</h2>
+<p>The station itself is a table and a chair. Everything around it is the hub. Providers bring their own products, tools and consumables.</p>
+<h3>Full Service Glam Hub (Trinidad, Jamaica, Miami)</h3>
+<ul>${incl("trinidad")}</ul>
+<p>The shuttle runs in Jamaica and Trinidad. Trinidad and Jamaica also run bronzing, a barber and reels. ${escapeHtml(STATION_TERRITORY_NOTES.miami)}</p>
+<h3>Glam Hub Lite (all other territories)</h3>
+<ul>${incl("barbados")}</ul>
+<h2>Station rates by territory</h2>
+<h3>Full Service Glam Hub</h3>
+<ul>${rateRows(FULL_SERVICE_STATION_TERRITORIES)}</ul>
+<h3>Glam Hub Lite</h3>
+<ul>${rateRows(LITE_STATION_TERRITORIES)}</ul>
+<h2>How it works</h2>
+<ol>
+  <li>Enquire with your service, your territory and the days you want.</li>
+  <li>We confirm your territory, your dates and remaining station availability.</li>
+  <li>You pay the station rate and are allocated a station in the lounge.</li>
+  <li>You show up with your kit and your clients, and work.</li>
+</ol>
+<h2>Why a Glam Hub station beats setting up alone</h2>
+<p>The venue is already booked and staffed, masqueraders are already coming through the door, and there is a receptionist checking your clients in, so you are not managing the door from your chair. You keep your own bookings and your own prices.</p>
+<h2>Station rental questions</h2>
+${faqs}
+<p><a href="/station-rentals#enquiry">Enquire about a station</a></p>
+${CTA}`;
+}
+
 function buildRouteMap(): Record<string, Content> {
   const map: Record<string, Content> = { ...CORE, ...SERVICES };
+  map["/station-rentals"] = {
+    title: "Rent a Station Inside the Carnival Glam Hub",
+    body: `${stationRentalsBody()}\n${relatedBlock({
+      services: [
+        { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
+        { href: "/services/carnival-hair", label: "Carnival hair" },
+        { href: "/services/carnival-photoshoot", label: "Carnival photoshoot" },
+      ],
+      destinations: [
+        { href: "/trinidad", label: "Trinidad Carnival hub" },
+        { href: "/jamaica", label: "Jamaica Carnival hub" },
+        { href: "/barbados", label: "Barbados Crop Over hub" },
+      ],
+    })}`,
+  };
   // Append prerendered internal-link blocks to each service body so
   // non-JS crawlers see the hub-and-spoke internal links, not only
   // the client-rendered <RelatedLinks /> component.
