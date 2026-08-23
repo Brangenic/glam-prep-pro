@@ -370,15 +370,19 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                   <strong className="text-foreground">{MIAMI_VENUE_NAME}</strong>,{" "}
                   {MIAMI_VENUE_ADDRESS}, sometimes listed as the{" "}
                   {MIAMI_VENUE_ALIAS}. The city is {MIAMI_VENUE_CITY}, not Fort
-                  Lauderdale. Our Glam Hub will be near the stadium.
+                  Lauderdale.
                 </p>
                 <p>
                   <strong className="text-foreground">
-                    There is no shuttle this season, so plan your ride.
+                    {MIAMI_HUB_LOCATION}
                   </strong>{" "}
-                  The venue has ready Uber access, and overnight bag check is
-                  available at US$35 per masquerader.
+                  The venue moved to Broward and we moved with it, so you are
+                  minutes from the road rather than driving in from Miami.
                 </p>
+                <p>
+                  <strong className="text-foreground">{MIAMI_SHUTTLE_NOTE}</strong>
+                </p>
+                <p>{MIAMI_BAG_CHECK_NOTE}</p>
                 <p>{MIAMI_VENUE_DISTANCES}</p>
               </div>
             </div>
