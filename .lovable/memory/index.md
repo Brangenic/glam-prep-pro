@@ -15,6 +15,7 @@ Blogs: NEVER generate AI images. Hero/body images must come only from the curate
 - [Gallery UX](mem://ux/gallery) — Masonry image gallery layout and YouTube video integration
 - [Brand Identity & Contact](mem://brand/identity) — Brand positioning, contact info, social links, and logo usage
 - [Business Offerings](mem://features/business-offerings) — Supported destinations and detailed service list
+- [Station Rentals](mem://features/station-rentals) — B2B station rental page, tier-derived rates (Lite US$200/day, Full US$250/day or US$400 both days)
 - [Booking Integration](mem://features/booking-integration) — External booking platform URL and CTA linkage
 - [Amazon Store](mem://features/amazon-store) — Daily sync from Amazon storefront to curated collections
 - [Reviews](mem://features/reviews) — Automated daily sync of Google reviews via Lovable Cloud
