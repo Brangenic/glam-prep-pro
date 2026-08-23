@@ -169,7 +169,7 @@ export const destinations: Destination[] = [
     date: "11 October 2026",
     description: "Glam hub services for Miami Carnival.",
     longDescription:
-      "Our Miami Carnival Full Service Glam Hub serves the entire Miami Carnival season, from pre-carnival fetes through Columbus Day weekend. Full sweat-resistant makeup, hair, gems and body art by our pro carnival team, with a photoshoot in the lounge. There is no shuttle in Miami this season, but the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel.",
+      `Our Miami Carnival Full Service Glam Hub serves the entire Miami Carnival season, from pre-carnival fetes through Columbus Day weekend. Full sweat-resistant makeup, hair, gems and body art by our pro carnival team, with a photoshoot in the lounge. ${MIAMI_VENUE_NOTE} ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_DISTANCES}`,
     image: "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&dl=1",
     cta: "Book Miami Glam",
     objectPosition: "50% 20%",
@@ -180,9 +180,9 @@ export const destinations: Destination[] = [
       "Gems, lashes and body paint",
     ],
     metaTitle:
-      "Miami Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+      "Miami Carnival Makeup 2026 | Broward Venue | Glam Hub",
     metaDescription:
-      "Book Miami Carnival 2026 makeup, hair, photoshoot at our Full Service Glam Hub. No shuttle in Miami this season. Trusted by 15,000+ masqueraders since 2017.",
+      "Miami Carnival 2026 has moved to Broward: Central Broward Park, Lauderhill. No shuttle this season, so plan your ride. Book makeup, hair and photoshoot.",
   },
   {
     slug: "toronto",
