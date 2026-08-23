@@ -29,6 +29,7 @@ import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import BookingConfirmed from "./pages/BookingConfirmed.tsx";
 import BookingCalculator from "./pages/BookingCalculator.tsx";
+import StationRentals from "./pages/StationRentals.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import {
   BestCarnivalMakeupTrinidad,
@@ -127,6 +128,7 @@ const App = () => (
           <Route path="/booking-confirmed" element={<BookingConfirmed />} />
           <Route path="/thank-you" element={<BookingConfirmed />} />
           <Route path="/booking-calculator" element={<BookingCalculator />} />
+          <Route path="/station-rentals" element={<StationRentals />} />
           <Route path="/best-carnival-makeup-trinidad" element={<BestCarnivalMakeupTrinidad />} />
           <Route path="/best-carnival-makeup-jamaica" element={<BestCarnivalMakeupJamaica />} />
           <Route path="/best-carnival-makeup-miami" element={<BestCarnivalMakeupMiami />} />
