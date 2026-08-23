@@ -49,7 +49,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do you offer a shuttle service?",
-    a: "Shuttle is a Full Service Glam Hub inclusion and runs in Jamaica and Trinidad. There is no shuttle in Miami this season: the Miami venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader, so you can leave your bags with us and collect them the next day or that night at your hotel. Glam Hub Lite territories do not include a shuttle.",
+    a: "Shuttle is a Full Service Glam Hub inclusion and runs in Jamaica and Trinidad. There is no shuttle in Miami this season, so plan your ride. Miami Carnival has moved to Broward County: as announced by Miami Carnival, the Parade of Bands is at Central Broward Park and Broward County Stadium, 3700 NW 11th Place, Lauderhill, Florida 33311, sometimes listed as the Fort Lauderdale cricket stadium. Our Glam Hub will be near the stadium, the venue has ready Uber access, and overnight bag check is available as a paid add-on at US$35 per masquerader. Lauderhill is about 6 miles from Fort Lauderdale, roughly a 12 minute drive, and about 26 miles from Miami, so Fort Lauderdale is the closer airport and the closer place to stay. Glam Hub Lite territories do not include a shuttle.",
   },
   {
     q: "How do deposits and payments work?",
