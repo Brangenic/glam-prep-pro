@@ -168,15 +168,75 @@ const StationRentals = () => {
           </div>
         </section>
 
-        {/* What you get */}
-        <section className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16">
+        {/* What a station actually is */}
+        <section id="station-spec" className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16 scroll-mt-28">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-center">
-            What a station <span className="italic text-gradient-primary">includes</span>
+            What a station <span className="italic text-gradient-primary">actually is</span>
           </h2>
           <p className="font-body text-base text-muted-foreground text-center max-w-2xl mx-auto mb-8 leading-relaxed">
-            The station is a table and a chair. Everything around it is the hub
-            itself, and that changes by tier. Bring your own products, tools and
-            consumables.
+            The station spec is identical in every territory, Full Service and
+            Lite alike. Here is exactly what you turn up to and exactly what you
+            need to carry.
+          </p>
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border border-border bg-card/50 p-6 sm:p-7">
+              <h3 className="font-display text-lg font-bold mb-4">What we provide</h3>
+              <ul className="space-y-2 font-body text-sm">
+                {STATION_PROVIDED.map((line) => (
+                  <li key={line} className="flex gap-2">
+                    <span aria-hidden="true" className="text-primary">•</span>
+                    <span className="text-muted-foreground">{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl border-2 border-primary/60 bg-primary/5 p-6 sm:p-7">
+              <h3 className="font-display text-lg font-bold mb-4">What you bring</h3>
+              <ul className="space-y-2 font-body text-sm">
+                {STATION_BRING.map((line) => (
+                  <li key={line} className="flex gap-2">
+                    <span aria-hidden="true" className="text-primary">•</span>
+                    <span className="text-muted-foreground">{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 rounded-xl bg-primary text-primary-foreground font-body text-sm font-semibold px-4 py-3 leading-relaxed">
+                Bring your own extension cord and multiplug. Everyone must carry
+                their own, no exceptions.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-border bg-card/50 p-6 sm:p-7">
+              <h3 className="font-display text-lg font-bold mb-4">What you can rent</h3>
+              <ul className="space-y-2 font-body text-sm">
+                <li className="flex gap-2">
+                  <span aria-hidden="true" className="text-primary">•</span>
+                  <span className="text-muted-foreground">{HIGH_CHAIR_RATE_LABEL}</span>
+                </li>
+              </ul>
+              <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">
+                Charged per day, like the station itself. Ask for it when you
+                enquire so we can set one aside.
+              </p>
+            </div>
+          </div>
+          <p className="font-body text-sm text-muted-foreground mt-6 text-center max-w-3xl mx-auto leading-relaxed">
+            You bring your full kit, your products, your tools and your
+            consumables. We do not supply product or equipment.
+          </p>
+        </section>
+
+        {/* Lite versus Full Service */}
+        <section className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-center">
+            Glam Hub Lite versus{" "}
+            <span className="italic text-gradient-primary">Full Service</span>
+          </h2>
+          <p className="font-body text-base text-muted-foreground text-center max-w-2xl mx-auto mb-4 leading-relaxed">
+            The station spec is the same at both tiers. What differs is the hub
+            around it, and what your clients can use while they are there.
+          </p>
+          <p className="font-body text-base text-foreground/90 font-medium text-center max-w-3xl mx-auto mb-8 leading-relaxed">
+            {CLIENT_AMENITIES_NOTE}
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {(["full", "lite"] as const).map((tier) => {
@@ -185,6 +245,7 @@ const StationRentals = () => {
                 tier === "full"
                   ? FULL_SERVICE_STATION_TERRITORIES
                   : LITE_STATION_TERRITORIES;
+              const rate = getTierRate(tier);
               return (
                 <div
                   key={tier}
@@ -193,8 +254,17 @@ const StationRentals = () => {
                   <span className="inline-block rounded-full bg-secondary/15 text-secondary font-body text-[11px] uppercase tracking-[0.15em] font-semibold px-3 py-1 mb-4">
                     {TIER_LABEL[tier]}
                   </span>
-                  <p className="font-body text-sm text-muted-foreground mb-5">
+                  <p className="font-body text-sm text-muted-foreground mb-2">
                     {territories.map((t) => t.name).join(", ")}
+                  </p>
+                  <p className="font-body text-sm font-semibold mb-5">
+                    US${rate.perDay} per station per day
+                    {rate.bothDays !== null
+                      ? `, US$${rate.bothDays} for both days`
+                      : ", multi-day confirmed on enquiry"}
+                  </p>
+                  <p className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground font-semibold mb-3">
+                    You and your clients get
                   </p>
                   <ul className="space-y-2 font-body text-sm">
                     {getStationInclusions(sample).map((line) => (
@@ -213,11 +283,19 @@ const StationRentals = () => {
                       {STATION_TERRITORY_NOTES.miami}
                     </p>
                   )}
+                  {tier === "lite" && (
+                    <p className="font-body text-xs text-muted-foreground mt-5 leading-relaxed">
+                      A Glam Hub Lite does not run a shuttle, hair, a
+                      seamstress, getting-dressed assistance, bronzing, reels,
+                      alcohol or breakfast.
+                    </p>
+                  )}
                 </div>
               );
             })}
           </div>
         </section>
+
 
         {/* Rate card */}
         <section id="rates" className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16 scroll-mt-28">
