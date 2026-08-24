@@ -38,6 +38,8 @@ const staticEntries: StaticEntry[] = [
   { path: "/trinidad-carnival-2027", priority: "0.9", changefreq: "weekly" },
   { path: "/amazon-store", priority: "0.7", changefreq: "weekly" },
   { path: "/booking-calculator", priority: "0.6", changefreq: "monthly" },
+  { path: "/policies", priority: "0.3", changefreq: "yearly" },
+
   { path: "/jamaica", priority: "0.8", changefreq: "weekly" },
   { path: "/trinidad", priority: "0.8", changefreq: "weekly" },
   { path: "/saint-lucia", priority: "0.8", changefreq: "weekly" },

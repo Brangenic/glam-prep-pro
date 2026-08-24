@@ -82,7 +82,11 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/blogs": "/images/services/photoshoot-hero.jpg",
   "/amazon-store": "/images/services/makeup-hero.jpg",
   "/booking-calculator": "/images/services/makeup-hero.jpg",
-  "/station-rentals": "/images/services/makeup-hero.jpg",
+  "/station-rentals": "/images/station-rentals/station-rentals-hero.png",
+  // Portrait illustration: letterboxed onto the brand warm-white canvas
+  // (see OG_CONTAIN_ROUTES) so the figures are never cropped.
+  "/policies": "/images/policies/refund-policy.png",
+
   "/best-carnival-makeup-trinidad":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
   "/best-carnival-makeup-jamaica":
@@ -91,11 +95,90 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
     "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&raw=1",
 };
 
+// Routes whose source art is a portrait illustration rather than a
+// landscape photograph. A cover crop would slice the figures' heads off,
+// so these are letterboxed ("contain") onto the brand warm-white canvas
+// with a gold rule along the bottom edge, which reads as deliberate.
+const OG_CONTAIN_ROUTES = new Set<string>(["/policies"]);
+
+/** Brand warm white, hsl(40 20% 97%) from src/index.css --background. */
+const OG_CANVAS = { r: 249, g: 248, b: 246, alpha: 1 };
+/** Brand gold, hsl(43 72% 50%) from src/index.css --primary. */
+const OG_RULE_HEX = "#dba724";
+
+// og:image:alt / twitter:image:alt. Where a route ships a real photograph
+// or illustration, describe the picture rather than repeating the title.
+// Routes not listed here fall back to the page title.
+const OG_IMAGE_ALT: Record<string, string> = {
+  "/jamaica":
+    "Masquerader in a Jamaica Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/saint-lucia":
+    "Masquerader in a Saint Lucia Carnival costume with Carnival Glam Hub makeup and headpiece",
+  "/antigua":
+    "Masquerader in an Antigua Carnival costume with Carnival Glam Hub makeup",
+  "/grenada":
+    "Masquerader in a Grenada Spicemas costume with Carnival Glam Hub makeup",
+  "/barbados":
+    "Masquerader in a Barbados Crop Over costume with Carnival Glam Hub makeup",
+  "/miami":
+    "Masquerader in a Miami Carnival costume with Carnival Glam Hub makeup",
+  "/toronto":
+    "Masquerader in a Toronto Caribana costume with Carnival Glam Hub makeup",
+  "/trinidad":
+    "Masquerader in a Trinidad Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/tobago":
+    "Masquerader in Carnival costume with Carnival Glam Hub makeup for Tobago Carnival",
+  "/guyana":
+    "Masquerader in Carnival costume with Carnival Glam Hub makeup for Guyana Carnival",
+  "/epic-cruise":
+    "Masquerader glammed by Carnival Glam Hub aboard the EPIC Carnival Experience cruise",
+  "/trinidad-carnival-2027":
+    "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub for the 2027 season",
+  "/services/carnival-makeup":
+    "Carnival Glam Hub artist applying sweat-resistant Carnival makeup to a masquerader",
+  "/services/carnival-hair":
+    "Carnival Glam Hub stylist setting a headpiece-ready Carnival hairstyle",
+  "/services/carnival-photoshoot":
+    "Masquerader photographed in full Carnival costume at a Carnival Glam Hub photoshoot",
+  "/services/getting-dressed":
+    "Carnival Glam Hub team fitting a masquerader into a wire-bra Carnival costume",
+  "/services/carnival-shuttle":
+    "Masqueraders leaving the Carnival Glam Hub lounge for the Carnival shuttle",
+  "/about":
+    "Carnival Glam Hub artist at work on a masquerader on Carnival morning",
+  "/faq":
+    "Carnival Glam Hub stylist finishing a masquerader's Carnival hair in the lounge",
+  "/reviews":
+    "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team",
+  "/blogs":
+    "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team",
+  "/amazon-store":
+    "Professional Carnival makeup products laid out at a Carnival Glam Hub station",
+  "/booking-calculator":
+    "Carnival Glam Hub artist applying Carnival makeup at a lounge station",
+  "/station-rentals":
+    "Carnival Glam Hub makeup station rentals, a gold branded director's chair beside a lit vanity of professional makeup products",
+  "/policies":
+    "Illustration of two Glam Hub team members reviewing a refund request form",
+  "/best-carnival-makeup-trinidad":
+    "Masquerader in a Trinidad Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/best-carnival-makeup-jamaica":
+    "Masquerader in a Jamaica Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/best-carnival-makeup-miami":
+    "Masquerader in a Miami Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+};
+
+
+
 function slugForRoute(path: string): string {
   return path.replace(/^\//, "").replace(/\//g, "-");
 }
 
-async function transcodeOgImage(slug: string, source: string): Promise<string | null> {
+async function transcodeOgImage(
+  slug: string,
+  source: string,
+  mode: "cover" | "contain" = "cover",
+): Promise<string | null> {
   try {
     const outDir = join(DIST, "og");
     mkdirSync(outDir, { recursive: true });
@@ -122,11 +205,29 @@ async function transcodeOgImage(slug: string, source: string): Promise<string | 
       if (!res.ok) return null;
       buf = Buffer.from(await res.arrayBuffer());
     }
-    await sharp(buf)
-      .resize(OG_W, OG_H, { fit: "cover", position: "centre" })
-      .jpeg({ quality: 85, mozjpeg: true })
-      .toFile(outFile);
+    if (mode === "contain") {
+      const RULE_H = 14;
+      const rule = Buffer.from(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_W}" height="${RULE_H}"><rect width="${OG_W}" height="${RULE_H}" fill="${OG_RULE_HEX}"/></svg>`,
+      );
+      await sharp(buf)
+        .resize(OG_W, OG_H - RULE_H, {
+          fit: "contain",
+          background: OG_CANVAS,
+        })
+        .extend({ bottom: RULE_H, background: OG_CANVAS })
+        .composite([{ input: rule, top: OG_H - RULE_H, left: 0 }])
+        .flatten({ background: OG_CANVAS })
+        .jpeg({ quality: 85, mozjpeg: true })
+        .toFile(outFile);
+    } else {
+      await sharp(buf)
+        .resize(OG_W, OG_H, { fit: "cover", position: "centre" })
+        .jpeg({ quality: 85, mozjpeg: true })
+        .toFile(outFile);
+    }
     return `${BASE_URL}/og/route-${slug}.jpg`;
+
   } catch (err) {
     console.warn(`prerender-routes: og transcode failed for ${slug}:`, err);
     return null;
@@ -329,8 +430,16 @@ const staticRoutes: RouteMeta[] = [
     title: "Carnival Station Rental for Makeup Artists | Glam Hub",
     description:
       "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.",
-    ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
+    ogImage: `${BASE_URL}/images/station-rentals/station-rentals-hero.png`,
   },
+  {
+    path: "/policies",
+    title: "Terms, Refund Policy and Privacy Policy | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub booking terms, deposit and refund policy, cancellation and transfer rules, referral programme terms and privacy policy. Effective 24 August 2026.",
+    ogImage: `${BASE_URL}/images/policies/refund-policy.png`,
+  },
+
   {
     path: "/blogs",
     title: "Carnival Beauty and Travel Journal | Carnival Glam Hub",
@@ -613,9 +722,24 @@ function buildJsonLd(route: RouteMeta): object[] {
       "/booking-calculator": "Quote Calculator",
       "/station-rentals": "Station Rentals",
       "/blogs": "Journal",
+      "/policies": "Terms and Policies",
     };
     blocks.push(homeCrumb(NAME[route.path] ?? route.title, route.path));
   }
+
+  // 1b) /policies: a plain WebPage node. No FAQPage here on purpose.
+  if (route.path === "/policies") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Terms and Policies",
+      url,
+      description: route.description,
+      dateModified: "2026-08-24",
+      publisher: PROVIDER,
+    });
+  }
+
 
   // 2) Service node for /services/* and destinations.
   if (route.path.startsWith("/services/")) {
@@ -833,6 +957,8 @@ function rewriteHead(template: string, route: RouteMeta): string {
   const image = route.ogImage ?? DEFAULT_OG;
   const imageType = route.ogImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
   const ogType = route.ogType ?? "website";
+  const imageAlt = OG_IMAGE_ALT[route.path] ?? title;
+
 
   let html = template;
 
@@ -877,7 +1003,7 @@ function rewriteHead(template: string, route: RouteMeta): string {
   );
   html = html.replace(
     /<meta\s+property="og:image:alt"[^>]*>/i,
-    `<meta property="og:image:alt" content="${escapeAttr(title)}" />`,
+    `<meta property="og:image:alt" content="${escapeAttr(imageAlt)}" />`,
   );
 
   // og:image:type — match the real file extension for custom hero images.
@@ -909,7 +1035,7 @@ function rewriteHead(template: string, route: RouteMeta): string {
   );
   html = html.replace(
     /<meta\s+name="twitter:image:alt"[^>]*>/i,
-    `<meta name="twitter:image:alt" content="${escapeAttr(title)}" />`,
+    `<meta name="twitter:image:alt" content="${escapeAttr(imageAlt)}" />`,
   );
   // twitter:card must be summary_large_image
   if (!/<meta\s+name="twitter:card"[^>]*>/i.test(html)) {
@@ -972,7 +1098,12 @@ async function main() {
   for (const route of allRoutes) {
     const source = ROUTE_HERO_SOURCES[route.path];
     if (!source) continue;
-    const transcoded = await transcodeOgImage(slugForRoute(route.path), source);
+    const transcoded = await transcodeOgImage(
+      slugForRoute(route.path),
+      source,
+      OG_CONTAIN_ROUTES.has(route.path) ? "contain" : "cover",
+    );
+
     if (transcoded) route.ogImage = transcoded;
   }
 

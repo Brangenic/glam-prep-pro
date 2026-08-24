@@ -37,7 +37,7 @@ const PAGE_TITLE = "Carnival Station Rental for Makeup Artists | Glam Hub";
 const PAGE_DESCRIPTION =
   "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.";
 const CANONICAL = "https://www.carnivalglamhub.com/station-rentals";
-const HERO_IMAGE = "/images/services/makeup-hero.jpg";
+const HERO_IMAGE = "/images/station-rentals/station-rentals-hero.webp";
 
 /** Real Carnival Glam Hub footage from Trinidad. Wide cut and vertical short. */
 const HUB_VIDEO_WIDE = "HWFyXB1tyIU";
@@ -125,10 +125,22 @@ const StationRentals = () => {
             <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4">
               For service providers
             </p>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Rent a station inside the{" "}
-              <span className="italic text-gradient-primary">Carnival Glam Hub</span>
+            <h1 className="sr-only">
+              Makeup station rentals with Carnival Glam Hub. Wherever Carnival
+              takes you, you can rent a station too.
             </h1>
+            <figure className="mb-8 -mx-4 sm:mx-0">
+              <img
+                src={HERO_IMAGE}
+                alt="Carnival Glam Hub makeup station rentals, a gold branded director's chair beside a lit vanity of professional makeup products"
+                width={1774}
+                height={887}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="w-full h-auto aspect-[2/1] object-contain bg-black sm:rounded-2xl shadow-lg"
+              />
+            </figure>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed max-w-3xl mx-auto font-medium">
               You bring your kit and your clients. We bring the location, the
               air-conditioned lounge, reception and the crowd. Stations are
@@ -149,16 +161,8 @@ const StationRentals = () => {
               </a>
             </div>
           </div>
-          <figure className="mb-14 -mx-4 sm:mx-0">
-            <img
-              src={HERO_IMAGE}
-              alt="Artist working at a station inside the air-conditioned Carnival Glam Hub lounge"
-              loading="eager"
-              decoding="async"
-              className="w-full h-[240px] sm:h-[380px] lg:h-[440px] sm:rounded-2xl object-cover object-center shadow-lg"
-            />
-          </figure>
         </section>
+
 
         {/* See inside a Glam Hub */}
         <section id="inside" className="container mx-auto px-4 sm:px-6 max-w-4xl mb-16 scroll-mt-28">

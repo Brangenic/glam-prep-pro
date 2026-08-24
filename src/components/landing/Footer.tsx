@@ -114,13 +114,15 @@ const Footer = () => (
             <li><a href="/amazon-store" className="hover:text-primary transition-colors">Amazon Store</a></li>
             <li><a href="/booking-calculator" className="hover:text-primary transition-colors">Booking Calculator</a></li>
             <li><a href="/station-rentals" className="hover:text-primary transition-colors">Station rentals for artists</a></li>
+            <li><a href="/policies" className="hover:text-primary transition-colors">Terms and Policies</a></li>
+
           </ul>
         </div>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
         <div className="col-span-2 sm:col-span-1">
           <a href="/" className="inline-flex mb-4" aria-label="Carnival Glam Hub home">
-            <img src={brandLogo} alt="Carnival Glam Hub" className="h-14 w-auto sm:h-16" loading="lazy" />
+            <img src={brandLogo} alt="Carnival Glam Hub" width={1318} height={1225} className="h-14 w-auto sm:h-16" loading="lazy" />
           </a>
           <p className="font-body text-sm text-muted-foreground leading-relaxed">
             Premium carnival morning preparation since 2017.
@@ -167,8 +169,10 @@ const Footer = () => (
             Legal
           </h4>
           <div className="space-y-2 font-body text-sm text-muted-foreground">
-            <p className="hover:text-foreground cursor-pointer transition-colors">Terms of Service</p>
-            <p className="hover:text-foreground cursor-pointer transition-colors">Privacy Policy</p>
+            <a href="/policies#terms" className="block hover:text-primary transition-colors">Terms of Service</a>
+            <a href="/policies#refunds" className="block hover:text-primary transition-colors">Refund Policy</a>
+            <a href="/policies#privacy" className="block hover:text-primary transition-colors">Privacy Policy</a>
+
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSfatcdkmAEaPDXcB1XY-GYASAtqZpYCjH3Q97sZOhm0CkujYg/viewform"
               target="_blank"

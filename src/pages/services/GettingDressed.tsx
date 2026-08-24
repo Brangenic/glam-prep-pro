@@ -181,6 +181,8 @@ const GettingDressed = () => {
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
               src="/images/services/getting-dressed-hero.jpg"
+              width={1280}
+              height={1280}
               alt="Carnival Glam Hub dressing assistant helping a masquerader into her costume"
               loading="eager"
               decoding="async"
@@ -204,7 +206,9 @@ const GettingDressed = () => {
           </section>
 
           <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/getting-dressed-2.webp" alt="Carnival Glam Hub dresser securing a masquerader's costume before the road" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+            <img src="/images/services/getting-dressed-2.webp"
+              width={739}
+              height={1424} alt="Carnival Glam Hub dresser securing a masquerader's costume before the road" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
           </figure>
 
           <section className="mb-12">
@@ -262,7 +266,9 @@ const GettingDressed = () => {
           </section>
 
           <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/getting-dressed-6.webp" alt="Final road-ready costume check during getting-dressed at Carnival Glam Hub" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+            <img src="/images/services/getting-dressed-6.webp"
+              width={1123}
+              height={1600} alt="Final road-ready costume check during getting-dressed at Carnival Glam Hub" loading="lazy" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
           </figure>
 
           <section className="mb-12">

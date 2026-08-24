@@ -675,7 +675,7 @@ const BlogPost = () => {
                     <img
                       src={post.image_url}
                       alt={post.title}
-                      className="w-full rounded-none sm:rounded-2xl object-cover object-top max-h-[28rem]"
+                      className="w-full aspect-[16/9] rounded-none sm:rounded-2xl object-cover object-top max-h-[28rem]"
                     />
                   </div>
                 )}

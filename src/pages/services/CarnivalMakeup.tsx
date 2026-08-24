@@ -157,6 +157,8 @@ const CarnivalMakeup = () => {
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
               src="/images/services/makeup-hero.jpg"
+              width={1125}
+              height={1397}
               alt="Carnival Glam Hub makeup artist finishing sweat-proof full glam on masquerader Marissa Williams at Miami Carnival"
               loading="eager"
               decoding="async"
@@ -322,6 +324,8 @@ const CarnivalMakeup = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <img
                 src="/images/services/makeup-1.jpg"
+              width={1125}
+              height={1373}
                 alt="Bold Carnival eye makeup with gems and glitter by Carnival Glam Hub"
                 loading="lazy"
                 decoding="async"
@@ -329,6 +333,8 @@ const CarnivalMakeup = () => {
               />
               <img
                 src="/images/services/makeup-2.jpg"
+              width={1125}
+              height={1129}
                 alt="Masquerader Kalefia in full Carnival glam makeup by Carnival Glam Hub"
                 loading="lazy"
                 decoding="async"
@@ -336,6 +342,8 @@ const CarnivalMakeup = () => {
               />
               <img
                 src="/images/services/makeup-3.jpg"
+              width={1284}
+              height={1277}
                 alt="Sweat-proof Carnival makeup look ready for the road by Carnival Glam Hub"
                 loading="lazy"
                 decoding="async"

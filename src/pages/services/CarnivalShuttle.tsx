@@ -122,7 +122,9 @@ const CarnivalShuttle = () => {
           </header>
 
           <figure className="mb-12 -mx-4 sm:mx-0">
-            <img src="/images/services/carnival-shuttle.webp" alt="Carnival Glam Hub shuttle that collects masqueraders from the lounge and drives them to their band's start point" loading="eager" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
+            <img src="/images/services/carnival-shuttle.webp"
+              width={1600}
+              height={800} alt="Carnival Glam Hub shuttle that collects masqueraders from the lounge and drives them to their band's start point" loading="eager" decoding="async" className="w-full h-auto sm:rounded-2xl object-cover shadow-lg" />
           </figure>
 
           <div className="mb-12 text-center">
