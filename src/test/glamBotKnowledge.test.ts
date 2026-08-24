@@ -347,7 +347,7 @@ describe("group 6: conversation context", () => {
     const p = promptFor("how much is makeup");
     expect(p).toContain("No territory has been established in this conversation yet");
     expect(p).toContain("Which Carnival are you attending?");
-    expect(p).toContain("ask once");
+    expect(p).toContain("Never ask which Carnival and then answer in the same reply");
   });
 });
 
