@@ -82,7 +82,11 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/blogs": "/images/services/photoshoot-hero.jpg",
   "/amazon-store": "/images/services/makeup-hero.jpg",
   "/booking-calculator": "/images/services/makeup-hero.jpg",
-  "/station-rentals": "/images/services/makeup-hero.jpg",
+  "/station-rentals": "/images/station-rentals/station-rentals-hero.png",
+  // Portrait illustration: letterboxed onto the brand warm-white canvas
+  // (see OG_CONTAIN_ROUTES) so the figures are never cropped.
+  "/policies": "/images/policies/refund-policy.png",
+
   "/best-carnival-makeup-trinidad":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
   "/best-carnival-makeup-jamaica":
