@@ -30,7 +30,9 @@ import Admin from "./pages/Admin.tsx";
 import BookingConfirmed from "./pages/BookingConfirmed.tsx";
 import BookingCalculator from "./pages/BookingCalculator.tsx";
 import StationRentals from "./pages/StationRentals.tsx";
+import Policies from "./pages/Policies.tsx";
 import NotFound from "./pages/NotFound.tsx";
+
 import {
   BestCarnivalMakeupTrinidad,
   BestCarnivalMakeupJamaica,
