@@ -5,9 +5,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import amazonLogo from "@/assets/amazon-logo.svg";
 import { supabase } from "@/integrations/supabase/client";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const AMAZON_STORE_URL =
-  "https://www.amazon.com/shop/carnivalglamhub?ccs_id=7e98f14b-a852-49d9-a50d-4fb90fee34c8";
+import { AMAZON_STORE_URL } from "@/lib/constants";
 
 type StoreItem = {
   external_id: string;

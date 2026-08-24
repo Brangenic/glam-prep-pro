@@ -1,0 +1,650 @@
+/**
+ * Glam Bot knowledge composer.
+ *
+ * This module holds NO facts of its own. Every sentence it emits is
+ * derived from the existing single sources of truth:
+ *   territoryProfiles, hubTiers, territoryPricing, seasons, policies,
+ *   pressCoverage, stationRentals and lib/constants.
+ *
+ * It imports only asset-free modules, so `scripts/generate-bot-knowledge.ts`
+ * can import it under bunx tsx. Never import `src/data/destinations.ts`
+ * or anything that pulls in an image asset.
+ *
+ * Nothing here may compute what season is next or what has passed. This
+ * file is generated at build time and would go stale. The edge function
+ * resolves status against today using `seasonEndISO`.
+ */
+
+import {
+  BOOKING_URL,
+  SITE_URL,
+  AMAZON_STORE_URL,
+  AMAZON_STORE_PATH,
+  WHATSAPP_URL,
+  WHATSAPP_DISPLAY,
+  CONTACT_EMAIL,
+} from "@/lib/constants";
+import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
+import {
+  FULL_SERVICE_SLUGS,
+  LITE_SLUGS,
+  TIER_LABEL,
+  LITE_NOT_OFFERED,
+  DAY_BAG_CHECK,
+  CHARGEABLE_SERVICES,
+  HUB_CAPABILITIES,
+  getCapabilities,
+  getFreeInclusions,
+  getHubTier,
+  MIAMI_LOGISTICS_SUMMARY,
+  REELS_NOTE,
+} from "@/data/hubTiers";
+import {
+  BARBER_PRICE,
+  GETTING_DRESSED_PRICE,
+  OVERNIGHT_BAG_CHECK_PRICE,
+  REELS_PRICE,
+  getTerritoryPricing,
+  type DayKey,
+  type QuoteProduct,
+  type TerritoryPricing,
+} from "@/data/territoryPricing";
+import { SEASON_END_DATES, SEASON_FORWARD_SLUGS } from "@/data/seasons";
+import {
+  EFFECTIVE_DATE,
+  TERMS_BLOCKS,
+  PRIVACY_BLOCKS,
+  CONTENTS as POLICY_CONTENTS,
+} from "@/data/policies";
+import { PRESS_STORIES } from "@/data/pressCoverage";
+import {
+  BOOKABLE_FULL_NAMES,
+  BOOKABLE_LITE_NAMES,
+  HIGH_CHAIR_RATE_PER_DAY,
+  STATION_BRING,
+  STATION_PAYMENT_NOTE,
+  STATION_PROVIDED,
+  STATION_SERVICE_TYPES,
+  getTierRate,
+  VENDOR_SPACE_BOTH_DAYS,
+  VENDOR_SPACE_INCLUDES,
+  VENDOR_SPACE_INTRO,
+  VENDOR_SPACE_NOTE,
+  VENDOR_SPACE_PER_DAY,
+} from "@/data/stationRentals";
+
+/** Bronzing is a masos product, so its price comes from the product list. */
+const BRONZING_PRICE = 160;
+
+/** Road ready access, the Carnival morning access product. */
+const ROAD_READY_PRICE = 35;
+
+export type KnowledgeEvent = {
+  slug: string;
+  name: string;
+  dateText: string;
+  seasonEndISO: string | null;
+  path: string | null;
+  bookingUrl: string;
+  quotable: boolean;
+  tier: string | null;
+  seasonForward: boolean;
+};
+
+export type KnowledgePack = {
+  generatedAt: string;
+  brand: string;
+  contact: {
+    whatsappUrl: string;
+    whatsappDisplay: string;
+    email: string;
+    bookingUrl: string;
+    siteUrl: string;
+    amazonUrl: string;
+    amazonPath: string;
+  };
+  tiers: string;
+  events: KnowledgeEvent[];
+  territories: Record<
+    string,
+    { name: string; aliases: string[]; path: string | null; brief: string }
+  >;
+  topics: Record<string, string>;
+  links: { label: string; url: string }[];
+  neverSay: string[];
+  unknowns: string[];
+};
+
+const BOT_SLUGS = TERRITORY_PROFILES.map((p) => p.slug);
+
+/** Trinidad Carnival 2027 shares the Trinidad hub and the Trinidad prices. */
+function pricingFor(slug: string): TerritoryPricing | undefined {
+  return getTerritoryPricing(
+    slug === "trinidad-carnival-2027" ? "trinidad" : slug,
+  );
+}
+
+function money(n: number): string {
+  return `US$${n}`;
+}
+
+function bullets(items: string[]): string {
+  return items.map((i) => `- ${i}`).join("\n");
+}
+
+function sentenceList(items: string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
+function tierLabelFor(slug: string): string | null {
+  const tier = getHubTier(slug);
+  return tier ? TIER_LABEL[tier] : null;
+}
+
+function productLine(p: QuoteProduct): string {
+  return `${p.label}: ${money(p.price)}`;
+}
+
+function dayBlock(t: TerritoryPricing, day: DayKey, label: string): string {
+  const all = t.products.filter((p) => p.day === day);
+  if (!all.length) return "";
+  const standard = all.filter((p) => !p.premium);
+  const premium = all.filter((p) => p.premium);
+  const parts: string[] = [`**${label}**`];
+  if (standard.length) parts.push(bullets(standard.map(productLine)));
+  if (premium.length) {
+    parts.push("Named and celebrity artists, charged separately:");
+    parts.push(bullets(premium.map(productLine)));
+  }
+  return parts.join("\n");
+}
+
+function capabilityLines(slug: string): string[] {
+  const caps = getCapabilities(slug);
+  const lines: string[] = [];
+  if (caps.barber) lines.push(`Barber: ${money(BARBER_PRICE)}`);
+  if (caps.bronzing) lines.push(`Bronzing: ${money(BRONZING_PRICE)}`);
+  if (caps.reels)
+    lines.push(
+      "Reels: a paid add-on with no published price. The booking team confirms it.",
+    );
+  if (caps.overnightBagCheck)
+    lines.push(
+      `Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader, a paid add-on and never an inclusion.`,
+    );
+  return lines;
+}
+
+/* ============================================================
+ * Brand
+ * ============================================================ */
+
+const BRAND = `# Carnival Glam Hub
+
+Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe McGann. More than 15,000 masqueraders have been served since 2017.
+
+We are band neutral. We serve masqueraders from every band, in every section.
+
+Carnival Glam Hub runs the whole Carnival morning from one location. Makeup, hair, photos and the practical parts of getting on the road happen in one place, so a masquerader is not moving between an artist, a hotel room and a photographer on the morning itself.
+
+The service runs across the Caribbean and North America, in two hub tiers, Full Service Glam Hub and Glam Hub Lite.`;
+
+/* ============================================================
+ * Tiers
+ * ============================================================ */
+
+function buildTiers(): string {
+  const full = [...FULL_SERVICE_SLUGS].map((s) => getProfile(s)?.shortName ?? s);
+  const lite = [...LITE_SLUGS].map((s) => getProfile(s)?.shortName ?? s);
+  const capSlugs = Object.keys(HUB_CAPABILITIES).filter(
+    (s) => s !== "trinidad-carnival-2027",
+  );
+
+  const capLines = capSlugs.map((s) => {
+    const caps = getCapabilities(s);
+    const has = [
+      caps.barber ? `barber ${money(BARBER_PRICE)}` : null,
+      caps.bronzing ? `bronzing ${money(BRONZING_PRICE)}` : null,
+      caps.reels ? "reels, price confirmed by the booking team" : null,
+      caps.overnightBagCheck
+        ? `overnight bag check ${money(OVERNIGHT_BAG_CHECK_PRICE)}`
+        : null,
+    ].filter(Boolean) as string[];
+    return `${getProfile(s)?.shortName ?? s}: ${sentenceList(has)}`;
+  });
+
+  return `# The two hub tiers
+
+**${TIER_LABEL.full}**: ${sentenceList(full)}.
+**${TIER_LABEL.lite}**: ${sentenceList(lite)}.
+
+Epic Cruise is a cruise partnership rather than a hub, so it carries no tier.
+
+## Free with any booking at a ${TIER_LABEL.full}
+${bullets(getFreeInclusions("trinidad"))}
+
+Miami is a ${TIER_LABEL.full} but runs no shuttle this season, so its free list is:
+${bullets(getFreeInclusions("miami"))}
+
+## Free with any booking at a ${TIER_LABEL.lite}
+${bullets(getFreeInclusions("saint-lucia"))}
+
+## Always chargeable, never an inclusion
+${sentenceList(CHARGEABLE_SERVICES)} are products. They are charged separately at every hub, at both tiers, and must never be described as included.
+
+## Not offered at a ${TIER_LABEL.lite}
+${bullets(LITE_NOT_OFFERED)}
+
+## Four territory-scoped capabilities
+These sit outside the tier model and exist only where listed:
+${bullets(capLines)}
+
+## The two different bag things
+- Free: ${DAY_BAG_CHECK}. Available at every hub, both tiers, space permitting rather than guaranteed.
+- Paid: overnight bag check at ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader. Trinidad, Jamaica and Miami only. It is an add-on, never an inclusion.`;
+}
+
+/* ============================================================
+ * Events
+ * ============================================================ */
+
+function buildEvents(): KnowledgeEvent[] {
+  return TERRITORY_PROFILES.filter(
+    (p) => SEASON_END_DATES[p.slug] || p.slug === "atlanta",
+  ).map((p) => {
+    const pricing = pricingFor(p.slug);
+    return {
+      slug: p.slug,
+      name: p.name,
+      dateText: p.dateText,
+      seasonEndISO: SEASON_END_DATES[p.slug] ?? null,
+      path: p.path,
+      bookingUrl: pricing?.bookingUrl ?? BOOKING_URL,
+      quotable: pricing?.quotable ?? false,
+      tier: tierLabelFor(p.slug),
+      seasonForward: (SEASON_FORWARD_SLUGS as readonly string[]).includes(
+        p.slug,
+      ),
+    };
+  });
+}
+
+/* ============================================================
+ * Territory briefs
+ * ============================================================ */
+
+function buildBrief(slug: string): string {
+  const profile = getProfile(slug)!;
+  const pricing = pricingFor(slug);
+  const tier = tierLabelFor(slug);
+  const free = getFreeInclusions(slug);
+  const caps = capabilityLines(slug);
+  const parts: string[] = [`# ${profile.name}`];
+
+  if (profile.dateText) parts.push(`Dates: ${profile.dateText}.`);
+  else
+    parts.push(
+      "Dates: not confirmed. We have no date for this territory, so hand the visitor to the booking team.",
+    );
+
+  if (tier) {
+    parts.push(
+      tier === TIER_LABEL.full
+        ? `Tier: ${tier}. A Full Service hub runs the whole Carnival morning from one location, with the widest set of services on site.`
+        : `Tier: ${tier}. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.`,
+    );
+  } else {
+    parts.push(
+      "Tier: none. Epic Cruise is a cruise partnership rather than a Glam Hub, so it carries no tier badge.",
+    );
+  }
+
+  parts.push(
+    profile.venue
+      ? `Location: ${profile.venue}`
+      : "Location: the venue is confirmed after booking. Never guess or name a venue for this territory.",
+  );
+
+  if (pricing?.quotable) {
+    const dayBlocks = pricing.days
+      .map((d) => dayBlock(pricing, d.key, d.label))
+      .filter(Boolean);
+    parts.push(
+      `## Prices\nPer masquerader in US dollars.\n\n${dayBlocks.join("\n\n")}`,
+    );
+    if (pricing.provisionalNote) parts.push(pricing.provisionalNote);
+  } else {
+    parts.push(
+      "## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm.",
+    );
+  }
+
+  if (free.length) parts.push(`## Free with any booking here\n${bullets(free)}`);
+
+  parts.push(
+    caps.length
+      ? `## Also available here\n${bullets(caps)}`
+      : "## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.",
+  );
+
+  parts.push(
+    pricing?.roadReady
+      ? `Road ready Carnival morning access applies here at ${money(ROAD_READY_PRICE)}. Getting dressed is free with any Glam Hub service and ${money(GETTING_DRESSED_PRICE)} on its own.`
+      : "Road ready Carnival morning access and getting dressed are not offered at this hub.",
+  );
+
+  if (pricing?.deposit)
+    parts.push(
+      `Deposit: ${money(pricing.deposit.amount)}. ${pricing.deposit.note}`,
+    );
+
+  if (slug === "miami") parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
+
+  parts.push(
+    profile.path
+      ? `Page: ${profile.path}`
+      : "Page: none. This territory has no page on the site.",
+  );
+
+  return parts.join("\n\n");
+}
+
+/* ============================================================
+ * Topics
+ * ============================================================ */
+
+function topicPricing(): string {
+  return `# Pricing rules across territories
+
+Prices are per masquerader in US dollars. They vary by territory and by day, so always answer from the territory brief rather than from memory.
+
+- Getting dressed: ${money(GETTING_DRESSED_PRICE)} on its own, and free with any Glam Hub service. Trinidad, Jamaica and Miami only.
+- Barber: ${money(BARBER_PRICE)}. Trinidad and Jamaica only.
+- Bronzing: ${money(BRONZING_PRICE)}. Trinidad and Jamaica only.
+- Reels: Trinidad and Jamaica only. A paid add-on with no confirmed price. ${REELS_NOTE} There is no figure to quote, so never invent one.
+- Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader. Trinidad, Jamaica and Miami only.
+- Shuttle: an inclusion where it runs. It is never charged as an extra.
+- Road ready Carnival morning access: ${money(ROAD_READY_PRICE)}, where the territory offers it.
+
+${CHARGEABLE_SERVICES.join(", ")} are always charged. They are never included with a booking.`;
+}
+
+function topicServices(): string {
+  return `# Services
+
+- **Makeup**: sweat-resistant Carnival makeup by our trained artists. Available at every hub. Always charged. Page /services/carnival-makeup
+- **Hair**: styling and installs built to hold under a headpiece. Full Service hubs only, Trinidad, Jamaica and Miami. Always charged. Page /services/carnival-hair
+- **Photoshoot**: a shoot in costume before you hit the road. Available at every hub. Always charged. Page /services/carnival-photoshoot
+- **Getting dressed**: help into the costume, wires and headpiece. Trinidad, Jamaica and Miami only. ${money(GETTING_DRESSED_PRICE)} on its own, free with any Glam Hub service. Page /services/getting-dressed
+- **Shuttle**: transport from the hub. Where it runs it is an inclusion and is never charged. Not running in Miami this season. Page /services/carnival-shuttle
+- **Barber**: ${money(BARBER_PRICE)}, Trinidad and Jamaica only. Charged.
+- **Bronzing**: ${money(BRONZING_PRICE)}, Trinidad and Jamaica only. Charged.
+- **Reels**: Trinidad and Jamaica only. A paid add-on with no published price, confirmed by the booking team.
+- **Seamstress**: on-site costume repairs. Full Service hubs only. An inclusion where offered.
+- **Changing room**: available at every hub. An inclusion.
+- **Bag check**: ${DAY_BAG_CHECK}, free at every hub, space permitting. Overnight bag check is a separate paid add-on at ${money(OVERNIGHT_BAG_CHECK_PRICE)}, Trinidad, Jamaica and Miami only.`;
+}
+
+function topicBooking(): string {
+  return `# How booking works
+
+1. Pick your territory and your day on the booking platform: ${BOOKING_URL}
+2. Choose your services. Prices are per masquerader and shown at checkout.
+3. Pay the deposit. A ${money(50)} non-refundable deposit per masquerader confirms your slot. Nothing is held by enquiry, conversation or intention to pay.
+4. The balance is due before your service begins.
+
+Book 4 to 6 weeks ahead. Book earlier for Trinidad, Jamaica and Miami, where slots go two to three months out.
+
+You can also reach the booking team on WhatsApp at ${WHATSAPP_DISPLAY} (${WHATSAPP_URL}) or by email at ${CONTACT_EMAIL}. Estimate a total first with the booking calculator at /booking-calculator.`;
+}
+
+function policyClause(prefix: string): string | null {
+  for (const block of [...TERMS_BLOCKS, ...PRIVACY_BLOCKS]) {
+    for (const c of block.clauses ?? []) {
+      if (c.n === prefix) return c.body;
+    }
+  }
+  return null;
+}
+
+function topicPolicies(): string {
+  const cited = ["1.1", "1.2", "3.1", "3.2", "3.3", "4.1", "4.2"]
+    .map((n) => {
+      const body = policyClause(n);
+      return body ? `- ${n} ${body}` : null;
+    })
+    .filter(Boolean) as string[];
+
+  return `# Terms, refunds and privacy
+
+${EFFECTIVE_DATE}. The full text is published at /policies. Sections: ${POLICY_CONTENTS.map((c) => c.label).join(", ")}.
+
+Key clauses, quoted from the published policy:
+${cited.join("\n")}
+
+In plain terms:
+- The deposit is ${money(50)}, non-refundable, per masquerader, in every territory. It confirms the slot.
+- No refund inside 14 days of the Event.
+- No shows and same day cancellations forfeit everything paid.
+- One transfer per booking, to any Glam Hub event within 12 months, requested at least 3 days before the appointment. Transfers may cross territories.
+- Register 30 minutes before your appointment. There is a 15 minute grace period, after which the service may be shortened or cancelled. There is no cash late fee.
+- We may substitute an artist of equivalent standard.
+- Photo delivery times are indicative and are not a term of the booking.
+- Items left at the hub are left at your own risk.
+
+Read it in full at /policies. Privacy questions and data requests go to ${CONTACT_EMAIL}.`;
+}
+
+function topicPress(): string {
+  const top = PRESS_STORIES.filter(
+    (s) => s.tier === "hero" || s.tier === "feature",
+  );
+  const outlets = Array.from(new Set(PRESS_STORIES.map((s) => s.outlet)));
+  const lines = top.map(
+    (s) => `- ${s.headline}. ${s.outlet}, ${s.publishedDate}. ${s.url}`,
+  );
+  return `# Press coverage
+
+Carnival Glam Hub has been covered by ${sentenceList(outlets)}. There are ${PRESS_STORIES.length} verified stories in total, collected at /press.
+
+Lead coverage:
+${lines.join("\n")}
+
+Hard rule: press articles are historical. They describe a past season and never override current destination, price or season data. If an article and a territory brief disagree, the territory brief wins.`;
+}
+
+function topicStations(): string {
+  return `# Station rentals and vendor spaces
+
+Two separate offers, both at /station-rentals.
+
+## Station rental
+A station is for ${sentenceList(STATION_SERVICE_TYPES.map((s) => s.toLowerCase()))} only. Nothing else is offered.
+
+Rates per station per day:
+- ${TIER_LABEL.full} (${BOOKABLE_FULL_NAMES}): ${money(getTierRate("full").perDay)} per station per day, ${money(getTierRate("full").bothDays ?? 0)} for both days.
+- ${TIER_LABEL.lite} (${BOOKABLE_LITE_NAMES}): ${money(getTierRate("lite").perDay)} per station per day. There is no confirmed both-days rate, so multi-day is confirmed on enquiry.
+- Optional extra: high chair rental at ${money(HIGH_CHAIR_RATE_PER_DAY)} per day.
+
+Provided with a station:
+${bullets(STATION_PROVIDED)}
+
+The renter brings:
+${bullets(STATION_BRING)}
+
+Never promise mirrors, ring lights, product, assistants or Wi-Fi.
+
+## Vendor and merchandise space
+${VENDOR_SPACE_INTRO}
+
+Rate: ${money(VENDOR_SPACE_PER_DAY)} per day, ${money(VENDOR_SPACE_BOTH_DAYS)} for both days. The same flat rate at every Glam Hub, Full Service and Lite alike.
+
+A vendor space includes:
+${bullets(VENDOR_SPACE_INCLUDES)}
+
+${VENDOR_SPACE_NOTE}
+
+## Payment
+${STATION_PAYMENT_NOTE}
+
+Enquire at /station-rentals.`;
+}
+
+function topicEssentials(): string {
+  return `# What to bring on Carnival morning
+
+Your costume, your headpiece, your accessories, your boots or footwear, any personal beauty product you cannot do without, and a packed bag for the road. We provide everything else.
+
+Prep the night before: cleanse and moisturise the skin, avoid heavy actives in the 48 hours before, wash, deep condition and stretch the hair so it sits well under heat styling, sleep early and hydrate.
+
+Bring your headpiece to a hair appointment so the style is set around it.
+
+Our recommended kit is on our Amazon storefront, ${AMAZON_STORE_URL}, also browsable on the site at ${AMAZON_STORE_PATH}.
+
+${DAY_BAG_CHECK}, free at every hub, space permitting. Overnight bag check is a separate paid add-on at ${money(OVERNIGHT_BAG_CHECK_PRICE)} in Trinidad, Jamaica and Miami only. Items left at the hub are left at your own risk.`;
+}
+
+function topicAbout(): string {
+  const full = [...FULL_SERVICE_SLUGS].map((s) => getProfile(s)?.shortName ?? s);
+  const lite = [...LITE_SLUGS].map((s) => getProfile(s)?.shortName ?? s);
+  return `# About Carnival Glam Hub
+
+Founded in 2017 by Gabrielle Waite and Kibwe McGann, Carnival Glam Hub has served more than 15,000 masqueraders. We are band neutral and serve masqueraders from every band.
+
+The idea is simple. Instead of chasing an artist, a hotel room and a photographer on Carnival morning, everything happens in one location.
+
+We run two tiers. A ${TIER_LABEL.full}, in ${sentenceList(full)}, carries the widest service list on site. A ${TIER_LABEL.lite}, in ${sentenceList(lite)}, is a focused setup around makeup, a photoshoot, a changing room and refreshments. Epic Cruise is a cruise partnership rather than a hub.
+
+More at /about.`;
+}
+
+/* ============================================================
+ * Links
+ * ============================================================ */
+
+function buildLinks(): { label: string; url: string }[] {
+  const links: { label: string; url: string }[] = [];
+  for (const p of TERRITORY_PROFILES) {
+    if (!p.path) continue;
+    links.push({
+      label:
+        p.slug === "trinidad-carnival-2027"
+          ? "Trinidad Carnival 2027"
+          : p.name,
+      url: p.path,
+    });
+  }
+  links.push(
+    { label: "Carnival makeup", url: "/services/carnival-makeup" },
+    { label: "Carnival hair", url: "/services/carnival-hair" },
+    { label: "Carnival photoshoot", url: "/services/carnival-photoshoot" },
+    { label: "Getting dressed", url: "/services/getting-dressed" },
+    { label: "Carnival shuttle", url: "/services/carnival-shuttle" },
+    { label: "Frequently asked questions", url: "/faq" },
+    { label: "Terms and Policies", url: "/policies" },
+    { label: "Press coverage", url: "/press" },
+    { label: "About us", url: "/about" },
+    { label: "Reviews", url: "/reviews" },
+    { label: "Station rentals and vendor spaces", url: "/station-rentals" },
+    { label: "Booking calculator", url: "/booking-calculator" },
+    { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
+    { label: "Blog", url: "/blogs" },
+    {
+      label: "Best carnival makeup",
+      url: "/best-carnival-makeup",
+    },
+    {
+      label: "Best carnival makeup in Trinidad",
+      url: "/best-carnival-makeup-trinidad",
+    },
+    {
+      label: "Best carnival makeup in Jamaica",
+      url: "/best-carnival-makeup-jamaica",
+    },
+    { label: "Book now", url: BOOKING_URL },
+    { label: "WhatsApp us", url: WHATSAPP_URL },
+    { label: "Our Amazon storefront", url: AMAZON_STORE_URL },
+  );
+  return links;
+}
+
+/* ============================================================
+ * Guardrails
+ * ============================================================ */
+
+const NEVER_SAY = [
+  "GENX10",
+  "Any deposit figure other than US$50, which is the only deposit we take",
+  "Any lower deposit for Miami. Miami takes the same US$50 deposit as everywhere else.",
+  "Any discount code, promo code or voucher code of any kind",
+  "Any shuttle departure or pick-up time",
+  "Any promise that a specific named artist will do a booking",
+  "Any price for reels",
+  "Any price for bag delivery in Miami",
+  "Any date for Jamaica Carnival 2027",
+  "Any date for Atlanta Carnival",
+  "The word masos in prose. It may only ever appear inside a booking URL.",
+];
+
+const UNKNOWNS = [
+  "Jamaica Carnival 2027 dates",
+  "Atlanta Carnival dates and prices",
+  "Guyana prices",
+  "Tobago prices",
+  "The price of reels",
+  "The price of bag delivery in Miami",
+  "Exact appointment times and live availability",
+  "Territories we do not operate in",
+  "Our registered legal entity name",
+];
+
+/* ============================================================
+ * Composer
+ * ============================================================ */
+
+export function buildKnowledgePack(): KnowledgePack {
+  const territories: KnowledgePack["territories"] = {};
+  for (const slug of BOT_SLUGS) {
+    const p = getProfile(slug)!;
+    territories[slug] = {
+      name: p.name,
+      aliases: p.aliases,
+      path: p.path,
+      brief: buildBrief(slug),
+    };
+  }
+
+  return {
+    generatedAt: new Date().toISOString(),
+    brand: BRAND,
+    contact: {
+      whatsappUrl: WHATSAPP_URL,
+      whatsappDisplay: WHATSAPP_DISPLAY,
+      email: CONTACT_EMAIL,
+      bookingUrl: BOOKING_URL,
+      siteUrl: SITE_URL,
+      amazonUrl: AMAZON_STORE_URL,
+      amazonPath: AMAZON_STORE_PATH,
+    },
+    tiers: buildTiers(),
+    events: buildEvents(),
+    territories,
+    topics: {
+      pricing: topicPricing(),
+      services: topicServices(),
+      booking: topicBooking(),
+      policies: topicPolicies(),
+      press: topicPress(),
+      stations: topicStations(),
+      essentials: topicEssentials(),
+      about: topicAbout(),
+    },
+    links: buildLinks(),
+    neverSay: NEVER_SAY,
+    unknowns: UNKNOWNS,
+  };
+}
+
+/** Reels has no confirmed price by design. Referenced so it cannot be dropped. */
+export const REELS_PRICE_IS_NULL = REELS_PRICE === null;
