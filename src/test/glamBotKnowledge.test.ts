@@ -243,7 +243,9 @@ describe("group 3: knowledge questions", () => {
 describe("group 4: refusals have no material to answer from", () => {
   const cases: [string, string, string[]][] = [
     ["Brazil", "Do you operate in Brazil?", ["Brazil", "Rio", "Salvador"]],
-    ["a discount", "Can I get a US$50 discount?", ["discount code", "US$50 off"]],
+    // "discount code" appears in the NEVER SAY guardrail by design, so the
+    // check is for an actual offer rather than for the word.
+    ["a discount", "Can I get a US$50 discount?", ["US$50 off", "50% off", "discount of"]],
     ["a shuttle time", "Does the shuttle run at 02:17?", ["02:17", "2:17"]],
     [
       "a named artist",
@@ -303,8 +305,11 @@ describe("group 5: forbidden strings", () => {
   });
 
   it("no reels price anywhere", () => {
-    for (const line of serialised.split("\\n")) {
-      if (/reels/i.test(line)) expect(line).not.toMatch(/US\$\d/);
+    // Segment on clause boundaries, because a capability line can name
+    // reels alongside an unrelated priced service in the same sentence.
+    const segments = prose.split(/[,.\n]|\band\b/);
+    for (const seg of segments) {
+      if (/reels/i.test(seg)) expect(seg).not.toMatch(/US\$\d/);
     }
   });
 
