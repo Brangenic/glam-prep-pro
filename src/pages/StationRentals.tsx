@@ -27,6 +27,12 @@ import {
   STATION_TERRITORIES,
   STATION_TERRITORY_NOTES,
   CLOSED_STATION_TERRITORIES,
+  ENQUIRY_TYPES,
+  VENDOR_SPACE_BOTH_DAYS,
+  VENDOR_SPACE_INCLUDES,
+  VENDOR_SPACE_INTRO,
+  VENDOR_SPACE_NOTE,
+  VENDOR_SPACE_PER_DAY,
   formatStationRate,
   getStationInclusions,
   getTierRate,
@@ -35,7 +41,7 @@ import {
 
 const PAGE_TITLE = "Carnival Station Rental for Makeup Artists | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.";
+  "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces, in every Glam Hub territory.";
 const CANONICAL = "https://www.carnivalglamhub.com/station-rentals";
 const HERO_IMAGE = "/images/station-rentals/station-rentals-hero.webp";
 
@@ -195,11 +201,11 @@ const StationRentals = () => {
             Who station rental is <span className="italic text-gradient-primary">for</span>
           </h2>
           <p className="font-body text-base text-muted-foreground text-center max-w-2xl mx-auto mb-8 leading-relaxed">
-            Any independent Carnival service provider who wants a professional
-            room to work from on Carnival morning without renting and staffing
-            a venue of their own.
+            A station is a working chair for a makeup artist or a hair
+            stylist who wants a professional room to work from on Carnival
+            morning without renting and staffing a venue of their own.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 max-w-xl mx-auto">
             {STATION_SERVICE_TYPES.map((s) => (
               <div
                 key={s}
@@ -401,6 +407,72 @@ const StationRentals = () => {
 
 
 
+        {/* Vendor and merchandise spaces. A separate offer, never a station. */}
+        <section
+          id="vendor-spaces"
+          className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16 scroll-mt-28"
+        >
+          <div className="rounded-3xl border border-secondary/30 bg-secondary/5 p-6 sm:p-10">
+            <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3 text-center">
+              A separate offer
+            </p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-center">
+              Vendor and merchandise{" "}
+              <span className="italic text-gradient-primary">spaces</span>
+            </h2>
+            <p className="font-body text-base text-muted-foreground text-center max-w-2xl mx-auto mb-8 leading-relaxed">
+              {VENDOR_SPACE_INTRO}
+            </p>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-card/70 p-6 sm:p-8">
+                <h3 className="font-display text-xl font-bold mb-5">What you get</h3>
+                <ul className="space-y-2 font-body text-sm">
+                  {VENDOR_SPACE_INCLUDES.map((line) => (
+                    <li key={line} className="flex gap-2">
+                      <span aria-hidden="true" className="text-primary">
+                        •
+                      </span>
+                      <span className="text-muted-foreground">{line}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="font-body text-xs text-muted-foreground mt-5 leading-relaxed">
+                  {VENDOR_SPACE_NOTE}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border bg-card/70 p-6 sm:p-8">
+                <h3 className="font-display text-xl font-bold mb-5">Vendor space rates</h3>
+                <ul className="divide-y divide-border">
+                  <li className="py-3">
+                    <div className="font-body text-sm font-semibold">One day</div>
+                    <div className="font-body text-sm text-muted-foreground">
+                      US${VENDOR_SPACE_PER_DAY} per day
+                    </div>
+                  </li>
+                  <li className="py-3">
+                    <div className="font-body text-sm font-semibold">Both days</div>
+                    <div className="font-body text-sm text-muted-foreground">
+                      US${VENDOR_SPACE_BOTH_DAYS} for both days
+                    </div>
+                  </li>
+                </ul>
+                <p className="font-body text-sm text-muted-foreground mt-5 leading-relaxed">
+                  The same flat rate at every Glam Hub, Full Service and Glam
+                  Hub Lite alike. A vendor space is not a station and is not
+                  priced from the hub tier.
+                </p>
+                <a
+                  href="#enquiry"
+                  className="inline-block mt-6 bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
+                >
+                  Enquire about a vendor space
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
         {/* How it works */}
         <section className="container mx-auto px-4 sm:px-6 max-w-5xl mb-16">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">
@@ -466,11 +538,12 @@ const StationRentals = () => {
         {/* Enquiry form */}
         <section id="enquiry" className="container mx-auto px-4 sm:px-6 max-w-2xl mb-16 scroll-mt-28">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-center">
-            Enquire about a <span className="italic text-gradient-primary">station</span>
+            Enquire about a station or a{" "}
+            <span className="italic text-gradient-primary">vendor space</span>
           </h2>
           <p className="font-body text-base text-muted-foreground text-center mb-8 leading-relaxed">
-            Tell us what you do and where you want to work. We will come back to
-            you with availability and the rate for your territory.
+            Tell us which one you want, what you do and where. We will come back
+            to you with availability and the rate.
           </p>
           <EnquiryForm />
         </section>
@@ -521,6 +594,7 @@ const EnquiryForm = () => {
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [form, setForm] = useState({
+    enquiry_type: ENQUIRY_TYPES[0] as string,
     full_name: "",
     business_name: "",
     service_type: "",
@@ -535,10 +609,12 @@ const EnquiryForm = () => {
   const set = (key: keyof typeof form) => (value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
 
+  const isStation = form.enquiry_type === "Station rental";
+
   const validate = () => {
     const next: Record<string, string> = {};
     if (form.full_name.trim().length < 2) next.full_name = "Please enter your full name.";
-    if (!form.service_type) next.service_type = "Please choose your service.";
+    if (isStation && !form.service_type) next.service_type = "Please choose your service.";
     if (!form.territory) next.territory = "Please choose a territory.";
     if (!form.days_needed) next.days_needed = "Please choose the days you need.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim()))
@@ -556,7 +632,8 @@ const EnquiryForm = () => {
     const { error } = await supabase.from("station_rental_enquiries").insert({
       full_name: form.full_name.trim(),
       business_name: form.business_name.trim() || null,
-      service_type: form.service_type,
+      enquiry_type: form.enquiry_type,
+      service_type: isStation ? form.service_type : null,
       territory: form.territory,
       days_needed: form.days_needed,
       email: form.email.trim(),
@@ -578,7 +655,7 @@ const EnquiryForm = () => {
         <h3 className="font-display text-xl font-bold mb-3">Enquiry received</h3>
         <p className="font-body text-sm text-muted-foreground leading-relaxed">
           Thank you. Our team will come back to you with availability and the
-          station rate for your territory. If it is urgent, email{" "}
+          rate for your territory. If it is urgent, email{" "}
           <a href="mailto:Bookings@carnivalglamhub.com" className="text-primary hover:underline">
             Bookings@carnivalglamhub.com
           </a>
@@ -600,8 +677,34 @@ const EnquiryForm = () => {
       onSubmit={onSubmit}
       noValidate
       className="rounded-2xl border border-border bg-card/50 p-6 sm:p-8 space-y-5"
-      aria-label="Station rental enquiry"
+      aria-label="Station rental and vendor space enquiry"
     >
+      <fieldset>
+        <legend className={LABEL_CLASS}>What are you enquiring about?</legend>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {ENQUIRY_TYPES.map((t) => (
+            <label
+              key={t}
+              className={`flex items-center gap-3 rounded-xl border px-4 py-3 font-body text-sm cursor-pointer transition-colors ${
+                form.enquiry_type === t
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-primary/50"
+              }`}
+            >
+              <input
+                type="radio"
+                name="enquiry_type"
+                value={t}
+                checked={form.enquiry_type === t}
+                onChange={(e) => set("enquiry_type")(e.target.value)}
+                className="accent-current text-primary"
+              />
+              <span>{t}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
       <div>
         <label htmlFor="sr-name" className={LABEL_CLASS}>
           Full name
@@ -632,6 +735,7 @@ const EnquiryForm = () => {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
+        {isStation && (
         <div>
           <label htmlFor="sr-service" className={LABEL_CLASS}>
             Service type
@@ -653,6 +757,7 @@ const EnquiryForm = () => {
           </select>
           {err("service_type")}
         </div>
+        )}
         <div>
           <label htmlFor="sr-territory" className={LABEL_CLASS}>
             Territory
