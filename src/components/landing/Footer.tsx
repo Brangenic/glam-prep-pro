@@ -169,8 +169,10 @@ const Footer = () => (
             Legal
           </h4>
           <div className="space-y-2 font-body text-sm text-muted-foreground">
-            <p className="hover:text-foreground cursor-pointer transition-colors">Terms of Service</p>
-            <p className="hover:text-foreground cursor-pointer transition-colors">Privacy Policy</p>
+            <a href="/policies#terms" className="block hover:text-primary transition-colors">Terms of Service</a>
+            <a href="/policies#refunds" className="block hover:text-primary transition-colors">Refund Policy</a>
+            <a href="/policies#privacy" className="block hover:text-primary transition-colors">Privacy Policy</a>
+
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSfatcdkmAEaPDXcB1XY-GYASAtqZpYCjH3Q97sZOhm0CkujYg/viewform"
               target="_blank"
