@@ -189,6 +189,8 @@ const CarnivalPhotoshoot = () => {
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
               src="/images/services/photoshoot-hero.jpg"
+              width={1125}
+              height={1325}
               alt="Pre-road Carnival photoshoot at Saint Lucia Carnival by Carnival Glam Hub"
               loading="eager"
               decoding="async"
@@ -221,6 +223,8 @@ const CarnivalPhotoshoot = () => {
           <figure className="mb-8 -mx-4 sm:mx-0">
             <img
               src="/images/services/photoshoot-1.jpg"
+              width={1130}
+              height={1409}
               alt="Masquerader in full costume during a Carnival Glam Hub pre-road photoshoot"
               loading="lazy"
               decoding="async"
@@ -261,6 +265,8 @@ const CarnivalPhotoshoot = () => {
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
               src="/images/services/photoshoot-2.jpg"
+              width={1284}
+              height={1599}
               alt="Carnival costume portrait captured in the Carnival Glam Hub photoshoot garden"
               loading="lazy"
               decoding="async"
@@ -338,6 +344,8 @@ const CarnivalPhotoshoot = () => {
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
               src="/images/services/photoshoot-3.jpg"
+              width={1284}
+              height={1610}
               alt="Content-ready Carnival photoshoot before hitting the road, by Carnival Glam Hub"
               loading="lazy"
               decoding="async"

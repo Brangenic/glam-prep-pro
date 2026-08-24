@@ -164,6 +164,8 @@ const CarnivalHair = () => {
           <figure className="mb-12 -mx-4 sm:mx-0">
             <img
               src="/images/services/hair-hero.jpg"
+              width={1125}
+              height={1365}
               alt="Road-ready Carnival hair styling by Carnival Glam Hub"
               loading="eager"
               decoding="async"
@@ -299,6 +301,8 @@ const CarnivalHair = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <img
                 src="/images/services/hair-1.jpg"
+              width={1284}
+              height={1588}
                 alt="Sleek Carnival ponytail styled to sit under a headpiece, by Carnival Glam Hub"
                 loading="lazy"
                 decoding="async"
@@ -306,6 +310,8 @@ const CarnivalHair = () => {
               />
               <img
                 src="/images/services/hair-2.jpg"
+              width={1080}
+              height={1349}
                 alt="Masquerader Veronie with Carnival hair styled by Carnival Glam Hub"
                 loading="lazy"
                 decoding="async"
@@ -313,6 +319,8 @@ const CarnivalHair = () => {
               />
               <img
                 src="/images/services/hair-3.jpg"
+              width={1157}
+              height={1188}
                 alt="Braided Carnival hairstyle built to last through the road, by Carnival Glam Hub"
                 loading="lazy"
                 decoding="async"
