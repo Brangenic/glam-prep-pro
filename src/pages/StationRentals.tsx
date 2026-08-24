@@ -37,7 +37,7 @@ const PAGE_TITLE = "Carnival Station Rental for Makeup Artists | Glam Hub";
 const PAGE_DESCRIPTION =
   "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.";
 const CANONICAL = "https://www.carnivalglamhub.com/station-rentals";
-const HERO_IMAGE = "/images/services/makeup-hero.jpg";
+const HERO_IMAGE = "/images/station-rentals/station-rentals-hero.webp";
 
 /** Real Carnival Glam Hub footage from Trinidad. Wide cut and vertical short. */
 const HUB_VIDEO_WIDE = "HWFyXB1tyIU";
