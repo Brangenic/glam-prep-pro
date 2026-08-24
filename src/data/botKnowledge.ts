@@ -575,8 +575,8 @@ function buildLinks(): { label: string; url: string }[] {
 
 const NEVER_SAY = [
   "GENX10",
-  "US$25 deposit",
-  "Miami deposit of US$25",
+  "Any deposit figure other than US$50, which is the only deposit we take",
+  "Any lower deposit for Miami. Miami takes the same US$50 deposit as everywhere else.",
   "Any discount code, promo code or voucher code of any kind",
   "Any shuttle departure or pick-up time",
   "Any promise that a specific named artist will do a booking",
