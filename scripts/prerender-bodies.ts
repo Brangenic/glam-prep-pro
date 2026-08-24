@@ -54,6 +54,19 @@ import {
 import { hasSeasonPassed, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+import {
+  TERMS_BLOCKS,
+  PRIVACY_BLOCKS,
+  PRIVACY_TAILS,
+  TERMS_INTRO,
+  PRIVACY_INTRO,
+  STATION_CLAUSE_TEXT,
+  CONTENTS as POLICY_CONTENTS,
+  anchorFor as policyAnchorFor,
+  EFFECTIVE_DATE as POLICY_EFFECTIVE_DATE,
+  CONTACT_EMAIL as POLICY_CONTACT_EMAIL,
+  type Block as PolicyBlock,
+} from "../src/data/policies";
 
 const DIST = resolve("dist");
 const DEST_SRC = resolve("src/data/destinations.ts");
@@ -576,8 +589,68 @@ ${faqs}
 ${CTA}`;
 }
 
+// /policies. Every clause is derived from src/data/policies.ts, the same
+// module the React page renders from, so the static HTML and the runtime
+// render can never drift apart. Never paste policy copy in here.
+function policyBlockHtml(block: PolicyBlock): string {
+  const id = block.id ?? policyAnchorFor(block.heading);
+  const parts: string[] = [];
+  parts.push(
+    `<h3${id ? ` id="${id}"` : ""}>${escapeHtml(block.heading)}</h3>`,
+  );
+  for (const p of block.paragraphs ?? []) parts.push(`<p>${escapeHtml(p)}</p>`);
+  if (block.clauses?.length) {
+    const lis = block.clauses
+      .map((c) => {
+        const body =
+          c.body === "__STATION__"
+            ? `<a href="/station-rentals">Station rental</a>${escapeHtml(STATION_CLAUSE_TEXT.replace("Station rental", ""))}`
+            : escapeHtml(c.body);
+        return `<li><strong>${escapeHtml(c.n)}</strong> ${body}</li>`;
+      })
+      .join("");
+    parts.push(`<ul>${lis}</ul>`);
+  }
+  if (block.bullets?.length) {
+    parts.push(
+      `<ul>${block.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`,
+    );
+  }
+  const tail = PRIVACY_TAILS[block.heading];
+  if (tail) parts.push(`<p>${escapeHtml(tail)}</p>`);
+  return parts.join("\n");
+}
+
+function policiesBody(): string {
+  const contents = POLICY_CONTENTS.map(
+    (c) => `<li><a href="${c.href}">${escapeHtml(c.label)}</a></li>`,
+  ).join("");
+  return `<p>Our booking terms, refund and cancellation policy, and privacy policy. ${escapeHtml(POLICY_EFFECTIVE_DATE)}.</p>
+<nav aria-label="Contents"><h2>Contents</h2><ul>${contents}</ul></nav>
+<section id="terms">
+<h2>Terms of Service and Booking Policy</h2>
+${TERMS_INTRO.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n")}
+${TERMS_BLOCKS.map(policyBlockHtml).join("\n")}
+</section>
+<section id="privacy">
+<h2>Privacy Policy</h2>
+<p>${escapeHtml(POLICY_EFFECTIVE_DATE)}</p>
+${PRIVACY_INTRO.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n")}
+${PRIVACY_BLOCKS.map(policyBlockHtml).join("\n")}
+</section>
+<section id="contact-policies">
+<h2>Still have a question?</h2>
+<p>Write to us about a booking, these Terms or your privacy and we will come back to you: <a href="mailto:${POLICY_CONTACT_EMAIL}">${POLICY_CONTACT_EMAIL}</a>.</p>
+</section>
+${CTA}`;
+}
+
 function buildRouteMap(): Record<string, Content> {
   const map: Record<string, Content> = { ...CORE, ...SERVICES };
+  map["/policies"] = {
+    title: "Terms and Policies",
+    body: policiesBody(),
+  };
   map["/station-rentals"] = {
     title: "Rent a Station Inside the Carnival Glam Hub",
     body: `${stationRentalsBody()}\n${relatedBlock({
