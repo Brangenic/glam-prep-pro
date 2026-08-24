@@ -1,14 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const SUGGESTIONS = [
-  "What services do you offer?",
-  "Which destinations do you cover?",
-  "How do I book?",
+  "When is the next Glam Hub?",
+  "How much is makeup in Trinidad?",
+  "What is included in my booking?",
+  "Which locations are Glam Hub Lite?",
 ];
 
 async function streamChat({
@@ -71,6 +73,34 @@ const ChatWidget = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  // Internal paths navigate in the same tab, external links open in a new
+  // one. The real href stays set so middle-click, copy link and crawlers
+  // all keep working.
+  const markdownComponents = {
+    a: ({ href, children, ...rest }: { href?: string; children?: React.ReactNode }) => {
+      const target = href ?? "";
+      const isExternal = target.startsWith("http");
+      return (
+        <a
+          {...rest}
+          href={target}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          onClick={(e) => {
+            if (isExternal || !target.startsWith("/")) return;
+            e.preventDefault();
+            setOpen(false);
+            navigate(target);
+          }}
+          className="text-primary underline underline-offset-2 inline-block py-1 min-h-[2.25rem] sm:min-h-0 sm:py-0"
+        >
+          {children}
+        </a>
+      );
+    },
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
@@ -105,7 +135,7 @@ const ChatWidget = () => {
         onError: (msg) => {
           setMessages((p) => [
             ...p,
-            { role: "assistant", content: `⚠️ ${msg}` },
+            { role: "assistant", content: msg },
           ]);
           setLoading(false);
         },
@@ -134,7 +164,9 @@ const ChatWidget = () => {
       {/* Header */}
       <div className="flex items-center justify-between bg-primary px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-lg">✨</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-primary-foreground" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
           <span className="font-heading text-primary-foreground text-sm font-semibold">Glam Bot</span>
         </div>
         <button onClick={() => setOpen(false)} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors" aria-label="Close chat">
@@ -148,7 +180,7 @@ const ChatWidget = () => {
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-3">
         {messages.length === 0 && (
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Hi! I'm Glam Bot ✨ Ask me anything about our carnival glam services.</p>
+            <p className="text-sm text-muted-foreground">I am Glam Bot. Ask me about dates, prices, services or what is included at any Glam Hub.</p>
             <div className="flex flex-wrap gap-1.5">
               {SUGGESTIONS.map((s) => (
                 <button key={s} onClick={() => send(s)} className="text-xs rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-primary hover:bg-primary/10 transition-colors">
@@ -163,7 +195,7 @@ const ChatWidget = () => {
             <div className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${m.role === "user" ? "bg-primary text-primary-foreground rounded-br-md" : "bg-muted text-foreground rounded-bl-md"}`}>
               {m.role === "assistant" ? (
                 <div className="prose prose-sm max-w-none dark:prose-invert [&_p]:m-0 [&_ul]:my-1 [&_li]:my-0">
-                  <ReactMarkdown>{m.content}</ReactMarkdown>
+                  <ReactMarkdown components={markdownComponents}>{m.content}</ReactMarkdown>
                 </div>
               ) : (
                 m.content
@@ -192,7 +224,7 @@ const ChatWidget = () => {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about our services..."
+          placeholder="Ask about dates, prices or services"
           className="flex-1 rounded-full border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
           disabled={loading}
         />

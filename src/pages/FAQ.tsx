@@ -1,5 +1,6 @@
 import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -10,7 +11,7 @@ const PAGE_DESCRIPTION =
   "Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.";
 const CANONICAL = "https://www.carnivalglamhub.com/faq";
 
-const FAQS: Array<{ q: string; a: string }> = [
+const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string } }> = [
   {
     q: "What is included in a Carnival Glam Hub morning?",
     a: "It depends on the tier. A Full Service Glam Hub morning includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica, with the price confirmed on booking. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. A Glam Hub Lite morning includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments. Every package includes a confirmed time slot and on-site styling support until you leave for the road.",
@@ -53,15 +54,17 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "How do deposits and payments work?",
-    a: "A non-refundable deposit secures the slot. The balance is due before Carnival weekend. Major cards and bank transfer are accepted.",
+    a: "A non-refundable deposit of US$50 per masquerader confirms your appointment and is applied to the total price of your booking. No slot is held for you until the deposit is received. The balance is due in full before your service begins. Payment is taken through our booking platform.",
   },
   {
     q: "What is the cancellation policy?",
-    a: "Deposits are non-refundable. If you cancel more than 30 days before Carnival, the deposit can be transferred to another masquerader. Within 30 days, the full balance is owed.",
+    a: "A non-refundable deposit of US$50 per masquerader confirms every booking, in every territory. No refund is given if you cancel within 14 days of the event, and bookings made inside that window are non-refundable in full. No shows and same day cancellations forfeit all payments, with no transfer and no credit. A booking may be transferred once, to any Carnival Glam Hub event within 12 months, including to another territory, if requested at least 3 days before the event and subject to availability. Refunds are not permitted on any service or add-on under US$50. The full terms are published at /policies#refunds.",
+    link: { href: "/policies#refunds", label: "Read the full refund and cancellation terms" },
   },
   {
     q: "What happens if I am late on Carnival morning?",
-    a: "Carnival morning runs on a strict schedule. If you arrive late, your team will complete as much of the service as your remaining time allows. The full fee still applies.",
+    a: "Please register at the hub no later than 30 minutes before your appointment time. A 15 minute grace period applies. After that, your service may be shortened to fit the remaining time, or your appointment may be cancelled with payments forfeited. A shortened service is charged at the full booked price. There is no separate late fee. The full terms are published at /policies#terms.",
+    link: { href: "/policies#terms", label: "Read the full booking terms" },
   },
   {
     q: "What should I bring on Carnival day?",
@@ -180,7 +183,7 @@ const FAQ = () => {
           </header>
 
           <section aria-label="Frequently asked questions" className="space-y-3">
-            {FAQS.map(({ q, a }, i) => (
+            {FAQS.map(({ q, a, link }, i) => (
               <details
                 key={i}
                 className="group rounded-2xl border border-border bg-card p-5 sm:p-6 open:shadow-lg open:shadow-primary/5 transition-all"
@@ -202,6 +205,13 @@ const FAQ = () => {
                 <p className="font-body text-base text-muted-foreground leading-relaxed mt-4">
                   {a}
                 </p>
+                {link && (
+                  <p className="font-body text-base mt-3">
+                    <Link to={link.href} className="text-primary underline underline-offset-2">
+                      {link.label}
+                    </Link>
+                  </p>
+                )}
               </details>
             ))}
           </section>

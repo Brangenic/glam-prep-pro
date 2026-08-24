@@ -505,6 +505,12 @@ ${CTA}`,
 <p>You can, but Carnival makeup must survive heat, sweat, and hours on the road. Most masqueraders choose a professional for sweat-resistant, photo-ready results that last all day.</p>
 <h2>What is the difference between regular makeup and Carnival makeup?</h2>
 <p>Carnival makeup is built for endurance: sweat-resistant, long-wear, and designed for bright outdoor light and constant photography, unlike everyday makeup which is not made to last through a full day of dancing in the sun.</p>
+<h2>How do deposits and payments work?</h2>
+<p>A non-refundable deposit of US$50 per masquerader confirms your appointment and is applied to the total price of your booking. No slot is held for you until the deposit is received. The balance is due in full before your service begins. Payment is taken through our booking platform.</p>
+<h2>What is the cancellation policy?</h2>
+<p>A non-refundable deposit of US$50 per masquerader confirms every booking, in every territory. No refund is given if you cancel within 14 days of the event, and bookings made inside that window are non-refundable in full. No shows and same day cancellations forfeit all payments, with no transfer and no credit. A booking may be transferred once, to any Carnival Glam Hub event within 12 months, including to another territory, if requested at least 3 days before the event and subject to availability. Refunds are not permitted on any service or add-on under US$50. Read the full terms on our <a href="/policies#refunds">refund and cancellation policy</a>.</p>
+<h2>What happens if I am late on Carnival morning?</h2>
+<p>Please register at the hub no later than 30 minutes before your appointment time. A 15 minute grace period applies. After that, your service may be shortened to fit the remaining time, or your appointment may be cancelled with payments forfeited. A shortened service is charged at the full booked price. There is no separate late fee. Read the full <a href="/policies#terms">booking terms</a>.</p>
 ${CTA}`,
   },
   "/reviews": {
