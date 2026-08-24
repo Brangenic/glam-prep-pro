@@ -957,6 +957,8 @@ function rewriteHead(template: string, route: RouteMeta): string {
   const image = route.ogImage ?? DEFAULT_OG;
   const imageType = route.ogImage ? imageTypeFor(image) : DEFAULT_OG_TYPE;
   const ogType = route.ogType ?? "website";
+  const imageAlt = OG_IMAGE_ALT[route.path] ?? title;
+
 
   let html = template;
 
