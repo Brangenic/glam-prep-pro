@@ -240,18 +240,12 @@ const Policies = () => {
                   <p className="font-body text-sm text-muted-foreground/80 mb-4">
                     {EFFECTIVE_DATE}
                   </p>
-                  <p className="font-body text-base text-muted-foreground leading-[1.8] mb-3">
-                    Carnival Glam Hub is committed to protecting your personal
-                    information. This Privacy Policy explains what we collect,
-                    why we collect it, who we share it with and what choices you
-                    have.
-                  </p>
-                  <p className="font-body text-base text-muted-foreground leading-[1.8]">
-                    It applies to carnivalglamhub.com, to bookings made through
-                    our booking platform, and to information you give us by
-                    email, by WhatsApp, by social media or in person at one of
-                    our Hubs.
-                  </p>
+                  {PRIVACY_INTRO.map((p) => (
+                    <p key={p} className="font-body text-base text-muted-foreground leading-[1.8] mb-3">
+                      {p}
+                    </p>
+                  ))}
+
                 </div>
               </div>
 
