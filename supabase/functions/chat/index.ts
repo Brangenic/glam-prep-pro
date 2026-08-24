@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { buildSystemPrompt, type Msg, type Pack } from "./logic.ts";
+import knowledge from "./knowledge.json" with { type: "json" };
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,14 +14,14 @@ const corsHeaders = {
  * business facts of its own, and no logic either. All of the logic
  * lives in ./logic.ts so the Vitest suite can prove it.
  *
- * The pack is read and parsed at module scope rather than imported
- * with an import attribute, because a JSON import attribute needs a
- * recent Deno and this works on every version.
+ * The pack is imported as JSON, which is what gets it bundled and
+ * shipped with the function. Reading it with Deno.readTextFile does
+ * NOT work, because the deploy bundler only ships modules that are
+ * imported, so the file is absent from the deployed function. Verified
+ * against the deployed runtime on 24 August 2026.
  * ============================================================ */
 
-const pack: Pack = JSON.parse(
-  await Deno.readTextFile(new URL("./knowledge.json", import.meta.url)),
-);
+const pack = knowledge as unknown as Pack;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
