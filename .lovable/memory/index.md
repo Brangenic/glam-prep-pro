@@ -28,3 +28,4 @@ Blogs: NEVER generate AI images. Hero/body images must come only from the curate
 - [No AI Blog Images](mem://constraints/no-ai-blog-images) — Blog images must come only from user-provided pool, never AI-generated
 - [Blog Social-Share Image](mem://constraints/blog-social-share-image) — og:image must transcode article hero to 1200x630 JPEG, never serve generic logo
 - [Blog Content Standards](mem://constraints/blog-content-standards) — H2 styling, link colors, Amazon-link highlight, booking-CTA dedup, Wix cleanup
+- [Glam Bot Knowledge Sync](mem://constraints/glam-bot-knowledge-sync) — Bot knowledge generated from src/data, never hand-edit knowledge.json, resync in same change set
