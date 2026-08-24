@@ -114,6 +114,8 @@ const Footer = () => (
             <li><a href="/amazon-store" className="hover:text-primary transition-colors">Amazon Store</a></li>
             <li><a href="/booking-calculator" className="hover:text-primary transition-colors">Booking Calculator</a></li>
             <li><a href="/station-rentals" className="hover:text-primary transition-colors">Station rentals for artists</a></li>
+            <li><a href="/policies" className="hover:text-primary transition-colors">Terms and Policies</a></li>
+
           </ul>
         </div>
       </div>
