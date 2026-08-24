@@ -52,13 +52,12 @@ const ClauseBlock = ({ block }: { block: Block }) => (
                   >
                     Station rental
                   </a>
-                  s for independent service providers are a separate commercial
-                  arrangement and are governed by the station rental terms issued
-                  with the rental confirmation, not by this booking policy.
+                  {STATION_CLAUSE_TEXT.replace("Station rental", "")}
                 </>
               ) : (
                 c.body
               )}
+
             </span>
           </li>
         ))}
