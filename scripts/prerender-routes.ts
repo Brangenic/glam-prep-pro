@@ -1035,7 +1035,7 @@ function rewriteHead(template: string, route: RouteMeta): string {
   );
   html = html.replace(
     /<meta\s+name="twitter:image:alt"[^>]*>/i,
-    `<meta name="twitter:image:alt" content="${escapeAttr(title)}" />`,
+    `<meta name="twitter:image:alt" content="${escapeAttr(imageAlt)}" />`,
   );
   // twitter:card must be summary_large_image
   if (!/<meta\s+name="twitter:card"[^>]*>/i.test(html)) {
