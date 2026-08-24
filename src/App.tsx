@@ -131,7 +131,16 @@ const App = () => (
           <Route path="/thank-you" element={<BookingConfirmed />} />
           <Route path="/booking-calculator" element={<BookingCalculator />} />
           <Route path="/station-rentals" element={<StationRentals />} />
+          <Route path="/policies" element={<Policies />} />
+          <Route path="/terms" element={<Navigate to="/policies#terms" replace />} />
+          <Route path="/terms-and-conditions" element={<Navigate to="/policies#terms" replace />} />
+          <Route path="/refund-policy" element={<Navigate to="/policies#refunds" replace />} />
+          <Route path="/refunds" element={<Navigate to="/policies#refunds" replace />} />
+          <Route path="/cancellation-policy" element={<Navigate to="/policies#refunds" replace />} />
+          <Route path="/privacy" element={<Navigate to="/policies#privacy" replace />} />
+          <Route path="/privacy-policy" element={<Navigate to="/policies#privacy" replace />} />
           <Route path="/best-carnival-makeup-trinidad" element={<BestCarnivalMakeupTrinidad />} />
+
           <Route path="/best-carnival-makeup-jamaica" element={<BestCarnivalMakeupJamaica />} />
           <Route path="/best-carnival-makeup-miami" element={<BestCarnivalMakeupMiami />} />
           <Route path="*" element={<NotFound />} />
