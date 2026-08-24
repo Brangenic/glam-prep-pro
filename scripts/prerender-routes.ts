@@ -438,7 +438,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/station-rentals",
     title: "Carnival Station Rental for Makeup Artists | Glam Hub",
     description:
-      "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces, in every Glam Hub territory.",
+      "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces.",
     ogImage: `${BASE_URL}/images/station-rentals/station-rentals-hero.png`,
   },
   {

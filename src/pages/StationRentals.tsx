@@ -41,7 +41,7 @@ import {
 
 const PAGE_TITLE = "Carnival Station Rental for Makeup Artists | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces, in every Glam Hub territory.";
+  "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces.";
 const CANONICAL = "https://www.carnivalglamhub.com/station-rentals";
 const HERO_IMAGE = "/images/station-rentals/station-rentals-hero.webp";
 
