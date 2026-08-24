@@ -277,11 +277,12 @@ export type Database = {
           created_at: string
           days_needed: string
           email: string
+          enquiry_type: string
           full_name: string
           id: string
           instagram: string | null
           message: string | null
-          service_type: string
+          service_type: string | null
           territory: string
           whatsapp: string
         }
@@ -290,11 +291,12 @@ export type Database = {
           created_at?: string
           days_needed: string
           email: string
+          enquiry_type?: string
           full_name: string
           id?: string
           instagram?: string | null
           message?: string | null
-          service_type: string
+          service_type?: string | null
           territory: string
           whatsapp: string
         }
@@ -303,11 +305,12 @@ export type Database = {
           created_at?: string
           days_needed?: string
           email?: string
+          enquiry_type?: string
           full_name?: string
           id?: string
           instagram?: string | null
           message?: string | null
-          service_type?: string
+          service_type?: string | null
           territory?: string
           whatsapp?: string
         }

@@ -745,7 +745,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         {!seasonPassed && (
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-6 text-center">
           <p className="font-body text-sm text-muted-foreground">
-            Are you a makeup artist, stylist, barber or photographer working{" "}
+            Are you a makeup artist or hair stylist working{" "}
             {dest.shortName} Carnival?{" "}
             <a href="/station-rentals" className="text-primary hover:underline">
               Rent a station inside our Glam Hub
