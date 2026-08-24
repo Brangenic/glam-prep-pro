@@ -199,20 +199,12 @@ const Policies = () => {
                   <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4 leading-tight">
                     Terms of Service and Booking Policy
                   </h2>
-                  <p className="font-body text-base text-muted-foreground leading-[1.8] mb-3">
-                    These Terms govern every booking made with Carnival Glam Hub,
-                    whether made on carnivalglamhub.com, through our booking
-                    platform, by email, by WhatsApp or in person. By placing a
-                    booking you accept these Terms on behalf of yourself and
-                    anyone you book for.
-                  </p>
-                  <p className="font-body text-base text-muted-foreground leading-[1.8]">
-                    In these Terms, "we", "us" and "our" mean Carnival Glam Hub.
-                    "You" means the person making the booking. "Event" means the
-                    Carnival, festival or date for which the appointment is
-                    booked. "Hub" means the venue at which we operate on that
-                    date.
-                  </p>
+                  {TERMS_INTRO.map((p) => (
+                    <p key={p} className="font-body text-base text-muted-foreground leading-[1.8] mb-3">
+                      {p}
+                    </p>
+                  ))}
+
                 </div>
               </div>
 
