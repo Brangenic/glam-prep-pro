@@ -429,7 +429,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/station-rentals",
     title: "Carnival Station Rental for Makeup Artists | Glam Hub",
     description:
-      "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.",
+      "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces, in every Glam Hub territory.",
     ogImage: `${BASE_URL}/images/station-rentals/station-rentals-hero.png`,
   },
   {
@@ -830,16 +830,56 @@ function buildJsonLd(route: RouteMeta): object[] {
       areaServed: CARIBBEAN_AREAS,
       audience: {
         "@type": "BusinessAudience",
-        name: "Independent Carnival service providers: makeup artists, hair stylists, braiders, barbers, body-art and gem artists, lash techs and photographers",
+        name: "Independent Carnival makeup artists and hair stylists renting a station, and vendors selling Monday wear, costume accessories and merchandise from a vendor space",
       },
       offers: {
         "@type": "AggregateOffer",
         priceCurrency: "USD",
         lowPrice: String(STATION_RATE_LOW),
-        highPrice: String(STATION_RATE_HIGH),
-        offerCount: "3",
+        highPrice: String(Math.max(STATION_RATE_HIGH, VENDOR_SPACE_BOTH_DAYS)),
+        // Two station offers (Glam Hub Lite per day, Full Service per day),
+        // the Full Service both-days rate, and the two flat vendor space
+        // rates. Vendor space rates are flat and never tier-derived.
+        offerCount: "5",
         availability: "https://schema.org/InStock",
         url,
+        offers: [
+          {
+            "@type": "Offer",
+            name: "Station rental, Glam Hub Lite, per day",
+            price: String(STATION_RATE_LOW),
+            priceCurrency: "USD",
+            url,
+          },
+          {
+            "@type": "Offer",
+            name: "Station rental, Full Service Glam Hub, per day",
+            price: "250",
+            priceCurrency: "USD",
+            url,
+          },
+          {
+            "@type": "Offer",
+            name: "Station rental, Full Service Glam Hub, both days",
+            price: String(STATION_RATE_HIGH),
+            priceCurrency: "USD",
+            url,
+          },
+          {
+            "@type": "Offer",
+            name: "Vendor and merchandise space, per day",
+            price: String(VENDOR_SPACE_PER_DAY),
+            priceCurrency: "USD",
+            url: `${url}#vendor-spaces`,
+          },
+          {
+            "@type": "Offer",
+            name: "Vendor and merchandise space, both days",
+            price: String(VENDOR_SPACE_BOTH_DAYS),
+            priceCurrency: "USD",
+            url: `${url}#vendor-spaces`,
+          },
+        ],
       },
     });
     blocks.push(faqPage(STATION_FAQS.map((f) => ({ q: f.q, a: f.a }))));
@@ -848,7 +888,7 @@ function buildJsonLd(route: RouteMeta): object[] {
       "@type": "VideoObject",
       name: "Inside a Carnival Glam Hub in Trinidad",
       description:
-        "A look inside the Carnival Glam Hub in Trinidad on Carnival morning: the air-conditioned beauty lounge, the stations, reception and the room independent makeup artists, hair stylists, barbers, braiders, body-art artists, lash techs and photographers rent a station in.",
+        "A look inside the Carnival Glam Hub in Trinidad on Carnival morning: the air-conditioned beauty lounge, the stations, reception and the room independent makeup artists and hair stylists rent a station in.",
       thumbnailUrl: ["https://i.ytimg.com/vi/HWFyXB1tyIU/maxresdefault.jpg"],
       uploadDate: "2024-03-01T00:00:00-04:00",
       contentUrl: "https://www.youtube.com/watch?v=HWFyXB1tyIU",

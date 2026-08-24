@@ -753,7 +753,6 @@ const EnquiryForm = () => {
                 {s}
               </option>
             ))}
-            <option value="Other">Other</option>
           </select>
           {err("service_type")}
         </div>
