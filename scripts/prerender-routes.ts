@@ -95,11 +95,26 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
     "https://www.dropbox.com/scl/fi/x4z9o06d4h5ite4v2ph4g/Kayla.png?rlkey=o33o2vlxhcqidxgewnhp4wuh0&raw=1",
 };
 
+// Routes whose source art is a portrait illustration rather than a
+// landscape photograph. A cover crop would slice the figures' heads off,
+// so these are letterboxed ("contain") onto the brand warm-white canvas
+// with a gold rule along the bottom edge, which reads as deliberate.
+const OG_CONTAIN_ROUTES = new Set<string>(["/policies"]);
+
+/** Brand warm white, hsl(40 20% 97%) from src/index.css --background. */
+const OG_CANVAS = { r: 249, g: 248, b: 246, alpha: 1 };
+/** Brand gold, hsl(43 72% 50%) from src/index.css --primary. */
+const OG_RULE_HEX = "#dba724";
+
 function slugForRoute(path: string): string {
   return path.replace(/^\//, "").replace(/\//g, "-");
 }
 
-async function transcodeOgImage(slug: string, source: string): Promise<string | null> {
+async function transcodeOgImage(
+  slug: string,
+  source: string,
+  mode: "cover" | "contain" = "cover",
+): Promise<string | null> {
   try {
     const outDir = join(DIST, "og");
     mkdirSync(outDir, { recursive: true });
@@ -126,11 +141,29 @@ async function transcodeOgImage(slug: string, source: string): Promise<string | 
       if (!res.ok) return null;
       buf = Buffer.from(await res.arrayBuffer());
     }
-    await sharp(buf)
-      .resize(OG_W, OG_H, { fit: "cover", position: "centre" })
-      .jpeg({ quality: 85, mozjpeg: true })
-      .toFile(outFile);
+    if (mode === "contain") {
+      const RULE_H = 14;
+      const rule = Buffer.from(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_W}" height="${RULE_H}"><rect width="${OG_W}" height="${RULE_H}" fill="${OG_RULE_HEX}"/></svg>`,
+      );
+      await sharp(buf)
+        .resize(OG_W, OG_H - RULE_H, {
+          fit: "contain",
+          background: OG_CANVAS,
+        })
+        .extend({ bottom: RULE_H, background: OG_CANVAS })
+        .composite([{ input: rule, top: OG_H - RULE_H, left: 0 }])
+        .flatten({ background: OG_CANVAS })
+        .jpeg({ quality: 85, mozjpeg: true })
+        .toFile(outFile);
+    } else {
+      await sharp(buf)
+        .resize(OG_W, OG_H, { fit: "cover", position: "centre" })
+        .jpeg({ quality: 85, mozjpeg: true })
+        .toFile(outFile);
+    }
     return `${BASE_URL}/og/route-${slug}.jpg`;
+
   } catch (err) {
     console.warn(`prerender-routes: og transcode failed for ${slug}:`, err);
     return null;
