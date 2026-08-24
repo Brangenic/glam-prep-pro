@@ -38,12 +38,14 @@ import {
   getHubTier,
   MIAMI_LOGISTICS_SUMMARY,
   REELS_NOTE,
+  SHUTTLE_TERRITORIES,
 } from "@/data/hubTiers";
 import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
   OVERNIGHT_BAG_CHECK_PRICE,
   REELS_PRICE,
+  TERRITORY_PRICING,
   getTerritoryPricing,
   type DayKey,
   type QuoteProduct,
@@ -58,8 +60,6 @@ import {
 } from "@/data/policies";
 import { PRESS_STORIES } from "@/data/pressCoverage";
 import {
-  BOOKABLE_FULL_NAMES,
-  BOOKABLE_LITE_NAMES,
   HIGH_CHAIR_RATE_PER_DAY,
   STATION_BRING,
   STATION_PAYMENT_NOTE,
@@ -78,6 +78,17 @@ const BRONZING_PRICE = 160;
 
 /** Road ready access, the Carnival morning access product. */
 const ROAD_READY_PRICE = 35;
+
+/**
+ * The only deposit we take, read out of published Terms clause 1.1 so
+ * the figure can never drift from the policy text.
+ */
+const POLICY_DEPOSIT = (() => {
+  const clause = policyClause("1.1") ?? "";
+  const m = clause.match(/US\$(\d+)/);
+  if (!m) throw new Error("Terms clause 1.1 no longer states a deposit figure.");
+  return Number(m[1]);
+})();
 
 export type KnowledgeEvent = {
   slug: string;
@@ -174,6 +185,26 @@ function capabilityLines(slug: string): string[] {
       `Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader, a paid add-on and never an inclusion.`,
     );
   return lines;
+}
+
+/**
+ * The deposit is a policy fact, not a price-list fact. Published Terms
+ * clause 1.1 applies it per masquerader in every territory, so every
+ * brief carries it whether or not `territoryPricing` holds a note.
+ */
+function depositLine(pricing: TerritoryPricing | undefined): string {
+  const base = `Deposit: ${money(POLICY_DEPOSIT)} non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.`;
+  return pricing?.deposit ? `${base} ${pricing.deposit.note}` : base;
+}
+
+/** Lowest published hair price across Full Service hubs. Derived, never typed. */
+function hairFloor(): number | null {
+  const prices = TERRITORY_PRICING.filter(
+    (t) => t.quotable && (FULL_SERVICE_SLUGS as readonly string[]).includes(t.slug),
+  ).flatMap((t) =>
+    t.products.filter((p) => p.tags.includes("hair") && !p.premium).map((p) => p.price),
+  );
+  return prices.length ? Math.min(...prices) : null;
 }
 
 /* ============================================================
@@ -322,11 +353,17 @@ function buildBrief(slug: string): string {
 
   if (free.length) parts.push(`## Free with any booking here\n${bullets(free)}`);
 
-  parts.push(
-    caps.length
-      ? `## Also available here\n${bullets(caps)}`
-      : "## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.",
-  );
+  if (!tier) {
+    parts.push(
+      "## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner at booking, so never list inclusions for it.",
+    );
+  } else {
+    parts.push(
+      caps.length
+        ? `## Also available here\n${bullets(caps)}`
+        : "## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.",
+    );
+  }
 
   parts.push(
     pricing?.roadReady
@@ -334,10 +371,7 @@ function buildBrief(slug: string): string {
       : "Road ready Carnival morning access and getting dressed are not offered at this hub.",
   );
 
-  if (pricing?.deposit)
-    parts.push(
-      `Deposit: ${money(pricing.deposit.amount)}. ${pricing.deposit.note}`,
-    );
+  parts.push(depositLine(pricing));
 
   if (slug === "miami") parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
 
@@ -374,10 +408,10 @@ function topicServices(): string {
   return `# Services
 
 - **Makeup**: sweat-resistant Carnival makeup by our trained artists. Available at every hub. Always charged. Page /services/carnival-makeup
-- **Hair**: styling and installs built to hold under a headpiece. Full Service hubs only, Trinidad, Jamaica and Miami. Always charged. Page /services/carnival-hair
+- **Hair**: styling and installs built to hold under a headpiece. Full Service hubs only, Trinidad, Jamaica and Miami. Always charged, from ${money(hairFloor() ?? 0)} depending on the style and the territory. Page /services/carnival-hair
 - **Photoshoot**: a shoot in costume before you hit the road. Available at every hub. Always charged. Page /services/carnival-photoshoot
 - **Getting dressed**: help into the costume, wires and headpiece. Trinidad, Jamaica and Miami only. ${money(GETTING_DRESSED_PRICE)} on its own, free with any Glam Hub service. Page /services/getting-dressed
-- **Shuttle**: transport from the hub. Where it runs it is an inclusion and is never charged. Not running in Miami this season. Page /services/carnival-shuttle
+- **Shuttle**: transport from the hub. ${sentenceList(SHUTTLE_TERRITORIES)} only. Where it runs it is an inclusion and is never charged. Not running in Miami this season. Page /services/carnival-shuttle
 - **Barber**: ${money(BARBER_PRICE)}, Trinidad and Jamaica only. Charged.
 - **Bronzing**: ${money(BRONZING_PRICE)}, Trinidad and Jamaica only. Charged.
 - **Reels**: Trinidad and Jamaica only. A paid add-on with no published price, confirmed by the booking team.
@@ -455,17 +489,21 @@ Hard rule: press articles are historical. They describe a past season and never 
 }
 
 function topicStations(): string {
+  const full = [...FULL_SERVICE_SLUGS].map((sl) => getProfile(sl)?.shortName ?? sl);
+  const lite = [...LITE_SLUGS].map((sl) => getProfile(sl)?.shortName ?? sl);
   return `# Station rentals and vendor spaces
 
 Two separate offers, both at /station-rentals.
 
 ## Station rental
-A station is for ${sentenceList(STATION_SERVICE_TYPES.map((s) => s.toLowerCase()))} only. Nothing else is offered.
+A station is for ${sentenceList(STATION_SERVICE_TYPES.map((t) => t.toLowerCase()))} only. Nothing else is offered.
 
-Rates per station per day:
-- ${TIER_LABEL.full} (${BOOKABLE_FULL_NAMES}): ${money(getTierRate("full").perDay)} per station per day, ${money(getTierRate("full").bothDays ?? 0)} for both days.
-- ${TIER_LABEL.lite} (${BOOKABLE_LITE_NAMES}): ${money(getTierRate("lite").perDay)} per station per day. There is no confirmed both-days rate, so multi-day is confirmed on enquiry.
+Rates are set by the tier of the hub, as a rule rather than a list:
+- ${TIER_LABEL.full} (${sentenceList(full)}): ${money(getTierRate("full").perDay)} per station per day, ${money(getTierRate("full").bothDays ?? 0)} for both days.
+- ${TIER_LABEL.lite} (${sentenceList(lite)}): ${money(getTierRate("lite").perDay)} per station per day. There is no confirmed both-days rate, so multi-day is confirmed on enquiry.
 - Optional extra: high chair rental at ${money(HIGH_CHAIR_RATE_PER_DAY)} per day.
+
+A station can only be rented in a territory whose Carnival is still ahead of us. Read the season status for a territory from the FACTS block, never from this list.
 
 Provided with a station:
 ${bullets(STATION_PROVIDED)}
@@ -551,16 +589,16 @@ function buildLinks(): { label: string; url: string }[] {
     { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
     { label: "Blog", url: "/blogs" },
     {
-      label: "Best carnival makeup",
-      url: "/best-carnival-makeup",
-    },
-    {
       label: "Best carnival makeup in Trinidad",
       url: "/best-carnival-makeup-trinidad",
     },
     {
       label: "Best carnival makeup in Jamaica",
       url: "/best-carnival-makeup-jamaica",
+    },
+    {
+      label: "Best carnival makeup in Miami",
+      url: "/best-carnival-makeup-miami",
     },
     { label: "Book now", url: BOOKING_URL },
     { label: "WhatsApp us", url: WHATSAPP_URL },
