@@ -366,8 +366,16 @@ const staticRoutes: RouteMeta[] = [
     title: "Carnival Station Rental for Makeup Artists | Glam Hub",
     description:
       "Rent a station inside a Carnival Glam Hub. MUA, hair stylist, barber, braider and body-art station rental from US$200 per day, in every Glam Hub territory with a season still to come.",
-    ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
+    ogImage: `${BASE_URL}/images/station-rentals/station-rentals-hero.png`,
   },
+  {
+    path: "/policies",
+    title: "Terms, Refund Policy and Privacy Policy | Carnival Glam Hub",
+    description:
+      "Carnival Glam Hub booking terms, deposit and refund policy, cancellation and transfer rules, referral programme terms and privacy policy. Effective 24 August 2026.",
+    ogImage: `${BASE_URL}/images/policies/refund-policy.png`,
+  },
+
   {
     path: "/blogs",
     title: "Carnival Beauty and Travel Journal | Carnival Glam Hub",
