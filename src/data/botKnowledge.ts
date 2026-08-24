@@ -425,7 +425,7 @@ function topicBooking(): string {
 
 1. Pick your territory and your day on the booking platform: ${BOOKING_URL}
 2. Choose your services. Prices are per masquerader and shown at checkout.
-3. Pay the deposit. A ${money(50)} non-refundable deposit per masquerader confirms your slot. Nothing is held by enquiry, conversation or intention to pay.
+3. Pay the deposit. A ${money(POLICY_DEPOSIT)} non-refundable deposit per masquerader confirms your slot. Nothing is held by enquiry, conversation or intention to pay.
 4. The balance is due before your service begins.
 
 Book 4 to 6 weeks ahead. Book earlier for Trinidad, Jamaica and Miami, where slots go two to three months out.
@@ -458,7 +458,7 @@ Key clauses, quoted from the published policy:
 ${cited.join("\n")}
 
 In plain terms:
-- The deposit is ${money(50)}, non-refundable, per masquerader, in every territory. It confirms the slot.
+- The deposit is ${money(POLICY_DEPOSIT)}, non-refundable, per masquerader, in every territory. It confirms the slot.
 - No refund inside 14 days of the Event.
 - No shows and same day cancellations forfeit everything paid.
 - One transfer per booking, to any Glam Hub event within 12 months, requested at least 3 days before the appointment. Transfers may cross territories.
