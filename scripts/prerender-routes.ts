@@ -19,7 +19,13 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
 import sharp from "sharp";
-import { STATION_FAQS, STATION_RATE_HIGH, STATION_RATE_LOW } from "../src/data/stationRentals";
+import {
+  STATION_FAQS,
+  STATION_RATE_HIGH,
+  STATION_RATE_LOW,
+  VENDOR_SPACE_BOTH_DAYS,
+  VENDOR_SPACE_PER_DAY,
+} from "../src/data/stationRentals";
 import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta } from "../src/data/seasons";
 import {
   MIAMI_VENUE_NAME,
