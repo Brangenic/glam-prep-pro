@@ -464,8 +464,8 @@ Two separate offers, both at /station-rentals.
 A station is for ${sentenceList(STATION_SERVICE_TYPES.map((s) => s.toLowerCase()))} only. Nothing else is offered.
 
 Rates per station per day:
-- Full Service Glam Hub (${sentenceList(BOOKABLE_FULL_NAMES)}): ${money(STATION_RATE_LOW + 50)} per day, ${money(STATION_RATE_HIGH)} for both days.
-- Glam Hub Lite (${sentenceList(BOOKABLE_LITE_NAMES)}): ${money(STATION_RATE_LOW)} per station per day. There is no confirmed both-days rate, so multi-day is confirmed on enquiry.
+- ${TIER_LABEL.full} (${BOOKABLE_FULL_NAMES}): ${money(getTierRate("full").perDay)} per station per day, ${money(getTierRate("full").bothDays ?? 0)} for both days.
+- ${TIER_LABEL.lite} (${BOOKABLE_LITE_NAMES}): ${money(getTierRate("lite").perDay)} per station per day. There is no confirmed both-days rate, so multi-day is confirmed on enquiry.
 - Optional extra: high chair rental at ${money(HIGH_CHAIR_RATE_PER_DAY)} per day.
 
 Provided with a station:
