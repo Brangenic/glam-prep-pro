@@ -91,6 +91,8 @@ const AmazonStore = () => {
                 <img
                   src={amazonLogo}
                   alt="Amazon logo"
+                  width={603}
+                  height={182}
                   className="h-5 w-auto opacity-70"
                   loading="lazy"
                 />

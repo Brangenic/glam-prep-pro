@@ -122,7 +122,7 @@ const Footer = () => (
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
         <div className="col-span-2 sm:col-span-1">
           <a href="/" className="inline-flex mb-4" aria-label="Carnival Glam Hub home">
-            <img src={brandLogo} alt="Carnival Glam Hub" className="h-14 w-auto sm:h-16" loading="lazy" />
+            <img src={brandLogo} alt="Carnival Glam Hub" width={1318} height={1225} className="h-14 w-auto sm:h-16" loading="lazy" />
           </a>
           <p className="font-body text-sm text-muted-foreground leading-relaxed">
             Premium carnival morning preparation since 2017.
