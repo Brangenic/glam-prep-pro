@@ -1098,7 +1098,12 @@ async function main() {
   for (const route of allRoutes) {
     const source = ROUTE_HERO_SOURCES[route.path];
     if (!source) continue;
-    const transcoded = await transcodeOgImage(slugForRoute(route.path), source);
+    const transcoded = await transcodeOgImage(
+      slugForRoute(route.path),
+      source,
+      OG_CONTAIN_ROUTES.has(route.path) ? "contain" : "cover",
+    );
+
     if (transcoded) route.ogImage = transcoded;
   }
 
