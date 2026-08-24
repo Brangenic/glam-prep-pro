@@ -658,9 +658,24 @@ function buildJsonLd(route: RouteMeta): object[] {
       "/booking-calculator": "Quote Calculator",
       "/station-rentals": "Station Rentals",
       "/blogs": "Journal",
+      "/policies": "Terms and Policies",
     };
     blocks.push(homeCrumb(NAME[route.path] ?? route.title, route.path));
   }
+
+  // 1b) /policies: a plain WebPage node. No FAQPage here on purpose.
+  if (route.path === "/policies") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Terms and Policies",
+      url,
+      description: route.description,
+      dateModified: "2026-08-24",
+      publisher: PROVIDER,
+    });
+  }
+
 
   // 2) Service node for /services/* and destinations.
   if (route.path.startsWith("/services/")) {
