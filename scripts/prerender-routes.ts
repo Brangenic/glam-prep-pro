@@ -1003,7 +1003,7 @@ function rewriteHead(template: string, route: RouteMeta): string {
   );
   html = html.replace(
     /<meta\s+property="og:image:alt"[^>]*>/i,
-    `<meta property="og:image:alt" content="${escapeAttr(title)}" />`,
+    `<meta property="og:image:alt" content="${escapeAttr(imageAlt)}" />`,
   );
 
   // og:image:type — match the real file extension for custom hero images.
