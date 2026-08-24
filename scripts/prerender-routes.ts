@@ -106,6 +106,70 @@ const OG_CANVAS = { r: 249, g: 248, b: 246, alpha: 1 };
 /** Brand gold, hsl(43 72% 50%) from src/index.css --primary. */
 const OG_RULE_HEX = "#dba724";
 
+// og:image:alt / twitter:image:alt. Where a route ships a real photograph
+// or illustration, describe the picture rather than repeating the title.
+// Routes not listed here fall back to the page title.
+const OG_IMAGE_ALT: Record<string, string> = {
+  "/jamaica":
+    "Masquerader in a Jamaica Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/saint-lucia":
+    "Masquerader in a Saint Lucia Carnival costume with Carnival Glam Hub makeup and headpiece",
+  "/antigua":
+    "Masquerader in an Antigua Carnival costume with Carnival Glam Hub makeup",
+  "/grenada":
+    "Masquerader in a Grenada Spicemas costume with Carnival Glam Hub makeup",
+  "/barbados":
+    "Masquerader in a Barbados Crop Over costume with Carnival Glam Hub makeup",
+  "/miami":
+    "Masquerader in a Miami Carnival costume with Carnival Glam Hub makeup",
+  "/toronto":
+    "Masquerader in a Toronto Caribana costume with Carnival Glam Hub makeup",
+  "/trinidad":
+    "Masquerader in a Trinidad Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/tobago":
+    "Masquerader in Carnival costume with Carnival Glam Hub makeup for Tobago Carnival",
+  "/guyana":
+    "Masquerader in Carnival costume with Carnival Glam Hub makeup for Guyana Carnival",
+  "/epic-cruise":
+    "Masquerader glammed by Carnival Glam Hub aboard the EPIC Carnival Experience cruise",
+  "/trinidad-carnival-2027":
+    "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub for the 2027 season",
+  "/services/carnival-makeup":
+    "Carnival Glam Hub artist applying sweat-resistant Carnival makeup to a masquerader",
+  "/services/carnival-hair":
+    "Carnival Glam Hub stylist setting a headpiece-ready Carnival hairstyle",
+  "/services/carnival-photoshoot":
+    "Masquerader photographed in full Carnival costume at a Carnival Glam Hub photoshoot",
+  "/services/getting-dressed":
+    "Carnival Glam Hub team fitting a masquerader into a wire-bra Carnival costume",
+  "/services/carnival-shuttle":
+    "Masqueraders leaving the Carnival Glam Hub lounge for the Carnival shuttle",
+  "/about":
+    "Carnival Glam Hub artist at work on a masquerader on Carnival morning",
+  "/faq":
+    "Carnival Glam Hub stylist finishing a masquerader's Carnival hair in the lounge",
+  "/reviews":
+    "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team",
+  "/blogs":
+    "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team",
+  "/amazon-store":
+    "Professional Carnival makeup products laid out at a Carnival Glam Hub station",
+  "/booking-calculator":
+    "Carnival Glam Hub artist applying Carnival makeup at a lounge station",
+  "/station-rentals":
+    "Carnival Glam Hub makeup station rentals, a gold branded director's chair beside a lit vanity of professional makeup products",
+  "/policies":
+    "Illustration of two Glam Hub team members reviewing a refund request form",
+  "/best-carnival-makeup-trinidad":
+    "Masquerader in a Trinidad Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/best-carnival-makeup-jamaica":
+    "Masquerader in a Jamaica Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/best-carnival-makeup-miami":
+    "Masquerader in a Miami Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+};
+
+
+
 function slugForRoute(path: string): string {
   return path.replace(/^\//, "").replace(/\//g, "-");
 }
