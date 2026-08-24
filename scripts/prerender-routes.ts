@@ -89,6 +89,7 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/amazon-store": "/images/services/makeup-hero.jpg",
   "/booking-calculator": "/images/services/makeup-hero.jpg",
   "/station-rentals": "/images/station-rentals/station-rentals-hero.png",
+  "/press": "/images/services/photoshoot-hero.jpg",
   // Portrait illustration: letterboxed onto the brand warm-white canvas
   // (see OG_CONTAIN_ROUTES) so the figures are never cropped.
   "/policies": "/images/policies/refund-policy.png",
@@ -158,6 +159,8 @@ const OG_IMAGE_ALT: Record<string, string> = {
     "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team",
   "/blogs":
     "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team",
+  "/press":
+    "Masquerader in full Carnival costume photographed by the Carnival Glam Hub team on Carnival morning",
   "/amazon-store":
     "Professional Carnival makeup products laid out at a Carnival Glam Hub station",
   "/booking-calculator":

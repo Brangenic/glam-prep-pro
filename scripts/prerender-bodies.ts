@@ -48,6 +48,12 @@ import {
   HIGH_CHAIR_RATE_LABEL,
   CLIENT_AMENITIES_NOTE,
   STATION_TERRITORY_NOTES,
+  VENDOR_SPACE_BOTH_DAYS,
+  VENDOR_SPACE_INCLUDES,
+  VENDOR_SPACE_INTRO,
+  VENDOR_SPACE_NOTE,
+  VENDOR_SPACE_PER_DAY,
+  VENDOR_SPACE_RATE_LABEL,
   formatStationRate,
   getStationInclusions,
 } from "../src/data/stationRentals";
@@ -549,6 +555,7 @@ function stationRentalsBody(): string {
 
   return `<p>Rent a station inside a Carnival Glam Hub for Carnival morning. You bring your kit and your clients. We bring the location, the air-conditioned lounge, reception and the crowd. Stations are available in every Glam Hub territory, Full Service and Glam Hub Lite.</p>
 <h2>Who station rental is for</h2>
+<p>A station is a working chair for a makeup artist or a hair stylist. No other provider type is offered.</p>
 <ul>${STATION_SERVICE_TYPES.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul>
 <h2>What a station actually is</h2>
 <p>The station spec is identical in every territory, Full Service and Glam Hub Lite alike. Providers bring their own products, tools and consumables.</p>
@@ -573,6 +580,14 @@ function stationRentalsBody(): string {
 <ul>${rateRows(FULL_SERVICE_STATION_TERRITORIES)}</ul>
 <h3>Glam Hub Lite</h3>
 <ul>${rateRows(LITE_STATION_TERRITORIES)}</ul>
+<h2>Vendor and merchandise spaces</h2>
+<p>${escapeHtml(VENDOR_SPACE_INTRO)}</p>
+<h3>What you get</h3>
+<ul>${VENDOR_SPACE_INCLUDES.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul>
+<p>${escapeHtml(VENDOR_SPACE_NOTE)}</p>
+<h3>Vendor space rates</h3>
+<ul><li>US$${VENDOR_SPACE_PER_DAY} per day</li><li>US$${VENDOR_SPACE_BOTH_DAYS} for both days</li></ul>
+<p>${escapeHtml(VENDOR_SPACE_RATE_LABEL)} A vendor space is not a station and is not priced from the hub tier.</p>
 <h2>How it works</h2>
 <ol>
   <li>Enquire with your service, your territory and the days you want.</li>
@@ -585,7 +600,7 @@ function stationRentalsBody(): string {
 <p>The venue is already booked and staffed, masqueraders are already coming through the door, and there is a receptionist checking your clients in, so you are not managing the door from your chair. You keep your own bookings and your own prices.</p>
 <h2>Station rental questions</h2>
 ${faqs}
-<p><a href="/station-rentals#enquiry">Enquire about a station</a></p>
+<p><a href="/station-rentals#enquiry">Enquire about a station</a> or <a href="/station-rentals#vendor-spaces">a vendor and merchandise space</a>.</p>
 ${CTA}`;
 }
 
