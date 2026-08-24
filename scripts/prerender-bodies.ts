@@ -592,8 +592,11 @@ ${CTA}`;
 // /policies. Every clause is derived from src/data/policies.ts, the same
 // module the React page renders from, so the static HTML and the runtime
 // render can never drift apart. Never paste policy copy in here.
-function policyBlockHtml(block: PolicyBlock): string {
-  const id = block.id ?? policyAnchorFor(block.heading);
+function policyBlockHtml(
+  block: PolicyBlock,
+  scope: "terms" | "privacy" = "terms",
+): string {
+  const id = block.id ?? policyAnchorFor(block.heading, scope);
   const parts: string[] = [];
   parts.push(
     `<h3${id ? ` id="${id}"` : ""}>${escapeHtml(block.heading)}</h3>`,
@@ -630,13 +633,13 @@ function policiesBody(): string {
 <section id="terms">
 <h2>Terms of Service and Booking Policy</h2>
 ${TERMS_INTRO.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n")}
-${TERMS_BLOCKS.map(policyBlockHtml).join("\n")}
+${TERMS_BLOCKS.map((b) => policyBlockHtml(b, "terms")).join("\n")}
 </section>
 <section id="privacy">
 <h2>Privacy Policy</h2>
 <p>${escapeHtml(POLICY_EFFECTIVE_DATE)}</p>
 ${PRIVACY_INTRO.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n")}
-${PRIVACY_BLOCKS.map(policyBlockHtml).join("\n")}
+${PRIVACY_BLOCKS.map((b) => policyBlockHtml(b, "privacy")).join("\n")}
 </section>
 <section id="contact-policies">
 <h2>Still have a question?</h2>

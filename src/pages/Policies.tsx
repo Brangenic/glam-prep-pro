@@ -28,8 +28,14 @@ const PRIVACY_IMAGE = "/images/policies/privacy-policy.webp";
 const PRIVACY_ALT =
   "Illustration of two Glam Hub team members securing a customer data record";
 
-const ClauseBlock = ({ block }: { block: Block }) => (
-  <div id={block.id ?? anchorFor(block.heading)} className="scroll-mt-28 mb-10">
+const ClauseBlock = ({
+  block,
+  scope = "terms",
+}: {
+  block: Block;
+  scope?: "terms" | "privacy";
+}) => (
+  <div id={block.id ?? anchorFor(block.heading, scope)} className="scroll-mt-28 mb-10">
     <h3 className="font-display text-xl sm:text-2xl font-bold mb-4 leading-snug">
       {block.heading}
     </h3>
@@ -241,7 +247,7 @@ const Policies = () => {
               </div>
 
               {PRIVACY_BLOCKS.map((block) => (
-                <ClauseBlock key={block.heading} block={block} />
+                <ClauseBlock key={block.heading} block={block} scope="privacy" />
               ))}
             </section>
 

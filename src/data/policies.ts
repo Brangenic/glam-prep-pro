@@ -28,7 +28,15 @@ export const CONTENTS = [
   { href: "#contact-policies", label: "Contact us" },
 ];
 
-export const anchorFor = (heading: string): string | undefined => {
+/**
+ * Deep-link anchors only exist on the Terms clauses. Privacy clauses share
+ * the same numbering, so they must never claim these ids.
+ */
+export const anchorFor = (
+  heading: string,
+  scope: "terms" | "privacy" = "terms",
+): string | undefined => {
+  if (scope !== "terms") return undefined;
   if (heading.startsWith("4.")) return "transfers";
   if (heading.startsWith("13.")) return "referrals";
   return undefined;
