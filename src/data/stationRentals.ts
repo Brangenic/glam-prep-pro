@@ -1,7 +1,8 @@
 /**
  * Station rentals: selling station space inside a Carnival Glam Hub to
- * independent service providers (makeup artists, hair stylists, barbers,
- * braiders, body-art and gem artists, lash techs, photographers).
+ * independent service providers. A station is for makeup artists and hair
+ * stylists only. No other provider type is offered, and none may be added
+ * back without Kibwe confirming it.
  *
  * Single source of truth for station rental rates. Rates are derived from
  * the hub tier in `hubTiers.ts`, so a territory moving tier automatically
@@ -253,15 +254,48 @@ export const STATION_TERRITORY_NOTES: Record<string, string> = {
     "There is no shuttle in Miami this season. The venue has ready Uber access, and overnight bag check is available as a paid add-on.",
 };
 
-export const STATION_SERVICE_TYPES = [
-  "Makeup artists",
-  "Hair stylists",
-  "Braiders",
-  "Barbers",
-  "Body-art and gem artists",
-  "Lash techs",
-  "Photographers",
+/**
+ * Who a station is for. Makeup artists and hair stylists, nothing else.
+ * Confirmed by Kibwe on 24 August 2026. Do not add braiders, barbers,
+ * body-art or gem artists, lash techs or photographers back to this list.
+ * They are not offered.
+ */
+export const STATION_SERVICE_TYPES = ["Makeup artists", "Hair stylists"];
+
+/**
+ * Vendor and merchandise spaces. A SEPARATE offer from a station. A station
+ * is a working chair for a service provider. A vendor space is a space for
+ * selling goods to masqueraders on Carnival morning.
+ *
+ * Rates confirmed by Kibwe on 24 August 2026. They are a FLAT rate at every
+ * Glam Hub, Full Service and Glam Hub Lite alike. They are deliberately NOT
+ * derived from `getHubTier` and must never be wired into the tier system,
+ * even though that means a Glam Hub Lite station is US$200 a day while a
+ * vendor space at the same hub is US$250 a day. Kibwe was shown that and
+ * confirmed it.
+ */
+export const VENDOR_SPACE_PER_DAY = 250;
+export const VENDOR_SPACE_BOTH_DAYS = 400;
+export const VENDOR_SPACE_RATE_LABEL = `US$${VENDOR_SPACE_PER_DAY} per day, US$${VENDOR_SPACE_BOTH_DAYS} for both days. The same flat rate at every Glam Hub, Full Service and Glam Hub Lite alike.`;
+
+export const VENDOR_SPACE_INTRO =
+  "A space inside the Glam Hub to sell products to masqueraders on Carnival morning. Typical sellers are Monday wear, costume accessories and merchandise. This is not a station. A station is a working chair for a service provider.";
+
+/** Exactly what a vendor space includes. Never add to this list. */
+export const VENDOR_SPACE_INCLUDES = [
+  "The space inside the Glam Hub",
+  "Access to card processing at the hub, so you can take card payments without bringing your own terminal",
 ];
+
+export const VENDOR_SPACE_NOTE =
+  "Anything beyond the space and access to card processing is confirmed on enquiry.";
+
+/** What a person is enquiring about. Captured with every enquiry. */
+export const ENQUIRY_TYPES = [
+  "Station rental",
+  "Vendor and merchandise space",
+] as const;
+export type EnquiryType = (typeof ENQUIRY_TYPES)[number];
 
 /**
  * Page FAQ. Shared by the React page, the prerendered head (FAQPage
@@ -313,6 +347,14 @@ export const STATION_FAQS: { q: string; a: string }[] = [
   {
     q: "What happens if I need two days?",
     a: "In Trinidad, Jamaica and Miami the both-days rate is US$400 per station. In Glam Hub Lite territories there is no fixed both-days rate, so multi-day is confirmed on enquiry.",
+  },
+  {
+    q: "Can I sell Monday wear at the Glam Hub?",
+    a: `Yes, through a vendor and merchandise space rather than a station. A vendor space is a space inside the Glam Hub to sell products to masqueraders on Carnival morning, typically Monday wear, costume accessories and merchandise. It is US$${VENDOR_SPACE_PER_DAY} per day or US$${VENDOR_SPACE_BOTH_DAYS} for both days, the same flat rate at every Glam Hub. You get the space and access to card processing at the hub. Anything else is confirmed on enquiry.`,
+  },
+  {
+    q: "What is the difference between a station and a vendor space?",
+    a: "A station is a working chair for a makeup artist or hair stylist to service clients from. A vendor and merchandise space is a space for selling goods to masqueraders. They are separate offers, at separate rates, and a vendor space is not a station.",
   },
   {
     q: "Do you take a cut of what I charge my clients?",
