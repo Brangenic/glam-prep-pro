@@ -1,4 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { syncAmazonStorefront } from "../_shared/amazonStore.ts";
 
 type SourceKey = "google_reviews" | "amazon_store" | "blog_posts";
 
@@ -224,105 +225,21 @@ const toAmazonRows = (productsRaw: unknown[], fallbackCategory: string | null = 
   })
   .filter(Boolean) as Array<Record<string, unknown>>;
 
+// The Amazon storefront is now read directly from its server rendered HTML and
+// its images are mirrored into public storage. Firecrawl could not read Amazon
+// list pages, which is why this source had been failing since March 2026.
 const syncAmazonProducts = async (
   supabaseAdmin: ReturnType<typeof createClient>,
-  firecrawlApiKey: string,
-  sourceUrl: string,
 ) => {
-  const [storefrontListsExtract, storefrontLinks] = await Promise.all([
-    callFirecrawlJson(
-      firecrawlApiKey,
-      sourceUrl,
-      "Extract all Amazon list categories from this storefront with shape: { lists: [{ title, list_url }] }. Include every visible list/category card and use full list URLs.",
-    ).catch(() => null),
-    callFirecrawlLinks(firecrawlApiKey, sourceUrl).catch(() => []),
-  ]);
+  const report = await syncAmazonStorefront(supabaseAdmin);
 
-  const storefrontListsRaw = Array.isArray(storefrontListsExtract?.lists)
-    ? storefrontListsExtract.lists
-    : [];
-
-  const categoryByListBaseUrl = new Map<string, string>();
-  for (const listEntry of storefrontListsRaw) {
-    const item = listEntry as Record<string, unknown>;
-    const listUrl = canonicalizeUrl(normalizeText(item.list_url));
-    const title = normalizeCategoryLabel(item.title);
-
-    if (!isAmazonListUrl(listUrl) || !title) continue;
-    categoryByListBaseUrl.set(getAmazonListBaseUrl(listUrl), title);
+  if (report.image_failures.length > 0) {
+    console.warn("Amazon image mirror failures:", JSON.stringify(report.image_failures));
   }
 
-  const collectedListUrls = Array.from(
-    new Set(
-      [
-        ...Array.from(categoryByListBaseUrl.keys()),
-        ...((Array.isArray(storefrontLinks) ? storefrontLinks : []).map((url) => getAmazonListBaseUrl(canonicalizeUrl(normalizeText(url))))),
-      ]
-        .filter((url) => isAmazonListUrl(url))
-        .flatMap((listUrl) => buildPaginatedListUrls(listUrl)),
-    ),
-  ).slice(0, AMAZON_LIST_CRAWL_LIMIT);
-
-  const listExtracts: Array<{ listUrl: string; extract: unknown }> = [];
-  const BATCH_SIZE = 2;
-
-  for (let i = 0; i < collectedListUrls.length; i += BATCH_SIZE) {
-    const batch = collectedListUrls.slice(i, i + BATCH_SIZE);
-
-    const batchResults = await Promise.all(
-      batch.map(async (listUrl) => {
-        const extract = await callFirecrawlJson(
-          firecrawlApiKey,
-          listUrl,
-          `Extract up to ${AMAZON_PRODUCTS_PER_LIST} visible product cards from this Amazon list page into JSON with exact shape: { list_title, products: [{ id, title, price_text, image_url, product_url }] }. Include ONLY real products. product_url must be a direct Amazon product page URL containing /dp/ or /gp/product/. Omit anything that links to /shop/, /list/, storefront pages, or category pages.`,
-        ).catch(() => null);
-
-        return { listUrl, extract };
-      }),
-    );
-
-    listExtracts.push(...batchResults);
-  }
-
-  const rows = listExtracts.flatMap(({ listUrl, extract }) => {
-    const productsRaw = Array.isArray((extract as { products?: unknown[] } | null)?.products)
-      ? ((extract as { products?: unknown[] }).products ?? [])
-      : [];
-    const fallbackCategory =
-      normalizeCategoryLabel((extract as { list_title?: unknown } | null)?.list_title) ??
-      categoryByListBaseUrl.get(getAmazonListBaseUrl(listUrl)) ??
-      null;
-
-    return toAmazonRows(productsRaw, fallbackCategory);
-  });
-
-  const dedupedRows = Array.from(
-    new Map(rows.map((row) => [String(row.product_url), row])).values(),
-  );
-
-  if (dedupedRows.length === 0) {
-    throw new Error("No products could be extracted from the Amazon category lists.");
-  }
-
-  const { error: upsertError } = await supabaseAdmin
-    .from("amazon_products")
-    .upsert(dedupedRows, { onConflict: "external_id" });
-
-  if (upsertError) {
-    throw new Error(`Amazon products upsert failed: ${upsertError.message}`);
-  }
-
-  const { error: deleteError } = await supabaseAdmin
-    .from("amazon_products")
-    .delete()
-    .not("external_id", "in", `(${dedupedRows.map((row) => `\"${String(row.external_id).replace(/\"/g, '\\\"')}\"`).join(",")})`);
-
-  if (deleteError) {
-    console.warn("Could not prune stale Amazon products:", deleteError.message);
-  }
-
-  return dedupedRows.length;
+  return report.rows_upserted;
 };
+
 
 const slugify = (text: string) =>
   text
@@ -507,7 +424,7 @@ Deno.serve(async (req) => {
       const count = sourceKey === "google_reviews"
         ? await syncGoogleReviews(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
         : sourceKey === "amazon_store"
-        ? await syncAmazonProducts(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
+        ? await syncAmazonProducts(supabaseAdmin)
         : await syncBlogPosts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
 
       await supabaseAdmin

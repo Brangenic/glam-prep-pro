@@ -1,0 +1,1 @@
+ALTER TABLE public.amazon_products ADD COLUMN IF NOT EXISTS source_image_url text;

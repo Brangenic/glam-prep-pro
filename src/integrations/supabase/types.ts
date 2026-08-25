@@ -24,6 +24,7 @@ export type Database = {
           price_text: string | null
           product_url: string
           raw_payload: Json | null
+          source_image_url: string | null
           synced_at: string
           title: string
           updated_at: string
@@ -37,6 +38,7 @@ export type Database = {
           price_text?: string | null
           product_url: string
           raw_payload?: Json | null
+          source_image_url?: string | null
           synced_at?: string
           title: string
           updated_at?: string
@@ -50,6 +52,7 @@ export type Database = {
           price_text?: string | null
           product_url?: string
           raw_payload?: Json | null
+          source_image_url?: string | null
           synced_at?: string
           title?: string
           updated_at?: string
