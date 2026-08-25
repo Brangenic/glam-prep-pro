@@ -91,12 +91,16 @@ export const parseStorefrontLists = (html: string): ParsedList[] => {
     if (!listId || seen.has(listId)) continue;
 
     const image = block.match(/class="list-image-container"><img[^>]*src="([^"]+)"/)?.[1];
+    // <span class="list-title ..."><bdi>Jab Jab J&#x27;ouvert</bdi></span>
     const rawTitle =
-      block.match(/class="[^"]*list-title[^"]*"[^>]*>([^<]+)</)?.[1] ??
-      block.match(/>([^<>]{3,140})<\/(?:span|div|h2)>/)?.[1];
+      block.match(/class="[^"]*list-title[^"]*"[^>]*>(?:<bdi>)?([^<]+)</)?.[1] ??
+      block
+        .match(/>([^<>]{3,140})<\/(?:bdi|span|div|h2)>/g)
+        ?.map((match) => match.replace(/^>|<\/(?:bdi|span|div|h2)>$/g, ""))
+        .find((candidate) => !/^\d+\s+Items?$/i.test(candidate.trim()));
 
     const title = decodeEntities(rawTitle ?? "");
-    if (!title || !image) continue;
+    if (!title || !image || /^\d+\s+Items?$/i.test(title)) continue;
 
     seen.add(listId);
     lists.push({
