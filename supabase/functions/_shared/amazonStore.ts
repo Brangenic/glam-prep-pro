@@ -10,14 +10,19 @@
 // Amazon rate limits aggressively and answers roughly half of all requests with
 // a 503 "Sorry! Something went wrong!" page, so every fetch is retried.
 //
-// Images are mirrored into the public `amazon-store` storage bucket under a
-// deterministic key (<external_id>.jpg) so the site never hotlinks
+// Images are mirrored into public storage under a deterministic key
+// (amazon-store/<external_id>.jpg) so the site never hotlinks
 // m.media-amazon.com. The original Amazon URL is kept in source_image_url.
+//
+// The mirror lives inside the existing public `blog-images` bucket under an
+// `amazon-store/` prefix because this workspace blocks the creation of new
+// public buckets, and a private bucket cannot serve <img src> URLs.
 
 import { Image } from "https://deno.land/x/imagescript@1.2.17/mod.ts";
 
 const STOREFRONT_URL = "https://www.amazon.com/shop/carnivalglamhub";
-const BUCKET = "amazon-store";
+const BUCKET = "blog-images";
+const IMAGE_PREFIX = "amazon-store";
 export const IMAGE_SIZE = 800;
 const JPEG_QUALITY = 78;
 const FETCH_ATTEMPTS = 6;
@@ -154,7 +159,7 @@ const mirrorImage = async (
       console.warn(`resize failed for ${externalId}, storing original:`, (error as Error).message);
     }
 
-    const path = `${externalId}.jpg`;
+    const path = `${IMAGE_PREFIX}/${externalId}.jpg`;
     const { error: uploadError } = await supabaseAdmin.storage
       .from(BUCKET)
       .upload(path, payload, { contentType: "image/jpeg", upsert: true, cacheControl: "86400" });
