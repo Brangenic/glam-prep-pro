@@ -1164,21 +1164,11 @@ async function main() {
     writeFileSync(join(dir, "index.html"), html);
     written++;
 
-    // Destinations are also linked as /destinations/<slug> in older
-    // content. Lovable hosting has no edge redirect layer, so we must
-    // emit real per-route HTML here — otherwise the SPA fallback
-    // (dist/index.html) is served and non-JS crawlers see the generic
-    // homepage og:image instead of the destination's own hero. The
-    // emitted file self-canonicals to the short /<slug> URL, which is
-    // the correct duplicate-consolidation signal for Google (NOT a
-    // soft-404 — the body is substantive, hydrated by the SPA to the
-    // same destination page).
-    if (DEST_AREA[route.path]) {
-      const aliasDir = join(DIST, "destinations", route.path.replace(/^\//, ""));
-      mkdirSync(aliasDir, { recursive: true });
-      writeFileSync(join(aliasDir, "index.html"), html);
-      written++;
-    }
+    // NOTE: /destinations/<slug> alias HTML is deliberately NOT emitted.
+    // Emitting it created duplicate indexable URLs. The alias is now a
+    // 301 in public/_redirects, with a client-side <Navigate> fallback
+    // in App.tsx for in-app navigation.
+
   }
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 
