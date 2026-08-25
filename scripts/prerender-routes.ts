@@ -1164,12 +1164,54 @@ async function main() {
     writeFileSync(join(dir, "index.html"), html);
     written++;
 
-    // NOTE: /destinations/<slug> alias HTML is deliberately NOT emitted.
-    // Emitting it created duplicate indexable URLs. The alias is now a
-    // 301 in public/_redirects, with a client-side <Navigate> fallback
-    // in App.tsx for in-app navigation.
-
   }
+
+  // /destinations/<slug> aliases: emit a redirect STUB only, never content.
+  // A stub keeps the alias URL from serving the homepage shell (which would
+  // ship a homepage canonical and the generic og-home.jpg on a subpage URL),
+  // while consolidating signals onto the short slug via canonical + meta
+  // refresh. Deliberately NO robots noindex: noindex plus canonical is a
+  // contradictory signal and would block consolidation.
+  for (const route of destinationRoutes) {
+    const slug = route.path.replace(/^\//, "");
+    const target = `${BASE_URL}/${slug}`;
+    const ogImage = route.ogImage?.startsWith("http")
+      ? route.ogImage
+      : `${BASE_URL}${route.ogImage ?? ""}`;
+    const stub = `<!doctype html>
+<html lang="en">
+  <head>
+    <script>location.replace("/${slug}" + location.search + location.hash);</script>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/${slug}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${route.title}</title>
+    <meta name="description" content="${route.description.replace(/"/g, "&quot;")}" />
+    <link rel="canonical" href="${target}" />
+    <meta property="og:title" content="${route.title}" />
+    <meta property="og:description" content="${route.description.replace(/"/g, "&quot;")}" />
+    <meta property="og:url" content="${target}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="${target}" />
+    <meta name="twitter:title" content="${route.title}" />
+    <meta name="twitter:description" content="${route.description.replace(/"/g, "&quot;")}" />
+    <meta name="twitter:image" content="${ogImage}" />
+  </head>
+  <body><a href="/${slug}">Continue to ${route.title}</a></body>
+</html>
+`;
+    const dir = join(DIST, "destinations", slug);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "index.html"), stub);
+  }
+  console.log(
+    `prerender-routes: wrote ${destinationRoutes.length} /destinations/* redirect stubs.`,
+  );
+
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 
   // Homepage-only VideoObject JSON-LD. The "Glam Hub in Action" YouTube
