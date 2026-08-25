@@ -161,6 +161,8 @@ const AmazonStore = () => {
                         <img
                           src={item.image_url}
                           alt={item.title}
+                          width={800}
+                          height={800}
                           className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
                           loading="lazy"
                         />
