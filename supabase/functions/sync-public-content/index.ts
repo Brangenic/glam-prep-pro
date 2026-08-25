@@ -1,4 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { syncAmazonStorefront } from "../_shared/amazonStore.ts";
 
 type SourceKey = "google_reviews" | "amazon_store" | "blog_posts";
 
@@ -423,7 +424,7 @@ Deno.serve(async (req) => {
       const count = sourceKey === "google_reviews"
         ? await syncGoogleReviews(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
         : sourceKey === "amazon_store"
-        ? await syncAmazonProducts(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
+        ? await syncAmazonProducts(supabaseAdmin)
         : await syncBlogPosts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
 
       await supabaseAdmin

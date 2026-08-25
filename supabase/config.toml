@@ -14,3 +14,5 @@ verify_jwt = false
 
 [functions.rehost-blog-inline-images]
 verify_jwt = false
+[functions.sync-amazon-store]
+verify_jwt = false
