@@ -159,7 +159,6 @@ export const destinationPackages: Record<string, DestinationPackages> = {
           { name: "Monday Front Braided Ponytail", price: "$185 USD", image: `${IMG}/a39e49a4-c984-4d09-afec-0e4ae2fa9d5d/462x578` },
           { name: "Monday Half Up Half Down Ponytail", price: "$220 USD", image: `${IMG}/b479d4d8-d245-4a2f-8029-754fea039020/462x578` },
           { name: "Trinidad Monday His Glam", price: "$35 USD", image: `${IMG}/456ab071-0f85-4fe0-8541-d7410dd465de/462x578` },
-          { name: "Monday Chontelle Sewett MUA", price: "$350 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
         ],
       },
       {
@@ -171,8 +170,6 @@ export const destinationPackages: Record<string, DestinationPackages> = {
           { name: "Trinidad Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/79ce4fac-414f-4cfe-95fa-e31ad5de18fc/462x578` },
           { name: "Trinidad Tuesday Full Glam", price: "$440 USD", image: `${IMG}/8255cfa7-1c9c-415d-a4c6-ae0628625a36/462x578` },
           { name: "Trinidad Tuesday Makeup & Photoshoot + Bronzing", price: "$480 USD", image: `${IMG}/f832281b-cd40-442e-8d7d-a8075c52bd56/462x578` },
-          { name: "Tuesday Chontelle Sewett MUA", price: "$350 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
-          { name: "Tuesday Chontelle Sewett MUA Team", price: "$200 USD", image: `${IMG}/9895722c-f90f-4709-951d-82da224f1e45/462x578` },
           { name: "Trinidad Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/d60f1246-a372-4bc4-aec7-9cfe760d01b6/462x578` },
           { name: "Tuesday Bronzing", price: "$160 USD", image: `${IMG}/dc8c705a-26fe-4373-b869-5d738180b664/462x578` },
           { name: "Trinidad Tuesday Hair Only", price: "$120 USD", image: `${IMG}/dcfa0d3f-e8a0-4c3a-a5cc-90b5dd4a61e5/462x578` },
