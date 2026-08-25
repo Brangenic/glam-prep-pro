@@ -7,7 +7,6 @@ import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 import { buildDestinationUrl } from "@/lib/destinations";
 import photoGabby from "@/assets/trinidad-2027-p1.webp";
 import photoDania from "@/assets/trinidad-2027-p2.webp";
-import photoChontelle from "@/assets/trinidad-2027-p3.webp";
 import heroCover from "@/assets/trinidad-2027-hero.webp";
 import reviewsImage from "@/assets/trinidad-2027-reviews.webp";
 
@@ -171,7 +170,6 @@ const TrinidadCarnival2027 = () => {
   const photos = [
     { src: photoGabby, caption: "Gabby — hair and makeup by Glam Hub", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
     { src: photoDania, caption: "Dania Duntin — hair and makeup by Glam Hub", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
-    { src: photoChontelle, caption: "Chontelle — hair by Glam Hub, makeup by Chontelle", alt: "Chontelle — Trinidad Carnival hair by Glam Hub, makeup by Chontelle" },
   ];
 
   return (
@@ -266,7 +264,6 @@ const TrinidadCarnival2027 = () => {
             {[
               { src: photoGabby, name: "Gabby", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
               { src: photoDania, name: "Dania", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
-              { src: photoChontelle, name: "Chontelle", alt: "Chontelle — Trinidad Carnival hair by Glam Hub" },
             ].map((m) => (
               <figure key={m.name} className="flex flex-col">
                 <img

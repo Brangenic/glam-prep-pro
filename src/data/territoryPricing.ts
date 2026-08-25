@@ -96,8 +96,6 @@ const TRINIDAD_TUESDAY: QuoteProduct[] = [
   { id: "tue-bronzing", label: "Bronzing", price: 160, day: "tuesday", tags: ["bronzing"] },
   { id: "tue-gabby-makeup", label: "Gabby Glam Team makeup only", price: 200, day: "tuesday", tags: ["makeup"], premium: true },
   { id: "tue-gabby-makeup-photo", label: "Gabby Glam Team makeup and photoshoot", price: 370, day: "tuesday", tags: ["makeup", "photoshoot"], premium: true },
-  { id: "tue-chontelle", label: "Chontelle Sewett MUA", price: 350, day: "tuesday", tags: ["makeup"], premium: true },
-  { id: "tue-chontelle-team", label: "Chontelle Sewett MUA Team", price: 200, day: "tuesday", tags: ["makeup"], premium: true },
 ];
 
 const trinidad: TerritoryPricing = {
@@ -124,7 +122,6 @@ const trinidad: TerritoryPricing = {
     { id: "mon-makeup-photo-bronzing", label: "Makeup and photoshoot plus bronzing", price: 480, day: "monday", tags: ["makeup", "photoshoot", "bronzing"] },
     { id: "mon-gabby-makeup", label: "Gabby Glam Team makeup only", price: 200, day: "monday", tags: ["makeup"], premium: true },
     { id: "mon-gabby-makeup-photo", label: "Gabby Glam Team makeup and photoshoot", price: 370, day: "monday", tags: ["makeup", "photoshoot"], premium: true },
-    { id: "mon-chontelle", label: "Chontelle Sewett MUA", price: 350, day: "monday", tags: ["makeup"], premium: true },
     // Tuesday 9 February 2027
     ...TRINIDAD_TUESDAY,
     // Both days

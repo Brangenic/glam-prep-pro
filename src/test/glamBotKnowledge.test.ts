@@ -249,7 +249,7 @@ describe("group 4: refusals have no material to answer from", () => {
     ["a shuttle time", "Does the shuttle run at 02:17?", ["02:17", "2:17"]],
     [
       "a named artist",
-      "Can you guarantee Chontelle does my face?",
+      "Can you guarantee a specific artist does my face?",
       ["we guarantee", "guaranteed artist"],
     ],
   ];
