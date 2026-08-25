@@ -260,7 +260,7 @@ const TrinidadCarnival2027 = () => {
         {/* Why Glam Hub */}
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Why Glam Hub</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
             {[
               { src: photoGabby, name: "Gabby", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
               { src: photoDania, name: "Dania", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
@@ -354,7 +354,7 @@ const TrinidadCarnival2027 = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {photos.map((p) => (
               <figure key={p.caption} className="rounded-2xl overflow-hidden border border-border bg-card">
                 <img
