@@ -45,6 +45,32 @@ const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
   guyana: { city: "Georgetown", country: "GY" },
 };
 
+/**
+ * Onward destination card. An outbound booking link matches the site's
+ * other MasOS links, target _blank with rel noopener noreferrer. An
+ * internal fallback stays a client side route.
+ */
+const OtherCard = ({
+  external,
+  href,
+  className,
+  children,
+}: {
+  external: boolean;
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) =>
+  external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      {children}
+    </a>
+  ) : (
+    <Link to={href} className={className}>
+      {children}
+    </Link>
+  );
+
 const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const params = useParams();
   const slug = slugOverride ?? params.slug ?? "";
