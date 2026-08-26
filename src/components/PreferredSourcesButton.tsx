@@ -14,17 +14,14 @@ declare module "react" {
 
 const PreferredSourcesButton = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // During prerender / SSR there is no window, so ship the fallback anchor
-  // in the static HTML rather than an empty container.
-  const [showFallback, setShowFallback] = useState(typeof window === "undefined");
-
+  // The anchor is the working path today, so it renders by default and only
+  // hides once Google's library has actually populated the container.
+  const [buttonRendered, setButtonRendered] = useState(false);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       const node = containerRef.current;
-      // If Google's script never arrived, or left the container empty,
-      // fall back to the documented deeplink.
-      if (!node || node.childElementCount === 0) setShowFallback(true);
+      setButtonRendered(!!node && node.childElementCount > 0);
     }, FALLBACK_DELAY_MS);
 
     return () => window.clearTimeout(timer);
@@ -35,6 +32,13 @@ const PreferredSourcesButton = () => {
       <p className="font-body text-xs text-muted-foreground leading-relaxed mb-2">
         Prefer our Carnival coverage? Set Carnival Glam Hub as a preferred source on Google.
       </p>
+      {/*
+        Google's publisher.js fills this container with its own Preferred
+        Sources button, but only once Google marks the domain eligible.
+        Until then it stays empty by design and the anchor below is what
+        visitors use. Do not delete this container: when eligibility lands,
+        the real button appears here automatically and the anchor hides.
+      */}
       <div
         ref={containerRef}
         google-add-preferred-source-btn=""
@@ -42,29 +46,19 @@ const PreferredSourcesButton = () => {
         data-lang="en"
         className="max-w-full overflow-hidden"
       />
-      {showFallback ? (
+      {!buttonRendered && (
         <a
           href={DEEPLINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-body text-xs text-muted-foreground hover:text-primary transition-colors underline break-words"
+          className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors break-words"
         >
           Add Carnival Glam Hub as a preferred source on Google
         </a>
-      ) : (
-        <noscript>
-          <a
-            href={DEEPLINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-body text-xs text-muted-foreground hover:text-primary transition-colors underline break-words"
-          >
-            Add Carnival Glam Hub as a preferred source on Google
-          </a>
-        </noscript>
       )}
     </div>
   );
 };
+
 
 export default PreferredSourcesButton;
