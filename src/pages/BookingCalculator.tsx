@@ -26,6 +26,7 @@ import {
   type DayKey,
   type QuoteProduct,
   type ServiceTag,
+  type TerritoryPricing,
 } from "@/data/territoryPricing";
 import { hasSeasonPassed } from "@/data/seasons";
 import { hasBookableEvent } from "@/lib/destinations";
@@ -96,7 +97,7 @@ const BOOKABLE_TERRITORIES = getBookableQuoteTerritories();
  * event on file. Jamaica, Tobago and Atlanta are selectable but enquiry only:
  * no price, no total, no MasOS checkout handoff.
  */
-function canQuote(config: TerritoryPricing | undefined): boolean {
+export function canQuote(config: TerritoryPricing | undefined): boolean {
   return Boolean(config?.quotable) && Boolean(config && hasBookableEvent(config.slug));
 }
 

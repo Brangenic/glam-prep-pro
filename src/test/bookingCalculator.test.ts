@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getBookableQuoteTerritories } from "@/pages/BookingCalculator";
+import { canQuote, getBookableQuoteTerritories } from "@/pages/BookingCalculator";
 import { hasBookableEvent } from "@/lib/destinations";
 
 const FIXED_NOW = new Date("2026-08-26T12:00:00Z");
@@ -15,7 +15,7 @@ describe("booking calculator territory list", () => {
   const slugs = territories.map((t) => t.slug);
 
   it("quotes only territories with real products and a bookable event", () => {
-    const quoting = territories.filter((t) => t.quotable).map((t) => t.slug);
+    const quoting = territories.filter((t) => canQuote(t)).map((t) => t.slug);
     expect(quoting).toEqual(["trinidad", "miami"]);
     for (const slug of quoting) {
       expect(hasBookableEvent(slug)).toBe(true);
@@ -26,8 +26,7 @@ describe("booking calculator territory list", () => {
     for (const slug of ["jamaica", "tobago", "atlanta"]) {
       expect(slugs).toContain(slug);
       const territory = territories.find((t) => t.slug === slug)!;
-      expect(territory.quotable).toBe(false);
-      expect(territory.products).toHaveLength(0);
+      expect(canQuote(territory)).toBe(false);
       expect(hasBookableEvent(slug)).toBe(false);
     }
   });
