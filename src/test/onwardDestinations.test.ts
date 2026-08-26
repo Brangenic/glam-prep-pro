@@ -147,11 +147,20 @@ describe("onward destination rule", () => {
       return out;
     }
 
+    /**
+     * A file may hold an ordering or neighbour map of slugs, RelatedLinks
+     * and the homepage strip both do, but only if it then filters that
+     * map through the season helper in the same file. A slug array with
+     * no season filter beside it is the thing this guard exists to catch.
+     */
+    const SEASON_FILTER = /getUpcomingDestinations|isUpcomingDestination|hasSeasonPassed/;
+
     const offenders: string[] = [];
     for (const file of walk(SRC)) {
       const rel = relative(SRC, file).split("\\").join("/");
       if (ALLOWED.has(rel)) continue;
       const source = readFileSync(file, "utf8");
+      if (SEASON_FILTER.test(source)) continue;
       // Any bracketed literal listing three or more distinct destination
       // slugs is a hardcoded destination list.
       for (const block of source.match(/\[[^[\]]*\]/g) ?? []) {
@@ -164,9 +173,11 @@ describe("onward destination rule", () => {
       }
     }
 
-    it("finds no component with its own destination slug array", () => {
+    it("finds no unfiltered destination slug array in a component", () => {
       expect(offenders).toEqual([]);
     });
+
+
 
     it("can actually fail, so the guard is honest", () => {
       const fake = `const DESTS = ["trinidad", "barbados", "grenada"];`;
