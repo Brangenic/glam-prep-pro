@@ -64,7 +64,12 @@ const openExternalLink = (href: string) => {
   window.location.href = href;
 };
 
-const Footer = () => (
+const Footer = () => {
+  const footerDestinations = getUpcomingDestinations(undefined, undefined, {
+    dedupeTrinidad: false,
+  });
+
+  return (
   <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
     <div className="container mx-auto px-4 sm:px-6">
       {/* Hub sitemap — every primary route is reachable from the footer */}
@@ -203,7 +208,8 @@ const Footer = () => (
         </p>
       </div>
     </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 export default Footer;
