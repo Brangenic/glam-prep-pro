@@ -430,9 +430,15 @@ describe("group 8: season awareness on 2026-08-24", () => {
   });
 
   it("open seasons are still open", () => {
-    for (const slug of ["miami", "tobago", "trinidad", "epic-cruise"]) {
+    for (const slug of ["miami", "tobago", "trinidad"]) {
       expect(slugs(upcoming)).toContain(slug);
     }
+  });
+
+  it("Epic Cruise points forward to 2028 with no date published", () => {
+    expect(slugs(forward)).toContain("epic-cruise");
+    expect(slugs(passed)).not.toContain("epic-cruise");
+    expect(JSON.stringify(pack)).not.toContain("8–9 February 2027");
   });
 
   it("Jamaica is neither closed nor dated for the next season", () => {
