@@ -21,7 +21,8 @@ export type KnowledgeEvent = {
   dateText: string;
   seasonEndISO: string | null;
   path: string | null;
-  bookingUrl: string;
+  bookingUrl: string | null;
+  bookableEvent?: boolean;
   quotable: boolean;
   tier: string | null;
   seasonForward: boolean;
@@ -81,14 +82,14 @@ export function resolveEvents(pack: Pack, now: Date): ResolvedEvents {
   const undated: KnowledgeEvent[] = [];
 
   for (const ev of pack.events) {
-    if (!ev.seasonEndISO) {
-      undated.push(ev);
-      continue;
-    }
     if (ev.seasonForward) {
       // Never described as closed. It points forward to a season with no
       // confirmed dates, so it takes no place in the ordering.
       forward.push(ev);
+      continue;
+    }
+    if (!ev.seasonEndISO) {
+      undated.push(ev);
       continue;
     }
     if (t > endOfDay(ev.seasonEndISO)) passed.push(ev);
@@ -381,6 +382,7 @@ export function eventLine(pack: Pack, ev: KnowledgeEvent, now: Date): string {
   const open = ev.seasonEndISO
     ? now.getTime() <= endOfDay(ev.seasonEndISO)
     : false;
+  const bookableEvent = Boolean(ev.bookableEvent && ev.bookingUrl);
   const bits = [
     `${ev.name}, ${ev.dateText || "dates not confirmed"}`,
     ev.tier ? ev.tier : "cruise partnership, no tier",
@@ -394,11 +396,14 @@ export function eventLine(pack: Pack, ev: KnowledgeEvent, now: Date): string {
     bits.push("venue confirmed after booking");
   }
   bits.push(
-    open
+    open && bookableEvent
       ? "bookings are open"
-      : "this season has finished, so bookings are closed for it",
+      : open
+        ? "no bookable event is on file yet, so do not offer checkout"
+        : "this season has finished, so bookings are closed for it",
   );
   if (ev.path) bits.push(`page ${ev.path}`);
+  if (ev.path && !bookableEvent) bits.push(`register interest at ${ev.path}`);
   return `- ${bits.join(". ")}.`;
 }
 
@@ -456,15 +461,19 @@ export function buildFacts(
     if (ev) {
       if (ev.seasonForward) {
         parts.push(
-          `${territory.name} status: the most recent season has finished and the next dates are not yet confirmed.`,
+          `${territory.name} status: the most recent season has finished and the next dates are not yet confirmed. No bookable event is on file, so do not offer checkout. ${territory.path ? `Point the visitor to register interest at ${territory.path}.` : `Hand the visitor to WhatsApp at ${pack.contact.whatsappUrl}.`}`,
         );
       } else if (!ev.seasonEndISO) {
         parts.push(
-          `${territory.name} status: no confirmed dates, so nothing is bookable for a date yet.`,
+          `${territory.name} status: no confirmed dates, so nothing is bookable for a date yet. No bookable event is on file, so do not offer checkout. ${territory.path ? `Point the visitor to register interest at ${territory.path}.` : `Hand the visitor to WhatsApp at ${pack.contact.whatsappUrl}.`}`,
+        );
+      } else if (now.getTime() <= endOfDay(ev.seasonEndISO) && ev.bookableEvent && ev.bookingUrl) {
+        parts.push(
+          `${territory.name} status: open. ${ev.dateText}. Bookings are open.`,
         );
       } else if (now.getTime() <= endOfDay(ev.seasonEndISO)) {
         parts.push(
-          `${territory.name} status: open. ${ev.dateText}. Bookings are open.`,
+          `${territory.name} status: ${ev.dateText}. No bookable event is on file, so do not offer checkout. ${territory.path ? `Point the visitor to register interest at ${territory.path}.` : `Hand the visitor to WhatsApp at ${pack.contact.whatsappUrl}.`}`,
         );
       } else {
         parts.push(
@@ -499,15 +508,27 @@ export function buildKnowledgeContext(
   territorySlug: string | null,
 ): string {
   const parts: string[] = ["# KNOWLEDGE", pack.brand, pack.tiers];
+  const territoryEvent = territorySlug
+    ? pack.events.find((e) => e.slug === territorySlug)
+    : null;
+  const territoryHasCheckout = territoryEvent
+    ? Boolean(territoryEvent.bookableEvent && territoryEvent.bookingUrl)
+    : true;
   for (const topic of topics) {
-    const block = pack.topics[topic];
+    const block =
+      topic === "booking" && territorySlug && !territoryHasCheckout
+        ? "# Booking status for this territory\nNo bookable event is on file for this territory. Do not offer checkout, do not send the visitor to the booking platform and do not quote a deposit. Use the territory page if it exists, otherwise use the WhatsApp handover."
+        : pack.topics[topic];
     if (block) parts.push(block);
   }
   parts.push(
     territorySlug ? pack.territories[territorySlug].brief : territoryIndex(pack),
   );
+  const links = territoryHasCheckout
+    ? pack.links
+    : pack.links.filter((l) => l.label !== "Book now");
   parts.push(
-    `## LINKS directory\n${pack.links.map((l) => `- ${l.label}: ${l.url}`).join("\n")}`,
+    `## LINKS directory\n${links.map((l) => `- ${l.label}: ${l.url}`).join("\n")}`,
   );
   parts.push(`## NEVER SAY\n${pack.neverSay.map((n) => `- ${n}`).join("\n")}`);
   parts.push(

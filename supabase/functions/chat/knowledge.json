@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T12:08:23.614Z",
+  "generatedAt": "2026-08-26T12:20:12.220Z",
   "brand": "# Carnival Glam Hub\n\nCarnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe McGann. More than 15,000 masqueraders have been served since 2017.\n\nWe are band neutral. We serve masqueraders from every band, in every section.\n\nCarnival Glam Hub runs the whole Carnival morning from one location. Makeup, hair, photos and the practical parts of getting on the road happen in one place, so a masquerader is not moving between an artist, a hotel room and a photographer on the morning itself.\n\nThe service runs across the Caribbean and North America, in two hub tiers, Full Service Glam Hub and Glam Hub Lite.",
   "contact": {
     "whatsappUrl": "https://wa.me/18765090997",
@@ -18,8 +18,9 @@
       "dateText": "2027 season, dates to be confirmed",
       "seasonEndISO": "2027-04-30",
       "path": "/jamaica",
-      "bookingUrl": "https://carnivalglamhub.masos.app/events",
-      "quotable": true,
+      "bookingUrl": null,
+      "bookableEvent": false,
+      "quotable": false,
       "tier": "Full Service Glam Hub",
       "seasonForward": true
     },
@@ -30,6 +31,7 @@
       "seasonEndISO": "2027-02-09",
       "path": "/trinidad",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Full Service Glam Hub",
       "seasonForward": false
@@ -41,6 +43,7 @@
       "seasonEndISO": "2027-02-09",
       "path": "/trinidad-carnival-2027",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Full Service Glam Hub",
       "seasonForward": false
@@ -52,6 +55,7 @@
       "seasonEndISO": "2026-10-11",
       "path": "/miami",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/d6238a3f-73d0-4805-a3f2-91e8b4415047",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Full Service Glam Hub",
       "seasonForward": false
@@ -62,7 +66,8 @@
       "dateText": "30 October – 1 November 2026",
       "seasonEndISO": "2026-11-01",
       "path": "/tobago",
-      "bookingUrl": "https://carnivalglamhub.masos.app/events",
+      "bookingUrl": null,
+      "bookableEvent": false,
       "quotable": false,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -74,6 +79,7 @@
       "seasonEndISO": "2026-07-21",
       "path": "/saint-lucia",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/060faa4a-949a-4b36-893e-dc6db75e3100",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -85,6 +91,7 @@
       "seasonEndISO": "2026-08-11",
       "path": "/grenada",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -96,6 +103,7 @@
       "seasonEndISO": "2026-08-04",
       "path": "/antigua",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/5ff02f96-f867-4e59-9ca8-f88a48eafb44",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -107,6 +115,7 @@
       "seasonEndISO": "2026-08-03",
       "path": "/barbados",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/d76deb6d-c816-4df6-9006-05a11a555c43",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -118,6 +127,7 @@
       "seasonEndISO": "2026-08-01",
       "path": "/toronto",
       "bookingUrl": "https://carnivalglamhub.masos.app/events/9d7627f9-f1ea-4e3d-a54b-1898f9a7a98f",
+      "bookableEvent": true,
       "quotable": true,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -128,7 +138,8 @@
       "dateText": "May 2026",
       "seasonEndISO": "2026-05-31",
       "path": "/guyana",
-      "bookingUrl": "https://carnivalglamhub.masos.app/events",
+      "bookingUrl": null,
+      "bookableEvent": false,
       "quotable": false,
       "tier": "Glam Hub Lite",
       "seasonForward": false
@@ -139,10 +150,23 @@
       "dateText": "",
       "seasonEndISO": null,
       "path": null,
-      "bookingUrl": "https://carnivalglamhub.masos.app/events",
+      "bookingUrl": null,
+      "bookableEvent": false,
       "quotable": false,
       "tier": "Glam Hub Lite",
       "seasonForward": false
+    },
+    {
+      "slug": "epic-cruise",
+      "name": "Epic Cruise, Trinidad Carnival",
+      "dateText": "Returns 2028, dates to be confirmed",
+      "seasonEndISO": null,
+      "path": "/epic-cruise",
+      "bookingUrl": null,
+      "bookableEvent": false,
+      "quotable": false,
+      "tier": null,
+      "seasonForward": true
     }
   ],
   "territories": {
@@ -154,7 +178,7 @@
         "pegasus"
       ],
       "path": "/jamaica",
-      "brief": "# Jamaica Carnival\n\nDates: 2027 season, dates to be confirmed.\n\nTier: Full Service Glam Hub. A Full Service hub runs the whole Carnival morning from one location, with the widest set of services on site.\n\nLocation: Jamaica Pegasus Hotel, Kingston\n\n## Prices\nPer masquerader in US dollars.\n\n**Carnival day**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Photoshoot only: US$160\n- Hair only, ponytail: US$120\n- Front braided ponytail: US$185\n- Full Glam: US$440\n- Makeup and photoshoot plus bronzing: US$480\n- Bronzing: US$160\nNamed and celebrity artists, charged separately:\n- Gabby Glam Team makeup only: US$200\n- Gabby Glam Team makeup and photoshoot: US$370\n\nJamaica pricing is provisional and mirrors our Trinidad rates. Your booking team will confirm before payment.\n\n## Free with any booking here\n- Shuttle\n- Wing and bag check while you are with us, space permitting\n- Breakfast and refreshments\n- Alcohol\n- Seamstress\n- Getting-dressed assistance\n- Changing room\n- Coffee and tea\n\n## Also available here\n- Barber: US$35\n- Bronzing: US$160\n- Reels: a paid add-on with no published price. The booking team confirms it.\n- Overnight bag check: US$35 per masquerader, a paid add-on and never an inclusion.\n\nRoad ready Carnival morning access applies here at US$35. Getting dressed is free with any Glam Hub service and US$35 on its own.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /jamaica"
+      "brief": "# Jamaica Carnival\n\nDates: 2027 season, dates to be confirmed.\n\nTier: Full Service Glam Hub. A Full Service hub runs the whole Carnival morning from one location, with the widest set of services on site.\n\nLocation: Jamaica Pegasus Hotel, Kingston\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.\n\n## Service model when this opens\n- Shuttle\n- Wing and bag check while you are with us, space permitting\n- Breakfast and refreshments\n- Alcohol\n- Seamstress\n- Getting-dressed assistance\n- Changing room\n- Coffee and tea\nThese inclusions apply only once the territory has a bookable event on file. Until then, do not describe them as part of an active booking.\n\n## Also available here\n- Barber: US$35\n- Bronzing: US$160\n- Reels: a paid add-on with no published price. The booking team confirms it.\n- Overnight bag check: US$35 per masquerader, a paid add-on and never an inclusion.\n\nBooking status: no bookable event is on file for this territory yet. Do not send the visitor to the booking platform, do not quote a deposit and do not suggest checkout. Register interest at /jamaica.\n\nPage: /jamaica"
     },
     "trinidad": {
       "name": "Trinidad Carnival",
@@ -197,7 +221,7 @@
         "tobago"
       ],
       "path": "/tobago",
-      "brief": "# Tobago Carnival\n\nDates: 30 October – 1 November 2026.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm.\n\n## Free with any booking here\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nRoad ready Carnival morning access and getting dressed are not offered at this hub.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /tobago"
+      "brief": "# Tobago Carnival\n\nDates: 30 October – 1 November 2026.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.\n\n## Service model when this opens\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\nThese inclusions apply only once the territory has a bookable event on file. Until then, do not describe them as part of an active booking.\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nBooking status: no bookable event is on file for this territory yet. Do not send the visitor to the booking platform, do not quote a deposit and do not suggest checkout. Register interest at /tobago.\n\nPage: /tobago"
     },
     "saint-lucia": {
       "name": "Saint Lucia Carnival",
@@ -258,7 +282,7 @@
         "mash"
       ],
       "path": "/guyana",
-      "brief": "# Guyana Carnival\n\nDates: May 2026.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm.\n\n## Free with any booking here\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nRoad ready Carnival morning access and getting dressed are not offered at this hub.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /guyana"
+      "brief": "# Guyana Carnival\n\nDates: May 2026.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.\n\n## Service model when this opens\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\nThese inclusions apply only once the territory has a bookable event on file. Until then, do not describe them as part of an active booking.\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nBooking status: no bookable event is on file for this territory yet. Do not send the visitor to the booking platform, do not quote a deposit and do not suggest checkout. Register interest at /guyana.\n\nPage: /guyana"
     },
     "atlanta": {
       "name": "Atlanta Carnival",
@@ -266,7 +290,7 @@
         "atlanta"
       ],
       "path": null,
-      "brief": "# Atlanta Carnival\n\nDates: not confirmed. We have no date for this territory, so hand the visitor to the booking team.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm.\n\n## Free with any booking here\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nRoad ready Carnival morning access and getting dressed are not offered at this hub.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: none. This territory has no page on the site."
+      "brief": "# Atlanta Carnival\n\nDates: not confirmed. We have no date for this territory, so hand the visitor to the booking team.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.\n\n## Service model when this opens\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\nThese inclusions apply only once the territory has a bookable event on file. Until then, do not describe them as part of an active booking.\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nBooking status: no bookable event is on file for this territory yet. Do not send the visitor to the booking platform, do not quote a deposit and do not suggest checkout. Message the booking team on WhatsApp at https://wa.me/18765090997.\n\nPage: none. This territory has no page on the site."
     },
     "epic-cruise": {
       "name": "Epic Cruise, Trinidad Carnival",
@@ -276,7 +300,7 @@
         "cruise"
       ],
       "path": "/epic-cruise",
-      "brief": "# Epic Cruise, Trinidad Carnival\n\nDates: Returns 2028, dates to be confirmed.\n\nTier: none. Epic Cruise is a cruise partnership rather than a Glam Hub, so it carries no tier badge.\n\nLocation: Aboard the EPIC Carnival Experience, sailing from San Juan, Puerto Rico\n\n## Prices\nPer masquerader in US dollars.\n\n**Carnival Monday**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Full Glam: US$440\n- Hair only: US$120\n- Photoshoot only: US$140\n\n**Carnival Tuesday**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Full Glam: US$440\n- Hair only: US$120\n- Photoshoot only: US$160\n\n## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner at booking, so never list inclusions for it.\n\nRoad ready Carnival morning access applies here at US$35. Getting dressed is free with any Glam Hub service and US$35 on its own.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /epic-cruise"
+      "brief": "# Epic Cruise, Trinidad Carnival\n\nDates: Returns 2028, dates to be confirmed.\n\nTier: none. Epic Cruise is a cruise partnership rather than a Glam Hub, so it carries no tier badge.\n\nLocation: Aboard the EPIC Carnival Experience, sailing from San Juan, Puerto Rico\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.\n\n## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner when the sailing opens, so never list inclusions for it.\n\nBooking status: no bookable event is on file for this territory yet. Do not send the visitor to the booking platform, do not quote a deposit and do not suggest checkout. Register interest at /epic-cruise.\n\nPage: /epic-cruise"
     }
   },
   "topics": {
