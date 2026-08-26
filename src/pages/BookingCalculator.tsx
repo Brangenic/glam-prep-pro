@@ -28,6 +28,7 @@ import {
   type ServiceTag,
 } from "@/data/territoryPricing";
 import { hasSeasonPassed } from "@/data/seasons";
+import { hasBookableEvent } from "@/lib/destinations";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
@@ -74,7 +75,13 @@ const hasAll = (p: QuoteProduct, tags: ServiceTag[]) => tags.every((t) => p.tags
  * Derived from the season calendar, so a passed Carnival drops out of
  * the calculator on its own.
  */
-const BOOKABLE_TERRITORIES = TERRITORY_PRICING.filter((t) => !hasSeasonPassed(t.slug));
+export function getBookableQuoteTerritories(today: Date = new Date()) {
+  return TERRITORY_PRICING.filter(
+    (t) => !hasSeasonPassed(t.slug, today) && hasBookableEvent(t.slug),
+  );
+}
+
+const BOOKABLE_TERRITORIES = getBookableQuoteTerritories();
 
 /** Real products that satisfy a given intent, for a territory and day. */
 function productsForIntent(products: QuoteProduct[], intent: IntentKey): QuoteProduct[] {
