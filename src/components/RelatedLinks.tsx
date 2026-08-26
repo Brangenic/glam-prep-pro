@@ -144,16 +144,21 @@ function deriveFromPath(pathname: string): Props | null {
   const slug = pathname.replace(/^\//, "").replace(/\/$/, "");
   if (DESTINATION_SLUGS.has(slug)) {
     const services = Object.values(ALL_SERVICES);
-    const neighbours = (DEST_NEIGHBOURS[slug] ?? []).map((s) => ({
-      to: `/${s}`,
-      label: DEST_LABEL[s] ?? s,
-    }));
+    // Neighbour logic is unchanged, but a Carnival that has passed is
+    // never offered as an onward destination.
+    const neighbours = (DEST_NEIGHBOURS[slug] ?? [])
+      .filter((s) => isUpcomingDestination(s))
+      .map((s) => ({
+        to: `/${s}`,
+        label: DEST_LABEL[s] ?? s,
+      }));
     return {
       services,
       destinations: neighbours,
       guides: DEST_GUIDES[slug] ?? [],
     };
   }
+
   return null;
 }
 
