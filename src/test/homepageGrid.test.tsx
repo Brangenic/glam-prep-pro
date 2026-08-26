@@ -9,7 +9,7 @@
  * The clock is fixed on purpose, so this never starts failing on its own.
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import Destinations from "@/components/landing/Destinations";
@@ -76,15 +76,19 @@ describe("homepage destination grid", () => {
   });
 
   it("still shows the upcoming Carnivals", () => {
-    renderGrid();
+    const { container } = renderGrid();
+    const text = container.textContent ?? "";
     for (const name of ["Miami Carnival", "Tobago Carnival"]) {
-      expect(screen.getAllByText(name).length).toBeGreaterThan(0);
+      expect(text).toContain(name);
     }
   });
 
   it("sends a territory with no date and no event to a WhatsApp enquiry", () => {
     const { container } = renderGrid();
-    const anchor = Array.from(container.querySelectorAll("a")).find((a) =>
+    const anchors: HTMLAnchorElement[] = Array.from(
+      container.querySelectorAll<HTMLAnchorElement>("a"),
+    );
+    const anchor = anchors.find((a) =>
       /Ask about Atlanta/i.test(a.textContent ?? ""),
     );
     expect(anchor).toBeTruthy();
@@ -94,7 +98,9 @@ describe("homepage destination grid", () => {
 
   it("never offers Epic Cruise as a booking", () => {
     const { container } = renderGrid();
-    const anchors = Array.from(container.querySelectorAll("a"));
+    const anchors: HTMLAnchorElement[] = Array.from(
+      container.querySelectorAll<HTMLAnchorElement>("a"),
+    );
     const epic = anchors.find((a) => /Epic Cruise/i.test(a.textContent ?? ""));
     expect(epic).toBeTruthy();
     expect(epic!.getAttribute("href") ?? "").not.toContain("masos.app/events/");
