@@ -7,8 +7,9 @@ Any list, grid, strip, banner or link block that points a visitor at a destinati
 
 Rules:
 - Every such list reads `getUpcomingDestinations` from `src/data/seasons.ts`. Never add a destination list with its own hardcoded array.
+- The homepage grid in `src/components/landing/Destinations.tsx` is in scope. Wrapped Carnivals drop out of the grid entirely, no wrapped badge and no Gallery card, and the grid reflows rather than being padded.
 - Destination pages are never deleted, never deindexed and never removed from the sitemap. The rule governs onward links, not pages.
-- `getDestinationCardLink` in `src/lib/destinations.ts` is the only place that decides where a destination card goes: the MasOS event when upcoming with a real event UUID, the destination page when upcoming without one (today Jamaica and Tobago), the Gallery when the season has wrapped.
+- `getDestinationCardLink` in `src/lib/destinations.ts` is the only place that decides where a destination card goes: the MasOS event when upcoming with a real event UUID, the destination page when upcoming without one (today Jamaica and Tobago), the Gallery when the season has wrapped, and a WhatsApp enquiry where a territory has no date, no page and no event, for example Atlanta. A card like that is worded as an enquiry, never as a booking, and never points at the generic events list.
 - The helper reads the live clock at call time, so the React app recomputes on hydration and a stale prerender never shows a wrapped Carnival.
 - When a real date lands, set the territory's season end date in `SEASON_END_DATES` and let everything reopen on its own. Never reopen a territory by hand.
 - `src/test/onwardDestinations.test.ts` enforces all of the above against a fixed clock of 26 August 2026.

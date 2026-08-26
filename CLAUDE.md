@@ -120,6 +120,11 @@ removed from the sitemap. The rule governs onward links, not pages. A
 wrapped territory keeps its page, its content and its search presence, it
 simply stops being offered as somewhere else to go.
 
+The homepage destination grid in `src/components/landing/Destinations.tsx`
+is in scope. A wrapped Carnival drops out of that grid entirely, it does
+not stay on as a badge and a Gallery link, and the grid is left to reflow
+rather than padded.
+
 Every such list reads `getUpcomingDestinations` from `src/data/seasons.ts`.
 Nobody adds a new destination list with its own hardcoded array. The helper
 reads the live clock at call time, so the React app recomputes on hydration
@@ -147,6 +152,15 @@ that decides. A destination card goes:
   today is Jamaica and Tobago, so the visitor lands on the waitlist or
   enquiry block
 - to the Gallery when the season has wrapped
+- to a WhatsApp enquiry where a territory has no date, no page and no
+  event, for example Atlanta, worded as an enquiry rather than a booking.
+  Such a card never points at the generic MasOS events list, because that
+  drops a visitor into a list of other territories
+
+Anything not sellable carries no booking call to action. Epic Cruise is
+the standing example: it returns in 2028 with no confirmed day, so it
+holds no MasOS event and its card goes to `/epic-cruise`, where the
+register-interest block lives.
 
 Outbound cards use `target="_blank"` and `rel="noopener noreferrer"` to
 match every other booking call to action. Internal cards stay client side
