@@ -21,7 +21,8 @@ export type KnowledgeEvent = {
   dateText: string;
   seasonEndISO: string | null;
   path: string | null;
-  bookingUrl: string;
+  bookingUrl: string | null;
+  bookableEvent?: boolean;
   quotable: boolean;
   tier: string | null;
   seasonForward: boolean;
@@ -381,6 +382,7 @@ export function eventLine(pack: Pack, ev: KnowledgeEvent, now: Date): string {
   const open = ev.seasonEndISO
     ? now.getTime() <= endOfDay(ev.seasonEndISO)
     : false;
+  const bookableEvent = Boolean(ev.bookableEvent && ev.bookingUrl);
   const bits = [
     `${ev.name}, ${ev.dateText || "dates not confirmed"}`,
     ev.tier ? ev.tier : "cruise partnership, no tier",
@@ -394,11 +396,14 @@ export function eventLine(pack: Pack, ev: KnowledgeEvent, now: Date): string {
     bits.push("venue confirmed after booking");
   }
   bits.push(
-    open
+    open && bookableEvent
       ? "bookings are open"
-      : "this season has finished, so bookings are closed for it",
+      : open
+        ? "no bookable event is on file yet, so do not offer checkout"
+        : "this season has finished, so bookings are closed for it",
   );
   if (ev.path) bits.push(`page ${ev.path}`);
+  if (ev.path && !bookableEvent) bits.push(`register interest at ${ev.path}`);
   return `- ${bits.join(". ")}.`;
 }
 
@@ -456,16 +461,20 @@ export function buildFacts(
     if (ev) {
       if (ev.seasonForward) {
         parts.push(
-          `${territory.name} status: the most recent season has finished and the next dates are not yet confirmed.`,
+        `${territory.name} status: the most recent season has finished and the next dates are not yet confirmed. No bookable event is on file, so do not offer checkout. ${territory.path ? `Point the visitor to register interest at ${territory.path}.` : `Hand the visitor to WhatsApp at ${pack.contact.whatsappUrl}.`}`,
         );
       } else if (!ev.seasonEndISO) {
         parts.push(
-          `${territory.name} status: no confirmed dates, so nothing is bookable for a date yet.`,
+        `${territory.name} status: no confirmed dates, so nothing is bookable for a date yet. No bookable event is on file, so do not offer checkout. ${territory.path ? `Point the visitor to register interest at ${territory.path}.` : `Hand the visitor to WhatsApp at ${pack.contact.whatsappUrl}.`}`,
         );
-      } else if (now.getTime() <= endOfDay(ev.seasonEndISO)) {
+    } else if (now.getTime() <= endOfDay(ev.seasonEndISO) && ev.bookableEvent && ev.bookingUrl) {
         parts.push(
           `${territory.name} status: open. ${ev.dateText}. Bookings are open.`,
         );
+    } else if (now.getTime() <= endOfDay(ev.seasonEndISO)) {
+      parts.push(
+        `${territory.name} status: ${ev.dateText}. No bookable event is on file, so do not offer checkout. ${territory.path ? `Point the visitor to register interest at ${territory.path}.` : `Hand the visitor to WhatsApp at ${pack.contact.whatsappUrl}.`}`,
+      );
       } else {
         parts.push(
           `${territory.name} status: the ${ev.seasonEndISO.slice(0, 4)} season has finished and bookings are closed for it.`,
