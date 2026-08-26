@@ -158,9 +158,9 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
   },
   {
     slug: "epic-cruise",
-    name: "Epic Cruise — Trinidad Carnival",
+    name: "Epic Cruise, Trinidad Carnival",
     shortName: "Epic Cruise",
-    dateText: "8–9 February 2027",
+    dateText: "Returns 2028, dates to be confirmed",
     path: "/epic-cruise",
     venue:
       "Aboard the EPIC Carnival Experience, sailing from San Juan, Puerto Rico",

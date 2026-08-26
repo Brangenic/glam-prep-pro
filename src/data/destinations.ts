@@ -253,14 +253,14 @@ export const destinations: Destination[] = [
   },
   {
     slug: "epic-cruise",
-    name: "Epic Cruise — Trinidad Carnival",
+    name: "Epic Cruise, Trinidad Carnival",
     shortName: "Epic Cruise",
-    date: "8–9 February 2027",
+    date: "Returns 2028, dates to be confirmed",
     description: "Premium glam hub services for EPIC Carnival Experience masqueraders.",
     longDescription:
-      "Glam Hub at sea! Carnival Glam Hub is aboard the EPIC Carnival Experience — the luxury floating hotel that sails masqueraders from San Juan, Puerto Rico straight to Trinidad Carnival. Book your makeup, hair, photoshoot, and get-dressed services exclusively for EPIC cruise masqueraders.",
+      "Glam Hub at sea! Carnival Glam Hub is aboard the EPIC Carnival Experience, the luxury floating hotel that sails masqueraders from San Juan, Puerto Rico straight to Trinidad Carnival. Book your makeup, hair, photoshoot, and get-dressed services exclusively for EPIC cruise masqueraders.",
     image: "https://www.dropbox.com/scl/fi/i9atucg76ieovbmkkqupg/IMG_8522.jpg?rlkey=b74ambfqu21fjbadhidkcy6u7&st=rmucsn19&dl=1",
-    cta: "Book Epic Cruise Glam",
+    cta: "Ask about Epic Cruise",
     objectPosition: "50% 20%",
     highlights: [
       "Glam hub aboard the EPIC cruise ship",
@@ -268,9 +268,9 @@ export const destinations: Destination[] = [
       "Full makeup, hair & photoshoot",
       "Get Dressed assistance included",
     ],
-    metaTitle: "Epic Cruise Carnival Makeup & Glam 2027 | Glam Hub",
+    metaTitle: "Epic Cruise Carnival Glam | Returns 2028 | Glam Hub",
     metaDescription:
-      "Book your carnival glam services on the EPIC Cruise. Carnival Glam Hub is aboard the EPIC Carnival Experience for Trinidad Carnival 2027.",
+      "The EPIC Cruise Glam Hub returns in 2028 and dates are still to be confirmed. Register your interest with Carnival Glam Hub for the next sailing.",
   },
 ];
 

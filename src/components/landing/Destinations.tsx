@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
 import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
-import { BOOKING_URL } from "@/lib/constants";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { getDestinationCardLink } from "@/lib/destinations";
-import { GALLERY_CTA, GALLERY_HREF, hasSeasonPassed, isUpcomingDestination, passedSeasonYear } from "@/data/seasons";
+import { isUpcomingDestination } from "@/data/seasons";
 
 const Destinations = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -25,6 +25,7 @@ const Destinations = () => {
     "grenada",
     "miami",
     "trinidad",
+    "jamaica",
     "tobago",
     "epic-cruise",
   ];
@@ -32,7 +33,11 @@ const Destinations = () => {
     trinidad: { name: "Trinidad Carnival 2027" },
     "epic-cruise": { date: "Returns 2028" },
   };
+  // Onward links, and the homepage grid is one of them, show upcoming
+  // Carnivals only. A wrapped Carnival drops out of the grid entirely and
+  // the grid simply reflows, it is never padded.
   const orderedDestinations = HOMEPAGE_ORDER
+    .filter((slug) => isUpcomingDestination(slug))
     .map((slug) => destinations.find((d) => d.slug === slug))
     .filter((d): d is NonNullable<typeof d> => Boolean(d))
     .map((d) => ({ ...d, ...HOMEPAGE_OVERRIDES[d.slug] }));
@@ -92,11 +97,7 @@ const Destinations = () => {
                   });
                 }
               }}
-              aria-label={
-                hasSeasonPassed(d.slug)
-                  ? `${d.name} ${passedSeasonYear(d.slug)} has wrapped, see the gallery`
-                  : `Book ${d.name} glam services`
-              }
+              aria-label={`${d.name} glam services`}
               className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] block transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
@@ -112,12 +113,7 @@ const Destinations = () => {
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              {hasSeasonPassed(d.slug) && (
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/90 text-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full">
-                  {passedSeasonYear(d.slug)} wrapped
-                </div>
-              )}
-              {d.upcoming && !hasSeasonPassed(d.slug) && (
+              {d.upcoming && (
                 <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-secondary/90 text-secondary-foreground font-body text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full">
                   Coming Soon
                 </div>
@@ -143,12 +139,10 @@ const Destinations = () => {
                   {d.name}
                 </h3>
                 <p className="font-body text-xs text-white/70 mb-4 sm:mb-5">
-                  {hasSeasonPassed(d.slug)
-                    ? `${passedSeasonYear(d.slug)} season has wrapped. Bookings are closed.`
-                    : d.description}
+                  {d.description}
                 </p>
                 <span className="inline-block bg-primary text-primary-foreground font-body font-semibold text-xs px-5 py-2.5 rounded-full group-hover:shadow-lg group-hover:shadow-primary/25 transition-all">
-                  {hasSeasonPassed(d.slug) ? GALLERY_CTA : d.cta}
+                  {d.cta}
                 </span>
               </div>
             </CardTag>
@@ -165,12 +159,17 @@ const Destinations = () => {
             {liteTerritories.map((t) => (
               <a
                 key={t.slug}
-                href={BOOKING_URL}
+                // No date, no page and no event, so this is an enquiry
+                // rather than a booking. It must never point at the
+                // generic events list.
+                href={`${WHATSAPP_URL}?text=${encodeURIComponent(
+                  `Hi Carnival Glam Hub, I would like to ask about ${t.name} Carnival.`,
+                )}`}
                 target="_blank"
                 rel="noopener"
                 className="inline-block rounded-full border border-border bg-background px-5 py-2.5 font-body text-sm font-semibold hover:border-primary/60 hover:text-primary transition-colors"
               >
-                {t.name}
+                Ask about {t.name}
               </a>
             ))}
           </div>

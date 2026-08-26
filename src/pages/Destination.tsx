@@ -276,7 +276,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             )}
             {dest.slug === "epic-cruise" && (
               <span className="inline-block w-fit bg-secondary/90 text-secondary-foreground font-body text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
-                🚢 Glam Hub at Sea — exclusively for EPIC Cruise masqueraders
+                Glam Hub at Sea, exclusively for EPIC Cruise masqueraders
               </span>
             )}
             {dest.slug === "trinidad" && (

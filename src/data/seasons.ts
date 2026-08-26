@@ -36,7 +36,6 @@ export const SEASON_END_DATES: Record<string, string> = {
   jamaica: "2027-04-30",
   trinidad: "2027-02-09",
   "trinidad-carnival-2027": "2027-02-09",
-  "epic-cruise": "2027-02-09",
 };
 
 
@@ -44,7 +43,9 @@ export const SEASON_END_DATES: Record<string, string> = {
  * Territories that keep selling forward through their own next-season
  * messaging and must never be caught by `hasSeasonPassed`.
  */
-export const SEASON_FORWARD_SLUGS = ["jamaica"] as const;
+// Epic Cruise does not sail in 2027. It returns in 2028 with no confirmed
+// day yet, so it keeps pointing forward and must never carry a 2027 date.
+export const SEASON_FORWARD_SLUGS = ["jamaica", "epic-cruise"] as const;
 
 /** Where a closed-out territory sends people instead of the booking flow. */
 export const GALLERY_HREF = "/#gallery";

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T11:01:42.917Z",
+  "generatedAt": "2026-08-26T12:02:14.777Z",
   "brand": "# Carnival Glam Hub\n\nCarnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe McGann. More than 15,000 masqueraders have been served since 2017.\n\nWe are band neutral. We serve masqueraders from every band, in every section.\n\nCarnival Glam Hub runs the whole Carnival morning from one location. Makeup, hair, photos and the practical parts of getting on the road happen in one place, so a masquerader is not moving between an artist, a hotel room and a photographer on the morning itself.\n\nThe service runs across the Caribbean and North America, in two hub tiers, Full Service Glam Hub and Glam Hub Lite.",
   "contact": {
     "whatsappUrl": "https://wa.me/18765090997",
@@ -143,17 +143,6 @@
       "quotable": false,
       "tier": "Glam Hub Lite",
       "seasonForward": false
-    },
-    {
-      "slug": "epic-cruise",
-      "name": "Epic Cruise — Trinidad Carnival",
-      "dateText": "8–9 February 2027",
-      "seasonEndISO": "2027-02-09",
-      "path": "/epic-cruise",
-      "bookingUrl": "https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244",
-      "quotable": true,
-      "tier": null,
-      "seasonForward": false
     }
   ],
   "territories": {
@@ -280,14 +269,14 @@
       "brief": "# Atlanta Carnival\n\nDates: not confirmed. We have no date for this territory, so hand the visitor to the booking team.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm.\n\n## Free with any booking here\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nRoad ready Carnival morning access and getting dressed are not offered at this hub.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: none. This territory has no page on the site."
     },
     "epic-cruise": {
-      "name": "Epic Cruise — Trinidad Carnival",
+      "name": "Epic Cruise, Trinidad Carnival",
       "aliases": [
         "epic",
         "epic cruise",
         "cruise"
       ],
       "path": "/epic-cruise",
-      "brief": "# Epic Cruise — Trinidad Carnival\n\nDates: 8–9 February 2027.\n\nTier: none. Epic Cruise is a cruise partnership rather than a Glam Hub, so it carries no tier badge.\n\nLocation: Aboard the EPIC Carnival Experience, sailing from San Juan, Puerto Rico\n\n## Prices\nPer masquerader in US dollars.\n\n**Carnival Monday**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Full Glam: US$440\n- Hair only: US$120\n- Photoshoot only: US$140\n\n**Carnival Tuesday**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Full Glam: US$440\n- Hair only: US$120\n- Photoshoot only: US$160\n\n## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner at booking, so never list inclusions for it.\n\nRoad ready Carnival morning access applies here at US$35. Getting dressed is free with any Glam Hub service and US$35 on its own.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /epic-cruise"
+      "brief": "# Epic Cruise, Trinidad Carnival\n\nDates: Returns 2028, dates to be confirmed.\n\nTier: none. Epic Cruise is a cruise partnership rather than a Glam Hub, so it carries no tier badge.\n\nLocation: Aboard the EPIC Carnival Experience, sailing from San Juan, Puerto Rico\n\n## Prices\nPer masquerader in US dollars.\n\n**Carnival Monday**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Full Glam: US$440\n- Hair only: US$120\n- Photoshoot only: US$140\n\n**Carnival Tuesday**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Full Glam: US$440\n- Hair only: US$120\n- Photoshoot only: US$160\n\n## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner at booking, so never list inclusions for it.\n\nRoad ready Carnival morning access applies here at US$35. Getting dressed is free with any Glam Hub service and US$35 on its own.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /epic-cruise"
     }
   },
   "topics": {
@@ -346,7 +335,7 @@
       "url": "/guyana"
     },
     {
-      "label": "Epic Cruise — Trinidad Carnival",
+      "label": "Epic Cruise, Trinidad Carnival",
       "url": "/epic-cruise"
     },
     {
