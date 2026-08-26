@@ -1,4 +1,6 @@
 import { BOOKING_URL } from "@/lib/constants";
+import { GALLERY_HREF, hasSeasonPassed } from "@/data/seasons";
+import { getProfile } from "@/data/territoryProfiles";
 
 export interface Destination {
   slug: string;
@@ -14,6 +16,9 @@ export const DESTINATIONS: Destination[] = [
   { slug: 'grenada', label: 'Grenada', masosUrl: 'https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0' },
   { slug: 'miami', label: 'Miami', masosUrl: 'https://carnivalglamhub.masos.app/events/d6238a3f-73d0-4805-a3f2-91e8b4415047' },
   { slug: 'trinidad', label: 'Trinidad', masosUrl: 'https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb' },
+  // Same Carnival and the same MasOS event as /trinidad, so the 2027 guide
+  // page can send a card straight to the event too.
+  { slug: 'trinidad-carnival-2027', label: 'Trinidad Carnival 2027', masosUrl: 'https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb' },
   { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events' },
@@ -35,4 +40,41 @@ export function buildDestinationUrl(slug: string, campaign = 'destination_select
     utm_content: slug,
   });
   return `${base}?${params.toString()}`;
+}
+
+/**
+ * One place decides where a destination card goes.
+ *
+ * The journey is home, card, MasOS event. The destination page hop is
+ * gone for anything we can actually sell.
+ *
+ *   - Season wrapped: the card goes to the Gallery, per the season rules.
+ *   - Upcoming with a real event on file: straight to that event, with
+ *     UTMs attached.
+ *   - Upcoming with no event on file, currently Jamaica and Tobago: the
+ *     card goes to its own destination page, where the waitlist or
+ *     enquiry call to action lives. It must never go to the generic
+ *     events list, because that drops a visitor who clicked one
+ *     territory into a list of others.
+ */
+export type DestinationCardLink = {
+  href: string;
+  /** True only for an outbound booking link, so callers set target and rel the same way. */
+  external: boolean;
+};
+
+export function hasBookableEvent(slug: string): boolean {
+  const dest = getDestination(slug);
+  return Boolean(dest && dest.masosUrl.includes("/events/"));
+}
+
+export function getDestinationCardLink(
+  slug: string,
+  campaign: string,
+): DestinationCardLink {
+  if (hasSeasonPassed(slug)) return { href: GALLERY_HREF, external: false };
+  if (hasBookableEvent(slug)) {
+    return { href: buildDestinationUrl(slug, campaign), external: true };
+  }
+  return { href: getProfile(slug)?.path ?? `/${slug}`, external: false };
 }

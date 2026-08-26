@@ -16,7 +16,7 @@ import {
   getDestinationBySlug,
   getDestinationFaqs,
 } from "@/data/destinations";
-import { buildDestinationUrl } from "@/lib/destinations";
+import { buildDestinationUrl, getDestinationCardLink } from "@/lib/destinations";
 import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE } from "@/data/hubTiers";
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
@@ -44,6 +44,32 @@ const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
   toronto: { city: "Toronto", country: "CA" },
   guyana: { city: "Georgetown", country: "GY" },
 };
+
+/**
+ * Onward destination card. An outbound booking link matches the site's
+ * other MasOS links, target _blank with rel noopener noreferrer. An
+ * internal fallback stays a client side route.
+ */
+const OtherCard = ({
+  external,
+  href,
+  className,
+  children,
+}: {
+  external: boolean;
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) =>
+  external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      {children}
+    </a>
+  ) : (
+    <Link to={href} className={className}>
+      {children}
+    </Link>
+  );
 
 const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const params = useParams();
@@ -158,7 +184,13 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       const source =
         getDestinationBySlug(u.slug) ??
         (u.slug === "trinidad-carnival-2027" ? getDestinationBySlug("trinidad") : undefined);
-      return { ...u, image: source?.image };
+      return {
+        ...u,
+        image: source?.image,
+        // Same helper as the homepage grid, so one place decides whether a
+        // card books directly or goes to the destination page.
+        card: getDestinationCardLink(u.slug, "other_destinations_card"),
+      };
     })
     .filter((o): o is typeof o & { image: string } => Boolean(o.image));
   const onwardLinks = getUpcomingDestinations(dest.slug);
@@ -744,9 +776,10 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {others.map((o) => (
-                <Link
+                <OtherCard
                   key={o.slug}
-                  to={o.path}
+                  external={o.card.external}
+                  href={o.card.href}
                   className="group relative rounded-2xl overflow-hidden aspect-[3/4] block"
                 >
                   <img
@@ -764,7 +797,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {o.dateText}
                     </p>
                   </div>
-                </Link>
+                </OtherCard>
               ))}
             </div>
 
