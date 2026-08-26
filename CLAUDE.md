@@ -105,3 +105,67 @@ it in `src/pages/FAQ.tsx` if the FAQ paraphrases it, and in
 `scripts/prerender-bodies.ts` so crawlers see the same wording. The
 deposit figure the bot quotes is read out of clause 1.1, so it follows
 automatically. Regenerate the pack, then run `npm run test`.
+
+---
+
+# ONWARD DESTINATION RULE
+
+Any list, grid, strip, banner or link block that points a visitor at a
+destination other than the one they are viewing shows **upcoming
+destinations only**. A Carnival that has passed never appears as an onward
+option anywhere on the site.
+
+Destination pages themselves are never deleted, never deindexed and never
+removed from the sitemap. The rule governs onward links, not pages. A
+wrapped territory keeps its page, its content and its search presence, it
+simply stops being offered as somewhere else to go.
+
+Every such list reads `getUpcomingDestinations` from `src/data/seasons.ts`.
+Nobody adds a new destination list with its own hardcoded array. The helper
+reads the live clock at call time, so the React app recomputes on hydration
+and a stale prerender can never show a wrapped Carnival to a visitor.
+
+Current call sites, all of which must stay on the helper:
+
+- `src/pages/Destination.tsx`, the "Other Destinations" grid and the
+  awaiting-dates banner
+- `src/components/landing/Footer.tsx`, the footer destination list
+- `src/components/RelatedLinks.tsx`, neighbour and service related links
+- `src/components/landing/Destinations.tsx`, the homepage grid and the
+  "Also glamming" strip
+- `scripts/prerender-bodies.ts`, the build-time neighbour and footer
+  cross-links
+
+## Where a destination card goes
+
+`getDestinationCardLink` in `src/lib/destinations.ts` is the only place
+that decides. A destination card goes:
+
+- to the MasOS event when the Carnival is upcoming and has a real event
+  UUID on file, with UTMs attached by `buildDestinationUrl`
+- to the destination page when it is upcoming but has no event UUID, which
+  today is Jamaica and Tobago, so the visitor lands on the waitlist or
+  enquiry block
+- to the Gallery when the season has wrapped
+
+Outbound cards use `target="_blank"` and `rel="noopener noreferrer"` to
+match every other booking call to action. Internal cards stay client side
+routes so the SPA does not reload.
+
+## Reopening a territory
+
+When a real date lands for any territory, set its season end date in
+`SEASON_END_DATES` in `src/data/seasons.ts` and let everything reopen on
+its own. Do not reopen a territory by hand, do not re-add it to a list, and
+do not special case it in a component. Jamaica is the live example: it has
+no confirmed 2027 day yet, so it reads "2027 season, dates to be confirmed"
+and carries a waitlist rather than a bookable card. The day the date is
+confirmed, one line in the season calendar is the whole change.
+
+## Enforcement
+
+`src/test/onwardDestinations.test.ts` fails if a wrapped slug can appear in
+an onward list, if both Trinidad pages appear in one list, if a card link
+resolves to the wrong target, or if a component grows a destination slug
+array with no season filter beside it. It runs against a fixed clock of
+26 August 2026 so it never starts failing on its own in February.
