@@ -181,6 +181,240 @@ export type Database = {
           },
         ]
       }
+      glam_match_analysis: {
+        Row: {
+          accent_colour: string | null
+          confidence: string | null
+          created_at: string
+          depth_notes: string | null
+          direction: Json | null
+          gem_tone: string | null
+          id: string
+          intensity: string | null
+          lead_id: string | null
+          metallic_colour: string | null
+          mood: string | null
+          notes: string | null
+          primary_colour: string | null
+          secondary_colour: string | null
+          skin_tone: string | null
+          undertone: string | null
+        }
+        Insert: {
+          accent_colour?: string | null
+          confidence?: string | null
+          created_at?: string
+          depth_notes?: string | null
+          direction?: Json | null
+          gem_tone?: string | null
+          id?: string
+          intensity?: string | null
+          lead_id?: string | null
+          metallic_colour?: string | null
+          mood?: string | null
+          notes?: string | null
+          primary_colour?: string | null
+          secondary_colour?: string | null
+          skin_tone?: string | null
+          undertone?: string | null
+        }
+        Update: {
+          accent_colour?: string | null
+          confidence?: string | null
+          created_at?: string
+          depth_notes?: string | null
+          direction?: Json | null
+          gem_tone?: string | null
+          id?: string
+          intensity?: string | null
+          lead_id?: string | null
+          metallic_colour?: string | null
+          mood?: string | null
+          notes?: string | null
+          primary_colour?: string | null
+          secondary_colour?: string | null
+          skin_tone?: string | null
+          undertone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "glam_match_analysis_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "glam_match_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      glam_match_events: {
+        Row: {
+          created_at: string
+          detail: Json | null
+          event: string | null
+          id: string
+          lead_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          detail?: Json | null
+          event?: string | null
+          id?: string
+          lead_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          detail?: Json | null
+          event?: string | null
+          id?: string
+          lead_id?: string | null
+        }
+        Relationships: []
+      }
+      glam_match_leads: {
+        Row: {
+          consent_at: string
+          created_at: string
+          destination_slug: string | null
+          email: string | null
+          expires_at: string
+          id: string
+          ip_hash: string | null
+          marketing_opt_in: boolean
+          placement: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          consent_at: string
+          created_at?: string
+          destination_slug?: string | null
+          email?: string | null
+          expires_at?: string
+          id?: string
+          ip_hash?: string | null
+          marketing_opt_in?: boolean
+          placement?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          consent_at?: string
+          created_at?: string
+          destination_slug?: string | null
+          email?: string | null
+          expires_at?: string
+          id?: string
+          ip_hash?: string | null
+          marketing_opt_in?: boolean
+          placement?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      glam_match_looks: {
+        Row: {
+          best_match: boolean
+          bronzing: string | null
+          crease_colour: string | null
+          created_at: string
+          eye_description: string | null
+          gem_placement: string | null
+          glitter: string | null
+          hair: string | null
+          id: string
+          lash: string | null
+          lead_id: string | null
+          lid_colour: string | null
+          liner: string | null
+          lip_colour: string | null
+          look_name: string | null
+          look_type: string | null
+          preview_path: string | null
+          why_it_works: string | null
+        }
+        Insert: {
+          best_match?: boolean
+          bronzing?: string | null
+          crease_colour?: string | null
+          created_at?: string
+          eye_description?: string | null
+          gem_placement?: string | null
+          glitter?: string | null
+          hair?: string | null
+          id?: string
+          lash?: string | null
+          lead_id?: string | null
+          lid_colour?: string | null
+          liner?: string | null
+          lip_colour?: string | null
+          look_name?: string | null
+          look_type?: string | null
+          preview_path?: string | null
+          why_it_works?: string | null
+        }
+        Update: {
+          best_match?: boolean
+          bronzing?: string | null
+          crease_colour?: string | null
+          created_at?: string
+          eye_description?: string | null
+          gem_placement?: string | null
+          glitter?: string | null
+          hair?: string | null
+          id?: string
+          lash?: string | null
+          lead_id?: string | null
+          lid_colour?: string | null
+          liner?: string | null
+          lip_colour?: string | null
+          look_name?: string | null
+          look_type?: string | null
+          preview_path?: string | null
+          why_it_works?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "glam_match_looks_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "glam_match_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      glam_match_uploads: {
+        Row: {
+          costume_path: string | null
+          created_at: string
+          id: string
+          lead_id: string | null
+          purge_after: string
+          selfie_path: string | null
+        }
+        Insert: {
+          costume_path?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          purge_after?: string
+          selfie_path?: string | null
+        }
+        Update: {
+          costume_path?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          purge_after?: string
+          selfie_path?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "glam_match_uploads_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "glam_match_leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       google_reviews: {
         Row: {
           author_name: string | null
@@ -408,7 +642,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      glam_match_purge_previews_and_leads: { Args: never; Returns: undefined }
+      glam_match_purge_uploads: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
