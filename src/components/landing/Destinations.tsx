@@ -3,6 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
 import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
 import { BOOKING_URL } from "@/lib/constants";
+import { getDestinationCardLink } from "@/lib/destinations";
 import { GALLERY_CTA, GALLERY_HREF, hasSeasonPassed, isUpcomingDestination, passedSeasonYear } from "@/data/seasons";
 
 const Destinations = () => {
@@ -68,10 +69,20 @@ const Destinations = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {orderedDestinations.map((d, i) => (
-            <Link
+          {orderedDestinations.map((d, i) => {
+            // One helper decides the target: the MasOS event where the
+            // Carnival is upcoming and has a real event on file, the
+            // destination page where it does not, the Gallery once the
+            // season has wrapped.
+            const card = getDestinationCardLink(d.slug, "homepage_card");
+            const CardTag = card.external ? "a" : Link;
+            const linkProps = card.external
+              ? { href: card.href, target: "_blank", rel: "noopener noreferrer" }
+              : { to: card.href };
+            return (
+            <CardTag
               key={d.slug}
-              to={hasSeasonPassed(d.slug) ? GALLERY_HREF : `/destinations/${d.slug}`}
+              {...(linkProps as never)}
               onClick={() => {
                 if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
                   window.gtag("event", "destination_click", {
