@@ -158,7 +158,13 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       const source =
         getDestinationBySlug(u.slug) ??
         (u.slug === "trinidad-carnival-2027" ? getDestinationBySlug("trinidad") : undefined);
-      return { ...u, image: source?.image };
+      return {
+        ...u,
+        image: source?.image,
+        // Same helper as the homepage grid, so one place decides whether a
+        // card books directly or goes to the destination page.
+        card: getDestinationCardLink(u.slug, "other_destinations_card"),
+      };
     })
     .filter((o): o is typeof o & { image: string } => Boolean(o.image));
   const onwardLinks = getUpcomingDestinations(dest.slug);
@@ -744,9 +750,11 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {others.map((o) => (
-                <Link
+                <a
                   key={o.slug}
-                  to={o.path}
+                  {...(o.card.external
+                    ? { href: o.card.href, target: "_blank", rel: "noopener noreferrer" }
+                    : { href: o.card.href })}
                   className="group relative rounded-2xl overflow-hidden aspect-[3/4] block"
                 >
                   <img
@@ -764,7 +772,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {o.dateText}
                     </p>
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
 

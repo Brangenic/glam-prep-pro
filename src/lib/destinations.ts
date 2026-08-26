@@ -16,6 +16,9 @@ export const DESTINATIONS: Destination[] = [
   { slug: 'grenada', label: 'Grenada', masosUrl: 'https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0' },
   { slug: 'miami', label: 'Miami', masosUrl: 'https://carnivalglamhub.masos.app/events/d6238a3f-73d0-4805-a3f2-91e8b4415047' },
   { slug: 'trinidad', label: 'Trinidad', masosUrl: 'https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb' },
+  // Same Carnival and the same MasOS event as /trinidad, so the 2027 guide
+  // page can send a card straight to the event too.
+  { slug: 'trinidad-carnival-2027', label: 'Trinidad Carnival 2027', masosUrl: 'https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb' },
   { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
   { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events' },
