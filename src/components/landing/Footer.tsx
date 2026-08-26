@@ -1,4 +1,6 @@
 import brandLogo from "@/assets/gabby-glam-logo.png";
+import PreferredSourcesButton from "@/components/PreferredSourcesButton";
+
 
 const socialLinks = [
   {
@@ -182,7 +184,11 @@ const Footer = () => (
               Work at Glam Hub
             </a>
           </div>
+          <div className="mt-6">
+            <PreferredSourcesButton />
+          </div>
         </div>
+
       </div>
       <div className="border-t border-border mt-10 sm:mt-12 pt-6 sm:pt-8 text-center">
         <p className="font-body text-xs text-muted-foreground mb-3">
