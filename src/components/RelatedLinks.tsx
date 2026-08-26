@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { isUpcomingDestination } from "@/data/seasons";
 
 type LinkRef = { to: string; label: string };
 
@@ -136,7 +137,9 @@ function deriveFromPath(pathname: string): Props | null {
     const meta = SERVICE_DEFAULTS[current];
     return {
       services,
-      destinations: meta?.destinations ?? [],
+      destinations: (meta?.destinations ?? []).filter((d) =>
+        isUpcomingDestination(d.to.replace(/^\//, "")),
+      ),
       guides: meta?.guides ?? [],
     };
   }
