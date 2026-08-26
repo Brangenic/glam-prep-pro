@@ -16,3 +16,13 @@ verify_jwt = false
 verify_jwt = false
 [functions.sync-amazon-store]
 verify_jwt = false
+
+[functions.glam-match-start]
+verify_jwt = false
+
+[functions.glam-match-analyze]
+verify_jwt = false
+
+[functions.glam-match-generate]
+verify_jwt = false
+
