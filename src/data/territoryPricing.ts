@@ -307,6 +307,9 @@ const epicCruise: TerritoryPricing = {
   label: "Epic Cruise, Trinidad Carnival",
   tier: "partnership",
   quotable: false,
+  // Not running at all until 2028, so it is not even an enquiry. Out of the calculator.
+  runningThisSeason: false,
+
   eventDate: "Returns 2028, dates to be confirmed",
   askDay: false,
   days: SINGLE_DAY,
