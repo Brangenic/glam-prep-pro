@@ -184,17 +184,23 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
-  const seasonEnded = dest.slug === "jamaica";
-  const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
+  // A territory whose next season has no confirmed day yet. Derived from
+  // the published date string, so no territory needs a bespoke flag.
+  const awaitingDates = /to be confirmed/i.test(dest.date);
+  const waitlistYear = dest.date.match(/\b(20\d{2})\b/)?.[1] ?? "";
+  const waitlistHref = `mailto:Bookings@carnivalglamhub.com?subject=${encodeURIComponent(
+    `${dest.name} ${waitlistYear} Waitlist`.replace(/\s+/g, " ").trim(),
+  )}`;
   // A passed territory sells nothing. Every booking call to action on the
   // page becomes a Gallery link, derived from the season calendar.
-  const ctaHref = seasonPassed ? GALLERY_HREF : seasonEnded ? waitlistHref : bookingUrl;
+  const ctaHref = seasonPassed ? GALLERY_HREF : awaitingDates ? waitlistHref : bookingUrl;
   const ctaLabel = seasonPassed
     ? GALLERY_CTA
-    : seasonEnded
-      ? "Join 2027 Waitlist"
+    : awaitingDates
+      ? `Join the ${waitlistYear} waitlist`.replace(/\s+/g, " ")
       : "Book Your Glam";
-  const ctaExternal = !seasonPassed && !seasonEnded;
+  const ctaExternal = !seasonPassed && !awaitingDates;
+
 
   return (
     <div className="min-h-screen bg-background">
