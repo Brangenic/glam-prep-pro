@@ -91,6 +91,15 @@ export function getBookableQuoteTerritories(today: Date = new Date()) {
 
 const BOOKABLE_TERRITORIES = getBookableQuoteTerritories();
 
+/**
+ * A territory only shows numbers when it has real products AND a bookable
+ * event on file. Jamaica, Tobago and Atlanta are selectable but enquiry only:
+ * no price, no total, no MasOS checkout handoff.
+ */
+function canQuote(config: TerritoryPricing | undefined): boolean {
+  return Boolean(config?.quotable) && Boolean(config && hasBookableEvent(config.slug));
+}
+
 /** Real products that satisfy a given intent, for a territory and day. */
 function productsForIntent(products: QuoteProduct[], intent: IntentKey): QuoteProduct[] {
   switch (intent) {
@@ -143,7 +152,7 @@ const BookingCalculator = () => {
   );
 
   const intents = useMemo<IntentKey[]>(() => {
-    if (!config || !config.quotable) return [];
+    if (!config || !canQuote(config)) return [];
     const list: IntentKey[] = [];
     (["makeup", "makeup-photoshoot", "photoshoot", "hair", "full-glam"] as IntentKey[]).forEach(
       (k) => {
@@ -197,7 +206,7 @@ const BookingCalculator = () => {
 
   const total = lines.reduce((s, l) => s + l.amount, 0);
   const isGroup = partySize >= 5 || intent === "group";
-  const quotable = Boolean(config?.quotable) && intent !== "group";
+  const quotable = canQuote(config) && intent !== "group";
 
   const inclusions = useMemo(() => {
     const free = getFreeInclusions(territory);
@@ -209,7 +218,7 @@ const BookingCalculator = () => {
   }, [territory, intent]);
 
   const premiumFrom = useMemo(
-    () => (config && config.quotable ? lowestPremiumPrice(config, day) : null),
+    () => (canQuote(config) ? lowestPremiumPrice(config, day) : null),
     [config, day],
   );
 
@@ -441,7 +450,7 @@ const BookingCalculator = () => {
                 )}
 
                 {/* 3. Intent */}
-                {config && config.quotable && (
+                {config && canQuote(config) && (
                   <div className="space-y-2">
                     <Label className="font-body text-sm font-semibold">
                       What do you need for Carnival morning?
@@ -515,7 +524,7 @@ const BookingCalculator = () => {
                   </div>
                 )}
 
-                {config && !config.quotable && (
+                {config && !canQuote(config) && (
                   <p className="font-body text-sm text-muted-foreground">
                     Pricing for {config.label} is confirmed on enquiry. Tell us what you need and our
                     team will come back to you.
