@@ -24,6 +24,7 @@ import {
   WHATSAPP_DISPLAY,
   CONTACT_EMAIL,
 } from "@/lib/constants";
+import { hasBookableEvent } from "@/lib/destinations";
 import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
 import {
   FULL_SERVICE_SLUGS,
@@ -96,7 +97,8 @@ export type KnowledgeEvent = {
   dateText: string;
   seasonEndISO: string | null;
   path: string | null;
-  bookingUrl: string;
+  bookingUrl: string | null;
+  bookableEvent: boolean;
   quotable: boolean;
   tier: string | null;
   seasonForward: boolean;
@@ -281,18 +283,18 @@ ${bullets(capLines)}
  * ============================================================ */
 
 function buildEvents(): KnowledgeEvent[] {
-  return TERRITORY_PROFILES.filter(
-    (p) => SEASON_END_DATES[p.slug] || p.slug === "atlanta",
-  ).map((p) => {
+  return TERRITORY_PROFILES.map((p) => {
     const pricing = pricingFor(p.slug);
+    const bookableEvent = hasBookableEvent(p.slug);
     return {
       slug: p.slug,
       name: p.name,
       dateText: p.dateText,
       seasonEndISO: SEASON_END_DATES[p.slug] ?? null,
       path: p.path,
-      bookingUrl: pricing?.bookingUrl ?? BOOKING_URL,
-      quotable: pricing?.quotable ?? false,
+      bookingUrl: bookableEvent ? (pricing?.bookingUrl ?? null) : null,
+      bookableEvent,
+      quotable: Boolean(pricing?.quotable && bookableEvent),
       tier: tierLabelFor(p.slug),
       seasonForward: (SEASON_FORWARD_SLUGS as readonly string[]).includes(
         p.slug,
@@ -308,6 +310,7 @@ function buildEvents(): KnowledgeEvent[] {
 function buildBrief(slug: string): string {
   const profile = getProfile(slug)!;
   const pricing = pricingFor(slug);
+  const bookableEvent = hasBookableEvent(slug);
   const tier = tierLabelFor(slug);
   const free = getFreeInclusions(slug);
   const caps = capabilityLines(slug);
@@ -337,7 +340,7 @@ function buildBrief(slug: string): string {
       : "Location: the venue is confirmed after booking. Never guess or name a venue for this territory.",
   );
 
-  if (pricing?.quotable) {
+  if (pricing?.quotable && bookableEvent) {
     const dayBlocks = pricing.days
       .map((d) => dayBlock(pricing, d.key, d.label))
       .filter(Boolean);
@@ -347,15 +350,21 @@ function buildBrief(slug: string): string {
     if (pricing.provisionalNote) parts.push(pricing.provisionalNote);
   } else {
     parts.push(
-      "## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm.",
+      "## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.",
     );
   }
 
-  if (free.length) parts.push(`## Free with any booking here\n${bullets(free)}`);
+  if (free.length && bookableEvent) {
+    parts.push(`## Free with any booking here\n${bullets(free)}`);
+  } else if (free.length) {
+    parts.push(
+      `## Service model when this opens\n${bullets(free)}\nThese inclusions apply only once the territory has a bookable event on file. Until then, do not describe them as part of an active booking.`,
+    );
+  }
 
   if (!tier) {
     parts.push(
-      "## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner at booking, so never list inclusions for it.",
+      "## Also available here\nEpic Cruise runs aboard the EPIC Carnival Experience. What is included on board is confirmed by the cruise partner when the sailing opens, so never list inclusions for it.",
     );
   } else {
     parts.push(
@@ -365,13 +374,22 @@ function buildBrief(slug: string): string {
     );
   }
 
-  parts.push(
-    pricing?.roadReady
-      ? `Road ready Carnival morning access applies here at ${money(ROAD_READY_PRICE)}. Getting dressed is free with any Glam Hub service and ${money(GETTING_DRESSED_PRICE)} on its own.`
-      : "Road ready Carnival morning access and getting dressed are not offered at this hub.",
-  );
+  if (bookableEvent) {
+    parts.push(
+      pricing?.roadReady
+        ? `Road ready Carnival morning access applies here at ${money(ROAD_READY_PRICE)}. Getting dressed is free with any Glam Hub service and ${money(GETTING_DRESSED_PRICE)} on its own.`
+        : "Road ready Carnival morning access and getting dressed are not offered at this hub.",
+    );
 
-  parts.push(depositLine(pricing));
+    parts.push(depositLine(pricing));
+  } else {
+    const action = profile.path
+      ? `Register interest at ${profile.path}.`
+      : `Message the booking team on WhatsApp at ${WHATSAPP_URL}.`;
+    parts.push(
+      `Booking status: no bookable event is on file for this territory yet. Do not send the visitor to the booking platform, do not quote a deposit and do not suggest checkout. ${action}`,
+    );
+  }
 
   if (slug === "miami") parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
 
