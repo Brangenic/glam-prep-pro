@@ -289,7 +289,7 @@ const toronto: TerritoryPricing = {
 
 const epicCruise: TerritoryPricing = {
   slug: "epic-cruise",
-  label: "EPIC Carnival Experience, Trinidad 2028",
+  label: "Epic Cruise, Trinidad Carnival",
   tier: "partnership",
   quotable: false,
   eventDate: "Returns 2028, dates to be confirmed",
@@ -303,7 +303,8 @@ const epicCruise: TerritoryPricing = {
 
 /**
  * No pricing exists for Guyana, Tobago or Atlanta anywhere in the
- * project. They remain selectable but never show a number.
+ * project. They never appear in the quote calculator unless a real
+ * bookable event is added for them.
  */
 const guyana: TerritoryPricing = {
   slug: "guyana",

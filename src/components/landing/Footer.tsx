@@ -1,6 +1,7 @@
 import brandLogo from "@/assets/gabby-glam-logo.png";
 import PreferredSourcesButton from "@/components/PreferredSourcesButton";
 import { getUpcomingDestinations } from "@/data/seasons";
+import { WHATSAPP_URL } from "@/lib/constants";
 
 // The footer destination list shows upcoming Carnivals only. A season that
 // has passed never appears as an onward option. Both Trinidad pages stay
@@ -10,9 +11,9 @@ const FOOTER_LABELS: Record<string, string> = {
   "epic-cruise": "Epic Cruise",
 };
 
-
-
-
+const ATLANTA_ENQUIRY_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
+  "Hi Carnival Glam Hub, I would like to ask about Atlanta Carnival.",
+)}`;
 const socialLinks = [
   {
     label: "Instagram",
@@ -100,12 +101,12 @@ const Footer = () => {
             ))}
             <li>
               <a
-                href="https://carnivalglamhub.masos.app/events"
+                href={ATLANTA_ENQUIRY_URL}
                 target="_blank"
                 rel="noopener"
                 className="hover:text-primary transition-colors"
               >
-                Atlanta (Glam Hub Lite)
+                Ask about Atlanta
               </a>
             </li>
           </ul>
