@@ -58,22 +58,50 @@ async function briefLooks(apiKey: string, prompt: string) {
  * input_fidelity on the edits endpoint, so if the API returns a 400 naming an
  * unrecognised or unsupported parameter we strip that parameter and retry once.
  * The shape that succeeded is logged so we learn the answer from the first real run.
+ *
+ * MODEL FALLBACK RUNG, TEMPORARY UNTIL 1 DECEMBER 2026.
+ * If the error names the model itself, or reports the endpoint or model as
+ * unsupported or not found, we retry once on gpt-image-1 at the same quality and
+ * log fallback_model: "gpt-image-1" to glam_match_events. gpt-image-1 retires on
+ * 1 December 2026, so this rung must be removed by then. The log line is how we
+ * find out whether we still need it: if no event ever carries fallback_model,
+ * gpt-image-2 is doing edits fine and the rung can go early.
  */
+const isModelOrEndpointFailure = (text: string) => {
+  const lower = text.toLowerCase();
+  return (
+    lower.includes(IMAGE_MODEL.toLowerCase()) ||
+    lower.includes("unsupported") ||
+    lower.includes("not supported") ||
+    lower.includes("not found") ||
+    lower.includes("does not exist") ||
+    lower.includes("unknown model") ||
+    lower.includes("invalid model")
+  );
+};
+
+const FALLBACK_IMAGE_MODEL = "gpt-image-1";
+
 async function editImage(
   apiKey: string,
   prompt: string,
   selfie: Blob,
   quality: string,
-): Promise<{ base64: string; shape: string; strippedParam: string | null }> {
+): Promise<{
+  base64: string;
+  shape: string;
+  strippedParam: string | null;
+  fallbackModel: string | null;
+}> {
   const optional: Record<string, string> = {
     size: "1024x1024",
     input_fidelity: "high",
     quality,
   };
 
-  const attempt = async (params: Record<string, string>) => {
+  const attempt = async (params: Record<string, string>, model = IMAGE_MODEL) => {
     const form = new FormData();
-    form.append("model", IMAGE_MODEL);
+    form.append("model", model);
     form.append("prompt", prompt);
     form.append("image", selfie, "selfie.jpg");
     for (const [key, value] of Object.entries(params)) form.append(key, value);
@@ -87,11 +115,20 @@ async function editImage(
     return { ok: res.ok, status: res.status, text };
   };
 
+  const readImage = (text: string) => {
+    const base64 = JSON.parse(text)?.data?.[0]?.b64_json;
+    if (!base64) throw new Error("Image response carried no image data");
+    return base64 as string;
+  };
+
   const first = await attempt(optional);
   if (first.ok) {
-    const base64 = JSON.parse(first.text)?.data?.[0]?.b64_json;
-    if (!base64) throw new Error("Image response carried no image data");
-    return { base64, shape: Object.keys(optional).join("+"), strippedParam: null };
+    return {
+      base64: readImage(first.text),
+      shape: Object.keys(optional).join("+"),
+      strippedParam: null,
+      fallbackModel: null,
+    };
   }
 
   if (first.status === 400) {
@@ -101,17 +138,54 @@ async function editImage(
       delete retryParams[offender];
       const second = await attempt(retryParams);
       if (second.ok) {
-        const base64 = JSON.parse(second.text)?.data?.[0]?.b64_json;
-        if (!base64) throw new Error("Image response carried no image data");
         return {
-          base64,
+          base64: readImage(second.text),
           shape: Object.keys(retryParams).join("+"),
           strippedParam: offender,
+          fallbackModel: null,
         };
+      }
+      if (isModelOrEndpointFailure(second.text)) {
+        const third = await attempt(retryParams, FALLBACK_IMAGE_MODEL);
+        if (third.ok) {
+          return {
+            base64: readImage(third.text),
+            shape: Object.keys(retryParams).join("+"),
+            strippedParam: offender,
+            fallbackModel: FALLBACK_IMAGE_MODEL,
+          };
+        }
+        throw new Error(`${third.status} ${third.text}`);
       }
       throw new Error(`${second.status} ${second.text}`);
     }
   }
+
+  if (isModelOrEndpointFailure(first.text)) {
+    const fallback = await attempt(optional, FALLBACK_IMAGE_MODEL);
+    if (fallback.ok) {
+      return {
+        base64: readImage(fallback.text),
+        shape: Object.keys(optional).join("+"),
+        strippedParam: null,
+        fallbackModel: FALLBACK_IMAGE_MODEL,
+      };
+    }
+    const stripped = { ...optional };
+    delete stripped.input_fidelity;
+    const fallbackStripped = await attempt(stripped, FALLBACK_IMAGE_MODEL);
+    if (fallbackStripped.ok) {
+      return {
+        base64: readImage(fallbackStripped.text),
+        shape: Object.keys(stripped).join("+"),
+        strippedParam: "input_fidelity",
+        fallbackModel: FALLBACK_IMAGE_MODEL,
+      };
+    }
+    throw new Error(`${fallbackStripped.status} ${fallbackStripped.text}`);
+  }
+
+
 
   throw new Error(`${first.status} ${first.text}`);
 }
