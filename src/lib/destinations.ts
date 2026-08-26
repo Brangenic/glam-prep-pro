@@ -19,8 +19,11 @@ export const DESTINATIONS: Destination[] = [
   // Same Carnival and the same MasOS event as /trinidad, so the 2027 guide
   // page can send a card straight to the event too.
   { slug: 'trinidad-carnival-2027', label: 'Trinidad Carnival 2027', masosUrl: 'https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb' },
-  { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
-  { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: 'https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244' },
+  // Epic Cruise does not sail in 2027 and nothing is on sale for the 2028
+  // return, so neither slug carries a bookable event. Cards fall back to
+  // /epic-cruise, where the register-interest call to action lives.
+  { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: BOOKING_URL },
+  { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: BOOKING_URL },
   { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events' },
   // Guyana has no confirmed masos event yet, so it points at the generic events listing.
   { slug: 'guyana', label: 'Guyana', masosUrl: BOOKING_URL },

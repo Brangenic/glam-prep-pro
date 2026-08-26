@@ -219,7 +219,7 @@ const DEST_LABEL: Record<string, string> = {
   trinidad: "Trinidad Carnival",
   tobago: "Tobago Carnival",
   guyana: "Guyana Carnival",
-  "epic-cruise": "Epic Cruise — Trinidad Carnival",
+  "epic-cruise": "Epic Cruise, Trinidad Carnival",
 };
 function destinationRelated(slug: string): string {
   const neighbours = (DEST_NEIGHBOURS[slug] ?? []).filter((s) => isUpcomingDestination(s)).map((s) => ({

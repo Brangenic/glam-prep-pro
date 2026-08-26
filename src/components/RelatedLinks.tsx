@@ -94,7 +94,7 @@ const DEST_LABEL: Record<string, string> = {
   toronto: "Toronto Caribana",
   trinidad: "Trinidad Carnival",
   guyana: "Guyana Carnival",
-  "epic-cruise": "Epic Cruise — Trinidad Carnival",
+  "epic-cruise": "Epic Cruise, Trinidad Carnival",
   "trinidad-carnival-2027": "Trinidad Carnival 2027",
 };
 

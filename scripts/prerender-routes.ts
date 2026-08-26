@@ -348,9 +348,9 @@ const destinationRoutes: RouteMeta[] = [
   },
   {
     path: "/epic-cruise",
-    title: "Epic Cruise Carnival Makeup & Glam 2027 | Glam Hub",
+    title: "Epic Cruise Carnival Glam | Returns 2028 | Glam Hub",
     description:
-      "Book your carnival glam services on the EPIC Cruise. Carnival Glam Hub is aboard the EPIC Carnival Experience for Trinidad Carnival 2027.",
+      "The EPIC Cruise Glam Hub returns in 2028 and dates are still to be confirmed. Register your interest with Carnival Glam Hub for the next sailing.",
     ogImage: HERO_FALLBACK,
   },
 ];
@@ -615,7 +615,7 @@ const DEST_CRUMB: Record<string, string> = {
   "/trinidad": "Trinidad Carnival",
   "/tobago": "Tobago Carnival",
   "/guyana": "Guyana Carnival",
-  "/epic-cruise": "Epic Cruise — Trinidad Carnival",
+  "/epic-cruise": "Epic Cruise, Trinidad Carnival",
   "/trinidad-carnival-2027": "Trinidad Carnival 2027",
 };
 
