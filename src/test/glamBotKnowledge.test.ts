@@ -465,6 +465,15 @@ describe("group 8: season awareness on 2026-08-24", () => {
     }
   });
 
+  it("a no-event territory booking prompt carries no booking platform link", () => {
+    const p = promptFor("Can I book the Epic Cruise?");
+    expect(p).toContain("No bookable event is on file for this territory");
+    expect(p).toContain("Register interest at /epic-cruise");
+    expect(p).not.toContain("https://carnivalglamhub.masos.app/events");
+    expect(p).not.toContain("Book now");
+    expect(p).not.toContain("Deposit:");
+  });
+
   it("Jamaica is neither closed nor dated for the next season", () => {
     expect(slugs(forward)).toContain("jamaica");
     expect(slugs(passed)).not.toContain("jamaica");

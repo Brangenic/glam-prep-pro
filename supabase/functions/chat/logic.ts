@@ -508,15 +508,27 @@ export function buildKnowledgeContext(
   territorySlug: string | null,
 ): string {
   const parts: string[] = ["# KNOWLEDGE", pack.brand, pack.tiers];
+  const territoryEvent = territorySlug
+    ? pack.events.find((e) => e.slug === territorySlug)
+    : null;
+  const territoryHasCheckout = territoryEvent
+    ? Boolean(territoryEvent.bookableEvent && territoryEvent.bookingUrl)
+    : true;
   for (const topic of topics) {
-    const block = pack.topics[topic];
+    const block =
+      topic === "booking" && territorySlug && !territoryHasCheckout
+        ? "# Booking status for this territory\nNo bookable event is on file for this territory. Do not offer checkout, do not send the visitor to the booking platform and do not quote a deposit. Use the territory page if it exists, otherwise use the WhatsApp handover."
+        : pack.topics[topic];
     if (block) parts.push(block);
   }
   parts.push(
     territorySlug ? pack.territories[territorySlug].brief : territoryIndex(pack),
   );
+  const links = territoryHasCheckout
+    ? pack.links
+    : pack.links.filter((l) => l.label !== "Book now");
   parts.push(
-    `## LINKS directory\n${pack.links.map((l) => `- ${l.label}: ${l.url}`).join("\n")}`,
+    `## LINKS directory\n${links.map((l) => `- ${l.label}: ${l.url}`).join("\n")}`,
   );
   parts.push(`## NEVER SAY\n${pack.neverSay.map((n) => `- ${n}`).join("\n")}`);
   parts.push(
