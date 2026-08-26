@@ -302,10 +302,12 @@ Deno.serve(async (req) => {
 
       await logEvent(supabase, leadId, "generate.image_created", {
         look_id: look.id,
-        model: IMAGE_MODEL,
+        model: result.fallbackModel ?? IMAGE_MODEL,
         quality: regenerate ? "high" : IMAGE_QUALITY,
         request_shape: result.shape,
         stripped_param: result.strippedParam,
+        // Present only while the gpt-image-1 fallback rung exists (retires 1 December 2026).
+        fallback_model: result.fallbackModel,
       });
 
       const { data: signed } = await supabase.storage
