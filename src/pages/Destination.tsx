@@ -24,10 +24,12 @@ import { getDestinationPackages } from "@/data/destinationPackages";
 import {
   GALLERY_CTA,
   GALLERY_HREF,
+  getUpcomingDestinations,
   hasSeasonPassed,
   passedSeasonYear,
   seasonAwareMeta,
 } from "@/data/seasons";
+
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 
 const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
