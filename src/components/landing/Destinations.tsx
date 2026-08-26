@@ -151,8 +151,9 @@ const Destinations = () => {
                   {hasSeasonPassed(d.slug) ? GALLERY_CTA : d.cta}
                 </span>
               </div>
-            </Link>
-          ))}
+            </CardTag>
+            );
+          })}
         </div>
 
         {liteTerritories.length > 0 && (
