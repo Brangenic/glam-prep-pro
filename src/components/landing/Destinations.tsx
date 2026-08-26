@@ -138,12 +138,13 @@ const Destinations = () => {
           ))}
         </div>
 
+        {liteTerritories.length > 0 && (
         <div className="mt-8 sm:mt-10 text-center">
           <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">
             Also glamming, Glam Hub Lite
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {EXTRA_LITE_TERRITORIES.map((t) => (
+            {liteTerritories.map((t) => (
               <a
                 key={t.slug}
                 href={BOOKING_URL}
@@ -156,6 +157,7 @@ const Destinations = () => {
             ))}
           </div>
         </div>
+        )}
       </div>
     </section>
   );
