@@ -296,10 +296,10 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </section>
         )}
 
-        {/* Season ended banner — Jamaica only */}
-        {dest.slug === "jamaica" && (
+        {/* Next season announced, dates not yet confirmed */}
+        {awaitingDates && !seasonPassed && (
           <section
-            aria-label="Jamaica Carnival 2026 season ended"
+            aria-label={`${dest.name} ${waitlistYear} dates to be confirmed`}
             className="relative bg-gradient-to-br from-primary via-primary to-primary/90 border-y-4 border-primary-foreground/10 shadow-lg shadow-primary/20"
           >
             <div
@@ -308,34 +308,41 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             />
             <div className="relative container mx-auto px-4 sm:px-6 max-w-5xl py-8 sm:py-10 text-center">
               <span className="inline-block bg-primary-foreground/15 text-primary-foreground font-body text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 rounded-full mb-4 backdrop-blur-sm">
-                Season Ended
+                Dates to be confirmed
               </span>
               <p className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug text-primary-foreground">
-                🎉 Jamaica Carnival 2026 has wrapped — see you next year! In the meantime, explore our other active destinations:
+                {dest.name} {waitlistYear} dates are still to be confirmed. Register your interest and we will come to you first when they land.
               </p>
-              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto">
-                {[
-                  { slug: "miami", label: "Miami" },
-                  { slug: "barbados", label: "Barbados" },
-                  { slug: "trinidad", label: "Trinidad" },
-                  { slug: "antigua", label: "Antigua" },
-                  { slug: "grenada", label: "Grenada" },
-                  { slug: "saint-lucia", label: "Saint Lucia" },
-                  { slug: "toronto", label: "Toronto" },
-                  { slug: "epic-cruise", label: "Epic Cruise" },
-                ].map((d) => (
-                  <Link
-                    key={d.slug}
-                    to={`/${d.slug}`}
-                    className="block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-[1.03] font-body font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-md text-center transition-all"
-                  >
-                    {d.label}
-                  </Link>
-                ))}
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <a
+                  href={waitlistHref}
+                  className="inline-block bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-body font-semibold text-sm px-7 py-3 rounded-full shadow-md transition-all"
+                >
+                  {ctaLabel}
+                </a>
               </div>
+              {onwardLinks.length > 0 && (
+                <>
+                  <p className="mt-8 font-body text-xs uppercase tracking-[0.2em] text-primary-foreground/80 font-semibold">
+                    Seasons still ahead of us
+                  </p>
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto">
+                    {onwardLinks.map((d) => (
+                      <Link
+                        key={d.slug}
+                        to={d.path}
+                        className="block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-[1.03] font-body font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-md text-center transition-all"
+                      >
+                        {d.shortName}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </section>
         )}
+
 
         {/* Season wrapped banner — any territory whose date has passed */}
         {seasonPassed && (
