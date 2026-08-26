@@ -71,15 +71,23 @@ const sameTags = (p: QuoteProduct, tags: ServiceTag[]) =>
 const hasAll = (p: QuoteProduct, tags: ServiceTag[]) => tags.every((t) => p.tags.includes(t));
 
 /**
- * Only territories whose Carnival is still ahead of us can be quoted.
- * Derived from the season calendar, so a passed Carnival drops out of
- * the calculator on its own.
+ * Which territories a visitor can select in the calculator.
+ *
+ * Two cases, deliberately kept apart:
+ * - Carnival coming, no products or event yet (Jamaica, Tobago, Atlanta).
+ *   Selectable. They show inclusions and an enquiry call to action, never a
+ *   number, a total or a MasOS checkout handoff. This is a lead path.
+ * - Carnival not running at all (Epic Cruise, returns 2028). Dropped entirely,
+ *   because there is nothing to enquire about for a season with no date.
+ *
+ * Passed Carnivals drop out on their own via the season calendar.
  */
 export function getBookableQuoteTerritories(today: Date = new Date()) {
   return TERRITORY_PRICING.filter(
-    (t) => !hasSeasonPassed(t.slug, today) && hasBookableEvent(t.slug),
+    (t) => !hasSeasonPassed(t.slug, today) && t.runningThisSeason !== false,
   );
 }
+
 
 const BOOKABLE_TERRITORIES = getBookableQuoteTerritories();
 
