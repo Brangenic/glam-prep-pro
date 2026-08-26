@@ -1,4 +1,6 @@
 import { BOOKING_URL } from "@/lib/constants";
+import { GALLERY_HREF, hasSeasonPassed } from "@/data/seasons";
+import { getProfile } from "@/data/territoryProfiles";
 
 export interface Destination {
   slug: string;
@@ -35,4 +37,41 @@ export function buildDestinationUrl(slug: string, campaign = 'destination_select
     utm_content: slug,
   });
   return `${base}?${params.toString()}`;
+}
+
+/**
+ * One place decides where a destination card goes.
+ *
+ * The journey is home, card, MasOS event. The destination page hop is
+ * gone for anything we can actually sell.
+ *
+ *   - Season wrapped: the card goes to the Gallery, per the season rules.
+ *   - Upcoming with a real event on file: straight to that event, with
+ *     UTMs attached.
+ *   - Upcoming with no event on file, currently Jamaica and Tobago: the
+ *     card goes to its own destination page, where the waitlist or
+ *     enquiry call to action lives. It must never go to the generic
+ *     events list, because that drops a visitor who clicked one
+ *     territory into a list of others.
+ */
+export type DestinationCardLink = {
+  href: string;
+  /** True only for an outbound booking link, so callers set target and rel the same way. */
+  external: boolean;
+};
+
+export function hasBookableEvent(slug: string): boolean {
+  const dest = getDestination(slug);
+  return Boolean(dest && dest.masosUrl.includes("/events/"));
+}
+
+export function getDestinationCardLink(
+  slug: string,
+  campaign: string,
+): DestinationCardLink {
+  if (hasSeasonPassed(slug)) return { href: GALLERY_HREF, external: false };
+  if (hasBookableEvent(slug)) {
+    return { href: buildDestinationUrl(slug, campaign), external: true };
+  }
+  return { href: getProfile(slug)?.path ?? `/${slug}`, external: false };
 }
