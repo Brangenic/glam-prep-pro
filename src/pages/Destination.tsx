@@ -770,6 +770,8 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
           </div>
         </section>
+        )}
+
         {dest.slug === "trinidad" && (
           <div className="pb-12 sm:pb-20">
             <TrinidadGuidesBlock />
