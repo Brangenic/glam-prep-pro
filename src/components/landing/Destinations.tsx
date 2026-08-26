@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
 import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
-import { BOOKING_URL } from "@/lib/constants";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { getDestinationCardLink } from "@/lib/destinations";
 import { GALLERY_CTA, GALLERY_HREF, hasSeasonPassed, isUpcomingDestination, passedSeasonYear } from "@/data/seasons";
 
@@ -32,7 +32,11 @@ const Destinations = () => {
     trinidad: { name: "Trinidad Carnival 2027" },
     "epic-cruise": { date: "Returns 2028" },
   };
+  // Onward links, and the homepage grid is one of them, show upcoming
+  // Carnivals only. A wrapped Carnival drops out of the grid entirely and
+  // the grid simply reflows, it is never padded.
   const orderedDestinations = HOMEPAGE_ORDER
+    .filter((slug) => isUpcomingDestination(slug))
     .map((slug) => destinations.find((d) => d.slug === slug))
     .filter((d): d is NonNullable<typeof d> => Boolean(d))
     .map((d) => ({ ...d, ...HOMEPAGE_OVERRIDES[d.slug] }));
@@ -165,12 +169,17 @@ const Destinations = () => {
             {liteTerritories.map((t) => (
               <a
                 key={t.slug}
-                href={BOOKING_URL}
+                // No date, no page and no event, so this is an enquiry
+                // rather than a booking. It must never point at the
+                // generic events list.
+                href={`${WHATSAPP_URL}?text=${encodeURIComponent(
+                  `Hi Carnival Glam Hub, I would like to ask about ${t.name} Carnival.`,
+                )}`}
                 target="_blank"
                 rel="noopener"
                 className="inline-block rounded-full border border-border bg-background px-5 py-2.5 font-body text-sm font-semibold hover:border-primary/60 hover:text-primary transition-colors"
               >
-                {t.name}
+                Ask about {t.name}
               </a>
             ))}
           </div>
