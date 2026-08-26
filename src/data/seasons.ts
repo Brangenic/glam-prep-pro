@@ -20,7 +20,6 @@
 /** ISO (YYYY-MM-DD) last day of the territory's most recent season. */
 export const SEASON_END_DATES: Record<string, string> = {
   // 2026 seasons
-  jamaica: "2026-04-12",
   guyana: "2026-05-31",
   "saint-lucia": "2026-07-21",
   toronto: "2026-08-01",
@@ -30,10 +29,14 @@ export const SEASON_END_DATES: Record<string, string> = {
   miami: "2026-10-11",
   tobago: "2026-11-01",
   // 2027 seasons
+  // Jamaica 2027 has no confirmed day yet. The end date below only keeps
+  // the season pointing forward and must never be published as a date.
+  jamaica: "2027-04-30",
   trinidad: "2027-02-09",
   "trinidad-carnival-2027": "2027-02-09",
   "epic-cruise": "2027-02-09",
 };
+
 
 /**
  * Territories that keep selling forward through their own next-season
