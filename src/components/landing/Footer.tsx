@@ -1,5 +1,16 @@
 import brandLogo from "@/assets/gabby-glam-logo.png";
 import PreferredSourcesButton from "@/components/PreferredSourcesButton";
+import { getUpcomingDestinations } from "@/data/seasons";
+
+// The footer destination list shows upcoming Carnivals only. A season that
+// has passed never appears as an onward option. Both Trinidad pages stay
+// listed here because the footer doubles as the site map.
+const FOOTER_LABELS: Record<string, string> = {
+  "trinidad-carnival-2027": "Trinidad Carnival 2027 guide",
+  "epic-cruise": "Epic Cruise",
+};
+
+
 
 
 const socialLinks = [
