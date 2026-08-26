@@ -46,7 +46,35 @@ Never remove the canonical-domain redirect script or the noindex script
 at the top of `index.html`, and never point a canonical at a
 `.lovable.app` host.
 
+# REDIRECTS AND VANITY DOMAINS
+
+- Lovable production hosting has no edge or rewrite layer. There is no
+  `_redirects`, no `_headers` and no `netlify.toml` behaviour in
+  production. A rule added to `public/_redirects` does nothing. Verified
+  26 August 2026: `/destinations/barbados` returns 200, not the 301 that
+  file claims.
+- A legacy or alias URL therefore cannot be given a real 301 from inside
+  this repository. The strongest available signal is the pattern in
+  `scripts/prerender-wix-redirects.ts`: a prerendered page carrying a
+  canonical to the new URL, a meta refresh, a JavaScript redirect and
+  enough real content that Google does not classify it as a Soft 404. A
+  bare stub was previously flagged as Soft 404 in Search Console, so
+  never reduce those pages to one sentence.
+- Three vanity domains point at this site and are managed at the
+  registrar, not here. `trinidadcarnivalmakeup.com` 301s to `/trinidad`,
+  `miamicarnivalmakeup.com` 301s to `/miami`, and `bookglamhub.com` is
+  reserved for the Glam Match tool. All three were verified as
+  single-hop 301s on 26 August 2026, except bookglamhub.com which still
+  serves a placeholder page.
+- GoDaddy forwarding redirects the bare root only.
+  `https://trinidadcarnivalmakeup.com/glam-match?utm_source=flyer`
+  returns 404 with no redirect. Never publish a deep path or a query
+  string on a vanity domain. Put campaign parameters on the destination
+  URL instead. Real path and query preservation would require moving DNS
+  to a host with wildcard redirect rules.
+
 ## Copy rules
+
 
 - British spelling throughout.
 - Never use an em dash. Use a comma, a full stop or the word "and".
