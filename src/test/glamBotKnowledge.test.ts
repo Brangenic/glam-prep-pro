@@ -413,7 +413,7 @@ describe("group 7: Amazon cart directive", () => {
  * ============================================================ */
 
 describe("group 8: season awareness on 2026-08-24", () => {
-  const { upcoming, passed, forward } = resolveEvents(pack, NOW);
+  const { upcoming, passed, forward, undated } = resolveEvents(pack, NOW);
   const slugs = (list: { slug: string }[]) => list.map((e) => e.slug);
 
   it("finished seasons are described as finished", () => {
@@ -436,8 +436,11 @@ describe("group 8: season awareness on 2026-08-24", () => {
   });
 
   it("Epic Cruise points forward to 2028 with no date published", () => {
-    expect(slugs(forward)).toContain("epic-cruise");
+    // No confirmed 2028 day, so the cruise sits with the undated events
+    // and is never described as closed or as bookable.
+    expect(slugs(undated)).toContain("epic-cruise");
     expect(slugs(passed)).not.toContain("epic-cruise");
+    expect(slugs(upcoming)).not.toContain("epic-cruise");
     expect(JSON.stringify(pack)).not.toContain("8–9 February 2027");
   });
 
