@@ -413,7 +413,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
 
         {/* Packages */}
-        {packagesData && !seasonEnded && (
+        {packagesData && !awaitingDates && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
             <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
               <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3 text-center">
@@ -633,7 +633,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {GALLERY_CTA}
                     </a>
                   </>
-                ) : seasonEnded ? (
+                ) : awaitingDates ? (
                   <>
                     <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
                       Season Ended
