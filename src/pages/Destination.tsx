@@ -16,7 +16,7 @@ import {
   getDestinationBySlug,
   getDestinationFaqs,
 } from "@/data/destinations";
-import { buildDestinationUrl } from "@/lib/destinations";
+import { buildDestinationUrl, getDestinationCardLink } from "@/lib/destinations";
 import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE } from "@/data/hubTiers";
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
@@ -750,11 +750,10 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {others.map((o) => (
-                <a
+                <OtherCard
                   key={o.slug}
-                  {...(o.card.external
-                    ? { href: o.card.href, target: "_blank", rel: "noopener noreferrer" }
-                    : { href: o.card.href })}
+                  external={o.card.external}
+                  href={o.card.href}
                   className="group relative rounded-2xl overflow-hidden aspect-[3/4] block"
                 >
                   <img
@@ -772,7 +771,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {o.dateText}
                     </p>
                   </div>
-                </a>
+                </OtherCard>
               ))}
             </div>
 
