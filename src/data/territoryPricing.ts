@@ -289,27 +289,16 @@ const toronto: TerritoryPricing = {
 
 const epicCruise: TerritoryPricing = {
   slug: "epic-cruise",
-  label: "EPIC Carnival Experience, Trinidad 2027",
+  label: "EPIC Carnival Experience, Trinidad 2028",
   tier: "partnership",
-  quotable: true,
-  eventDate: "8-9 February 2027",
-  askDay: true,
-  days: TWO_DAYS_NO_BOTH,
-  roadReady: true,
+  quotable: false,
+  eventDate: "Returns 2028, dates to be confirmed",
+  askDay: false,
+  days: SINGLE_DAY,
+  roadReady: false,
   barber: false,
-  bookingUrl: "https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244",
-  products: [
-    { id: "epic-mon-makeup", label: "Makeup only", price: 200, day: "monday", tags: ["makeup"] },
-    { id: "epic-mon-makeup-photo", label: "Makeup and photoshoot", price: 320, day: "monday", tags: ["makeup", "photoshoot"] },
-    { id: "epic-mon-full-glam", label: "Full Glam", price: 440, day: "monday", tags: ["makeup", "hair", "photoshoot"] },
-    { id: "epic-mon-hair", label: "Hair only", price: 120, day: "monday", tags: ["hair"] },
-    { id: "epic-mon-photo", label: "Photoshoot only", price: 140, day: "monday", tags: ["photoshoot"] },
-    { id: "epic-tue-makeup", label: "Makeup only", price: 200, day: "tuesday", tags: ["makeup"] },
-    { id: "epic-tue-makeup-photo", label: "Makeup and photoshoot", price: 320, day: "tuesday", tags: ["makeup", "photoshoot"] },
-    { id: "epic-tue-full-glam", label: "Full Glam", price: 440, day: "tuesday", tags: ["makeup", "hair", "photoshoot"] },
-    { id: "epic-tue-hair", label: "Hair only", price: 120, day: "tuesday", tags: ["hair"] },
-    { id: "epic-tue-photo", label: "Photoshoot only", price: 160, day: "tuesday", tags: ["photoshoot"] },
-  ],
+  bookingUrl: BOOKING_URL,
+  products: [],
 };
 
 /**

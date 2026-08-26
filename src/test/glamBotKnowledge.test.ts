@@ -19,6 +19,7 @@ import { FULL_SERVICE_SLUGS, LITE_SLUGS, TIER_LABEL } from "@/data/hubTiers";
 import { getTerritoryPricing } from "@/data/territoryPricing";
 import { AMAZON_STORE_URL, WHATSAPP_DISPLAY } from "@/lib/constants";
 import { PRESS_STORIES } from "@/data/pressCoverage";
+import { hasBookableEvent } from "@/lib/destinations";
 
 import {
   buildSystemPrompt,
@@ -119,7 +120,9 @@ describe("group 3: knowledge questions", () => {
 
   it("4. how much is a photoshoot in Jamaica", () => {
     const p = promptFor("How much is a photoshoot in Jamaica?");
-    expect(p).toContain(`Photoshoot only: US$${priceOf("jamaica", "jam-tue-photo")}`);
+    expect(p).toContain("Jamaica Carnival has no published prices");
+    expect(p).toContain("Do not quote a number for it");
+    expect(p).not.toContain(`Photoshoot only: US$${priceOf("jamaica", "jam-tue-photo")}`);
   });
 
   it("5. does Trinidad have overnight bag check", () => {
@@ -438,10 +441,28 @@ describe("group 8: season awareness on 2026-08-24", () => {
   it("Epic Cruise points forward to 2028 with no date published", () => {
     // No confirmed 2028 day, so the cruise is not a dated event at all.
     // It is never described as closed and never offered as bookable.
-    for (const group of [upcoming, passed, forward, undated]) {
-      expect(slugs(group)).not.toContain("epic-cruise");
-    }
+    expect(slugs(forward)).toContain("epic-cruise");
+    expect(slugs(upcoming)).not.toContain("epic-cruise");
+    expect(slugs(passed)).not.toContain("epic-cruise");
+    expect(slugs(undated)).not.toContain("epic-cruise");
     expect(JSON.stringify(pack)).not.toContain("8–9 February 2027");
+    expect(JSON.stringify(pack)).not.toContain("8 and 9 February 2027");
+    expect(pack.territories["epic-cruise"].brief).toContain("Returns 2028, dates to be confirmed");
+    expect(pack.territories["epic-cruise"].brief).toContain("Register interest at /epic-cruise");
+    expect(pack.territories["epic-cruise"].brief).not.toContain("Deposit:");
+  });
+
+  it("territories with no bookable event cannot offer checkout", () => {
+    for (const ev of pack.events) {
+      if (hasBookableEvent(ev.slug)) continue;
+      const brief = pack.territories[ev.slug]?.brief ?? "";
+      expect(ev.bookableEvent, ev.slug).toBe(false);
+      expect(ev.bookingUrl, ev.slug).toBeNull();
+      expect(ev.quotable, ev.slug).toBe(false);
+      expect(brief, ev.slug).not.toContain("Deposit:");
+      expect(brief, ev.slug).not.toContain("Per masquerader in US dollars");
+      expect(brief, ev.slug).toContain("no bookable event is on file");
+    }
   });
 
   it("Jamaica is neither closed nor dated for the next season", () => {
