@@ -3,10 +3,16 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
 import { getHubTier, TIER_LABEL, EXTRA_LITE_TERRITORIES, hasBarber, BARBER_LABEL } from "@/data/hubTiers";
 import { BOOKING_URL } from "@/lib/constants";
-import { GALLERY_CTA, GALLERY_HREF, hasSeasonPassed, passedSeasonYear } from "@/data/seasons";
+import { GALLERY_CTA, GALLERY_HREF, hasSeasonPassed, isUpcomingDestination, passedSeasonYear } from "@/data/seasons";
 
 const Destinations = () => {
   const { ref, isVisible } = useScrollReveal();
+
+  // Onward links show upcoming Carnivals only, recomputed from the live
+  // clock on render so a stale prerender self-corrects on hydration.
+  const liteTerritories = EXTRA_LITE_TERRITORIES.filter((t) =>
+    isUpcomingDestination(t.slug),
+  );
 
   // Homepage-only ordering and label overrides. Does not affect destination
   // pages, routes, sitemap or shared data.
