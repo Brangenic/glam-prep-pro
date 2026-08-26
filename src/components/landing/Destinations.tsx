@@ -75,14 +75,14 @@ const Destinations = () => {
             // destination page where it does not, the Gallery once the
             // season has wrapped.
             const card = getDestinationCardLink(d.slug, "homepage_card");
-            const CardTag = card.external ? "a" : Link;
-            const linkProps = card.external
+            const CardTag = (card.external ? "a" : Link) as React.ElementType;
+            const linkProps: Record<string, string> = card.external
               ? { href: card.href, target: "_blank", rel: "noopener noreferrer" }
               : { to: card.href };
             return (
             <CardTag
               key={d.slug}
-              {...(linkProps as never)}
+              {...linkProps}
               onClick={() => {
                 if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
                   window.gtag("event", "destination_click", {
