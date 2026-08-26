@@ -732,8 +732,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
-        {/* Other destinations */}
+        {/* Other destinations, upcoming Carnivals only. Hidden entirely
+            when nothing is upcoming, rather than padded with a past
+            season. */}
+        {others.length > 0 && (
         <section className="py-12 sm:py-20 bg-card/50 border-t border-border">
+
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">
               Other <span className="text-gradient-primary italic">Destinations</span>
