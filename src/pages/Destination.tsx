@@ -714,12 +714,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               {others.map((o) => (
                 <Link
                   key={o.slug}
-                  to={`/destinations/${o.slug}`}
+                  to={o.path}
                   className="group relative rounded-2xl overflow-hidden aspect-[3/4] block"
                 >
                   <img
                     src={o.image}
-                    alt={`${o.name} masquerader in costume — Carnival Glam Hub destination`}
+                    alt={`${o.name} masquerader in costume, a Carnival Glam Hub destination`}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
@@ -729,12 +729,13 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {o.shortName}
                     </h3>
                     <p className="font-body text-[10px] uppercase tracking-wider text-white/70">
-                      {o.date}
+                      {o.dateText}
                     </p>
                   </div>
                 </Link>
               ))}
             </div>
+
           </div>
         </section>
         {dest.slug === "trinidad" && (
