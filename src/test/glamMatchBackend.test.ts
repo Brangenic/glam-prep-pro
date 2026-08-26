@@ -161,8 +161,13 @@ describe("no hardcoded prices, dates or territory names in the glam match functi
   const dateLike =
     /\b(\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)|(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4}|\b20\d{2}-\d{2}-\d{2}\b|\b(19|20)\d{2}\b)/;
 
+  // Code comments are engineering notes, never sent to a model or a customer, so
+  // they are stripped before the guard runs. Model retirement dates live in comments.
+  const stripComments = (code: string) =>
+    code.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+
   for (const file of glamMatchFunctionFiles) {
-    const source = fs.readFileSync(file, "utf8");
+    const source = stripComments(fs.readFileSync(file, "utf8"));
     const label = path.basename(path.dirname(file));
 
     it(`${label} carries no price`, () => {
