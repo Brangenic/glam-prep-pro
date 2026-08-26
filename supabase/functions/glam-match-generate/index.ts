@@ -39,6 +39,8 @@ async function briefLooks(apiKey: string, prompt: string) {
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       model: TEXT_MODEL,
+      // JSON mode guarantees a parseable object. parseJsonReply stays as the safety net.
+      response_format: { type: "json_object" },
       messages: [{ role: "user", content: prompt }],
     }),
   });
