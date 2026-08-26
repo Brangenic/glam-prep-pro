@@ -26,6 +26,7 @@ import {
   type DayKey,
   type QuoteProduct,
   type ServiceTag,
+  type TerritoryPricing,
 } from "@/data/territoryPricing";
 import { hasSeasonPassed } from "@/data/seasons";
 import { hasBookableEvent } from "@/lib/destinations";
@@ -71,17 +72,34 @@ const sameTags = (p: QuoteProduct, tags: ServiceTag[]) =>
 const hasAll = (p: QuoteProduct, tags: ServiceTag[]) => tags.every((t) => p.tags.includes(t));
 
 /**
- * Only territories whose Carnival is still ahead of us can be quoted.
- * Derived from the season calendar, so a passed Carnival drops out of
- * the calculator on its own.
+ * Which territories a visitor can select in the calculator.
+ *
+ * Two cases, deliberately kept apart:
+ * - Carnival coming, no products or event yet (Jamaica, Tobago, Atlanta).
+ *   Selectable. They show inclusions and an enquiry call to action, never a
+ *   number, a total or a MasOS checkout handoff. This is a lead path.
+ * - Carnival not running at all (Epic Cruise, returns 2028). Dropped entirely,
+ *   because there is nothing to enquire about for a season with no date.
+ *
+ * Passed Carnivals drop out on their own via the season calendar.
  */
 export function getBookableQuoteTerritories(today: Date = new Date()) {
   return TERRITORY_PRICING.filter(
-    (t) => !hasSeasonPassed(t.slug, today) && hasBookableEvent(t.slug),
+    (t) => !hasSeasonPassed(t.slug, today) && t.runningThisSeason !== false,
   );
 }
 
+
 const BOOKABLE_TERRITORIES = getBookableQuoteTerritories();
+
+/**
+ * A territory only shows numbers when it has real products AND a bookable
+ * event on file. Jamaica, Tobago and Atlanta are selectable but enquiry only:
+ * no price, no total, no MasOS checkout handoff.
+ */
+export function canQuote(config: TerritoryPricing | undefined): boolean {
+  return Boolean(config?.quotable) && Boolean(config && hasBookableEvent(config.slug));
+}
 
 /** Real products that satisfy a given intent, for a territory and day. */
 function productsForIntent(products: QuoteProduct[], intent: IntentKey): QuoteProduct[] {
@@ -135,7 +153,7 @@ const BookingCalculator = () => {
   );
 
   const intents = useMemo<IntentKey[]>(() => {
-    if (!config || !config.quotable) return [];
+    if (!config || !canQuote(config)) return [];
     const list: IntentKey[] = [];
     (["makeup", "makeup-photoshoot", "photoshoot", "hair", "full-glam"] as IntentKey[]).forEach(
       (k) => {
@@ -189,7 +207,7 @@ const BookingCalculator = () => {
 
   const total = lines.reduce((s, l) => s + l.amount, 0);
   const isGroup = partySize >= 5 || intent === "group";
-  const quotable = Boolean(config?.quotable) && intent !== "group";
+  const quotable = canQuote(config) && intent !== "group";
 
   const inclusions = useMemo(() => {
     const free = getFreeInclusions(territory);
@@ -201,7 +219,7 @@ const BookingCalculator = () => {
   }, [territory, intent]);
 
   const premiumFrom = useMemo(
-    () => (config && config.quotable ? lowestPremiumPrice(config, day) : null),
+    () => (canQuote(config) ? lowestPremiumPrice(config, day) : null),
     [config, day],
   );
 
@@ -433,7 +451,7 @@ const BookingCalculator = () => {
                 )}
 
                 {/* 3. Intent */}
-                {config && config.quotable && (
+                {config && canQuote(config) && (
                   <div className="space-y-2">
                     <Label className="font-body text-sm font-semibold">
                       What do you need for Carnival morning?
@@ -507,7 +525,7 @@ const BookingCalculator = () => {
                   </div>
                 )}
 
-                {config && !config.quotable && (
+                {config && !canQuote(config) && (
                   <p className="font-body text-sm text-muted-foreground">
                     Pricing for {config.label} is confirmed on enquiry. Tell us what you need and our
                     team will come back to you.

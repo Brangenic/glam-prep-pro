@@ -38,7 +38,22 @@ export type TerritoryPricing = {
   slug: string;
   label: string;
   tier: "full" | "lite" | "partnership";
+  /**
+   * Two different cases, never collapse them:
+   *
+   * 1. `quotable: false` with `runningThisSeason` left alone. The Carnival is
+   *    coming but no products or event are on file yet, for example Jamaica,
+   *    Tobago and Atlanta. These stay selectable in the calculator, show the
+   *    inclusions and an enquiry call to action, and never display a number,
+   *    a total or a checkout handoff.
+   * 2. `runningThisSeason: false`. The Carnival is not taking place at all,
+   *    for example Epic Cruise which does not sail until 2028. There is
+   *    nothing to enquire about, so it drops out of the calculator entirely.
+   */
   quotable: boolean;
+  /** Defaults to true. Set false only where the Carnival is not running at all. */
+  runningThisSeason?: boolean;
+
   provisionalNote?: string;
   eventDate: string;
   /** Only true where days genuinely differ in price. */
@@ -292,6 +307,9 @@ const epicCruise: TerritoryPricing = {
   label: "Epic Cruise, Trinidad Carnival",
   tier: "partnership",
   quotable: false,
+  // Not running at all until 2028, so it is not even an enquiry. Out of the calculator.
+  runningThisSeason: false,
+
   eventDate: "Returns 2028, dates to be confirmed",
   askDay: false,
   days: SINGLE_DAY,
