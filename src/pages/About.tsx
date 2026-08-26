@@ -229,16 +229,6 @@ const About = () => {
               role in raising the standard of Carnival morning experiences across the
               region.
             </p>
-            <p className="font-body text-sm text-muted-foreground leading-relaxed mt-4">
-              <a
-                href="https://www.google.com/preferences/source?q=https://www.carnivalglamhub.com"
-                target="_blank"
-                rel="noopener"
-                className="underline underline-offset-2 decoration-primary/30 hover:text-primary hover:decoration-primary transition-colors"
-              >
-                Follow us on Google — add Carnival Glam Hub as a preferred source →
-              </a>
-            </p>
           </section>
 
           <section className="mb-12">
