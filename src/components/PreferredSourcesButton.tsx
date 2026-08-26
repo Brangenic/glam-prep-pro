@@ -14,7 +14,10 @@ declare module "react" {
 
 const PreferredSourcesButton = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [showFallback, setShowFallback] = useState(false);
+  // During prerender / SSR there is no window, so ship the fallback anchor
+  // in the static HTML rather than an empty container.
+  const [showFallback, setShowFallback] = useState(typeof window === "undefined");
+
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
