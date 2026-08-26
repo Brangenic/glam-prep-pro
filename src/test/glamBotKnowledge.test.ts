@@ -441,7 +441,11 @@ describe("group 8: season awareness on 2026-08-24", () => {
     expect(slugs(upcoming)).not.toContain("jamaica");
     const p = promptFor("When is Jamaica?");
     expect(p).toContain("the next dates are not yet confirmed");
-    expect(p).not.toContain("2027 season");
+    // The season may be named, but no specific day may ever be published
+    // until a date is confirmed.
+    expect(p).toContain("dates to be confirmed");
+    expect(p).not.toMatch(/\d{1,2}\s+April\s+20\d{2}/);
+
   });
 
   it("Full Service hubs are the three we expect and are all in the pack", () => {

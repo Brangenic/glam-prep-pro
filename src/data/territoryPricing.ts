@@ -148,7 +148,7 @@ const jamaica: TerritoryPricing = {
   quotable: true,
   provisionalNote:
     "Jamaica pricing is provisional and mirrors our Trinidad rates. Your booking team will confirm before payment.",
-  eventDate: "12 April 2026",
+  eventDate: "2027 season, dates to be confirmed",
   askDay: false,
   days: SINGLE_DAY,
   roadReady: true,

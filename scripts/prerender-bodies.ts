@@ -57,7 +57,15 @@ import {
   formatStationRate,
   getStationInclusions,
 } from "../src/data/stationRentals";
-import { hasSeasonPassed, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
+import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
+
+// Onward destination links in the prerendered HTML show upcoming Carnivals
+// only, filtered at build time. The React app recomputes the same lists on
+// hydration with the live clock, so a season that passes between deploys
+// self-corrects for the visitor.
+const UPCOMING_LIST_HTML = getUpcomingDestinations(undefined, undefined, { dedupeTrinidad: false })
+  .map((d) => `  <li><a href="${d.path}">${d.name}</a></li>`)
+  .join("\n");
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 import {
@@ -214,7 +222,7 @@ const DEST_LABEL: Record<string, string> = {
   "epic-cruise": "Epic Cruise — Trinidad Carnival",
 };
 function destinationRelated(slug: string): string {
-  const neighbours = (DEST_NEIGHBOURS[slug] ?? []).map((s) => ({
+  const neighbours = (DEST_NEIGHBOURS[slug] ?? []).filter((s) => isUpcomingDestination(s)).map((s) => ({
     href: `/${s}`,
     label: DEST_LABEL[s] ?? s,
   }));
@@ -467,17 +475,7 @@ const CORE: Record<string, Content> = {
 </ul>
 <h2>Destinations</h2>
 <ul>
-  <li><a href="/trinidad">Trinidad Carnival</a></li>
-  <li><a href="/jamaica">Jamaica Carnival</a></li>
-  <li><a href="/barbados">Barbados Crop Over</a></li>
-  <li><a href="/grenada">Grenada Spicemas</a></li>
-  <li><a href="/antigua">Antigua Carnival</a></li>
-  <li><a href="/saint-lucia">Saint Lucia Carnival</a></li>
-  <li><a href="/miami">Miami Carnival</a></li>
-  <li><a href="/toronto">Toronto Caribana</a></li>
-  <li><a href="/tobago">Tobago Carnival</a></li>
-  <li><a href="/guyana">Guyana Carnival</a></li>
-  <li><a href="/epic-cruise">EPIC Cruise</a></li>
+${UPCOMING_LIST_HTML}
 </ul>
 ${CTA}`,
   },

@@ -1,3 +1,5 @@
+import { TERRITORY_PROFILES } from "@/data/territoryProfiles";
+
 /**
  * Season calendar. Single source of truth for when a territory's Carnival
  * has happened.
@@ -20,7 +22,6 @@
 /** ISO (YYYY-MM-DD) last day of the territory's most recent season. */
 export const SEASON_END_DATES: Record<string, string> = {
   // 2026 seasons
-  jamaica: "2026-04-12",
   guyana: "2026-05-31",
   "saint-lucia": "2026-07-21",
   toronto: "2026-08-01",
@@ -30,10 +31,14 @@ export const SEASON_END_DATES: Record<string, string> = {
   miami: "2026-10-11",
   tobago: "2026-11-01",
   // 2027 seasons
+  // Jamaica 2027 has no confirmed day yet. The end date below only keeps
+  // the season pointing forward and must never be published as a date.
+  jamaica: "2027-04-30",
   trinidad: "2027-02-09",
   "trinidad-carnival-2027": "2027-02-09",
   "epic-cruise": "2027-02-09",
 };
+
 
 /**
  * Territories that keep selling forward through their own next-season
@@ -95,4 +100,87 @@ export function seasonAwareMeta(
     title: candidate.length <= 70 ? candidate : `${eventName} | ${year} Wrapped | Glam Hub`,
     description: `${eventName} ${year} has wrapped and bookings are closed for this season. See the looks our artists created in our Gallery, and follow Carnival Glam Hub for next season.`,
   };
+}
+
+/* ============================================================
+ * Onward destination links.
+ *
+ * Permanent rule: any list, grid, strip, banner or link block that
+ * points a visitor at a destination other than the one they are viewing
+ * must show upcoming destinations only. A Carnival that has passed never
+ * appears as an onward option anywhere on the site.
+ *
+ * The destination pages themselves stay live, stay indexed and stay in
+ * the sitemap. This is about onward links, not about deleting pages.
+ *
+ * Every list on the site reads this one helper. It is computed from the
+ * live clock at call time, so the React app recomputes on hydration even
+ * if the prerendered HTML was built before a season passed.
+ * ============================================================ */
+
+export type UpcomingDestination = {
+  slug: string;
+  name: string;
+  shortName: string;
+  dateText: string;
+  path: string;
+};
+
+/**
+ * Trinidad and Trinidad Carnival 2027 are the same Carnival, so they must
+ * never both appear in one onward list. Prefer whichever is not the page
+ * being viewed, and where both are candidates keep the 2027 page only.
+ */
+function dedupeTrinidadPair(
+  list: UpcomingDestination[],
+  excludeSlug?: string,
+): UpcomingDestination[] {
+  const has2027 = list.some((d) => d.slug === "trinidad-carnival-2027");
+  const hasHub = list.some((d) => d.slug === "trinidad");
+  if (!has2027 || !hasHub) return list;
+  const drop = excludeSlug === "trinidad-carnival-2027" ? "trinidad-carnival-2027" : "trinidad";
+  return list.filter((d) => d.slug !== drop);
+}
+
+export type UpcomingOptions = {
+  /** Set false where both Trinidad pages should stay listed, e.g. the footer sitemap. */
+  dedupeTrinidad?: boolean;
+};
+
+/**
+ * Upcoming destinations only, soonest season first, with pages that
+ * exist. Territories with no season date sort last.
+ */
+export function getUpcomingDestinations(
+  excludeSlug?: string,
+  limit?: number,
+  opts: UpcomingOptions = {},
+): UpcomingDestination[] {
+  const { dedupeTrinidad = true } = opts;
+  // Imported lazily at module scope below to keep this module asset free.
+  const sorted = TERRITORY_PROFILES.filter(
+    (p) =>
+      p.path &&
+      p.slug !== excludeSlug &&
+      p.dateText.trim() &&
+      !hasSeasonPassed(p.slug),
+  )
+    .map((p) => ({
+      slug: p.slug,
+      name: p.name,
+      shortName: p.shortName,
+      dateText: p.dateText,
+      path: p.path as string,
+      sortKey: SEASON_END_DATES[p.slug] ?? "9999-12-31",
+    }))
+    .sort((a, b) => a.sortKey.localeCompare(b.sortKey) || a.slug.localeCompare(b.slug))
+    .map(({ sortKey: _sortKey, ...rest }) => rest);
+
+  const deduped = dedupeTrinidad ? dedupeTrinidadPair(sorted, excludeSlug) : sorted;
+  return typeof limit === "number" ? deduped.slice(0, limit) : deduped;
+}
+
+/** True when a slug may be offered as an onward destination link. */
+export function isUpcomingDestination(slug: string): boolean {
+  return !hasSeasonPassed(slug);
 }

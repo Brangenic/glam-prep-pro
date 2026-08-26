@@ -24,10 +24,12 @@ import { getDestinationPackages } from "@/data/destinationPackages";
 import {
   GALLERY_CTA,
   GALLERY_HREF,
+  getUpcomingDestinations,
   hasSeasonPassed,
   passedSeasonYear,
   seasonAwareMeta,
 } from "@/data/seasons";
+
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
 
 const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
@@ -147,7 +149,20 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
   if (!dest) return <Navigate to="/#destinations" replace />;
 
-  const others = destinations.filter((d) => d.slug !== dest.slug).slice(0, 4);
+  // Onward links show upcoming Carnivals only. Computed from the live
+  // clock on every render, so a stale prerender self-corrects on
+  // hydration. Trinidad and Trinidad Carnival 2027 are deduped inside the
+  // helper because they are the same Carnival.
+  const others = getUpcomingDestinations(dest.slug, 4)
+    .map((u) => {
+      const source =
+        getDestinationBySlug(u.slug) ??
+        (u.slug === "trinidad-carnival-2027" ? getDestinationBySlug("trinidad") : undefined);
+      return { ...u, image: source?.image };
+    })
+    .filter((o): o is typeof o & { image: string } => Boolean(o.image));
+  const onwardLinks = getUpcomingDestinations(dest.slug);
+
   const tier = getHubTier(dest.slug);
   const inclusions = getHubInclusions(dest.slug) ?? dest.highlights;
   const caps = getCapabilities(dest.slug);
@@ -169,17 +184,23 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
-  const seasonEnded = dest.slug === "jamaica";
-  const waitlistHref = "mailto:Bookings@carnivalglamhub.com?subject=Jamaica%20Carnival%202027%20Waitlist";
+  // A territory whose next season has no confirmed day yet. Derived from
+  // the published date string, so no territory needs a bespoke flag.
+  const awaitingDates = /to be confirmed/i.test(dest.date);
+  const waitlistYear = dest.date.match(/\b(20\d{2})\b/)?.[1] ?? "";
+  const waitlistHref = `mailto:Bookings@carnivalglamhub.com?subject=${encodeURIComponent(
+    `${dest.name} ${waitlistYear} Waitlist`.replace(/\s+/g, " ").trim(),
+  )}`;
   // A passed territory sells nothing. Every booking call to action on the
   // page becomes a Gallery link, derived from the season calendar.
-  const ctaHref = seasonPassed ? GALLERY_HREF : seasonEnded ? waitlistHref : bookingUrl;
+  const ctaHref = seasonPassed ? GALLERY_HREF : awaitingDates ? waitlistHref : bookingUrl;
   const ctaLabel = seasonPassed
     ? GALLERY_CTA
-    : seasonEnded
-      ? "Join 2027 Waitlist"
+    : awaitingDates
+      ? `Join the ${waitlistYear} waitlist`.replace(/\s+/g, " ")
       : "Book Your Glam";
-  const ctaExternal = !seasonPassed && !seasonEnded;
+  const ctaExternal = !seasonPassed && !awaitingDates;
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -275,10 +296,10 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </section>
         )}
 
-        {/* Season ended banner — Jamaica only */}
-        {dest.slug === "jamaica" && (
+        {/* Next season announced, dates not yet confirmed */}
+        {awaitingDates && !seasonPassed && (
           <section
-            aria-label="Jamaica Carnival 2026 season ended"
+            aria-label={`${dest.name} ${waitlistYear} dates to be confirmed`}
             className="relative bg-gradient-to-br from-primary via-primary to-primary/90 border-y-4 border-primary-foreground/10 shadow-lg shadow-primary/20"
           >
             <div
@@ -287,34 +308,41 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             />
             <div className="relative container mx-auto px-4 sm:px-6 max-w-5xl py-8 sm:py-10 text-center">
               <span className="inline-block bg-primary-foreground/15 text-primary-foreground font-body text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 rounded-full mb-4 backdrop-blur-sm">
-                Season Ended
+                Dates to be confirmed
               </span>
               <p className="font-display text-lg sm:text-xl lg:text-2xl font-bold leading-snug text-primary-foreground">
-                🎉 Jamaica Carnival 2026 has wrapped — see you next year! In the meantime, explore our other active destinations:
+                {dest.name} {waitlistYear} dates are still to be confirmed. Register your interest and we will come to you first when they land.
               </p>
-              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto">
-                {[
-                  { slug: "miami", label: "Miami" },
-                  { slug: "barbados", label: "Barbados" },
-                  { slug: "trinidad", label: "Trinidad" },
-                  { slug: "antigua", label: "Antigua" },
-                  { slug: "grenada", label: "Grenada" },
-                  { slug: "saint-lucia", label: "Saint Lucia" },
-                  { slug: "toronto", label: "Toronto" },
-                  { slug: "epic-cruise", label: "Epic Cruise" },
-                ].map((d) => (
-                  <Link
-                    key={d.slug}
-                    to={`/${d.slug}`}
-                    className="block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-[1.03] font-body font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-md text-center transition-all"
-                  >
-                    {d.label}
-                  </Link>
-                ))}
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <a
+                  href={waitlistHref}
+                  className="inline-block bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-body font-semibold text-sm px-7 py-3 rounded-full shadow-md transition-all"
+                >
+                  {ctaLabel}
+                </a>
               </div>
+              {onwardLinks.length > 0 && (
+                <>
+                  <p className="mt-8 font-body text-xs uppercase tracking-[0.2em] text-primary-foreground/80 font-semibold">
+                    Seasons still ahead of us
+                  </p>
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto">
+                    {onwardLinks.map((d) => (
+                      <Link
+                        key={d.slug}
+                        to={d.path}
+                        className="block bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:scale-[1.03] font-body font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-md text-center transition-all"
+                      >
+                        {d.shortName}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </section>
         )}
+
 
         {/* Season wrapped banner — any territory whose date has passed */}
         {seasonPassed && (
@@ -392,7 +420,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
 
         {/* Packages */}
-        {packagesData && !seasonEnded && (
+        {packagesData && !awaitingDates && (
           <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
             <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
               <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3 text-center">
@@ -612,7 +640,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {GALLERY_CTA}
                     </a>
                   </>
-                ) : seasonEnded ? (
+                ) : awaitingDates ? (
                   <>
                     <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
                       Season Ended
@@ -704,8 +732,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
-        {/* Other destinations */}
+        {/* Other destinations, upcoming Carnivals only. Hidden entirely
+            when nothing is upcoming, rather than padded with a past
+            season. */}
+        {others.length > 0 && (
         <section className="py-12 sm:py-20 bg-card/50 border-t border-border">
+
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">
               Other <span className="text-gradient-primary italic">Destinations</span>
@@ -714,12 +746,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               {others.map((o) => (
                 <Link
                   key={o.slug}
-                  to={`/destinations/${o.slug}`}
+                  to={o.path}
                   className="group relative rounded-2xl overflow-hidden aspect-[3/4] block"
                 >
                   <img
                     src={o.image}
-                    alt={`${o.name} masquerader in costume — Carnival Glam Hub destination`}
+                    alt={`${o.name} masquerader in costume, a Carnival Glam Hub destination`}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
@@ -729,14 +761,17 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {o.shortName}
                     </h3>
                     <p className="font-body text-[10px] uppercase tracking-wider text-white/70">
-                      {o.date}
+                      {o.dateText}
                     </p>
                   </div>
                 </Link>
               ))}
             </div>
+
           </div>
         </section>
+        )}
+
         {dest.slug === "trinidad" && (
           <div className="pb-12 sm:pb-20">
             <TrinidadGuidesBlock />
