@@ -436,11 +436,11 @@ describe("group 8: season awareness on 2026-08-24", () => {
   });
 
   it("Epic Cruise points forward to 2028 with no date published", () => {
-    // No confirmed 2028 day, so the cruise sits with the undated events
-    // and is never described as closed or as bookable.
-    expect(slugs(undated)).toContain("epic-cruise");
-    expect(slugs(passed)).not.toContain("epic-cruise");
-    expect(slugs(upcoming)).not.toContain("epic-cruise");
+    // No confirmed 2028 day, so the cruise is not a dated event at all.
+    // It is never described as closed and never offered as bookable.
+    for (const group of [upcoming, passed, forward, undated]) {
+      expect(slugs(group)).not.toContain("epic-cruise");
+    }
     expect(JSON.stringify(pack)).not.toContain("8–9 February 2027");
   });
 
