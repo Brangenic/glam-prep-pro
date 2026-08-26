@@ -147,7 +147,20 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
   if (!dest) return <Navigate to="/#destinations" replace />;
 
-  const others = destinations.filter((d) => d.slug !== dest.slug).slice(0, 4);
+  // Onward links show upcoming Carnivals only. Computed from the live
+  // clock on every render, so a stale prerender self-corrects on
+  // hydration. Trinidad and Trinidad Carnival 2027 are deduped inside the
+  // helper because they are the same Carnival.
+  const others = getUpcomingDestinations(dest.slug, 4)
+    .map((u) => {
+      const source =
+        getDestinationBySlug(u.slug) ??
+        (u.slug === "trinidad-carnival-2027" ? getDestinationBySlug("trinidad") : undefined);
+      return { ...u, image: source?.image };
+    })
+    .filter((o): o is typeof o & { image: string } => Boolean(o.image));
+  const onwardLinks = getUpcomingDestinations(dest.slug);
+
   const tier = getHubTier(dest.slug);
   const inclusions = getHubInclusions(dest.slug) ?? dest.highlights;
   const caps = getCapabilities(dest.slug);
