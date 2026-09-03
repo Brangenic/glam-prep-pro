@@ -123,6 +123,16 @@ export type HubCapabilities = {
   reels: boolean;
   /** Paid overnight bag check add-on. */
   overnightBagCheck: boolean;
+  /**
+   * Dressing assistants on site. Deliberate Grenada exception on
+   * Kibwe's instruction, 3 September 2026: Grenada offers dressing
+   * assistants and no seamstress, even though `LITE_NOT_OFFERED` lists
+   * getting dressed as absent from the Lite tier. Do not "correct" this
+   * back, and do not extend it to another Lite territory without a
+   * fresh instruction. It carries no price, because Grenada has no 2027
+   * product except the US$50 pre-registration.
+   */
+  dressingAssistance: boolean;
 };
 
 const NO_CAPABILITIES: HubCapabilities = {
@@ -130,6 +140,7 @@ const NO_CAPABILITIES: HubCapabilities = {
   bronzing: false,
   reels: false,
   overnightBagCheck: false,
+  dressingAssistance: false,
 };
 
 const TRINIDAD_CAPABILITIES: HubCapabilities = {
@@ -137,18 +148,43 @@ const TRINIDAD_CAPABILITIES: HubCapabilities = {
   bronzing: true,
   reels: true,
   overnightBagCheck: true,
+  dressingAssistance: false,
 };
 
 export const HUB_CAPABILITIES: Record<string, HubCapabilities> = {
   trinidad: TRINIDAD_CAPABILITIES,
   "trinidad-carnival-2027": TRINIDAD_CAPABILITIES,
-  jamaica: { barber: true, bronzing: true, reels: true, overnightBagCheck: true },
-  miami: { barber: false, bronzing: false, reels: false, overnightBagCheck: true },
+  jamaica: { barber: true, bronzing: true, reels: true, overnightBagCheck: true, dressingAssistance: false },
+  miami: { barber: false, bronzing: false, reels: false, overnightBagCheck: true, dressingAssistance: false },
+  // Grenada exception, Kibwe, 3 September 2026. Dressing assistants only,
+  // never a seamstress, and never priced.
+  grenada: { barber: false, bronzing: false, reels: false, overnightBagCheck: false, dressingAssistance: true },
 };
 
 export function getCapabilities(slug: string): HubCapabilities {
   return HUB_CAPABILITIES[slug] ?? NO_CAPABILITIES;
 }
+
+/** Label used wherever dressing assistance is listed as offered. */
+export const DRESSING_ASSISTANCE_LABEL = "Dressing assistance";
+
+export function hasDressingAssistance(slug: string): boolean {
+  return getCapabilities(slug).dressingAssistance;
+}
+
+/**
+ * What a hub does not offer, with the territory-scoped exceptions
+ * applied. Grenada offers dressing assistance, so "Getting dressed"
+ * must never appear on its not-offered list.
+ */
+export function getNotOffered(slug: string): string[] {
+  const list = [...LITE_NOT_OFFERED];
+  if (hasDressingAssistance(slug)) {
+    return list.filter((i) => i !== "Getting dressed");
+  }
+  return list;
+}
+
 
 /** Kept as a thin wrapper so existing callers keep working. */
 export function hasBarber(slug: string): boolean {
