@@ -325,7 +325,17 @@ export function getFreeInclusions(slug: string): string[] {
 export function getHubInclusions(slug: string): string[] | null {
   const tier = getHubTier(slug);
   if (!tier) return null;
-  if (tier === "lite") return [...LITE_INCLUSIONS];
+  if (tier === "lite") {
+    const lite = [...LITE_INCLUSIONS];
+    if (getCapabilities(slug).dressingAssistance) {
+      // Grenada exception, Kibwe, 3 September 2026. Dressing assistants
+      // sit straight after the photoshoot, and carry no price.
+      const at = lite.indexOf("Photoshoot");
+      lite.splice(at + 1, 0, DRESSING_ASSISTANCE_LABEL);
+    }
+    return lite;
+  }
+
   let list = [...FULL_SERVICE_INCLUSIONS];
   if (slug === "miami") {
     list = list.filter((i) => i !== "Shuttle");
