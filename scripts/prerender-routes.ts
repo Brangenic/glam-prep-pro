@@ -53,8 +53,8 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
     "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
   "/antigua":
     "https://www.dropbox.com/scl/fi/zj9aswskvl80vunhkhdcf/Chloe%20J.png?rlkey=yxp73i1uv8pcwpuink46ty6mv&raw=1",
-  "/grenada":
-    "https://www.dropbox.com/scl/fi/taonoqg2p6faph4jipzhr/AALiyah.png?rlkey=jwxhfig9y16l6kn2573nkuggh&raw=1",
+  "/grenada": "/images/destinations/grenada-hero-radisson.jpg",
+
   "/barbados":
     "https://www.dropbox.com/scl/fi/4a52okz83gxh171qyhfjc/Dania.png?rlkey=q3figf3ty5abs9gdie4rtjcow&raw=1",
   "/miami":

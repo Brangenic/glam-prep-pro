@@ -9,6 +9,14 @@ import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/dat
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
+export type DestinationGalleryImage = {
+  src: string;
+  caption: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
 export type Destination = {
   slug: string;
   name: string;
@@ -25,7 +33,12 @@ export type Destination = {
   highlights: string[];
   metaTitle: string;
   metaDescription: string;
+  /** Our own work from this territory, shown below the packages. */
+  gallery?: DestinationGalleryImage[];
+  /** One line of intro copy above the gallery. */
+  galleryNote?: string;
 };
+
 
 export const destinations: Destination[] = [
   {
@@ -102,19 +115,59 @@ export const destinations: Destination[] = [
     description: "Pre-register now for Spicemas 2027 glam in Grenada.",
     longDescription:
       "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge. Pre-registration is open at US$50 per masquerader.",
-    image: "https://www.dropbox.com/scl/fi/taonoqg2p6faph4jipzhr/AALiyah.png?rlkey=jwxhfig9y16l6kn2573nkuggh&dl=1",
+    image: "/images/destinations/grenada-hero-radisson.jpg",
     cta: "Pre-register for Spicemas 2027",
-    objectPosition: "50% 20%",
+    objectPosition: "50% 22%",
     highlights: [
       "Spicemas full glam",
       "J'ouvert paint and oil packages",
       "Festival gems and lashes",
       "Photoshoot in the lounge",
     ],
+    galleryNote:
+      "Every masquerader here had makeup and a photoshoot with Carnival Glam Hub at Spicemas.",
+    gallery: [
+      {
+        src: "/images/destinations/grenada-dania-duntin.jpg",
+        caption: "Dania Duntin, the face of Carnival Glam Hub",
+        alt: "Dania Duntin in a pink and blue Spicemas costume in Grenada with Carnival Glam Hub makeup and photoshoot",
+        width: 1200,
+        height: 1584,
+      },
+      {
+        src: "/images/destinations/grenada-emma-aqui.jpg",
+        caption: "Emma Aqui",
+        alt: "Emma Aqui in a pink feathered Spicemas costume in Grenada with Carnival Glam Hub makeup and photoshoot",
+        width: 1200,
+        height: 1738,
+      },
+      {
+        src: "/images/destinations/grenada-marissa-williams.jpg",
+        caption: "Marissa Williams",
+        alt: "Marissa Williams in a jewelled blue and green Spicemas costume in Grenada with Carnival Glam Hub makeup and photoshoot",
+        width: 1200,
+        height: 1368,
+      },
+      {
+        src: "/images/destinations/grenada-melissa-liu.jpg",
+        caption: "Melissa Liu",
+        alt: "Melissa Liu in a blue, green and yellow feathered Spicemas costume in Grenada with Carnival Glam Hub makeup and photoshoot",
+        width: 1200,
+        height: 1577,
+      },
+      {
+        src: "/images/destinations/grenada-spicemas-glam.jpg",
+        caption: "Spicemas glam",
+        alt: "Masquerader in a jewelled Spicemas costume and horned headpiece in Grenada with Carnival Glam Hub makeup and photoshoot",
+        width: 1200,
+        height: 1327,
+      },
+    ],
     metaTitle:
       "Grenada Spicemas Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
       "Spicemas 2027 is Monday 9 and Tuesday 10 August. Pre-register at US$50 per masquerader, closing 31 December 2026, for Grenada Glam Hub Lite makeup.",
+
   },
   {
     slug: "tobago",
