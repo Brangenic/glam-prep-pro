@@ -514,19 +514,36 @@ export function buildKnowledgeContext(
   const territoryHasCheckout = territoryEvent
     ? Boolean(territoryEvent.bookableEvent && territoryEvent.bookingUrl)
     : true;
+  // Where a territory is resolved and has its own event on file, the
+  // generic events list must not reach the prompt at all. It would drop a
+  // visitor who asked about one territory into a list of others.
+  const territoryBookingUrl =
+    territoryHasCheckout && territoryEvent?.bookingUrl?.includes("/events/")
+      ? territoryEvent.bookingUrl
+      : null;
   for (const topic of topics) {
-    const block =
+    let block =
       topic === "booking" && territorySlug && !territoryHasCheckout
         ? "# Booking status for this territory\nNo bookable event is on file for this territory. Do not offer checkout, do not send the visitor to the booking platform and do not quote a deposit. Use the territory page if it exists, otherwise use the WhatsApp handover."
         : pack.topics[topic];
+    if (block && territoryBookingUrl && territoryEvent) {
+      block = block.split(pack.contact.bookingUrl).join(territoryBookingUrl);
+    }
     if (block) parts.push(block);
   }
   parts.push(
     territorySlug ? pack.territories[territorySlug].brief : territoryIndex(pack),
   );
-  const links = territoryHasCheckout
+  let links = territoryHasCheckout
     ? pack.links
     : pack.links.filter((l) => l.label !== "Book now");
+  if (territoryBookingUrl && territoryEvent) {
+    links = links.map((l) =>
+      l.url === pack.contact.bookingUrl
+        ? { label: `Book ${territoryEvent.name}`, url: territoryBookingUrl }
+        : l,
+    );
+  }
   parts.push(
     `## LINKS directory\n${links.map((l) => `- ${l.label}: ${l.url}`).join("\n")}`,
   );
