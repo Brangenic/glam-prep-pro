@@ -38,6 +38,7 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
 import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY } from "../src/data/hubTiers";
+import { deEmDash } from "../src/lib/metaText";
 import {
   TRINIDAD_ANSWER_SECTIONS,
   TRINIDAD_VENUES,
@@ -1255,7 +1256,7 @@ function blogContentFromHtml(html: string, slug: string): Content | null {
 // that could sneak in through user content. `allowDangerousHtml` is left
 // OFF so raw HTML in markdown is escaped by micromark itself.
 function markdownToSafeHtml(md: string): string {
-  const cleaned = md
+  const cleaned = deEmDash(md)
     // Data URI placeholder images that Wix uses, remove them. The
     // data URI itself may contain `)` chars (encoded SVG paths), so
     // consume greedily up to the last `)` on the same line.

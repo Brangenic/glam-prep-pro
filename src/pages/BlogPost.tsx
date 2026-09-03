@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PromoBookingCard from "@/components/PromoBookingCard";
-import { fitTitle, fitDescription, plainTextExcerpt } from "@/lib/metaText";
+import { fitTitle, fitDescription, plainTextExcerpt, deEmDash } from "@/lib/metaText";
 
 // Extract a YouTube video id from any common URL form. Strips tracking
 // params like ?si=, &t=. Returns { id, kind } or null. kind="shorts" gets
