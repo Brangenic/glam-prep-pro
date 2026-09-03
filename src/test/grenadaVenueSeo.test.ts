@@ -19,7 +19,7 @@ const BANNED = [
   /\bstar\b/i,
   /minutes'? (walk|drive)/i,
   /\bmiles?\b/i,
-  /\bshuttle\b/i,
+  /(?<!no )\bshuttle\b/i,
   /street address/i,
 ];
 
