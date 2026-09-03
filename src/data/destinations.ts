@@ -9,6 +9,14 @@ import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/dat
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
+export type DestinationGalleryImage = {
+  src: string;
+  caption: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
 export type Destination = {
   slug: string;
   name: string;
@@ -25,7 +33,12 @@ export type Destination = {
   highlights: string[];
   metaTitle: string;
   metaDescription: string;
+  /** Our own work from this territory, shown below the packages. */
+  gallery?: DestinationGalleryImage[];
+  /** One line of intro copy above the gallery. */
+  galleryNote?: string;
 };
+
 
 export const destinations: Destination[] = [
   {
