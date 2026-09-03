@@ -429,6 +429,15 @@ function destinationBody(d: ParsedDest): string {
       `<p><a href="${GALLERY_HREF}">See the ${year} looks</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`,
     );
   } else {
+    // A territory with no confirmed product list never shows a service
+    // price. Where only a pre-registration exists, the body says so.
+    const pricing = TERRITORY_PRICING.find((t) => t.slug === d.slug);
+    if (pricing && pricing.quotable === false && pricing.deposit) {
+      parts.push(`<h2>${escapeHtml(d.name)} pre-registration</h2>`);
+      parts.push(
+        `<p>Pre-registration is open at US$${pricing.deposit.amount} per masquerader. ${escapeHtml(pricing.deposit.note ?? "")} No makeup, hair or photoshoot price is published for this season yet, and service rates are confirmed when the product list goes live.</p>`,
+      );
+    }
     parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
     parts.push(
       `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,

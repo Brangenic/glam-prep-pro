@@ -24,7 +24,6 @@ const WRAPPED_SLUGS = [
   "toronto",
   "barbados",
   "antigua",
-  "grenada",
 ] as const;
 
 function renderGrid() {

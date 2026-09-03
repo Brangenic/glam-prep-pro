@@ -425,7 +425,6 @@ describe("group 8: season awareness on 2026-08-24", () => {
       "barbados",
       "toronto",
       "antigua",
-      "grenada",
       "saint-lucia",
       "guyana",
     ]) {
@@ -434,7 +433,7 @@ describe("group 8: season awareness on 2026-08-24", () => {
   });
 
   it("open seasons are still open", () => {
-    for (const slug of ["miami", "tobago", "trinidad"]) {
+    for (const slug of ["miami", "tobago", "trinidad", "grenada"]) {
       expect(slugs(upcoming)).toContain(slug);
     }
   });

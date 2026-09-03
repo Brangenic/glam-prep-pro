@@ -28,10 +28,11 @@ export const SEASON_END_DATES: Record<string, string> = {
   toronto: "2026-08-01",
   barbados: "2026-08-03",
   antigua: "2026-08-04",
-  grenada: "2026-08-11",
   miami: "2026-10-11",
   tobago: "2026-11-01",
   // 2027 seasons
+  // Spicemas is fixed by rule, the second Monday and Tuesday of August.
+  grenada: "2027-08-10",
   jamaica: "2027-04-04",
   trinidad: "2027-02-09",
   "trinidad-carnival-2027": "2027-02-09",

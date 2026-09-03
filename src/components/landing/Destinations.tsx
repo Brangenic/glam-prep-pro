@@ -22,10 +22,10 @@ const Destinations = () => {
     "toronto",
     "barbados",
     "antigua",
-    "grenada",
     "miami",
     "trinidad",
     "jamaica",
+    "grenada",
     "tobago",
     "epic-cruise",
   ];

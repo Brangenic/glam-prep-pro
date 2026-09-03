@@ -299,9 +299,9 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/grenada",
     title:
-      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+      "Grenada Spicemas Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Spicemas 2027 is 9 and 10 August. Pre-registration is open at US$50 for sweat-resistant Grenada makeup at our Glam Hub Lite. Trusted since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
