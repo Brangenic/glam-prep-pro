@@ -36,7 +36,7 @@ const Testimonials = () => {
             </div>
             <a
               href="/reviews"
-              className="inline-flex items-center rounded-full border border-border bg-background px-4 py-2 font-body text-xs font-semibold text-foreground transition-colors hover:border-primary/25 hover:text-primary"
+              className="inline-flex items-center rounded-full border border-border bg-background px-5 py-3 font-body text-sm font-semibold text-foreground transition-colors hover:border-primary/25 hover:text-primary"
             >
               Read more reviews
             </a>

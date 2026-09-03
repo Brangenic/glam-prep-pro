@@ -216,7 +216,7 @@ const RelatedLinks = (props: Props) => {
   return (
     <section
       aria-label="Related links"
-      className="mt-16 pt-10 border-t border-border"
+      className="mt-4 pt-8 sm:pt-10 lg:pt-12 border-t border-border"
       data-related-links
     >
       <h2 className="font-display text-xl sm:text-2xl font-bold mb-6">
