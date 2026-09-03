@@ -469,7 +469,7 @@ export function buildFacts(
         );
       } else if (now.getTime() <= endOfDay(ev.seasonEndISO) && ev.bookableEvent && ev.bookingUrl) {
         parts.push(
-          `${territory.name} status: open. ${ev.dateText}. Bookings are open.`,
+          `${territory.name} status: open. ${ev.dateText}. Bookings are open. The only booking URL for ${territory.name} is ${ev.bookingUrl}. Any booking link in this reply must be that URL. Never link the generic events list.`,
         );
       } else if (now.getTime() <= endOfDay(ev.seasonEndISO)) {
         parts.push(
