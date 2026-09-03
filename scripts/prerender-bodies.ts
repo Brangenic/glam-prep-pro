@@ -636,7 +636,7 @@ ${CTA}`,
 // Other core routes
 const CORE: Record<string, Content> = {
   "/": {
-    title: "Carnival Glam Hub — Caribbean Carnival Beauty Concierge",
+    title: "Carnival Glam Hub, Caribbean Carnival Beauty Concierge",
     body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle from one air-conditioned lounge on Carnival morning.</p>
 <h2>Trusted by 15,000+ masqueraders since 2017</h2>
 <p>Founded by Gabrielle Waite. Booked across Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</p>
