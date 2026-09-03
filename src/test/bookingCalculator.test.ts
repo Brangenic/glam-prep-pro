@@ -35,3 +35,19 @@ describe("booking calculator territory list", () => {
     expect(slugs).not.toContain("epic-cruise");
   });
 });
+
+describe("Grenada in the calculator", () => {
+  const grenada = getBookableQuoteTerritories().find((t) => t.slug === "grenada");
+
+  it("is selectable but never quotable", () => {
+    expect(grenada).toBeTruthy();
+    expect(canQuote(grenada)).toBe(false);
+  });
+
+  it("publishes no service product, only a pre-registration", () => {
+    expect(grenada!.products).toHaveLength(0);
+    const preReg = getOpenPreRegistration("grenada");
+    expect(preReg?.amount).toBe(50);
+    expect(preReg?.closesOnText).toBe("31 December 2026");
+  });
+});
