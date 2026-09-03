@@ -10,7 +10,8 @@ export const TITLE_MAX = 60;
 export const DESC_MAX = 160;
 export const DESC_MIN = 140;
 
-const collapse = (s: string) => s.replace(/\s+/g, " ").trim();
+const collapse = (s: string) =>
+  s.replace(/\s*—\s*/g, ", ").replace(/,\s*,/g, ",").replace(/\s+/g, " ").trim();
 
 /**
  * Length as a crawler sees it. Titles and descriptions are HTML escaped
