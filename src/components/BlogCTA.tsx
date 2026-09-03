@@ -12,11 +12,11 @@ const SLUG_CONTEXT: Record<string, ContextLink[]> = {
     { href: "/services/carnival-makeup", label: "See Carnival makeup packages" },
   ],
   "what-is-jouvert-and-why-should-you-do-it-at-least-once": [
-    { href: "/services/carnival-makeup", label: "Sweat-resistant J'ouvert makeup" },
+    { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
     { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027" },
   ],
   "10-tips-for-trinidad-carnival-jouvert": [
-    { href: "/services/carnival-makeup", label: "Sweat-resistant J'ouvert makeup" },
+    { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
     { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027" },
   ],
   "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival": [
@@ -73,7 +73,7 @@ const inferContext = (
   if (/(photo|shoot|portrait|camera)/.test(hay))
     push({ href: "/services/carnival-photoshoot", label: "Carnival photoshoot" });
   if (/(jouvert|j'ouvert|jab|paint|mud|oil)/.test(hay))
-    push({ href: "/services/carnival-makeup", label: "Sweat-resistant J'ouvert makeup" });
+    push({ href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" });
   if (/trinidad/.test(hay))
     push({ href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027" });
   if (/(barbados|crop over)/.test(hay)) push({ href: "/barbados", label: "Barbados Crop Over glam" });
