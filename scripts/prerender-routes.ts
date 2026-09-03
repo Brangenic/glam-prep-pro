@@ -5,6 +5,7 @@
 // Named and celebrity artists US$200 to US$580. Photoshoot only US$140 to US$160.
 // Hair US$120 to US$220. Full Glam US$430 to US$680.
 // Carnival morning access US$35. Barber US$35 (Jamaica and Trinidad only).
+// Reels US$80 (Trinidad and Jamaica only).
 // Highest price of any product anywhere US$680. Deposit US$50, Trinidad only.
 // Postbuild: emits per-route static HTML at dist/<path>/index.html for
 // the app's non-blog routes (destinations, services, /trinidad-carnival-2027,
