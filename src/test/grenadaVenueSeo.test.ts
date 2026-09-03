@@ -9,10 +9,10 @@ import {
   GRENADA_ROUTE_FAQ,
   GRENADA_INCLUSIONS_SENTENCE,
 } from "@/data/hubTiers";
-import { DESTINATIONS, getDestinationFaqs } from "@/data/destinations";
+import { destinations, getDestinationFaqs } from "@/data/destinations";
 
 const read = (p: string) => readFileSync(resolve(p), "utf8");
-const grenada = DESTINATIONS.find((d) => d.slug === "grenada")!;
+const grenada = destinations.find((d) => d.slug === "grenada")!;
 
 // Facts confirmed by Kibwe on 3 September 2026, and nothing beyond them.
 const BANNED = [
