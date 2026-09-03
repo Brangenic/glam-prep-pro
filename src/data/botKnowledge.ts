@@ -275,7 +275,7 @@ ${bullets(LITE_NOT_OFFERED)}
 
 Grenada is the one exception to that list. Grenada offers dressing assistance, on Kibwe's instruction of 3 September 2026, and it carries no price. Grenada still has no seamstress.
 
-## Four territory-scoped capabilities
+## Territory-scoped capabilities
 These sit outside the tier model and exist only where listed:
 ${bullets(capLines)}
 
@@ -658,6 +658,8 @@ const NEVER_SAY = [
   "Any price for bag delivery in Miami",
   "Any date for Atlanta Carnival",
   "The word masos in prose. It may only ever appear inside a booking URL.",
+  "Any J'ouvert package, paint, oil or body art as something Carnival Glam Hub sells, includes or offers. We do not offer it in any territory.",
+  "Any seamstress, shuttle, breakfast, alcohol, hair, bronzing, barber, reels or overnight bag check in Grenada. None of those are offered there.",
 ];
 
 const UNKNOWNS = [
