@@ -28,10 +28,15 @@ import {
   VENDOR_SPACE_PER_DAY,
 } from "../src/data/stationRentals";
 import { TRINIDAD_ANSWER_SECTIONS } from "../src/data/answerPages";
-import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta } from "../src/data/seasons";
+import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta, getOpenPreRegistration } from "../src/data/seasons";
 import {
   MIAMI_VENUE_NAME,
   MIAMI_VENUE_FAQ,
+  GRENADA_VENUE_NAME,
+  GRENADA_VENUE_NOTE,
+  GRENADA_VENUE_FAQ,
+  GRENADA_ROUTE_FAQ,
+  GRENADA_INCLUSIONS_SENTENCE,
 } from "../src/data/hubTiers";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
