@@ -24,7 +24,8 @@ export const DESTINATIONS: Destination[] = [
   // /epic-cruise, where the register-interest call to action lives.
   { slug: 'epic', label: 'Epic Carnival Experience', masosUrl: BOOKING_URL },
   { slug: 'epic-cruise', label: 'Epic Cruise', masosUrl: BOOKING_URL },
-  { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events' },
+  { slug: 'jamaica', label: 'Jamaica', masosUrl: 'https://carnivalglamhub.masos.app/events/0ad062ce-d1e0-4838-aeaf-f418ed526440' },
+  { slug: 'tobago', label: 'Tobago', masosUrl: 'https://carnivalglamhub.masos.app/events/755be168-61a2-4827-9e9e-d52668a790ff' },
   // Guyana has no confirmed masos event yet, so it points at the generic events listing.
   { slug: 'guyana', label: 'Guyana', masosUrl: BOOKING_URL },
 ];
