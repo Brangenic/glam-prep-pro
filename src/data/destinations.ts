@@ -3,6 +3,7 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // not used as the hero of any other destination. Swap this for real
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
+import { getTerritoryPricing } from "@/data/territoryPricing";
 import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear } from "@/data/seasons";
 
@@ -310,6 +311,13 @@ export function getDestinationFaqs(d: Destination): Faq[] {
 
   const passed = hasSeasonPassed(d.slug);
   const year = passedSeasonYear(d.slug);
+  // A territory with no confirmed product list never implies a service
+  // price. Grenada 2027 is pre-registration only, and the answer says so.
+  const pricing = getTerritoryPricing(d.slug);
+  const bookingLink = pricing?.bookingUrl?.includes("/events/")
+    ? pricing.bookingUrl.replace(/^https?:\/\//, "")
+    : "carnivalglamhub.masos.app/events";
+  const preRegOnly = pricing ? pricing.quotable === false && Boolean(pricing.deposit) : false;
 
   return [
     ...venueFaq,
@@ -317,7 +325,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
       question: `Where can I book ${loc} carnival glam?`,
       answer: passed
         ? `${event} ${year} has wrapped, so bookings are closed for this season. You can see the looks our artists created on the road in our gallery at carnivalglamhub.com, and follow Carnival Glam Hub for ${loc} next season.`
-        : `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at carnivalglamhub.masos.app/events. We are the leading carnival glam service for ${event}, delivered by professional Caribbean-trained artists.`,
+        : `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at ${bookingLink}. We are the leading carnival glam service for ${event}, delivered by professional Caribbean-trained artists.`,
     },
     ...tierFaq,
     {
@@ -334,7 +342,9 @@ export function getDestinationFaqs(d: Destination): Faq[] {
       question: `How much does ${loc} carnival makeup cost?`,
       answer: passed
         ? `${loc} carnival makeup pricing varies by package. Pricing for the ${year} season is closed. Rates for the next ${loc} season are confirmed when bookings reopen.`
-        : `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at carnivalglamhub.masos.app/events.`,
+        : preRegOnly
+          ? `No ${loc} makeup, hair or photoshoot price is published yet. Pre-registration is open at US$${pricing?.deposit?.amount} per masquerader, which secures your place, and the service prices are confirmed when the ${loc} product list goes live.`
+          : `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at ${bookingLink}.`,
     },
     {
       question: `Do you offer j'ouvert paint and body art for ${event}?`,
