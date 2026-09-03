@@ -4,7 +4,7 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
 import { getTerritoryPricing } from "@/data/territoryPricing";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -421,10 +421,6 @@ export function getDestinationFaqs(d: Destination): Faq[] {
             ? `No ${loc} makeup, hair or photoshoot price is published for this season yet. Pre-registration is open at US$${preReg.amount} per masquerader, closing ${preReg.closesOnText}, and it secures ${preReg.secures} rather than a service. Service prices are confirmed when the ${loc} product list goes live.`
             : `No ${loc} makeup, hair or photoshoot price is published for this season yet. Pre-registration has closed, so message the booking team and we will confirm rates when the ${loc} product list goes live.`
           : `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at ${bookingLink}.`,
-    },
-    {
-      question: `Do you offer j'ouvert paint and body art for ${event}?`,
-      answer: `Yes. J'ouvert paint, shimmer, oil and body art are part of our ${loc} carnival glam menu at every Carnival Glam Hub, Full Service and Glam Hub Lite alike, because it is makeup work. Our artists use professional, skin-safe carnival paints that hold up to heat, sweat and water on the road.`,
     },
     {
       question: `How early should I book ${loc} carnival glam?`,
