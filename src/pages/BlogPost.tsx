@@ -872,7 +872,7 @@ const BlogPost = () => {
                       {(() => {
                         const base = groupCtaButtons(sanitizeLinksInMarkdown(cleanMarkdown(post.content)));
                         const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
-                        return slugCleaner ? slugCleaner(base) : base;
+                        return deEmDash(slugCleaner ? slugCleaner(base) : base);
                       })()}
                     </ReactMarkdown>
                   </div>
