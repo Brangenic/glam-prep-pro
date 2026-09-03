@@ -490,3 +490,41 @@ describe("group 8: season awareness on 2026-08-24", () => {
     }
   });
 });
+
+/* ============================================================
+ * Group 9. Per-territory booking links are never the generic list.
+ * ============================================================ */
+
+describe("group 9: booking links are territory specific", () => {
+  const GENERIC = "https://carnivalglamhub.masos.app/events";
+
+  it("no event in the pack carries the bare events list as its booking URL", () => {
+    for (const ev of pack.events) {
+      if (!ev.bookingUrl) continue;
+      expect(ev.bookingUrl, ev.slug).not.toBe(GENERIC);
+      expect(ev.bookingUrl, ev.slug).toContain("/events/");
+    }
+  });
+
+  it("no territory brief carries the bare events list", () => {
+    for (const [slug, t] of Object.entries(pack.territories)) {
+      const generic = t.brief
+        .split(/\s+/)
+        .some((w) => w.replace(/[.,)]+$/, "") === GENERIC);
+      expect(generic, slug).toBe(false);
+    }
+  });
+
+  it("a resolved bookable territory gets its own event URL, not the list", () => {
+    for (const slug of ["jamaica", "tobago", "trinidad", "miami"]) {
+      const ev = pack.events.find((e) => e.slug === slug)!;
+      expect(hasBookableEvent(slug)).toBe(true);
+      const p = promptFor(`How do I book ${ev.name}?`);
+      expect(p, slug).toContain(ev.bookingUrl!);
+      const bare = p
+        .split(/\s+/)
+        .some((w) => w.replace(/[.,)]+$/, "") === GENERIC);
+      expect(bare, slug).toBe(false);
+    }
+  });
+});
