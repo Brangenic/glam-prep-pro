@@ -1,0 +1,114 @@
+import { readFileSync, readdirSync, statSync } from "fs";
+import { join, resolve } from "path";
+import { describe, expect, it } from "vitest";
+
+import { destinations, getDestinationFaqs } from "@/data/destinations";
+import { getHubInclusions, LITE_NOT_OFFERED } from "@/data/hubTiers";
+import { territoryPricing } from "@/data/territoryPricing";
+
+const JOUVERT = /j\s*'?\s*ouv[ae]?[ry]?t?|jouvay/i;
+const STRICT = /jouvert|j\s*'\s*ouvert|jouvay/i;
+
+/**
+ * J'OUVERT IS EDITORIAL, NEVER AN OFFER.
+ *
+ * Masqueraders do not book makeup, hair or a photoshoot for J'ouvert.
+ * J'ouvert is oil, paint and mud, so Carnival Glam Hub sells nothing for
+ * it in any territory and must never appear to. Confirmed by Kibwe on
+ * 3 September 2026, and it applies everywhere we operate.
+ *
+ * A future session that finds a Grenada or Trinidad page with no
+ * J'ouvert mention and thinks it is an oversight is WRONG. The absence
+ * is deliberate. Do not "restore" it.
+ *
+ * The blog directories are scoped out on purpose. The J'ouvert articles
+ * are top of funnel editorial, they rank, and one sits on a keyword doing
+ * thousands of searches a month. They stay exactly as they are, in the
+ * sitemap, the blog index and internal links. Editorial is fine, an offer
+ * is false.
+ */
+const REPO = resolve(process.cwd());
+
+// Blog content, blog metadata, blog routing and blog build scripts.
+const EXEMPT = [
+  "src/data/recovered",
+  "src/data/recoveredPosts.ts",
+  "src/data/recoveredPostsMeta.ts",
+  "src/pages/blog",
+  "src/pages/Blogs.tsx",
+  "src/pages/BlogPost.tsx",
+  "src/components/BlogCTA.tsx",
+  "src/components/landing/CarnivalGuides.tsx",
+  "src/components/TrinidadGuidesBlock.tsx",
+  "src/lib/wixRedirects.ts",
+  "scripts/prerender-blog-meta.ts",
+  "scripts/prerender-wix-redirects.ts",
+];
+
+const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith(`${e}/`));
+
+const walk = (dir: string, out: string[] = []) => {
+  for (const entry of readdirSync(join(REPO, dir))) {
+    const rel = `${dir}/${entry}`;
+    if (isExempt(rel)) continue;
+    if (statSync(join(REPO, rel)).isDirectory()) walk(rel, out);
+    else if (/\.(ts|tsx|txt|json)$/.test(entry)) out.push(rel);
+  }
+  return out;
+};
+
+describe("J'ouvert is editorial, never an offer", () => {
+  it("never appears in destination data", () => {
+    for (const d of destinations) {
+      const surfaces = [
+        d.description,
+        d.longDescription,
+        d.metaTitle,
+        d.metaDescription,
+        d.cta,
+        ...d.highlights,
+        ...getDestinationFaqs(d).flatMap((f) => [f.question, f.answer]),
+      ];
+      for (const text of surfaces) expect(text ?? "", `${d.slug}: ${text}`).not.toMatch(STRICT);
+    }
+  });
+
+  it("never appears in package, pricing or inclusion data", () => {
+    expect(STRICT.test(JSON.stringify(territoryPricing))).toBe(false);
+    const lists = [
+      ...LITE_NOT_OFFERED,
+      ...destinations.flatMap((d) => getHubInclusions(d.slug) ?? []),
+    ];
+    for (const item of lists) expect(item).not.toMatch(STRICT);
+  });
+
+  it("never appears in llms.txt", () => {
+    expect(readFileSync(join(REPO, "public/llms.txt"), "utf8")).not.toMatch(STRICT);
+  });
+
+  it("never appears in the generated bot knowledge pack", () => {
+    const pack = JSON.parse(
+      readFileSync(join(REPO, "supabase/functions/chat/knowledge.json"), "utf8"),
+    ) as { neverSay?: unknown };
+    // The NEVER SAY guardrail names J'ouvert on purpose, so the bot knows
+    // not to sell it. Every other part of the pack must be clean.
+    const { neverSay, ...rest } = pack;
+    expect(Array.isArray(neverSay)).toBe(true);
+    expect(STRICT.test(JSON.stringify(rest))).toBe(false);
+  });
+
+  it("never appears in service pages, other pages, data or prerender scripts", () => {
+    const files = [
+      ...walk("src/pages"),
+      ...walk("src/data"),
+      ...walk("src/components"),
+      ...walk("scripts"),
+    ];
+    const offenders = files.filter((f) => STRICT.test(readFileSync(join(REPO, f), "utf8")));
+    expect(offenders, `J'ouvert found on commercial surfaces: ${offenders.join(", ")}`).toEqual([]);
+  });
+});
+
+// Keeps the loose pattern referenced so a future edit cannot silently
+// weaken it while a near-miss spelling slips onto a commercial surface.
+export const JOUVERT_PATTERNS = { JOUVERT, STRICT };
