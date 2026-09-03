@@ -14,7 +14,7 @@ const SocialProof = () => (
             <span className="font-display font-bold text-xl sm:text-2xl text-primary italic">
               {s.value}
             </span>
-            <p className="font-body text-[10px] sm:text-[11px] text-muted-foreground mt-1 sm:mt-1.5 uppercase tracking-[0.15em] font-medium">
+            <p className="font-body text-[11px] sm:text-xs text-muted-foreground mt-1 sm:mt-1.5 uppercase tracking-[0.15em] font-medium">
               {s.label}
             </p>
           </div>
