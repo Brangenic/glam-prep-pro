@@ -4,7 +4,7 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
 import { getTerritoryPricing } from "@/data/territoryPricing";
-import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -114,7 +114,7 @@ export const destinations: Destination[] = [
     date: "Monday 9 & Tuesday 10 August 2027",
     description: "Pre-register now for Spicemas 2027 glam in Grenada.",
     longDescription:
-      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup and a photoshoot by our trained Caribbean carnival artists, with dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. Pre-registration is open at US$50 per masquerader.",
+      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is hosted at the Radisson Hotel, central in Grenada, with the band route starting outside the hotel. You glam and step straight onto the road. Sweat-resistant makeup and a photoshoot by our trained Caribbean carnival artists, with dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. Pre-registration is open at US$50 per masquerader.",
     image: "/images/destinations/grenada-hero-radisson.jpg",
     cta: "Pre-register for Spicemas 2027",
     objectPosition: "50% 22%",
@@ -167,9 +167,9 @@ export const destinations: Destination[] = [
       },
     ],
     metaTitle:
-      "Grenada Spicemas Makeup 2027 | Sweat-Proof Glam | Glam Hub",
+      "Spicemas 2027 Makeup, 9 to 10 August | Grenada Glam Hub",
     metaDescription:
-      "Spicemas 2027 is Monday 9 and Tuesday 10 August. Pre-register at US$50 per masquerader, closing 31 December 2026, for Grenada Glam Hub Lite makeup.",
+      "Spicemas 2027 is Monday 9 and Tuesday 10 August. Grenada Carnival makeup at the Radisson Hotel, band route outside. Pre-register US$50 to 31 December 2026.",
 
   },
   {
@@ -376,7 +376,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
   // Where a venue is published, the venue question leads the FAQ list
   // and the FAQPage structured data.
   const venueFaq: Faq[] =
-    d.slug === "miami" ? [MIAMI_VENUE_FAQ] : d.slug === "grenada" ? [GRENADA_VENUE_FAQ] : [];
+    d.slug === "miami" ? [MIAMI_VENUE_FAQ] : d.slug === "grenada" ? [GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ] : [];
 
   const passed = hasSeasonPassed(d.slug);
   const year = passedSeasonYear(d.slug);
@@ -391,8 +391,35 @@ export function getDestinationFaqs(d: Destination): Faq[] {
   // own, so no answer here hardcodes a deadline.
   const preReg = getOpenPreRegistration(d.slug);
 
+  /**
+   * Answer engine questions for Grenada. Every answer is self-contained,
+   * answers in its first sentence and can be quoted on its own.
+   */
+  const grenadaAeoFaqs: Faq[] =
+    d.slug === "grenada"
+      ? [
+          {
+            question: "When is Spicemas 2027?",
+            answer: `Spicemas 2027 is Monday 9 and Tuesday 10 August 2027 in Grenada. The Carnival Glam Hub for Spicemas 2027 is hosted at the Radisson Hotel, central in Grenada, and the band route starts outside the hotel.`,
+          },
+          ...(preReg
+            ? [
+                {
+                  question: "How do I secure my spot for Spicemas 2027?",
+                  answer: `You secure your spot for Spicemas 2027 with a US$${preReg.amount} pre-registration per masquerader, which closes on ${preReg.closesOnText}. Pre-registration is not a full booking and no service is included, because no Grenada makeup or photoshoot price is published for 2027 yet. Pre-register at ${preReg.eventUrl}.`,
+                },
+              ]
+            : []),
+          {
+            question: "What is included at the Grenada Glam Hub?",
+            answer: `The Grenada Glam Hub is a Glam Hub Lite, covering makeup, a photoshoot, dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. There is no seamstress, no shuttle, no breakfast, no alcohol and no hair in Grenada.`,
+          },
+        ]
+      : [];
+
   return [
     ...venueFaq,
+    ...grenadaAeoFaqs,
     {
       question: `Where can I book ${loc} carnival glam?`,
       answer: passed
