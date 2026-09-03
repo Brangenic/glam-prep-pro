@@ -527,6 +527,12 @@ ${LITE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
 </ul>
 <p>A Glam Hub Lite does not offer ${LITE_NOT_OFFERED.map((i) => escapeHtml(i.toLowerCase())).join(", ")}.</p>`;
 
+const UPCOMING_WITH_DATES = `<ul>
+${getUpcomingDestinations(undefined, undefined, { dedupeTrinidad: true })
+  .map((d) => `  <li><a href="${d.path}">${escapeHtml(d.name)}</a>, ${escapeHtml(d.dateText)}</li>`)
+  .join("\n")}
+</ul>`;
+
 const PRESS_OUTLET_SENTENCE = `Carnival Glam Hub has been covered by ${PRESS_OUTLETS.map((o) => escapeHtml(o.name)).join(", ")}.`;
 
 const SERVICES: Record<string, Content> = {
@@ -542,6 +548,16 @@ const SERVICES: Record<string, Content> = {
 <p>Both work for the road. Traditional application, layered with a long-wear foundation and locked down with a setting spray, gives a fuller, more sculpted finish and is easier to touch up mid-route. Airbrush gives a lighter, second-skin finish that photographs beautifully and tends to suit oilier skin in extreme heat.</p>
 <h2>How long does Carnival makeup last?</h2>
 <p>A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat — from your morning departure through the last truck. Priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday.</p>
+<h2>Where you can book Carnival makeup</h2>
+<p>Makeup is booked territory by territory, and only where the Carnival is still ahead of us. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What comes with your Carnival morning</h2>
+<p>Makeup is never sold on its own. It sits inside a Glam Hub, and what the Hub includes depends on its tier.</p>
+${INCLUSION_LISTS}
+<h2>Why masqueraders book an artist rather than doing it themselves</h2>
+<p>Carnival makeup has to survive heat, sweat, paint, rain, body glitter and a full day of jumping, then still photograph well at every stage of the road. That is a different job from a night out. Our artists build the base in layers, set each one, and choose lash, brow and lip products that will not slide, transfer onto a costume or grey out under midday sun.</p>
+<h2>Press and reputation</h2>
+<p>${PRESS_OUTLET_SENTENCE} Read the coverage on our <a href="/press">press page</a>.</p>
 ${CTA}`,
   },
   "/services/carnival-hair": {
@@ -551,6 +567,15 @@ ${CTA}`,
 <p>Every style is anchored so your headpiece sits secure from the truck to the last lap. Slick-back ponies with lay-down edges, sculpted buns, braided crowns and sew-in installs with a Carnival-safe finish.</p>
 <h2>Curls, braids and updos</h2>
 <p>Voluminous carnival curls with silicone finish for heat and humidity, boho braids with beads, and sculpted updos for stage-front sections.</p>
+<h2>How much does Carnival hair cost?</h2>
+<p>Hair is ${HAIR_RANGE} depending on the style, and it can be booked on its own or as part of Full Glam at ${FULL_GLAM_RANGE}. ${ADD_ON_SUMMARY}</p>
+<h2>Where you can book Carnival hair</h2>
+<p>Hair is a Full Service Glam Hub service, so it runs in the territories where we open the full lounge. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
+<h2>Coming in with an install or your own hair</h2>
+<p>Both work. Tell us at booking whether you are arriving with a wig, a sew-in, braids or your own hair, and bring the headpiece with you so the stylist can anchor the style to the exact weight and fixing points it needs. Edges are laid last so they survive the shuttle rather than the mirror.</p>
 ${CTA}`,
   },
   "/services/carnival-photoshoot": {
@@ -560,6 +585,15 @@ ${CTA}`,
 <p>Editorial-lit portraits inside the air-conditioned lounge, plus outdoor sets on carnival morning — Savannah light, the Hilton grounds, or a curated backdrop matched to your costume.</p>
 <h2>Fast turnaround, private gallery</h2>
 <p>Edited highlights delivered same day for social; full gallery within 72 hours to a private link.</p>
+<h2>How much does a Carnival photoshoot cost?</h2>
+<p>Photoshoot only is ${PHOTO_RANGE}. Booked with makeup as Full Glam it is ${FULL_GLAM_RANGE}, and a deposit of US$${DEPOSIT} per masquerader confirms the slot.</p>
+<h2>Where you can book a Carnival photoshoot</h2>
+<p>The photoshoot runs at every Glam Hub, both tiers. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What the shoot covers</h2>
+<p>Full costume portraits front, back and detail, so the backpack, wire bra and headpiece are all documented properly, plus movement frames and group shots with your section. Shooting happens after hair, makeup and getting dressed, while the look is at its freshest and before the road touches it.</p>
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
 ${CTA}`,
   },
   "/services/getting-dressed": {
@@ -569,6 +603,14 @@ ${CTA}`,
 <p>Correct positioning, hidden padding for support, waist and hip strap tuning, hardware secured so nothing shifts on the road.</p>
 <h2>Collars, harnesses and headpieces</h2>
 <p>Locked into your hair install so it sits high and stays put. Backup pins, tape and touch-up strap kit on hand.</p>
+<h2>How much does getting dressed cost?</h2>
+<p>Carnival morning access, which covers getting dressed, the lounge, refreshments and the shuttle where it runs, is US$${GETTING_DRESSED_PRICE} per masquerader and is free with any Glam Hub service. It is a Full Service Glam Hub inclusion, so it is offered in the territories where we open the full lounge.</p>
+<h2>Where you can book getting-dressed help</h2>
+${UPCOMING_WITH_DATES}
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
+<h2>Why it matters</h2>
+<p>A modern Carnival costume is a piece of engineering. Wires dig, straps slip, hooks sit in the wrong place and a backpack that is half a centimetre out will bruise a shoulder by lunchtime. A seamstress on site can take in a bra, move a hook or rescue a fitting problem on the morning itself, which is not something a hotel room and a friend can do.</p>
 ${CTA}`,
   },
   "/services/carnival-shuttle": {
@@ -578,6 +620,15 @@ ${CTA}`,
 <p>Air-conditioned transport with your section, so you arrive fresh, dry and on time. Route pre-mapped to avoid Carnival morning gridlock.</p>
 <h2>Group capacity</h2>
 <p>Private shuttles for sections and friend groups. Book with your glam package or standalone.</p>
+<h2>What the shuttle costs</h2>
+<p>The shuttle is included in Carnival morning access at US$${GETTING_DRESSED_PRICE} per masquerader, free with any Glam Hub service, in the territories where it runs. It is not sold separately as a taxi service.</p>
+<h2>Where the shuttle runs</h2>
+<p>Shuttle is a Full Service Glam Hub inclusion. Glam Hub Lite territories do not include it, and there is no shuttle in Miami this season. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
+<h2>Timing on Carnival morning</h2>
+<p>The shuttle leaves in waves as sections finish getting dressed, so nobody sits in costume waiting for a full bus. Routes are mapped in advance around the road closures, which is the part that catches out masqueraders booking their own transport for the first time.</p>
 ${CTA}`,
   },
 };
