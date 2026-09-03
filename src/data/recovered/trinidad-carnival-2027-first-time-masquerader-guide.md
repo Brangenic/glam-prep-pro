@@ -2,7 +2,7 @@ Planning Trinidad Carnival 2027? You're not alone. Every year thousands of visit
 
 https://www.youtube.com/watch?v=DWuZ147fSbU
 
-[Book Your Trinidad Carnival 2027 Morning — US$50](https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb)
+[Book Your Trinidad Carnival 2027 Morning, US$50](https://carnivalglamhub.masos.app/events/cef3860d-c2e6-4753-a065-4ea39c0eb8cb)
 
 ## When Is Trinidad Carnival 2027?
 Trinidad Carnival 2027 takes place on:
@@ -20,9 +20,9 @@ One of the first decisions you'll need to make is choosing a band. Popular bands
 
 Each band offers different costume styles, experiences and price points. Some focus on premium all-inclusive experiences, while others appeal to masqueraders looking for a more intimate atmosphere. The best sections often sell out months before Carnival, which is why many experienced masqueraders secure their costume as early as possible.
 
-![Tamika Campbell — Trinidad Carnival](/blog/trinidad-2027/tamika-campbell.jpg)
+![Tamika Campbell, Trinidad Carnival](/blog/trinidad-2027/tamika-campbell.jpg)
 
-![Shanique Singh — Trinidad Carnival](/blog/trinidad-2027/shanique-singh.jpg)
+![Shanique Singh, Trinidad Carnival](/blog/trinidad-2027/shanique-singh.jpg)
 
 ## Where Should You Stay for Trinidad Carnival?
 Location matters more than most visitors realise. Carnival Glam Hub operates from both the **Hilton Trinidad** and **The BRIX Hotel**, two of the most popular Carnival hotels in Port of Spain.
@@ -35,7 +35,7 @@ One of the most common questions people ask is, "How much does Trinidad Carnival
 Many masqueraders spend anywhere between **US$2,000 and US$6,000+** depending on accommodation, costume choice and the number of events they attend. The biggest mistake people make is budgeting only for the costume and forgetting everything else that goes into the experience.
 
 ## When Should You Book Your Makeup Appointment?
-Most experienced masqueraders secure their makeup appointment shortly after securing their costume. The best appointment times are usually between **4:00am and 8:00am** — enough time for makeup, photos, getting dressed and transportation before meeting your band. Waiting until January often means settling for whatever appointments remain. If Trinidad Carnival is important to you, don't leave your Carnival-morning planning until the last minute.
+Most experienced masqueraders secure their makeup appointment shortly after securing their costume. The best appointment times are usually between **4:00am and 8:00am**, enough time for makeup, photos, getting dressed and transportation before meeting your band. Waiting until January often means settling for whatever appointments remain. If Trinidad Carnival is important to you, don't leave your Carnival-morning planning until the last minute.
 
 https://www.youtube.com/watch?v=tPcOp4C8FLQ
 
@@ -68,7 +68,7 @@ https://youtube.com/shorts/TMDesSgv2yw
 [See more in our gallery](https://www.carnivalglamhub.com/#gallery)
 
 ## New for Trinidad Carnival 2027
-This year, Carnival Glam Hub has expanded its quality-assurance process. Our Quality Assurance Director, **Angel Cumberbatch**, and her team will oversee service delivery throughout Carnival Monday and Tuesday. We've also introduced a dedicated **correction room** — if a guest would like an adjustment made before leaving for the road, our team will address it immediately. Our goal is simple: every guest leaves feeling confident and happy with their final look. That's the Glam Hub Satisfaction Guarantee.
+This year, Carnival Glam Hub has expanded its quality-assurance process. Our Quality Assurance Director, **Angel Cumberbatch**, and her team will oversee service delivery throughout Carnival Monday and Tuesday. We've also introduced a dedicated **correction room**, if a guest would like an adjustment made before leaving for the road, our team will address it immediately. Our goal is simple: every guest leaves feeling confident and happy with their final look. That's the Glam Hub Satisfaction Guarantee.
 
 https://youtube.com/shorts/0a0ggAp13Iw
 

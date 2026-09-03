@@ -56,7 +56,7 @@ const faqSchema = {
       name: "How should I prep my hair before the appointment?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Wash and fully dry your hair the day before — not the morning of — so it has a little grip for pins and braids. Skip heavy leave-ins and oils; they make holds fail in heat. Bring your headpiece, any extensions or wefts you want used, and a clear reference image of the style you want. If you are unsure which style suits your costume, our stylists will walk through options when you arrive and pick the one that will photograph best with your headpiece in place.",
+        text: "Wash and fully dry your hair the day before, rather than the morning of, so it has a little grip for pins and braids. Skip heavy leave-ins and oils; they make holds fail in heat. Bring your headpiece, any extensions or wefts you want used, and a clear reference image of the style you want. If you are unsure which style suits your costume, our stylists will walk through options when you arrive and pick the one that will photograph best with your headpiece in place.",
       },
     },
     {
@@ -64,7 +64,7 @@ const faqSchema = {
       name: "Can you work around my headpiece?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes — and we expect to. Most road-day headpieces are heavy, front-loaded and pinned in from below. Bring it. The stylist will build the base specifically to seat it, balance the weight across the crown and back, and anchor the pins so the piece stays put when you jump, wine and bend through the route.",
+        text: "Yes, and we expect to. Most road-day headpieces are heavy, front-loaded and pinned in from below. Bring it. The stylist will build the base specifically to seat it, balance the weight across the crown and back, and anchor the pins so the piece stays put when you jump, wine and bend through the route.",
       },
     },
     {
@@ -147,7 +147,7 @@ const CarnivalHair = () => {
               <a href="/about" className="text-primary hover:underline">
                 Carnival Glam Hub
               </a>{" "}
-              are sculpted, secured and headpiece-ready — built to hold under
+              are sculpted, secured and headpiece-ready, built to hold under
               feathers, wires and tropical heat, finished by professional
               stylists inside our air-conditioned lounge before you leave for
               the road.
@@ -156,7 +156,7 @@ const CarnivalHair = () => {
               Carnival hair has a very specific job: stay seated under a heavy
               headpiece for ten hours, in 30+ degree heat, through rum, paint
               and constant movement. Our stylists treat it as engineering as
-              much as styling — base, anchor, shape, hold — so the look you
+              much as styling, base, anchor, shape, hold, so the look you
               leave the lounge with is the look in your road photos.
             </p>
           </header>
@@ -249,8 +249,7 @@ const CarnivalHair = () => {
               How should I prep my hair before the appointment?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Wash and fully dry your hair the day before — not the morning of
-              — so it has a little grip for pins and braids. Skip heavy
+              Wash and fully dry your hair the day before, rather than the morning of, so it has a little grip for pins and braids. Skip heavy
               leave-ins and oils; they make holds fail in heat. Bring your
               headpiece, any extensions or wefts you want used, and a clear
               reference image of the style you want. If you are unsure which
@@ -265,7 +264,7 @@ const CarnivalHair = () => {
               Can you work around my headpiece?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Yes — and we expect to. Most road-day headpieces are heavy,
+              Yes, and we expect to. Most road-day headpieces are heavy,
               front-loaded and pinned in from below. Bring it. The stylist
               will build the base specifically to seat it, balance the weight
               across the crown and back, and anchor the pins so the piece

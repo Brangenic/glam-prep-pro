@@ -1,4 +1,5 @@
 import { TERRITORY_PROFILES } from "@/data/territoryProfiles";
+import { fitTitle, fitDescription, TITLE_MAX } from "@/lib/metaText";
 
 /**
  * Season calendar. Single source of truth for when a territory's Carnival
@@ -96,8 +97,12 @@ export function seasonAwareMeta(
   const year = passedSeasonYear(slug);
   const candidate = `${eventName} Makeup | ${year} Season Wrapped | Glam Hub`;
   return {
-    title: candidate.length <= 70 ? candidate : `${eventName} | ${year} Wrapped | Glam Hub`,
-    description: `${eventName} ${year} has wrapped and bookings are closed for this season. See the looks our artists created in our Gallery, and follow Carnival Glam Hub for next season.`,
+    title: fitTitle(
+      candidate.length <= TITLE_MAX ? candidate : `${eventName} | ${year} Wrapped | Glam Hub`,
+    ),
+    description: fitDescription(
+      `${eventName} ${year} has wrapped and bookings are closed. See the looks our artists created in our Gallery, and follow Carnival Glam Hub for next season.`,
+    ),
   };
 }
 

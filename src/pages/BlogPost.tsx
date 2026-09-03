@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PromoBookingCard from "@/components/PromoBookingCard";
+import { fitTitle, fitDescription, plainTextExcerpt, deEmDash } from "@/lib/metaText";
 
 // Extract a YouTube video id from any common URL form. Strips tracking
 // params like ?si=, &t=. Returns { id, kind } or null. kind="shorts" gets
@@ -110,7 +111,7 @@ const cleanMarkdown = (md: string): string => {
     .replace(/\n{3,}/g, '\n\n')
     .trim();
   // De-duplicate consecutive/repeated standalone booking CTA links to
-  // carnivalglamhub.masos.app — keep only the FIRST occurrence so we
+  // carnivalglamhub.masos.app, keep only the FIRST occurrence so we
   // never stack 3+ identical "Book Now" buttons at the foot of a post.
   const bookingLineRe =
     /^\s*\[[^\]]*\]\(\s*https?:\/\/(?:[^/)\s]*\.)?carnivalglamhub\.masos\.app[^)\s]*\)\s*$/i;
@@ -346,7 +347,7 @@ const BANNED_SLUG_PATTERNS: RegExp[] = [
 
 const isBannedSlug = (slug: string | undefined | null) => {
   if (!slug) return false;
-  // Recovered legacy posts always render — never treat as banned.
+  // Recovered legacy posts always render, never treat as banned.
   if (slug in RECOVERED_POST_BY_SLUG) return false;
   return BANNED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
@@ -467,18 +468,12 @@ const BlogPost = () => {
   useEffect(() => {
     if (post?.title) {
       const override = slug ? SLUG_META_TITLE_OVERRIDES[slug] : undefined;
-      if (override) {
-        document.title = override;
-      } else {
-        const suffix = " | Carnival Glam Hub Blog";
-        const withSuffix = `${post.title}${suffix}`;
-        document.title =
-          withSuffix.length <= 70 ? withSuffix : post.title;
-      }
+      document.title = fitTitle(override ?? post.title, override ? "" : " | Carnival Glam Hub Blog");
     }
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (post?.meta_description && metaDesc) {
-      metaDesc.setAttribute("content", post.meta_description);
+    const rawDesc = post?.meta_description ?? post?.excerpt ?? null;
+    if (rawDesc && metaDesc) {
+      metaDesc.setAttribute("content", fitDescription(rawDesc, plainTextExcerpt(post?.content)));
     }
 
     // 410-style handling: when load is complete and no post resolved,
@@ -705,7 +700,7 @@ const BlogPost = () => {
                         a: ({ node, href, children, ...props }) => {
                           const rewritten = rewriteHref(href);
                           // Drop anchors to dead internal placeholder domains
-                          // (solution.mini / happen.mini) — render children only.
+                          // (solution.mini / happen.mini), render children only.
                           if (isDeadLinkHref(rewritten)) {
                             return <>{children}</>;
                           }
@@ -877,7 +872,7 @@ const BlogPost = () => {
                       {(() => {
                         const base = groupCtaButtons(sanitizeLinksInMarkdown(cleanMarkdown(post.content)));
                         const slugCleaner = slug ? slugContentCleaners[slug] : undefined;
-                        return slugCleaner ? slugCleaner(base) : base;
+                        return deEmDash(slugCleaner ? slugCleaner(base) : base);
                       })()}
                     </ReactMarkdown>
                   </div>
@@ -887,7 +882,7 @@ const BlogPost = () => {
                   </p>
                 ) : null}
 
-                {/* Related guides — internal linking for SEO */}
+                {/* Related guides, internal linking for SEO */}
                 {slug && (
                   <RelatedGuides
                     currentSlug={slug}
@@ -904,7 +899,7 @@ const BlogPost = () => {
                   />
                 )}
 
-                {/* Related service + destination links — push readers to money pages */}
+                {/* Related service + destination links, push readers to money pages */}
                 {slug && (() => {
                   const s = slug.toLowerCase();
                   const service = /hair|hairstyle|ponytail|braid|wig/.test(s)
@@ -938,7 +933,7 @@ const BlogPost = () => {
                   );
                 })()}
 
-                {/* Conversion CTA — pushes to MasOS booking page */}
+                {/* Conversion CTA, pushes to MasOS booking page */}
                 <BlogCTA
                   slug={slug}
                   tags={

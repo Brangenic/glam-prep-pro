@@ -194,7 +194,7 @@ export const destinationPackages: Record<string, DestinationPackages> = {
     bookingUrl: "https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244",
     sections: [
       {
-        title: "Carnival Monday — 8 February 2027",
+        title: "Carnival Monday, 8 February 2027",
         packages: [
           { name: "Epic Monday Makeup Only", price: "$200 USD", image: `${IMG}/1be30ffc-a933-4584-95a6-5c3a53dae31b/462x578` },
           { name: "Epic Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/c612f252-aa7e-4948-aa4d-74fd19b0fcff/462x578` },
@@ -205,7 +205,7 @@ export const destinationPackages: Record<string, DestinationPackages> = {
         ],
       },
       {
-        title: "Carnival Tuesday — 9 February 2027",
+        title: "Carnival Tuesday, 9 February 2027",
         packages: [
           { name: "Epic Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/421b5290-2aa0-46fb-9333-f5a49c4bd625/462x578` },
           { name: "Epic Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/07b521e4-d70b-49ed-8323-20ab10c4a750/462x578` },

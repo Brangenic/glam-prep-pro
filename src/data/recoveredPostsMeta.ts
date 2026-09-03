@@ -20,13 +20,13 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
   {
     slug: "chatgpt-picks-the-top-5-best-caribbean-carnivals",
     title:
-      "ChatGPT Picks the Top 5 Best Caribbean Carnivals — Here's My Wild Take!",
+      "ChatGPT Picks the Top 5 Best Caribbean Carnivals, Here's My Wild Take!",
     author: "Carnival Chaser",
     publishedDate: "2024-09-15",
     coverImage:
       "https://static.wixstatic.com/media/477465_5d9a216d559442279bb4e143c2de0ad1~mv2.jpg",
     excerpt:
-      "ChatGPT ranked the top Caribbean Carnivals — here's a Carnival chaser's honest take on Trinidad, Crop Over, Jamaica, Spicemas and Saint Lucia.",
+      "ChatGPT ranked the top Caribbean Carnivals, here's a Carnival chaser's honest take on Trinidad, Crop Over, Jamaica, Spicemas and Saint Lucia.",
     category: "Caribbean Carnivals",
     tags: ["Carnival Tips", "Carnival Do's and Don'ts", "Travel Tips"],
     metaDescription:
@@ -42,7 +42,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     coverImage:
       "https://static.wixstatic.com/media/477465_a6095efb7ff846228e5a9a603caea64c~mv2.png",
     excerpt:
-      "Everything you need to know about Jamaica Carnival — dates, where to stay, fetes to hit, Carnival makeup, and the dos and don'ts.",
+      "Everything you need to know about Jamaica Carnival, dates, where to stay, fetes to hit, Carnival makeup, and the dos and don'ts.",
     category: "Jamaica Carnival",
     tags: [
       "Jamaica Carnival",
@@ -51,7 +51,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Xodus Carnival",
     ],
     metaDescription:
-      "Everything you need to know about Jamaica Carnival — dates, where to stay, fetes to hit, Carnival makeup, and the dos and don'ts.",
+      "Everything you need to know about Jamaica Carnival, dates, where to stay, fetes to hit, Carnival makeup, and the dos and don'ts.",
     readTime: "6 min read",
   },
   {
@@ -72,7 +72,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Soca Music",
     ],
     metaDescription:
-      "Rihanna's showstopping Crop Over return, broken down look by look — the costumes, the beauty, and why she is Carnival royalty.",
+      "Rihanna's showstopping Crop Over return, broken down look by look, the costumes, the beauty, and why she is Carnival royalty.",
     readTime: "5 min read",
   },
   {
@@ -158,11 +158,11 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     coverImage:
       "https://static.wixstatic.com/media/477465_25db9dd2b93b40089c6a0adf739f9e08~mv2.jpg",
     excerpt:
-      "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027 — block heels, peep-toe booties, platforms and the half-and-half move.",
+      "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027, block heels, peep-toe booties, platforms and the half-and-half move.",
     category: "Carnival Tips",
     tags: ["Carnival Tips", "Trinidad Carnival", "Carnival Shoes", "Carnival Do's and Don'ts"],
     metaDescription:
-      "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027 — block heels, peep-toe booties, platforms and the half-and-half move.",
+      "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027, block heels, peep-toe booties, platforms and the half-and-half move.",
     readTime: "4 min read",
   },
   {

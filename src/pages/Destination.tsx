@@ -79,7 +79,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const bookingUrl = useMemo(() => (dest ? buildDestinationUrl(dest.slug, "destination_page") : ""), [dest]);
 
   const seoOverrides: Record<string, { territory: string; year: string; event: string }> = {
-    // Trinidad evergreen hub — no year. The dated edition lives at /trinidad-carnival-2027.
+    // Trinidad evergreen hub, no year. The dated edition lives at /trinidad-carnival-2027.
     trinidad: { territory: "Trinidad", year: "", event: "Trinidad Carnival" },
     jamaica: { territory: "Jamaica", year: "2027", event: "Jamaica Carnival" },
     miami: { territory: "Miami", year: "2026", event: "Miami Carnival" },
@@ -244,7 +244,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
           <img
             src={dest.image}
-            alt={dest.imageAlt ?? `${dest.name} masquerader in full costume — ${dest.description}`}
+            alt={dest.imageAlt ?? `${dest.name} masquerader in full costume, ${dest.description}`}
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: dest.objectPosition || "center top" }}
           />
@@ -304,7 +304,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 <span className="text-gradient-primary italic">Trinidad Carnival</span>
               </h2>
               <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-                Sweat-resistant makeup, road-ready hair, getting-dressed help, on-site photos and shuttle from our Port of Spain lounge — by the team trusted by 15,000+ masqueraders since 2017.
+                Sweat-resistant makeup, road-ready hair, getting-dressed help, on-site photos and shuttle from our Port of Spain lounge, by the team trusted by 15,000+ masqueraders since 2017.
               </p>
               <div className="mb-6 rounded-2xl border border-primary/30 bg-background/60 px-5 py-4 max-w-2xl mx-auto">
                 <p className="font-body text-sm sm:text-base text-foreground/85">
@@ -377,7 +377,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         )}
 
 
-        {/* Season wrapped banner — any territory whose date has passed */}
+        {/* Season wrapped banner, any territory whose date has passed */}
         {seasonPassed && (
           <section
             aria-label={`${dest.name} ${passedSeasonYear(dest.slug)} season ended`}
@@ -412,7 +412,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </section>
         )}
 
-        {/* Miami logistics notice — venue move and no shuttle, above packages */}
+        {/* Miami logistics notice, venue move and no shuttle, above packages */}
         {dest.slug === "miami" && (
           <section
             aria-label="Miami Carnival 2026 venue and travel notice"
@@ -713,14 +713,14 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
-        {/* FAQ section — renders the same Q&A captured in FAQPage JSON-LD */}
+        {/* FAQ section, renders the same Q&A captured in FAQPage JSON-LD */}
         <section
           className="section-y border-t border-border"
           aria-labelledby={`${dest.slug}-faq-heading`}
         >
           <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
             <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3 text-center">
-              {dest.shortName} Carnival Glam — FAQ
+              {dest.shortName} Carnival Glam, FAQ
             </p>
             <h2
               id={`${dest.slug}-faq-heading`}

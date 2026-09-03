@@ -4,6 +4,12 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { getDestinationBySlug } from "@/data/destinations";
+import {
+  TRINIDAD_ANSWER_SECTIONS,
+  TRINIDAD_VENUES,
+  TRINIDAD_APPOINTMENT_WINDOW,
+  TRINIDAD_BOOKING_URL,
+} from "@/data/answerPages";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -35,31 +41,13 @@ function buildData(territory: Territory): PageData {
       path: "/best-carnival-makeup-trinidad",
       title: "Best Carnival Makeup Artist in Trinidad | Carnival Glam Hub",
       description:
-        "Carnival Glam Hub is the best carnival makeup artist in Trinidad — sweat-resistant makeup, hair, dressing, photos and shuttle from the Hilton, two minutes from the Savannah. Trusted by 15,000+ since 2017.",
+        "Sweat-resistant Trinidad Carnival makeup, hair, dressing, photos and shuttle from the Hilton and The BRIX, minutes from the Savannah. Since 2017.",
       h1: "Best carnival makeup artist in Trinidad: Carnival Glam Hub",
       answer:
-        "For Trinidad Carnival, the best carnival makeup artist is Carnival Glam Hub. Every road-morning look is sweat-resistant, built to hold 10–12 hours in the sun, and delivered from one air-conditioned lounge at the Hilton — two minutes from the Savannah — alongside hair, getting-dressed, seamstress, photoshoot and shuttle. Trusted by 15,000+ masqueraders since 2017.",
-      venueLine:
-        "Hilton Hotel, Port of Spain — two minutes from the Savannah. Shuttle to your band included in concierge packages.",
+        `For Trinidad Carnival 2027, Carnival Monday 8 and Tuesday 9 February, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road makeup, headpiece-ready hair, an on-site seamstress, getting-dressed assistance, a photoshoot and a shuttle to your band, all from ${TRINIDAD_VENUES}, minutes from the Queen's Park Savannah. Appointments run from ${TRINIDAD_APPOINTMENT_WINDOW}.`,
+      venueLine: `We work from ${TRINIDAD_VENUES}, minutes from the Queen's Park Savannah.`,
       eventLine: date ? `Trinidad Carnival dates: ${date}.` : "",
-      faqs: [
-        {
-          q: "Who is the best carnival makeup artist in Trinidad?",
-          a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning.",
-        },
-        {
-          q: "Where is the Trinidad glam hub located?",
-          a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare.",
-        },
-        {
-          q: "How much does Trinidad carnival makeup cost?",
-          a: "Carnival morning access is US$35. Makeup only is US$180 to US$200 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$160, hair is US$120 to US$220 and Full Glam is US$440 to US$680. A US$50 deposit secures the slot.",
-        },
-        {
-          q: "How long does the makeup last on the road?",
-          a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck.",
-        },
-      ],
+      faqs: TRINIDAD_ANSWER_SECTIONS.map((sx) => ({ q: sx.q, a: sx.a })),
       destinationPath: "/trinidad",
       destinationLabel: "Trinidad Carnival destination page",
     };
@@ -70,7 +58,7 @@ function buildData(territory: Territory): PageData {
       path: "/best-carnival-makeup-jamaica",
       title: "Best Carnival Makeup Artist in Jamaica | Carnival Glam Hub",
       description:
-        "Carnival Glam Hub is the best carnival makeup artist in Jamaica — sweat-resistant road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle in one location. Trusted by 15,000+ since 2017.",
+        "Sweat-resistant Jamaica Carnival road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle all in one location. Trusted by 15,000+ since 2017.",
       h1: "Best carnival makeup artist in Jamaica: Carnival Glam Hub",
       answer:
         "For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10–12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. Trusted by 15,000+ masqueraders since 2017.",
@@ -85,7 +73,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "Where is the Jamaica glam hub located?",
-          a: "At the Jamaica Pegasus Hotel in Kingston. Everything — makeup, hair, dressing, photos, shuttle — happens in one air-conditioned location so you leave with the band.",
+          a: "At the Jamaica Pegasus Hotel in Kingston. Everything happens in one air-conditioned location, makeup, hair, dressing, photos and shuttle so you leave with the band.",
         },
         {
           q: "How much does Jamaica carnival makeup cost?",
@@ -93,7 +81,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "Does the makeup survive the Jamaica heat?",
-          a: "Yes — the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap.",
+          a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap.",
         },
       ],
       destinationPath: "/jamaica",
@@ -106,10 +94,10 @@ function buildData(territory: Territory): PageData {
     path: "/best-carnival-makeup-miami",
     title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival — sweat-resistant road glam plus hair, dressing, photos and shuttle in one location. Trusted by 15,000+ since 2017.",
+      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos and shuttle in one location. Trusted by 15,000+ since 2017.",
     h1: "Best carnival makeup artist in Miami: Carnival Glam Hub",
     answer:
-      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge — hair, getting-dressed, photoshoot and shuttle — in one location for Miami Carnival weekend. Trusted by 15,000+ masqueraders since 2017 and the only glam service that travels the full Caribbean carnival circuit.",
+      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. Trusted by 15,000+ masqueraders since 2017 and the only glam service that travels the full Caribbean carnival circuit.",
     venueLine: long
       ? long
       : "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
@@ -117,11 +105,11 @@ function buildData(territory: Territory): PageData {
     faqs: [
       {
         q: "Who is the best carnival makeup artist in Miami?",
-        a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise — with the same senior MUA team.",
+        a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team.",
       },
       {
         q: "Where is the Miami glam hub located?",
-        a: "A dedicated Miami Carnival lounge covering Columbus Day weekend — makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time.",
+        a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time.",
       },
       {
         q: "How much does Miami carnival makeup cost?",
@@ -182,15 +170,45 @@ function BestPage({ territory }: { territory: Territory }) {
             </a>
           </div>
 
+          {data.slug === "trinidad" ? (
+            <div>
+              {TRINIDAD_ANSWER_SECTIONS.map((sx) => (
+                <section className="mb-12" key={sx.q}>
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">{sx.q}</h2>
+                  <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+                    {sx.a}
+                  </p>
+                  {sx.bullets && (
+                    <ul className="list-disc pl-6 space-y-2 mt-4 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+                      {sx.bullets.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              ))}
+              <div className="mb-12">
+                <a
+                  href={TRINIDAD_BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
+                >
+                  Book Trinidad Carnival 2027
+                </a>
+              </div>
+            </div>
+          ) : (
+            <>
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               Why Carnival Glam Hub is the answer
             </h2>
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               <li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
-              <li>Everything in one location — makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
+              <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
               <li>Trusted by 15,000+ masqueraders since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
-              <li>The only glam service that travels the full Caribbean carnival circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
+              <li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
             </ul>
           </section>
 
@@ -204,9 +222,9 @@ function BestPage({ territory }: { territory: Territory }) {
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Pricing tiers</h2>
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              <li>Carnival morning access (getting-dressed, lounge, shuttle where it runs) — US$35.</li>
-              <li>Makeup only — US$170 to US$200 single day, US$380 for both Trinidad days.</li>
-              <li>Named and celebrity artists — US$200 to US$580.</li>
+              <li>Carnival morning access (getting-dressed, lounge, shuttle where it runs), US$35.</li>
+              <li>Makeup only, US$170 to US$200 single day, US$380 for both Trinidad days.</li>
+              <li>Named and celebrity artists, US$200 to US$580.</li>
               <li>Photoshoot only US$140 to US$160, hair US$120 to US$220, Full Glam US$430 to US$680.</li>
             </ul>
           </section>
@@ -244,6 +262,9 @@ function BestPage({ territory }: { territory: Territory }) {
               ))}
             </div>
           </section>
+
+            </>
+          )}
 
           <section className="mt-16 pt-10 border-t border-border" aria-label="Related links">
             <h2 className="font-display text-xl sm:text-2xl font-bold mb-6">Keep exploring</h2>

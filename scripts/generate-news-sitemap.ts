@@ -3,7 +3,7 @@
 // sitemap format. Mirrors how scripts/prerender-blog-meta.ts reads posts.
 //
 // If no posts fall in the 48-hour window, a valid empty <urlset> is
-// written rather than erroring — Google accepts an empty news sitemap.
+// written rather than erroring, Google accepts an empty news sitemap.
 
 import { writeFileSync, existsSync, mkdirSync } from "fs";
 import { resolve, join, dirname } from "path";

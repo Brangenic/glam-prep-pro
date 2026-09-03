@@ -242,7 +242,7 @@ YOUR MISSION: Write content that OUTPERFORMS these competitors by:
 - Aiming for at least ${Math.max(900, avgWordCount + 200)} words to be more comprehensive
 - Adding unique value like product links, booking CTAs, and real-world carnival experience`;
   } else {
-    gaps = "No competitor articles found — write the definitive guide on this topic.";
+    gaps = "No competitor articles found, write the definitive guide on this topic.";
   }
 
   return { insights: competitorArticles, gaps };
@@ -260,7 +260,7 @@ async function generateArticle(
     .map((l) => `- [${l.title}](https://www.carnivalglamhub.com/blogs/${l.slug})`)
     .join("\n");
 
-  const prompt = `You are a professional beauty and carnival blog writer for Carnival Glam Hub — the premier Caribbean carnival makeup and styling service.
+  const prompt = `You are a professional beauty and carnival blog writer for Carnival Glam Hub, the premier Caribbean carnival makeup and styling service.
 
 Write a FULL SEO-optimized blog article (800-1200 words) based on this topic:
 
@@ -269,7 +269,7 @@ CONTEXT: ${topic.description}
 
 ${competitorGaps}
 
-INTERNAL LINKS — weave 2-3 of these naturally into the body:
+INTERNAL LINKS, weave 2-3 of these naturally into the body:
 ${linksBlock}
 
 REQUIREMENTS:
@@ -282,7 +282,7 @@ REQUIREMENTS:
 - Include 2-3 internal links from the list above, placed naturally
 - End with a strong CTA to book with Carnival Glam Hub
 - Brand voice: confident, glamorous, inclusive, Caribbean-rooted
-- ORIGINAL content only — do NOT copy competitor content
+- ORIGINAL content only, do NOT copy competitor content
 
 Also include a FAQ section at the end (3-4 Q&As) and generate a JSON-LD FAQPage schema.
 
@@ -339,7 +339,7 @@ async function triggerSitemap(supabaseUrl: string, anonKey: string) {
 async function pingIndexNow(slug: string) {
   const apiKey = Deno.env.get("INDEXNOW_API_KEY");
   if (!apiKey) {
-    console.warn("INDEXNOW_API_KEY not set — skipping IndexNow ping");
+    console.warn("INDEXNOW_API_KEY not set, skipping IndexNow ping");
     return;
   }
 
@@ -396,7 +396,7 @@ Deno.serve(async (req) => {
     // Step 3: Pick 1 fresh topic
     const freshTopic = pickFreshTopic(trending, existingSlugs, existingTitles);
     if (!freshTopic) {
-      return json({ success: true, message: "No fresh topics found — all trending topics already covered", published: false });
+      return json({ success: true, message: "No fresh topics found, all trending topics already covered", published: false });
     }
     console.log(`Selected fresh topic: "${freshTopic.title}"`);
 

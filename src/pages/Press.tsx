@@ -11,9 +11,9 @@ import {
   type PressStory,
 } from "@/data/pressCoverage";
 
-const PAGE_TITLE = "Carnival Glam Hub in the Press | Media Coverage Since 2019";
+const PAGE_TITLE = "Carnival Glam Hub in the Press | Media Coverage";
 const PAGE_DESCRIPTION =
-  "Carnival Glam Hub media coverage from Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People. Nine years of Caribbean Carnival beauty press.";
+  "Carnival Glam Hub media coverage from Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People.";
 const CANONICAL = "https://www.carnivalglamhub.com/press";
 const OG_IMAGE = "https://www.carnivalglamhub.com/og-image.png";
 const ORGANISATION = {

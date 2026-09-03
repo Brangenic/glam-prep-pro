@@ -50,7 +50,7 @@ const faqSchema = {
       name: "How long does Carnival makeup actually last?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat — from your morning departure through the last truck. The base is the part that matters most: priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday. Eye looks, lashes and lips are reinforced with road-tested products and locked down at the end. We pack a small touch-up kit on request for blot-and-go fixes on the route, but most masqueraders never reach for it.",
+        text: "A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat, from your morning departure through the last truck. The base is the part that matters most: priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday. Eye looks, lashes and lips are reinforced with road-tested products and locked down at the end. We pack a small touch-up kit on request for blot-and-go fixes on the route, but most masqueraders never reach for it.",
       },
     },
     {
@@ -58,7 +58,7 @@ const faqSchema = {
       name: "How do I prepare for my appointment?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Arrive on a clean face — no SPF, no primer, no leftover product. Eat something before you get to the lounge; sessions run around 90 minutes and you will sit through hair and getting-dressed after. Bring your headpiece, any reference photos you want the artist to see, and your costume so the artist can match base tones and shimmer to it. If you wear contact lenses, put them in before the eye look. Lash strips and adhesives are provided; if you have a preferred brand, bring it.",
+        text: "Arrive on a clean face, no SPF, no primer, no leftover product. Eat something before you get to the lounge; sessions run around 90 minutes and you will sit through hair and getting-dressed after. Bring your headpiece, any reference photos you want the artist to see, and your costume so the artist can match base tones and shimmer to it. If you wear contact lenses, put them in before the eye look. Lash strips and adhesives are provided; if you have a preferred brand, bring it.",
       },
     },
     {
@@ -229,7 +229,7 @@ const CarnivalMakeup = () => {
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               A properly built road look is designed to hold for ten to twelve
-              hours of dancing in tropical heat — from your morning departure
+              hours of dancing in tropical heat, from your morning departure
               through the last truck. The base is the part that matters most:
               priming, layering and setting are what stop the foundation
               breaking up around the nose, forehead and chest by midday. Eye
@@ -245,7 +245,7 @@ const CarnivalMakeup = () => {
               How do I prepare for my appointment?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Arrive on a clean face — no SPF, no primer, no leftover product.
+              Arrive on a clean face, no SPF, no primer, no leftover product.
               Eat something before you get to the lounge; sessions run around
               90 minutes and you will sit through hair and getting-dressed
               after. Bring your headpiece, any reference photos you want the

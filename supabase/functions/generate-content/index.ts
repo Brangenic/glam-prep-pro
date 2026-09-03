@@ -98,7 +98,7 @@ Brand voice: Confident, glamorous, inclusive, Caribbean-rooted.
 Services: Full glam makeup, body painting, rhinestone application, costume makeup, group packages.
 Booking: carnivalglamhub.masos.app/events
 Contact: Bookings@carnivalglamhub.com | 8765090997
-Territory focus: ${territory.name} (${territory.country}) — ${territory.event_dates ?? "upcoming season"}
+Territory focus: ${territory.name} (${territory.country}), ${territory.event_dates ?? "upcoming season"}
 Key hashtags: ${territory.hashtags.join(", ")}`;
 
   const userPrompt = `Generate a ${contentType} for ${channel} targeting people looking for carnival makeup services in ${territory.name}.

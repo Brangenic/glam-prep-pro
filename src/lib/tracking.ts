@@ -113,7 +113,7 @@ export function installOutboundClickTracking() {
         lower.includes("wa.me") ||
         lower.includes("whatsapp")
       ) {
-        // Google Ads "WhatsApp Click" conversion — fires before navigation
+        // Google Ads "WhatsApp Click" conversion, fires before navigation
         // because this listener uses { capture: true }.
         try {
           window.gtag?.("event", "conversion", {
@@ -122,7 +122,7 @@ export function installOutboundClickTracking() {
         } catch { /* noop */ }
         trackEvent("Contact", { source: "whatsapp", href });
       } else if (lower.startsWith("tel:")) {
-        // Google Ads "Phone Number Click" conversion — fires before navigation.
+        // Google Ads "Phone Number Click" conversion, fires before navigation.
         try {
           window.gtag?.("event", "conversion", {
             send_to: `${GOOGLE_ADS_ID}/${PHONE_LABEL}`,
@@ -131,7 +131,7 @@ export function installOutboundClickTracking() {
         trackEvent("Contact", { source: "phone", href });
       } else if (lower.startsWith("mailto:")) {
         // Treat email click as a Booking Enquiry submission (the site has no
-        // dedicated enquiry form yet — wire trackEnquirySubmitted() into any
+        // dedicated enquiry form yet, wire trackEnquirySubmitted() into any
         // future form's success handler).
         trackEnquirySubmitted();
         trackEvent("Lead", { source: "email", href });

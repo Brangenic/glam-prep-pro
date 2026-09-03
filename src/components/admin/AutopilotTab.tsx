@@ -181,8 +181,8 @@ export default function AutopilotTab() {
                 {lastRun.results.map((r: any, i: number) => (
                   <TableRow key={i}>
                     <TableCell className="font-medium">{r.territory}</TableCell>
-                    <TableCell className="max-w-[180px] truncate">{r.blog ?? "—"}</TableCell>
-                    <TableCell>{r.image ? "✅" : "—"}</TableCell>
+                    <TableCell className="max-w-[180px] truncate">{r.blog ?? ", "}</TableCell>
+                    <TableCell>{r.image ? "✅" : ", "}</TableCell>
                     <TableCell>{r.internal_links ?? 0}</TableCell>
                     <TableCell>{r.content_ideas ?? 0}</TableCell>
                     <TableCell>
@@ -217,7 +217,7 @@ export default function AutopilotTab() {
                 {recentBlogs.map((b: any) => (
                   <TableRow key={b.slug}>
                     <TableCell className="font-medium max-w-[250px] truncate">{b.title}</TableCell>
-                    <TableCell>{b.image_url ? "✅" : "—"}</TableCell>
+                    <TableCell>{b.image_url ? "✅" : ", "}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {new Date(b.created_at).toLocaleDateString()}
                     </TableCell>
@@ -250,7 +250,7 @@ export default function AutopilotTab() {
                   <TableRow key={i}>
                     <TableCell className="font-medium max-w-[250px] truncate">{idea.title}</TableCell>
                     <TableCell><Badge variant="outline">{idea.channel}</Badge></TableCell>
-                    <TableCell className="text-sm">{idea.territories?.name ?? "—"}</TableCell>
+                    <TableCell className="text-sm">{idea.territories?.name ?? ", "}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {new Date(idea.created_at).toLocaleDateString()}
                     </TableCell>
