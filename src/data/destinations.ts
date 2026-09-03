@@ -1,4 +1,5 @@
 import guyanaImg from "@/assets/carnival-4.jpg";
+import jamaicaImg from "@/assets/jamaica-carnival-hero.jpg";
 // Placeholder hero for Tobago: one of our own Glam Hub carnival images,
 // not used as the hero of any other destination. Swap this for real
 // Tobago photography as soon as we have it.
@@ -31,13 +32,13 @@ export const destinations: Destination[] = [
     slug: "jamaica",
     name: "Jamaica Carnival",
     shortName: "Jamaica",
-    date: "2027 season, dates to be confirmed",
+    date: "Sunday 4 April 2027",
     description: "Premium glam hub services for Jamaica Carnival.",
     longDescription:
       "Our Jamaica Carnival Full Service Glam Hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-resistant carnival looks built for the Jamaica heat.",
-    image: "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
+    image: jamaicaImg,
     cta: "Book Jamaica Glam",
-    objectPosition: "center 30%",
+    objectPosition: "50% 25%",
     highlights: [
       "Full carnival makeup with sweat-resistant finish",
       "Gem and feather application",

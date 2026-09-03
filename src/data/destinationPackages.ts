@@ -219,6 +219,48 @@ export const destinationPackages: Record<string, DestinationPackages> = {
   },
 };
 
+destinationPackages.jamaica = {
+  eventTitle: "Jamaica - Carnival Glam Hub 2027",
+  eventDate: "4 April 2027",
+  bookingUrl: "https://carnivalglamhub.masos.app/events/0ad062ce-d1e0-4838-aeaf-f418ed526440",
+  sections: [
+    {
+      packages: [
+        { name: "Jamaica Makeup Only", price: "$200 USD", image: `${IMG}/ac3c768e-c8fb-4757-8853-0fb29c9e1b65/462x578` },
+        { name: "Jamaica Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/b5d2efd6-04f5-4585-a470-5abf3f6762cd/462x578` },
+        { name: "Jamaica Full Glam", price: "$440 USD", image: `${IMG}/08807078-9949-4b30-bc62-b5834c0f1950/462x578` },
+        { name: "Jamaica Photoshoot Only", price: "$160 USD", image: `${IMG}/5faacd83-01dd-407e-9262-18cd6dfa97fb/462x578` },
+        { name: "Jamaica Hair Only", price: "$120 USD", image: `${IMG}/06940a17-7afe-49fa-b477-19ae9f24c899/462x578` },
+        { name: "Jamaica Glam Reel", price: "$80 USD", image: `${IMG}/21131994-3258-48e8-bbd4-3e0589b7d09d/462x578` },
+        { name: "Jamaica Bronzing", price: "$160 USD", image: `${IMG}/dc8c705a-26fe-4373-b869-5d738180b664/462x578` },
+        { name: "Gabby Glam Team Makeup Only", price: "$250 USD", image: `${IMG}/cb2e0314-2eb6-467b-b8af-fcbf0b2696dd/462x578` },
+        { name: "Gabby Glam Team Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/b53ecbae-0c1c-4198-b56b-83da4c3e4ad0/462x578` },
+        { name: "Jamaica His Glam", price: "$35 USD", image: `${IMG}/5cc82c00-0afc-4ff3-9c5f-a8d00e6698be/462x578` },
+        { name: "Get Dressed & Shuttle", price: "$35 USD", image: `${IMG}/16b148bf-4103-464c-b56b-143003ed7eee/462x578` },
+        { name: "Bring A Friend", price: "$25 USD", image: `${IMG}/5aa22d75-db0d-4138-b44d-fa6035b1043a/462x578` },
+      ],
+    },
+  ],
+};
+
+// Tobago is Glam Hub Lite, so the real masos Hair Only SKU is kept in the
+// raw record and stripped by LITE_EXCLUDED, exactly as Saint Lucia's is.
+destinationPackages.tobago = {
+  eventTitle: "Tobago - Carnival Glam Hub 2026",
+  eventDate: "1 November 2026",
+  bookingUrl: "https://carnivalglamhub.masos.app/events/755be168-61a2-4827-9e9e-d52668a790ff",
+  sections: [
+    {
+      packages: [
+        { name: "Makeup Only", price: "$120 USD", image: `${IMG}/20a2fbb2-2466-415c-899b-e9ada599d432/462x578` },
+        { name: "Makeup & Photoshoot", price: "$220 USD", image: `${IMG}/4cc0b4df-7b4f-421b-bca8-3dcb743c64a2/462x578` },
+        { name: "Hair Only", price: "$80 USD", image: `${IMG}/fceb3839-fc49-4182-9150-af74575afaa4/462x578` },
+        { name: "Photoshoot Only", price: "$100 USD", image: `${IMG}/77699beb-baa6-4002-88e0-a69caf59546f/462x578` },
+      ],
+    },
+  ],
+};
+
 import { getHubTier } from "@/data/hubTiers";
 
 /**

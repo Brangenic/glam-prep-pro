@@ -75,11 +75,18 @@ describe("onward destination rule", () => {
       expect(link.href).toContain("utm_campaign=homepage_card");
     });
 
+    it("sends Jamaica and Tobago straight to their own MasOS events", () => {
+      for (const slug of ["jamaica", "tobago"] as const) {
+        expect(hasBookableEvent(slug)).toBe(true);
+        const link = getDestinationCardLink(slug, "homepage_card");
+        expect(link.external).toBe(true);
+        expect(link.href).toContain("masos.app/events/");
+      }
+    });
+
     it("sends an upcoming Carnival with no event on file to its own page", () => {
-      for (const [slug, path] of [
-        ["jamaica", "/jamaica"],
-        ["tobago", "/tobago"],
-      ] as const) {
+      // Epic Cruise is the standing case: upcoming season, no event on file.
+      for (const [slug, path] of [["epic-cruise", "/epic-cruise"]] as const) {
         expect(hasBookableEvent(slug)).toBe(false);
         const link = getDestinationCardLink(slug, "homepage_card");
         expect(link.external).toBe(false);

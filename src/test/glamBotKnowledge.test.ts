@@ -120,9 +120,8 @@ describe("group 3: knowledge questions", () => {
 
   it("4. how much is a photoshoot in Jamaica", () => {
     const p = promptFor("How much is a photoshoot in Jamaica?");
-    expect(p).toContain("Jamaica Carnival has no published prices");
-    expect(p).toContain("Do not quote a number for it");
-    expect(p).not.toContain(`Photoshoot only: US$${priceOf("jamaica", "jam-tue-photo")}`);
+    expect(p).toContain(`Photoshoot only: US$${priceOf("jamaica", "jam-photo")}`);
+    expect(p).toContain(`Makeup only: US$${priceOf("jamaica", "jam-makeup")}`);
   });
 
   it("5. does Trinidad have overnight bag check", () => {
@@ -307,12 +306,14 @@ describe("group 5: forbidden strings", () => {
     }
   });
 
-  it("no reels price anywhere", () => {
+  it("quotes a reels price only where a real product exists", () => {
     // Segment on clause boundaries, because a capability line can name
     // reels alongside an unrelated priced service in the same sentence.
     const segments = prose.split(/[,.\n]|\band\b/);
     for (const seg of segments) {
-      if (/reels/i.test(seg)) expect(seg).not.toMatch(/US\$\d/);
+      if (!/reels/i.test(seg)) continue;
+      const priced = seg.match(/US\$(\d+)/);
+      if (priced) expect(Number(priced[1])).toBe(80);
     }
   });
 
@@ -474,17 +475,13 @@ describe("group 8: season awareness on 2026-08-24", () => {
     expect(p).not.toContain("Deposit:");
   });
 
-  it("Jamaica is neither closed nor dated for the next season", () => {
-    expect(slugs(forward)).toContain("jamaica");
+  it("Jamaica is an upcoming, dated, bookable season", () => {
+    expect(slugs(forward)).not.toContain("jamaica");
     expect(slugs(passed)).not.toContain("jamaica");
-    expect(slugs(upcoming)).not.toContain("jamaica");
+    expect(slugs(upcoming)).toContain("jamaica");
     const p = promptFor("When is Jamaica?");
-    expect(p).toContain("the next dates are not yet confirmed");
-    // The season may be named, but no specific day may ever be published
-    // until a date is confirmed.
-    expect(p).toContain("dates to be confirmed");
-    expect(p).not.toMatch(/\d{1,2}\s+April\s+20\d{2}/);
-
+    expect(p).toContain("Sunday 4 April 2027");
+    expect(p).not.toContain("dates to be confirmed");
   });
 
   it("Full Service hubs are the three we expect and are all in the pack", () => {

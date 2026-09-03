@@ -42,8 +42,8 @@ export type TerritoryPricing = {
    * Two different cases, never collapse them:
    *
    * 1. `quotable: false` with `runningThisSeason` left alone. The Carnival is
-   *    coming but no products or event are on file yet, for example Jamaica,
-   *    Tobago and Atlanta. These stay selectable in the calculator, show the
+   *    coming but no products or event are on file yet, for example
+   *    Guyana and Atlanta. These stay selectable in the calculator, show the
    *    inclusions and an enquiry call to action, and never display a number,
    *    a total or a checkout handoff.
    * 2. `runningThisSeason: false`. The Carnival is not taking place at all,
@@ -80,11 +80,22 @@ export const BARBER_PRICE = 35;
 export const OVERNIGHT_BAG_CHECK_PRICE = 35;
 
 /**
- * Reels are a paid add-on in Trinidad and Jamaica only. There is no
- * masos reels product, so there is no confirmed price. Never invent one:
- * the booking team confirms it.
+ * Reels are a paid add-on in Trinidad and Jamaica only, and the price is
+ * per territory. A null means there is no confirmed product price yet, so
+ * the booking team confirms it and nothing is added to a quote total.
+ * Never invent a figure: drop a real number in when the product exists.
  */
-export const REELS_PRICE: number | null = null;
+export const REELS_PRICE_BY_SLUG: Record<string, number | null> = {
+  jamaica: 80,
+  // No Trinidad reels product yet. Drop the number in here when it lands.
+  trinidad: null,
+  "trinidad-carnival-2027": null,
+};
+
+/** Reels price for a territory, or null where no price is confirmed. */
+export function getReelsPrice(slug: string): number | null {
+  return REELS_PRICE_BY_SLUG[slug] ?? null;
+}
 
 const SINGLE_DAY: { key: DayKey; label: string }[] = [{ key: "single", label: "Carnival day" }];
 
@@ -99,7 +110,7 @@ const TWO_DAYS_NO_BOTH: { key: DayKey; label: string }[] = [
   { key: "tuesday", label: "Carnival Tuesday" },
 ];
 
-/** Trinidad Tuesday list, reused verbatim by Jamaica while its own list is pending. */
+/** Trinidad Carnival Tuesday list. */
 const TRINIDAD_TUESDAY: QuoteProduct[] = [
   { id: "tue-makeup", label: "Makeup only", price: 200, day: "tuesday", tags: ["makeup"] },
   { id: "tue-makeup-photo", label: "Makeup and photoshoot", price: 320, day: "tuesday", tags: ["makeup", "photoshoot"] },
@@ -148,32 +159,28 @@ const trinidad: TerritoryPricing = {
   ],
 };
 
-/* ============================================================
- * PROVISIONAL: JAMAICA
- * Jamaica has no product list of its own anywhere in the project.
- * The prices below MIRROR the Trinidad Carnival Tuesday list and are
- * provisional. They MUST be replaced with the real Jamaica masos
- * product list as soon as it exists. Do not treat these as confirmed.
- * There is no confirmed Jamaica deposit figure, so none is set.
- * ============================================================ */
 const jamaica: TerritoryPricing = {
   slug: "jamaica",
   label: "Jamaica Carnival",
   tier: "full",
   quotable: true,
-  provisionalNote:
-    "Jamaica pricing is provisional and mirrors our Trinidad rates. Your booking team will confirm before payment.",
-  eventDate: "2027 season, dates to be confirmed",
+  eventDate: "4 April 2027",
   askDay: false,
   days: SINGLE_DAY,
   roadReady: true,
   barber: true,
-  bookingUrl: BOOKING_URL,
-  products: TRINIDAD_TUESDAY.map((p) => ({
-    ...p,
-    id: `jam-${p.id}`,
-    day: "single" as DayKey,
-  })),
+  deposit: { amount: 50, note: "US$50 secures your appointment." },
+  bookingUrl: "https://carnivalglamhub.masos.app/events/0ad062ce-d1e0-4838-aeaf-f418ed526440",
+  products: [
+    { id: "jam-makeup", label: "Makeup only", price: 200, day: "single", tags: ["makeup"] },
+    { id: "jam-makeup-photo", label: "Makeup and photoshoot", price: 320, day: "single", tags: ["makeup", "photoshoot"] },
+    { id: "jam-full-glam", label: "Full Glam", price: 440, day: "single", tags: ["makeup", "hair", "photoshoot"] },
+    { id: "jam-photo", label: "Photoshoot only", price: 160, day: "single", tags: ["photoshoot"] },
+    { id: "jam-hair", label: "Hair only", price: 120, day: "single", tags: ["hair"] },
+    { id: "jam-bronzing", label: "Bronzing", price: 160, day: "single", tags: ["bronzing"] },
+    { id: "jam-gabby-makeup", label: "Gabby Glam Team makeup only", price: 250, day: "single", tags: ["makeup"], premium: true },
+    { id: "jam-gabby-makeup-photo", label: "Gabby Glam Team makeup and photoshoot", price: 370, day: "single", tags: ["makeup", "photoshoot"], premium: true },
+  ],
 };
 
 const miami: TerritoryPricing = {
@@ -320,9 +327,8 @@ const epicCruise: TerritoryPricing = {
 };
 
 /**
- * No pricing exists for Guyana, Tobago or Atlanta anywhere in the
- * project. They never appear in the quote calculator unless a real
- * bookable event is added for them.
+ * No pricing exists for Guyana or Atlanta anywhere in the project. They
+ * never appear as a quote unless a real bookable event is added for them.
  */
 const guyana: TerritoryPricing = {
   slug: "guyana",
@@ -338,18 +344,27 @@ const guyana: TerritoryPricing = {
   products: [],
 };
 
+/**
+ * Tobago stays Glam Hub Lite. Its masos hair product is deliberately
+ * excluded from the quote flow, exactly as Saint Lucia's and Antigua's are.
+ */
 const tobago: TerritoryPricing = {
   slug: "tobago",
   label: "Tobago Carnival",
   tier: "lite",
-  quotable: false,
-  eventDate: "30 October to 1 November 2026",
+  quotable: true,
+  eventDate: "1 November 2026",
   askDay: false,
   days: SINGLE_DAY,
   roadReady: false,
   barber: false,
-  bookingUrl: BOOKING_URL,
-  products: [],
+  deposit: { amount: 50, note: "US$50 secures your appointment." },
+  bookingUrl: "https://carnivalglamhub.masos.app/events/755be168-61a2-4827-9e9e-d52668a790ff",
+  products: [
+    { id: "tob-makeup", label: "Makeup only", price: 120, day: "single", tags: ["makeup"] },
+    { id: "tob-makeup-photo", label: "Makeup and photoshoot", price: 220, day: "single", tags: ["makeup", "photoshoot"] },
+    { id: "tob-photo", label: "Photoshoot only", price: 100, day: "single", tags: ["photoshoot"] },
+  ],
 };
 
 const atlanta: TerritoryPricing = {

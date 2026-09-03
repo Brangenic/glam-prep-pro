@@ -46,8 +46,7 @@ const OG_H = 630;
 // transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
 // social crawlers always see a page-specific preview in the raw HTML.
 const ROUTE_HERO_SOURCES: Record<string, string> = {
-  "/jamaica":
-    "https://www.dropbox.com/scl/fi/a2s2gnuk6k1zurq8296ee/IMG_6662.jpg?rlkey=l0ekybyz3r68kohd6bbxjx2ro&raw=1",
+  "/jamaica": "asset:jamaica-carnival-hero",
   "/saint-lucia":
     "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
   "/antigua":
@@ -273,7 +272,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Book Jamaica Carnival 2027 makeup, hair, bronzing, shuttle, photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
+      "Book Jamaica Carnival, Sunday 4 April 2027. Makeup, hair, bronzing, shuttle and photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {

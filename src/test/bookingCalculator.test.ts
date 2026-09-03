@@ -16,14 +16,14 @@ describe("booking calculator territory list", () => {
 
   it("quotes only territories with real products and a bookable event", () => {
     const quoting = territories.filter((t) => canQuote(t)).map((t) => t.slug);
-    expect(quoting).toEqual(["trinidad", "miami"]);
+    expect(quoting).toEqual(["trinidad", "jamaica", "miami", "tobago"]);
     for (const slug of quoting) {
       expect(hasBookableEvent(slug)).toBe(true);
     }
   });
 
   it("keeps enquiry-only territories selectable with no number and no checkout", () => {
-    for (const slug of ["jamaica", "tobago", "atlanta"]) {
+    for (const slug of ["atlanta"]) {
       expect(slugs).toContain(slug);
       const territory = territories.find((t) => t.slug === slug)!;
       expect(canQuote(territory)).toBe(false);

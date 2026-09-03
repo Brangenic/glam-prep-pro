@@ -17,7 +17,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl, getDestinationCardLink } from "@/lib/destinations";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE, REELS_LABEL, reelsNote } from "@/data/hubTiers";
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
@@ -206,7 +206,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         }]
       : []),
     ...(caps.reels
-      ? [{ label: "Reels", note: "Price confirmed on booking." }]
+      ? [{ label: REELS_LABEL, note: reelsNote(dest.slug) }]
       : []),
     ...(caps.barber
       ? [{ label: "Barber", note: `US$${BARBER_PRICE} per masquerader.` }]
@@ -678,13 +678,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       Season Ended
                     </p>
                     <p className="font-body text-sm text-muted-foreground mb-4">
-                      Bookings for Jamaica 2027 opening soon — join our waitlist to be first in line.
+                      {dest.name} {waitlistYear} dates are still to be
+                      confirmed. Join the waitlist and we will come to you
+                      first when they land.
                     </p>
                     <a
                       href={waitlistHref}
                       className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                     >
-                      Join 2027 Waitlist
+                      Join the {waitlistYear} waitlist
                     </a>
                   </>
                 ) : (

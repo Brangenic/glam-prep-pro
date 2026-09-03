@@ -8,6 +8,8 @@
  * deliberately absent from both tiers and never carries a tier badge.
  */
 
+import { getReelsPrice } from "@/data/territoryPricing";
+
 export type HubTier = "full" | "lite";
 
 export const FULL_SERVICE_SLUGS = ["jamaica", "trinidad", "miami"] as const;
@@ -50,9 +52,23 @@ export const DAY_BAG_CHECK = "Wing and bag check while you are with us, space pe
  */
 export const OVERNIGHT_BAG_CHECK_LABEL = "Overnight bag check";
 
-/** Reels are a paid add-on with no confirmed masos price. Never quote a number. */
+/**
+ * Reels are a paid add-on in Trinidad and Jamaica. The price is per
+ * territory and lives in `territoryPricing.ts`. Where no price is
+ * confirmed, the booking team confirms it and no number is quoted.
+ */
 export const REELS_LABEL = "Reels";
-export const REELS_NOTE = "Reels are available in Trinidad and Jamaica, with the price confirmed on booking.";
+export const REELS_NOTE_UNPRICED = "Price confirmed on booking.";
+
+/** Reels line for one territory, priced where a real product exists. */
+export function reelsNote(slug: string): string {
+  const price = getReelsPrice(slug);
+  return price === null ? REELS_NOTE_UNPRICED : `US$${price} per masquerader.`;
+}
+
+/** Site-wide reels sentence, priced per territory where we have a figure. */
+export const REELS_NOTE =
+  "Reels are available in Trinidad and Jamaica. Jamaica reels are US$80 per masquerader, and the Trinidad price is confirmed on booking.";
 
 export const FULL_SERVICE_INCLUSIONS = [
   "Shuttle",
