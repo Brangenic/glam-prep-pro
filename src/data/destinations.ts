@@ -349,6 +349,13 @@ export function getDestinationFaqs(d: Destination): Faq[] {
   const inclusions = getHubInclusions(d.slug) ?? d.highlights;
   const inclusionText = inclusions.map((h) => h.toLowerCase()).join(", ");
 
+  // The Lite answer used to end by listing the Full Service inclusions
+  // and pointing at three other territories. Kibwe, 3 September 2026:
+  // a Lite page does not cross-sell. Scoped to Grenada for now, the
+  // other Lite territories are unchanged pending his decision.
+  const notOfferedText = getNotOffered(d.slug)
+    .map((i) => i.toLowerCase())
+    .join(", ");
   const tierFaq: Faq[] = tierLabel
     ? [
         {
@@ -356,10 +363,13 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           answer:
             tier === "full"
               ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? `. ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_NOTE}` : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
-              : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
+              : d.slug === "grenada"
+                ? `${loc} is a ${tierLabel}, not a Full Service Glam Hub. What you get in ${loc} is ${inclusionText}. There is no ${notOfferedText} in ${loc}.`
+                : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
         },
       ]
     : [];
+
 
   // Miami's venue has moved to Broward County, so the venue question
   // leads its FAQ list and its FAQPage structured data.
