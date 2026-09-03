@@ -433,6 +433,102 @@ function destinationBody(d: ParsedDest): string {
 }
 
 // Services
+
+// ---------------------------------------------------------------
+// Data-derived pricing and content helpers.
+// Every figure below is computed from src/data/territoryPricing.ts and
+// src/data/hubTiers.ts at build time, so the prerendered body can never
+// drift from the prices the calculator, the destination pages and the
+// Glam Bot quote. Never hardcode a price in this file.
+// ---------------------------------------------------------------
+
+/** Territories that are running, have a season ahead and carry real products. */
+const BOOKABLE_PRICING: TerritoryPricing[] = TERRITORY_PRICING.filter(
+  (t) => t.runningThisSeason !== false && !hasSeasonPassed(t.slug) && t.quotable,
+);
+
+function priceList(opts: {
+  tags: ServiceTag[];
+  premium: boolean;
+  bothDays: boolean;
+}): number[] {
+  const wanted = [...opts.tags].sort().join("|");
+  const out: number[] = [];
+  for (const t of BOOKABLE_PRICING) {
+    for (const prod of t.products) {
+      if (!!prod.premium !== opts.premium) continue;
+      if ((prod.day === "both") !== opts.bothDays) continue;
+      if ([...prod.tags].sort().join("|") !== wanted) continue;
+      out.push(prod.price);
+    }
+  }
+  return out;
+}
+
+function rangeLabel(nums: number[]): string {
+  if (!nums.length) return "";
+  const lo = Math.min(...nums);
+  const hi = Math.max(...nums);
+  return lo === hi ? `US$${lo}` : `US$${lo} to US$${hi}`;
+}
+
+function anyPremium(bothDays: boolean): number[] {
+  const out: number[] = [];
+  for (const t of BOOKABLE_PRICING)
+    for (const prod of t.products)
+      if (prod.premium && (prod.day === "both") === bothDays) out.push(prod.price);
+  return out;
+}
+
+const MAKEUP_SINGLE = rangeLabel(priceList({ tags: ["makeup"], premium: false, bothDays: false }));
+const MAKEUP_BOTH = rangeLabel(priceList({ tags: ["makeup"], premium: false, bothDays: true }));
+const PREMIUM_RANGE = rangeLabel([...anyPremium(false), ...anyPremium(true)]);
+const PHOTO_RANGE = rangeLabel(priceList({ tags: ["photoshoot"], premium: false, bothDays: false }));
+const HAIR_RANGE = rangeLabel(priceList({ tags: ["hair"], premium: false, bothDays: false }));
+const FULL_GLAM_RANGE = rangeLabel([
+  ...priceList({ tags: ["makeup", "hair", "photoshoot"], premium: false, bothDays: false }),
+  ...priceList({ tags: ["makeup", "hair", "photoshoot"], premium: false, bothDays: true }),
+]);
+const DEPOSIT = BOOKABLE_PRICING.find((t) => t.deposit)?.deposit?.amount ?? 50;
+
+/** One paragraph of pricing, generated. Used anywhere prices are summarised. */
+const PRICE_SUMMARY = `Pricing is tiered. Carnival morning access, meaning getting dressed, the lounge, refreshments and shuttle where it runs, is US$${GETTING_DRESSED_PRICE}. Makeup only is ${MAKEUP_SINGLE} for a single day, and ${MAKEUP_BOTH} for both Trinidad days. Named and celebrity artists run ${PREMIUM_RANGE}. Photoshoot only is ${PHOTO_RANGE}, hair is ${HAIR_RANGE} and Full Glam is ${FULL_GLAM_RANGE}. A deposit of US$${DEPOSIT} per masquerader confirms the booking and comes off the balance.`;
+
+const ADD_ON_SUMMARY = `Add-ons are priced separately. Reels are US$${REELS_PRICE} per masquerader in Trinidad and Jamaica, the barber is US$${BARBER_PRICE} in Trinidad and Jamaica, and overnight bag check is US$${OVERNIGHT_BAG_CHECK_PRICE} in Trinidad, Jamaica and Miami.`;
+
+/** Bookable territories with their season dates and entry price. */
+function pricingEntryRows(): string {
+  return BOOKABLE_PRICING.map((t) => {
+    const standard = t.products.filter((p) => !p.premium).map((p) => p.price);
+    const from = standard.length ? `from US$${Math.min(...standard)}` : "priced on enquiry";
+    return `<li><strong>${escapeHtml(t.label)}</strong>, ${escapeHtml(t.eventDate)}, ${from}</li>`;
+  }).join("\n");
+}
+
+/** Territories that are running but have no products on file yet. */
+function enquiryRows(): string {
+  return TERRITORY_PRICING.filter(
+    (t) => t.runningThisSeason !== false && !hasSeasonPassed(t.slug) && !t.quotable,
+  )
+    .map(
+      (t) =>
+        `<li><strong>${escapeHtml(t.label)}</strong>, ${escapeHtml(t.eventDate)}, enquire on WhatsApp</li>`,
+    )
+    .join("\n");
+}
+
+const INCLUSION_LISTS = `<h3>Full Service Glam Hub</h3>
+<ul>
+${FULL_SERVICE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
+</ul>
+<h3>Glam Hub Lite</h3>
+<ul>
+${LITE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
+</ul>
+<p>A Glam Hub Lite does not offer ${LITE_NOT_OFFERED.map((i) => escapeHtml(i.toLowerCase())).join(", ")}.</p>`;
+
+const PRESS_OUTLET_SENTENCE = `Carnival Glam Hub has been covered by ${PRESS_OUTLETS.map((o) => escapeHtml(o.name)).join(", ")}.`;
+
 const SERVICES: Record<string, Content> = {
   "/services/carnival-makeup": {
     title: "Sweat-Resistant Carnival Makeup",
