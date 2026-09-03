@@ -451,7 +451,20 @@ function destinationBody(d: ParsedDest): string {
       );
       if (profileVenue) parts.push(`<p>${escapeHtml(profileVenue)}</p>`);
     }
+    if (d.gallery && d.gallery.length) {
+      parts.push(`<h2>${escapeHtml(d.shortName)} masqueraders we glammed</h2>`);
+      if (d.galleryNote) parts.push(`<p>${escapeHtml(d.galleryNote)}</p>`);
+      parts.push(
+        d.gallery
+          .map(
+            (g) =>
+              `<figure><img src="${g.src}" alt="${escapeHtml(g.alt)}" width="${g.width}" height="${g.height}" loading="lazy" /><figcaption>${escapeHtml(g.caption)}</figcaption></figure>`,
+          )
+          .join("\n"),
+      );
+    }
     parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
+
     parts.push(
       `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
     );
