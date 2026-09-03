@@ -751,6 +751,125 @@ ${CTA}`,
   // parsed Trinidad destination record — see buildRouteMap().
 };
 
+/**
+ * /press. Generated in full from src/data/pressCoverage.ts, so a new
+ * story added to that module appears here on the next build with no
+ * edit to this file. Nothing here is written by hand.
+ */
+function pressBody(): string {
+  const stories = [...PRESS_STORIES].sort((a, b) =>
+    b.publishedDate.localeCompare(a.publishedDate),
+  );
+  const fmt = (iso: string) =>
+    new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  const items = stories
+    .map((story) => {
+      const quote = story.pullQuote
+        ? `<blockquote><p>${escapeHtml(story.pullQuote)}</p>${
+            story.pullQuoteAttribution
+              ? `<cite>${escapeHtml(story.pullQuoteAttribution)}</cite>`
+              : ""
+          }</blockquote>`
+        : "";
+      const byline = story.author ? ` By ${escapeHtml(story.author)}.` : "";
+      return `<article>
+  <h3><a href="${story.url}" rel="noopener noreferrer" target="_blank">${escapeHtml(story.headline)}</a></h3>
+  <p><strong>${escapeHtml(story.outlet)}</strong>, ${fmt(story.publishedDate)}.${byline}</p>
+  <p>${escapeHtml(story.summary)}</p>
+  ${quote}
+</article>`;
+    })
+    .join("\n");
+  const timeline = PRESS_TIMELINE.map(
+    (row) =>
+      `<li><strong>${escapeHtml(row.year)}</strong>: ${row.outlets.map((o) => escapeHtml(o)).join(", ")}</li>`,
+  ).join("\n");
+  return `<p>${PRESS_OUTLET_SENTENCE} Every story below is verified coverage of Carnival Glam Hub, listed newest first with the outlet, the date and a link to the original article. Nothing on this page is a press release we wrote about ourselves.</p>
+<h2>Outlets that have covered us</h2>
+<ul>
+${PRESS_OUTLETS.map((o) => `  <li>${escapeHtml(o.name)}</li>`).join("\n")}
+</ul>
+<h2>Coverage</h2>
+${items}
+<h2>Coverage by year</h2>
+<ul>
+${timeline}
+</ul>
+<h2>Press enquiries</h2>
+<p>Journalists, producers and editors can reach the team on WhatsApp at ${WHATSAPP_DISPLAY} or by email at ${escapeHtml(CONTACT_EMAIL)}. We can provide founder interviews, on-the-ground access on Carnival morning and imagery from any territory we work.</p>
+${CTA}`;
+}
+
+/**
+ * /booking-calculator. The explanation is written once, the numbers and
+ * the territory list are generated from src/data/territoryPricing.ts, so
+ * the static body always matches the interactive tool above it.
+ */
+function bookingCalculatorBody(): string {
+  return `<p>The Carnival Glam Hub quote calculator works out what your Carnival morning will actually cost, before you commit to anything. You pick the Carnival you are playing, the day or days you are on the road, and the services you want, and it returns a real total built from the same prices we sell at, not an estimate and not a starting-from figure.</p>
+<h2>How the calculator works</h2>
+<ol>
+  <li>Choose your Carnival. Only Carnivals that are still ahead of us are listed, because a season that has wrapped cannot be booked.</li>
+  <li>Choose your day. Where a Carnival runs over two days, Monday, Tuesday and both days are priced separately, since they are separate appointments.</li>
+  <li>Choose your services. Makeup, hair, photoshoot, bronzing and Full Glam combinations are all priced individually, and named or celebrity artists are shown as their own line rather than folded into the base price.</li>
+  <li>Read your total. The figure includes everything you selected. A deposit of US$${DEPOSIT} per masquerader confirms the booking and comes off that total.</li>
+</ol>
+<h2>What it costs</h2>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
+<h2>Carnivals you can price right now</h2>
+<ul>
+${pricingEntryRows()}
+</ul>
+<h2>Carnivals on enquiry</h2>
+<p>These Carnivals are running and we are working them, but the product list is not published yet, so the calculator shows you what is included and hands you to WhatsApp instead of quoting a number. We would rather say nothing than quote you a price we have not confirmed.</p>
+<ul>
+${enquiryRows()}
+</ul>
+<h2>What your quote includes</h2>
+${INCLUSION_LISTS}
+<h2>Deposits, transfers and cancellations</h2>
+<p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms your appointment and is applied to the total. No slot is held until it is received, and the balance is due before your service begins. No refund is given if you cancel within 14 days of the event. A booking may be transferred once, to any Carnival Glam Hub event within 12 months and including to another territory, if requested at least 3 days before the event and subject to availability. The full wording is on the <a href="/policies">terms and policies page</a>.</p>
+<p>When you are ready, <a href="${BOOKING_URL}">book your Carnival glam</a>, or message the team on WhatsApp at ${WHATSAPP_DISPLAY}.</p>
+${CTA}`;
+}
+
+/** /joinourteam. Mirrors the React page at src/pages/JoinOurTeam.tsx. */
+function joinOurTeamBody(): string {
+  const roles = [
+    ...STATION_SERVICE_TYPES,
+    "Photographers",
+    "Costume dressers",
+    "Front of house and check-in crew",
+  ];
+  return `<p>Carnival Glam Hub has created paid Carnival season work for hundreds of Caribbean beauty professionals since 2017. Every Carnival morning we run a full lounge: makeup, hair, getting dressed, photos and the shuttle, all under one roof, and we build a local crew in every territory we open in.</p>
+<h2>Who we hire</h2>
+<ul>
+${roles.map((r) => `  <li>${escapeHtml(r)}</li>`).join("\n")}
+</ul>
+<h2>Where we are hiring this season</h2>
+${UPCOMING_WITH_DATES}
+<p>If your Carnival is not on that list yet, send your portfolio anyway and we will keep it on file for the next season we open there.</p>
+<h2>What we look for</h2>
+<p>Carnival morning is not a salon day. Chairs run back to back from the early hours, every client leaves for the road, and the work has to hold through heat, sweat, paint and a full day of jumping. We look for artists who are fast without cutting corners, strictly hygienic with their kit, comfortable working to a schedule alongside a large team, and warm with clients who are nervous, jet lagged or running late.</p>
+<h2>How to apply</h2>
+<ol>
+  <li>Send your portfolio. Message us on WhatsApp at ${WHATSAPP_DISPLAY} or email ${escapeHtml(CONTACT_EMAIL)} with your role, your territory and a link to your work. Instagram is fine.</li>
+  <li>We review and shortlist. Your work is reviewed against the standard we hold on Carnival morning: speed, hygiene and a finish that survives the road.</li>
+  <li>Trial and briefing. Shortlisted artists are briefed on the Hub schedule, the products we use and how the stations run.</li>
+  <li>Work the season. Confirmed crew are allocated to a territory and a Carnival day, and paid for the work they take on.</li>
+</ol>
+<h2>Bringing your own clients instead</h2>
+<p>If you would rather work independently and keep your own bookings, you can rent a station inside the Hub instead of joining the crew. Rates, what is provided and which territories are open are all on the <a href="/station-rentals">station rentals page</a>.</p>
+<p><a href="${WHATSAPP_URL}" rel="noopener noreferrer" target="_blank">Apply on WhatsApp</a></p>
+${CTA}`;
+}
+
 
 // Station rentals (B2B). Every rate and inclusion is derived from
 // src/data/stationRentals.ts, which derives its tier from hubTiers.ts.
