@@ -90,6 +90,7 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/booking-calculator": "/images/services/makeup-hero.jpg",
   "/station-rentals": "/images/station-rentals/station-rentals-hero.png",
   "/press": "/images/services/photoshoot-hero.jpg",
+  "/joinourteam": "/images/station-rentals/station-rentals-hero.png",
   // Portrait illustration: letterboxed onto the brand warm-white canvas
   // (see OG_CONTAIN_ROUTES) so the figures are never cropped.
   "/policies": "/images/policies/refund-policy.png",
@@ -167,6 +168,8 @@ const OG_IMAGE_ALT: Record<string, string> = {
     "Carnival Glam Hub artist applying Carnival makeup at a lounge station",
   "/station-rentals":
     "Carnival Glam Hub makeup station rentals, a gold branded director's chair beside a lit vanity of professional makeup products",
+  "/joinourteam":
+    "A Carnival Glam Hub station set up for an artist on Carnival morning",
   "/policies":
     "Illustration of two Glam Hub team members reviewing a refund request form",
   "/best-carnival-makeup-trinidad":
@@ -457,6 +460,12 @@ const staticRoutes: RouteMeta[] = [
     ogImage: HERO_FALLBACK,
   },
   {
+    path: "/joinourteam",
+    title: "Join Our Team | Carnival Glam Hub Careers",
+    description:
+      "Work Carnival mornings with Carnival Glam Hub. We hire makeup artists, hair stylists, photographers, dressers and front of house crew across the Caribbean and the diaspora.",
+  },
+  {
     path: "/trinidad-carnival-2027",
     title: "Trinidad Carnival 2027 Makeup & Hair | Glam Hub",
     description:
@@ -730,6 +739,7 @@ function buildJsonLd(route: RouteMeta): object[] {
       "/amazon-store": "Amazon Storefront",
       "/booking-calculator": "Quote Calculator",
       "/station-rentals": "Station Rentals",
+      "/joinourteam": "Join Our Team",
       "/blogs": "Journal",
       "/policies": "Terms and Policies",
     };
