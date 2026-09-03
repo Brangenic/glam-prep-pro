@@ -30,3 +30,4 @@ Blogs: NEVER generate AI images. Hero/body images must come only from the curate
 - [Blog Content Standards](mem://constraints/blog-content-standards) — H2 styling, link colors, Amazon-link highlight, booking-CTA dedup, Wix cleanup
 - [Glam Bot Knowledge Sync](mem://constraints/glam-bot-knowledge-sync) — Bot knowledge generated from src/data, never hand-edit knowledge.json, resync in same change set
 - [Onward Destination Links](mem://constraints/onward-destination-links) — Onward lists show upcoming Carnivals only via getUpcomingDestinations; card links decided only by getDestinationCardLink
+- [J'ouvert Not An Offer](mem://constraints/jouvert-not-an-offer) — J'ouvert never appears on any commercial surface or in the bot pack; every J'ouvert blog post stays untouched

@@ -211,3 +211,41 @@ an onward list, if both Trinidad pages appear in one list, if a card link
 resolves to the wrong target, or if a component grows a destination slug
 array with no season filter beside it. It runs against a fixed clock of
 26 August 2026 so it never starts failing on its own in February.
+
+---
+
+# J'OUVERT IS EDITORIAL, NEVER AN OFFER
+
+Masqueraders do not book makeup, hair or a photoshoot for J'ouvert.
+J'ouvert is oil, paint and mud, so glam before it makes no commercial
+sense. Carnival Glam Hub sells nothing for J'ouvert, anywhere, and must
+never appear to. This is regional, not a Grenada quirk.
+
+J'ouvert therefore never appears on a destination page, a service page, a
+package, an inclusion list, a highlight, an FAQ answer, a meta
+description, structured data, `public/llms.txt`, a prerendered body, or in
+the Glam Bot knowledge pack. Not as a package, not as an inclusion, not as
+an example, not as "and J'ouvert too".
+
+The blog posts stay, all of them, untouched. They are top of funnel, they
+rank, and one of them sits on a keyword doing thousands of searches a
+month. Never delete, rename, noindex, redirect or reword a J'ouvert
+article, and never remove one from the sitemap, the blog index or internal
+links. Editorial links from a commercial page into a J'ouvert guide are
+fine, the offer is what is forbidden.
+
+Glam Bot must not pretend the festival does not exist. It may discuss
+J'ouvert and point to our guides, it simply may not sell makeup, hair or a
+photoshoot for it. The rule lives in the NEVER SAY guardrail in
+`src/data/botKnowledge.ts` and in the J'OUVERT section of the system
+prompt in `supabase/functions/chat/logic.ts`.
+
+## Enforcement
+
+`src/test/jouvertNotAnOffer.test.ts` fails the build if any casing of
+"jouvert" appears in destination data, package or pricing data, inclusion
+lists, service page copy, FAQ answers, `public/llms.txt`, the prerender
+scripts or the generated bot pack. Blog directories and blog scripts are
+scoped out on purpose. A future session that finds a Grenada or Trinidad
+page with no J'ouvert mention and thinks it is an oversight is wrong.
+
