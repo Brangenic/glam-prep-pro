@@ -204,7 +204,7 @@ const BookingCalculator = () => {
         amount: OVERNIGHT_BAG_CHECK_PRICE * partySize,
       });
     }
-    if (addReels && caps.reels && reelsPrice !== null) {
+    if (addReels && caps.reels) {
       out.push({ label: REELS_LABEL, amount: reelsPrice * partySize });
     }
     return out;
@@ -624,9 +624,7 @@ const BookingCalculator = () => {
                       id="reels"
                       name="reels"
                       aria-label={
-                        reelsPrice === null
-                          ? "Add reels, price confirmed on booking"
-                          : `Add reels, US$${reelsPrice} per masquerader`
+                        `Add reels, US$${reelsPrice} per masquerader`
                       }
                       data-mcp-param="reels"
                       checked={addReels}
@@ -745,13 +743,6 @@ const BookingCalculator = () => {
                         ) : (
                           <p className="font-body text-sm text-muted-foreground border-t border-border mt-5 pt-4">
                             Choose what you need for Carnival morning to see your total.
-                          </p>
-                        )}
-
-                        {addReels && caps.reels && reelsPrice === null && (
-                          <p className="font-body text-xs text-muted-foreground mt-3">
-                            Reels are not included in this total. Your booking team will confirm the
-                            reels price when they confirm your appointment.
                           </p>
                         )}
 

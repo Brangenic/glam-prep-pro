@@ -675,18 +675,18 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 ) : awaitingDates ? (
                   <>
                     <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-2">
-                      Season Ended
+                      Dates to be confirmed
                     </p>
                     <p className="font-body text-sm text-muted-foreground mb-4">
                       {dest.name} {waitlistYear} dates are still to be
-                      confirmed. Join the waitlist and we will come to you
-                      first when they land.
+                      confirmed. Register your interest and we will come to
+                      you first when they land.
                     </p>
                     <a
                       href={waitlistHref}
                       className="block w-full text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-5 py-3 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
                     >
-                      Join the {waitlistYear} waitlist
+                      {ctaLabel}
                     </a>
                   </>
                 ) : (

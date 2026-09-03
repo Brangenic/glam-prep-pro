@@ -5,6 +5,7 @@
 // Named and celebrity artists US$200 to US$580. Photoshoot only US$140 to US$160.
 // Hair US$120 to US$220. Full Glam US$430 to US$680.
 // Carnival morning access US$35. Barber US$35 (Jamaica and Trinidad only).
+// Reels US$80 (Trinidad and Jamaica only).
 // Highest price of any product anywhere US$680. Deposit US$50, Trinidad only.
 // Postbuild: emits per-route static HTML at dist/<path>/index.html for
 // the app's non-blog routes (destinations, services, /trinidad-carnival-2027,
@@ -46,7 +47,7 @@ const OG_H = 630;
 // transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
 // social crawlers always see a page-specific preview in the raw HTML.
 const ROUTE_HERO_SOURCES: Record<string, string> = {
-  "/jamaica": "asset:jamaica-carnival-hero",
+  "/jamaica": "/images/destinations/jamaica-meliza-hernandez.jpg",
   "/saint-lucia":
     "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
   "/antigua":
