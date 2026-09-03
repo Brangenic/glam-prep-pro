@@ -115,27 +115,17 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       },
     ],
   },
+  // Spicemas 2027. One real product on MasOS, the US$50 pre-registration.
+  // The retired 2026 makeup and photoshoot packages must not be reinstated
+  // without a confirmed 2027 product list.
   grenada: {
-    eventTitle: "Grenada - Carnival Glam Hub 2026",
-    eventDate: "10-11 August 2026",
-    bookingUrl: "https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0",
+    eventTitle: "Grenada Carnival 2027",
+    eventDate: "9 to 10 August 2027",
+    bookingUrl: "https://carnivalglamhub.masos.app/events/19940fc1-1fa1-4d34-8a7b-a4c3562df100",
     sections: [
       {
-        title: "Monday 10 August 2026",
         packages: [
-          { name: "Monday Makeup Only", price: "$200 USD", image: `${IMG}/ec4469ec-f72b-4176-934c-f3c11325f1d3/462x578` },
-          { name: "Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/8753e929-2f12-481b-a8f2-75d619ddbb2b/462x578` },
-          { name: "Monday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/462x578` },
-          { name: "Monday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/462x578` },
-        ],
-      },
-      {
-        title: "Tuesday 11 August 2026",
-        packages: [
-          { name: "Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/d859444f-a9d1-4c1e-9350-f0d49324bf5d/462x578` },
-          { name: "Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/59439c7d-8c5b-4950-8c5f-7f4338e365d9/462x578` },
-          { name: "Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/09cafbeb-665d-498a-ae5b-8bf067528b3c/462x578` },
-          { name: "Tuesday Get Dressed Only", price: "$25 USD", image: `${IMG}/4f1a1512-8dd1-4490-ba82-bf2820fee14e/462x578` },
+          { name: "Grenada Pre-Registration", price: "$50 USD", image: `${IMG}/bf6e5dae-ffc7-45d3-845f-d9928ce49e99/462x578` },
         ],
       },
     ],

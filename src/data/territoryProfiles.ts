@@ -105,7 +105,7 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     slug: "grenada",
     name: "Grenada Carnival",
     shortName: "Grenada",
-    dateText: "10 – 11 August 2026",
+    dateText: "Monday 9 & Tuesday 10 August 2027",
     path: "/grenada",
     venue: null,
     aliases: ["grenada", "spicemas", "spice mas"],

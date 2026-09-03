@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T17:40:37.461Z",
+  "generatedAt": "2026-09-03T19:49:31.865Z",
   "brand": "# Carnival Glam Hub\n\nCarnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe McGann. More than 15,000 masqueraders have been served since 2017.\n\nWe are band neutral. We serve masqueraders from every band, in every section.\n\nCarnival Glam Hub runs the whole Carnival morning from one location. Makeup, hair, photos and the practical parts of getting on the road happen in one place, so a masquerader is not moving between an artist, a hotel room and a photographer on the morning itself.\n\nThe service runs across the Caribbean and North America, in two hub tiers, Full Service Glam Hub and Glam Hub Lite.",
   "contact": {
     "whatsappUrl": "https://wa.me/18765090997",
@@ -87,12 +87,12 @@
     {
       "slug": "grenada",
       "name": "Grenada Carnival",
-      "dateText": "10 – 11 August 2026",
-      "seasonEndISO": "2026-08-11",
+      "dateText": "Monday 9 & Tuesday 10 August 2027",
+      "seasonEndISO": "2027-08-10",
       "path": "/grenada",
-      "bookingUrl": "https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0",
+      "bookingUrl": "https://carnivalglamhub.masos.app/events/19940fc1-1fa1-4d34-8a7b-a4c3562df100",
       "bookableEvent": true,
-      "quotable": true,
+      "quotable": false,
       "tier": "Glam Hub Lite",
       "seasonForward": false
     },
@@ -243,7 +243,7 @@
         "spice mas"
       ],
       "path": "/grenada",
-      "brief": "# Grenada Carnival\n\nDates: 10 – 11 August 2026.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nPer masquerader in US dollars.\n\n**Carnival day**\n- Makeup only: US$200\n- Makeup and photoshoot: US$320\n- Photoshoot only: US$160\n\n## Free with any booking here\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nRoad ready Carnival morning access and getting dressed are not offered at this hub.\n\nBooking link for Grenada Carnival: https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0. This is the only booking URL you may use for this territory.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list.\n\nPage: /grenada"
+      "brief": "# Grenada Carnival\n\nDates: Monday 9 & Tuesday 10 August 2027.\n\nTier: Glam Hub Lite. A Lite hub is a focused setup. It runs makeup and a photoshoot with a changing room and refreshments, and it does not carry the full service list.\n\nLocation: the venue is confirmed after booking. Never guess or name a venue for this territory.\n\n## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.\n\n## Free with any booking here\n- Changing room\n- Wing and bag check while you are with us, space permitting\n- Coffee, tea and light refreshments\n\n## Also available here\nNothing beyond the list above. Barber, bronzing, reels and overnight bag check are not available at this hub.\n\nRoad ready Carnival morning access and getting dressed are not offered at this hub.\n\nBooking link for Grenada Carnival: https://carnivalglamhub.masos.app/events/19940fc1-1fa1-4d34-8a7b-a4c3562df100. This is the only booking URL you may use for this territory.\n\nDeposit: US$50 non-refundable per masquerader confirms the booking. It applies in every territory and comes from the published Terms at /policies rather than from the territory price list. US$50 pre-registration secures your place for Spicemas 2027.\n\nPage: /grenada"
     },
     "antigua": {
       "name": "Antigua Carnival",

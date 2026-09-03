@@ -225,26 +225,31 @@ const saintLucia: TerritoryPricing = {
 };
 
 /**
- * Grenada does not ask for a day because Monday and Tuesday price
- * identically. The masos "Get Dressed Only" product is excluded because
- * Glam Hub Lite does not offer getting dressed.
+ * Spicemas 2027 is Monday 9 and Tuesday 10 August 2027. Only one product
+ * exists on MasOS for the 2027 season, the US$50 pre-registration, so
+ * Grenada is not quotable and must never display a service price.
+ *
+ * Retired 2026 pricing, kept only as a record. Do NOT reinstate any of
+ * these without a confirmed 2027 product list on MasOS:
+ *   Makeup only US$200, Makeup and photoshoot US$320, Photoshoot only US$160.
+ *
+ * Grenada stays Glam Hub Lite and stays selectable in the calculator, in
+ * the same enquiry state as Guyana, showing inclusions and the
+ * pre-registration call to action only.
  */
 const grenada: TerritoryPricing = {
   slug: "grenada",
   label: "Grenada Spice Mas",
   tier: "lite",
-  quotable: true,
-  eventDate: "10-11 August 2026",
+  quotable: false,
+  eventDate: "9 to 10 August 2027",
   askDay: false,
   days: SINGLE_DAY,
   roadReady: false,
   barber: false,
-  bookingUrl: "https://carnivalglamhub.masos.app/events/686e90eb-f3dc-4a83-ba43-86eada51ffe0",
-  products: [
-    { id: "gnd-makeup", label: "Makeup only", price: 200, day: "single", tags: ["makeup"] },
-    { id: "gnd-makeup-photo", label: "Makeup and photoshoot", price: 320, day: "single", tags: ["makeup", "photoshoot"] },
-    { id: "gnd-photo", label: "Photoshoot only", price: 160, day: "single", tags: ["photoshoot"] },
-  ],
+  deposit: { amount: 50, note: "US$50 pre-registration secures your place for Spicemas 2027." },
+  bookingUrl: "https://carnivalglamhub.masos.app/events/19940fc1-1fa1-4d34-8a7b-a4c3562df100",
+  products: [],
 };
 
 /** Antigua's masos hair, bronzing and shuttle products are excluded as Lite. */

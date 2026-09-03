@@ -97,7 +97,7 @@ export const destinations: Destination[] = [
     slug: "grenada",
     name: "Grenada Carnival",
     shortName: "Grenada",
-    date: "10 – 11 August 2026",
+    date: "Monday 9 & Tuesday 10 August 2027",
     description: "Premium glam services for Grenada Spicemas.",
     longDescription:
       "Spicemas is unmatched, and our Grenada Glam Hub Lite matches the energy. Full sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge.",
@@ -111,9 +111,9 @@ export const destinations: Destination[] = [
       "Photoshoot in the lounge",
     ],
     metaTitle:
-      "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+      "Grenada Spicemas Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Spicemas 2027 is 9 and 10 August. Pre-registration is open at US$50 for sweat-resistant Grenada makeup at our Glam Hub Lite. Trusted since 2017.",
   },
   {
     slug: "tobago",

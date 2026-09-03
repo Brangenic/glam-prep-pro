@@ -16,6 +16,8 @@ import { join, relative, resolve } from "path";
 
 import { getUpcomingDestinations, GALLERY_HREF } from "@/data/seasons";
 import { getDestinationCardLink, hasBookableEvent } from "@/lib/destinations";
+import { getTerritoryPricing } from "@/data/territoryPricing";
+import { destinationPackages } from "@/data/destinationPackages";
 
 /** The fixed clock every assertion below is judged against. */
 const FIXED_NOW = new Date("2026-08-26T12:00:00Z");
@@ -27,7 +29,6 @@ const WRAPPED_SLUGS = [
   "toronto",
   "barbados",
   "antigua",
-  "grenada",
 ] as const;
 
 describe("onward destination rule", () => {
@@ -48,6 +49,8 @@ describe("onward destination rule", () => {
     // Sanity check, so an empty list can never pass this test quietly.
     expect(slugs.length).toBeGreaterThan(2);
     expect(slugs).toContain("miami");
+    // Spicemas 2027 has reopened, so Grenada is an onward option again.
+    expect(slugs).toContain("grenada");
   });
 
   it("never returns both Trinidad pages in one list", () => {
@@ -91,6 +94,32 @@ describe("onward destination rule", () => {
         const link = getDestinationCardLink(slug, "homepage_card");
         expect(link.external).toBe(false);
         expect(link.href).toBe(path);
+      }
+    });
+
+    it("sends every Grenada card to the 2027 MasOS event, never the bare list", () => {
+      expect(hasBookableEvent("grenada")).toBe(true);
+      for (const campaign of ["homepage_card", "destination_card", "footer"]) {
+        const link = getDestinationCardLink("grenada", campaign);
+        expect(link.external).toBe(true);
+        expect(link.href).toContain(
+          "masos.app/events/19940fc1-1fa1-4d34-8a7b-a4c3562df100",
+        );
+        expect(link.href).not.toMatch(/masos\.app\/events(\?|$)/);
+      }
+    });
+
+    it("exposes no 2026 Grenada service price on any surface", () => {
+      const grenada = getTerritoryPricing("grenada");
+      expect(grenada?.quotable).toBe(false);
+      expect(grenada?.products).toHaveLength(0);
+      const packages = destinationPackages.grenada;
+      const names = packages.sections.flatMap((sec) => sec.packages);
+      expect(names).toHaveLength(1);
+      expect(names[0].name).toBe("Grenada Pre-Registration");
+      expect(names[0].price).toBe("$50 USD");
+      for (const retired of ["$200 USD", "$320 USD", "$160 USD"]) {
+        expect(names.map((n) => n.price)).not.toContain(retired);
       }
     });
 
