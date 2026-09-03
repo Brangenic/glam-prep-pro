@@ -460,6 +460,23 @@ function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
   ).replace(/</g, "\\u003c")}</script>`;
   html = html.replace("</head>", `    ${jsonLd}\n  </head>`);
 
+  // BreadcrumbList JSON-LD. Mirrors the runtime trail built in
+  // src/pages/BlogPost.tsx so crawlers that do not run JavaScript see the
+  // same Home > Journal > post trail.
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "Journal", item: `${BASE_URL}/blogs` },
+      { "@type": "ListItem", position: 3, name: post.title, item: url },
+    ],
+  };
+  const crumbLd = `<script type="application/ld+json" data-prerender="breadcrumblist">${JSON.stringify(
+    breadcrumb,
+  ).replace(/</g, "\\u003c")}</script>`;
+  html = html.replace("</head>", `    ${crumbLd}\n  </head>`);
+
   // Generic FAQPage schema, parsed from a "## Frequently Asked Questions"
   // section in the post body when present.
   const faqSchema = buildFaqSchema(post.content);
