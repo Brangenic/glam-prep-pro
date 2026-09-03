@@ -59,6 +59,32 @@ import {
   getStationInclusions,
 } from "../src/data/stationRentals";
 import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
+import {
+  BARBER_PRICE,
+  GETTING_DRESSED_PRICE,
+  OVERNIGHT_BAG_CHECK_PRICE,
+  REELS_PRICE,
+  TERRITORY_PRICING,
+  type ServiceTag,
+  type TerritoryPricing,
+} from "../src/data/territoryPricing";
+import {
+  PRESS_OUTLETS,
+  PRESS_STORIES,
+  PRESS_TIMELINE,
+} from "../src/data/pressCoverage";
+import {
+  FULL_SERVICE_INCLUSIONS,
+  LITE_INCLUSIONS,
+  LITE_NOT_OFFERED,
+} from "../src/data/hubTiers";
+import {
+  AMAZON_STORE_URL,
+  BOOKING_URL,
+  CONTACT_EMAIL,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+} from "../src/lib/constants";
 
 // Onward destination links in the prerendered HTML show upcoming Carnivals
 // only, filtered at build time. The React app recomputes the same lists on
