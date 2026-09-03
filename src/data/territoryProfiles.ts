@@ -12,7 +12,7 @@
  * never be guessed.
  */
 
-import { MIAMI_HUB_LOCATION } from "@/data/hubTiers";
+import { MIAMI_HUB_LOCATION, GRENADA_HUB_LOCATION } from "@/data/hubTiers";
 
 export type TerritoryProfile = {
   slug: string;
@@ -107,7 +107,7 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     shortName: "Grenada",
     dateText: "Monday 9 & Tuesday 10 August 2027",
     path: "/grenada",
-    venue: null,
+    venue: GRENADA_HUB_LOCATION,
     aliases: ["grenada", "spicemas", "spice mas"],
   },
   {

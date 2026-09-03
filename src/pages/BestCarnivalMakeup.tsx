@@ -170,7 +170,7 @@ function BestPage({ territory }: { territory: Territory }) {
             </a>
           </div>
 
-          {data.slug === "trinidad" ? (
+          {(data.slug as string) === "trinidad" ? (
             <div>
               {TRINIDAD_ANSWER_SECTIONS.map((sx) => (
                 <section className="mb-12" key={sx.q}>

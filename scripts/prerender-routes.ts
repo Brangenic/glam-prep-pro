@@ -301,7 +301,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Grenada Spicemas Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Spicemas 2027 is 9 and 10 August. Pre-registration is open at US$50 for sweat-resistant Grenada makeup at our Glam Hub Lite. Trusted since 2017.",
+      "Spicemas 2027 is Monday 9 and Tuesday 10 August. Pre-register at US$50 per masquerader, closing 31 December 2026, for Grenada Glam Hub Lite makeup.",
     ogImage: HERO_FALLBACK,
   },
   {

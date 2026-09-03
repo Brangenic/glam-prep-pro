@@ -4,8 +4,8 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
 import { getTerritoryPricing } from "@/data/territoryPricing";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ } from "@/data/hubTiers";
-import { hasSeasonPassed, passedSeasonYear } from "@/data/seasons";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ } from "@/data/hubTiers";
+import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -99,11 +99,11 @@ export const destinations: Destination[] = [
     name: "Grenada Carnival",
     shortName: "Grenada",
     date: "Monday 9 & Tuesday 10 August 2027",
-    description: "Premium glam services for Grenada Spicemas.",
+    description: "Pre-register now for Spicemas 2027 glam in Grenada.",
     longDescription:
-      "Spicemas is unmatched, and our Grenada Glam Hub Lite matches the energy. Full sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge.",
+      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge. Pre-registration is open at US$50 per masquerader.",
     image: "https://www.dropbox.com/scl/fi/taonoqg2p6faph4jipzhr/AALiyah.png?rlkey=jwxhfig9y16l6kn2573nkuggh&dl=1",
-    cta: "Book Grenada Glam",
+    cta: "Pre-register for Spicemas 2027",
     objectPosition: "50% 20%",
     highlights: [
       "Spicemas full glam",
@@ -114,7 +114,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Grenada Spicemas Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Spicemas 2027 is 9 and 10 August. Pre-registration is open at US$50 for sweat-resistant Grenada makeup at our Glam Hub Lite. Trusted since 2017.",
+      "Spicemas 2027 is Monday 9 and Tuesday 10 August. Pre-register at US$50 per masquerader, closing 31 December 2026, for Grenada Glam Hub Lite makeup.",
   },
   {
     slug: "tobago",
@@ -307,7 +307,10 @@ export function getDestinationFaqs(d: Destination): Faq[] {
 
   // Miami's venue has moved to Broward County, so the venue question
   // leads its FAQ list and its FAQPage structured data.
-  const venueFaq: Faq[] = d.slug === "miami" ? [MIAMI_VENUE_FAQ] : [];
+  // Where a venue is published, the venue question leads the FAQ list
+  // and the FAQPage structured data.
+  const venueFaq: Faq[] =
+    d.slug === "miami" ? [MIAMI_VENUE_FAQ] : d.slug === "grenada" ? [GRENADA_VENUE_FAQ] : [];
 
   const passed = hasSeasonPassed(d.slug);
   const year = passedSeasonYear(d.slug);
@@ -318,6 +321,9 @@ export function getDestinationFaqs(d: Destination): Faq[] {
     ? pricing.bookingUrl.replace(/^https?:\/\//, "")
     : "carnivalglamhub.masos.app/events";
   const preRegOnly = pricing ? pricing.quotable === false && Boolean(pricing.deposit) : false;
+  // Pre-registration is dated in src/data/seasons.ts and closes on its
+  // own, so no answer here hardcodes a deadline.
+  const preReg = getOpenPreRegistration(d.slug);
 
   return [
     ...venueFaq,
@@ -325,7 +331,9 @@ export function getDestinationFaqs(d: Destination): Faq[] {
       question: `Where can I book ${loc} carnival glam?`,
       answer: passed
         ? `${event} ${year} has wrapped, so bookings are closed for this season. You can see the looks our artists created on the road in our gallery at carnivalglamhub.com, and follow Carnival Glam Hub for ${loc} next season.`
-        : `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at ${bookingLink}. We are the leading carnival glam service for ${event}, delivered by professional Caribbean-trained artists.`,
+        : preReg
+          ? `Pre-registration for ${event} is open at US$${preReg.amount} per masquerader on our booking platform at ${bookingLink}, and it closes on ${preReg.closesOnText}. It secures ${preReg.secures}. It is not a full booking and no service is included, because the ${loc} service prices are set later.`
+          : `You can book ${loc} carnival glam directly with Carnival Glam Hub through our online booking platform at ${bookingLink}. We are the leading carnival glam service for ${event}, delivered by professional Caribbean-trained artists.`,
     },
     ...tierFaq,
     {
@@ -343,7 +351,9 @@ export function getDestinationFaqs(d: Destination): Faq[] {
       answer: passed
         ? `${loc} carnival makeup pricing varies by package. Pricing for the ${year} season is closed. Rates for the next ${loc} season are confirmed when bookings reopen.`
         : preRegOnly
-          ? `No ${loc} makeup, hair or photoshoot price is published yet. Pre-registration is open at US$${pricing?.deposit?.amount} per masquerader, which secures your place, and the service prices are confirmed when the ${loc} product list goes live.`
+          ? preReg
+            ? `No ${loc} makeup, hair or photoshoot price is published for this season yet. Pre-registration is open at US$${preReg.amount} per masquerader, closing ${preReg.closesOnText}, and it secures ${preReg.secures} rather than a service. Service prices are confirmed when the ${loc} product list goes live.`
+            : `No ${loc} makeup, hair or photoshoot price is published for this season yet. Pre-registration has closed, so message the booking team and we will confirm rates when the ${loc} product list goes live.`
           : `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at ${bookingLink}.`,
     },
     {

@@ -54,6 +54,63 @@ export const GALLERY_HREF = "/#gallery";
 export const GALLERY_CTA = "See the 2026 looks";
 export const GALLERY_CTA_SHORT = "View the Gallery";
 
+/* ============================================================
+ * Pre-registration.
+ *
+ * A territory whose Carnival is still ahead of us but whose service
+ * product list is not live yet may take a pre-registration only. One
+ * dated entry per slug, and every surface derives from it, exactly as
+ * the season calendar works. Nobody hardcodes a closing date in copy.
+ *
+ * When `closesOn` passes, the pre-registration block and its deadline
+ * wording disappear on their own and the page falls back to an enquiry
+ * call to action. The territory does not flip to "season finished",
+ * because its Carnival is still ahead.
+ *
+ * Add a second territory here and no component needs touching.
+ * ============================================================ */
+
+export type PreRegistration = {
+  /** Amount in US dollars, per masquerader. */
+  amount: number;
+  /** The territory's own MasOS event, never the bare events list. */
+  eventUrl: string;
+  /** ISO (YYYY-MM-DD) last day pre-registration is accepted. */
+  closesOn: string;
+  /** What the pre-registration secures, in plain words. */
+  secures: string;
+  /** Human wording for the closing date. */
+  closesOnText: string;
+};
+
+export const PRE_REGISTRATION: Record<string, PreRegistration> = {
+  grenada: {
+    amount: 50,
+    eventUrl:
+      "https://carnivalglamhub.masos.app/events/19940fc1-1fa1-4d34-8a7b-a4c3562df100",
+    closesOn: "2026-12-31",
+    closesOnText: "31 December 2026",
+    secures: "your spot for Spicemas 2027",
+  },
+};
+
+/** True while pre-registration is still being taken for this territory. */
+export function isPreRegistrationOpen(slug: string, today: Date = new Date()): boolean {
+  const entry = PRE_REGISTRATION[slug];
+  if (!entry) return false;
+  if (hasSeasonPassed(slug, today)) return false;
+  return today.getTime() <= endOfDay(entry.closesOn);
+}
+
+/** The pre-registration offer, only while it is open. Null otherwise. */
+export function getOpenPreRegistration(
+  slug: string,
+  today: Date = new Date(),
+): PreRegistration | null {
+  return isPreRegistrationOpen(slug, today) ? PRE_REGISTRATION[slug] : null;
+}
+
+
 function endOfDay(iso: string): number {
   // Compare against the end of the season's last day, so a territory is
   // only closed out once its final day is fully behind us.
