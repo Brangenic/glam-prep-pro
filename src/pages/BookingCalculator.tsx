@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { getFreeInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE, getCapabilities } from "@/data/hubTiers";
+import { getFreeInclusions, getHubTier, TIER_LABEL, MIAMI_SHUTTLE_NOTE, getCapabilities, REELS_LABEL, reelsNote } from "@/data/hubTiers";
 import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
@@ -137,6 +137,7 @@ const BookingCalculator = () => {
   const config = useMemo(() => getTerritoryPricing(territory), [territory]);
   const tier = getHubTier(territory);
   const caps = getCapabilities(territory);
+  const reelsPrice = getReelsPrice(territory);
 
   // Reset downstream answers whenever the territory changes.
   useEffect(() => {
@@ -635,7 +636,7 @@ const BookingCalculator = () => {
                     <span className="font-body text-sm leading-snug">
                       {REELS_LABEL}
                       <span className="block text-muted-foreground text-xs mt-0.5">
-                        {reelsNote(slug)}
+                        {reelsNote(territory)}
                       </span>
                     </span>
                   </label>
