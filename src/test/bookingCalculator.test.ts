@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { canQuote, getBookableQuoteTerritories } from "@/pages/BookingCalculator";
 import { hasBookableEvent } from "@/lib/destinations";
+import { getOpenPreRegistration } from "@/data/seasons";
 
 const FIXED_NOW = new Date("2026-08-26T12:00:00Z");
 
