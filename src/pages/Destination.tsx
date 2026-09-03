@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import RelatedLinks from "@/components/RelatedLinks";
+import RelatedLinks, { hasRelatedLinks } from "@/components/RelatedLinks";
 import MasosEmbed from "@/components/MasosEmbed";
 import { getDestination as getMasosDestination } from "@/lib/destinations";
 import {
@@ -91,6 +91,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const seo = dest ? seoOverrides[dest.slug] : undefined;
 
   const seasonPassed = hasSeasonPassed(slug);
+  const relatedLinksPresent = hasRelatedLinks(`/${slug}`);
   const seasonMeta = dest
     ? seasonAwareMeta(dest.slug, dest.name, dest.metaTitle, dest.metaDescription)
     : { title: "", description: "" };
@@ -453,7 +454,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
         {/* Packages */}
         {packagesData && !awaitingDates && (
-          <section className="py-12 sm:py-20 border-t border-border" aria-labelledby="packages-heading">
+          <section className="section-y border-t border-border" aria-labelledby="packages-heading">
             <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
               <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3 text-center">
                 {packagesData.eventDate}
@@ -556,7 +557,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         )}
 
         {/* Body */}
-        <section className="py-12 sm:py-20">
+        <section className="section-y">
           <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
@@ -714,7 +715,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
 
         {/* FAQ section — renders the same Q&A captured in FAQPage JSON-LD */}
         <section
-          className="py-12 sm:py-20 border-t border-border"
+          className="section-y border-t border-border"
           aria-labelledby={`${dest.slug}-faq-heading`}
         >
           <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
@@ -770,7 +771,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             when nothing is upcoming, rather than padded with a past
             season. */}
         {others.length > 0 && (
-        <section className="py-12 sm:py-20 bg-card/50 border-t border-border">
+        <section className="section-y bg-card/50 border-t border-border">
 
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">
@@ -808,7 +809,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         )}
 
         {dest.slug === "trinidad" && (
-          <div className="pb-12 sm:pb-20">
+          <div className="pb-9 sm:pb-12 lg:pb-16">
             <TrinidadGuidesBlock />
           </div>
         )}
@@ -824,9 +825,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </p>
         </div>
         )}
-        <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-12 sm:pb-20">
-          <RelatedLinks />
-        </div>
+        {relatedLinksPresent && (
+          <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-9 sm:pb-12 lg:pb-16">
+            <RelatedLinks />
+          </div>
+        )}
+
       </main>
 
       <Footer />

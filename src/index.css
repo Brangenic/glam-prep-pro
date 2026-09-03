@@ -72,7 +72,28 @@
   }
 }
 
+@layer components {
+  /* Single source of truth for vertical rhythm between top-level sections.
+     Each boundary stacks two paddings, so the gap between two adjacent
+     sections is roughly 72px on mobile, 96px on tablet and 128px on desktop. */
+  .section-y {
+    @apply py-9 sm:py-12 lg:py-16;
+  }
+
+  /* Denser rhythm for slim bars and strips (stats, compact press bar). */
+  .section-y-sm {
+    @apply py-6 sm:py-8 lg:py-10;
+  }
+
+  /* Applied to a section that sits directly against the previous one with no
+     border or background change, so the boundary pays one padding, not two. */
+  .section-flush-top {
+    @apply pt-0;
+  }
+}
+
 @layer utilities {
+
   .font-display {
     font-family: 'Playfair Display', serif;
   }

@@ -29,7 +29,7 @@ const GUIDES: { href: string; title: string; blurb: string }[] = [
 ];
 
 const CarnivalGuides = () => (
-  <section className="py-16 sm:py-24 border-t border-border" aria-labelledby="carnival-guides-heading">
+  <section className="section-y border-t border-border" aria-labelledby="carnival-guides-heading">
     <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
       <div className="text-center mb-10 sm:mb-12">
         <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">

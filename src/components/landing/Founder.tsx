@@ -5,7 +5,7 @@ const Founder = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="about" className="py-16 sm:py-24 lg:py-32">
+    <section id="about" className="section-y">
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <div

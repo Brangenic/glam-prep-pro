@@ -71,7 +71,7 @@ const Footer = () => {
   });
 
   return (
-  <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
+  <footer id="contact" className="border-t border-border section-y pb-28 lg:pb-16">
     <div className="container mx-auto px-4 sm:px-6">
       {/* Hub sitemap — every primary route is reachable from the footer */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-8 sm:gap-10 mb-10 sm:mb-12 pb-10 sm:pb-12 border-b border-border">

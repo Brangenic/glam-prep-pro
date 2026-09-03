@@ -46,7 +46,7 @@ const Services = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="services" className="py-16 sm:py-24 lg:py-32">
+    <section id="services" className="section-y section-flush-top">
       <div ref={ref} className="container mx-auto px-4 sm:px-6 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">

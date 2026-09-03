@@ -415,7 +415,7 @@ const Press = () => {
         </section>
 
         {/* B. LOGO STRIP */}
-        <section aria-label="Publications that have covered Carnival Glam Hub" className="border-y border-primary/10 bg-primary/[0.02] py-8 sm:py-10">
+        <section aria-label="Publications that have covered Carnival Glam Hub" className="border-y border-primary/10 bg-primary/[0.02] section-y-sm">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-5 lg:gap-x-7 xl:gap-x-9 2xl:gap-x-12">
               {PRESS_OUTLETS.map((o) => (
@@ -445,7 +445,7 @@ const Press = () => {
 
         {/* C. FEATURED COVERAGE */}
         {hero && (
-          <section className="py-14 sm:py-20" aria-labelledby="featured-heading">
+          <section className="section-y" aria-labelledby="featured-heading">
             <div className="container mx-auto max-w-7xl px-4 sm:px-6">
               <h2 id="featured-heading" className="sr-only">
                 Featured coverage
@@ -509,7 +509,7 @@ const Press = () => {
 
         {/* D. SECONDARY FEATURES */}
         {features.length > 0 && (
-          <section className="pb-14 sm:pb-20" aria-labelledby="features-heading">
+          <section className="pb-9 sm:pb-12 lg:pb-16" aria-labelledby="features-heading">
             <div className="container mx-auto max-w-7xl px-4 sm:px-6">
               <h2
                 id="features-heading"
@@ -558,7 +558,7 @@ const Press = () => {
         )}
 
         {/* E. FROM THE CARIBBEAN PRESS */}
-        <section className="pb-14 sm:pb-20" aria-labelledby="caribbean-heading">
+        <section className="pb-9 sm:pb-12 lg:pb-16" aria-labelledby="caribbean-heading">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6">
             <h2
               id="caribbean-heading"
@@ -604,7 +604,7 @@ const Press = () => {
         </section>
 
         {/* F. TIMELINE */}
-        <section className="border-y border-primary/10 py-12 sm:py-16" aria-labelledby="timeline-heading">
+        <section className="border-y border-primary/10 section-y" aria-labelledby="timeline-heading">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6">
             <h2
               id="timeline-heading"
@@ -630,7 +630,7 @@ const Press = () => {
         </section>
 
         {/* G. ALSO MENTIONED IN */}
-        <section className="py-12 sm:py-16" aria-labelledby="mentions-heading">
+        <section className="section-y" aria-labelledby="mentions-heading">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6">
             <h2
               id="mentions-heading"

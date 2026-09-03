@@ -43,7 +43,7 @@ const Destinations = () => {
     .map((d) => ({ ...d, ...HOMEPAGE_OVERRIDES[d.slug] }));
 
   return (
-    <section id="destinations" className="py-16 sm:py-24 lg:py-32 bg-card/50" aria-labelledby="destinations-heading">
+    <section id="destinations" className="section-y bg-card/50" aria-labelledby="destinations-heading">
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-16">
           <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${

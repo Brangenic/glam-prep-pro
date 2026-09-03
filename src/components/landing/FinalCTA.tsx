@@ -8,7 +8,7 @@ const FinalCTA = () => {
   const { get } = useSiteConfig();
 
   return (
-    <section id="book" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden" aria-labelledby="cta-heading">
+    <section id="book" className="section-y relative overflow-hidden" aria-labelledby="cta-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent pointer-events-none" />
       <div ref={ref} className="relative container mx-auto px-4 sm:px-6 text-center max-w-2xl">
         <div className={`inline-flex items-center gap-2 bg-secondary/10 border border-secondary/20 rounded-full px-4 py-1.5 mb-6 sm:mb-8 transition-all duration-700 ${

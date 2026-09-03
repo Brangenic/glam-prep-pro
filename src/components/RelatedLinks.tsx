@@ -188,6 +188,19 @@ const Column = ({ title, items }: { title: string; items: LinkRef[] }) => {
   );
 };
 
+/**
+ * True when RelatedLinks would render something for this path. Callers use it
+ * so they never wrap the component in a padded container that would otherwise
+ * render as an empty block of dead space.
+ */
+export function hasRelatedLinks(pathname: string): boolean {
+  const derived = deriveFromPath(pathname);
+  if (!derived) return false;
+  return Boolean(
+    derived.services?.length || derived.destinations?.length || derived.guides?.length,
+  );
+}
+
 const RelatedLinks = (props: Props) => {
   const { pathname } = useLocation();
   const derived = !props.services && !props.destinations && !props.guides
@@ -198,6 +211,7 @@ const RelatedLinks = (props: Props) => {
   const guides = props.guides ?? derived?.guides ?? [];
 
   if (!services.length && !destinations.length && !guides.length) return null;
+
 
   return (
     <section
