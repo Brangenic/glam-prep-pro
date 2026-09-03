@@ -225,7 +225,6 @@ destinationPackages.jamaica = {
   bookingUrl: "https://carnivalglamhub.masos.app/events/0ad062ce-d1e0-4838-aeaf-f418ed526440",
   sections: [
     {
-      title: "",
       packages: [
         { name: "Jamaica Makeup Only", price: "$200 USD", image: `${IMG}/ac3c768e-c8fb-4757-8853-0fb29c9e1b65/462x578` },
         { name: "Jamaica Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/b5d2efd6-04f5-4585-a470-5abf3f6762cd/462x578` },
@@ -252,7 +251,6 @@ destinationPackages.tobago = {
   bookingUrl: "https://carnivalglamhub.masos.app/events/755be168-61a2-4827-9e9e-d52668a790ff",
   sections: [
     {
-      title: "",
       packages: [
         { name: "Makeup Only", price: "$120 USD", image: `${IMG}/20a2fbb2-2466-415c-899b-e9ada599d432/462x578` },
         { name: "Makeup & Photoshoot", price: "$220 USD", image: `${IMG}/4cc0b4df-7b4f-421b-bca8-3dcb743c64a2/462x578` },
