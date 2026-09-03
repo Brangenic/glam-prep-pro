@@ -34,7 +34,7 @@ const faqSchema = {
       name: "How much does Carnival makeup cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Pricing is tiered so you can choose the level of artistry you want for the morning. Carnival morning access, meaning getting-dressed help, the lounge and shuttle where it runs, is US$35. Makeup only is US$170 to US$200 for a single day, and US$380 for both Trinidad days. Named and celebrity artists, including senior MUAs who work with soca artists and band launches, run US$200 to US$580. Photoshoot only is US$140 to US$160, hair is US$120 to US$220 and Full Glam is US$430 to US$680. Add-ons are quoted separately on booking.",
+        text: "Pricing is tiered so you can choose the level of artistry you want for the morning. Carnival morning access, meaning getting-dressed help, the lounge and shuttle where it runs, is US$35. Makeup only is US$170 to US$210 for a single day, and US$380 for both Trinidad days. Named and celebrity artists, including senior MUAs who work with soca artists and band launches, run US$240 to US$580. Photoshoot only is US$140 to US$160, hair is US$120 to US$220 and Full Glam is US$430 to US$680. Add-ons are quoted separately on booking.",
       },
     },
     {

@@ -11,7 +11,7 @@ const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
 const TITLE = "Is Professional Carnival Makeup Worth It?";
 const META_TITLE = "Is Professional Carnival Makeup Worth It? | Glam Hub";
 const DESCRIPTION =
-  "Makeup only runs US$170 to US$200 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.";
+  "Makeup only runs US$170 to US$210 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.";
 const META_DESCRIPTION = DESCRIPTION;
 const AUTHOR = "Carnival Glam Hub";
 const DATE_PUBLISHED = "2026-06-21";
