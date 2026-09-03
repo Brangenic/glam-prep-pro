@@ -114,16 +114,19 @@ export const destinations: Destination[] = [
     date: "Monday 9 & Tuesday 10 August 2027",
     description: "Pre-register now for Spicemas 2027 glam in Grenada.",
     longDescription:
-      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge. Pre-registration is open at US$50 per masquerader.",
+      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup and a photoshoot by our trained Caribbean carnival artists, with dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. Pre-registration is open at US$50 per masquerader.",
     image: "/images/destinations/grenada-hero-radisson.jpg",
     cta: "Pre-register for Spicemas 2027",
     objectPosition: "50% 22%",
     highlights: [
-      "Spicemas full glam",
-      "J'ouvert paint and oil packages",
-      "Festival gems and lashes",
-      "Photoshoot in the lounge",
+      "Makeup",
+      "Photoshoot",
+      "Dressing assistance",
+      "Changing room",
+      "Wing and bag check while you are with us, space permitting",
+      "Snacks, coffee, tea and light refreshments",
     ],
+
     galleryNote:
       "Every masquerader here had makeup and a photoshoot with Carnival Glam Hub at Spicemas.",
     gallery: [
