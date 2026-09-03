@@ -1405,7 +1405,7 @@ function blogRelatedBlock(slug: string, allSlugs: string[]): string {
 function blogFullContent(post: BlogRow, allSlugs: string[]): Content {
   const article = markdownToSafeHtml(post.content);
   const lead = post.description
-    ? `<p><em>${escapeHtml(post.description)}</em></p>\n`
+    ? `<p><em>${escapeHtml(deEmDash(post.description))}</em></p>\n`
     : "";
   return {
     title: post.title,
