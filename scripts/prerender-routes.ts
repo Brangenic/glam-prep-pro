@@ -46,7 +46,7 @@ const OG_H = 630;
 // transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
 // social crawlers always see a page-specific preview in the raw HTML.
 const ROUTE_HERO_SOURCES: Record<string, string> = {
-  "/jamaica": "asset:jamaica-carnival-hero",
+  "/jamaica": "/images/destinations/jamaica-meliza-hernandez.jpg",
   "/saint-lucia":
     "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
   "/antigua":

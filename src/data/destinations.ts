@@ -1,5 +1,4 @@
 import guyanaImg from "@/assets/carnival-4.jpg";
-import jamaicaImg from "@/assets/jamaica-carnival-hero.jpg";
 // Placeholder hero for Tobago: one of our own Glam Hub carnival images,
 // not used as the hero of any other destination. Swap this for real
 // Tobago photography as soon as we have it.
@@ -36,7 +35,7 @@ export const destinations: Destination[] = [
     description: "Premium glam hub services for Jamaica Carnival.",
     longDescription:
       "Our Jamaica Carnival Full Service Glam Hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-resistant carnival looks built for the Jamaica heat.",
-    image: jamaicaImg,
+    image: "/images/destinations/jamaica-meliza-hernandez.jpg",
     cta: "Book Jamaica Glam",
     objectPosition: "50% 25%",
     highlights: [
@@ -48,7 +47,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book Jamaica Carnival 2027 makeup, hair, bronzing, shuttle, photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
+      "Book Jamaica Carnival on Sunday 4 April 2027. Makeup, hair, bronzing, shuttle and photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
   },
   {
     slug: "saint-lucia",

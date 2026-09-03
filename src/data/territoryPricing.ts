@@ -80,21 +80,16 @@ export const BARBER_PRICE = 35;
 export const OVERNIGHT_BAG_CHECK_PRICE = 35;
 
 /**
- * Reels are a paid add-on in Trinidad and Jamaica only, and the price is
- * per territory. A null means there is no confirmed product price yet, so
- * the booking team confirms it and nothing is added to a quote total.
- * Never invent a figure: drop a real number in when the product exists.
+ * Reels are a paid add-on at US$80 per masquerader, Trinidad and Jamaica
+ * only, per HUB_CAPABILITIES. Confirmed against the MasOS Glam Reel
+ * products on 3 September 2026: Trinidad Monday, Trinidad Tuesday and
+ * Jamaica all sell the reel at the same price.
  */
-export const REELS_PRICE_BY_SLUG: Record<string, number | null> = {
-  jamaica: 80,
-  // No Trinidad reels product yet. Drop the number in here when it lands.
-  trinidad: null,
-  "trinidad-carnival-2027": null,
-};
+export const REELS_PRICE = 80;
 
-/** Reels price for a territory, or null where no price is confirmed. */
-export function getReelsPrice(slug: string): number | null {
-  return REELS_PRICE_BY_SLUG[slug] ?? null;
+/** Reels price for a territory. One price everywhere reels are offered. */
+export function getReelsPrice(_slug: string): number {
+  return REELS_PRICE;
 }
 
 const SINGLE_DAY: { key: DayKey; label: string }[] = [{ key: "single", label: "Carnival day" }];
