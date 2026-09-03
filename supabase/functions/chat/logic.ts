@@ -469,7 +469,7 @@ export function buildFacts(
         );
       } else if (now.getTime() <= endOfDay(ev.seasonEndISO) && ev.bookableEvent && ev.bookingUrl) {
         parts.push(
-          `${territory.name} status: open. ${ev.dateText}. Bookings are open.`,
+          `${territory.name} status: open. ${ev.dateText}. Bookings are open. The only booking URL for ${territory.name} is ${ev.bookingUrl}. Any booking link in this reply must be that URL. Never link the generic events list.`,
         );
       } else if (now.getTime() <= endOfDay(ev.seasonEndISO)) {
         parts.push(
@@ -514,19 +514,36 @@ export function buildKnowledgeContext(
   const territoryHasCheckout = territoryEvent
     ? Boolean(territoryEvent.bookableEvent && territoryEvent.bookingUrl)
     : true;
+  // Where a territory is resolved and has its own event on file, the
+  // generic events list must not reach the prompt at all. It would drop a
+  // visitor who asked about one territory into a list of others.
+  const territoryBookingUrl =
+    territoryHasCheckout && territoryEvent?.bookingUrl?.includes("/events/")
+      ? territoryEvent.bookingUrl
+      : null;
   for (const topic of topics) {
-    const block =
+    let block =
       topic === "booking" && territorySlug && !territoryHasCheckout
         ? "# Booking status for this territory\nNo bookable event is on file for this territory. Do not offer checkout, do not send the visitor to the booking platform and do not quote a deposit. Use the territory page if it exists, otherwise use the WhatsApp handover."
         : pack.topics[topic];
+    if (block && territoryBookingUrl && territoryEvent) {
+      block = block.split(pack.contact.bookingUrl).join(territoryBookingUrl);
+    }
     if (block) parts.push(block);
   }
   parts.push(
     territorySlug ? pack.territories[territorySlug].brief : territoryIndex(pack),
   );
-  const links = territoryHasCheckout
+  let links = territoryHasCheckout
     ? pack.links
     : pack.links.filter((l) => l.label !== "Book now");
+  if (territoryBookingUrl && territoryEvent) {
+    links = links.map((l) =>
+      l.url === pack.contact.bookingUrl
+        ? { label: `Book ${territoryEvent.name}`, url: territoryBookingUrl }
+        : l,
+    );
+  }
   parts.push(
     `## LINKS directory\n${links.map((l) => `- ${l.label}: ${l.url}`).join("\n")}`,
   );
@@ -572,6 +589,7 @@ Press coverage describes what we have done. It never establishes where we operat
 
 LINKS
 Answer first, then link. Always link to the most specific page that exists, never the home page when a destination or service page covers it. Write links as markdown with descriptive text, for example [View Trinidad Carnival Glam Hub details](/trinidad), never a bare URL. Use the paths in the LINKS directory exactly. Internal paths stay root-relative. For human help use the WhatsApp link. One or two links per reply, never a list of them.
+When a territory has been established, any booking link must be that territory's own event URL, exactly as given in its brief and in the FACTS block. Never link the generic events list once a territory is established, and never link it for a territory that has no bookable event.
 
 NEVER SAY
 The following must never appear in a reply under any circumstances, including when a visitor asks directly for a discount or a promotion code:

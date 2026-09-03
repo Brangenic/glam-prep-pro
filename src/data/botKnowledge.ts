@@ -390,6 +390,15 @@ function buildBrief(slug: string): string {
         : "Road ready Carnival morning access and getting dressed are not offered at this hub.",
     );
 
+    // The territory's own event URL, derived from the same source the site
+    // uses. Never the generic events list, which would drop a visitor who
+    // asked about one territory into a list of others.
+    if (pricing?.bookingUrl && pricing.bookingUrl.includes("/events/")) {
+      parts.push(
+        `Booking link for ${profile.name}: ${pricing.bookingUrl}. This is the only booking URL you may use for this territory.`,
+      );
+    }
+
     parts.push(depositLine(pricing));
   } else {
     const action = profile.path
