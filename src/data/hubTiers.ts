@@ -296,8 +296,9 @@ export const GRENADA_HUB_LOCATION = `Our Spicemas 2027 Glam Hub is at ${GRENADA_
 
 export const GRENADA_VENUE_FAQ = {
   question: "Where is the Grenada Glam Hub for Spicemas 2027?",
-  answer: `${GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so it covers makeup, a photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments. Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
+  answer: `${GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so it covers makeup, a photoshoot, dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. There is no seamstress, no hair, no shuttle, no breakfast and no alcohol in Grenada. Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
 };
+
 
 export function getHubTier(slug: string): HubTier | null {
   if ((FULL_SERVICE_SLUGS as readonly string[]).includes(slug)) return "full";
