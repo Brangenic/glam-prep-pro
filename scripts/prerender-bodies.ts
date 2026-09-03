@@ -680,7 +680,7 @@ ${CTA}`,
   },
   "/services/getting-dressed": {
     title: "Carnival Costume Getting-Dressed Assistance",
-    body: `<p>Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Included in concierge packages across Trinidad, Jamaica, Barbados, Grenada and Antigua.</p>
+    body: `<p>Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Included in Full Service Glam Hub packages in Trinidad, Jamaica and Miami. Grenada is the one Glam Hub Lite that offers dressing assistance, with no seamstress.</p>
 <h2>Wire bras, monokinis, backpacks</h2>
 <p>Correct positioning, hidden padding for support, waist and hip strap tuning, hardware secured so nothing shifts on the road.</p>
 <h2>Collars, harnesses and headpieces</h2>

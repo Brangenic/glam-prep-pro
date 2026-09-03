@@ -305,14 +305,15 @@ const GettingDressed = () => {
               <a href="/trinidad" className="text-primary hover:underline">Trinidad Carnival</a>,{" "}
               <a href="/jamaica" className="text-primary hover:underline">Jamaica Carnival</a> and{" "}
               <a href="/miami" className="text-primary hover:underline">Miami Carnival</a>.
-              Glam Hub Lite territories such as{" "}
+              <a href="/grenada" className="text-primary hover:underline">Grenada</a>{" "}
+              is the one Glam Hub Lite that offers dressing assistance, with no
+              seamstress. Other Glam Hub Lite territories such as{" "}
               <a href="/barbados" className="text-primary hover:underline">Barbados</a>,{" "}
-              <a href="/grenada" className="text-primary hover:underline">Grenada</a>,{" "}
               <a href="/antigua" className="text-primary hover:underline">Antigua</a>,{" "}
               <a href="/saint-lucia" className="text-primary hover:underline">Saint Lucia</a> and{" "}
               <a href="/toronto" className="text-primary hover:underline">Toronto</a> do not
-              offer getting dressed or seamstress support; they cover makeup, photoshoot and
-              reels, a changing room, and coffee, tea and light refreshments. It pairs with{" "}
+              offer getting dressed or seamstress support; they cover makeup, photoshoot,
+              a changing room, and coffee, tea and light refreshments. It pairs with{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 Carnival makeup
               </a>{" "}
