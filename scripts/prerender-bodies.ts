@@ -59,6 +59,32 @@ import {
   getStationInclusions,
 } from "../src/data/stationRentals";
 import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
+import {
+  BARBER_PRICE,
+  GETTING_DRESSED_PRICE,
+  OVERNIGHT_BAG_CHECK_PRICE,
+  REELS_PRICE,
+  TERRITORY_PRICING,
+  type ServiceTag,
+  type TerritoryPricing,
+} from "../src/data/territoryPricing";
+import {
+  PRESS_OUTLETS,
+  PRESS_STORIES,
+  PRESS_TIMELINE,
+} from "../src/data/pressCoverage";
+import {
+  FULL_SERVICE_INCLUSIONS,
+  LITE_INCLUSIONS,
+  LITE_NOT_OFFERED,
+} from "../src/data/hubTiers";
+import {
+  AMAZON_STORE_URL,
+  BOOKING_URL,
+  CONTACT_EMAIL,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+} from "../src/lib/constants";
 
 // Onward destination links in the prerendered HTML show upcoming Carnivals
 // only, filtered at build time. The React app recomputes the same lists on
@@ -407,6 +433,108 @@ function destinationBody(d: ParsedDest): string {
 }
 
 // Services
+
+// ---------------------------------------------------------------
+// Data-derived pricing and content helpers.
+// Every figure below is computed from src/data/territoryPricing.ts and
+// src/data/hubTiers.ts at build time, so the prerendered body can never
+// drift from the prices the calculator, the destination pages and the
+// Glam Bot quote. Never hardcode a price in this file.
+// ---------------------------------------------------------------
+
+/** Territories that are running, have a season ahead and carry real products. */
+const BOOKABLE_PRICING: TerritoryPricing[] = TERRITORY_PRICING.filter(
+  (t) => t.runningThisSeason !== false && !hasSeasonPassed(t.slug) && t.quotable,
+);
+
+function priceList(opts: {
+  tags: ServiceTag[];
+  premium: boolean;
+  bothDays: boolean;
+}): number[] {
+  const wanted = [...opts.tags].sort().join("|");
+  const out: number[] = [];
+  for (const t of BOOKABLE_PRICING) {
+    for (const prod of t.products) {
+      if (!!prod.premium !== opts.premium) continue;
+      if ((prod.day === "both") !== opts.bothDays) continue;
+      if ([...prod.tags].sort().join("|") !== wanted) continue;
+      out.push(prod.price);
+    }
+  }
+  return out;
+}
+
+function rangeLabel(nums: number[]): string {
+  if (!nums.length) return "";
+  const lo = Math.min(...nums);
+  const hi = Math.max(...nums);
+  return lo === hi ? `US$${lo}` : `US$${lo} to US$${hi}`;
+}
+
+function anyPremium(bothDays: boolean): number[] {
+  const out: number[] = [];
+  for (const t of BOOKABLE_PRICING)
+    for (const prod of t.products)
+      if (prod.premium && (prod.day === "both") === bothDays) out.push(prod.price);
+  return out;
+}
+
+const MAKEUP_SINGLE = rangeLabel(priceList({ tags: ["makeup"], premium: false, bothDays: false }));
+const MAKEUP_BOTH = rangeLabel(priceList({ tags: ["makeup"], premium: false, bothDays: true }));
+const PREMIUM_RANGE = rangeLabel([...anyPremium(false), ...anyPremium(true)]);
+const PHOTO_RANGE = rangeLabel(priceList({ tags: ["photoshoot"], premium: false, bothDays: false }));
+const HAIR_RANGE = rangeLabel(priceList({ tags: ["hair"], premium: false, bothDays: false }));
+const FULL_GLAM_RANGE = rangeLabel([
+  ...priceList({ tags: ["makeup", "hair", "photoshoot"], premium: false, bothDays: false }),
+  ...priceList({ tags: ["makeup", "hair", "photoshoot"], premium: false, bothDays: true }),
+]);
+const DEPOSIT = BOOKABLE_PRICING.find((t) => t.deposit)?.deposit?.amount ?? 50;
+
+/** One paragraph of pricing, generated. Used anywhere prices are summarised. */
+const PRICE_SUMMARY = `Pricing is tiered. Carnival morning access, meaning getting dressed, the lounge, refreshments and shuttle where it runs, is US$${GETTING_DRESSED_PRICE}. Makeup only is ${MAKEUP_SINGLE} for a single day, and ${MAKEUP_BOTH} for both Trinidad days. Named and celebrity artists run ${PREMIUM_RANGE}. Photoshoot only is ${PHOTO_RANGE}, hair is ${HAIR_RANGE} and Full Glam is ${FULL_GLAM_RANGE}. A deposit of US$${DEPOSIT} per masquerader confirms the booking and comes off the balance.`;
+
+const ADD_ON_SUMMARY = `Add-ons are priced separately. Reels are US$${REELS_PRICE} per masquerader in Trinidad and Jamaica, the barber is US$${BARBER_PRICE} in Trinidad and Jamaica, and overnight bag check is US$${OVERNIGHT_BAG_CHECK_PRICE} in Trinidad, Jamaica and Miami.`;
+
+/** Bookable territories with their season dates and entry price. */
+function pricingEntryRows(): string {
+  return BOOKABLE_PRICING.map((t) => {
+    const standard = t.products.filter((p) => !p.premium).map((p) => p.price);
+    const from = standard.length ? `from US$${Math.min(...standard)}` : "priced on enquiry";
+    return `<li><strong>${escapeHtml(t.label)}</strong>, ${escapeHtml(t.eventDate)}, ${from}</li>`;
+  }).join("\n");
+}
+
+/** Territories that are running but have no products on file yet. */
+function enquiryRows(): string {
+  return TERRITORY_PRICING.filter(
+    (t) => t.runningThisSeason !== false && !hasSeasonPassed(t.slug) && !t.quotable,
+  )
+    .map(
+      (t) =>
+        `<li><strong>${escapeHtml(t.label)}</strong>, ${escapeHtml(t.eventDate)}, enquire on WhatsApp</li>`,
+    )
+    .join("\n");
+}
+
+const INCLUSION_LISTS = `<h3>Full Service Glam Hub</h3>
+<ul>
+${FULL_SERVICE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
+</ul>
+<h3>Glam Hub Lite</h3>
+<ul>
+${LITE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
+</ul>
+<p>A Glam Hub Lite does not offer ${LITE_NOT_OFFERED.map((i) => escapeHtml(i.toLowerCase())).join(", ")}.</p>`;
+
+const UPCOMING_WITH_DATES = `<ul>
+${getUpcomingDestinations(undefined, undefined, { dedupeTrinidad: true })
+  .map((d) => `  <li><a href="${d.path}">${escapeHtml(d.name)}</a>, ${escapeHtml(d.dateText)}</li>`)
+  .join("\n")}
+</ul>`;
+
+const PRESS_OUTLET_SENTENCE = `Carnival Glam Hub has been covered by ${PRESS_OUTLETS.map((o) => escapeHtml(o.name)).join(", ")}.`;
+
 const SERVICES: Record<string, Content> = {
   "/services/carnival-makeup": {
     title: "Sweat-Resistant Carnival Makeup",
@@ -414,11 +542,22 @@ const SERVICES: Record<string, Content> = {
 <h2>What's included in your Carnival makeup</h2>
 <p>Skin prep and priming, full base with sweat-resistant foundation and concealer, contour and highlight, eye look with adhesive lash or strip lash, brow shaping, lip finish, and a final setting layer designed to hold through the parade. Each session runs around 90 minutes per masquerader and is delivered inside the air-conditioned Carnival Glam Hub lounge.</p>
 <h2>How much does Carnival makeup cost?</h2>
-<p>Pricing is tiered. Carnival morning access, meaning getting dressed, the lounge, refreshments and shuttle where it runs, is US$35. Makeup only is US$170 to US$200 for a single day, and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$140 to US$160, hair is US$120 to US$220 and Full Glam is US$430 to US$680.</p>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
 <h2>Airbrush vs traditional Carnival makeup</h2>
 <p>Both work for the road. Traditional application, layered with a long-wear foundation and locked down with a setting spray, gives a fuller, more sculpted finish and is easier to touch up mid-route. Airbrush gives a lighter, second-skin finish that photographs beautifully and tends to suit oilier skin in extreme heat.</p>
 <h2>How long does Carnival makeup last?</h2>
 <p>A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat — from your morning departure through the last truck. Priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday.</p>
+<h2>Where you can book Carnival makeup</h2>
+<p>Makeup is booked territory by territory, and only where the Carnival is still ahead of us. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What comes with your Carnival morning</h2>
+<p>Makeup is never sold on its own. It sits inside a Glam Hub, and what the Hub includes depends on its tier.</p>
+${INCLUSION_LISTS}
+<h2>Why masqueraders book an artist rather than doing it themselves</h2>
+<p>Carnival makeup has to survive heat, sweat, paint, rain, body glitter and a full day of jumping, then still photograph well at every stage of the road. That is a different job from a night out. Our artists build the base in layers, set each one, and choose lash, brow and lip products that will not slide, transfer onto a costume or grey out under midday sun.</p>
+<h2>Press and reputation</h2>
+<p>${PRESS_OUTLET_SENTENCE} Read the coverage on our <a href="/press">press page</a>.</p>
 ${CTA}`,
   },
   "/services/carnival-hair": {
@@ -428,6 +567,15 @@ ${CTA}`,
 <p>Every style is anchored so your headpiece sits secure from the truck to the last lap. Slick-back ponies with lay-down edges, sculpted buns, braided crowns and sew-in installs with a Carnival-safe finish.</p>
 <h2>Curls, braids and updos</h2>
 <p>Voluminous carnival curls with silicone finish for heat and humidity, boho braids with beads, and sculpted updos for stage-front sections.</p>
+<h2>How much does Carnival hair cost?</h2>
+<p>Hair is ${HAIR_RANGE} depending on the style, and it can be booked on its own or as part of Full Glam at ${FULL_GLAM_RANGE}. ${ADD_ON_SUMMARY}</p>
+<h2>Where you can book Carnival hair</h2>
+<p>Hair is a Full Service Glam Hub service, so it runs in the territories where we open the full lounge. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
+<h2>Coming in with an install or your own hair</h2>
+<p>Both work. Tell us at booking whether you are arriving with a wig, a sew-in, braids or your own hair, and bring the headpiece with you so the stylist can anchor the style to the exact weight and fixing points it needs. Edges are laid last so they survive the shuttle rather than the mirror.</p>
 ${CTA}`,
   },
   "/services/carnival-photoshoot": {
@@ -437,6 +585,15 @@ ${CTA}`,
 <p>Editorial-lit portraits inside the air-conditioned lounge, plus outdoor sets on carnival morning — Savannah light, the Hilton grounds, or a curated backdrop matched to your costume.</p>
 <h2>Fast turnaround, private gallery</h2>
 <p>Edited highlights delivered same day for social; full gallery within 72 hours to a private link.</p>
+<h2>How much does a Carnival photoshoot cost?</h2>
+<p>Photoshoot only is ${PHOTO_RANGE}. Booked with makeup as Full Glam it is ${FULL_GLAM_RANGE}, and a deposit of US$${DEPOSIT} per masquerader confirms the slot.</p>
+<h2>Where you can book a Carnival photoshoot</h2>
+<p>The photoshoot runs at every Glam Hub, both tiers. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What the shoot covers</h2>
+<p>Full costume portraits front, back and detail, so the backpack, wire bra and headpiece are all documented properly, plus movement frames and group shots with your section. Shooting happens after hair, makeup and getting dressed, while the look is at its freshest and before the road touches it.</p>
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
 ${CTA}`,
   },
   "/services/getting-dressed": {
@@ -446,6 +603,14 @@ ${CTA}`,
 <p>Correct positioning, hidden padding for support, waist and hip strap tuning, hardware secured so nothing shifts on the road.</p>
 <h2>Collars, harnesses and headpieces</h2>
 <p>Locked into your hair install so it sits high and stays put. Backup pins, tape and touch-up strap kit on hand.</p>
+<h2>How much does getting dressed cost?</h2>
+<p>Carnival morning access, which covers getting dressed, the lounge, refreshments and the shuttle where it runs, is US$${GETTING_DRESSED_PRICE} per masquerader and is free with any Glam Hub service. It is a Full Service Glam Hub inclusion, so it is offered in the territories where we open the full lounge.</p>
+<h2>Where you can book getting-dressed help</h2>
+${UPCOMING_WITH_DATES}
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
+<h2>Why it matters</h2>
+<p>A modern Carnival costume is a piece of engineering. Wires dig, straps slip, hooks sit in the wrong place and a backpack that is half a centimetre out will bruise a shoulder by lunchtime. A seamstress on site can take in a bra, move a hook or rescue a fitting problem on the morning itself, which is not something a hotel room and a friend can do.</p>
 ${CTA}`,
   },
   "/services/carnival-shuttle": {
@@ -455,6 +620,15 @@ ${CTA}`,
 <p>Air-conditioned transport with your section, so you arrive fresh, dry and on time. Route pre-mapped to avoid Carnival morning gridlock.</p>
 <h2>Group capacity</h2>
 <p>Private shuttles for sections and friend groups. Book with your glam package or standalone.</p>
+<h2>What the shuttle costs</h2>
+<p>The shuttle is included in Carnival morning access at US$${GETTING_DRESSED_PRICE} per masquerader, free with any Glam Hub service, in the territories where it runs. It is not sold separately as a taxi service.</p>
+<h2>Where the shuttle runs</h2>
+<p>Shuttle is a Full Service Glam Hub inclusion. Glam Hub Lite territories do not include it, and there is no shuttle in Miami this season. These are the Carnivals open now.</p>
+${UPCOMING_WITH_DATES}
+<h2>What your appointment includes</h2>
+${INCLUSION_LISTS}
+<h2>Timing on Carnival morning</h2>
+<p>The shuttle leaves in waves as sections finish getting dressed, so nobody sits in costume waiting for a full bus. Routes are mapped in advance around the road closures, which is the part that catches out masqueraders booking their own transport for the first time.</p>
 ${CTA}`,
   },
 };
@@ -478,6 +652,29 @@ const CORE: Record<string, Content> = {
 <ul>
 ${UPCOMING_LIST_HTML}
 </ul>
+<h2>What happens on Carnival morning</h2>
+<p>You arrive at the Glam Hub before sunrise, check in at reception and move through the lounge in one flow: hair, makeup, getting dressed with a seamstress on hand, then photographs in full costume while the look is at its freshest. When your section is ready the shuttle takes you to your band. Nothing is spread across five appointments and three parts of the city, which is the problem the Hub was built to solve.</p>
+<h2>What is included</h2>
+<p>Carnival Glam Hub runs at two tiers. A Full Service Glam Hub opens the complete lounge, a Glam Hub Lite runs a focused version of it.</p>
+${INCLUSION_LISTS}
+<h2>Carnival Glam Hub pricing</h2>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
+<h3>Open for booking now</h3>
+<ul>
+${pricingEntryRows()}
+</ul>
+<h3>Enquiry only</h3>
+<ul>
+${enquiryRows()}
+</ul>
+<p>Work out your own total on the <a href="/booking-calculator">quote calculator</a>, or message us on WhatsApp at ${WHATSAPP_DISPLAY}.</p>
+<h2>Booking and cancellation</h2>
+<p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms your appointment and comes off the balance. No slot is held until the deposit is received. No refund is given if you cancel within 14 days of the event, and a booking may be transferred once to another Carnival Glam Hub event within 12 months if requested at least 3 days ahead. The full wording is on our <a href="/policies">terms and policies page</a>.</p>
+<h2>Press</h2>
+<p>${PRESS_OUTLET_SENTENCE} See the coverage on our <a href="/press">press page</a>.</p>
+<h2>Working with us</h2>
+<p>Beauty professionals can <a href="/joinourteam">join the team</a> for the season, or <a href="/station-rentals">rent a station</a> inside a Hub and bring their own clients. Our product picks live on the <a href="/amazon-store">Amazon storefront</a>.</p>
 ${CTA}`,
   },
   "/about": {
@@ -486,7 +683,21 @@ ${CTA}`,
 <h2>Our story</h2>
 <p>Started in Port of Spain to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. Now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
 <h2>What we do</h2>
-<p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle — from one location, on the morning of the parade.</p>
+<p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle, from one location, on the morning of the parade.</p>
+<h2>How the Hub works</h2>
+<p>Every Carnival Glam Hub is a temporary lounge, taken over for the Carnival weekend, staffed by a local team and run to a schedule. Masqueraders check in, move through hair and makeup, get dressed with a seamstress on hand, are photographed in full costume and then leave for their band. The point is that it all happens in one air-conditioned building, before dawn, at the pace the road demands.</p>
+<h2>Two tiers, one standard</h2>
+<p>We run a Full Service Glam Hub where the demand and the venue allow the complete lounge, and a Glam Hub Lite everywhere else. The tier decides what is on offer, never the quality of the work.</p>
+${INCLUSION_LISTS}
+<h2>Where we work this season</h2>
+${UPCOMING_WITH_DATES}
+<h2>What it costs</h2>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
+<h2>The team behind it</h2>
+<p>Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
+<h2>Press</h2>
+<p>${PRESS_OUTLET_SENTENCE} The full list, with dates and links, is on our <a href="/press">press page</a>.</p>
 ${CTA}`,
   },
   "/faq": {
@@ -499,7 +710,8 @@ ${CTA}`,
 <h2>What is included in a Carnival Glam Hub appointment?</h2>
 <p>A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$80 per masquerader. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>
 <h2>How much does professional Carnival makeup cost?</h2>
-<p>Pricing is tiered. Carnival morning access, meaning getting dressed, the lounge, refreshments and shuttle where it runs, is US$35. Makeup only is US$170 to US$200 for a single day, and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$140 to US$160, hair is US$120 to US$220 and Full Glam is US$430 to US$680.</p>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
 <h2>Can I do my own Carnival makeup without experience?</h2>
 <p>You can, but Carnival makeup must survive heat, sweat, and hours on the road. Most masqueraders choose a professional for sweat-resistant, photo-ready results that last all day.</p>
 <h2>What is the difference between regular makeup and Carnival makeup?</h2>
@@ -538,6 +750,125 @@ ${CTA}`,
   // /trinidad-carnival-2027 body is derived at runtime from the
   // parsed Trinidad destination record — see buildRouteMap().
 };
+
+/**
+ * /press. Generated in full from src/data/pressCoverage.ts, so a new
+ * story added to that module appears here on the next build with no
+ * edit to this file. Nothing here is written by hand.
+ */
+function pressBody(): string {
+  const stories = [...PRESS_STORIES].sort((a, b) =>
+    b.publishedDate.localeCompare(a.publishedDate),
+  );
+  const fmt = (iso: string) =>
+    new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  const items = stories
+    .map((story) => {
+      const quote = story.pullQuote
+        ? `<blockquote><p>${escapeHtml(story.pullQuote)}</p>${
+            story.pullQuoteAttribution
+              ? `<cite>${escapeHtml(story.pullQuoteAttribution)}</cite>`
+              : ""
+          }</blockquote>`
+        : "";
+      const byline = story.author ? ` By ${escapeHtml(story.author)}.` : "";
+      return `<article>
+  <h3><a href="${story.url}" rel="noopener noreferrer" target="_blank">${escapeHtml(story.headline)}</a></h3>
+  <p><strong>${escapeHtml(story.outlet)}</strong>, ${fmt(story.publishedDate)}.${byline}</p>
+  <p>${escapeHtml(story.summary)}</p>
+  ${quote}
+</article>`;
+    })
+    .join("\n");
+  const timeline = PRESS_TIMELINE.map(
+    (row) =>
+      `<li><strong>${escapeHtml(row.year)}</strong>: ${row.outlets.map((o) => escapeHtml(o)).join(", ")}</li>`,
+  ).join("\n");
+  return `<p>${PRESS_OUTLET_SENTENCE} Every story below is verified coverage of Carnival Glam Hub, listed newest first with the outlet, the date and a link to the original article. Nothing on this page is a press release we wrote about ourselves.</p>
+<h2>Outlets that have covered us</h2>
+<ul>
+${PRESS_OUTLETS.map((o) => `  <li>${escapeHtml(o.name)}</li>`).join("\n")}
+</ul>
+<h2>Coverage</h2>
+${items}
+<h2>Coverage by year</h2>
+<ul>
+${timeline}
+</ul>
+<h2>Press enquiries</h2>
+<p>Journalists, producers and editors can reach the team on WhatsApp at ${WHATSAPP_DISPLAY} or by email at ${escapeHtml(CONTACT_EMAIL)}. We can provide founder interviews, on-the-ground access on Carnival morning and imagery from any territory we work.</p>
+${CTA}`;
+}
+
+/**
+ * /booking-calculator. The explanation is written once, the numbers and
+ * the territory list are generated from src/data/territoryPricing.ts, so
+ * the static body always matches the interactive tool above it.
+ */
+function bookingCalculatorBody(): string {
+  return `<p>The Carnival Glam Hub quote calculator works out what your Carnival morning will actually cost, before you commit to anything. You pick the Carnival you are playing, the day or days you are on the road, and the services you want, and it returns a real total built from the same prices we sell at, not an estimate and not a starting-from figure.</p>
+<h2>How the calculator works</h2>
+<ol>
+  <li>Choose your Carnival. Only Carnivals that are still ahead of us are listed, because a season that has wrapped cannot be booked.</li>
+  <li>Choose your day. Where a Carnival runs over two days, Monday, Tuesday and both days are priced separately, since they are separate appointments.</li>
+  <li>Choose your services. Makeup, hair, photoshoot, bronzing and Full Glam combinations are all priced individually, and named or celebrity artists are shown as their own line rather than folded into the base price.</li>
+  <li>Read your total. The figure includes everything you selected. A deposit of US$${DEPOSIT} per masquerader confirms the booking and comes off that total.</li>
+</ol>
+<h2>What it costs</h2>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
+<h2>Carnivals you can price right now</h2>
+<ul>
+${pricingEntryRows()}
+</ul>
+<h2>Carnivals on enquiry</h2>
+<p>These Carnivals are running and we are working them, but the product list is not published yet, so the calculator shows you what is included and hands you to WhatsApp instead of quoting a number. We would rather say nothing than quote you a price we have not confirmed.</p>
+<ul>
+${enquiryRows()}
+</ul>
+<h2>What your quote includes</h2>
+${INCLUSION_LISTS}
+<h2>Deposits, transfers and cancellations</h2>
+<p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms your appointment and is applied to the total. No slot is held until it is received, and the balance is due before your service begins. No refund is given if you cancel within 14 days of the event. A booking may be transferred once, to any Carnival Glam Hub event within 12 months and including to another territory, if requested at least 3 days before the event and subject to availability. The full wording is on the <a href="/policies">terms and policies page</a>.</p>
+<p>When you are ready, <a href="${BOOKING_URL}">book your Carnival glam</a>, or message the team on WhatsApp at ${WHATSAPP_DISPLAY}.</p>
+${CTA}`;
+}
+
+/** /joinourteam. Mirrors the React page at src/pages/JoinOurTeam.tsx. */
+function joinOurTeamBody(): string {
+  const roles = [
+    ...STATION_SERVICE_TYPES,
+    "Photographers",
+    "Costume dressers",
+    "Front of house and check-in crew",
+  ];
+  return `<p>Carnival Glam Hub has created paid Carnival season work for hundreds of Caribbean beauty professionals since 2017. Every Carnival morning we run a full lounge: makeup, hair, getting dressed, photos and the shuttle, all under one roof, and we build a local crew in every territory we open in.</p>
+<h2>Who we hire</h2>
+<ul>
+${roles.map((r) => `  <li>${escapeHtml(r)}</li>`).join("\n")}
+</ul>
+<h2>Where we are hiring this season</h2>
+${UPCOMING_WITH_DATES}
+<p>If your Carnival is not on that list yet, send your portfolio anyway and we will keep it on file for the next season we open there.</p>
+<h2>What we look for</h2>
+<p>Carnival morning is not a salon day. Chairs run back to back from the early hours, every client leaves for the road, and the work has to hold through heat, sweat, paint and a full day of jumping. We look for artists who are fast without cutting corners, strictly hygienic with their kit, comfortable working to a schedule alongside a large team, and warm with clients who are nervous, jet lagged or running late.</p>
+<h2>How to apply</h2>
+<ol>
+  <li>Send your portfolio. Message us on WhatsApp at ${WHATSAPP_DISPLAY} or email ${escapeHtml(CONTACT_EMAIL)} with your role, your territory and a link to your work. Instagram is fine.</li>
+  <li>We review and shortlist. Your work is reviewed against the standard we hold on Carnival morning: speed, hygiene and a finish that survives the road.</li>
+  <li>Trial and briefing. Shortlisted artists are briefed on the Hub schedule, the products we use and how the stations run.</li>
+  <li>Work the season. Confirmed crew are allocated to a territory and a Carnival day, and paid for the work they take on.</li>
+</ol>
+<h2>Bringing your own clients instead</h2>
+<p>If you would rather work independently and keep your own bookings, you can rent a station inside the Hub instead of joining the crew. Rates, what is provided and which territories are open are all on the <a href="/station-rentals">station rentals page</a>.</p>
+<p><a href="${WHATSAPP_URL}" rel="noopener noreferrer" target="_blank">Apply on WhatsApp</a></p>
+${CTA}`;
+}
 
 
 // Station rentals (B2B). Every rate and inclusion is derived from
@@ -673,6 +1004,18 @@ function buildRouteMap(): Record<string, Content> {
   map["/policies"] = {
     title: "Terms and Policies",
     body: policiesBody(),
+  };
+  map["/press"] = {
+    title: "Carnival Glam Hub in the Press",
+    body: pressBody(),
+  };
+  map["/booking-calculator"] = {
+    title: "Carnival Glam Quote Calculator",
+    body: bookingCalculatorBody(),
+  };
+  map["/joinourteam"] = {
+    title: "Join the Carnival Glam Hub Team",
+    body: joinOurTeamBody(),
   };
   map["/station-rentals"] = {
     title: "Rent a Station Inside the Carnival Glam Hub",

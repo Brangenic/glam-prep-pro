@@ -90,6 +90,7 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/booking-calculator": "/images/services/makeup-hero.jpg",
   "/station-rentals": "/images/station-rentals/station-rentals-hero.png",
   "/press": "/images/services/photoshoot-hero.jpg",
+  "/joinourteam": "/images/station-rentals/station-rentals-hero.png",
   // Portrait illustration: letterboxed onto the brand warm-white canvas
   // (see OG_CONTAIN_ROUTES) so the figures are never cropped.
   "/policies": "/images/policies/refund-policy.png",
@@ -167,6 +168,8 @@ const OG_IMAGE_ALT: Record<string, string> = {
     "Carnival Glam Hub artist applying Carnival makeup at a lounge station",
   "/station-rentals":
     "Carnival Glam Hub makeup station rentals, a gold branded director's chair beside a lit vanity of professional makeup products",
+  "/joinourteam":
+    "A Carnival Glam Hub station set up for an artist on Carnival morning",
   "/policies":
     "Illustration of two Glam Hub team members reviewing a refund request form",
   "/best-carnival-makeup-trinidad":
@@ -457,6 +460,12 @@ const staticRoutes: RouteMeta[] = [
     ogImage: HERO_FALLBACK,
   },
   {
+    path: "/joinourteam",
+    title: "Join Our Team | Carnival Glam Hub Careers",
+    description:
+      "Work Carnival mornings with Carnival Glam Hub. We hire makeup artists, hair stylists, photographers, dressers and front of house crew across the Caribbean and the diaspora.",
+  },
+  {
     path: "/trinidad-carnival-2027",
     title: "Trinidad Carnival 2027 Makeup & Hair | Glam Hub",
     description:
@@ -730,6 +739,7 @@ function buildJsonLd(route: RouteMeta): object[] {
       "/amazon-store": "Amazon Storefront",
       "/booking-calculator": "Quote Calculator",
       "/station-rentals": "Station Rentals",
+      "/joinourteam": "Join Our Team",
       "/blogs": "Journal",
       "/policies": "Terms and Policies",
     };
@@ -1212,6 +1222,60 @@ async function main() {
     `prerender-routes: wrote ${destinationRoutes.length} /destinations/* redirect stubs.`,
   );
 
+  // Root-level legacy aliases. /glam-store is the old name for the Amazon
+  // storefront, so it is one page under two URLs. It gets its own head and
+  // a canonical onto /amazon-store rather than a second self-canonical
+  // page, which would split the signals between duplicates. Same stub
+  // shape as the /destinations/* aliases: canonical, meta refresh and a
+  // JavaScript replace, with a real link in the body so it is never read
+  // as a Soft 404.
+  const rootAliases: { from: string; to: string }[] = [
+    { from: "/glam-store", to: "/amazon-store" },
+  ];
+  for (const alias of rootAliases) {
+    const target = allRoutes.find((r) => r.path === alias.to);
+    if (!target) continue;
+    const abs = `${BASE_URL}${alias.to}`;
+    const ogImage = target.ogImage?.startsWith("http")
+      ? target.ogImage
+      : `${BASE_URL}${target.ogImage ?? ""}`;
+    const desc = target.description.replace(/"/g, "&quot;");
+    const stub = `<!doctype html>
+<html lang="en">
+  <head>
+    <script>location.replace("${alias.to}" + location.search + location.hash);</script>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=${alias.to}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${target.title}</title>
+    <meta name="description" content="${desc}" />
+    <link rel="canonical" href="${abs}" />
+    <meta property="og:title" content="${target.title}" />
+    <meta property="og:description" content="${desc}" />
+    <meta property="og:url" content="${abs}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="${abs}" />
+    <meta name="twitter:title" content="${target.title}" />
+    <meta name="twitter:description" content="${desc}" />
+    <meta name="twitter:image" content="${ogImage}" />
+  </head>
+  <body>
+    <h1>${target.title}</h1>
+    <p>The Glam Store has moved. Every Carnival Glam Hub product pick now lives on one page, the Amazon storefront, with the makeup, hair, costume and travel items our artists actually use on Carnival morning.</p>
+    <p><a href="${alias.to}">Continue to the Carnival Glam Hub Amazon storefront</a></p>
+  </body>
+</html>
+`;
+    const dir = join(DIST, alias.from.replace(/^\//, ""));
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "index.html"), stub);
+  }
+  console.log(`prerender-routes: wrote ${rootAliases.length} root alias redirect stubs.`);
+
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 
   // Homepage-only VideoObject JSON-LD. The "Glam Hub in Action" YouTube
@@ -1235,12 +1299,29 @@ async function main() {
       logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png` },
     },
   };
-  const videoScript = `    <script type="application/ld+json" data-prerender="home-video">${JSON.stringify(
-    homeVideo,
-  ).replace(/</g, "\\u003c")}</script>\n  </head>`;
+  // Homepage BreadcrumbList. Every other route gets one from buildJsonLd,
+  // but `/` is written from the template rather than through rewriteHead,
+  // so it is injected here. A single-item list, because the homepage is
+  // the root of the trail.
+  const homeBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+    ],
+  };
+  const homeScripts =
+    `    <script type="application/ld+json" data-prerender="home-breadcrumb">${JSON.stringify(
+      homeBreadcrumb,
+    ).replace(/</g, "\\u003c")}</script>\n` +
+    `    <script type="application/ld+json" data-prerender="home-video">${JSON.stringify(
+      homeVideo,
+    ).replace(/</g, "\\u003c")}</script>\n  </head>`;
   const homeHtml = readFileSync(indexPath, "utf8");
-  writeFileSync(indexPath, homeHtml.replace("</head>", videoScript));
-  console.log("prerender-routes: injected homepage VideoObject JSON-LD.");
+  writeFileSync(indexPath, homeHtml.replace("</head>", homeScripts));
+  console.log(
+    "prerender-routes: injected homepage BreadcrumbList and VideoObject JSON-LD.",
+  );
 }
 
 main().catch((err) => {
