@@ -70,13 +70,13 @@ export const destinations: Destination[] = [
     date: "20–21 July 2026",
     description: "Glam Hub Lite for Saint Lucia Carnival.",
     longDescription:
-      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks. Sweat-resistant road makeup, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march and fete looks. Sweat-resistant road makeup, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     image: "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&dl=1",
     cta: "Book Saint Lucia Glam",
     objectPosition: "50% 20%",
     highlights: [
       "Road march full glam",
-      "J'ouvert paint and shimmer",
+      "Body shimmer and glitter",
       "Eye gems and festival lashes",
       "Photoshoot in the lounge",
     ],
@@ -92,7 +92,7 @@ export const destinations: Destination[] = [
     date: "4 August 2026",
     description: "Carnival glam services for Antigua Carnival.",
     longDescription:
-      "Antigua Carnival is one of the Caribbean's most colourful festivals, and our Glam Hub Lite keeps you camera-ready from j'ouvert to last lap. Premium sweat-resistant makeup, gems, body art and shimmer, plus a photoshoot in the lounge.",
+      "Antigua Carnival is one of the Caribbean's most colourful festivals, and our Glam Hub Lite keeps you camera-ready from first lap to last lap. Premium sweat-resistant makeup, gems, body art and shimmer, plus a photoshoot in the lounge.",
     image: "https://www.dropbox.com/scl/fi/zj9aswskvl80vunhkhdcf/Chloe%20J.png?rlkey=yxp73i1uv8pcwpuink46ty6mv&dl=1",
     cta: "Book Antigua Glam",
     objectPosition: "50% 20%",
@@ -176,7 +176,7 @@ export const destinations: Destination[] = [
     date: "30 October – 1 November 2026",
     description: "Glam Hub Lite for Tobago Carnival.",
     longDescription:
-      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     // Placeholder imagery of our own work, not a Tobago location shot.
     image: tobagoImg,
     imageAlt:
@@ -185,7 +185,7 @@ export const destinations: Destination[] = [
     objectPosition: "50% 20%",
     highlights: [
       "Road march full glam",
-      "J'ouvert paint and shimmer",
+      "Body shimmer and glitter",
       "Eye gems and festival lashes",
       "Photoshoot in the lounge",
     ],
