@@ -185,6 +185,10 @@ function capabilityLines(slug: string): string[] {
     lines.push(
       `Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader, a paid add-on and never an inclusion.`,
     );
+  if (caps.dressingAssistance)
+    lines.push(
+      "Dressing assistance: offered, and carries no published price. There is no seamstress.",
+    );
   return lines;
 }
 
@@ -242,6 +246,7 @@ function buildTiers(): string {
       caps.overnightBagCheck
         ? `overnight bag check ${money(OVERNIGHT_BAG_CHECK_PRICE)}`
         : null,
+      caps.dressingAssistance ? "dressing assistance, no price" : null,
     ].filter(Boolean) as string[];
     return `${getProfile(s)?.shortName ?? s}: ${sentenceList(has)}`;
   });
@@ -267,6 +272,8 @@ ${sentenceList(CHARGEABLE_SERVICES)} are products. They are charged separately a
 
 ## Not offered at a ${TIER_LABEL.lite}
 ${bullets(LITE_NOT_OFFERED)}
+
+Grenada is the one exception to that list. Grenada offers dressing assistance, on Kibwe's instruction of 3 September 2026, and it carries no price. Grenada still has no seamstress.
 
 ## Four territory-scoped capabilities
 These sit outside the tier model and exist only where listed:
