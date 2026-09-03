@@ -496,7 +496,7 @@ ${CTA}`,
 <h2>How far in advance should I book carnival makeup?</h2>
 <p>Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time — at least 4–6 weeks ahead for peak weekends.</p>
 <h2>What is included in a Carnival Glam Hub appointment?</h2>
-<p>A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica, with the price confirmed on booking. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>
+<p>A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica. Jamaica reels are US$80 per masquerader, and the Trinidad price is confirmed on booking. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>
 <h2>How much does professional Carnival makeup cost?</h2>
 <p>Pricing is tiered. Carnival morning access, meaning getting dressed, the lounge, refreshments and shuttle where it runs, is US$35. Makeup only is US$170 to US$200 for a single day, and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$140 to US$160, hair is US$120 to US$220 and Full Glam is US$430 to US$680.</p>
 <h2>Can I do my own Carnival makeup without experience?</h2>
@@ -576,7 +576,7 @@ function stationRentalsBody(): string {
 <p>The station spec is the same at both tiers. What differs is the hub around it. ${escapeHtml(CLIENT_AMENITIES_NOTE)}</p>
 <h3>Full Service Glam Hub (Trinidad, Jamaica, Miami)</h3>
 <ul>${incl("trinidad")}</ul>
-<p>The shuttle runs in Jamaica and Trinidad. Trinidad and Jamaica also run bronzing, a barber and reels. ${escapeHtml(STATION_TERRITORY_NOTES.miami)}</p>
+<p>The shuttle runs in Jamaica and Trinidad. Trinidad and Jamaica also run bronzing, a barber and reels, with Jamaica reels at US$80 per masquerader. ${escapeHtml(STATION_TERRITORY_NOTES.miami)}</p>
 <h3>Glam Hub Lite (all other territories)</h3>
 <ul>${incl("barbados")}</ul>
 <h2>Station rates by territory</h2>
