@@ -247,6 +247,22 @@ export const MIAMI_VENUE_FAQ = {
   answer: `Miami Carnival has moved to Broward County. As announced by Miami Carnival, the Parade of Bands is at ${MIAMI_VENUE_NAME}, ${MIAMI_VENUE_ADDRESS}, sometimes listed as the ${MIAMI_VENUE_ALIAS}. The city is Lauderhill, not Fort Lauderdale. ${MIAMI_VENUE_DISTANCES} ${MIAMI_HUB_LOCATION} ${MIAMI_SHUTTLE_NOTE}`,
 };
 
+/**
+ * Grenada's Spicemas 2027 Glam Hub venue, named by the booking team.
+ * Only the property name is confirmed, so no address, rating or
+ * distance may ever be added here or anywhere that reads it. Naming a
+ * venue does not change the tier: Grenada stays Glam Hub Lite.
+ */
+export const GRENADA_VENUE_NAME = "the Radisson Hotel";
+
+/** Location line used by the page, the prerendered body and the bot. */
+export const GRENADA_HUB_LOCATION = `Our Spicemas 2027 Glam Hub is at ${GRENADA_VENUE_NAME}, Grenada.`;
+
+export const GRENADA_VENUE_FAQ = {
+  question: "Where is the Grenada Glam Hub for Spicemas 2027?",
+  answer: `${GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so it covers makeup, a photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments. Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
+};
+
 export function getHubTier(slug: string): HubTier | null {
   if ((FULL_SERVICE_SLUGS as readonly string[]).includes(slug)) return "full";
   if ((LITE_SLUGS as readonly string[]).includes(slug)) return "lite";

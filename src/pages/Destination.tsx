@@ -17,7 +17,7 @@ import {
   getDestinationFaqs,
 } from "@/data/destinations";
 import { buildDestinationUrl, getDestinationCardLink } from "@/lib/destinations";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE, REELS_LABEL, reelsNote } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_SHUTTLE_NOTE, hasBarber, BARBER_LABEL, getCapabilities, MIAMI_VENUE_NAME, MIAMI_VENUE_ADDRESS, MIAMI_VENUE_ALIAS, MIAMI_VENUE_CITY, MIAMI_VENUE_DISTANCES, MIAMI_HUB_LOCATION, MIAMI_BAG_CHECK_NOTE, REELS_LABEL, reelsNote, GRENADA_HUB_LOCATION } from "@/data/hubTiers";
 import { BARBER_PRICE, OVERNIGHT_BAG_CHECK_PRICE } from "@/data/territoryPricing";
 import logoImg from "@/assets/logo.png";
 import { getDestinationPackages } from "@/data/destinationPackages";
@@ -28,6 +28,8 @@ import {
   hasSeasonPassed,
   passedSeasonYear,
   seasonAwareMeta,
+  getOpenPreRegistration,
+  PRE_REGISTRATION,
 } from "@/data/seasons";
 
 import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
@@ -86,7 +88,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     "saint-lucia": { territory: "Saint Lucia", year: "2026", event: "Saint Lucia Carnival" },
     antigua: { territory: "Antigua", year: "2026", event: "Antigua Carnival" },
     barbados: { territory: "Barbados", year: "2026", event: "Barbados Crop Over" },
-    grenada: { territory: "Grenada", year: "2026", event: "Grenada Spicemas" },
+    grenada: { territory: "Grenada", year: "2027", event: "Grenada Spicemas" },
   };
   const seo = dest ? seoOverrides[dest.slug] : undefined;
 
@@ -226,13 +228,35 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   )}`;
   // A passed territory sells nothing. Every booking call to action on the
   // page becomes a Gallery link, derived from the season calendar.
-  const ctaHref = seasonPassed ? GALLERY_HREF : awaitingDates ? waitlistHref : bookingUrl;
+  // Pre-registration, dated centrally in src/data/seasons.ts. While it
+  // is open the page sells the pre-registration and nothing else. The
+  // day it closes the block and its deadline wording disappear on their
+  // own and the page falls back to an enquiry, without ever implying
+  // the Carnival itself is over.
+  const preReg = getOpenPreRegistration(dest.slug);
+  const preRegClosed = Boolean(PRE_REGISTRATION[dest.slug]) && !preReg && !seasonPassed;
+  const enquiryHref = `mailto:Bookings@carnivalglamhub.com?subject=${encodeURIComponent(
+    `${dest.name} enquiry`,
+  )}`;
+  const ctaHref = seasonPassed
+    ? GALLERY_HREF
+    : awaitingDates
+      ? waitlistHref
+      : preReg
+        ? preReg.eventUrl
+        : preRegClosed
+          ? enquiryHref
+          : bookingUrl;
   const ctaLabel = seasonPassed
     ? GALLERY_CTA
     : awaitingDates
       ? `Join the ${waitlistYear} waitlist`.replace(/\s+/g, " ")
-      : "Book Your Glam";
-  const ctaExternal = !seasonPassed && !awaitingDates;
+      : preReg
+        ? `Pre-register for US$${preReg.amount}`
+        : preRegClosed
+          ? "Enquire about your appointment"
+          : "Book Your Glam";
+  const ctaExternal = !seasonPassed && !awaitingDates && !preRegClosed;
 
 
   return (
@@ -324,6 +348,47 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-8 py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
               >
                 Book Now
+              </a>
+            </div>
+          </section>
+        )}
+
+        {/* Pre-registration only. Dated centrally, closes on its own. */}
+        {preReg && (
+          <section
+            aria-label={`${dest.name} pre-registration`}
+            className="border-y border-border bg-primary/5"
+          >
+            <div className="container mx-auto px-4 sm:px-6 max-w-4xl py-10 sm:py-14">
+              <p className="font-body text-xs uppercase tracking-[0.25em] text-secondary font-medium mb-3">
+                Pre-registration open
+              </p>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">
+                Secure {preReg.secures} for US${preReg.amount}
+              </h2>
+              <p className="font-body text-sm sm:text-base text-muted-foreground mb-3">
+                Pre-registration is US${preReg.amount} per masquerader and it closes on{" "}
+                {preReg.closesOnText}. It secures {preReg.secures} at our Glam Hub for{" "}
+                {dest.date}.
+              </p>
+              <p className="font-body text-sm sm:text-base text-muted-foreground mb-3">
+                To be clear about what it is: pre-registration is not a full booking and no
+                service is included. Makeup, hair and photoshoot prices are set later, and you
+                choose and pay for your services when the product list goes live.
+              </p>
+              {dest.slug === "grenada" && (
+                <p className="font-body text-sm sm:text-base text-muted-foreground mb-6">
+                  {GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so the tier and its
+                  inclusions are unchanged.
+                </p>
+              )}
+              <a
+                href={preReg.eventUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-primary text-primary-foreground hover:bg-primary/90 font-body font-semibold text-sm px-7 py-3 rounded-full shadow-md transition-all"
+              >
+                Pre-register for US${preReg.amount}
               </a>
             </div>
           </section>

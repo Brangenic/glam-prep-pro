@@ -65,7 +65,8 @@ import {
   formatStationRate,
   getStationInclusions,
 } from "../src/data/stationRentals";
-import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF } from "../src/data/seasons";
+import { TERRITORY_PROFILES } from "../src/data/territoryProfiles";
+import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF, getOpenPreRegistration } from "../src/data/seasons";
 import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
@@ -432,11 +433,23 @@ function destinationBody(d: ParsedDest): string {
     // A territory with no confirmed product list never shows a service
     // price. Where only a pre-registration exists, the body says so.
     const pricing = TERRITORY_PRICING.find((t) => t.slug === d.slug);
-    if (pricing && pricing.quotable === false && pricing.deposit) {
+    const preReg = getOpenPreRegistration(d.slug);
+    const profileVenue = TERRITORY_PROFILES.find((p) => p.slug === d.slug)?.venue;
+    if (preReg) {
       parts.push(`<h2>${escapeHtml(d.name)} pre-registration</h2>`);
       parts.push(
-        `<p>Pre-registration is open at US$${pricing.deposit.amount} per masquerader. ${escapeHtml(pricing.deposit.note ?? "")} No makeup, hair or photoshoot price is published for this season yet, and service rates are confirmed when the product list goes live.</p>`,
+        `<p>Pre-registration is open at US$${preReg.amount} per masquerader and closes on ${escapeHtml(preReg.closesOnText)}. It secures ${escapeHtml(preReg.secures)} at our Glam Hub for ${escapeHtml(d.date)}. Pre-registration is not a full booking and no service is included. No makeup, hair or photoshoot price is published for this season yet, and service prices are confirmed when the product list goes live.</p>`,
       );
+      if (profileVenue) parts.push(`<p>${escapeHtml(profileVenue)}</p>`);
+      parts.push(
+        `<p><a href="${preReg.eventUrl}" rel="noopener noreferrer">Pre-register for US$${preReg.amount}</a></p>`,
+      );
+    } else if (pricing && pricing.quotable === false && pricing.deposit) {
+      parts.push(`<h2>${escapeHtml(d.name)} appointments</h2>`);
+      parts.push(
+        `<p>No makeup, hair or photoshoot price is published for this season yet, and pre-registration has closed. Message the booking team and we will confirm your appointment and rates when the product list goes live.</p>`,
+      );
+      if (profileVenue) parts.push(`<p>${escapeHtml(profileVenue)}</p>`);
     }
     parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
     parts.push(

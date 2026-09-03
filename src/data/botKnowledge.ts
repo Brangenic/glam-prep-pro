@@ -52,7 +52,7 @@ import {
   type QuoteProduct,
   type TerritoryPricing,
 } from "@/data/territoryPricing";
-import { SEASON_END_DATES, SEASON_FORWARD_SLUGS } from "@/data/seasons";
+import { SEASON_END_DATES, SEASON_FORWARD_SLUGS, getOpenPreRegistration } from "@/data/seasons";
 import {
   EFFECTIVE_DATE,
   TERMS_BLOCKS,
@@ -348,8 +348,11 @@ function buildBrief(slug: string): string {
     );
     if (pricing.provisionalNote) parts.push(pricing.provisionalNote);
   } else {
+    const preRegistration = getOpenPreRegistration(slug);
     parts.push(
-      "## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.",
+      preRegistration
+        ? `## Prices\nNo makeup, hair or photoshoot price is published for this territory yet, so never quote a service price for it. The only figure is the pre-registration.\n\n## Pre-registration\nPre-registration is ${money(preRegistration.amount)} per masquerader and closes on ${preRegistration.closesOnText}. It secures ${preRegistration.secures}. It is not a full booking and no service is included, because service prices are set later. Pre-register at ${preRegistration.eventUrl}, never the generic events list.`
+        : "## Prices\nNo prices are published for this territory yet. Never quote a number for it. Send the visitor to the booking team to confirm before any payment.",
     );
   }
 
@@ -640,6 +643,7 @@ function buildLinks(): { label: string; url: string }[] {
 const NEVER_SAY = [
   "GENX10",
   "Any deposit figure other than US$50, which is the only deposit we take",
+  "Any Grenada makeup, hair or photoshoot price for Spicemas 2027. None exists. The only Grenada figure is the US$50 pre-registration, which closes on 31 December 2026 and is not a full booking.",
   "Any lower deposit for Miami. Miami takes the same US$50 deposit as everywhere else.",
   "Any discount code, promo code or voucher code of any kind",
   "Any shuttle departure or pick-up time",
