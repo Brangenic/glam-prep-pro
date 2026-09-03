@@ -650,6 +650,7 @@ function buildLinks(): { label: string; url: string }[] {
 const NEVER_SAY = [
   "GENX10",
   "Any deposit figure other than US$50, which is the only deposit we take",
+  "That the Grenada pre-registration is a deposit, or that it is refundable or non-refundable. It is a US$50 pre-registration and nothing more has been confirmed.",
   "Any Grenada makeup, hair or photoshoot price for Spicemas 2027. None exists. The only Grenada figure is the US$50 pre-registration, which closes on 31 December 2026 and is not a full booking.",
   "Any lower deposit for Miami. Miami takes the same US$50 deposit as everywhere else.",
   "Any discount code, promo code or voucher code of any kind",
