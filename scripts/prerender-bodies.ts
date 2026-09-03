@@ -500,8 +500,13 @@ function destinationBody(d: ParsedDest): string {
     }
     parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
 
+    // A Lite page does not list what the visitor is missing and send
+    // them to three other territories. Kibwe, 3 September 2026. Scoped
+    // to Grenada for now, the other Lite bodies are unchanged.
     parts.push(
-      `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
+      d.slug === "grenada"
+        ? `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. ${escapeHtml(d.shortName ?? d.name)} is a Glam Hub Lite, not a Full Service Glam Hub. What we run here is ${escapeHtml((getHubInclusions(d.slug) ?? []).map((i) => i.toLowerCase()).join(", "))}.</p>`
+        : `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
     );
     parts.push(CTA);
   }
@@ -602,7 +607,7 @@ ${FULL_SERVICE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
 <ul>
 ${LITE_INCLUSIONS.map((i) => `  <li>${escapeHtml(i)}</li>`).join("\n")}
 </ul>
-<p>A Glam Hub Lite does not offer ${LITE_NOT_OFFERED.map((i) => escapeHtml(i.toLowerCase())).join(", ")}.</p>`;
+<p>A Glam Hub Lite does not offer ${LITE_NOT_OFFERED.map((i) => escapeHtml(i.toLowerCase())).join(", ")}. Grenada is the one exception: it offers dressing assistance, and still no seamstress.</p>`;
 
 const UPCOMING_WITH_DATES = `<ul>
 ${getUpcomingDestinations(undefined, undefined, { dedupeTrinidad: true })
