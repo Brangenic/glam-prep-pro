@@ -45,7 +45,8 @@ import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
   OVERNIGHT_BAG_CHECK_PRICE,
-  REELS_PRICE,
+  REELS_PRICE_BY_SLUG,
+  getReelsPrice,
   TERRITORY_PRICING,
   getTerritoryPricing,
   type DayKey,
@@ -178,10 +179,14 @@ function capabilityLines(slug: string): string[] {
   const lines: string[] = [];
   if (caps.barber) lines.push(`Barber: ${money(BARBER_PRICE)}`);
   if (caps.bronzing) lines.push(`Bronzing: ${money(BRONZING_PRICE)}`);
-  if (caps.reels)
+  if (caps.reels) {
+    const reels = getReelsPrice(slug);
     lines.push(
-      "Reels: a paid add-on with no published price. The booking team confirms it.",
+      reels === null
+        ? "Reels: a paid add-on with no published price. The booking team confirms it."
+        : `Reels: ${money(reels)} per masquerader, a paid add-on.`,
     );
+  }
   if (caps.overnightBagCheck)
     lines.push(
       `Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader, a paid add-on and never an inclusion.`,
@@ -239,7 +244,11 @@ function buildTiers(): string {
     const has = [
       caps.barber ? `barber ${money(BARBER_PRICE)}` : null,
       caps.bronzing ? `bronzing ${money(BRONZING_PRICE)}` : null,
-      caps.reels ? "reels, price confirmed by the booking team" : null,
+      caps.reels
+        ? getReelsPrice(s) === null
+          ? "reels, price confirmed by the booking team"
+          : `reels ${money(getReelsPrice(s)!)}`
+        : null,
       caps.overnightBagCheck
         ? `overnight bag check ${money(OVERNIGHT_BAG_CHECK_PRICE)}`
         : null,
@@ -414,7 +423,7 @@ Prices are per masquerader in US dollars. They vary by territory and by day, so 
 - Getting dressed: ${money(GETTING_DRESSED_PRICE)} on its own, and free with any Glam Hub service. Trinidad, Jamaica and Miami only.
 - Barber: ${money(BARBER_PRICE)}. Trinidad and Jamaica only.
 - Bronzing: ${money(BRONZING_PRICE)}. Trinidad and Jamaica only.
-- Reels: Trinidad and Jamaica only. A paid add-on with no confirmed price. ${REELS_NOTE} There is no figure to quote, so never invent one.
+- Reels: Trinidad and Jamaica only, a paid add-on. ${REELS_NOTE} Where no price is confirmed there is no figure to quote, so never invent one.
 - Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader. Trinidad, Jamaica and Miami only.
 - Shuttle: an inclusion where it runs. It is never charged as an extra.
 - Road ready Carnival morning access: ${money(ROAD_READY_PRICE)}, where the territory offers it.
@@ -702,5 +711,5 @@ export function buildKnowledgePack(): KnowledgePack {
   };
 }
 
-/** Reels has no confirmed price by design. Referenced so it cannot be dropped. */
-export const REELS_PRICE_IS_NULL = REELS_PRICE === null;
+/** Trinidad reels has no confirmed price by design. Referenced so it cannot be dropped. */
+export const TRINIDAD_REELS_PRICE_IS_NULL = REELS_PRICE_BY_SLUG.trinidad === null;
