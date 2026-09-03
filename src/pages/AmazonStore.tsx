@@ -52,7 +52,7 @@ const AmazonStore = () => {
         // Amazon affiliate items: price is set by Amazon and changes,
         // so we do NOT emit Product+Offer markup (invalid Offer without a
         // real `price` is worse for SEO than none). Ship a plain
-        // ItemList of links instead — Rich Results-valid and honest.
+        // ItemList of links instead, Rich Results-valid and honest.
         url: item.product_url,
         name: item.title,
         image: item.image_url ?? undefined,
@@ -109,7 +109,7 @@ const AmazonStore = () => {
                 </span>
               </h1>
               <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                Browse our curated Amazon collections — tap any category to
+                Browse our curated Amazon collections, tap any category to
                 explore all the items inside.
               </p>
             </header>

@@ -6,7 +6,7 @@ const DEFAULTS: Record<string, string> = {
   hero_subtitle:
     "Luxury glam, costume dressing, and concierge-style preparation for masqueraders who want to hit the road looking flawless.",
   hero_subtext:
-    "From makeup to final touches — we handle everything so you can focus on the experience.",
+    "From makeup to final touches, we handle everything so you can focus on the experience.",
   hero_cta_text: "Book Your Carnival Glam",
   cta_headline: "Secure Your Carnival Glam Slot",
   cta_description:

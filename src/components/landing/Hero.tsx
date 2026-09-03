@@ -21,7 +21,7 @@ const Hero = () => {
         sizes="100vw"
         width={1920}
         height={1080}
-        alt="Carnival masquerader with golden feather headdress and rhinestone costume — Carnival Glam Hub"
+        alt="Carnival masquerader with golden feather headdress and rhinestone costume, Carnival Glam Hub"
         className="absolute inset-0 w-full h-full object-cover object-top"
         loading="eager"
         decoding="async"
@@ -34,7 +34,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
             <span className="font-body text-[10px] sm:text-xs uppercase tracking-[0.2em] text-primary font-medium drop-shadow-lg">
-              Now Booking — Limited Slots
+              Now Booking, Limited Slots
             </span>
           </div>
           <h1 id="hero-heading" className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mb-5 sm:mb-6 animate-fade-up text-white">

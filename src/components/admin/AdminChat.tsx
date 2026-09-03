@@ -38,7 +38,7 @@ export default function AdminChat() {
 
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.response || "Done — no response text." },
+        { role: "assistant", content: data.response || "Done, no response text." },
       ]);
     } catch (e: any) {
       setMessages((prev) => [

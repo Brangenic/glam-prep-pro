@@ -39,6 +39,12 @@ import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
 import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY } from "../src/data/hubTiers";
 import {
+  TRINIDAD_ANSWER_SECTIONS,
+  TRINIDAD_VENUES,
+  TRINIDAD_APPOINTMENT_WINDOW,
+  TRINIDAD_BOOKING_URL,
+} from "../src/data/answerPages";
+import {
   FULL_SERVICE_STATION_TERRITORIES,
   LITE_STATION_TERRITORIES,
   STATION_BRING,
@@ -270,12 +276,12 @@ function destinationRelated(slug: string): string {
 }
 
 // ---------------------------------------------------------------
-// Destinations — parsed at build time from src/data/destinations.ts
+// Destinations, parsed at build time from src/data/destinations.ts
 // so the injected copy always matches the app's real data. We cannot
 // import that file here (it uses the @/ alias and imports image
 // assets), so we regex-parse its source text and extract only the
 // plain string fields we need: slug, name, date, longDescription,
-// highlights. If a field is missing, we omit it — never invent one.
+// highlights. If a field is missing, we omit it, never invent one.
 // ---------------------------------------------------------------
 
 type ParsedDest = {
@@ -379,10 +385,10 @@ function escapeHtml(s: string): string {
 
 function destinationBody(d: ParsedDest): string {
   const parts: string[] = [];
-  // Header line — include date only if present in source data.
+  // Header line, include date only if present in source data.
   if (d.date) {
     parts.push(
-      `<p><strong>${escapeHtml(d.name)}</strong> — ${escapeHtml(d.date)}</p>`,
+      `<p><strong>${escapeHtml(d.name)}</strong>, ${escapeHtml(d.date)}</p>`,
     );
   } else {
     parts.push(`<p><strong>${escapeHtml(d.name)}</strong></p>`);
@@ -547,7 +553,7 @@ const SERVICES: Record<string, Content> = {
 <h2>Airbrush vs traditional Carnival makeup</h2>
 <p>Both work for the road. Traditional application, layered with a long-wear foundation and locked down with a setting spray, gives a fuller, more sculpted finish and is easier to touch up mid-route. Airbrush gives a lighter, second-skin finish that photographs beautifully and tends to suit oilier skin in extreme heat.</p>
 <h2>How long does Carnival makeup last?</h2>
-<p>A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat — from your morning departure through the last truck. Priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday.</p>
+<p>A properly built road look is designed to hold for ten to twelve hours of dancing in tropical heat, from your morning departure through the last truck. Priming, layering and setting are what stop the foundation breaking up around the nose, forehead and chest by midday.</p>
 <h2>Where you can book Carnival makeup</h2>
 <p>Makeup is booked territory by territory, and only where the Carnival is still ahead of us. These are the Carnivals open now.</p>
 ${UPCOMING_WITH_DATES}
@@ -562,7 +568,7 @@ ${CTA}`,
   },
   "/services/carnival-hair": {
     title: "Carnival Hair & Hairstyles",
-    body: `<p>Carnival hair and hairstyles built to hold under feathers, wires and tropical heat — sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami.</p>
+    body: `<p>Carnival hair and hairstyles built to hold under feathers, wires and tropical heat, sleek ponies, voluminous curls, braided crowns and headpiece-ready installs. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami.</p>
 <h2>Headpiece-ready installs</h2>
 <p>Every style is anchored so your headpiece sits secure from the truck to the last lap. Slick-back ponies with lay-down edges, sculpted buns, braided crowns and sew-in installs with a Carnival-safe finish.</p>
 <h2>Curls, braids and updos</h2>
@@ -582,7 +588,7 @@ ${CTA}`,
     title: "Carnival Photoshoot",
     body: `<p>Professional Carnival photoshoot captured the morning of the parade. In-lounge or outdoor sets, fast turnaround, private gallery delivery. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami.</p>
 <h2>In-lounge and outdoor sets</h2>
-<p>Editorial-lit portraits inside the air-conditioned lounge, plus outdoor sets on carnival morning — Savannah light, the Hilton grounds, or a curated backdrop matched to your costume.</p>
+<p>Editorial-lit portraits inside the air-conditioned lounge, plus outdoor sets on carnival morning, Savannah light, the Hilton grounds, or a curated backdrop matched to your costume.</p>
 <h2>Fast turnaround, private gallery</h2>
 <p>Edited highlights delivered same day for social; full gallery within 72 hours to a private link.</p>
 <h2>How much does a Carnival photoshoot cost?</h2>
@@ -702,11 +708,11 @@ ${CTA}`,
   },
   "/faq": {
     title: "Carnival Glam Hub FAQ",
-    body: `<p>Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.</p>
+    body: `<p>Answers on booking Carnival Glam Hub: makeup, hair, photoshoot, dressing, shuttle, the US$50 deposit, cancellations and what to bring on the morning.</p>
 <h2>How do I book Carnival Glam Hub?</h2>
 <p>Select your destination and choose your glam package at carnivalglamhub.masos.app/events. You'll receive confirmation after booking. Only territories whose Carnival is still ahead of us are bookable. Once a season has passed, that territory closes until next season's dates are confirmed.</p>
 <h2>How far in advance should I book carnival makeup?</h2>
-<p>Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time — at least 4–6 weeks ahead for peak weekends.</p>
+<p>Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time, at least 4–6 weeks ahead for peak weekends.</p>
 <h2>What is included in a Carnival Glam Hub appointment?</h2>
 <p>A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$80 per masquerader. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>
 <h2>How much does professional Carnival makeup cost?</h2>
@@ -726,13 +732,13 @@ ${CTA}`,
   },
   "/reviews": {
     title: "Carnival Glam Hub Reviews",
-    body: `<p>Real reviews from Carnival Glam Hub clients — authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.</p>
+    body: `<p>Real reviews from Carnival Glam Hub clients, authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.</p>
 <p>Reviews are synced daily from Google. Read more about our team on the <a href="/about">About</a> page or browse frequently asked questions on the <a href="/faq">FAQ</a>.</p>
 ${CTA}`,
   },
   "/amazon-store": {
     title: "Carnival Glam Hub Amazon Storefront",
-    body: `<p>Shop the Carnival Glam Hub Amazon storefront — curated Carnival makeup, hair, costume and lounge essentials hand-picked by our team.</p>
+    body: `<p>Shop the Carnival Glam Hub Amazon storefront: curated Carnival makeup, hair, costume and lounge essentials, hand-picked by the artists on our team.</p>
 <p>Collections are updated daily. Includes long-wear foundation, setting spray, waterproof mascara, festival gems, adhesive lashes and body shimmer.</p>
 ${CTA}`,
   },
@@ -748,7 +754,7 @@ ${CTA}`,
 ${CTA}`,
   },
   // /trinidad-carnival-2027 body is derived at runtime from the
-  // parsed Trinidad destination record — see buildRouteMap().
+  // parsed Trinidad destination record, see buildRouteMap().
 };
 
 /**
@@ -878,7 +884,7 @@ function stationRentalsBody(): string {
     list
       .map(
         (t) =>
-          `<li><strong>${escapeHtml(t.name)}</strong> — ${escapeHtml(formatStationRate(t.slug))}</li>`,
+          `<li><strong>${escapeHtml(t.name)}</strong>, ${escapeHtml(formatStationRate(t.slug))}</li>`,
       )
       .join("");
   const incl = (slug: string) =>
@@ -1046,11 +1052,11 @@ function buildRouteMap(): Record<string, Content> {
     map[path] = { title: d.name, body: destinationBody(d) };
   }
   // Alias page: /trinidad-carnival-2027 mirrors the Trinidad record
-  // (uses only fields from destinations.ts — no invented copy).
+  // (uses only fields from destinations.ts, no invented copy).
   const trinidad = dests.find((d) => d.slug === "trinidad");
   if (trinidad) {
     map["/trinidad-carnival-2027"] = {
-      title: `${trinidad.name}${trinidad.date ? ` — ${trinidad.date}` : ""}`,
+      title: `${trinidad.name}${trinidad.date ? `, ${trinidad.date}` : ""}`,
       body: destinationBody(trinidad),
     };
   }
@@ -1069,7 +1075,7 @@ function buildRouteMap(): Record<string, Content> {
       territory: "Trinidad",
       slug: "trinidad",
       venueLine:
-        "Hilton Hotel, Port of Spain — two minutes from the Savannah. Shuttle to your band included in concierge packages.",
+        "Hilton Hotel, Port of Spain, two minutes from the Savannah. Shuttle to your band included in concierge packages.",
       faqs: [
         { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
         { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
@@ -1086,9 +1092,9 @@ function buildRouteMap(): Record<string, Content> {
         "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
       faqs: [
         { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
-        { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything — makeup, hair, dressing, photos, shuttle — happens in one air-conditioned location so you leave with the band." },
+        { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything happens in one air-conditioned location, makeup, hair, dressing, photos and shuttle so you leave with the band." },
         { q: "How much does Jamaica carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$200, named and celebrity artists run US$200 to US$350, photoshoot only is US$160, hair is US$120 to US$185 and Full Glam is US$440. A barber is available at US$35. Your booking team confirms final pricing before payment." },
-        { q: "Does the makeup survive the Jamaica heat?", a: "Yes — the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
+        { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
       ],
     },
     {
@@ -1099,8 +1105,8 @@ function buildRouteMap(): Record<string, Content> {
         byslug("miami")?.longDescription ??
         "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise — with the same senior MUA team." },
-        { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend — makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
+        { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
+        { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
         { q: "How much does Miami carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430." },
         { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Slots are limited and sell out weeks ahead." },
       ],
@@ -1124,9 +1130,9 @@ ${dateLine}
 <h2>Why Carnival Glam Hub is the answer</h2>
 <ul>
 <li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
-<li>Everything in one location — makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
+<li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
 <li>Trusted by 15,000+ masqueraders since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
-<li>The only glam service that travels the full Caribbean carnival circuit — Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
+<li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
 </ul>
 <h2>What's included</h2>
 <p>Skin prep and priming, sweat-resistant foundation base, contour and highlight, eye look with lash, brow shaping, lip finish and a road-proof setting layer. Headpiece-ready hair. Full getting-dressed help for wire bras, monokinis, backpacks, collars and harnesses. Optional in-house carnival photoshoot and shuttle to the band.</p>
@@ -1158,6 +1164,38 @@ ${relatedBlock({
     map[p.path] = {
       title: `Best carnival makeup artist in ${p.territory}: Carnival Glam Hub`,
       body,
+    };
+  }
+
+  // Trinidad answer page. Question shaped H2s, each followed immediately by
+  // a direct factual answer, generated from the shared answer-page module so
+  // the prerendered body, the React surface and the FAQPage schema agree.
+  {
+    const dest = byslug("trinidad");
+    const sections = TRINIDAD_ANSWER_SECTIONS.map(
+      (sx) =>
+        `<h2>${escapeHtml(sx.q)}</h2><p>${escapeHtml(sx.a)}</p>` +
+        (sx.bullets
+          ? `<ul>${sx.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`
+          : ""),
+    ).join("\n");
+    map["/best-carnival-makeup-trinidad"] = {
+      title: "Best carnival makeup artist in Trinidad: Carnival Glam Hub",
+      body: `<p><strong>For Trinidad Carnival 2027, Carnival Monday 8 and Tuesday 9 February, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road makeup, headpiece-ready hair, an on-site seamstress, getting-dressed assistance, a photoshoot and a shuttle to your band, all from ${escapeHtml(TRINIDAD_VENUES)}, minutes from the Queen's Park Savannah. Appointments run from ${escapeHtml(TRINIDAD_APPOINTMENT_WINDOW)}.</p>
+${dest?.date ? `<p><strong>Trinidad Carnival dates:</strong> ${escapeHtml(dest.date)}.</p>` : ""}
+${sections}
+<p><a href="${escapeHtml(TRINIDAD_BOOKING_URL)}">Book Trinidad Carnival 2027</a></p>
+${relatedBlock({
+  services: [
+    { href: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
+    { href: "/services/carnival-hair", label: "Carnival hair" },
+  ],
+  destinations: [{ href: "/trinidad", label: "Trinidad Carnival destination" }],
+  guides: [
+    { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
+    { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
+  ],
+})}`,
     };
   }
 
@@ -1218,7 +1256,7 @@ function blogContentFromHtml(html: string, slug: string): Content | null {
 // OFF so raw HTML in markdown is escaped by micromark itself.
 function markdownToSafeHtml(md: string): string {
   const cleaned = md
-    // Data URI placeholder images that Wix uses — remove them. The
+    // Data URI placeholder images that Wix uses, remove them. The
     // data URI itself may contain `)` chars (encoded SVG paths), so
     // consume greedily up to the last `)` on the same line.
     .replace(/!\[[^\]]*\]\(data:[^\n]*\)\s*/g, "")
@@ -1230,7 +1268,7 @@ function markdownToSafeHtml(md: string): string {
   });
   // Defence in depth: kill anything scripty. micromark already escapes
   // raw HTML, but recovered posts may contain HTML we intentionally
-  // rendered — be paranoid.
+  // rendered, be paranoid.
   html = html
     .replace(/<script[\s\S]*?<\/script>/gi, "")
     .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
@@ -1258,7 +1296,7 @@ function pickSiblings(slug: string, all: string[], n = 2): string[] {
   return out;
 }
 
-// Best hub link for a blog slug — surface one relevant service or
+// Best hub link for a blog slug, surface one relevant service or
 // destination page in every article's related block.
 function primaryHubFor(slug: string): { href: string; label: string } {
   const s = slug.toLowerCase();
@@ -1418,7 +1456,7 @@ async function main() {
     }
   }
 
-  // Blog posts — inject full article body sourced from Supabase / local
+  // Blog posts, inject full article body sourced from Supabase / local
   // recovered markdown, converted to HTML. Falls back to a stub when a
   // post has no fetched body (never fails the build).
   const blogSlugs = discoverBlogSlugs();

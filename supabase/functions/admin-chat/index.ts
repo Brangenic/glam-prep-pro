@@ -186,7 +186,7 @@ async function executeTool(
           .from("generated_content")
           .select("*", { count: "exact", head: true })
           .eq("status", "published");
-        return `Content stats — Total: ${total ?? 0}, Drafts: ${drafts ?? 0}, Published: ${published ?? 0}.`;
+        return `Content stats, Total: ${total ?? 0}, Drafts: ${drafts ?? 0}, Published: ${published ?? 0}.`;
       }
 
       if (query_type === "territories") {
@@ -194,7 +194,7 @@ async function executeTool(
           .from("territories")
           .select("name, country, slug, event_dates, active")
           .order("name");
-        return `Territories:\n${(data ?? []).map((t: any) => `• ${t.name} (${t.country}) — ${t.active ? "Active" : "Inactive"}${t.event_dates ? `, dates: ${t.event_dates}` : ""}`).join("\n")}`;
+        return `Territories:\n${(data ?? []).map((t: any) => `• ${t.name} (${t.country}), ${t.active ? "Active" : "Inactive"}${t.event_dates ? `, dates: ${t.event_dates}` : ""}`).join("\n")}`;
       }
 
       if (query_type === "recent_drafts") {
@@ -205,7 +205,7 @@ async function executeTool(
           .order("created_at", { ascending: false })
           .limit(10);
         if (!data?.length) return "No draft content found.";
-        return `Recent drafts:\n${data.map((d: any) => `• [${d.id.slice(0, 8)}] ${d.territories?.name ?? "General"} — ${d.channel}: "${d.title ?? "(no title)"}"`).join("\n")}`;
+        return `Recent drafts:\n${data.map((d: any) => `• [${d.id.slice(0, 8)}] ${d.territories?.name ?? "General"}, ${d.channel}: "${d.title ?? "(no title)"}"`).join("\n")}`;
       }
 
       if (query_type === "site_config") {
@@ -226,10 +226,10 @@ async function executeTool(
 const SYSTEM_PROMPT = `You are the Carnival Glam Hub Admin Assistant. You help the admin manage the website through conversation.
 
 You have these tools:
-1. **update_site_config** — Change website text (hero headlines, CTAs, announcements)
-2. **generate_content** — Create AI marketing content for social media channels
-3. **publish_content** — Publish draft content (you need the content ID)
-4. **query_data** — Look up stats (reviews, content, territories, current site config)
+1. **update_site_config**, Change website text (hero headlines, CTAs, announcements)
+2. **generate_content**, Create AI marketing content for social media channels
+3. **publish_content**, Publish draft content (you need the content ID)
+4. **query_data**, Look up stats (reviews, content, territories, current site config)
 
 Guidelines:
 - Always confirm what you did after using a tool
@@ -331,7 +331,7 @@ serve(async (req) => {
         continue; // let the model respond with tool results
       }
 
-      // No tool calls — we have the final text
+      // No tool calls, we have the final text
       finalResponse = msg.content ?? "";
       break;
     }

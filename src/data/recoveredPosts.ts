@@ -1,5 +1,5 @@
 // Recovered legacy Wix posts rendered from in-repo markdown. These don't
-// require a database row — BlogPost.tsx checks this map first, before the
+// require a database row, BlogPost.tsx checks this map first, before the
 // Supabase lookup, so they always render the full article body.
 
 import { RECOVERED_POSTS_META, type RecoveredPostMeta } from "./recoveredPostsMeta";

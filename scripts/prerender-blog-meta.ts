@@ -10,6 +10,7 @@ import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 import { buildFaqSchema } from "../src/lib/faqSchema";
+import { fitTitle, fitDescription, plainTextExcerpt } from "../src/lib/metaText";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -66,11 +67,9 @@ const SUFFIX = " | Carnival Glam Hub Blog";
 
 export function buildBlogTitle(slug: string, postTitle: string): string {
   const override = SEO_TITLE_OVERRIDES[slug];
-  if (override) return override;
-  const withSuffix = `${postTitle}${SUFFIX}`;
-  if (withSuffix.length <= 70) return withSuffix;
-  if (postTitle.length <= 70) return postTitle;
-  return postTitle;
+  // fitTitle keeps the primary keyword at the front and drops the blog
+  // suffix before it ever cuts the substantive part of the title.
+  return fitTitle(override ?? postTitle, override ? "" : SUFFIX);
 }
 
 const SUPABASE_URL =
@@ -220,7 +219,7 @@ async function resolveOgImage(slug: string, image: string, content?: string): Pr
       }
       continue;
     }
-    // Any remote http(s) image — always transcode to JPEG, never reject by
+    // Any remote http(s) image, always transcode to JPEG, never reject by
     // format. Generic /og-image.png is the absolute last resort.
     const generated = await generateRemoteJpeg(slug, candidate);
     if (generated)
@@ -287,7 +286,9 @@ const escapeHtml = (s: string) =>
 function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
   const url = `${BASE_URL}/blogs/${post.slug}`;
   const title = buildBlogTitle(post.slug, post.title);
-  const desc = post.description;
+  // Fit to the 140 to 160 character snippet window. Short descriptions are
+  // topped up from the post's own opening prose, never invented copy.
+  const desc = fitDescription(post.description, plainTextExcerpt(post.content));
   const image = img.url;
 
   let html = template;

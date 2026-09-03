@@ -7,7 +7,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE =
-  "Carnival Costume Getting-Dressed Assistance | Carnival Glam Hub";
+  "Carnival Costume Dressing Assistance | Glam Hub";
 const PAGE_DESCRIPTION =
   "Professional getting-dressed assistance for modern Carnival costumes: wire bras, monokinis, backpacks, collars, harnesses. Free with any Carnival Glam Hub service, US$35 stand-alone, at our Full Service Glam Hubs in Trinidad, Jamaica and Miami.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/getting-dressed";
@@ -24,7 +24,7 @@ const faqSchema = {
       name: "Why getting-dressed help matters",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A costume that is not fitted properly will shift, dig, ride up or come apart on the road. A poorly seated backpack or collar will hurt within the first hour. Gem fixes, zip breaks and last-minute alterations are the most common reasons masqueraders miss their band's start. Our team adjusts every piece for fit and movement — and our seamstress repairs anything that needs a needle — before you leave the lounge.",
+        text: "A costume that is not fitted properly will shift, dig, ride up or come apart on the road. A poorly seated backpack or collar will hurt within the first hour. Gem fixes, zip breaks and last-minute alterations are the most common reasons masqueraders miss their band's start. Our team adjusts every piece for fit and movement, and our seamstress repairs anything that needs a needle, before you leave the lounge.",
       },
     },
     {
@@ -48,7 +48,7 @@ const faqSchema = {
       name: "What if a costume piece breaks at the lounge?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "That is exactly what the on-site seamstress is there for. The most common morning-of failures — a wire bra cup that has collapsed, a gem cluster that has dropped overnight, a strap that is too long, a zip that splits when you raise your arms — all get handled in the lounge before you leave. We keep matching gem packs, thread, elastic and trim on hand so the repair looks like part of the costume, not a patch job.",
+        text: "That is exactly what the on-site seamstress is there for. The most common morning-of failures, a wire bra cup that has collapsed, a gem cluster that has dropped overnight, a strap that is too long, a zip that splits when you raise your arms, all get handled in the lounge before you leave. We keep matching gem packs, thread, elastic and trim on hand so the repair looks like part of the costume, not a patch job.",
       },
     },
     {
@@ -56,7 +56,7 @@ const faqSchema = {
       name: "What should I bring to my appointment?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Every piece of your costume, in the original packaging if you still have it — including the headpiece, arm and leg pieces, stockings, any padding and the standing collar. Bring road shoes you have already broken in, plus a change of clothes for after. We supply tape, pins, padding and small repair kit; you do not need to bring those.",
+        text: "Every piece of your costume, in the original packaging if you still have it, including the headpiece, arm and leg pieces, stockings, any padding and the standing collar. Bring road shoes you have already broken in, plus a change of clothes for after. We supply tape, pins, padding and small repair kit; you do not need to bring those.",
       },
     },
     {
@@ -64,7 +64,7 @@ const faqSchema = {
       name: "Can the seamstress alter a costume that does not fit?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "For most modern band costumes, yes — within reason. Straps can be shortened, padding added, wire bras re-shaped, monokini bases taken in slightly, and gem clusters re-attached or replaced. Full re-cuts of a beaded panel or structural changes to a backpack are not road-morning jobs; flag those at the fitting in advance. The aim is a costume that holds its shape and does not bite into you for ten hours, not a rebuild.",
+        text: "For most modern band costumes, yes, within reason. Straps can be shortened, padding added, wire bras re-shaped, monokini bases taken in slightly, and gem clusters re-attached or replaced. Full re-cuts of a beaded panel or structural changes to a backpack are not road-morning jobs; flag those at the fitting in advance. The aim is a costume that holds its shape and does not bite into you for ten hours, not a rebuild.",
       },
     },
     {
@@ -199,8 +199,7 @@ const GettingDressed = () => {
               come apart on the road. A poorly seated backpack or collar will
               hurt within the first hour. Gem fixes, zip breaks and last-minute
               alterations are the most common reasons masqueraders miss their
-              band's start. Our team adjusts every piece for fit and movement —
-              and our seamstress repairs anything that needs a needle — before
+              band's start. Our team adjusts every piece for fit and movement, and our seamstress repairs anything that needs a needle, before
               you leave the lounge.
             </p>
           </section>
@@ -242,10 +241,9 @@ const GettingDressed = () => {
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               That is exactly what the on-site seamstress is there for. The
-              most common morning-of failures — a wire bra cup that has
+              most common morning-of failures, a wire bra cup that has
               collapsed, a gem cluster that has dropped overnight, a strap
-              that is too long, a zip that splits when you raise your arms —
-              all get handled in the lounge before you leave. We keep
+              that is too long, a zip that splits when you raise your arms, all get handled in the lounge before you leave. We keep
               matching gem packs, thread, elastic and trim on hand so the
               repair looks like part of the costume, not a patch job.
             </p>
@@ -257,7 +255,7 @@ const GettingDressed = () => {
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Every piece of your costume, in the original packaging if you
-              still have it — including the headpiece, arm and leg pieces,
+              still have it, including the headpiece, arm and leg pieces,
               stockings, any padding and the standing collar. Bring road shoes
               you have already broken in, plus a change of clothes for after.
               We supply tape, pins, padding and small repair kit; you do not
@@ -276,7 +274,7 @@ const GettingDressed = () => {
               Can the seamstress alter a costume that does not fit?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              For most modern band costumes, yes — within reason. Straps can
+              For most modern band costumes, yes, within reason. Straps can
               be shortened, padding added, wire bras re-shaped, monokini
               bases taken in slightly, and gem clusters re-attached or
               replaced. Full re-cuts of a beaded panel or structural changes

@@ -12,21 +12,21 @@ import reviewsImage from "@/assets/trinidad-2027-reviews.webp";
 
 const PAGE_TITLE = "Trinidad Carnival 2027 Makeup & Hair | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Trinidad Carnival 2027 dates: Carnival Monday 8 and Tuesday 9 February 2027. Hair, makeup and photos from the Hilton, 2 minutes from the Savannah. Book early from US$50.";
+  "Trinidad Carnival 2027 runs Monday 8 and Tuesday 9 February. Hair, makeup and photos from the Hilton, two minutes from the Savannah. US$50 books a slot.";
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 const YT_ID = "IHUJsYg0GhI";
 
 const eventSchema = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "Trinidad Carnival 2027 — Glam Hub Morning Concierge",
+  name: "Trinidad Carnival 2027, Glam Hub Morning Concierge",
   startDate: "2027-02-08T04:00:00-04:00",
   endDate: "2027-02-09T20:00:00-04:00",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   url: CANONICAL,
   description:
-    "Trinidad Carnival 2027 makeup, hair, photoshoot, getting-dressed, seamstress and shuttle — by Carnival Glam Hub.",
+    "Trinidad Carnival 2027 makeup, hair, photoshoot, getting-dressed, seamstress and shuttle, by Carnival Glam Hub.",
   location: {
     "@type": "Place",
     name: "Port of Spain, Trinidad and Tobago",
@@ -72,7 +72,7 @@ const VISIBLE_REVIEWS = [
     author: "Kerra Denel",
     rating: 5,
     body:
-      "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time — which is everything during Carnival season — and the entire process was professional and organised.",
+      "I had the most amazing experience at Carnival Glam Hub! From start to finish, everything was seamless. My appointment started right on time, which is everything during Carnival season, and the entire process was professional and organised.",
   },
 ] as const;
 
@@ -81,7 +81,7 @@ const reviewSchema = {
   "@type": "LocalBusiness",
   "@id": `${CANONICAL}#business`,
   name: "Carnival Glam Hub",
-  alternateName: "Carnival Glam Hub — Trinidad Carnival",
+  alternateName: "Carnival Glam Hub, Trinidad Carnival",
   url: CANONICAL,
   sameAs: ["https://www.wikidata.org/wiki/Q140323641"],
   image: "https://www.carnivalglamhub.com/og/trinidad-carnival-2027.jpg",
@@ -168,8 +168,8 @@ const TrinidadCarnival2027 = () => {
   }, []);
 
   const photos = [
-    { src: photoGabby, caption: "Gabby — hair and makeup by Glam Hub", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
-    { src: photoDania, caption: "Dania Duntin — hair and makeup by Glam Hub", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
+    { src: photoGabby, caption: "Gabby, hair and makeup by Glam Hub", alt: "Gabby, Trinidad Carnival hair and makeup by Glam Hub" },
+    { src: photoDania, caption: "Dania Duntin, hair and makeup by Glam Hub", alt: "Dania Duntin, Trinidad Carnival hair and makeup by Glam Hub" },
   ];
 
   return (
@@ -262,8 +262,8 @@ const TrinidadCarnival2027 = () => {
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Why Glam Hub</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
             {[
-              { src: photoGabby, name: "Gabby", alt: "Gabby — Trinidad Carnival hair and makeup by Glam Hub" },
-              { src: photoDania, name: "Dania", alt: "Dania Duntin — Trinidad Carnival hair and makeup by Glam Hub" },
+              { src: photoGabby, name: "Gabby", alt: "Gabby, Trinidad Carnival hair and makeup by Glam Hub" },
+              { src: photoDania, name: "Dania", alt: "Dania Duntin, Trinidad Carnival hair and makeup by Glam Hub" },
             ].map((m) => (
               <figure key={m.name} className="flex flex-col">
                 <img
@@ -327,7 +327,7 @@ const TrinidadCarnival2027 = () => {
               <iframe
                 className="absolute inset-0 w-full h-full"
                 src={`https://www.youtube.com/embed/${YT_ID}?autoplay=1&rel=0`}
-                title="Carnival Glam Hub — see the glam in action"
+                title="Carnival Glam Hub, see the glam in action"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -400,7 +400,7 @@ const TrinidadCarnival2027 = () => {
                 <blockquote className="font-body text-base text-foreground/85 leading-relaxed mb-3">
                   “{r.body}”
                 </blockquote>
-                <figcaption className="font-body text-sm text-muted-foreground">— {r.author}</figcaption>
+                <figcaption className="font-body text-sm text-muted-foreground">, {r.author}</figcaption>
               </figure>
             ))}
           </div>

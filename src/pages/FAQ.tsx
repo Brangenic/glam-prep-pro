@@ -6,9 +6,9 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
 const PAGE_TITLE =
-  "Carnival Glam Hub FAQ | Booking, Makeup & Shuttle Answers";
+  "Carnival Glam Hub FAQ | Booking and Service Answers";
 const PAGE_DESCRIPTION =
-  "Answers to the most common questions about booking Carnival Glam Hub: makeup, hair, photoshoot, getting-dressed, shuttle, deposits, cancellations and what to bring on Carnival morning.";
+  "Answers on booking Carnival Glam Hub: makeup, hair, photoshoot, dressing, shuttle, the US$50 deposit, cancellations and what to bring on the morning.";
 const CANONICAL = "https://www.carnivalglamhub.com/faq";
 
 const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string } }> = [

@@ -26,7 +26,7 @@ const Founder = () => {
               Gabby is a professional celebrity makeup artist whose experience behind the chair brings an elevated level of polish, speed, and glamour to every carnival morning.
             </p>
             <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed mb-5 sm:mb-6">
-              As the founder of her own glam line, she brings real beauty-industry credibility to the brand — combining artistry, product expertise, and a deep understanding of what lasts on the road.
+              As the founder of her own glam line, she brings real beauty-industry credibility to the brand, combining artistry, product expertise, and a deep understanding of what lasts on the road.
             </p>
             <div className="border-l-2 border-primary pl-5 sm:pl-6 mt-6 sm:mt-8">
               <p className="font-display text-base sm:text-lg text-foreground/90 italic leading-relaxed">

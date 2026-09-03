@@ -56,7 +56,7 @@ const faqSchema = {
       name: "Can we do couples, group or band-section shoots?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Couples and small groups are common — best friends, sister duos, full sections. Group shoots are scheduled into the morning timeline so glam finishes in sequence and everyone hits the camera together at peak. Larger band-section shoots need to be flagged at booking so we hold the photographer and the shoot window.",
+        text: "Yes. Couples and small groups are common, best friends, sister duos, full sections. Group shoots are scheduled into the morning timeline so glam finishes in sequence and everyone hits the camera together at peak. Larger band-section shoots need to be flagged at booking so we hold the photographer and the shoot window.",
       },
     },
     {
@@ -303,7 +303,7 @@ const CarnivalPhotoshoot = () => {
               Can we do couples, group or band-section shoots?
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Yes. Couples and small groups are common — best friends, sister
+              Yes. Couples and small groups are common, best friends, sister
               duos, full sections. Group shoots are scheduled into the morning
               timeline so glam finishes in sequence and everyone hits the
               camera together at peak. Larger band-section shoots need to be

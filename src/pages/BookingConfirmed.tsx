@@ -42,7 +42,7 @@ const BookingConfirmed = () => {
       <div className="max-w-xl text-center">
         <p className="font-body text-xs uppercase tracking-[0.2em] text-primary mb-4">Booking Confirmed</p>
         <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-          Thank you — your <span className="text-gradient-primary italic">Glam Slot</span> is locked in.
+          Thank you, your <span className="text-gradient-primary italic">Glam Slot</span> is locked in.
         </h1>
         <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-8">
           A confirmation has been sent to your email. We'll be in touch with arrival details ahead of your Carnival morning.

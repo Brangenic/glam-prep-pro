@@ -18,7 +18,7 @@ import {
 
 const PAGE_TITLE = "Terms, Refund Policy and Privacy Policy | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Carnival Glam Hub booking terms, deposit and refund policy, cancellation and transfer rules, referral programme terms and privacy policy. Effective 24 August 2026.";
+  "Carnival Glam Hub booking terms, deposit and refund policy, cancellation and transfer rules, referral terms and privacy policy. Effective 24 August 2026.";
 const CANONICAL = "https://www.carnivalglamhub.com/policies";
 
 const REFUND_IMAGE = "/images/policies/refund-policy.webp";

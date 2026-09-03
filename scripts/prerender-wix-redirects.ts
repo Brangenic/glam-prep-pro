@@ -8,7 +8,7 @@
 // flagging "Soft 404" on an empty redirect stub.
 //
 // Previous version was a bare meta-refresh page with `noindex,follow`
-// and one sentence of body — Google Search Console classified those as
+// and one sentence of body, Google Search Console classified those as
 // Soft 404. This version keeps the canonical + JS redirect for
 // browsers, drops `noindex` (canonical does the consolidation), and
 // adds a real content block that names the destination post so the
@@ -61,7 +61,7 @@ function buildHtml(targetAbs: string, targetPath: string): string {
       <p>This Carnival Glam Hub Journal article has moved to a new permanent URL.</p>
       <p>Read the full post here: <a href="${t}" rel="canonical">${t}</a>.</p>
       <p>You'll be redirected automatically in a moment. If not, tap the link above.</p>
-      <p style="margin-top:2rem"><a href="https://www.carnivalglamhub.com/blogs">Back to the Carnival Glam Hub Journal</a> — sweat-resistant carnival makeup, hair, dressing, photoshoot and shuttle for masqueraders flying in for Trinidad, Jamaica, Crop Over and more.</p>
+      <p style="margin-top:2rem"><a href="https://www.carnivalglamhub.com/blogs">Back to the Carnival Glam Hub Journal</a>, sweat-resistant carnival makeup, hair, dressing, photoshoot and shuttle for masqueraders flying in for Trinidad, Jamaica, Crop Over and more.</p>
     </main>
   </body>
 </html>

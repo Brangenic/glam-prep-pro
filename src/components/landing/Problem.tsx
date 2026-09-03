@@ -5,7 +5,7 @@ const luxuryFeatures = [
   {
     icon: "☕",
     title: "Pre-Game Lounge",
-    description: "Coffee, tea, water, and cocktails — start your carnival morning relaxed and in the mood.",
+    description: "Coffee, tea, water, and cocktails, start your carnival morning relaxed and in the mood.",
   },
   {
     icon: "👗",
@@ -20,7 +20,7 @@ const luxuryFeatures = [
   {
     icon: "📸",
     title: "Photo Shoot Ready",
-    description: "Step into our garden for a stunning pre-road photo shoot — content-ready before you hit the road.",
+    description: "Step into our garden for a stunning pre-road photo shoot, content-ready before you hit the road.",
   },
   {
     icon: "🧳",
@@ -79,7 +79,7 @@ const Problem = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            More than a makeup appointment — a luxury, full-service preparation
+            More than a makeup appointment, a luxury, full-service preparation
             experience so you feel confident, relaxed, and fully ready before you
             step onto the road.
           </p>

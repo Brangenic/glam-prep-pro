@@ -47,7 +47,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book Jamaica Carnival on Sunday 4 April 2027. Makeup, hair, bronzing, shuttle and photoshoot at our Full Service Glam Hub in Kingston. Trusted by 15,000+ masqueraders since 2017.",
+      "Jamaica Carnival, Sunday 4 April 2027. Makeup, hair, bronzing, shuttle and photoshoot at our Full Service Glam Hub in Kingston. Book your morning slot.",
   },
   {
     slug: "saint-lucia",
@@ -69,7 +69,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
   },
   {
     slug: "antigua",
@@ -91,7 +91,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
   },
   {
     slug: "grenada",
@@ -113,7 +113,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Grenada Spicemas Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Sweat-resistant Grenada Spicemas 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
   },
   {
     slug: "tobago",
@@ -138,7 +138,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening, 30 October to 1 November 2026. Limited slots, secure yours.",
+      "Sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening runs 30 October to 1 November 2026. Slots are limited.",
   },
   {
     slug: "barbados",
@@ -160,7 +160,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Book sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Limited slots, secure yours.",
+      "Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
   },
   {
     slug: "miami",
@@ -203,7 +203,7 @@ export const destinations: Destination[] = [
     ],
     metaTitle: "Toronto Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
-      "Toronto Caribana glam from our Glam Hub Lite. Sweat-resistant carnival makeup with a photoshoot. Book your Caribana look now.",
+      "Toronto Caribana glam from our Glam Hub Lite. Sweat-resistant Carnival makeup, headpiece-ready hair and a photoshoot, by professional Caribbean artists.",
   },
   {
     slug: "trinidad",
@@ -213,7 +213,7 @@ export const destinations: Destination[] = [
     description:
       "Trinidad Carnival 2027 hair, makeup and photos from the Hilton Hotel, two minutes from the Savannah. Bookings are open.",
     longDescription:
-      "Trinidad Carnival 2027 hair, makeup and photos from the Hilton Hotel, two minutes from the Savannah. Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Bookings are open — book now for Carnival Monday 8 February and Carnival Tuesday 9 February 2027.",
+      "Trinidad Carnival 2027 hair, makeup and photos from the Hilton Hotel, two minutes from the Savannah. Shuttle service from the Hilton, getting dressed assistance, and refreshments and snacks included. Bookings are open, book now for Carnival Monday 8 February and Carnival Tuesday 9 February 2027.",
     image: "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&dl=1",
     cta: "Book Trinidad Glam",
     upcoming: false,
@@ -227,7 +227,7 @@ export const destinations: Destination[] = [
       "Carnival Monday 8 and Tuesday 9 February 2027",
     ],
     metaTitle:
-      "Trinidad Carnival Makeup, Hair & Photoshoots | Carnival Glam Hub",
+      "Trinidad Carnival Makeup, Hair & Photoshoots | Glam Hub",
     metaDescription:
       "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
   },
@@ -249,7 +249,7 @@ export const destinations: Destination[] = [
     ],
     metaTitle: "Guyana Carnival Makeup & Glam 2026 | Glam Hub",
     metaDescription:
-      "Book Guyana Carnival makeup with a photoshoot at our Glam Hub Lite. Sweat-resistant carnival glam by professional Caribbean artists.",
+      "Guyana Carnival makeup with a photoshoot at our Glam Hub Lite. Sweat-resistant Carnival glam by professional Caribbean artists, trusted since 2017.",
   },
   {
     slug: "epic-cruise",

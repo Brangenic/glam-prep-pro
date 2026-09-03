@@ -426,7 +426,7 @@ const Blogs = () => {
                 name="q"
                 value={query}
                 onChange={(e) => { setQuery(e.target.value); setPage(1); }}
-                placeholder="Search the journal — try ‘jouvert’, ‘makeup’, ‘Trinidad’…"
+                placeholder="Search the journal, try ‘jouvert’, ‘makeup’, ‘Trinidad’…"
                 className="w-full max-w-2xl rounded-full border border-border bg-card px-5 py-3 font-body text-sm sm:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
             </div>
@@ -462,7 +462,7 @@ const Blogs = () => {
                   No journal posts match “{trimmedQuery}”.
                 </p>
                 <p className="font-body text-sm text-muted-foreground mb-6">
-                  Try a broader word — like ‘makeup’, ‘jouvert’ or a Carnival name.
+                  Try a broader word, like ‘makeup’, ‘jouvert’ or a Carnival name.
                 </p>
                 <button
                   onClick={() => setQuery("")}

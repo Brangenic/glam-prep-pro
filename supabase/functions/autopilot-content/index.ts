@@ -124,7 +124,7 @@ async function generateBlogArticle(
 
   const reviewSnippets = sourceData.reviews
     .slice(0, 5)
-    .map((r: any) => `"${r.quote}" — ${r.author_name}`)
+    .map((r: any) => `"${r.quote}", ${r.author_name}`)
     .join("\n");
 
   const productMentions = sourceData.products
@@ -132,17 +132,17 @@ async function generateBlogArticle(
     .map((p: any) => `${p.title} (${p.price_text ?? "see price"})`)
     .join(", ");
 
-  const prompt = `You are a professional beauty and carnival blog writer for Carnival Glam Hub — the premier Caribbean carnival makeup and styling service.
+  const prompt = `You are a professional beauty and carnival blog writer for Carnival Glam Hub, the premier Caribbean carnival makeup and styling service.
 
 Write a FULL SEO-optimized blog article (1000-1500 words) for ${territory.name}, ${territory.country}.
 
 TRENDING TOPICS (base the article on one or more of these):
 ${trendingSummary}
 
-COMPETITOR ARTICLES (analyze what they cover and write something BETTER — do NOT copy):
+COMPETITOR ARTICLES (analyze what they cover and write something BETTER, do NOT copy):
 ${competitorSummary}
 
-EXISTING BLOG POSTS ON OUR SITE (DO NOT write about any of these topics — find something NEW):
+EXISTING BLOG POSTS ON OUR SITE (DO NOT write about any of these topics, find something NEW):
 ${existingTitles}
 
 INTERNAL LINKS TO WEAVE IN (include 2-3 of these naturally in the article body):
@@ -171,7 +171,7 @@ REQUIREMENTS:
   - Natural product mentions where relevant
   - End with a strong CTA to book with Carnival Glam Hub
 - Brand voice: confident, glamorous, inclusive, Caribbean-rooted
-- ORIGINAL content — do NOT copy from trending or competitor articles
+- ORIGINAL content, do NOT copy from trending or competitor articles
 - Include a FAQ section at the end with 3-4 questions and answers relevant to the topic
 
 IMPORTANT: Also generate a JSON-LD FAQ schema for the FAQ section.
@@ -255,7 +255,7 @@ async function generateContentIdeas(
 ) {
   const trendingSummary = trendingTopics.slice(0, 3).map((t) => t.title).join(", ");
 
-  const prompt = `You are a social media strategist for Carnival Glam Hub — Caribbean carnival makeup & styling.
+  const prompt = `You are a social media strategist for Carnival Glam Hub, Caribbean carnival makeup & styling.
 
 Generate 2 social media CONTENT IDEAS (not full posts) for ${territory.name}, ${territory.country}.
 

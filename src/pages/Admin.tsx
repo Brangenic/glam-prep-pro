@@ -185,7 +185,7 @@ export default function Admin() {
                     <TableBody>
                       {content?.map((item: any) => (
                         <TableRow key={item.id}>
-                          <TableCell className="font-medium">{item.territories?.name ?? "—"}</TableCell>
+                          <TableCell className="font-medium">{item.territories?.name ?? ", "}</TableCell>
                           <TableCell><Badge variant="outline">{item.channel}</Badge></TableCell>
                           <TableCell className="max-w-[200px] truncate">{item.title ?? item.body.slice(0, 50)}</TableCell>
                           <TableCell>
@@ -242,7 +242,7 @@ export default function Admin() {
                       <TableRow key={t.id}>
                         <TableCell className="font-medium">{t.name}</TableCell>
                         <TableCell>{t.country}</TableCell>
-                        <TableCell>{t.event_dates ?? "—"}</TableCell>
+                        <TableCell>{t.event_dates ?? ", "}</TableCell>
                         <TableCell className="max-w-[200px] truncate">{t.keywords?.join(", ")}</TableCell>
                         <TableCell><Badge variant={t.active ? "default" : "secondary"}>{t.active ? "Active" : "Inactive"}</Badge></TableCell>
                       </TableRow>

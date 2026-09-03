@@ -4,9 +4,9 @@ import Footer from "@/components/landing/Footer";
 import PressBar from "@/components/landing/PressBar";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
-const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Carnival Makeup Testimonials";
+const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Testimonials";
 const PAGE_DESCRIPTION =
-  "Read real reviews from Carnival Glam Hub clients. Authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.";
+  "Real reviews from Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.";
 
 type RealReview = {
   name: string;
