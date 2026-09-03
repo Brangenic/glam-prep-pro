@@ -34,7 +34,7 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     slug: "jamaica",
     name: "Jamaica Carnival",
     shortName: "Jamaica",
-    dateText: "2027 season, dates to be confirmed",
+    dateText: "Sunday 4 April 2027",
     path: "/jamaica",
     venue: "Jamaica Pegasus Hotel, Kingston",
     aliases: ["jamaica", "kingston", "pegasus"],

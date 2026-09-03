@@ -16,7 +16,7 @@ import { TERRITORY_PROFILES } from "@/data/territoryProfiles";
  *   - A territory with no date here is treated as NOT passed.
  *   - A territory listed in `SEASON_FORWARD_SLUGS` is never treated as
  *     passed, because it already points forward to its next season with
- *     its own messaging. Jamaica is the standing example.
+ *     its own messaging. Epic Cruise is the standing example.
  */
 
 /** ISO (YYYY-MM-DD) last day of the territory's most recent season. */
@@ -31,9 +31,7 @@ export const SEASON_END_DATES: Record<string, string> = {
   miami: "2026-10-11",
   tobago: "2026-11-01",
   // 2027 seasons
-  // Jamaica 2027 has no confirmed day yet. The end date below only keeps
-  // the season pointing forward and must never be published as a date.
-  jamaica: "2027-04-30",
+  jamaica: "2027-04-04",
   trinidad: "2027-02-09",
   "trinidad-carnival-2027": "2027-02-09",
 };
@@ -45,7 +43,7 @@ export const SEASON_END_DATES: Record<string, string> = {
  */
 // Epic Cruise does not sail in 2027. It returns in 2028 with no confirmed
 // day yet, so it keeps pointing forward and must never carry a 2027 date.
-export const SEASON_FORWARD_SLUGS = ["jamaica", "epic-cruise"] as const;
+export const SEASON_FORWARD_SLUGS = ["epic-cruise"] as const;
 
 /** Where a closed-out territory sends people instead of the booking flow. */
 export const GALLERY_HREF = "/#gallery";
