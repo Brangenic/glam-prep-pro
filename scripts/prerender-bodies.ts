@@ -37,7 +37,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
-import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY } from "../src/data/hubTiers";
+import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ, GRENADA_INCLUSIONS_SENTENCE } from "../src/data/hubTiers";
 import { deEmDash } from "../src/lib/metaText";
 import {
   TRINIDAD_ANSWER_SECTIONS,
@@ -498,6 +498,40 @@ function destinationBody(d: ParsedDest): string {
           .join("\n"),
       );
     }
+    // Grenada answer engine block. Same questions and answers as the
+    // React FAQ, so a crawler and a visitor read the same thing.
+    if (d.slug === "grenada") {
+      const gFaqs = [
+        GRENADA_VENUE_FAQ,
+        GRENADA_ROUTE_FAQ,
+        {
+          question: "When is Spicemas 2027?",
+          answer: `Spicemas 2027 is Monday 9 and Tuesday 10 August 2027 in Grenada. The Carnival Glam Hub for Spicemas 2027 is hosted at the Radisson Hotel, central in Grenada, and the band route starts outside the hotel.`,
+        },
+        ...(preReg
+          ? [
+              {
+                question: "How do I secure my spot for Spicemas 2027?",
+                answer: `You secure your spot for Spicemas 2027 with a US$${preReg.amount} pre-registration per masquerader, which closes on ${preReg.closesOnText}. Pre-registration is not a full booking and no service is included, because no Grenada makeup or photoshoot price is published for 2027 yet.`,
+              },
+            ]
+          : []),
+        {
+          question: "What is included at the Grenada Glam Hub?",
+          answer: GRENADA_INCLUSIONS_SENTENCE,
+        },
+      ];
+      parts.push(`<h2>Grenada Spicemas 2027 questions</h2>`);
+      parts.push(
+        gFaqs
+          .map(
+            (f) =>
+              `<h3>${escapeHtml(f.question)}</h3><p>${escapeHtml(f.answer)}</p>`,
+          )
+          .join("\n"),
+      );
+    }
+
     parts.push(`<h2>Book ${escapeHtml(d.name)} glam</h2>`);
 
     // A Lite page does not list what the visitor is missing and send
