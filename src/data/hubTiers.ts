@@ -123,6 +123,16 @@ export type HubCapabilities = {
   reels: boolean;
   /** Paid overnight bag check add-on. */
   overnightBagCheck: boolean;
+  /**
+   * Dressing assistants on site. Deliberate Grenada exception on
+   * Kibwe's instruction, 3 September 2026: Grenada offers dressing
+   * assistants and no seamstress, even though `LITE_NOT_OFFERED` lists
+   * getting dressed as absent from the Lite tier. Do not "correct" this
+   * back, and do not extend it to another Lite territory without a
+   * fresh instruction. It carries no price, because Grenada has no 2027
+   * product except the US$50 pre-registration.
+   */
+  dressingAssistance: boolean;
 };
 
 const NO_CAPABILITIES: HubCapabilities = {
@@ -130,6 +140,7 @@ const NO_CAPABILITIES: HubCapabilities = {
   bronzing: false,
   reels: false,
   overnightBagCheck: false,
+  dressingAssistance: false,
 };
 
 const TRINIDAD_CAPABILITIES: HubCapabilities = {
@@ -137,18 +148,43 @@ const TRINIDAD_CAPABILITIES: HubCapabilities = {
   bronzing: true,
   reels: true,
   overnightBagCheck: true,
+  dressingAssistance: false,
 };
 
 export const HUB_CAPABILITIES: Record<string, HubCapabilities> = {
   trinidad: TRINIDAD_CAPABILITIES,
   "trinidad-carnival-2027": TRINIDAD_CAPABILITIES,
-  jamaica: { barber: true, bronzing: true, reels: true, overnightBagCheck: true },
-  miami: { barber: false, bronzing: false, reels: false, overnightBagCheck: true },
+  jamaica: { barber: true, bronzing: true, reels: true, overnightBagCheck: true, dressingAssistance: false },
+  miami: { barber: false, bronzing: false, reels: false, overnightBagCheck: true, dressingAssistance: false },
+  // Grenada exception, Kibwe, 3 September 2026. Dressing assistants only,
+  // never a seamstress, and never priced.
+  grenada: { barber: false, bronzing: false, reels: false, overnightBagCheck: false, dressingAssistance: true },
 };
 
 export function getCapabilities(slug: string): HubCapabilities {
   return HUB_CAPABILITIES[slug] ?? NO_CAPABILITIES;
 }
+
+/** Label used wherever dressing assistance is listed as offered. */
+export const DRESSING_ASSISTANCE_LABEL = "Dressing assistance";
+
+export function hasDressingAssistance(slug: string): boolean {
+  return getCapabilities(slug).dressingAssistance;
+}
+
+/**
+ * What a hub does not offer, with the territory-scoped exceptions
+ * applied. Grenada offers dressing assistance, so "Getting dressed"
+ * must never appear on its not-offered list.
+ */
+export function getNotOffered(slug: string): string[] {
+  const list = [...LITE_NOT_OFFERED];
+  if (hasDressingAssistance(slug)) {
+    return list.filter((i) => i !== "Getting dressed");
+  }
+  return list;
+}
+
 
 /** Kept as a thin wrapper so existing callers keep working. */
 export function hasBarber(slug: string): boolean {
@@ -260,8 +296,9 @@ export const GRENADA_HUB_LOCATION = `Our Spicemas 2027 Glam Hub is at ${GRENADA_
 
 export const GRENADA_VENUE_FAQ = {
   question: "Where is the Grenada Glam Hub for Spicemas 2027?",
-  answer: `${GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so it covers makeup, a photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments. Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
+  answer: `${GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so it covers makeup, a photoshoot, dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. There is no seamstress, no hair, no shuttle, no breakfast and no alcohol in Grenada. Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
 };
+
 
 export function getHubTier(slug: string): HubTier | null {
   if ((FULL_SERVICE_SLUGS as readonly string[]).includes(slug)) return "full";
@@ -288,7 +325,17 @@ export function getFreeInclusions(slug: string): string[] {
 export function getHubInclusions(slug: string): string[] | null {
   const tier = getHubTier(slug);
   if (!tier) return null;
-  if (tier === "lite") return [...LITE_INCLUSIONS];
+  if (tier === "lite") {
+    const lite = [...LITE_INCLUSIONS];
+    if (getCapabilities(slug).dressingAssistance) {
+      // Grenada exception, Kibwe, 3 September 2026. Dressing assistants
+      // sit straight after the photoshoot, and carry no price.
+      const at = lite.indexOf("Photoshoot");
+      lite.splice(at + 1, 0, DRESSING_ASSISTANCE_LABEL);
+    }
+    return lite;
+  }
+
   let list = [...FULL_SERVICE_INCLUSIONS];
   if (slug === "miami") {
     list = list.filter((i) => i !== "Shuttle");

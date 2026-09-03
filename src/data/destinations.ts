@@ -4,7 +4,7 @@ import guyanaImg from "@/assets/carnival-4.jpg";
 // Tobago photography as soon as we have it.
 import tobagoImg from "@/assets/carnival-8.jpg";
 import { getTerritoryPricing } from "@/data/territoryPricing";
-import { getHubTier, getHubInclusions, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ } from "@/data/hubTiers";
+import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
@@ -70,13 +70,13 @@ export const destinations: Destination[] = [
     date: "20–21 July 2026",
     description: "Glam Hub Lite for Saint Lucia Carnival.",
     longDescription:
-      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks. Sweat-resistant road makeup, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+      "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march and fete looks. Sweat-resistant road makeup, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     image: "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&dl=1",
     cta: "Book Saint Lucia Glam",
     objectPosition: "50% 20%",
     highlights: [
       "Road march full glam",
-      "J'ouvert paint and shimmer",
+      "Body shimmer and glitter",
       "Eye gems and festival lashes",
       "Photoshoot in the lounge",
     ],
@@ -92,7 +92,7 @@ export const destinations: Destination[] = [
     date: "4 August 2026",
     description: "Carnival glam services for Antigua Carnival.",
     longDescription:
-      "Antigua Carnival is one of the Caribbean's most colourful festivals, and our Glam Hub Lite keeps you camera-ready from j'ouvert to last lap. Premium sweat-resistant makeup, gems, body art and shimmer, plus a photoshoot in the lounge.",
+      "Antigua Carnival is one of the Caribbean's most colourful festivals, and our Glam Hub Lite keeps you camera-ready from first lap to last lap. Premium sweat-resistant makeup, gems, body art and shimmer, plus a photoshoot in the lounge.",
     image: "https://www.dropbox.com/scl/fi/zj9aswskvl80vunhkhdcf/Chloe%20J.png?rlkey=yxp73i1uv8pcwpuink46ty6mv&dl=1",
     cta: "Book Antigua Glam",
     objectPosition: "50% 20%",
@@ -114,16 +114,19 @@ export const destinations: Destination[] = [
     date: "Monday 9 & Tuesday 10 August 2027",
     description: "Pre-register now for Spicemas 2027 glam in Grenada.",
     longDescription:
-      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup, gems, lashes and j'ouvert paint by our trained Caribbean carnival artists, plus a photoshoot in the lounge. Pre-registration is open at US$50 per masquerader.",
+      "Spicemas 2027 runs on Monday 9 and Tuesday 10 August, and our Grenada Glam Hub Lite is at the Radisson Hotel. Sweat-resistant makeup and a photoshoot by our trained Caribbean carnival artists, with dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. Pre-registration is open at US$50 per masquerader.",
     image: "/images/destinations/grenada-hero-radisson.jpg",
     cta: "Pre-register for Spicemas 2027",
     objectPosition: "50% 22%",
     highlights: [
-      "Spicemas full glam",
-      "J'ouvert paint and oil packages",
-      "Festival gems and lashes",
-      "Photoshoot in the lounge",
+      "Makeup",
+      "Photoshoot",
+      "Dressing assistance",
+      "Changing room",
+      "Wing and bag check while you are with us, space permitting",
+      "Snacks, coffee, tea and light refreshments",
     ],
+
     galleryNote:
       "Every masquerader here had makeup and a photoshoot with Carnival Glam Hub at Spicemas.",
     gallery: [
@@ -176,7 +179,7 @@ export const destinations: Destination[] = [
     date: "30 October – 1 November 2026",
     description: "Glam Hub Lite for Tobago Carnival.",
     longDescription:
-      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march, j'ouvert and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, j'ouvert paint and shimmer, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
+      "Our Tobago Carnival Glam Hub Lite is set up with packages for road march and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
     // Placeholder imagery of our own work, not a Tobago location shot.
     image: tobagoImg,
     imageAlt:
@@ -185,7 +188,7 @@ export const destinations: Destination[] = [
     objectPosition: "50% 20%",
     highlights: [
       "Road march full glam",
-      "J'ouvert paint and shimmer",
+      "Body shimmer and glitter",
       "Eye gems and festival lashes",
       "Photoshoot in the lounge",
     ],
@@ -346,6 +349,13 @@ export function getDestinationFaqs(d: Destination): Faq[] {
   const inclusions = getHubInclusions(d.slug) ?? d.highlights;
   const inclusionText = inclusions.map((h) => h.toLowerCase()).join(", ");
 
+  // The Lite answer used to end by listing the Full Service inclusions
+  // and pointing at three other territories. Kibwe, 3 September 2026:
+  // a Lite page does not cross-sell. Scoped to Grenada for now, the
+  // other Lite territories are unchanged pending his decision.
+  const notOfferedText = getNotOffered(d.slug)
+    .map((i) => i.toLowerCase())
+    .join(", ");
   const tierFaq: Faq[] = tierLabel
     ? [
         {
@@ -353,10 +363,13 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           answer:
             tier === "full"
               ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? `. ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_NOTE}` : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
-              : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
+              : d.slug === "grenada"
+                ? `${loc} is a ${tierLabel}, not a Full Service Glam Hub. What you get in ${loc} is ${inclusionText}. There is no ${notOfferedText} in ${loc}.`
+                : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
         },
       ]
     : [];
+
 
   // Miami's venue has moved to Broward County, so the venue question
   // leads its FAQ list and its FAQPage structured data.
@@ -408,10 +421,6 @@ export function getDestinationFaqs(d: Destination): Faq[] {
             ? `No ${loc} makeup, hair or photoshoot price is published for this season yet. Pre-registration is open at US$${preReg.amount} per masquerader, closing ${preReg.closesOnText}, and it secures ${preReg.secures} rather than a service. Service prices are confirmed when the ${loc} product list goes live.`
             : `No ${loc} makeup, hair or photoshoot price is published for this season yet. Pre-registration has closed, so message the booking team and we will confirm rates when the ${loc} product list goes live.`
           : `${loc} carnival makeup pricing varies by package. Live pricing and availability for every ${loc} package is shown on our booking page at ${bookingLink}.`,
-    },
-    {
-      question: `Do you offer j'ouvert paint and body art for ${event}?`,
-      answer: `Yes. J'ouvert paint, shimmer, oil and body art are part of our ${loc} carnival glam menu at every Carnival Glam Hub, Full Service and Glam Hub Lite alike, because it is makeup work. Our artists use professional, skin-safe carnival paints that hold up to heat, sweat and water on the road.`,
     },
     {
       question: `How early should I book ${loc} carnival glam?`,

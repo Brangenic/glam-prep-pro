@@ -694,7 +694,19 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                   </p>
                 )}
 
-                {tier === "lite" && (
+                {/* A Lite page does not list what the visitor is not getting
+                    and send them to three other territories. Kibwe,
+                    3 September 2026. Scoped to Grenada for now, the other
+                    Lite pages are unchanged pending his decision. */}
+                {tier === "lite" && dest.slug === "grenada" && (
+                  <p className="font-body text-sm text-muted-foreground mb-8">
+                    {dest.shortName} is a Glam Hub Lite, not a Full Service Glam
+                    Hub. What we run here is{" "}
+                    {inclusions.map((i) => i.toLowerCase()).join(", ")}.
+                  </p>
+                )}
+
+                {tier === "lite" && dest.slug !== "grenada" && (
                   <p className="font-body text-sm text-muted-foreground mb-8">
                     {dest.shortName} is a Glam Hub Lite. Our Full Service Glam
                     Hubs, which add shuttle, breakfast and refreshments, alcohol,
@@ -704,6 +716,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                     <Link to="/miami" className="text-primary hover:underline">Miami</Link>.
                   </p>
                 )}
+
 
                 <a
                   href={ctaHref}
