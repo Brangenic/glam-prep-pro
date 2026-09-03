@@ -284,20 +284,43 @@ export const MIAMI_VENUE_FAQ = {
 };
 
 /**
- * Grenada's Spicemas 2027 Glam Hub venue, named by the booking team.
- * Only the property name is confirmed, so no address, rating or
- * distance may ever be added here or anywhere that reads it. Naming a
- * venue does not change the tier: Grenada stays Glam Hub Lite.
+ * Grenada's Spicemas 2027 Glam Hub venue, named by Kibwe on
+ * 3 September 2026. Two facts are confirmed and nothing more: the hub
+ * is hosted at the Radisson Hotel, which is central, and the band
+ * route starts outside the hotel. No address, no rating, no room
+ * count, no distance in miles or minutes, no walking time and no
+ * shuttle may ever be added here or anywhere that reads this.
+ * Naming a venue does not change the tier: Grenada stays Glam Hub Lite.
  */
 export const GRENADA_VENUE_NAME = "the Radisson Hotel";
 
+/** The band route fact, held once and read everywhere. */
+export const GRENADA_ROUTE_NOTE = "The band route starts outside the hotel.";
+
+/**
+ * House phrasing for the venue. Every surface, the page, the
+ * prerendered body, the FAQ, the structured data, llms.txt and the bot
+ * pack, reads this constant rather than repeating the sentence.
+ */
+export const GRENADA_VENUE_NOTE = `Hosted at ${GRENADA_VENUE_NAME}, central in Grenada, with the band route starting outside the hotel.`;
+
 /** Location line used by the page, the prerendered body and the bot. */
-export const GRENADA_HUB_LOCATION = `Our Spicemas 2027 Glam Hub is at ${GRENADA_VENUE_NAME}, Grenada.`;
+export const GRENADA_HUB_LOCATION = `Our Spicemas 2027 Glam Hub is hosted at ${GRENADA_VENUE_NAME}, central in Grenada, with the band route starting outside the hotel.`;
+
+/** What a Glam Hub Lite in Grenada covers, in one quotable sentence. */
+export const GRENADA_INCLUSIONS_SENTENCE =
+  "Grenada is a Glam Hub Lite, covering makeup, a photoshoot, dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. There is no seamstress, no shuttle, no breakfast, no alcohol and no hair in Grenada.";
 
 export const GRENADA_VENUE_FAQ = {
-  question: "Where is the Grenada Glam Hub for Spicemas 2027?",
-  answer: `${GRENADA_HUB_LOCATION} Grenada is a Glam Hub Lite, so it covers makeup, a photoshoot, dressing assistance, a changing room, wing and bag check while you are with us space permitting, and snacks, coffee, tea and light refreshments. There is no seamstress, no hair, no shuttle, no breakfast and no alcohol in Grenada. Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
+  question: "Where is the Carnival Glam Hub for Spicemas 2027?",
+  answer: `The Carnival Glam Hub for Spicemas 2027 is hosted at ${GRENADA_VENUE_NAME}, central in Grenada, and the band route starts outside the hotel. ${GRENADA_INCLUSIONS_SENTENCE} Your appointment time and the room details are confirmed once the Spicemas 2027 service list goes live.`,
 };
+
+export const GRENADA_ROUTE_FAQ = {
+  question: "Is the Grenada Glam Hub on the Spicemas band route?",
+  answer: `Yes. The Carnival Glam Hub for Spicemas 2027 is hosted at ${GRENADA_VENUE_NAME}, central in Grenada, and the band route starts outside the hotel, so you finish your makeup and photoshoot and step straight onto the road.`,
+};
+
 
 
 export function getHubTier(slug: string): HubTier | null {
