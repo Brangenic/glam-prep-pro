@@ -652,6 +652,29 @@ const CORE: Record<string, Content> = {
 <ul>
 ${UPCOMING_LIST_HTML}
 </ul>
+<h2>What happens on Carnival morning</h2>
+<p>You arrive at the Glam Hub before sunrise, check in at reception and move through the lounge in one flow: hair, makeup, getting dressed with a seamstress on hand, then photographs in full costume while the look is at its freshest. When your section is ready the shuttle takes you to your band. Nothing is spread across five appointments and three parts of the city, which is the problem the Hub was built to solve.</p>
+<h2>What is included</h2>
+<p>Carnival Glam Hub runs at two tiers. A Full Service Glam Hub opens the complete lounge, a Glam Hub Lite runs a focused version of it.</p>
+${INCLUSION_LISTS}
+<h2>Carnival Glam Hub pricing</h2>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
+<h3>Open for booking now</h3>
+<ul>
+${pricingEntryRows()}
+</ul>
+<h3>Enquiry only</h3>
+<ul>
+${enquiryRows()}
+</ul>
+<p>Work out your own total on the <a href="/booking-calculator">quote calculator</a>, or message us on WhatsApp at ${WHATSAPP_DISPLAY}.</p>
+<h2>Booking and cancellation</h2>
+<p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms your appointment and comes off the balance. No slot is held until the deposit is received. No refund is given if you cancel within 14 days of the event, and a booking may be transferred once to another Carnival Glam Hub event within 12 months if requested at least 3 days ahead. The full wording is on our <a href="/policies">terms and policies page</a>.</p>
+<h2>Press</h2>
+<p>${PRESS_OUTLET_SENTENCE} See the coverage on our <a href="/press">press page</a>.</p>
+<h2>Working with us</h2>
+<p>Beauty professionals can <a href="/joinourteam">join the team</a> for the season, or <a href="/station-rentals">rent a station</a> inside a Hub and bring their own clients. Our product picks live on the <a href="/amazon-store">Amazon storefront</a>.</p>
 ${CTA}`,
   },
   "/about": {
@@ -660,7 +683,21 @@ ${CTA}`,
 <h2>Our story</h2>
 <p>Started in Port of Spain to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. Now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
 <h2>What we do</h2>
-<p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle — from one location, on the morning of the parade.</p>
+<p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle, from one location, on the morning of the parade.</p>
+<h2>How the Hub works</h2>
+<p>Every Carnival Glam Hub is a temporary lounge, taken over for the Carnival weekend, staffed by a local team and run to a schedule. Masqueraders check in, move through hair and makeup, get dressed with a seamstress on hand, are photographed in full costume and then leave for their band. The point is that it all happens in one air-conditioned building, before dawn, at the pace the road demands.</p>
+<h2>Two tiers, one standard</h2>
+<p>We run a Full Service Glam Hub where the demand and the venue allow the complete lounge, and a Glam Hub Lite everywhere else. The tier decides what is on offer, never the quality of the work.</p>
+${INCLUSION_LISTS}
+<h2>Where we work this season</h2>
+${UPCOMING_WITH_DATES}
+<h2>What it costs</h2>
+<p>${PRICE_SUMMARY}</p>
+<p>${ADD_ON_SUMMARY}</p>
+<h2>The team behind it</h2>
+<p>Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
+<h2>Press</h2>
+<p>${PRESS_OUTLET_SENTENCE} The full list, with dates and links, is on our <a href="/press">press page</a>.</p>
 ${CTA}`,
   },
   "/faq": {
