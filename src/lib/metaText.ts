@@ -112,3 +112,12 @@ export function plainTextExcerpt(markdown?: string | null, max = 220): string {
     .trim();
   return text.slice(0, max);
 }
+
+/**
+ * House style forbids the em dash. Blog bodies are synced from an external
+ * source, so copy arriving that way is normalised at render time on both
+ * the React surface and the prerendered surface.
+ */
+export function deEmDash(text: string): string {
+  return text.replace(/\s*—\s*/g, ", ").replace(/,\s*,/g, ",");
+}
