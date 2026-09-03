@@ -154,10 +154,10 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       {
         title: "Tuesday 9 February 2027",
         packages: [
-          { name: "Gabby Glam Team Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/cd5ca635-209b-4185-82c3-580be33fddac/462x578` },
-          { name: "Gabby Glam Team Tuesday Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/1acf94cd-ca39-4200-b409-62428403d5b9/462x578` },
-          { name: "Trinidad Tuesday Makeup Only", price: "$200 USD", image: `${IMG}/80ed37c5-125b-4c29-832f-9c4016feb014/462x578` },
-          { name: "Trinidad Tuesday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/79ce4fac-414f-4cfe-95fa-e31ad5de18fc/462x578` },
+          { name: "Gabby Glam Team Tuesday Makeup Only", price: "$300 USD", image: `${IMG}/cd5ca635-209b-4185-82c3-580be33fddac/462x578` },
+          { name: "Gabby Glam Team Tuesday Makeup & Photoshoot", price: "$420 USD", image: `${IMG}/1acf94cd-ca39-4200-b409-62428403d5b9/462x578` },
+          { name: "Trinidad Tuesday Makeup Only", price: "$210 USD", image: `${IMG}/80ed37c5-125b-4c29-832f-9c4016feb014/462x578` },
+          { name: "Trinidad Tuesday Makeup & Photoshoot", price: "$330 USD", image: `${IMG}/79ce4fac-414f-4cfe-95fa-e31ad5de18fc/462x578` },
           { name: "Trinidad Tuesday Full Glam", price: "$440 USD", image: `${IMG}/8255cfa7-1c9c-415d-a4c6-ae0628625a36/462x578` },
           { name: "Trinidad Tuesday Makeup & Photoshoot + Bronzing", price: "$480 USD", image: `${IMG}/f832281b-cd40-442e-8d7d-a8075c52bd56/462x578` },
           { name: "Trinidad Tuesday Photoshoot Only", price: "$160 USD", image: `${IMG}/d60f1246-a372-4bc4-aec7-9cfe760d01b6/462x578` },

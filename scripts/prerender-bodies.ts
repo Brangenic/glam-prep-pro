@@ -1,8 +1,8 @@
 // PRICING NOTE: every figure quoted in this file comes from
 // src/data/territoryPricing.ts (masos products). Keep them in step with
 // that file. Never invent a price here.
-// Makeup only US$170 to US$200 single day, US$380 both Trinidad days.
-// Named and celebrity artists US$200 to US$580. Photoshoot only US$140 to US$160.
+// Makeup only US$170 to US$210 single day, US$380 both Trinidad days.
+// Named and celebrity artists US$240 to US$580. Photoshoot only US$140 to US$160.
 // Hair US$120 to US$220. Full Glam US$430 to US$680.
 // Carnival morning access US$35. Barber US$35 (Jamaica and Trinidad only).
 // Reels US$80 (Trinidad and Jamaica only).
@@ -1102,7 +1102,7 @@ function buildRouteMap(): Record<string, Content> {
       faqs: [
         { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
         { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
-        { q: "How much does Trinidad carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$180 to US$200 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$160, hair is US$120 to US$220 and Full Glam is US$440 to US$680. A US$50 deposit secures the slot." },
+        { q: "How much does Trinidad carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$180 to US$210 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$240 to US$580. Photoshoot only is US$160, hair is US$120 to US$220 and Full Glam is US$440 to US$680. A US$50 deposit secures the slot." },
         { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
       ],
     },
@@ -1162,8 +1162,8 @@ ${dateLine}
 <h2>Pricing tiers</h2>
 <ul>
 <li>Carnival morning access, meaning getting dressed, lounge, refreshments and shuttle where it runs: US$35.</li>
-<li>Makeup only: US$170 to US$200 for a single day, US$380 for both Trinidad days.</li>
-<li>Named and celebrity artists: US$200 to US$580.</li>
+<li>Makeup only: US$170 to US$210 for a single day, US$380 for both Trinidad days.</li>
+<li>Named and celebrity artists: US$240 to US$580.</li>
 <li>Photoshoot only US$140 to US$160, hair US$120 to US$220, Full Glam US$430 to US$680.</li>
 </ul>
 <h2>How booking works</h2>

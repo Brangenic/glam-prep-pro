@@ -107,16 +107,16 @@ const TWO_DAYS_NO_BOTH: { key: DayKey; label: string }[] = [
 
 /** Trinidad Carnival Tuesday list. */
 const TRINIDAD_TUESDAY: QuoteProduct[] = [
-  { id: "tue-makeup", label: "Makeup only", price: 200, day: "tuesday", tags: ["makeup"] },
-  { id: "tue-makeup-photo", label: "Makeup and photoshoot", price: 320, day: "tuesday", tags: ["makeup", "photoshoot"] },
+  { id: "tue-makeup", label: "Makeup only", price: 210, day: "tuesday", tags: ["makeup"] },
+  { id: "tue-makeup-photo", label: "Makeup and photoshoot", price: 330, day: "tuesday", tags: ["makeup", "photoshoot"] },
   { id: "tue-photo", label: "Photoshoot only", price: 160, day: "tuesday", tags: ["photoshoot"] },
   { id: "tue-hair-ponytail", label: "Hair only, ponytail", price: 120, day: "tuesday", tags: ["hair"] },
   { id: "tue-hair-front-braided", label: "Front braided ponytail", price: 185, day: "tuesday", tags: ["hair"] },
   { id: "tue-full-glam", label: "Full Glam", price: 440, day: "tuesday", tags: ["makeup", "hair", "photoshoot"] },
   { id: "tue-makeup-photo-bronzing", label: "Makeup and photoshoot plus bronzing", price: 480, day: "tuesday", tags: ["makeup", "photoshoot", "bronzing"] },
   { id: "tue-bronzing", label: "Bronzing", price: 160, day: "tuesday", tags: ["bronzing"] },
-  { id: "tue-gabby-makeup", label: "Gabby Glam Team makeup only", price: 200, day: "tuesday", tags: ["makeup"], premium: true },
-  { id: "tue-gabby-makeup-photo", label: "Gabby Glam Team makeup and photoshoot", price: 370, day: "tuesday", tags: ["makeup", "photoshoot"], premium: true },
+  { id: "tue-gabby-makeup", label: "Gabby Glam Team makeup only", price: 300, day: "tuesday", tags: ["makeup"], premium: true },
+  { id: "tue-gabby-makeup-photo", label: "Gabby Glam Team makeup and photoshoot", price: 420, day: "tuesday", tags: ["makeup", "photoshoot"], premium: true },
 ];
 
 const trinidad: TerritoryPricing = {

@@ -1,8 +1,8 @@
 // PRICING NOTE: every figure quoted in this file comes from
 // src/data/territoryPricing.ts (masos products). Keep them in step with
 // that file. Never invent a price here.
-// Makeup only US$170 to US$200 single day, US$380 both Trinidad days.
-// Named and celebrity artists US$200 to US$580. Photoshoot only US$140 to US$160.
+// Makeup only US$170 to US$210 single day, US$380 both Trinidad days.
+// Named and celebrity artists US$240 to US$580. Photoshoot only US$140 to US$160.
 // Hair US$120 to US$220. Full Glam US$430 to US$680.
 // Carnival morning access US$35. Barber US$35 (Jamaica and Trinidad only).
 // Reels US$80 (Trinidad and Jamaica only).
