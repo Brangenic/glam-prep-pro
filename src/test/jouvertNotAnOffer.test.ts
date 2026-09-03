@@ -43,6 +43,9 @@ const EXEMPT = [
   "src/lib/wixRedirects.ts",
   "scripts/prerender-blog-meta.ts",
   "scripts/prerender-wix-redirects.ts",
+  // Names J'ouvert only inside the NEVER SAY guardrail, so the bot knows
+  // not to sell it. The generated pack is checked separately above.
+  "src/data/botKnowledge.ts",
 ];
 
 const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith(`${e}/`));
