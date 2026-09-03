@@ -289,9 +289,18 @@ function destinationRelated(slug: string): string {
 type ParsedDest = {
   slug: string;
   name: string;
+  shortName?: string;
   date?: string;
   longDescription?: string;
   highlights: string[];
+  galleryNote?: string;
+  gallery?: {
+    src: string;
+    caption: string;
+    alt: string;
+    width: string;
+    height: string;
+  }[];
 };
 
 function stripEscapes(s: string): string {
@@ -372,10 +381,34 @@ function parseDestinations(): ParsedDest[] {
       longDescription:
         extractString(block, "longDescription") ??
         extractString(block, "description"),
+      shortName: extractString(block, "shortName"),
       highlights: extractStringArray(block, "highlights"),
+      galleryNote: extractString(block, "galleryNote"),
+      gallery: parseGallery(block),
     });
   }
   return out;
+}
+
+/**
+ * Reads the optional destination gallery out of the data module so the
+ * crawler body carries the same photographs and captions as the page.
+ */
+function parseGallery(block: string): ParsedDest["gallery"] {
+  const arr = block.match(/gallery\s*:\s*\[([\s\S]*?)\n {4}\],/);
+  if (!arr) return undefined;
+  const out: NonNullable<ParsedDest["gallery"]> = [];
+  for (const item of arr[1].split(/\},/)) {
+    const src = extractString(item, "src");
+    const caption = extractString(item, "caption");
+    const alt = extractString(item, "alt");
+    const width = item.match(/width\s*:\s*(\d+)/)?.[1];
+    const height = item.match(/height\s*:\s*(\d+)/)?.[1];
+    if (src && caption && alt && width && height) {
+      out.push({ src, caption, alt, width, height });
+    }
+  }
+  return out.length ? out : undefined;
 }
 
 function escapeHtml(s: string): string {
@@ -452,7 +485,9 @@ function destinationBody(d: ParsedDest): string {
       if (profileVenue) parts.push(`<p>${escapeHtml(profileVenue)}</p>`);
     }
     if (d.gallery && d.gallery.length) {
-      parts.push(`<h2>${escapeHtml(d.shortName)} masqueraders we glammed</h2>`);
+      parts.push(
+        `<h2>${escapeHtml(d.shortName ?? d.name)} masqueraders we glammed</h2>`,
+      );
       if (d.galleryNote) parts.push(`<p>${escapeHtml(d.galleryNote)}</p>`);
       parts.push(
         d.gallery
