@@ -1005,6 +1005,18 @@ function buildRouteMap(): Record<string, Content> {
     title: "Terms and Policies",
     body: policiesBody(),
   };
+  map["/press"] = {
+    title: "Carnival Glam Hub in the Press",
+    body: pressBody(),
+  };
+  map["/booking-calculator"] = {
+    title: "Carnival Glam Quote Calculator",
+    body: bookingCalculatorBody(),
+  };
+  map["/joinourteam"] = {
+    title: "Join the Carnival Glam Hub Team",
+    body: joinOurTeamBody(),
+  };
   map["/station-rentals"] = {
     title: "Rent a Station Inside the Carnival Glam Hub",
     body: `${stationRentalsBody()}\n${relatedBlock({
