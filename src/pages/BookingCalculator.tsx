@@ -19,6 +19,7 @@ import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
   OVERNIGHT_BAG_CHECK_PRICE,
+  getReelsPrice,
   TERRITORY_PRICING,
   getTerritoryPricing,
   lowestPremiumPrice,
@@ -202,8 +203,11 @@ const BookingCalculator = () => {
         amount: OVERNIGHT_BAG_CHECK_PRICE * partySize,
       });
     }
+    if (addReels && caps.reels && reelsPrice !== null) {
+      out.push({ label: REELS_LABEL, amount: reelsPrice * partySize });
+    }
     return out;
-  }, [intent, selectedProduct, partySize, addBarber, addOvernightBag, caps, config]);
+  }, [intent, selectedProduct, partySize, addBarber, addOvernightBag, addReels, reelsPrice, caps, config]);
 
   const total = lines.reduce((s, l) => s + l.amount, 0);
   const isGroup = partySize >= 5 || intent === "group";
@@ -618,16 +622,20 @@ const BookingCalculator = () => {
                     <Checkbox
                       id="reels"
                       name="reels"
-                      aria-label="Add reels, price confirmed on booking"
+                      aria-label={
+                        reelsPrice === null
+                          ? "Add reels, price confirmed on booking"
+                          : `Add reels, US$${reelsPrice} per masquerader`
+                      }
                       data-mcp-param="reels"
                       checked={addReels}
                       onCheckedChange={() => setAddReels((v) => !v)}
                       className="mt-1"
                     />
                     <span className="font-body text-sm leading-snug">
-                      Reels
+                      {REELS_LABEL}
                       <span className="block text-muted-foreground text-xs mt-0.5">
-                        Price confirmed on booking.
+                        {reelsNote(slug)}
                       </span>
                     </span>
                   </label>
@@ -739,7 +747,7 @@ const BookingCalculator = () => {
                           </p>
                         )}
 
-                        {addReels && caps.reels && (
+                        {addReels && caps.reels && reelsPrice === null && (
                           <p className="font-body text-xs text-muted-foreground mt-3">
                             Reels are not included in this total. Your booking team will confirm the
                             reels price when they confirm your appointment.
