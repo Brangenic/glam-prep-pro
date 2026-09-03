@@ -31,6 +31,7 @@ import BookingConfirmed from "./pages/BookingConfirmed.tsx";
 import BookingCalculator from "./pages/BookingCalculator.tsx";
 import StationRentals from "./pages/StationRentals.tsx";
 import Policies from "./pages/Policies.tsx";
+import JoinOurTeam from "./pages/JoinOurTeam.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 import {
@@ -132,6 +133,10 @@ const App = () => (
           <Route path="/booking-calculator" element={<BookingCalculator />} />
           <Route path="/station-rentals" element={<StationRentals />} />
           <Route path="/policies" element={<Policies />} />
+          <Route path="/joinourteam" element={<JoinOurTeam />} />
+          <Route path="/join-our-team" element={<Navigate to="/joinourteam" replace />} />
+          {/* The Glam Store is the Amazon storefront. One page, one canonical. */}
+          <Route path="/glam-store" element={<Navigate to="/amazon-store" replace />} />
           <Route path="/terms" element={<Navigate to="/policies#terms" replace />} />
           <Route path="/terms-and-conditions" element={<Navigate to="/policies#terms" replace />} />
           <Route path="/refund-policy" element={<Navigate to="/policies#refunds" replace />} />

@@ -189,7 +189,15 @@ const JoinOurTeam = () => {
           </p>
         </section>
 
-        <RelatedLinks />
+        <div className="container mx-auto max-w-4xl px-4 sm:px-6">
+          <RelatedLinks
+            services={[
+              { to: "/services/carnival-makeup", label: "Sweat-resistant Carnival makeup" },
+              { to: "/services/carnival-hair", label: "Carnival hair and hairstyles" },
+              { to: "/services/carnival-photoshoot", label: "Carnival photoshoot" },
+            ]}
+          />
+        </div>
       </main>
       <Footer />
     </div>
