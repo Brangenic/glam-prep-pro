@@ -29,7 +29,7 @@ const PreferredSourcesButton = () => {
 
   return (
     <div className="max-w-full">
-      <p className="font-body text-xs text-muted-foreground leading-relaxed mb-2">
+      <p className="font-body text-sm text-muted-foreground leading-relaxed mb-2">
         Prefer our Carnival coverage? Set Carnival Glam Hub as a preferred source on Google.
       </p>
       {/*

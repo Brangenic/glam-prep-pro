@@ -397,7 +397,7 @@ const Blogs = () => {
       />
       <Navbar />
       <main className="pt-28 sm:pt-32">
-        <section className="py-14 sm:py-18 lg:py-20" aria-labelledby="blog-page-heading">
+        <section className="section-y" aria-labelledby="blog-page-heading">
           <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
             <header className="mb-10 sm:mb-14">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3">

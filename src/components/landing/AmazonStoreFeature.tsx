@@ -47,7 +47,7 @@ const AmazonStoreFeature = () => {
   }, []);
 
   return (
-    <section id="amazon-store" className="py-16 sm:py-24 lg:py-32 bg-card/50" aria-labelledby="amazon-store-heading">
+    <section id="amazon-store" className="section-y bg-card/50" aria-labelledby="amazon-store-heading">
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 sm:gap-8 lg:gap-12 items-stretch">
           <div

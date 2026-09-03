@@ -52,7 +52,7 @@ interface PressBarProps {
 const PressBar = ({ compact = false }: PressBarProps) => (
   <section
     aria-label="Featured in"
-    className={`border-y border-primary/10 bg-primary/[0.02] ${compact ? "py-6 sm:py-8" : "py-12 sm:py-16"}`}
+    className={`border-y border-primary/10 bg-primary/[0.02] ${compact ? "section-y-sm" : "section-y"}`}
   >
     <div className="container mx-auto px-4 sm:px-6">
       {!compact && (

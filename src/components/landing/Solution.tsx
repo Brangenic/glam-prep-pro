@@ -5,7 +5,7 @@ const Solution = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="experience" className="py-24 lg:py-32 overflow-hidden">
+    <section id="experience" className="section-y overflow-hidden">
       <div ref={ref} className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div

@@ -97,7 +97,7 @@ const Gallery = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="gallery" className="py-16 sm:py-24 lg:py-32">
+    <section id="gallery" className="section-y">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectSchema) }}

@@ -149,7 +149,7 @@ const ChatWidget = () => {
       <button
         onClick={() => setOpen(true)}
         aria-label="Open chat"
-        className="fixed bottom-20 left-4 z-50 lg:bottom-6 lg:left-6 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-primary-foreground shadow-lg hover:shadow-xl transition-all hover:scale-105"
+        className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-primary-foreground shadow-lg hover:shadow-xl transition-all hover:scale-105"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -160,7 +160,7 @@ const ChatWidget = () => {
   }
 
   return (
-    <div className="fixed bottom-20 left-4 z-50 lg:bottom-6 lg:left-6 w-[min(360px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-2xl flex flex-col overflow-hidden" style={{ height: "min(520px, calc(100vh - 8rem))" }}>
+    <div className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 w-[min(360px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-2xl flex flex-col overflow-hidden" style={{ height: "min(520px, calc(100vh - 8rem))" }}>
       {/* Header */}
       <div className="flex items-center justify-between bg-primary px-4 py-3">
         <div className="flex items-center gap-2">

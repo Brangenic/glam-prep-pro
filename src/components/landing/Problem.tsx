@@ -49,7 +49,7 @@ const Problem = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="experience" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
+    <section id="experience" className="section-y relative overflow-hidden">
       {/* Decorative background */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 

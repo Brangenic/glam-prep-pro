@@ -29,7 +29,7 @@ const LINKS: { href: string; title: string }[] = [
 
 const TrinidadGuidesBlock = () => (
   <section
-    className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20"
+    className="container mx-auto px-4 sm:px-6 max-w-3xl"
     aria-labelledby="plan-trinidad-heading"
   >
     <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">

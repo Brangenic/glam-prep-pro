@@ -188,6 +188,19 @@ const Column = ({ title, items }: { title: string; items: LinkRef[] }) => {
   );
 };
 
+/**
+ * True when RelatedLinks would render something for this path. Callers use it
+ * so they never wrap the component in a padded container that would otherwise
+ * render as an empty block of dead space.
+ */
+export function hasRelatedLinks(pathname: string): boolean {
+  const derived = deriveFromPath(pathname);
+  if (!derived) return false;
+  return Boolean(
+    derived.services?.length || derived.destinations?.length || derived.guides?.length,
+  );
+}
+
 const RelatedLinks = (props: Props) => {
   const { pathname } = useLocation();
   const derived = !props.services && !props.destinations && !props.guides
@@ -199,10 +212,11 @@ const RelatedLinks = (props: Props) => {
 
   if (!services.length && !destinations.length && !guides.length) return null;
 
+
   return (
     <section
       aria-label="Related links"
-      className="mt-16 pt-10 border-t border-border"
+      className="mt-4 pt-8 sm:pt-10 lg:pt-12 border-t border-border"
       data-related-links
     >
       <h2 className="font-display text-xl sm:text-2xl font-bold mb-6">

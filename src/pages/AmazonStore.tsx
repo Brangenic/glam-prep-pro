@@ -73,7 +73,7 @@ const AmazonStore = () => {
       <Navbar />
       <main className="pt-28 sm:pt-32">
         <section
-          className="py-14 sm:py-18 lg:py-20"
+          className="section-y"
           aria-labelledby="amazon-store-page-heading"
         >
           <div ref={ref} className="container mx-auto px-4 sm:px-6 max-w-6xl">

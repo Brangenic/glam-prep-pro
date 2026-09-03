@@ -6,7 +6,7 @@ const Testimonials = () => {
   const testimonials = featuredReviews.slice(0, 3);
 
   return (
-    <section id="reviews" className="py-16 sm:py-24 lg:py-32 bg-card/50">
+    <section id="reviews" className="section-y bg-card/50">
       <div ref={ref} className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-16">
           <p className={`font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4 transition-all duration-700 ${
@@ -36,7 +36,7 @@ const Testimonials = () => {
             </div>
             <a
               href="/reviews"
-              className="inline-flex items-center rounded-full border border-border bg-background px-4 py-2 font-body text-xs font-semibold text-foreground transition-colors hover:border-primary/25 hover:text-primary"
+              className="inline-flex items-center rounded-full border border-border bg-background px-5 py-3 font-body text-sm font-semibold text-foreground transition-colors hover:border-primary/25 hover:text-primary"
             >
               Read more reviews
             </a>

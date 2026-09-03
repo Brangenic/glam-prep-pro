@@ -206,7 +206,7 @@ const Reviews = () => {
           </div>
         </section>
 
-        <section className="py-16 sm:py-20 lg:py-24" aria-labelledby="reviews-page-heading">
+        <section className="section-y" aria-labelledby="reviews-page-heading">
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
             <div className="text-center mb-10 sm:mb-14">
               <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-4">

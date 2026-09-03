@@ -71,7 +71,7 @@ const Footer = () => {
   });
 
   return (
-  <footer id="contact" className="border-t border-border py-12 sm:py-16 pb-28 lg:pb-16">
+  <footer id="contact" className="border-t border-border section-y pb-28 lg:pb-16">
     <div className="container mx-auto px-4 sm:px-6">
       {/* Hub sitemap — every primary route is reachable from the footer */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-8 sm:gap-10 mb-10 sm:mb-12 pb-10 sm:pb-12 border-b border-border">
@@ -79,22 +79,22 @@ const Footer = () => {
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Services
           </h4>
-          <ul className="space-y-2 font-body text-sm text-muted-foreground">
-            <li><a href="/services/carnival-makeup" className="hover:text-primary transition-colors">Carnival makeup</a></li>
-            <li><a href="/services/carnival-hair" className="hover:text-primary transition-colors">Carnival hair</a></li>
-            <li><a href="/services/carnival-photoshoot" className="hover:text-primary transition-colors">Carnival photoshoot</a></li>
-            <li><a href="/services/getting-dressed" className="hover:text-primary transition-colors">Getting dressed</a></li>
-            <li><a href="/services/carnival-shuttle" className="hover:text-primary transition-colors">Carnival shuttle</a></li>
+          <ul className="space-y-0 font-body text-sm text-muted-foreground">
+            <li><a href="/services/carnival-makeup" className="block py-3 leading-5 hover:text-primary transition-colors">Carnival makeup</a></li>
+            <li><a href="/services/carnival-hair" className="block py-3 leading-5 hover:text-primary transition-colors">Carnival hair</a></li>
+            <li><a href="/services/carnival-photoshoot" className="block py-3 leading-5 hover:text-primary transition-colors">Carnival photoshoot</a></li>
+            <li><a href="/services/getting-dressed" className="block py-3 leading-5 hover:text-primary transition-colors">Getting dressed</a></li>
+            <li><a href="/services/carnival-shuttle" className="block py-3 leading-5 hover:text-primary transition-colors">Carnival shuttle</a></li>
           </ul>
         </div>
         <div>
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Destinations
           </h4>
-          <ul className="space-y-2 font-body text-sm text-muted-foreground">
+          <ul className="space-y-0 font-body text-sm text-muted-foreground">
             {footerDestinations.map((d) => (
               <li key={d.slug}>
-                <a href={d.path} className="hover:text-primary transition-colors">
+                <a href={d.path} className="block py-3 leading-5 hover:text-primary transition-colors">
                   {FOOTER_LABELS[d.slug] ?? d.name}
                 </a>
               </li>
@@ -104,14 +104,14 @@ const Footer = () => {
                 href={ATLANTA_ENQUIRY_URL}
                 target="_blank"
                 rel="noopener"
-                className="hover:text-primary transition-colors"
+                className="block py-3 leading-5 hover:text-primary transition-colors"
               >
                 Ask about Atlanta
               </a>
             </li>
           </ul>
 
-          <p className="mt-4 font-body text-xs text-muted-foreground leading-relaxed">
+          <p className="mt-4 font-body text-sm text-muted-foreground leading-relaxed">
             Full Service Glam Hubs: Jamaica, Trinidad, Miami. All other territories are Glam Hub Lite.
           </p>
         </div>
@@ -119,17 +119,17 @@ const Footer = () => {
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Explore
           </h4>
-          <ul className="space-y-2 font-body text-sm text-muted-foreground">
-            <li><a href="/" className="hover:text-primary transition-colors">Home</a></li>
-            <li><a href="/blogs" className="hover:text-primary transition-colors">Journal</a></li>
-            <li><a href="/about" className="hover:text-primary transition-colors">About</a></li>
-            <li><a href="/faq" className="hover:text-primary transition-colors">FAQ</a></li>
-            <li><a href="/press" className="hover:text-primary transition-colors">Press</a></li>
-            <li><a href="/reviews" className="hover:text-primary transition-colors">Reviews</a></li>
-            <li><a href="/amazon-store" className="hover:text-primary transition-colors">Amazon Store</a></li>
-            <li><a href="/booking-calculator" className="hover:text-primary transition-colors">Booking Calculator</a></li>
-            <li><a href="/station-rentals" className="hover:text-primary transition-colors">Station rentals for artists</a></li>
-            <li><a href="/policies" className="hover:text-primary transition-colors">Terms and Policies</a></li>
+          <ul className="space-y-0 font-body text-sm text-muted-foreground">
+            <li><a href="/" className="block py-3 leading-5 hover:text-primary transition-colors">Home</a></li>
+            <li><a href="/blogs" className="block py-3 leading-5 hover:text-primary transition-colors">Journal</a></li>
+            <li><a href="/about" className="block py-3 leading-5 hover:text-primary transition-colors">About</a></li>
+            <li><a href="/faq" className="block py-3 leading-5 hover:text-primary transition-colors">FAQ</a></li>
+            <li><a href="/press" className="block py-3 leading-5 hover:text-primary transition-colors">Press</a></li>
+            <li><a href="/reviews" className="block py-3 leading-5 hover:text-primary transition-colors">Reviews</a></li>
+            <li><a href="/amazon-store" className="block py-3 leading-5 hover:text-primary transition-colors">Amazon Store</a></li>
+            <li><a href="/booking-calculator" className="block py-3 leading-5 hover:text-primary transition-colors">Booking Calculator</a></li>
+            <li><a href="/station-rentals" className="block py-3 leading-5 hover:text-primary transition-colors">Station rentals for artists</a></li>
+            <li><a href="/policies" className="block py-3 leading-5 hover:text-primary transition-colors">Terms and Policies</a></li>
 
           </ul>
         </div>
@@ -147,7 +147,7 @@ const Footer = () => {
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Contact
           </h4>
-          <div className="space-y-2 font-body text-sm text-muted-foreground">
+          <div className="space-y-0 font-body text-sm text-muted-foreground">
             <p>Bookings@carnivalglamhub.com</p>
             <p>8765090997</p>
           </div>
@@ -156,14 +156,14 @@ const Footer = () => {
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Follow
           </h4>
-          <div className="space-y-2">
+          <div>
             {socialLinks.map((link) =>
               isExternalLink(link.href) ? (
                 <button
                   key={link.href}
                   type="button"
                   onClick={() => openExternalLink(link.href)}
-                  className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors text-left"
+                  className="block w-full py-3 leading-5 font-body text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                 >
                   {link.label} →
                 </button>
@@ -171,7 +171,7 @@ const Footer = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="block py-3 leading-5 font-body text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {link.label} →
                 </a>
@@ -183,16 +183,16 @@ const Footer = () => {
           <h4 className="font-body text-xs font-semibold mb-4 uppercase tracking-[0.15em] text-foreground/60">
             Legal
           </h4>
-          <div className="space-y-2 font-body text-sm text-muted-foreground">
-            <a href="/policies#terms" className="block hover:text-primary transition-colors">Terms of Service</a>
-            <a href="/policies#refunds" className="block hover:text-primary transition-colors">Refund Policy</a>
-            <a href="/policies#privacy" className="block hover:text-primary transition-colors">Privacy Policy</a>
+          <div className="space-y-0 font-body text-sm text-muted-foreground">
+            <a href="/policies#terms" className="block py-3 leading-5 hover:text-primary transition-colors">Terms of Service</a>
+            <a href="/policies#refunds" className="block py-3 leading-5 hover:text-primary transition-colors">Refund Policy</a>
+            <a href="/policies#privacy" className="block py-3 leading-5 hover:text-primary transition-colors">Privacy Policy</a>
 
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSfatcdkmAEaPDXcB1XY-GYASAtqZpYCjH3Q97sZOhm0CkujYg/viewform"
               target="_blank"
               rel="noopener noreferrer"
-              className="block hover:text-primary transition-colors"
+              className="block py-3 leading-5 hover:text-primary transition-colors"
             >
               Work at Glam Hub
             </a>
@@ -204,7 +204,7 @@ const Footer = () => {
 
       </div>
       <div className="border-t border-border mt-10 sm:mt-12 pt-6 sm:pt-8 text-center">
-        <p className="font-body text-xs text-muted-foreground">
+        <p className="font-body text-sm text-muted-foreground">
           © {new Date().getFullYear()} Carnival Glam Hub. All rights reserved.
         </p>
       </div>
