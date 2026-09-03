@@ -778,6 +778,50 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
+        {/* Our own work in this territory, below the packages and above the FAQ */}
+        {dest.gallery && dest.gallery.length > 0 && (
+          <section
+            className="section-y border-t border-border"
+            aria-labelledby={`${dest.slug}-gallery-heading`}
+          >
+            <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+              <p className="font-body text-xs uppercase tracking-[0.2em] text-secondary font-medium mb-3 text-center">
+                Our Work
+              </p>
+              <h2
+                id={`${dest.slug}-gallery-heading`}
+                className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-center"
+              >
+                {dest.shortName} masqueraders we glammed
+              </h2>
+              {dest.galleryNote && (
+                <p className="font-body text-sm text-muted-foreground text-center max-w-2xl mx-auto mb-10">
+                  {dest.galleryNote}
+                </p>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {dest.gallery.map((img) => (
+                  <figure key={img.src} className="overflow-hidden rounded-2xl border border-border bg-card">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      width={img.width}
+                      height={img.height}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-auto block"
+                    />
+                    <figcaption className="font-body text-xs text-muted-foreground px-4 py-3">
+                      {img.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+
         {/* FAQ section, renders the same Q&A captured in FAQPage JSON-LD */}
         <section
           className="section-y border-t border-border"
