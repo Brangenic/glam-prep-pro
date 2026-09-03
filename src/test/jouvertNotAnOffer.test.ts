@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { destinations, getDestinationFaqs } from "@/data/destinations";
 import { getHubInclusions, LITE_NOT_OFFERED } from "@/data/hubTiers";
-import { territoryPricing } from "@/data/territoryPricing";
+import { TERRITORY_PRICING } from "@/data/territoryPricing";
 
 const JOUVERT = /j\s*'?\s*ouv[ae]?[ry]?t?|jouvay/i;
 const STRICT = /jouvert|j\s*'\s*ouvert|jouvay/i;
@@ -74,7 +74,7 @@ describe("J'ouvert is editorial, never an offer", () => {
   });
 
   it("never appears in package, pricing or inclusion data", () => {
-    expect(STRICT.test(JSON.stringify(territoryPricing))).toBe(false);
+    expect(STRICT.test(JSON.stringify(TERRITORY_PRICING))).toBe(false);
     const lists = [
       ...LITE_NOT_OFFERED,
       ...destinations.flatMap((d) => getHubInclusions(d.slug) ?? []),
