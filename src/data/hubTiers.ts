@@ -8,7 +8,7 @@
  * deliberately absent from both tiers and never carries a tier badge.
  */
 
-import { getReelsPrice } from "@/data/territoryPricing";
+import { getReelsPrice, REELS_PRICE } from "@/data/territoryPricing";
 
 export type HubTier = "full" | "lite";
 

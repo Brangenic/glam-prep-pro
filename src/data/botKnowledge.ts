@@ -45,7 +45,6 @@ import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
   OVERNIGHT_BAG_CHECK_PRICE,
-  REELS_PRICE_BY_SLUG,
   getReelsPrice,
   TERRITORY_PRICING,
   getTerritoryPricing,
@@ -180,12 +179,7 @@ function capabilityLines(slug: string): string[] {
   if (caps.barber) lines.push(`Barber: ${money(BARBER_PRICE)}`);
   if (caps.bronzing) lines.push(`Bronzing: ${money(BRONZING_PRICE)}`);
   if (caps.reels) {
-    const reels = getReelsPrice(slug);
-    lines.push(
-      reels === null
-        ? "Reels: a paid add-on with no published price. The booking team confirms it."
-        : `Reels: ${money(reels)} per masquerader, a paid add-on.`,
-    );
+    lines.push(`Reels: ${money(getReelsPrice(slug))} per masquerader, a paid add-on.`);
   }
   if (caps.overnightBagCheck)
     lines.push(
@@ -244,11 +238,7 @@ function buildTiers(): string {
     const has = [
       caps.barber ? `barber ${money(BARBER_PRICE)}` : null,
       caps.bronzing ? `bronzing ${money(BRONZING_PRICE)}` : null,
-      caps.reels
-        ? getReelsPrice(s) === null
-          ? "reels, price confirmed by the booking team"
-          : `reels ${money(getReelsPrice(s)!)}`
-        : null,
+      caps.reels ? `reels ${money(getReelsPrice(s))}` : null,
       caps.overnightBagCheck
         ? `overnight bag check ${money(OVERNIGHT_BAG_CHECK_PRICE)}`
         : null,
@@ -432,7 +422,7 @@ Prices are per masquerader in US dollars. They vary by territory and by day, so 
 - Getting dressed: ${money(GETTING_DRESSED_PRICE)} on its own, and free with any Glam Hub service. Trinidad, Jamaica and Miami only.
 - Barber: ${money(BARBER_PRICE)}. Trinidad and Jamaica only.
 - Bronzing: ${money(BRONZING_PRICE)}. Trinidad and Jamaica only.
-- Reels: Trinidad and Jamaica only, a paid add-on. ${REELS_NOTE} Where no price is confirmed there is no figure to quote, so never invent one.
+- Reels: Trinidad and Jamaica only, a paid add-on. ${REELS_NOTE}
 - Overnight bag check: ${money(OVERNIGHT_BAG_CHECK_PRICE)} per masquerader. Trinidad, Jamaica and Miami only.
 - Shuttle: an inclusion where it runs. It is never charged as an extra.
 - Road ready Carnival morning access: ${money(ROAD_READY_PRICE)}, where the territory offers it.
@@ -450,7 +440,7 @@ function topicServices(): string {
 - **Shuttle**: transport from the hub. ${sentenceList(SHUTTLE_TERRITORIES)} only. Where it runs it is an inclusion and is never charged. Not running in Miami this season. Page /services/carnival-shuttle
 - **Barber**: ${money(BARBER_PRICE)}, Trinidad and Jamaica only. Charged.
 - **Bronzing**: ${money(BRONZING_PRICE)}, Trinidad and Jamaica only. Charged.
-- **Reels**: Trinidad and Jamaica only. A paid add-on with no published price, confirmed by the booking team.
+- **Reels**: Trinidad and Jamaica only. A paid add-on at ${money(getReelsPrice("trinidad"))} per masquerader.
 - **Seamstress**: on-site costume repairs. Full Service hubs only. An inclusion where offered.
 - **Changing room**: available at every hub. An inclusion.
 - **Bag check**: ${DAY_BAG_CHECK}, free at every hub, space permitting. Overnight bag check is a separate paid add-on at ${money(OVERNIGHT_BAG_CHECK_PRICE)}, Trinidad, Jamaica and Miami only.`;
@@ -654,19 +644,15 @@ const NEVER_SAY = [
   "Any discount code, promo code or voucher code of any kind",
   "Any shuttle departure or pick-up time",
   "Any promise that a specific named artist will do a booking",
-  "Any price for reels",
   "Any price for bag delivery in Miami",
-  "Any date for Jamaica Carnival 2027",
   "Any date for Atlanta Carnival",
   "The word masos in prose. It may only ever appear inside a booking URL.",
 ];
 
 const UNKNOWNS = [
-  "Jamaica Carnival 2027 dates",
   "Atlanta Carnival dates and prices",
   "Guyana prices",
   "Tobago prices",
-  "The price of reels",
   "The price of bag delivery in Miami",
   "Exact appointment times and live availability",
   "Territories we do not operate in",
@@ -720,5 +706,5 @@ export function buildKnowledgePack(): KnowledgePack {
   };
 }
 
-/** Trinidad reels has no confirmed price by design. Referenced so it cannot be dropped. */
-export const TRINIDAD_REELS_PRICE_IS_NULL = REELS_PRICE_BY_SLUG.trinidad === null;
+/** Reels carry one confirmed price in every territory that offers them. */
+export const REELS_PRICE_IS_CONFIRMED = getReelsPrice("trinidad") === 80;
