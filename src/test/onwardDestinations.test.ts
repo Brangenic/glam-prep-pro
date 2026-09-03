@@ -85,7 +85,8 @@ describe("onward destination rule", () => {
     });
 
     it("sends an upcoming Carnival with no event on file to its own page", () => {
-      for (const [slug, path] of [["guyana", "/guyana"]] as const) {
+      // Epic Cruise is the standing case: upcoming season, no event on file.
+      for (const [slug, path] of [["epic-cruise", "/epic-cruise"]] as const) {
         expect(hasBookableEvent(slug)).toBe(false);
         const link = getDestinationCardLink(slug, "homepage_card");
         expect(link.external).toBe(false);

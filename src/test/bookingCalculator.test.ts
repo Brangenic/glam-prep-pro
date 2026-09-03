@@ -16,7 +16,7 @@ describe("booking calculator territory list", () => {
 
   it("quotes only territories with real products and a bookable event", () => {
     const quoting = territories.filter((t) => canQuote(t)).map((t) => t.slug);
-    expect(quoting).toEqual(["jamaica", "trinidad", "miami", "tobago"]);
+    expect(quoting).toEqual(["trinidad", "jamaica", "miami", "tobago"]);
     for (const slug of quoting) {
       expect(hasBookableEvent(slug)).toBe(true);
     }
