@@ -138,8 +138,8 @@ export const destinationPackages: Record<string, DestinationPackages> = {
       {
         title: "Monday 8 February 2027",
         packages: [
-          { name: "Gabby Glam Team Monday Makeup Only", price: "$250 USD", image: `${IMG}/ec4fe656-22ef-4f5d-94ac-88caad314d98/462x578` },
-          { name: "Gabby Glam Team Monday Makeup & Photoshoot", price: "$370 USD", image: `${IMG}/e67cf4d5-6cb6-415e-bb85-a63772402f1e/462x578` },
+          { name: "Gabby Glam Team Monday Makeup Only", price: "$200 USD", image: `${IMG}/ec4fe656-22ef-4f5d-94ac-88caad314d98/462x578` },
+          { name: "Gabby Glam Team Monday Makeup & Photoshoot", price: "$350 USD", image: `${IMG}/e67cf4d5-6cb6-415e-bb85-a63772402f1e/462x578` },
           { name: "Trinidad Monday Makeup Only", price: "$180 USD", image: `${IMG}/7cc50573-b1af-423a-b00f-da2abaf1896e/462x578` },
           { name: "Trinidad Monday Makeup & Photoshoot", price: "$320 USD", image: `${IMG}/b6e9cb02-ea71-4bd4-8a3f-fd31e30a483e/462x578` },
           { name: "Trinidad Monday Full Glam", price: "$440 USD", image: `${IMG}/c5dba60c-4280-4504-8fdb-ec201a3a55fb/462x578` },
