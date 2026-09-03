@@ -29,7 +29,7 @@ import {
   type ServiceTag,
   type TerritoryPricing,
 } from "@/data/territoryPricing";
-import { hasSeasonPassed } from "@/data/seasons";
+import { hasSeasonPassed, getOpenPreRegistration } from "@/data/seasons";
 import { hasBookableEvent } from "@/lib/destinations";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
@@ -213,6 +213,9 @@ const BookingCalculator = () => {
   const total = lines.reduce((s, l) => s + l.amount, 0);
   const isGroup = partySize >= 5 || intent === "group";
   const quotable = canQuote(config) && intent !== "group";
+  // Where a territory has no published service price, the only figure is
+  // its dated pre-registration. It closes on its own from seasons.ts.
+  const preRegistration = config ? getOpenPreRegistration(config.slug) : null;
 
   const inclusions = useMemo(() => {
     const free = getFreeInclusions(territory);
@@ -532,8 +535,9 @@ const BookingCalculator = () => {
 
                 {config && !canQuote(config) && (
                   <p className="font-body text-sm text-muted-foreground">
-                    Pricing for {config.label} is confirmed on enquiry. Tell us what you need and our
-                    team will come back to you.
+                    {preRegistration
+                      ? `No ${config.label} service price is published yet, so there is nothing to total here. Pre-registration is the only figure, and it secures ${preRegistration.secures}.`
+                      : `Pricing for ${config.label} is confirmed on enquiry. Tell us what you need and our team will come back to you.`}
                   </p>
                 )}
 
@@ -756,7 +760,9 @@ const BookingCalculator = () => {
                       <p className="font-body text-sm text-muted-foreground border-t border-border mt-5 pt-4">
                         {intent === "group"
                           ? "Group pricing is confirmed on enquiry."
-                          : `Pricing for ${config.label} is confirmed on enquiry.`}
+                          : preRegistration
+                            ? `No ${config.label} service price is published yet, so there is no total to show. Pre-registration is US$${preRegistration.amount} per masquerader and it closes on ${preRegistration.closesOnText}.`
+                            : `Pricing for ${config.label} is confirmed on enquiry.`}
                       </p>
                     )}
 
@@ -781,10 +787,27 @@ const BookingCalculator = () => {
                         {config.provisionalNote}
                       </p>
                     )}
-                    {config.deposit && (
+                    {config.deposit && !preRegistration && (
                       <p className="font-body text-xs text-muted-foreground mt-2">
                         {config.deposit.note}
                       </p>
+                    )}
+                    {preRegistration && (
+                      <div className="border-t border-border mt-5 pt-4">
+                        <p className="font-body text-sm text-muted-foreground mb-3">
+                          Pre-registration is US${preRegistration.amount} per masquerader and it closes
+                          on {preRegistration.closesOnText}. It is not a full booking and no service is
+                          included. You choose and pay for your services when the product list goes live.
+                        </p>
+                        <a
+                          href={preRegistration.eventUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block rounded-full bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-3"
+                        >
+                          Pre-register for US${preRegistration.amount}
+                        </a>
+                      </div>
                     )}
                   </>
                 )}
