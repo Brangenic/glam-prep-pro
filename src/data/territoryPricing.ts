@@ -141,7 +141,7 @@ const trinidad: TerritoryPricing = {
     { id: "mon-hair-half-up", label: "Half up half down ponytail", price: 220, day: "monday", tags: ["hair"] },
     { id: "mon-full-glam", label: "Full Glam", price: 440, day: "monday", tags: ["makeup", "hair", "photoshoot"] },
     { id: "mon-makeup-photo-bronzing", label: "Makeup and photoshoot plus bronzing", price: 480, day: "monday", tags: ["makeup", "photoshoot", "bronzing"] },
-    { id: "mon-gabby-makeup", label: "Gabby Glam Team makeup only", price: 200, day: "monday", tags: ["makeup"], premium: true },
+    { id: "mon-gabby-makeup", label: "Gabby Glam Team makeup only", price: 250, day: "monday", tags: ["makeup"], premium: true },
     { id: "mon-gabby-makeup-photo", label: "Gabby Glam Team makeup and photoshoot", price: 370, day: "monday", tags: ["makeup", "photoshoot"], premium: true },
     // Tuesday 9 February 2027
     ...TRINIDAD_TUESDAY,
