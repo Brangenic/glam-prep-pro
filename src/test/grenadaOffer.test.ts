@@ -41,11 +41,14 @@ describe("no J'ouvert in offer copy", () => {
   });
 
   it("never appears in the generated bot knowledge pack", () => {
-    const pack = readFileSync(
-      resolve(process.cwd(), "supabase/functions/chat/knowledge.json"),
-      "utf8",
-    );
-    expect(JOUVERT.test(pack)).toBe(false);
+    const pack = JSON.parse(
+      readFileSync(resolve(process.cwd(), "supabase/functions/chat/knowledge.json"), "utf8"),
+    ) as Record<string, unknown>;
+    // The never-say guardrail names J'ouvert on purpose, so that the bot
+    // knows not to offer it. Everything else must be clean.
+    const { neverSay, ...rest } = pack as { neverSay?: unknown };
+    expect(Array.isArray(neverSay)).toBe(true);
+    expect(JOUVERT.test(JSON.stringify(rest))).toBe(false);
   });
 });
 
