@@ -219,6 +219,18 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
+  // A territory with a single product would leave two thirds of the package
+  // row empty on desktop, so the section becomes two columns with a
+  // companion panel beside the card. With no companion the card centres.
+  const packageCount = packagesData
+    ? packagesData.sections.reduce((n, s) => n + s.packages.length, 0)
+    : 0;
+  const singlePackage = packageCount === 1;
+  const companion = singlePackage ? dest.companion : undefined;
+  const companionVideoId =
+    companion?.videoUrl.match(/(?:shorts\/|watch\?v=|youtu\.be\/|embed\/)([^/?#&]+)/)?.[1] ??
+    null;
+
   // A territory whose next season has no confirmed day yet. Derived from
   // the published date string, so no territory needs a bespoke flag.
   const awaitingDates = /to be confirmed/i.test(dest.date);
