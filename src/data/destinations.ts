@@ -37,6 +37,18 @@ export type Destination = {
   gallery?: DestinationGalleryImage[];
   /** One line of intro copy above the gallery. */
   galleryNote?: string;
+  /**
+   * Editorial block below the gallery and above the FAQ. Top of funnel
+   * storytelling that points at a journal post. It is never an offer, so it
+   * carries no price, no product and no booking link.
+   */
+  editorial?: {
+    heading: string;
+    paragraphs: string[];
+    image: { src: string; alt: string; width: number; height: number };
+    linkLabel: string;
+    linkTo: string;
+  };
 };
 
 
@@ -166,6 +178,23 @@ export const destinations: Destination[] = [
         height: 1327,
       },
     ],
+    editorial: {
+      heading: "Before the feathers, there is Jab",
+      paragraphs: [
+        "Grenada's Carnival does not start with gems. It starts at four in the morning on the Carenage, in the dark, when a conch shell goes and the street fills with people covered head to toe in black oil.",
+        "The word comes from patois. Diable. Devil. Enslaved Africans took the imagery the church used to frighten them and threw it back as satire, blackening themselves on purpose, turning chains of captivity into a symbol of freedom.",
+        "It is not a costume. It is a two-hundred-year-old protest that people still walk every August.",
+        "Dania, Emma and Jamie Lee had played a lot of mas before Grenada. They had not played this.",
+      ],
+      image: {
+        src: "/images/blog/jab-jab-horn-helmet.jpg",
+        alt: "A Grenadian Jab Jab wearing a horned helmet, the symbol of rebellion, at Spicemas",
+        width: 1400,
+        height: 1829,
+      },
+      linkLabel: "Read: Grenada Jab Jab, the Spicemas J'ouvert experience",
+      linkTo: "/blogs/grenada-jab-jab-spicemas-jouvert-experience",
+    },
     metaTitle:
       "Spicemas 2027 Makeup, 9 to 10 August | Grenada Glam Hub",
     metaDescription:

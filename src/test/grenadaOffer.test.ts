@@ -48,7 +48,14 @@ describe("no J'ouvert in offer copy", () => {
     // knows not to offer it. Everything else must be clean.
     const { neverSay, ...rest } = pack as { neverSay?: unknown };
     expect(Array.isArray(neverSay)).toBe(true);
-    expect(JOUVERT.test(JSON.stringify(rest))).toBe(false);
+    // A link to a journal article is editorial, not an offer, so the blog
+    // slug is stripped before the scan. See EDITORIAL_ALLOWANCES in
+    // src/test/jouvertNotAnOffer.test.ts for the same rule.
+    const scanned = JSON.stringify(rest).replace(
+      /grenada-jab-jab-spicemas-jouvert-experience/g,
+      "",
+    );
+    expect(JOUVERT.test(scanned)).toBe(false);
   });
 });
 

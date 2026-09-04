@@ -294,6 +294,13 @@ type ParsedDest = {
   longDescription?: string;
   highlights: string[];
   galleryNote?: string;
+  editorial?: {
+    heading: string;
+    paragraphs: string[];
+    image: { src: string; alt: string; width: string; height: string };
+    linkLabel: string;
+    linkTo: string;
+  };
   gallery?: {
     src: string;
     caption: string;
@@ -385,6 +392,7 @@ function parseDestinations(): ParsedDest[] {
       highlights: extractStringArray(block, "highlights"),
       galleryNote: extractString(block, "galleryNote"),
       gallery: parseGallery(block),
+      editorial: parseEditorial(block),
     });
   }
   return out;
@@ -409,6 +417,35 @@ function parseGallery(block: string): ParsedDest["gallery"] {
     }
   }
   return out.length ? out : undefined;
+}
+
+/**
+ * Reads the optional editorial block out of the data module. It is top of
+ * funnel storytelling that points at a journal post, never an offer, so it
+ * carries no price, no product and no booking link.
+ */
+function parseEditorial(block: string): ParsedDest["editorial"] {
+  const m = block.match(/editorial\s*:\s*\{([\s\S]*?)\n {4}\},/);
+  if (!m) return undefined;
+  const body = m[1];
+  const heading = extractString(body, "heading");
+  const linkLabel = extractString(body, "linkLabel");
+  const linkTo = extractString(body, "linkTo");
+  const src = extractString(body, "src");
+  const alt = extractString(body, "alt");
+  const width = body.match(/width\s*:\s*(\d+)/)?.[1];
+  const height = body.match(/height\s*:\s*(\d+)/)?.[1];
+  const paras = body.match(/paragraphs\s*:\s*\[([\s\S]*?)\n {6}\],/);
+  const paragraphs = paras
+    ? Array.from(paras[1].matchAll(/"((?:[^"\\]|\\.)*)"/g)).map((x) =>
+        x[1].replace(/\\"/g, '"').replace(/\\'/g, "'"),
+      )
+    : [];
+  if (!heading || !linkLabel || !linkTo || !src || !alt || !width || !height) {
+    return undefined;
+  }
+  if (!paragraphs.length) return undefined;
+  return { heading, paragraphs, image: { src, alt, width, height }, linkLabel, linkTo };
 }
 
 function escapeHtml(s: string): string {
@@ -496,6 +533,18 @@ function destinationBody(d: ParsedDest): string {
               `<figure><img src="${g.src}" alt="${escapeHtml(g.alt)}" width="${g.width}" height="${g.height}" loading="lazy" /><figcaption>${escapeHtml(g.caption)}</figcaption></figure>`,
           )
           .join("\n"),
+      );
+    }
+    if (d.editorial) {
+      parts.push(`<h2>${escapeHtml(d.editorial.heading)}</h2>`);
+      parts.push(
+        `<figure><img src="${d.editorial.image.src}" alt="${escapeHtml(d.editorial.image.alt)}" width="${d.editorial.image.width}" height="${d.editorial.image.height}" loading="lazy" /></figure>`,
+      );
+      parts.push(
+        d.editorial.paragraphs.map((t) => `<p>${escapeHtml(t)}</p>`).join("\n"),
+      );
+      parts.push(
+        `<p><a href="${d.editorial.linkTo}">${escapeHtml(d.editorial.linkLabel)}</a></p>`,
       );
     }
     // Grenada answer engine block. Same questions and answers as the

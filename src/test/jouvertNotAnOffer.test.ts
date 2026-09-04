@@ -50,6 +50,25 @@ const EXEMPT = [
 
 const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith(`${e}/`));
 
+/**
+ * Editorial allowances. These are links and labels pointing at the J'ouvert
+ * journal posts, which are protected top of funnel editorial. A link to an
+ * article is not an offer, so the slug and its human readable label are
+ * stripped before the commercial-surface scan runs. Nothing here sells
+ * makeup, hair or a photoshoot for J'ouvert, and nothing else may be added
+ * to this list unless it is likewise a pointer at a blog post.
+ */
+const EDITORIAL_ALLOWANCES: RegExp[] = [
+  /grenada-jab-jab-spicemas-jouvert-experience/g,
+  /Grenada Jab Jab, the Spicemas J'ouvert experience/g,
+  /Grenada Jab Jab: The Spicemas J'ouvert Experience/g,
+  /Spicemas Jab Jab begins before dawn/g,
+];
+
+const stripEditorial = (text: string) =>
+  EDITORIAL_ALLOWANCES.reduce((acc, re) => acc.replace(re, ""), text);
+
+
 const walk = (dir: string, out: string[] = []) => {
   for (const entry of readdirSync(join(REPO, dir))) {
     const rel = `${dir}/${entry}`;
@@ -86,7 +105,9 @@ describe("J'ouvert is editorial, never an offer", () => {
   });
 
   it("never appears in llms.txt", () => {
-    expect(readFileSync(join(REPO, "public/llms.txt"), "utf8")).not.toMatch(STRICT);
+    expect(stripEditorial(readFileSync(join(REPO, "public/llms.txt"), "utf8"))).not.toMatch(
+      STRICT,
+    );
   });
 
   it("never appears in the generated bot knowledge pack", () => {
@@ -97,7 +118,7 @@ describe("J'ouvert is editorial, never an offer", () => {
     // not to sell it. Every other part of the pack must be clean.
     const { neverSay, ...rest } = pack;
     expect(Array.isArray(neverSay)).toBe(true);
-    expect(STRICT.test(JSON.stringify(rest))).toBe(false);
+    expect(STRICT.test(stripEditorial(JSON.stringify(rest)))).toBe(false);
   });
 
   it("never appears in service pages, other pages, data or prerender scripts", () => {
@@ -107,7 +128,9 @@ describe("J'ouvert is editorial, never an offer", () => {
       ...walk("src/components"),
       ...walk("scripts"),
     ];
-    const offenders = files.filter((f) => STRICT.test(readFileSync(join(REPO, f), "utf8")));
+    const offenders = files.filter((f) =>
+      STRICT.test(stripEditorial(readFileSync(join(REPO, f), "utf8"))),
+    );
     expect(offenders, `J'ouvert found on commercial surfaces: ${offenders.join(", ")}`).toEqual([]);
   });
 });

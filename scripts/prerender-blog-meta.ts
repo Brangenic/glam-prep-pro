@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 
 import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
+import { getBlogPlaceSchema } from "../src/data/blogPlaceSchema";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 import { buildFaqSchema } from "../src/lib/faqSchema";
 import { fitTitle, fitDescription, plainTextExcerpt } from "../src/lib/metaText";
@@ -20,6 +21,8 @@ const DIST = resolve("dist");
 // in sync with SLUG_META_TITLE_OVERRIDES / buildTitleForSlug in
 // src/pages/BlogPost.tsx so static and runtime titles match.
 export const SEO_TITLE_OVERRIDES: Record<string, string> = {
+  "grenada-jab-jab-spicemas-jouvert-experience":
+    "Grenada Jab Jab: The Spicemas J'ouvert Experience",
   "tribe-carnival-2027-elysia-band-launch":
     "TRIBE Carnival 2027: Inside the Elysia Band Launch",
   "trinidad-carnival-2027-first-time-masquerader-guide":
@@ -480,6 +483,15 @@ function rewriteHead(template: string, post: Post, img: ResolvedImage): string {
 
   // Generic FAQPage schema, parsed from a "## Frequently Asked Questions"
   // section in the post body when present.
+  // Place schema for posts that are about a real location.
+  const place = getBlogPlaceSchema(post.slug);
+  if (place) {
+    const placeLd = `<script type="application/ld+json" data-prerender="place">${JSON.stringify(
+      place,
+    ).replace(/</g, "\\u003c")}</script>`;
+    html = html.replace("</head>", `    ${placeLd}\n  </head>`);
+  }
+
   const faqSchema = buildFaqSchema(post.content);
   if (faqSchema) {
     const faqLd = `<script type="application/ld+json" data-prerender="faqpage">${JSON.stringify(

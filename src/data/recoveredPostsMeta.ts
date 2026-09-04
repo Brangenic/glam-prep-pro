@@ -185,7 +185,29 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Planning Trinidad Carnival 2027? Dates, bands, hotels, budgets and how to plan your Carnival-morning makeup, hair and photos. A first-timer's guide from Carnival Glam Hub.",
     readTime: "8 min read",
   },
+  {
+    slug: "grenada-jab-jab-spicemas-jouvert-experience",
+    title:
+      "Grenada Jab Jab: Two Trinidad Masqueraders Played Spicemas J'ouvert for the First Time",
+    author: "Carnival Glam Hub",
+    publishedDate: "2026-09-03",
+    coverImage: "/images/blog/jab-jab-grenada-opener.jpg",
+    excerpt:
+      "Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. What Jab means, what to pack, and how to get to Grenada without stress.",
+    category: "Grenada Carnival",
+    tags: [
+      "Jouvert",
+      "Grenada Carnival",
+      "Spicemas",
+      "Carnival Tips",
+      "Travel Tips",
+    ],
+    metaDescription:
+      "Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. What Jab means, what to pack, and how to get to Grenada without stress.",
+    readTime: "7 min read",
+  },
 ];
+
 
 export const RECOVERED_POST_SLUGS: Set<string> = new Set(
   RECOVERED_POSTS_META.map((p) => p.slug),

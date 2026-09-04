@@ -166,6 +166,7 @@ import RelatedGuides from "@/components/RelatedGuides";
 import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
 import { buildFaqSchema } from "@/lib/faqSchema";
+import { getBlogPlaceSchema } from "@/data/blogPlaceSchema";
 
 // Slug rewrite map: some old post bodies link to slugs that don't exist.
 // Rewrite the href at render time to the real slug so we don't emit 404s.
@@ -277,6 +278,8 @@ const SLUG_HERO_OVERRIDES: Record<string, string> = {
 
 // Per-slug meta title overrides, kept under 60 characters for SEO.
 const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
+  "grenada-jab-jab-spicemas-jouvert-experience":
+    "Grenada Jab Jab: The Spicemas J'ouvert Experience",
   "tribe-carnival-2027-elysia-band-launch":
     "TRIBE Carnival 2027: Inside the Elysia Band Launch",
   "2025-carnival-makeup-guide-50-looks-to-show-your-mua":
@@ -496,6 +499,8 @@ const BlogPost = () => {
     let faqScript: HTMLScriptElement | null = null;
     let articleScript: HTMLScriptElement | null = null;
     let breadcrumbScript: HTMLScriptElement | null = null;
+    let placeScript: HTMLScriptElement | null = null;
+
 
     if (post && slug && !isBannedSlug(slug)) {
       const postUrl = `https://www.carnivalglamhub.com/blogs/${slug}`;
@@ -545,6 +550,14 @@ const BlogPost = () => {
       breadcrumbScript.type = "application/ld+json";
       breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
       document.head.appendChild(breadcrumbScript);
+
+      const place = getBlogPlaceSchema(slug);
+      if (place) {
+        placeScript = document.createElement("script");
+        placeScript.type = "application/ld+json";
+        placeScript.textContent = JSON.stringify(place);
+        document.head.appendChild(placeScript);
+      }
     }
 
     if (post?.content) {
@@ -575,6 +588,7 @@ const BlogPost = () => {
       document.title = "Carnival Glam Hub";
       if (faqScript) faqScript.remove();
       if (articleScript) articleScript.remove();
+      if (placeScript) placeScript.remove();
       if (breadcrumbScript) breadcrumbScript.remove();
       if (robotsTag) robotsTag.remove();
       if (canonicalTag) canonicalTag.remove();

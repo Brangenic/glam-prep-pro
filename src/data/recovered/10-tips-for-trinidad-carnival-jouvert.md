@@ -25,3 +25,7 @@ J'ouvert is the French Creole term meaning **"dawn" or "daybreak"**, the time at
 *Credit: J. Hamilton Photography*
 
 Keep your squad close, when everyone's painted, everyone looks the same. Set a meeting time and spot, and try to leave an hour before it ends to beat the madness. Enjoy and have a safe Carnival.
+
+## People also read
+
+- [Grenada Jab Jab: two Trinidad masqueraders played Spicemas J'ouvert for the first time](/blogs/grenada-jab-jab-spicemas-jouvert-experience)

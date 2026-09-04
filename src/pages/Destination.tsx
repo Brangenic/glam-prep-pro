@@ -834,6 +834,57 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </section>
         )}
 
+        {/*
+          Editorial block. Top of funnel storytelling that points at a journal
+          post. It is never an offer, so it carries no price, no product and no
+          booking link.
+        */}
+        {dest.editorial && (
+          <section
+            className="section-y border-t border-border"
+            aria-labelledby={`${dest.slug}-editorial-heading`}
+          >
+            <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div className="overflow-hidden rounded-2xl border border-border bg-card">
+                  <img
+                    src={dest.editorial.image.src}
+                    alt={dest.editorial.image.alt}
+                    width={dest.editorial.image.width}
+                    height={dest.editorial.image.height}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-auto block"
+                  />
+                </div>
+                <div>
+                  <h2
+                    id={`${dest.slug}-editorial-heading`}
+                    className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-6"
+                  >
+                    {dest.editorial.heading}
+                  </h2>
+                  {dest.editorial.paragraphs.map((para) => (
+                    <p
+                      key={para.slice(0, 40)}
+                      className="font-body text-base text-muted-foreground leading-relaxed mb-4"
+                    >
+                      {para}
+                    </p>
+                  ))}
+                  <Link
+                    to={dest.editorial.linkTo}
+                    className="inline-flex items-center gap-2 font-body font-semibold text-primary underline underline-offset-4 mt-2"
+                  >
+                    {dest.editorial.linkLabel}
+                    <span aria-hidden="true">-&gt;</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
 
         {/* FAQ section, renders the same Q&A captured in FAQPage JSON-LD */}
         <section
