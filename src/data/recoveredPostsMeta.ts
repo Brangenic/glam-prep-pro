@@ -193,7 +193,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     publishedDate: "2026-09-03",
     coverImage: "/images/blog/jab-jab-grenada-opener.jpg",
     excerpt:
-      "Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. What Jab actually means, what to pack, and how to get to Grenada without stress.",
+      "Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. What Jab means, what to pack, and how to get to Grenada without stress.",
     category: "Grenada Carnival",
     tags: [
       "Jouvert",
@@ -203,7 +203,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
       "Travel Tips",
     ],
     metaDescription:
-      "Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. What Jab actually means, what to pack, and how to get to Grenada without stress.",
+      "Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. What Jab means, what to pack, and how to get to Grenada without stress.",
     readTime: "7 min read",
   },
 ];
