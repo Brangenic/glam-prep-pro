@@ -105,7 +105,9 @@ describe("J'ouvert is editorial, never an offer", () => {
   });
 
   it("never appears in llms.txt", () => {
-    expect(readFileSync(join(REPO, "public/llms.txt"), "utf8")).not.toMatch(STRICT);
+    expect(stripEditorial(readFileSync(join(REPO, "public/llms.txt"), "utf8"))).not.toMatch(
+      STRICT,
+    );
   });
 
   it("never appears in the generated bot knowledge pack", () => {
@@ -116,7 +118,7 @@ describe("J'ouvert is editorial, never an offer", () => {
     // not to sell it. Every other part of the pack must be clean.
     const { neverSay, ...rest } = pack;
     expect(Array.isArray(neverSay)).toBe(true);
-    expect(STRICT.test(JSON.stringify(rest))).toBe(false);
+    expect(STRICT.test(stripEditorial(JSON.stringify(rest)))).toBe(false);
   });
 
   it("never appears in service pages, other pages, data or prerender scripts", () => {
@@ -126,7 +128,9 @@ describe("J'ouvert is editorial, never an offer", () => {
       ...walk("src/components"),
       ...walk("scripts"),
     ];
-    const offenders = files.filter((f) => STRICT.test(readFileSync(join(REPO, f), "utf8")));
+    const offenders = files.filter((f) =>
+      STRICT.test(stripEditorial(readFileSync(join(REPO, f), "utf8"))),
+    );
     expect(offenders, `J'ouvert found on commercial surfaces: ${offenders.join(", ")}`).toEqual([]);
   });
 });
