@@ -6,20 +6,53 @@
 export const BLOG_PLACE_SCHEMA: Record<string, unknown> = {
   "grenada-jab-jab-spicemas-jouvert-experience": {
     "@context": "https://schema.org",
-    "@type": "Place",
-    name: "St George's, Grenada",
-    description:
-      "The Carenage in St George's, Grenada, where Spicemas Jab Jab begins before dawn on Carnival Monday.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "St George's",
-      addressCountry: "GD",
-    },
-    containedInPlace: {
-      "@type": "Country",
-      name: "Grenada",
-    },
+    "@graph": [
+      {
+        "@type": "Place",
+        "@id": "https://www.carnivalglamhub.com/grenada#grenada",
+        name: "Grenada",
+        description:
+          "The Caribbean island where Spicemas, and its Jab Jab oil mas, runs every August.",
+        address: { "@type": "PostalAddress", addressCountry: "GD" },
+      },
+      {
+        "@type": "Place",
+        "@id": "https://www.carnivalglamhub.com/grenada#st-georges",
+        name: "St George's, Grenada",
+        description:
+          "The capital of Grenada, where the Spicemas Jab Jab bands gather before dawn on Carnival Monday.",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "St George's",
+          addressCountry: "GD",
+        },
+        containedInPlace: {
+          "@id": "https://www.carnivalglamhub.com/grenada#grenada",
+        },
+      },
+      {
+        "@type": "Place",
+        "@id": "https://www.carnivalglamhub.com/grenada#carenage",
+        name: "The Carenage, St George's",
+        description:
+          "The harbour front in St George's where a conch shell starts Jab Jab around four in the morning.",
+        containedInPlace: {
+          "@id": "https://www.carnivalglamhub.com/grenada#st-georges",
+        },
+      },
+      {
+        "@type": "Place",
+        "@id": "https://www.carnivalglamhub.com/grenada#grand-anse",
+        name: "Grand Anse, Grenada",
+        description:
+          "The beach strip where most Spicemas visitors stay, and where the Carnival Glam Hub sits at the Radisson Hotel.",
+        containedInPlace: {
+          "@id": "https://www.carnivalglamhub.com/grenada#grenada",
+        },
+      },
+    ],
   },
+
 };
 
 export function getBlogPlaceSchema(slug: string | null | undefined) {
