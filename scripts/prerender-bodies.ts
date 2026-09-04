@@ -294,6 +294,12 @@ type ParsedDest = {
   longDescription?: string;
   highlights: string[];
   galleryNote?: string;
+  companion?: {
+    heading: string;
+    note: string;
+    linkLabel: string;
+    linkTo: string;
+  };
   editorial?: {
     heading: string;
     paragraphs: string[];
@@ -392,6 +398,7 @@ function parseDestinations(): ParsedDest[] {
       highlights: extractStringArray(block, "highlights"),
       galleryNote: extractString(block, "galleryNote"),
       gallery: parseGallery(block),
+      companion: parseCompanion(block),
       editorial: parseEditorial(block),
     });
   }
@@ -417,6 +424,24 @@ function parseGallery(block: string): ParsedDest["gallery"] {
     }
   }
   return out.length ? out : undefined;
+}
+
+/**
+ * Reads the optional companion panel out of the data module. It sits beside
+ * the single package card for a one product territory, so the crawler body
+ * carries the same heading, line and journal link as the page. The video
+ * itself is not embedded here.
+ */
+function parseCompanion(block: string): ParsedDest["companion"] {
+  const m = block.match(/companion\s*:\s*\{([\s\S]*?)\n {4}\},/);
+  if (!m) return undefined;
+  const body = m[1];
+  const heading = extractString(body, "heading");
+  const note = extractString(body, "note");
+  const linkLabel = extractString(body, "linkLabel");
+  const linkTo = extractString(body, "linkTo");
+  if (!heading || !note || !linkLabel || !linkTo) return undefined;
+  return { heading, note, linkLabel, linkTo };
 }
 
 /**
@@ -520,6 +545,12 @@ function destinationBody(d: ParsedDest): string {
         `<p>No makeup, hair or photoshoot price is published for this season yet, and pre-registration has closed. Message the booking team and we will confirm your appointment and rates when the product list goes live.</p>`,
       );
       if (profileVenue) parts.push(`<p>${escapeHtml(profileVenue)}</p>`);
+    }
+    if (d.companion) {
+      parts.push(`<h2>${escapeHtml(d.companion.heading)}</h2>`);
+      parts.push(
+        `<p>${escapeHtml(d.companion.note)} <a href="${d.companion.linkTo}">${escapeHtml(d.companion.linkLabel)}</a></p>`,
+      );
     }
     if (d.gallery && d.gallery.length) {
       parts.push(
