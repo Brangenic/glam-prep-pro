@@ -60,6 +60,9 @@ const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith
  */
 const EDITORIAL_ALLOWANCES: RegExp[] = [
   /grenada-jab-jab-spicemas-jouvert-experience/g,
+  // A pointer at the protected Trinidad J'ouvert guide. A link to an
+  // article is editorial, never an offer.
+  /10-tips-for-trinidad-carnival-jouvert/g,
   /Grenada Jab Jab, the Spicemas J'ouvert experience/g,
   /Grenada Jab Jab: The Spicemas J'ouvert Experience/g,
   /Spicemas Jab Jab begins before dawn/g,

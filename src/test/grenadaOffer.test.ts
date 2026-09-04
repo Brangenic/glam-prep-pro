@@ -51,10 +51,9 @@ describe("no J'ouvert in offer copy", () => {
     // A link to a journal article is editorial, not an offer, so the blog
     // slug is stripped before the scan. See EDITORIAL_ALLOWANCES in
     // src/test/jouvertNotAnOffer.test.ts for the same rule.
-    const scanned = JSON.stringify(rest).replace(
-      /grenada-jab-jab-spicemas-jouvert-experience/g,
-      "",
-    );
+    const scanned = JSON.stringify(rest)
+      .replace(/grenada-jab-jab-spicemas-jouvert-experience/g, "")
+      .replace(/10-tips-for-trinidad-carnival-jouvert/g, "");
     expect(JOUVERT.test(scanned)).toBe(false);
   });
 });

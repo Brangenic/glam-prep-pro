@@ -4,6 +4,8 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import RelatedLinks, { hasRelatedLinks } from "@/components/RelatedLinks";
 import MasosEmbed from "@/components/MasosEmbed";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
+
 import { getDestination as getMasosDestination } from "@/lib/destinations";
 import {
   Accordion,
@@ -219,6 +221,18 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
   const embedUrl =
     masosEntry && masosEntry.masosUrl.includes("/events/") ? masosEntry.masosUrl : null;
   const packagesData = getDestinationPackages(dest.slug);
+  // A territory with a single product would leave two thirds of the package
+  // row empty on desktop, so the section becomes two columns with a
+  // companion panel beside the card. With no companion the card centres.
+  const packageCount = packagesData
+    ? packagesData.sections.reduce((n, s) => n + s.packages.length, 0)
+    : 0;
+  const singlePackage = packageCount === 1;
+  const companion = singlePackage ? dest.companion : undefined;
+  const companionVideoId =
+    companion?.videoUrl.match(/(?:shorts\/|watch\?v=|youtu\.be\/|embed\/)([^/?#&]+)/)?.[1] ??
+    null;
+
   // A territory whose next season has no confirmed day yet. Derived from
   // the published date string, so no territory needs a bespoke flag.
   const awaitingDates = /to be confirmed/i.test(dest.date);
@@ -545,7 +559,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {section.title}
                     </h3>
                   )}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                  <div
+                    className={
+                      singlePackage
+                        ? companion
+                          ? "grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-start"
+                          : "flex justify-center"
+                        : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+                    }
+                  >
                     {section.packages.map((pkg) => {
                       const CardTag = seasonPassed ? "div" : "a";
                       return (
@@ -558,7 +580,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                               target: "_blank",
                               rel: "noopener noreferrer",
                             })}
-                        className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all"
+                        className={`group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all${
+                          singlePackage ? " w-full max-w-xs md:self-center" : ""
+                        }`}
                       >
                         <div className="h-[200px] overflow-hidden bg-muted">
                           <img
@@ -588,9 +612,31 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       </CardTag>
                       );
                     })}
+                    {singlePackage && companion && idx === 0 && (
+                      <div data-companion-panel="true">
+                        <h3 className="font-display text-xl sm:text-2xl font-bold mb-4">
+                          {companion.heading}
+                        </h3>
+                        <YouTubeEmbed
+                          videoId={companionVideoId ?? ""}
+                          title={companion.videoTitle}
+                          vertical
+                        />
+                        <p className="font-body text-sm text-muted-foreground mt-4">
+                          {companion.note}{" "}
+                          <Link
+                            to={companion.linkTo}
+                            className="text-primary font-semibold underline underline-offset-4"
+                          >
+                            {companion.linkLabel}
+                          </Link>
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
+
 
               <div className="text-center mt-12">
                 {seasonPassed ? (

@@ -605,7 +605,10 @@ function topicJabJab(): string {
     "What to wear: old dark clothes you will throw away, closed-toe old trainers, hair tied back and covered, no jewellery.",
     "Getting the oil off: coat your skin and hair in baby oil before you go out, then use oil again to lift the Jab oil before soap and water. Oil lifts oil. Soap on its own smears it.",
     "Getting to Grenada for Spicemas: fly into Maurice Bishop International, usually with one regional connection. Barbados is the most reliable regional routing when the short hop from Trinidad is full. Some masqueraders travel by yacht or charter boat from Trinidad, usually TT$1,400 to TT$2,000 per person. On the island, boat taxis around the Carenage are cheap and often faster than the road.",
+    "Jab is not the same as Trinidad's paint and powder morning. It is older, it is darker, and it carries its own history.",
     "Read our journal post: /blogs/grenada-jab-jab-spicemas-jouvert-experience",
+    "Other guides worth pointing at: /blogs/10-tips-for-trinidad-carnival-jouvert and /blogs/is-trinidad-carnival-safe",
+
     "Carnival Glam Hub sells nothing for Jab Jab or for oil mas anywhere, because oil, paint and mud is the whole point of it. If someone asks for Jab glam, say plainly that we do not do it and why, then offer Monday Mas and Tuesday Pretty Mas glam at the Grenada Glam Hub instead.",
   ].join("\n");
 }
