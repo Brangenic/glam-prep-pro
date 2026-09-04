@@ -1,5 +1,3 @@
-# Grenada Jab Jab: Two Trinidad Girls Played Spicemas J'ouvert and Came Back Changed
-
 ![A Jab Jab masquerader covered in black oil during Spicemas J'ouvert in Grenada](/images/blog/jab-jab-grenada-opener.jpg)
 
 Dania Duntin and Emma Aqui have played a lot of mas. Between them they have done Trinidad more times than they can count, and they came to Grenada thinking they knew what was coming.
