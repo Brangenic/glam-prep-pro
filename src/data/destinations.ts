@@ -193,7 +193,16 @@ export const destinations: Destination[] = [
         height: 1327,
       },
     ],
+    companion: {
+      heading: "Masqueraders we glammed at Spicemas",
+      videoUrl: "https://youtube.com/shorts/pUO_syTc3Gs",
+      videoTitle: "Masqueraders glammed by Carnival Glam Hub at Spicemas in Grenada",
+      note: "Grenada's Carnival starts in the dark, long before the feathers.",
+      linkLabel: "Read: Grenada Jab Jab, the Spicemas J'ouvert experience",
+      linkTo: "/blogs/grenada-jab-jab-spicemas-jouvert-experience",
+    },
     editorial: {
+
       heading: "Before the feathers, there is Jab",
       paragraphs: [
         "Grenada's Carnival does not start with gems. It starts at four in the morning on the Carenage, in the dark, when a conch shell goes and the street fills with people covered head to toe in black oil.",
