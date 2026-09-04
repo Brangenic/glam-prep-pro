@@ -593,6 +593,23 @@ We run two tiers. A ${TIER_LABEL.full}, in ${sentenceList(full)}, carries the wi
 More at /about.`;
 }
 
+/**
+ * Jab Jab, editorial only. Glam Bot may explain the festival and point at
+ * our journal, and must never sell makeup, hair or a photoshoot for it.
+ */
+function topicJabJab(): string {
+  return [
+    "Jab Jab is Grenada's oil mas, played before dawn on Carnival Monday at Spicemas.",
+    "The name comes from the patois word for devil, diable. Enslaved Africans took the devil imagery the church used against them and threw it back as satire, covering themselves in black oil, wearing horns and dragging chains, turning the chains of captivity into a symbol of freedom. It is around two hundred years old and it is a protest, not a costume.",
+    "It starts around four in the morning on the Carenage in St George's, when a conch shell goes and the street fills with people covered head to toe in black oil. Horns, chains, drums, and in some bands snakes.",
+    "What to wear: old dark clothes you will throw away, closed-toe old trainers, hair tied back and covered, no jewellery.",
+    "Getting the oil off: coat your skin and hair in baby oil before you go out, then use oil again to lift the Jab oil before soap and water. Oil lifts oil. Soap on its own smears it.",
+    "Getting to Grenada for Spicemas: fly into Maurice Bishop International, usually with one regional connection. Barbados is the most reliable regional routing when the short hop from Trinidad is full. Some masqueraders travel by yacht or charter boat from Trinidad, usually TT$1,400 to TT$2,000 per person. On the island, boat taxis around the Carenage are cheap and often faster than the road.",
+    "Read our journal post: /blogs/grenada-jab-jab-spicemas-jouvert-experience",
+    "Carnival Glam Hub sells nothing for Jab Jab or J'ouvert anywhere, because oil, paint and mud is the whole point of it. If someone asks for Jab glam, say plainly that we do not do it and why, then offer Monday Mas and Tuesday Pretty Mas glam at the Grenada Glam Hub instead.",
+  ].join("\n");
+}
+
 /* ============================================================
  * Links
  * ============================================================ */
@@ -624,6 +641,10 @@ function buildLinks(): { label: string; url: string }[] {
     { label: "Booking calculator", url: "/booking-calculator" },
     { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
     { label: "Blog", url: "/blogs" },
+    {
+      label: "Grenada Jab Jab, the Spicemas experience",
+      url: "/blogs/grenada-jab-jab-spicemas-jouvert-experience",
+    },
     {
       label: "Best carnival makeup in Trinidad",
       url: "/best-carnival-makeup-trinidad",
@@ -713,6 +734,7 @@ export function buildKnowledgePack(): KnowledgePack {
       stations: topicStations(),
       essentials: topicEssentials(),
       about: topicAbout(),
+      jabJab: topicJabJab(),
     },
     links: buildLinks(),
     neverSay: NEVER_SAY,
