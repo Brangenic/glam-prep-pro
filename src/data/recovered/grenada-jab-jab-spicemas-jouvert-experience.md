@@ -1,5 +1,3 @@
-![A Jab Jab masquerader covered in black oil during Spicemas J'ouvert in Grenada](/images/blog/jab-jab-grenada-opener.jpg)
-
 Two Trinidadian masqueraders played Jab at Spicemas J'ouvert for the first time. They had done a lot of mas before Grenada. They had not done this.
 
 This is what Jab actually is, what it means, what to pack, and how to get to Grenada without stress.
