@@ -166,6 +166,7 @@ import RelatedGuides from "@/components/RelatedGuides";
 import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
 import { buildFaqSchema } from "@/lib/faqSchema";
+import { getBlogPlaceSchema } from "@/data/blogPlaceSchema";
 
 // Slug rewrite map: some old post bodies link to slugs that don't exist.
 // Rewrite the href at render time to the real slug so we don't emit 404s.
@@ -547,6 +548,14 @@ const BlogPost = () => {
       breadcrumbScript.type = "application/ld+json";
       breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
       document.head.appendChild(breadcrumbScript);
+
+      const place = getBlogPlaceSchema(slug);
+      if (place) {
+        placeScript = document.createElement("script");
+        placeScript.type = "application/ld+json";
+        placeScript.textContent = JSON.stringify(place);
+        document.head.appendChild(placeScript);
+      }
     }
 
     if (post?.content) {
@@ -577,6 +586,7 @@ const BlogPost = () => {
       document.title = "Carnival Glam Hub";
       if (faqScript) faqScript.remove();
       if (articleScript) articleScript.remove();
+      if (placeScript) placeScript.remove();
       if (breadcrumbScript) breadcrumbScript.remove();
       if (robotsTag) robotsTag.remove();
       if (canonicalTag) canonicalTag.remove();
