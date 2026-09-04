@@ -581,7 +581,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                               rel: "noopener noreferrer",
                             })}
                         className={`group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all${
-                          singlePackage ? " w-full max-w-xs md:self-center md:justify-self-end" : ""
+                          singlePackage ? " w-full max-w-xs md:self-center" : ""
                         }`}
                       >
                         <div className="h-[200px] overflow-hidden bg-muted">
