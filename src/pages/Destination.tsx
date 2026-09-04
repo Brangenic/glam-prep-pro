@@ -4,6 +4,8 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import RelatedLinks, { hasRelatedLinks } from "@/components/RelatedLinks";
 import MasosEmbed from "@/components/MasosEmbed";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
+
 import { getDestination as getMasosDestination } from "@/lib/destinations";
 import {
   Accordion,
