@@ -499,6 +499,8 @@ const BlogPost = () => {
     let faqScript: HTMLScriptElement | null = null;
     let articleScript: HTMLScriptElement | null = null;
     let breadcrumbScript: HTMLScriptElement | null = null;
+    let placeScript: HTMLScriptElement | null = null;
+
 
     if (post && slug && !isBannedSlug(slug)) {
       const postUrl = `https://www.carnivalglamhub.com/blogs/${slug}`;
