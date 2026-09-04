@@ -50,6 +50,25 @@ const EXEMPT = [
 
 const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith(`${e}/`));
 
+/**
+ * Editorial allowances. These are links and labels pointing at the J'ouvert
+ * journal posts, which are protected top of funnel editorial. A link to an
+ * article is not an offer, so the slug and its human readable label are
+ * stripped before the commercial-surface scan runs. Nothing here sells
+ * makeup, hair or a photoshoot for J'ouvert, and nothing else may be added
+ * to this list unless it is likewise a pointer at a blog post.
+ */
+const EDITORIAL_ALLOWANCES: RegExp[] = [
+  /grenada-jab-jab-spicemas-jouvert-experience/g,
+  /Grenada Jab Jab, the Spicemas J'ouvert experience/g,
+  /Grenada Jab Jab: The Spicemas J'ouvert Experience/g,
+  /Spicemas Jab Jab begins before dawn/g,
+];
+
+const stripEditorial = (text: string) =>
+  EDITORIAL_ALLOWANCES.reduce((acc, re) => acc.replace(re, ""), text);
+
+
 const walk = (dir: string, out: string[] = []) => {
   for (const entry of readdirSync(join(REPO, dir))) {
     const rel = `${dir}/${entry}`;
