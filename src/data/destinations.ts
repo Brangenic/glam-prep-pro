@@ -49,7 +49,22 @@ export type Destination = {
     linkLabel: string;
     linkTo: string;
   };
+  /**
+   * Companion panel for a territory that sells a single package. The one
+   * card would otherwise sit against an empty row on desktop, so this fills
+   * the space beside it. Any one product territory can use the slot. With
+   * no companion content the single card simply centres.
+   */
+  companion?: {
+    heading: string;
+    videoUrl: string;
+    videoTitle: string;
+    note: string;
+    linkLabel: string;
+    linkTo: string;
+  };
 };
+
 
 
 export const destinations: Destination[] = [
