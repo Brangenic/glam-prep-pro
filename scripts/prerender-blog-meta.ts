@@ -20,6 +20,8 @@ const DIST = resolve("dist");
 // in sync with SLUG_META_TITLE_OVERRIDES / buildTitleForSlug in
 // src/pages/BlogPost.tsx so static and runtime titles match.
 export const SEO_TITLE_OVERRIDES: Record<string, string> = {
+  "grenada-jab-jab-spicemas-jouvert-experience":
+    "Grenada Jab Jab: The Spicemas J'ouvert Experience",
   "tribe-carnival-2027-elysia-band-launch":
     "TRIBE Carnival 2027: Inside the Elysia Band Launch",
   "trinidad-carnival-2027-first-time-masquerader-guide":

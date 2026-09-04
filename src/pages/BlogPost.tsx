@@ -277,6 +277,8 @@ const SLUG_HERO_OVERRIDES: Record<string, string> = {
 
 // Per-slug meta title overrides, kept under 60 characters for SEO.
 const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
+  "grenada-jab-jab-spicemas-jouvert-experience":
+    "Grenada Jab Jab: The Spicemas J'ouvert Experience",
   "tribe-carnival-2027-elysia-band-launch":
     "TRIBE Carnival 2027: Inside the Elysia Band Launch",
   "2025-carnival-makeup-guide-50-looks-to-show-your-mua":

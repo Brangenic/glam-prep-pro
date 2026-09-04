@@ -24,3 +24,7 @@ So, you've heard the rumours. Everyone's got an opinion on crime in Trinidad. Bu
 **10. Carnival is love.** Don't argue with anyone. Avoid confrontation, smile and keep it rolling. Soca is happy music. No argument is worth it.
 
 Safety isn't a buzzkill, it's your VIP pass to a worry-free Carnival. Store these on speed dial: **Police 999, Fire 990, Ambulance 811.**
+
+## People also read
+
+- [Grenada Jab Jab: two Trinidad masqueraders played Spicemas J'ouvert for the first time](/blogs/grenada-jab-jab-spicemas-jouvert-experience)
