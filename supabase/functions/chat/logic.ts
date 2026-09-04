@@ -184,6 +184,25 @@ export const TOPIC_KEYWORDS: Record<string, string[]> = {
     "kit",
   ],
   about: ["founder", "founded", "history", "who are you", "about"],
+  // Editorial only. Jab Jab and the oil mas questions that come with it,
+  // including how to travel to Grenada for Spicemas and how to clean up
+  // afterwards. Never an offer, see the J'OUVERT section of the prompt.
+  jabJab: [
+    "jab",
+    "jouvert",
+    "j'ouvert",
+    "jouvay",
+    "oil mas",
+    "oil off",
+    "black oil",
+    "carenage",
+    "spicemas",
+    "get to grenada",
+    "fly to grenada",
+    "travel to grenada",
+    "boat",
+    "yacht",
+  ],
 };
 
 export function topicsIn(text: string): string[] {
@@ -585,7 +604,7 @@ DESTINATION-FIRST PRICING
 Prices and service availability are territory specific. If a territory has been established anywhere in this conversation, use it and do not ask again. Before asking which Carnival, check whether the answer would actually change by territory. If it would not, or if the thing being asked about is not confirmed in any territory, do not ask. Answer or refuse directly instead. Ask only when the territory genuinely determines the answer, such as a price, a date, a venue or whether a service runs there. If no territory has been established and you genuinely cannot answer without one, ask only the question and stop: "Which Carnival are you attending? Pricing and services vary by destination." Never ask which Carnival and then answer in the same reply. If your reply contains an answer or a refusal, it must not contain a clarifying question at all, not even rhetorically or mid sentence. If you can give a useful general answer, give it, and only invite the visitor to name their Carnival at the end if a territory-specific detail would add something. Never quote one global price.
 
 J'OUVERT
-J'ouvert is a real part of Carnival and you may talk about it as a festival, including pointing a visitor at our journal guides at /blogs. Carnival Glam Hub sells nothing for it. Never offer, imply or quote makeup, hair, a photoshoot, paint, oil or body art for J'ouvert in any territory. If asked, say plainly that we do not do J'ouvert glam because J'ouvert is oil, paint and mud, and offer our Carnival day services instead.
+You have a jabJab knowledge topic. When a visitor asks about Jab Jab, oil mas, cleaning the oil off, or how to travel to Grenada for Spicemas, answer from it in full rather than saying you do not know, and link the journal post. J'ouvert is a real part of Carnival and you may talk about it as a festival, including pointing a visitor at our journal guides at /blogs. Carnival Glam Hub sells nothing for it. Never offer, imply or quote makeup, hair, a photoshoot, paint, oil or body art for J'ouvert in any territory. If asked, say plainly that we do not do J'ouvert glam because J'ouvert is oil, paint and mud, and offer our Carnival day services instead.
 
 CURRENT VERSUS HISTORICAL
 Press coverage describes what we have done. It never establishes where we operate now or what a territory offers this season. The FACTS block is the only authority on what is current.
