@@ -545,7 +545,15 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       {section.title}
                     </h3>
                   )}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                  <div
+                    className={
+                      singlePackage
+                        ? companion
+                          ? "grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-start"
+                          : "flex justify-center"
+                        : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+                    }
+                  >
                     {section.packages.map((pkg) => {
                       const CardTag = seasonPassed ? "div" : "a";
                       return (
@@ -558,7 +566,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                               target: "_blank",
                               rel: "noopener noreferrer",
                             })}
-                        className="group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all"
+                        className={`group flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl hover:border-primary/40 transition-all${
+                          singlePackage ? " w-full max-w-xs" : ""
+                        }`}
                       >
                         <div className="h-[200px] overflow-hidden bg-muted">
                           <img
@@ -588,9 +598,31 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                       </CardTag>
                       );
                     })}
+                    {singlePackage && companion && idx === 0 && (
+                      <div data-companion-panel="true">
+                        <h3 className="font-display text-xl sm:text-2xl font-bold mb-4">
+                          {companion.heading}
+                        </h3>
+                        <YouTubeEmbed
+                          videoId={companionVideoId ?? ""}
+                          title={companion.videoTitle}
+                          vertical
+                        />
+                        <p className="font-body text-sm text-muted-foreground mt-4">
+                          {companion.note}{" "}
+                          <Link
+                            to={companion.linkTo}
+                            className="text-primary font-semibold underline underline-offset-4"
+                          >
+                            {companion.linkLabel}
+                          </Link>
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
+
 
               <div className="text-center mt-12">
                 {seasonPassed ? (
