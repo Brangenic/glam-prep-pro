@@ -49,6 +49,8 @@ const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
 
 const isExcludedSlug = (slug: string | null | undefined) => {
   if (!slug) return false;
+  // Withdrawn posts never appear in the index, whatever else they match.
+  if (isRemovedPostSlug(slug)) return true;
   if (slug && ALLOWED_OVERRIDE_SLUGS.has(slug)) return false;
   return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
