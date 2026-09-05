@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PromoBookingCard from "@/components/PromoBookingCard";
@@ -167,6 +167,7 @@ import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
 import { buildFaqSchema } from "@/lib/faqSchema";
 import { getBlogPlaceSchema } from "@/data/blogPlaceSchema";
+import { removedPostTarget } from "@/lib/removedPosts";
 
 // Slug rewrite map: some old post bodies link to slugs that don't exist.
 // Rewrite the href at render time to the real slug so we don't emit 404s.
@@ -985,4 +986,15 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;
+// Withdrawn posts never render. Production hosting cannot issue a real
+// 301, so the crawler-facing signal is the prerendered redirect page in
+// scripts/prerender-removed-posts.ts, and this is the in-app equivalent
+// for a visitor arriving through client-side routing.
+const BlogPostRoute = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const target = removedPostTarget(slug);
+  if (target) return <Navigate to={target} replace />;
+  return <BlogPost />;
+};
+
+export default BlogPostRoute;
