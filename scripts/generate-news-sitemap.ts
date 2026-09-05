@@ -31,12 +31,16 @@ const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
   /^artificial/i,
 ];
 
+import { isRemovedPostSlug } from "../src/lib/removedPosts";
+
 const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
   RECOVERED_POSTS_META.map((p) => p.slug),
 );
 
 const isExcludedSlug = (slug: string | null | undefined) =>
   !slug ||
+  // Withdrawn posts are gone from every crawler surface.
+  isRemovedPostSlug(slug) ||
   (!ALLOWED_OVERRIDE_SLUGS.has(slug) &&
     EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug)));
 

@@ -171,8 +171,8 @@ import { getBlogPlaceSchema } from "@/data/blogPlaceSchema";
 // Slug rewrite map: some old post bodies link to slugs that don't exist.
 // Rewrite the href at render time to the real slug so we don't emit 404s.
 const SLUG_LINK_REWRITES: Record<string, string> = {
-  "/blogs/carnival-glam-hub-reviews":
-    "/blogs/what-people-say-about-carnival-glam-hub",
+  "/blogs/carnival-glam-hub-reviews": "/reviews",
+  "/blogs/what-people-say-about-carnival-glam-hub": "/reviews",
   "/blogs/barbados-crop-over-2026-what-to-know-before-you-go":
     "/blogs/barbados-crop-over-2025-what-to-know-before-you-go",
   "/blogs/saint-lucia-carnival-2026-travel-tips-for-international-visitors":

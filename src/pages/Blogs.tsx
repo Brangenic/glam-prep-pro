@@ -10,6 +10,7 @@ import airliftHero from "@/assets/blog-airlift-hero.webp";
 import worthItHero from "@/assets/blog-carnival-makeup-worth-it-hero-v2.webp";
 import bookEarlyHero from "@/assets/blog-book-early-hero.webp";
 import { RECOVERED_POSTS_META } from "@/data/recoveredPostsMeta";
+import { isRemovedPostSlug } from "@/lib/removedPosts";
 
 type BlogPost = {
   external_id: string;
@@ -126,7 +127,6 @@ const MANUAL_GRID_ORDER: string[] = [
   "caribbean-carnival-has-an-airlift-problem",
   "2025-carnival-makeup-guide-50-looks-to-show-your-mua",
   "what-is-jouvert-and-why-should-you-do-it-at-least-once",
-  "what-people-say-about-carnival-glam-hub",
   "jab-jab-grenada-2026-guide",
   "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival",
   "should-the-makeup-match-your-costume",
