@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { RECOVERED_POSTS_META } from "@/data/recoveredPostsMeta";
+import { isRemovedPostSlug } from "@/lib/removedPosts";
 
 type Candidate = {
   slug: string;
@@ -23,6 +24,8 @@ const EXCLUDED_PATTERNS: RegExp[] = [
 ];
 const ALLOWED_OVERRIDE = new Set(RECOVERED_POSTS_META.map((p) => p.slug));
 const isExcluded = (slug: string) => {
+  // Withdrawn posts are never offered as related reading.
+  if (isRemovedPostSlug(slug)) return true;
   if (ALLOWED_OVERRIDE.has(slug)) return false;
   return EXCLUDED_PATTERNS.some((re) => re.test(slug));
 };

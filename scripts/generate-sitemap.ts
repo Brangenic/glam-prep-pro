@@ -86,12 +86,16 @@ const EXCLUDED_AUTHORS = new Set([
 
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 
+import { isRemovedPostSlug } from "../src/lib/removedPosts";
+
 const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
   RECOVERED_POSTS_META.map((p) => p.slug),
 );
 
 const isExcludedSlug = (slug: string | null | undefined) => {
   if (!slug) return true;
+  // Withdrawn posts are gone from every crawler surface.
+  if (isRemovedPostSlug(slug)) return true;
   if (ALLOWED_OVERRIDE_SLUGS.has(slug)) return false;
   return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
 };
