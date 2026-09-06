@@ -218,7 +218,7 @@ const Footer = () => {
 
   return (
     <footer id="contact" className="border-t border-border">
-      <div className="container mx-auto px-4 sm:px-6 section-y-sm pb-52 sm:pb-44 lg:pb-8">
+      <div className="container mx-auto px-4 sm:px-6 section-y-sm pb-56 lg:pb-8">
         {/* Desktop and tablet: five dense columns beside the brand block */}
         <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-6">
           <div className="lg:col-span-1 md:col-span-3">{brand}</div>
