@@ -1,4 +1,4 @@
-// Generates the Glam Bot knowledge pack.
+// Generates the JADE knowledge pack.
 //
 // Plain Node, run by `bunx tsx` from predev and prebuild, exactly like
 // the other scripts in this folder. It imports the composer in

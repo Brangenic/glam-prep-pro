@@ -67,8 +67,14 @@ async function streamChat({
   onDone();
 }
 
-const ChatWidget = () => {
-  const [open, setOpen] = useState(false);
+type ChatWidgetProps = {
+  /** Controlled by the single floating launcher in HelpLauncher.tsx. */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+const ChatWidget = ({ open, onOpenChange }: ChatWidgetProps) => {
+  const setOpen = onOpenChange;
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -144,20 +150,7 @@ const ChatWidget = () => {
     [messages, loading]
   );
 
-  if (!open) {
-    return (
-      <button
-        onClick={() => setOpen(true)}
-        aria-label="Open chat"
-        className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-primary-foreground shadow-lg hover:shadow-xl transition-all hover:scale-105"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-        <span className="font-body text-sm font-semibold hidden sm:inline">Ask Glam Bot</span>
-      </button>
-    );
-  }
+  if (!open) return null;
 
   return (
     <div className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 w-[min(360px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-2xl flex flex-col overflow-hidden" style={{ height: "min(520px, calc(100vh - 8rem))" }}>
@@ -167,9 +160,9 @@ const ChatWidget = () => {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-primary-foreground" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
-          <span className="font-heading text-primary-foreground text-sm font-semibold">Glam Bot</span>
+          <span className="font-heading text-primary-foreground text-sm font-semibold">JADE</span>
         </div>
-        <button onClick={() => setOpen(false)} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors" aria-label="Close chat">
+        <button onClick={() => setOpen(false)} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors" aria-label="Close JADE">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -180,7 +173,7 @@ const ChatWidget = () => {
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-3">
         {messages.length === 0 && (
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">I am Glam Bot. Ask me about dates, prices, services or what is included at any Glam Hub.</p>
+            <p className="text-sm text-muted-foreground">I am JADE, the Carnival Glam Hub assistant. Ask me about dates, prices, services or what is included at any Glam Hub.</p>
             <div className="flex flex-wrap gap-1.5">
               {SUGGESTIONS.map((s) => (
                 <button key={s} onClick={() => send(s)} className="text-xs rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-primary hover:bg-primary/10 transition-colors">

@@ -1,12 +1,12 @@
-# Glam Bot rules
+# JADE rules (formerly Glam Bot)
 
-This document is the contract for Glam Bot, the concierge on
+This document is the contract for JADE, the virtual assistant on
 carnivalglamhub.com. Read it before changing anything the bot answers
 from. British spelling, no em dashes.
 
 ## 1. Where the knowledge comes from
 
-Glam Bot holds no facts of its own. Every sentence it can say is derived
+JADE holds no facts of its own. Every sentence it can say is derived
 from the site's own single sources of truth:
 
 | Module | What it owns |

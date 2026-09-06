@@ -1,5 +1,5 @@
 /**
- * Glam Bot knowledge composer.
+ * JADE knowledge composer. JADE is the customer-facing assistant name.
  *
  * This module holds NO facts of its own. Every sentence it emits is
  * derived from the existing single sources of truth:
@@ -594,7 +594,7 @@ More at /about.`;
 }
 
 /**
- * Jab Jab, editorial only. Glam Bot may explain the festival and point at
+ * Jab Jab, editorial only. JADE may explain the festival and point at
  * our journal, and must never sell makeup, hair or a photoshoot for it.
  */
 function topicJabJab(): string {

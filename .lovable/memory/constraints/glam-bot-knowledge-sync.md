@@ -1,9 +1,9 @@
 ---
-name: Glam Bot knowledge sync
-description: Glam Bot knowledge is generated from src/data via botKnowledge.ts. Never hand-write bot facts, never hand-edit knowledge.json, always resync in the same change set.
+name: JADE knowledge sync
+description: JADE (the assistant, formerly Glam Bot) knowledge is generated from src/data via botKnowledge.ts. Never hand-write bot facts, never hand-edit knowledge.json, always resync in the same change set.
 type: constraint
 ---
-Glam Bot's knowledge is generated from `src/data/`, never hand-written, and never a second copy of a fact. `src/data/botKnowledge.ts` composes the pack and `scripts/generate-bot-knowledge.ts` writes `supabase/functions/chat/knowledge.json` on predev and prebuild.
+JADE's knowledge is generated from `src/data/`, never hand-written, and never a second copy of a fact. `src/data/botKnowledge.ts` composes the pack and `scripts/generate-bot-knowledge.ts` writes `supabase/functions/chat/knowledge.json` on predev and prebuild.
 
 Rules:
 - Any factual change to the site, a price, a date, a venue, a tier, a policy clause, a press story, a station or vendor rate, must be reflected in the pack in the same change set.
