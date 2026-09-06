@@ -25,6 +25,7 @@ import {
   CONTACT_EMAIL,
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
+import { CARNIVAL_GUIDE_GROUPS } from "@/data/carnivalGuides";
 import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
 import {
   FULL_SERVICE_SLUGS,
@@ -613,6 +614,23 @@ function topicJabJab(): string {
   ].join("\n");
 }
 
+/**
+ * Journal guides, editorial only. JADE may point someone at a real guide
+ * when they ask about a territory, packing, a first Carnival or J'ouvert.
+ * Linking an article is never an offer, and she may only link these.
+ */
+function topicGuides(): string {
+  const lines = ["Journal guides JADE may link, grouped. Link only these, never invent a blog URL."];
+  for (const group of CARNIVAL_GUIDE_GROUPS) {
+    lines.push(`${group.title}: ${group.blurb}`);
+    for (const g of group.guides) {
+      lines.push(`  ${g.anchor} - /blogs/${g.slug}`);
+    }
+  }
+  lines.push("All guides live at /blogs.");
+  return lines.join("\n");
+}
+
 /* ============================================================
  * Links
  * ============================================================ */
@@ -738,6 +756,7 @@ export function buildKnowledgePack(): KnowledgePack {
       essentials: topicEssentials(),
       about: topicAbout(),
       jabJab: topicJabJab(),
+      guides: topicGuides(),
     },
     links: buildLinks(),
     neverSay: NEVER_SAY,

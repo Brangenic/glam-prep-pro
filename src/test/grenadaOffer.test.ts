@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import { describe, expect, it } from "vitest";
+import { ALL_CARNIVAL_GUIDES, CARNIVAL_GUIDE_GROUPS } from "@/data/carnivalGuides";
 
 import { destinations, getDestinationBySlug, getDestinationFaqs } from "@/data/destinations";
 import {
@@ -51,9 +52,21 @@ describe("no J'ouvert in offer copy", () => {
     // A link to a journal article is editorial, not an offer, so the blog
     // slug is stripped before the scan. See EDITORIAL_ALLOWANCES in
     // src/test/jouvertNotAnOffer.test.ts for the same rule.
-    const scanned = JSON.stringify(rest)
-      .replace(/grenada-jab-jab-spicemas-jouvert-experience/g, "")
-      .replace(/10-tips-for-trinidad-carnival-jouvert/g, "");
+    // Registered journal guides are pointers at protected editorial, so a
+    // whole guide entry is stripped before the scan.
+    const esc = (v: string) => v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    let scanned = JSON.stringify(rest);
+    for (const g of ALL_CARNIVAL_GUIDES) {
+      scanned = scanned
+        .replace(new RegExp(`[^\\n"]*${esc(g.slug)}[^\\n"]*`, "g"), "")
+        .replace(new RegExp(esc(g.anchor), "g"), "")
+        .replace(new RegExp(esc(g.blurb), "g"), "");
+    }
+    for (const group of CARNIVAL_GUIDE_GROUPS) {
+      scanned = scanned
+        .replace(new RegExp(esc(group.title), "g"), "")
+        .replace(new RegExp(esc(group.blurb), "g"), "");
+    }
     expect(JOUVERT.test(scanned)).toBe(false);
   });
 });

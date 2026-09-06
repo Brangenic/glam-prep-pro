@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { destinations, getDestinationFaqs } from "@/data/destinations";
 import { getHubInclusions, LITE_NOT_OFFERED } from "@/data/hubTiers";
 import { TERRITORY_PRICING } from "@/data/territoryPricing";
+import { ALL_CARNIVAL_GUIDES, CARNIVAL_GUIDE_GROUPS } from "@/data/carnivalGuides";
 
 const JOUVERT = /j\s*'?\s*ouv[ae]?[ry]?t?|jouvay/i;
 const STRICT = /jouvert|j\s*'\s*ouvert|jouvay/i;
@@ -46,6 +47,11 @@ const EXEMPT = [
   // Names J'ouvert only inside the NEVER SAY guardrail, so the bot knows
   // not to sell it. The generated pack is checked separately above.
   "src/data/botKnowledge.ts",
+  // The guides registry and the blog slug catalogue are pointers at journal
+  // articles, nothing more. J'ouvert and Jab guides belong there, because
+  // editorial is fine and only an offer is false.
+  "src/data/carnivalGuides.ts",
+  "src/data/blogCatalogue.ts",
 ];
 
 const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith(`${e}/`));
@@ -68,8 +74,32 @@ const EDITORIAL_ALLOWANCES: RegExp[] = [
   /Spicemas Jab Jab begins before dawn/g,
 ];
 
+// Every registered guide is a link to a protected journal article, so its
+// slug and its anchor text are stripped before the commercial scan runs.
+const esc = (v: string) => v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const GUIDE_ALLOWANCES: RegExp[] = [
+  // A whole guide entry, its anchor, its blurb and its /blogs/ link, is one
+  // pointer at a protected journal article. Strip the entry entirely rather
+  // than word by word, so a partial strip cannot leave a stray fragment.
+  ...ALL_CARNIVAL_GUIDES.map(
+    (g) => new RegExp(`[^\\n"]*${esc(g.slug)}[^\\n"]*`, "g"),
+  ),
+  ...ALL_CARNIVAL_GUIDES.flatMap((g) => [
+    new RegExp(esc(g.anchor), "g"),
+    new RegExp(esc(g.blurb), "g"),
+  ]),
+  ...CARNIVAL_GUIDE_GROUPS.flatMap((group) => [
+    new RegExp(esc(group.title), "g"),
+    new RegExp(esc(group.blurb), "g"),
+  ]),
+];
+
 const stripEditorial = (text: string) =>
-  EDITORIAL_ALLOWANCES.reduce((acc, re) => acc.replace(re, ""), text);
+  [...GUIDE_ALLOWANCES, ...EDITORIAL_ALLOWANCES].reduce(
+    (acc, re) => acc.replace(re, ""),
+    text,
+  );
 
 
 const walk = (dir: string, out: string[] = []) => {
