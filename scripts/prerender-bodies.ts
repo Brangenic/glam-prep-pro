@@ -38,6 +38,7 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
 import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ, GRENADA_INCLUSIONS_SENTENCE } from "../src/data/hubTiers";
+import { getGuidesForTerritory } from "../src/data/carnivalGuides";
 import { deEmDash } from "../src/lib/metaText";
 import {
   TRINIDAD_ANSWER_SECTIONS,
@@ -623,6 +624,20 @@ function destinationBody(d: ParsedDest): string {
         : `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
     );
     parts.push(CTA);
+  }
+  // Editorial guides for this territory. Never season filtered, an
+  // article stays useful reading after the Carnival has passed.
+  const guides = getGuidesForTerritory(d.slug);
+  if (guides.length) {
+    parts.push(`<h2>${escapeHtml(d.shortName ?? d.name)} Carnival guides</h2>`);
+    parts.push(
+      `<ul>${guides
+        .map(
+          (g) =>
+            `<li><a href="/blogs/${g.slug}">${escapeHtml(g.anchor)}</a> ${escapeHtml(g.blurb)}</li>`,
+        )
+        .join("")}</ul>`,
+    );
   }
   parts.push(destinationRelated(d.slug));
   return parts.join("\n");

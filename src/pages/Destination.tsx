@@ -34,7 +34,7 @@ import {
   PRE_REGISTRATION,
 } from "@/data/seasons";
 
-import TrinidadGuidesBlock from "@/components/TrinidadGuidesBlock";
+import CarnivalGuides from "@/components/landing/CarnivalGuides";
 
 const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
   trinidad: { city: "Port of Spain", country: "TT" },
@@ -1027,11 +1027,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         </section>
         )}
 
-        {dest.slug === "trinidad" && (
-          <div className="pb-9 sm:pb-12 lg:pb-16">
-            <TrinidadGuidesBlock />
-          </div>
-        )}
+        {/* Editorial guides for this territory. Never season filtered. */}
+        <CarnivalGuides territory={dest.slug} territoryName={dest.shortName} />
+
         {!seasonPassed && (
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl pb-6 text-center">
           <p className="font-body text-sm text-muted-foreground">
