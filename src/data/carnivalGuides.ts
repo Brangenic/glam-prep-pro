@@ -377,3 +377,45 @@ export function getGuidesForTerritory(slug: string, limit = 6): CarnivalGuide[] 
   }
   return picked;
 }
+
+/**
+ * The five evergreen guides Kibwe confirmed on 6 September 2026. They are the
+ * floor for any guides list, so a territory with a single article never
+ * renders one lonely card beside a row of empty columns. Ordered as briefed:
+ * Jab Jab first, then the two J'ouvert guides, then Trinidad, then the road
+ * essentials. Editorial only, never an offer.
+ */
+export const FEATURED_GUIDE_SLUGS = [
+  "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival",
+  "10-tips-for-trinidad-carnival-jouvert",
+  "how-to-protect-your-hair-at-jouvert-without-looking-crazy",
+  "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips",
+  "strut-or-struggle-the-ultimate-guide-to-carnival-shoes",
+] as const;
+
+export const FEATURED_CARNIVAL_GUIDES: CarnivalGuide[] = FEATURED_GUIDE_SLUGS.map(
+  (slug) => {
+    const guide = ALL_CARNIVAL_GUIDES.find((g) => g.slug === slug);
+    if (!guide) {
+      throw new Error(`Featured guide slug is not in the registry: ${slug}`);
+    }
+    return guide;
+  },
+);
+
+/**
+ * Guides for a "Keep exploring" column. Territory guides come first, then the
+ * featured five fill the list out. Never season filtered.
+ */
+export function getRelatedGuides(slug?: string, limit = 5): CarnivalGuide[] {
+  const seen = new Set<string>();
+  const picked: CarnivalGuide[] = [];
+  const push = (guide: CarnivalGuide) => {
+    if (picked.length >= limit || seen.has(guide.slug)) return;
+    seen.add(guide.slug);
+    picked.push(guide);
+  };
+  if (slug) getGuidesForTerritory(slug, limit).forEach(push);
+  FEATURED_CARNIVAL_GUIDES.forEach(push);
+  return picked;
+}
