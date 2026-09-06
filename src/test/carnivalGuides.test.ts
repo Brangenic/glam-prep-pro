@@ -62,3 +62,23 @@ describe("Carnival guides", () => {
     expect(getGuidesForTerritory("barbados").length).toBeGreaterThan(0);
   });
 });
+
+describe("Featured guides", () => {
+  it("all five featured guides resolve to real posts", async () => {
+    const { FEATURED_CARNIVAL_GUIDES } = await import("@/data/carnivalGuides");
+    expect(FEATURED_CARNIVAL_GUIDES.length).toBe(5);
+    for (const g of FEATURED_CARNIVAL_GUIDES) {
+      expect(isRealPostSlug(g.slug), g.slug).toBe(true);
+      expect(isRemovedPostSlug(g.slug), g.slug).toBe(false);
+    }
+  });
+
+  it("a guides column is never one lonely link", async () => {
+    const { getRelatedGuides } = await import("@/data/carnivalGuides");
+    for (const slug of ["grenada", "trinidad", "antigua", "toronto"]) {
+      const guides = getRelatedGuides(slug);
+      expect(guides.length, slug).toBeGreaterThanOrEqual(3);
+      for (const g of guides) expect(isRealPostSlug(g.slug), g.slug).toBe(true);
+    }
+  });
+});
