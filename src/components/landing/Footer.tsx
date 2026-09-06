@@ -268,7 +268,8 @@ const Footer = () => {
 
         {/* Utility row, one compact line that wraps naturally */}
         <div className="mt-4 border-t border-border pt-3">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-sm text-muted-foreground">
+          {/* Left inset keeps the utility row clear of the fixed Ask JADE launcher. */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-sm text-muted-foreground pl-0 lg:pl-44">
             <span>© {new Date().getFullYear()} Carnival Glam Hub</span>
             <span aria-hidden="true">·</span>
             <a href="/policies#terms" className="hover:text-primary transition-colors py-2">Terms</a>
