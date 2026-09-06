@@ -12,7 +12,7 @@ declare module "react" {
   }
 }
 
-const PreferredSourcesButton = () => {
+const PreferredSourcesButton = ({ compact = false }: { compact?: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   // The anchor is the working path today, so it renders by default and only
   // hides once Google's library has actually populated the container.
@@ -28,10 +28,12 @@ const PreferredSourcesButton = () => {
   }, []);
 
   return (
-    <div className="max-w-full">
-      <p className="font-body text-sm text-muted-foreground leading-relaxed mb-2">
-        Prefer our Carnival coverage? Set Carnival Glam Hub as a preferred source on Google.
-      </p>
+    <div className={compact ? "inline-flex items-center gap-2 max-w-full" : "max-w-full"}>
+      {!compact && (
+        <p className="font-body text-sm text-muted-foreground leading-relaxed mb-2">
+          Prefer our Carnival coverage? Set Carnival Glam Hub as a preferred source on Google.
+        </p>
+      )}
       {/*
         Google's publisher.js fills this container with its own Preferred
         Sources button, but only once Google marks the domain eligible.
@@ -51,9 +53,15 @@ const PreferredSourcesButton = () => {
           href={DEEPLINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="block font-body text-sm text-muted-foreground hover:text-primary transition-colors break-words"
+          className={
+            compact
+              ? "font-body text-sm text-muted-foreground hover:text-primary transition-colors py-2"
+              : "block font-body text-sm text-muted-foreground hover:text-primary transition-colors break-words"
+          }
         >
-          Add Carnival Glam Hub as a preferred source on Google
+          {compact
+            ? "Preferred Source on Google"
+            : "Add Carnival Glam Hub as a preferred source on Google"}
         </a>
       )}
     </div>
