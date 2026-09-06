@@ -272,11 +272,12 @@ const Footer = () => {
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-sm text-muted-foreground pl-0 lg:pl-44">
             <span>© {new Date().getFullYear()} Carnival Glam Hub</span>
             <span aria-hidden="true">·</span>
-            <a href="/policies#terms" className="hover:text-primary transition-colors py-2">Terms</a>
+            <a href="/policies#terms" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Terms</a>
             <span aria-hidden="true">·</span>
-            <a href="/policies#privacy" className="hover:text-primary transition-colors py-2">Privacy</a>
+            <a href="/policies#privacy" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Privacy</a>
             <span aria-hidden="true">·</span>
-            <a href="/policies#refunds" className="hover:text-primary transition-colors py-2">Refund Policy</a>
+            <a href="/policies#refunds" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Refund Policy</a>
+
             <span aria-hidden="true">·</span>
             <PreferredSourcesButton compact />
           </div>
