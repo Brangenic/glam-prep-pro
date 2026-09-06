@@ -55,7 +55,7 @@ const PreferredSourcesButton = ({ compact = false }: { compact?: boolean }) => {
           rel="noopener noreferrer"
           className={
             compact
-              ? "font-body text-sm text-muted-foreground hover:text-primary transition-colors py-2"
+              ? "inline-flex min-h-[44px] items-center font-body text-sm text-muted-foreground hover:text-primary transition-colors"
               : "block font-body text-sm text-muted-foreground hover:text-primary transition-colors break-words"
           }
         >
