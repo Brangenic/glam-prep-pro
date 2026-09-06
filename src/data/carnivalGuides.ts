@@ -407,7 +407,7 @@ export const FEATURED_CARNIVAL_GUIDES: CarnivalGuide[] = FEATURED_GUIDE_SLUGS.ma
  * Guides for a "Keep exploring" column. Territory guides come first, then the
  * featured five fill the list out. Never season filtered.
  */
-export function getRelatedGuides(slug?: string, limit = 5): CarnivalGuide[] {
+export function getRelatedGuides(slug?: string, limit = 6): CarnivalGuide[] {
   const seen = new Set<string>();
   const picked: CarnivalGuide[] = [];
   const push = (guide: CarnivalGuide) => {
