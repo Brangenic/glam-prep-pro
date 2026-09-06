@@ -206,10 +206,10 @@ const Footer = () => {
         Makeup, hair, photos, getting dressed and more across the Carnival circuit.
       </p>
       <div className="mt-2 font-body text-sm">
-        <a href={`mailto:${CONTACT_EMAIL}`} className="block min-h-[44px] flex items-center text-muted-foreground hover:text-primary transition-colors break-all">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="flex min-h-[44px] items-center text-muted-foreground hover:text-primary transition-colors break-all">
           {CONTACT_EMAIL}
         </a>
-        <a href={CONTACT_PHONE_HREF} className="block min-h-[44px] flex items-center text-muted-foreground hover:text-primary transition-colors">
+        <a href={CONTACT_PHONE_HREF} className="flex min-h-[44px] items-center text-muted-foreground hover:text-primary transition-colors">
           {CONTACT_PHONE_DISPLAY}
         </a>
       </div>
@@ -241,9 +241,6 @@ const Footer = () => {
           <div>
             <ColumnHeading>Connect</ColumnHeading>
             <SocialRow />
-            <div className="mt-3">
-              <PreferredSourcesButton />
-            </div>
           </div>
         </div>
 
@@ -265,9 +262,6 @@ const Footer = () => {
             </Accordion>
             <Accordion title="Connect">
               <SocialRow />
-              <div className="mt-3">
-                <PreferredSourcesButton />
-              </div>
             </Accordion>
           </div>
         </div>
@@ -282,6 +276,8 @@ const Footer = () => {
             <a href="/policies#privacy" className="hover:text-primary transition-colors py-2">Privacy</a>
             <span aria-hidden="true">·</span>
             <a href="/policies#refunds" className="hover:text-primary transition-colors py-2">Refund Policy</a>
+            <span aria-hidden="true">·</span>
+            <PreferredSourcesButton compact />
           </div>
         </div>
       </div>
