@@ -20,3 +20,10 @@ export const WHATSAPP_DISPLAY = "+1 876 509 0997";
 
 /** The address published in the live Terms and Privacy Policy. */
 export const CONTACT_EMAIL = "carnivalglamhub@gmail.com";
+
+/** Published booking phone number. Never hardcode this inline. */
+export const CONTACT_PHONE_DISPLAY = "876-509-0997";
+export const CONTACT_PHONE_HREF = "tel:+18765090997";
+
+/** Customer-facing name of our virtual assistant. */
+export const ASSISTANT_NAME = "JADE";
