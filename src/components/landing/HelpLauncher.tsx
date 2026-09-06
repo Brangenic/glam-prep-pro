@@ -48,6 +48,7 @@ const HelpLauncher = () => {
                   setMenuOpen(false);
                   setChatOpen(true);
                 }}
+                data-testid="launcher-ask-jade"
                 className="flex w-full min-h-[44px] flex-col items-start rounded-xl px-3 py-2 text-left hover:bg-muted transition-colors"
               >
                 <span className="font-body text-sm font-semibold text-foreground">
@@ -63,6 +64,7 @@ const HelpLauncher = () => {
                   setMenuOpen(false);
                   openExternal(WHATSAPP_HREF);
                 }}
+                data-testid="launcher-whatsapp"
                 className="flex w-full min-h-[44px] flex-col items-start rounded-xl px-3 py-2 text-left hover:bg-muted transition-colors"
               >
                 <span className="font-body text-sm font-semibold text-foreground">
