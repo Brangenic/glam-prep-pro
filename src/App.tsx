@@ -3,8 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate, useParams } from "react-router-
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import FloatingWhatsApp from "@/components/landing/FloatingWhatsApp";
-import ChatWidget from "@/components/landing/ChatWidget";
+import HelpLauncher from "@/components/landing/HelpLauncher";
 import RouteTracker from "@/components/RouteTracker";
 import { getWixRedirectTarget } from "@/lib/wixRedirects";
 import Index from "./pages/Index.tsx";
@@ -150,8 +149,7 @@ const App = () => (
           <Route path="/best-carnival-makeup-miami" element={<BestCarnivalMakeupMiami />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <FloatingWhatsApp />
-        <ChatWidget />
+        <HelpLauncher />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
