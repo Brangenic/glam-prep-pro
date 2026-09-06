@@ -415,7 +415,9 @@ export function getRelatedGuides(slug?: string, limit = 5): CarnivalGuide[] {
     seen.add(guide.slug);
     picked.push(guide);
   };
-  if (slug) getGuidesForTerritory(slug, limit).forEach(push);
+  // Territory guides lead, but never fill the whole column, so the
+  // featured five always get a look in.
+  if (slug) getGuidesForTerritory(slug, Math.max(1, limit - 3)).forEach(push);
   FEATURED_CARNIVAL_GUIDES.forEach(push);
   return picked;
 }
