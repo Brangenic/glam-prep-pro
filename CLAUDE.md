@@ -80,12 +80,12 @@ at the top of `index.html`, and never point a canonical at a
 - Never use an em dash. Use a comma, a full stop or the word "and".
 - The word "masos" must never appear in customer-facing copy. URLs are
   the only exception.
-- No emoji in Glam Bot output or in the chat widget UI.
+- No emoji in JADE output or in the chat widget UI.
 
-## GLAM BOT SYNCHRONISATION RULE
+## JADE (GLAM BOT) SYNCHRONISATION RULE
 
 Any change to Carnival Glam Hub factual content must trigger a review of
-Glam Bot knowledge. Where relevant, update the bot knowledge source in
+JADE knowledge. Where relevant, update the bot knowledge source in
 the same commit or change set. Never leave site content and bot data
 inconsistent.
 
@@ -224,7 +224,7 @@ never appear to. This is regional, not a Grenada quirk.
 J'ouvert therefore never appears on a destination page, a service page, a
 package, an inclusion list, a highlight, an FAQ answer, a meta
 description, structured data, `public/llms.txt`, a prerendered body, or in
-the Glam Bot knowledge pack. Not as a package, not as an inclusion, not as
+the JADE knowledge pack. Not as a package, not as an inclusion, not as
 an example, not as "and J'ouvert too".
 
 The blog posts stay, all of them, untouched. They are top of funnel, they
@@ -234,7 +234,7 @@ article, and never remove one from the sitemap, the blog index or internal
 links. Editorial links from a commercial page into a J'ouvert guide are
 fine, the offer is what is forbidden.
 
-Glam Bot must not pretend the festival does not exist. It may discuss
+JADE must not pretend the festival does not exist. It may discuss
 J'ouvert and point to our guides, it simply may not sell makeup, hair or a
 photoshoot for it. The rule lives in the NEVER SAY guardrail in
 `src/data/botKnowledge.ts` and in the J'OUVERT section of the system

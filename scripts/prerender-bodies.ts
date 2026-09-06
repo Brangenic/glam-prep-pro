@@ -635,7 +635,7 @@ function destinationBody(d: ParsedDest): string {
 // Every figure below is computed from src/data/territoryPricing.ts and
 // src/data/hubTiers.ts at build time, so the prerendered body can never
 // drift from the prices the calculator, the destination pages and the
-// Glam Bot quote. Never hardcode a price in this file.
+// JADE quote. Never hardcode a price in this file.
 // ---------------------------------------------------------------
 
 /** Territories that are running, have a season ahead and carry real products. */

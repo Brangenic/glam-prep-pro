@@ -14,7 +14,7 @@ export const AMAZON_STORE_URL =
 /** Our own on-site storefront page. */
 export const AMAZON_STORE_PATH = "/amazon-store";
 
-/** WhatsApp, matching FloatingWhatsApp.tsx. */
+/** WhatsApp. Used by the floating launcher and every in-page enquiry link. */
 export const WHATSAPP_URL = "https://wa.me/18765090997";
 export const WHATSAPP_DISPLAY = "+1 876 509 0997";
 

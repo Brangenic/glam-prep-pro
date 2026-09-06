@@ -1,5 +1,5 @@
 /**
- * Glam Bot knowledge and logic suite.
+ * JADE knowledge and logic suite.
  *
  * Every assertion runs against the freshly built knowledge pack or the
  * pure logic in supabase/functions/chat/logic.ts. Nothing here holds a
