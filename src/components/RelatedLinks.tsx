@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { isUpcomingDestination } from "@/data/seasons";
+import { getRelatedGuides, guideHref } from "@/data/carnivalGuides";
 
 type LinkRef = { to: string; label: string };
 
@@ -112,20 +113,10 @@ const DEST_NEIGHBOURS: Record<string, string[]> = {
   "trinidad-carnival-2027": ["trinidad", "epic-cruise", "jamaica"],
 };
 
-const DEST_GUIDES: Record<string, LinkRef[]> = {
-  trinidad: [
-    { to: "/blogs/trinidad-carnival-vs-jamaica-carnival", label: "Trinidad vs Jamaica Carnival" },
-  ],
-  "trinidad-carnival-2027": [
-    { to: "/blogs/trinidad-carnival-vs-jamaica-carnival", label: "Trinidad vs Jamaica Carnival" },
-  ],
-  jamaica: [
-    { to: "/blogs/trinidad-carnival-vs-jamaica-carnival", label: "Trinidad vs Jamaica Carnival" },
-  ],
-  grenada: [
-    { to: "/blogs/jab-jab-101-what-you-really-need-to-know-about-grenada-carnival", label: "Jab Jab 101" },
-  ],
-};
+// Guides come from the editorial registry, territory first and then the
+// featured five, so this column can never render as one lonely link.
+const destGuides = (slug: string): LinkRef[] =>
+  getRelatedGuides(slug).map((g) => ({ to: guideHref(g), label: g.anchor }));
 
 function deriveFromPath(pathname: string): Props | null {
   // Service pages
@@ -158,7 +149,7 @@ function deriveFromPath(pathname: string): Props | null {
     return {
       services,
       destinations: neighbours,
-      guides: DEST_GUIDES[slug] ?? [],
+      guides: destGuides(slug),
     };
   }
 

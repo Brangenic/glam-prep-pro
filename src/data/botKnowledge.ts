@@ -25,7 +25,7 @@ import {
   CONTACT_EMAIL,
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
-import { CARNIVAL_GUIDE_GROUPS } from "@/data/carnivalGuides";
+import { CARNIVAL_GUIDE_GROUPS, FEATURED_CARNIVAL_GUIDES } from "@/data/carnivalGuides";
 import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
 import {
   FULL_SERVICE_SLUGS,
@@ -627,6 +627,10 @@ function topicGuides(): string {
       lines.push(`  ${g.anchor} - /blogs/${g.slug}`);
     }
   }
+  lines.push(
+    "The five guides to reach for first, confirmed 6 September 2026: " +
+      FEATURED_CARNIVAL_GUIDES.map((g) => `${g.anchor} (/blogs/${g.slug})`).join("; "),
+  );
   lines.push("All guides live at /blogs.");
   return lines.join("\n");
 }

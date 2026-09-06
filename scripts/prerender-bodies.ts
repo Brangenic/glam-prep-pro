@@ -38,7 +38,7 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
 import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ, GRENADA_INCLUSIONS_SENTENCE } from "../src/data/hubTiers";
-import { getGuidesForTerritory } from "../src/data/carnivalGuides";
+import { getGuidesForTerritory, getRelatedGuides, guideHref } from "../src/data/carnivalGuides";
 import { deEmDash } from "../src/lib/metaText";
 import {
   TRINIDAD_ANSWER_SECTIONS,
@@ -271,10 +271,9 @@ function destinationRelated(slug: string): string {
       { href: "/services/carnival-shuttle", label: "Carnival shuttle" },
     ],
     destinations: neighbours,
-    guides: [
-      { href: "/blogs/is-professional-carnival-makeup-worth-it", label: "Is professional Carnival makeup worth it?" },
-      { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
-    ],
+    // Territory guides first, then the featured five. Editorial, never
+    // season filtered, and never a single lonely link.
+    guides: getRelatedGuides(slug).map((g) => ({ href: guideHref(g), label: g.anchor })),
   });
 }
 
