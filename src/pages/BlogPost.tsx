@@ -603,7 +603,10 @@ const BlogPost = () => {
         <article className="py-10 sm:py-14 lg:py-18">
           <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
             {loading ? (
-              <div className="space-y-6 animate-pulse">
+              // min-height reserves roughly an article's worth of space so the
+              // footer does not jump upward when the post body arrives (CLS).
+              <div className="space-y-6 animate-pulse min-h-[160vh]">
+
                 <div className="h-5 bg-muted rounded w-24" />
                 <div className="h-10 bg-muted rounded w-3/4" />
                 <div className="flex items-center gap-3">

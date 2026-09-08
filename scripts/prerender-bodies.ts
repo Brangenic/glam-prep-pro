@@ -141,8 +141,23 @@ function wrap(c: Content): string {
   // Wrapping div carries data-prerender so it's obvious in view-source
   // that this is the static snapshot. React's createRoot().render()
   // clears it on hydration.
+  //
+  // DO NOT DELETE THIS BLOCK. It is the entire non-JS crawler and AEO
+  // surface (GPTBot, PerplexityBot, ClaudeBot, CCBot, older search
+  // bots, llms.txt consumers). It stays in the served HTML.
+  //
+  // It is visually hidden by PRERENDER_HIDE_STYLE (inline critical CSS
+  // in <head>) so it never paints in the gap before React mounts, which
+  // otherwise showed a flash of unstyled content on every cold load.
+  // Visually-hidden, not display:none, so crawlers and assistive tech
+  // still read it. React clears it on first render.
   return `<div data-prerender="static">\n<h1>${c.title}</h1>\n${c.body}\n</div>`;
 }
+
+// Inline critical CSS. Must be in the head, before the stylesheet, so
+// the static snapshot is hidden on the very first painted frame.
+const PRERENDER_HIDE_STYLE = `<style id="prerender-static-style">[data-prerender="static"]{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}</style>`;
+
 
 const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`;
 
@@ -1410,13 +1425,19 @@ ${relatedBlock({
 // Injection
 // ---------------------------------------------------------------
 
+function withHideStyle(html: string): string {
+  if (html.includes('id="prerender-static-style"')) return html;
+  return html.replace(/<head(\s[^>]*)?>/i, (m) => `${m}\n    ${PRERENDER_HIDE_STYLE}`);
+}
+
 function replaceRoot(html: string, inner: string): string | null {
   const empty = /<div\s+id="root"[^>]*>\s*<\/div>/i;
   if (empty.test(html)) {
-    return html.replace(empty, `<div id="root">${inner}</div>`);
+    return withHideStyle(html.replace(empty, `<div id="root">${inner}</div>`));
   }
   return null;
 }
+
 
 function writeRoute(route: string, content: Content): boolean {
   const targetFile =
