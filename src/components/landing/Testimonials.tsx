@@ -57,9 +57,22 @@ const Testimonials = () => {
               <p className="font-body text-foreground/85 leading-relaxed mb-6 sm:mb-8 pt-6 sm:pt-8 text-sm sm:text-[15px]">
                 {t.quote}
               </p>
-              <div>
-                <p className="font-body text-sm font-semibold">{t.name}</p>
-                <p className="font-body text-xs text-muted-foreground">{t.location}</p>
+              <div className="flex items-center gap-4">
+                {t.image && (
+                  <img
+                    src={t.image}
+                    alt={t.imageAlt ?? t.name}
+                    width={200}
+                    height={200}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 rounded-full object-cover ring-1 ring-primary/20"
+                  />
+                )}
+                <div>
+                  <p className="font-body text-sm font-semibold">{t.name}</p>
+                  <p className="font-body text-xs text-muted-foreground">{t.location}</p>
+                </div>
               </div>
             </div>
           ))}
