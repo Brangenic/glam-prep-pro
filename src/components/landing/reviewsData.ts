@@ -3,6 +3,8 @@ export type ReviewItem = {
   name: string;
   detail: string;
   location: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 export const featuredReviews: ReviewItem[] = [
@@ -12,6 +14,8 @@ export const featuredReviews: ReviewItem[] = [
     name: "Melissa Chung",
     detail: "Jamaica review",
     location: "Carnival GLAM HUB Jamaica",
+    image: "/images/testimonials/melissa-chung.webp",
+    imageAlt: "Melissa Chung in costume on the road at Jamaica Carnival",
   },
   {
     quote:
@@ -19,6 +23,8 @@ export const featuredReviews: ReviewItem[] = [
     name: "Snowwhite Hogie",
     detail: "Jamaica review",
     location: "Carnival GLAM HUB Jamaica",
+    image: "/images/testimonials/snowwhite-hogie.webp",
+    imageAlt: "Snowwhite Hogie in a feathered costume at Jamaica Carnival",
   },
   {
     quote:
@@ -26,6 +32,8 @@ export const featuredReviews: ReviewItem[] = [
     name: "Daydrie Burke",
     detail: "Jamaica review",
     location: "Carnival GLAM HUB Jamaica",
+    image: "/images/testimonials/daydrie-burke.webp",
+    imageAlt: "Daydrie Burke in Carnival makeup and a jewelled headpiece",
   },
   {
     quote:
