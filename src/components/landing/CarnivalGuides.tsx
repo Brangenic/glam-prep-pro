@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  CARNIVAL_GUIDE_GROUPS,
+  HOME_CARNIVAL_GUIDES,
   getGuidesForTerritory,
   guideHref,
   type CarnivalGuide,
@@ -104,27 +104,15 @@ const CarnivalGuides = ({ territory, territoryName }: Props) => {
             Carnival <span className="italic text-gradient-primary">guides</span>
           </h2>
           <p className="font-body text-base text-muted-foreground max-w-2xl mx-auto">
-            Grouped by island and by question, so you can find the one you need.
+            Three worth reading before you travel, written by the team on the ground.
           </p>
         </div>
 
-        <div className="space-y-10 sm:space-y-12">
-          {CARNIVAL_GUIDE_GROUPS.map((group) => (
-            <div key={group.id}>
-              <h3 className="font-display text-xl sm:text-2xl font-bold mb-1">
-                {group.title}
-              </h3>
-              <p className="font-body text-sm text-muted-foreground mb-4 sm:mb-5">
-                {group.blurb}
-              </p>
-              <ul className={gridClass(group.guides.length)}>
-                {group.guides.map((g) => (
-                  <GuideCard key={`${group.id}-${g.slug}`} guide={g} />
-                ))}
-              </ul>
-            </div>
+        <ul className={gridClass(HOME_CARNIVAL_GUIDES.length)}>
+          {HOME_CARNIVAL_GUIDES.map((g) => (
+            <GuideCard key={g.slug} guide={g} />
           ))}
-        </div>
+        </ul>
 
         <div className="text-center mt-10">
           <Link

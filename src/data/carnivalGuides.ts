@@ -404,6 +404,23 @@ export const FEATURED_CARNIVAL_GUIDES: CarnivalGuide[] = FEATURED_GUIDE_SLUGS.ma
 );
 
 /**
+ * The home page shows Kibwe's top three only, taken from the front of the
+ * featured list so the two can never drift apart. The full registry stays
+ * intact and is still reachable through /blogs and the destination pages.
+ */
+export const HOME_GUIDE_SLUGS = FEATURED_GUIDE_SLUGS.slice(0, 3);
+
+export const HOME_CARNIVAL_GUIDES: CarnivalGuide[] = HOME_GUIDE_SLUGS.map(
+  (slug) => {
+    const guide = ALL_CARNIVAL_GUIDES.find((g) => g.slug === slug);
+    if (!guide) {
+      throw new Error(`Home guide slug is not in the registry: ${slug}`);
+    }
+    return guide;
+  },
+);
+
+/**
  * Guides for a "Keep exploring" column. Territory guides come first, then the
  * featured five fill the list out. Never season filtered.
  */
