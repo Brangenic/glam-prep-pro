@@ -19,8 +19,11 @@ export const REVIEWS_PAGE_TITLE =
 export const REVIEWS_PAGE_DESCRIPTION =
   "Reviews published on Google by Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.";
 
-/** The two founders, in the order they are always named. */
-export const FOUNDER_NAMES = ["Gabrielle Waite", "Kibwe McGann"] as const;
+/**
+ * The two co-founders, in the order they are always named. Both co-founded
+ * Carnival Glam Hub, neither founded it alone.
+ */
+export const FOUNDER_NAMES = ["Kibwe McGann", "Gabrielle Waite"] as const;
 
 /** Verified outbound links for the founder credit. */
 export const GABBY_GLAM_COSMETICS_URL = "https://gabbyglamcosmetics.com/";

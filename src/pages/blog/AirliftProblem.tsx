@@ -53,7 +53,7 @@ const PLAIN_BODY =
       .replace(/__TRINIDAD__/g, "Trinidad")
       .replace(/__STLUCIA__/g, "Saint Lucia")
   ).join("\n\n") +
-  "\n\nKibwe McGann\nCofounder, Carnival Glam Hub";
+  "\n\nKibwe McGann\nCo-founder, Carnival Glam Hub";
 
 type Segment =
   | { type: "text"; value: string }
@@ -321,7 +321,7 @@ const AirliftProblem = () => {
                   </Link>
                 </p>
                 <p className="font-body text-muted-foreground text-sm">
-                  Cofounder, Carnival Glam Hub
+                  Co-founder, Carnival Glam Hub
                 </p>
               </div>
             </div>

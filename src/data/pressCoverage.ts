@@ -314,7 +314,7 @@ export const PRESS_STORIES: PressStory[] = [
     url: "https://www.thehautepeople.com/2021/12/jamaican-beauty-mogul-gabrielle-waite-launches-new-line-of-lipsticks.html",
     publishedDate: "2021-12-01",
     summary:
-      "Founder coverage describing Carnival Glam Hub as the Caribbean's premier Carnival makeup and hair concierge.",
+      "Coverage of co-founder Gabrielle Waite that describes Carnival Glam Hub as the Caribbean's premier Carnival makeup and hair concierge.",
     tier: "mention",
   },
 ];
