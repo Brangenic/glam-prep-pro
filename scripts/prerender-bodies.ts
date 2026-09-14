@@ -65,6 +65,7 @@ import {
 import { TERRITORY_PROFILES } from "../src/data/territoryProfiles";
 import { FULL_SERVICE_NAMES, LITE_NAMES, listNames } from "../src/data/hubTiers";
 import {
+  DEPOSIT_AMOUNT,
   OPERATING_TERRITORY_SENTENCE,
   territoryPriceSentence,
 } from "../src/data/territoryPriceProse";
@@ -1379,7 +1380,7 @@ ${dateLine}
 <li>${pricingSummarySentence()}</li>
 </ul>
 <h2>How booking works</h2>
-<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>.${p.slug === "trinidad" ? " A US$${DEPOSIT} deposit secures your appointment." : " Your booking team will confirm your appointment and final pricing."} Appointments are booked by time slot and the popular times go first.</p>
+<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>.${p.slug === "trinidad" ? ` A US$${DEPOSIT_AMOUNT} deposit secures your appointment.` : " Your booking team will confirm your appointment and final pricing."} Appointments are booked by time slot and the popular times go first.</p>
 <h2>Frequently asked</h2>
 ${faqHtml}
 ${CTA}
