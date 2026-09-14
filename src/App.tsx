@@ -60,9 +60,17 @@ const DestinationsSlugRedirect = () => {
   return <Navigate to={`/${slug ?? ""}`} replace />;
 };
 
-const App = () => (
+const App = () => {
+  // A returning visitor who already accepted is measured straight away, with
+  // no banner. Anyone who has not chosen loads nothing.
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+
       <Toaster />
       <Sonner />
       <BrowserRouter>
