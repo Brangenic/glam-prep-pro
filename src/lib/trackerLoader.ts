@@ -43,11 +43,11 @@ function loadGoogle() {
   w.dataLayer = w.dataLayer || [];
   // gtag must push the arguments object itself, not an array copy: that is
   // what gtag.js reads.
-  function gtag() {
+  const gtag = function (this: unknown, ...args: unknown[]) {
     // eslint-disable-next-line prefer-rest-params
-    w.dataLayer!.push(arguments);
-  }
-  w.gtag = gtag as unknown as (...args: unknown[]) => void;
+    w.dataLayer!.push(arguments as unknown as IArguments);
+  } as (...args: unknown[]) => void;
+  w.gtag = gtag;
 
   injectScript(`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`);
   gtag("js", new Date());
