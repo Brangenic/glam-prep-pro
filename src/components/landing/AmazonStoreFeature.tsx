@@ -111,9 +111,9 @@ const AmazonStoreFeature = () => {
                 </div>
               </div>
 
-              <div className="space-y-3">
-                {featuredProducts.length > 0 ? (
-                  featuredProducts.map((product) => (
+              {featuredProducts.length > 0 && (
+                <div className="space-y-3">
+                  {featuredProducts.map((product) => (
                     <a
                       key={product.external_id}
                       href={getFeaturedProductHref(product.product_url)}
@@ -141,24 +141,17 @@ const AmazonStoreFeature = () => {
                         </p>
                       </div>
                     </a>
-                  ))
-                ) : (
-                  <>
-                    <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
-                      <span className="font-body text-sm text-foreground">Makeup favorites</span>
-                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
-                      <span className="font-body text-sm text-foreground">Travel essentials</span>
-                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-2xl bg-background px-4 py-3 border border-border">
-                      <span className="font-body text-sm text-foreground">Carnival prep picks</span>
-                      <span className="font-body text-xs uppercase tracking-[0.15em] text-muted-foreground">Shop</span>
-                    </div>
-                  </>
-                )}
-              </div>
+                  ))}
+                </div>
+              )}
+              <a
+                href={AMAZON_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-body text-sm text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors"
+              >
+                Browse the storefront
+              </a>
             </div>
           </div>
         </div>

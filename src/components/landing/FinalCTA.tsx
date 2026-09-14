@@ -11,12 +11,6 @@ const FinalCTA = () => {
     <section id="book" className="section-y relative overflow-hidden" aria-labelledby="cta-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent pointer-events-none" />
       <div ref={ref} className="relative container mx-auto px-4 sm:px-6 text-center max-w-2xl">
-        <div className={`inline-flex items-center gap-2 bg-secondary/10 border border-secondary/20 rounded-full px-4 py-1.5 mb-6 sm:mb-8 transition-all duration-700 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}>
-          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" aria-hidden="true" />
-          <span className="font-body text-xs uppercase tracking-[0.15em] text-secondary font-medium">Limited Availability</span>
-        </div>
         <h2
           id="cta-heading"
           className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 sm:mb-8 transition-all duration-700 delay-100 ${

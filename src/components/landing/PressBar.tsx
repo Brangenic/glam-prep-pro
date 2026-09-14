@@ -67,7 +67,7 @@ const PressBar = ({ compact = false }: PressBarProps) => (
           <PublicationLink
             key={o.name}
             name={o.name}
-            domain={o.domain}
+            
             anchorId={o.anchorId}
             compact={compact}
           />
