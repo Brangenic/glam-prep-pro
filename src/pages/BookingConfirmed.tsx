@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { useNoindex } from "@/hooks/useNoindex";
+import { trackBookingConfirmed } from "@/lib/tracking";
 
 const BookingConfirmed = () => {
   useNoindex();
@@ -18,13 +19,7 @@ const BookingConfirmed = () => {
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.gtag === "undefined") return;
-    const payload: Record<string, unknown> = {
-      send_to: "AW-10894663311/esrcCKj357McEI-9_coo",
-      currency,
-    };
-    if (typeof total === "number") payload.value = total;
-    if (id) payload.transaction_id = id;
-    window.gtag("event", "conversion", payload);
+    trackBookingConfirmed({ total, id, currency });
 
     try {
       window.fbq?.("track", "Purchase", {

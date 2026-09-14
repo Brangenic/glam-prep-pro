@@ -1,3 +1,5 @@
+import { trackBookingCtaClick } from "@/lib/tracking";
+
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
 const StickyMobileCTA = () => (
@@ -9,13 +11,7 @@ const StickyMobileCTA = () => (
       data-mcp-action="register-event"
       data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
       onClick={() => {
-        if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
-          window.gtag("event", "conversion", {
-            send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
-            value: 1.0,
-            currency: "USD",
-          });
-        }
+        trackBookingCtaClick();
       }}
       className="flex items-center justify-center w-full bg-primary text-primary-foreground font-body font-semibold text-base py-3.5 rounded-full hover:shadow-lg hover:shadow-primary/25 transition-all"
     >

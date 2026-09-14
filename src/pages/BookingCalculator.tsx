@@ -31,6 +31,7 @@ import {
 } from "@/data/territoryPricing";
 import { hasSeasonPassed, getOpenPreRegistration } from "@/data/seasons";
 import { hasBookableEvent } from "@/lib/destinations";
+import { trackEnquirySubmitted } from "@/lib/tracking";
 
 const PAGE_TITLE = "Carnival Glam Quote Calculator | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
@@ -331,11 +332,7 @@ const BookingCalculator = () => {
     };
     w.dataLayer = w.dataLayer || [];
     if (typeof w.gtag === "function") {
-      w.gtag("event", "conversion", {
-        send_to: "AW-10894663311/7s1DCKX357McEI-9_coo",
-        value: total,
-        currency: "USD",
-      });
+      trackEnquirySubmitted(total);
       w.gtag("event", "generate_lead", {
         territory,
         carnival_day: day,

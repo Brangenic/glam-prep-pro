@@ -160,7 +160,7 @@ const Problem = () => {
               >
                 <div className="aspect-video">
                   <iframe
-                    src={`https://www.youtube.com/embed/${video.id}`}
+                    src={`https://www.youtube-nocookie.com/embed/${video.id}`}
                     title={video.title}
                     className="h-full w-full"
                     loading="lazy"

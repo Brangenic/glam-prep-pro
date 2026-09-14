@@ -2,6 +2,7 @@ import { useState } from "react";
 import brandLogo from "@/assets/gabby-glam-logo.png";
 import PreferredSourcesButton from "@/components/PreferredSourcesButton";
 import { getUpcomingDestinations } from "@/data/seasons";
+import { openCookieSettings } from "@/components/CookieConsent";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
@@ -277,6 +278,14 @@ const Footer = () => {
             <a href="/policies#privacy" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Privacy</a>
             <span aria-hidden="true">·</span>
             <a href="/policies#refunds" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Refund Policy</a>
+            <span aria-hidden="true">·</span>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              Cookie settings
+            </button>
 
             <span aria-hidden="true">·</span>
             <PreferredSourcesButton compact />

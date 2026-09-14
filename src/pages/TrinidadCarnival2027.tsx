@@ -319,7 +319,7 @@ const TrinidadCarnival2027 = () => {
             {videoLoaded ? (
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src={`https://www.youtube.com/embed/${YT_ID}?autoplay=1&rel=0`}
+                src={`https://www.youtube-nocookie.com/embed/${YT_ID}?autoplay=1&rel=0`}
                 title="Carnival Glam Hub, see the glam in action"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
