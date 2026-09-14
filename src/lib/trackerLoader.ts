@@ -1,19 +1,19 @@
-// Analytics and advertising tag loading, gated on consent.
+// Tracker loading, gated on consent.
 //
-// Nothing here runs until the visitor has granted consent. The four tag IDs
-// live in this file only. They are not in index.html any more.
+// Nothing here runs until the visitor has granted consent. The four tracker
+// IDs, Google Tag Manager, GA4, Google Ads and the Meta Pixel, live in this
+// file only. They are not in index.html any more.
 //
-// The linker configuration is preserved exactly, including the booking
-// platform host, because it carries booking attribution through to it.
+// The linker configuration is preserved exactly, including
+// carnivalglamhub.masos.app, because it carries booking attribution through
+// to the booking platform.
 
-import { getConsent, subscribe } from "./consent";
+import { getConsent, subscribeConsent } from "./consent";
 
-export const ANALYTICS_IDS = {
-  gtm: "GTM-PN57SZF",
-  ga4: "G-BZCF4FF50Y",
-  googleAds: "AW-10894663311",
-  metaPixel: "2629600853863973",
-} as const;
+const GTM_ID = "GTM-PN57SZF";
+export const GA4_ID = "G-BZCF4FF50Y";
+export const GOOGLE_ADS_ID = "AW-10894663311";
+const META_PIXEL_ID = "2629600853863973";
 
 const LINKER = {
   linker: {
@@ -43,21 +43,20 @@ function loadGoogle() {
   w.dataLayer = w.dataLayer || [];
   // gtag must push the arguments object itself, not an array copy: that is
   // what gtag.js reads.
-  const gtag = function (this: unknown, ..._args: unknown[]) {
+  const gtag = function (this: unknown, ...args: unknown[]) {
     // eslint-disable-next-line prefer-rest-params
     w.dataLayer!.push(arguments as unknown as IArguments);
   } as (...args: unknown[]) => void;
   w.gtag = gtag;
 
-  // One gtag.js load serves both the GA4 and the Google Ads ID.
-  injectScript(`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_IDS.ga4}`);
+  injectScript(`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`);
   gtag("js", new Date());
-  gtag("config", ANALYTICS_IDS.ga4, { ...LINKER });
-  gtag("config", ANALYTICS_IDS.googleAds, { ...LINKER });
+  gtag("config", GA4_ID, { ...LINKER });
+  gtag("config", GOOGLE_ADS_ID, { ...LINKER });
 
   // Google Tag Manager
   w.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-  injectScript(`https://www.googletagmanager.com/gtm.js?id=${ANALYTICS_IDS.gtm}`);
+  injectScript(`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`);
 }
 
 function loadMeta() {
@@ -83,14 +82,14 @@ function loadMeta() {
   n.version = "2.0";
   n.queue = [];
   injectScript("https://connect.facebook.net/en_US/fbevents.js");
-  n("init", ANALYTICS_IDS.metaPixel);
+  n("init", META_PIXEL_ID);
 }
 
 /**
- * Load the tags, once per page load, and fire the pageview they missed.
- * Safe to call at any point after consent is granted.
+ * Load the trackers, once, and fire the pageview they missed. Safe to call
+ * at any point after consent is granted.
  */
-export function loadAnalytics() {
+export function loadTrackers() {
   if (loaded) return;
   if (typeof window === "undefined" || typeof document === "undefined") return;
   if (getConsent() !== "granted") return;
@@ -108,24 +107,21 @@ export function loadAnalytics() {
   w.gtag?.("event", "page_view", {
     page_path: path,
     page_title: document.title,
-    send_to: ANALYTICS_IDS.ga4,
+    send_to: GA4_ID,
   });
-  w.gtag?.("event", "page_view", {
-    page_path: path,
-    send_to: ANALYTICS_IDS.googleAds,
-  });
+  w.gtag?.("event", "page_view", { page_path: path, send_to: GOOGLE_ADS_ID });
 }
 
 /**
  * Stop firing and clear what we can. Scripts already in the document cannot
- * be unloaded, so Analytics and Ads are switched off with their own opt-out
- * flags and every tracking cookie we can reach is removed.
+ * be unloaded, so GA and Ads are switched off with their own opt-out flags
+ * and every tracking cookie we can reach is removed.
  */
-export function disableAnalytics() {
+export function disableTrackers() {
   if (typeof window === "undefined" || typeof document === "undefined") return;
   const w = window as unknown as Record<string, unknown>;
-  w[`ga-disable-${ANALYTICS_IDS.ga4}`] = true;
-  w[`ga-disable-${ANALYTICS_IDS.googleAds}`] = true;
+  w[`ga-disable-${GA4_ID}`] = true;
+  w[`ga-disable-${GOOGLE_ADS_ID}`] = true;
   w.gtag = undefined;
   w.fbq = undefined;
 
@@ -143,11 +139,11 @@ export function disableAnalytics() {
 }
 
 /** Called once at app start. Loads on consent, now or later. */
-export function initAnalytics() {
+export function initTrackingConsent() {
   if (typeof window === "undefined") return;
-  if (getConsent() === "granted") loadAnalytics();
-  subscribe((status) => {
-    if (status === "granted") loadAnalytics();
-    else disableAnalytics();
+  if (getConsent() === "granted") loadTrackers();
+  subscribeConsent((state) => {
+    if (state === "granted") loadTrackers();
+    else disableTrackers();
   });
 }

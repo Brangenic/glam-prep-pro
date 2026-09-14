@@ -329,7 +329,7 @@ export const PRIVACY_BLOCKS: Block[] = [
   {
     heading: "12. Cookies and analytics",
     paragraphs: [
-      "Our website uses cookies and similar technologies. Only what is strictly necessary for the site to work loads when you arrive. Cookies for measurement and advertising, which is Google Tag Manager, Google Analytics, Google Ads and the Meta Pixel, load only after you accept them. If you decline, none of those load and only the strictly necessary cookies remain. Your choice is stored in your browser and you can change it at any time through the Cookie settings link in the footer. You can also control cookies through your browser settings. Turning some cookies off may affect how parts of the site work.",
+      "Our website uses cookies and similar technologies to keep the site working, remember your choices and understand how the site is used. We ask for your consent before loading any analytics or advertising cookies, and nothing of that kind loads until you accept. You can change your choice at any time through the Cookie settings link in the footer. You can also control cookies through your browser settings. Turning some cookies off may affect how parts of the site work.",
     ],
   },
   {
