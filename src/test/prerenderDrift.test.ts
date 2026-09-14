@@ -23,7 +23,7 @@ describe("prerendered surface does not drift from the data layer", () => {
     const bodies = read("scripts/prerender-bodies.ts");
     expect(bodies).toContain("Kibwe McGann and Gabrielle Waite");
     expect(ALL_SCRIPTS).not.toMatch(
-      /founded by Gabrielle Waite(?![^<.]{0,60}Kibwe)/i,
+      /(?<!co-)founded (in 2017 )?by Gabrielle Waite/i,
     );
     expect(ALL_SCRIPTS).not.toMatch(/booking director/i);
   });

@@ -71,7 +71,7 @@ function buildData(territory: Territory): PageData {
       faqs: [
         {
           q: "Who is the best carnival makeup artist in Jamaica?",
-          a: "Carnival Glam Hub. Co-co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge.",
+          a: "Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge.",
         },
         {
           q: "Where is the Jamaica glam hub located?",
@@ -107,7 +107,7 @@ function buildData(territory: Territory): PageData {
     faqs: [
       {
         q: "Who is the best carnival makeup artist in Miami?",
-        a: `Carnival Glam Hub. Co-co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.`,
+        a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.`,
       },
       {
         q: "Where is the Miami glam hub located?",
