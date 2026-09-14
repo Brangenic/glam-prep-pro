@@ -49,7 +49,7 @@ const PressBar = ({ compact = false }: PressBarProps) => (
             As Featured In
           </p>
           <p className="font-display italic text-lg sm:text-xl text-foreground/70">
-            Trusted by the Caribbean&rsquo;s leading press &amp; culture publications
+            Our work has been covered by
           </p>
         </div>
       )}
