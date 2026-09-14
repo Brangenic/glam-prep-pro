@@ -106,7 +106,9 @@ const AmazonStoreFeature = () => {
                     Top picks from the store.
                   </p>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                    Three quick product links right from the homepage.
+                    {featuredProducts.length > 0
+                      ? "Quick product links, straight from the storefront."
+                      : "Everything we recommend for Carnival prep sits on our Amazon storefront."}
                   </p>
                 </div>
               </div>
@@ -148,7 +150,7 @@ const AmazonStoreFeature = () => {
                 href={AMAZON_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-sm text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors"
+                className="mt-6 font-body text-sm text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors"
               >
                 Browse the storefront
               </a>
