@@ -329,7 +329,7 @@ export const PRIVACY_BLOCKS: Block[] = [
   {
     heading: "12. Cookies and analytics",
     paragraphs: [
-      "Our website uses cookies and similar technologies to keep the site working, remember your choices and understand how the site is used. You can control cookies through your browser settings. Turning some cookies off may affect how parts of the site work.",
+      "Our website uses cookies and similar technologies to keep the site working, remember your choices and understand how the site is used. We ask for your consent before loading any analytics or advertising cookies, and nothing of that kind loads until you accept. You can change your choice at any time through the Cookie settings link in the footer. You can also control cookies through your browser settings. Turning some cookies off may affect how parts of the site work.",
     ],
   },
   {

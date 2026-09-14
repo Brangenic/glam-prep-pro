@@ -229,7 +229,7 @@ const BookEarly = () => {
                   {videoLoaded ? (
                     <iframe
                       className="absolute inset-0 w-full h-full"
-                      src={`https://www.youtube.com/embed/${YOUTUBE_ID}?rel=0&autoplay=1`}
+                      src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?rel=0&autoplay=1`}
                       title="Carnival Glam Hub: everything in one location"
                       loading="lazy"
                       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

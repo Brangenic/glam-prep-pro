@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import brandLogo from "@/assets/gabby-glam-logo.png";
+import { trackBookingCtaClick } from "@/lib/tracking";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -113,13 +114,7 @@ const Navbar = () => {
             data-mcp-action="register-event"
             data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
             onClick={() => {
-              if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
-                window.gtag("event", "conversion", {
-                  send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
-                  value: 1.0,
-                  currency: "USD",
-                });
-              }
+              trackBookingCtaClick();
             }}
             className="bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
           >
@@ -185,13 +180,7 @@ const Navbar = () => {
             data-mcp-action="register-event"
             data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
             onClick={() => {
-              if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
-                window.gtag("event", "conversion", {
-                  send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
-                  value: 1.0,
-                  currency: "USD",
-                });
-              }
+              trackBookingCtaClick();
               setOpen(false);
             }}
             className="block text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-3 rounded-full"

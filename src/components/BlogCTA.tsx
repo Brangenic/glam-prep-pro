@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { trackBookingCtaClick } from "@/lib/tracking";
 
 const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -118,13 +119,7 @@ const BlogCTA = ({ slug, tags, category }: BlogCTAProps) => {
           data-mcp-action="register-event"
           data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
           onClick={() => {
-            if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
-              window.gtag("event", "conversion", {
-                send_to: "AW-10894663311/zIoVCMj-iLAcEI-9_coo",
-                value: 1.0,
-                currency: "USD",
-              });
-            }
+            trackBookingCtaClick();
           }}
           className="inline-flex items-center justify-center rounded-full bg-primary px-7 py-3.5 font-body text-base font-semibold text-primary-foreground shadow-md transition-all hover:shadow-lg hover:shadow-primary/30 no-underline"
         >

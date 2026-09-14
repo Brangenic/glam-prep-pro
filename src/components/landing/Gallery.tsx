@@ -82,7 +82,7 @@ const videoObjectSchema = {
   thumbnailUrl: "https://www.carnivalglamhub.com/og-image.png",
   uploadDate: toSchemaDateTime("2024-07-02T04:06:01-07:00"),
   contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
-  embedUrl: "https://www.youtube.com/embed/W4b98oLRTCE",
+  embedUrl: "https://www.youtube-nocookie.com/embed/W4b98oLRTCE",
   publisher: {
     "@type": "Organization",
     name: "Carnival Glam Hub",
@@ -154,7 +154,7 @@ const Gallery = () => {
             >
               <div className="aspect-video">
                 <iframe
-                  src={`https://www.youtube.com/embed/${video.id}`}
+                  src={`https://www.youtube-nocookie.com/embed/${video.id}`}
                   title={video.title}
                   className="h-full w-full"
                   loading="lazy"

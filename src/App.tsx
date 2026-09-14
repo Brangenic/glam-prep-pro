@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import HelpLauncher from "@/components/landing/HelpLauncher";
 import RouteTracker from "@/components/RouteTracker";
+import CookieConsent from "@/components/CookieConsent";
 import { getWixRedirectTarget } from "@/lib/wixRedirects";
 import Index from "./pages/Index.tsx";
 import Reviews from "./pages/Reviews.tsx";
@@ -150,6 +151,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         <HelpLauncher />
+        <CookieConsent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

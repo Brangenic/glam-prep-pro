@@ -2,7 +2,7 @@
 // Pageviews fire automatically on route change via <RouteTracker />.
 // Outbound clicks to booking/WhatsApp/tel/mailto fire conversion-grade
 // Lead/Contact/Schedule events automatically via the global listener.
-// Google Ads conversion labels (AW-10894663311):
+// Google Ads conversion labels:
 //   - Booking Enquiry Submitted: 7s1DCKX357McEI-9_coo  (mailto + form helper)
 //   - WhatsApp Click:            ZigKCKv357McEI-9_coo
 //   - Phone Number Click:        kSs4CK7357McEI-9_coo
@@ -17,13 +17,49 @@ declare global {
   }
 }
 
-const GOOGLE_ADS_ID = "AW-10894663311";
-const GA4_ID = "G-BZCF4FF50Y";
-// GA4 is initialised in index.html (G-BZCF4FF50Y); events here flow to it automatically.
+// The Google Ads and GA4 IDs live in src/lib/trackerLoader.ts, which is the
+// only place a tracker ID appears. Nothing here loads a tracker: every call
+// goes through window.gtag / window.fbq, which exist only once the visitor
+// has consented, so all of it no-ops safely before then.
+import { GA4_ID, GOOGLE_ADS_ID } from "./trackerLoader";
 
 const ENQUIRY_LABEL = "7s1DCKX357McEI-9_coo";
 const WHATSAPP_LABEL = "ZigKCKv357McEI-9_coo";
 const PHONE_LABEL = "kSs4CK7357McEI-9_coo";
+const BOOKING_CTA_LABEL = "zIoVCMj-iLAcEI-9_coo";
+const BOOKING_CONFIRMED_LABEL = "esrcCKj357McEI-9_coo";
+
+/** Booking CTA click, fired inline by every "Book now" style button. */
+export function trackBookingCtaClick() {
+  try {
+    window.gtag?.("event", "conversion", {
+      send_to: `${GOOGLE_ADS_ID}/${BOOKING_CTA_LABEL}`,
+      value: 1.0,
+      currency: "USD",
+    });
+  } catch {
+    /* noop */
+  }
+}
+
+/** Booking confirmed, fired on /booking-confirmed. */
+export function trackBookingConfirmed(opts: {
+  total?: number;
+  id?: string;
+  currency: string;
+}) {
+  try {
+    const payload: Record<string, unknown> = {
+      send_to: `${GOOGLE_ADS_ID}/${BOOKING_CONFIRMED_LABEL}`,
+      currency: opts.currency,
+    };
+    if (typeof opts.total === "number") payload.value = opts.total;
+    if (opts.id) payload.transaction_id = opts.id;
+    window.gtag?.("event", "conversion", payload);
+  } catch {
+    /* noop */
+  }
+}
 
 // SPA route-change pageview. Fire one page_view to GA4 and one to Google Ads,
 // plus a Meta Pixel PageView. The initial pageview is already counted by the
