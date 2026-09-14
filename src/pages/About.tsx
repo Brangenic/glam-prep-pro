@@ -176,22 +176,11 @@ const About = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe
               McGann. Gabrielle is a Jamaican makeup artist and entrepreneur with a
-              background in beauty and Carnival production. She was named a
-              Distinguished Awardee in Beauty at the Jamaica Gleaner&apos;s Flair
-              Distinguished Awards in 2023, as{" "}
-              <a
-                href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                reported by the Jamaica Gleaner
-              </a>
-              , and she founded{" "}
+              background in beauty and Carnival production, and the founder of{" "}
               <a
                 href="https://gabbyglamcosmetics.com/"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 className="text-primary hover:underline"
               >
                 Gabby Glam Cosmetics
@@ -200,12 +189,14 @@ const About = () => {
               <a
                 href="https://www.visitglamhaus.com/"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 className="text-primary hover:underline"
               >
                 Glam Haus by Gabby Glam
               </a>
-              , a studio in Kingston. Together they built the
+              . She received the Distinguished Award in Beauty at the Jamaica
+              Gleaner&apos;s Flair Distinguished Awards in 2023. Together they built the
+
               concept around a real masquerader&apos;s needs:{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 sweat-resistant makeup
@@ -267,8 +258,18 @@ const About = () => {
               </Link>{" "}
               Our Today, the Jamaica Observer, the Jamaica Gleaner and CaribVoxx for its
               role in raising the standard of Carnival morning experiences across the
-              region.
+              region. Gabrielle Waite received the{" "}
+              <a
+                href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured"
+                target="_blank"
+                rel="noopener"
+                className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors"
+              >
+                Distinguished Award in Beauty
+              </a>{" "}
+              at the Jamaica Gleaner's Flair Distinguished Awards in 2023.
             </p>
+
           </section>
 
           <section className="mb-12">

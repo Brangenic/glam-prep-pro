@@ -903,6 +903,7 @@ ${CTA}`,
     title: "About Carnival Glam Hub",
     body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge, founded by Gabrielle Waite in 2017. More than 15,000 masqueraders served across Trinidad, Jamaica and beyond.</p>
 <h2>Our story</h2>
+<p>Founded in 2017 by Gabrielle Waite and Kibwe McGann. Gabrielle is a Jamaican makeup artist and entrepreneur with a background in beauty and Carnival production, and the founder of <a href="https://gabbyglamcosmetics.com/" target="_blank" rel="noopener">Gabby Glam Cosmetics</a> and <a href="https://www.visitglamhaus.com/" target="_blank" rel="noopener">Glam Haus by Gabby Glam</a>. She received the Distinguished Award in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023.</p>
 <p>Started in Port of Spain to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. Now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
 <h2>What we do</h2>
 <p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle, from one location, on the morning of the parade.</p>
@@ -919,7 +920,7 @@ ${UPCOMING_WITH_DATES}
 <h2>The team behind it</h2>
 <p>Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
 <h2>Press</h2>
-<p>${PRESS_OUTLET_SENTENCE} The full list, with dates and links, is on our <a href="/press">press page</a>.</p>
+<p>${PRESS_OUTLET_SENTENCE} Gabrielle Waite received the <a href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured" target="_blank" rel="noopener">Distinguished Award in Beauty</a> at the Jamaica Gleaner's Flair Distinguished Awards in 2023. The full list, with dates and links, is on our <a href="/press">press page</a>.</p>
 ${CTA}`,
   },
   "/faq": {
