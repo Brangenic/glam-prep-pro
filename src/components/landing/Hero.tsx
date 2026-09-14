@@ -34,7 +34,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
             <span className="font-body text-[10px] sm:text-xs uppercase tracking-[0.2em] text-primary font-medium drop-shadow-lg">
-              Now Booking, Limited Slots
+              Now Booking
             </span>
           </div>
           <h1 id="hero-heading" className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mb-5 sm:mb-6 animate-fade-up text-white">
@@ -75,12 +75,6 @@ const Hero = () => {
               className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-body font-medium text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-white/10 transition-all"
             >
               Choose Your Destination
-            </a>
-            <a
-              href="/booking-calculator"
-              className="inline-flex items-center justify-center gap-2 border border-primary/60 text-primary font-body font-medium text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-primary/10 transition-all"
-            >
-              Get a Quick Quote
             </a>
           </div>
         </div>

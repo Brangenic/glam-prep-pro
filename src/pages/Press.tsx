@@ -25,8 +25,6 @@ const ORGANISATION = {
 const ANSWER_SUMMARY =
   "Carnival Glam Hub has been covered by the press since 2019. Coverage includes Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People, spanning Carnival in Jamaica, Trinidad, Miami, Saint Lucia, Barbados, Grenada and Toronto.";
 
-const favicon = (domain: string) =>
-  `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
 
 const formatDate = (iso: string) => {
   const parsed = new Date(`${iso}T12:00:00Z`);
@@ -41,36 +39,24 @@ const formatDate = (iso: string) => {
 
 /* ---------------------------------------------------------------- atoms */
 
+/**
+ * Outlet names are set in type. We hold no licence for any publisher's
+ * trade mark, so no publisher logo is rendered anywhere on the site.
+ */
 const OutletMark = ({
   outlet,
-  domain,
   className = "",
 }: {
   outlet: string;
-  domain: string;
+  domain?: string;
   className?: string;
-}) => {
-  const [failed, setFailed] = useState(false);
-  return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
-      {!failed && (
-        <img
-          src={favicon(domain)}
-          alt={`${outlet} logo`}
-          width={24}
-          height={24}
-          loading="lazy"
-          decoding="async"
-          onError={() => setFailed(true)}
-          className="h-5 w-5 rounded-sm object-contain"
-        />
-      )}
-      <span className="font-display text-sm tracking-wide text-foreground/75">
-        {outlet}
-      </span>
-    </div>
-  );
-};
+}) => (
+  <div className={`flex items-center gap-2.5 ${className}`}>
+    <span className="font-display text-sm tracking-wide text-foreground/75">
+      {outlet}
+    </span>
+  </div>
+);
 
 const NoteBadge = ({ note }: { note: string }) => (
   <span className="self-start rounded-full border border-primary/30 bg-primary/5 px-3 py-1 font-body text-[10px] uppercase tracking-[0.14em] text-primary">
@@ -425,15 +411,6 @@ const Press = () => {
                   aria-label={`Jump to ${o.name} coverage`}
                   className="group flex items-center gap-2 opacity-50 grayscale transition-all duration-500 ease-out hover:-translate-y-0.5 hover:opacity-100 hover:grayscale-0"
                 >
-                  <img
-                    src={favicon(o.domain)}
-                    alt={`${o.name} logo`}
-                    width={28}
-                    height={28}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-6 w-6 object-contain sm:h-7 sm:w-7"
-                  />
                   <span className="font-display text-base tracking-wide text-foreground/80 transition-colors group-hover:text-primary 2xl:text-lg">
                     {o.name}
                   </span>

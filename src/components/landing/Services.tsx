@@ -1,6 +1,39 @@
 import { useState } from "react";
 import servicesImg from "@/assets/services-hero.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import {
+  FULL_SERVICE_SLUGS,
+  HUB_CAPABILITIES,
+  TIER_LABEL,
+} from "@/data/hubTiers";
+
+/** Title case a slug, so "saint-lucia" reads as "Saint Lucia". */
+const titleCase = (slug: string) =>
+  slug
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+
+/** "Trinidad and Jamaica" from a list of slugs, in reading order. */
+const listNames = (slugs: readonly string[]) => {
+  const names = slugs.map(titleCase);
+  if (names.length <= 1) return names.join("");
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+};
+
+/**
+ * Availability lines are derived from the tier model in hubTiers.ts, so
+ * they cannot drift from the territories that actually run the service.
+ */
+const BRONZING_SLUGS = Object.keys(HUB_CAPABILITIES).filter(
+  (s) => HUB_CAPABILITIES[s].bronzing && s !== "trinidad-carnival-2027",
+);
+
+const BRONZING_AVAILABILITY = `${listNames(BRONZING_SLUGS)} only`;
+
+const FULL_SERVICE_AVAILABILITY = `${TIER_LABEL.full}s only, ${listNames(
+  FULL_SERVICE_SLUGS,
+)}`;
 
 const services = [
   {
@@ -13,18 +46,21 @@ const services = [
     title: "Hair Styling",
     description: "Styles designed to complement your costume and survive the road.",
     details: ["Ponytails", "Braids", "Sleek styles"],
+    availability: FULL_SERVICE_AVAILABILITY,
     accent: "from-secondary/20 to-primary/10",
   },
   {
     title: "Costume Dressing",
     description: "Our team ensures your costume is properly fitted, secured, and photo-ready before you leave.",
     details: ["On-site seamstress", "Dressing assistants", "Large mirrors"],
+    availability: FULL_SERVICE_AVAILABILITY,
     accent: "from-primary/15 to-secondary/15",
   },
   {
     title: "Bronzing",
     description: "Body-perfecting bronzing for smoother, more even-looking skin in person and in photos.",
     details: ["Remove visible tan lines", "Soften the look of stretch marks", "Even skin tone for better photos"],
+    availability: BRONZING_AVAILABILITY,
     accent: "from-secondary/15 to-primary/20",
   },
   {
@@ -35,8 +71,9 @@ const services = [
   },
   {
     title: "Concierge Prep",
-    description: "An elevated experience designed to make your carnival morning seamless.",
+    description: "One schedule, from the moment you arrive to the moment you leave for the road.",
     details: ["From arrival to departure, everything coordinated"],
+    availability: FULL_SERVICE_AVAILABILITY,
     accent: "from-primary/20 to-secondary/20",
   },
 ];
@@ -162,7 +199,7 @@ const Services = () => {
                     {/* Expandable details */}
                     <div
                       className={`overflow-hidden transition-all duration-500 ${
-                        i === active ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"
+                        i === active ? "max-h-60 opacity-100 mt-2" : "max-h-0 opacity-0"
                       }`}
                     >
                       <p className="font-body text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
@@ -179,6 +216,11 @@ const Services = () => {
                           </li>
                         ))}
                       </ul>
+                      {s.availability && (
+                        <p className="font-body text-[11px] text-muted-foreground mt-2">
+                          {s.availability}
+                        </p>
+                      )}
                     </div>
                   </div>
 
