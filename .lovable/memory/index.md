@@ -31,3 +31,4 @@ Blogs: NEVER generate AI images. Hero/body images must come only from the curate
 - [JADE Knowledge Sync](mem://constraints/glam-bot-knowledge-sync) — JADE (assistant name, formerly Glam Bot) knowledge generated from src/data, never hand-edit knowledge.json, resync in same change set
 - [Onward Destination Links](mem://constraints/onward-destination-links) — Onward lists show upcoming Carnivals only via getUpcomingDestinations; card links decided only by getDestinationCardLink
 - [J'ouvert Not An Offer](mem://constraints/jouvert-not-an-offer) — J'ouvert never appears on any commercial surface or in the bot pack; every J'ouvert blog post stays untouched
+- [Prerendered Surface Sync](mem://constraints/prerender-surface-sync) — Prerender scripts are a second rendering surface; apply every copy change to both and import figures and lists from src/data, never retype
