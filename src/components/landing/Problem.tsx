@@ -1,4 +1,7 @@
-import solutionImg from "@/assets/experience-hero.jpg";
+// Shared with the hero of /blogs/what-to-bring-for-carnival, one asset, one
+// URL. It exists at a single size (1006 x 488), so there is no srcset here.
+const solutionImg =
+  "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/content/trinidad-vs-jamaica/alliyah.png";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const luxuryFeatures = [
