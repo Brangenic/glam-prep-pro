@@ -146,10 +146,6 @@ const Reviews = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingJsonLd) }}
-      />
       {reviewListJsonLd.map((node, i) => (
         <script
           key={i}
