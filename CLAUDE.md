@@ -136,6 +136,28 @@ automatically. Regenerate the pack, then run `npm run test`.
 
 ---
 
+# THE PRERENDERED SURFACE IS A SECOND RENDERING SURFACE
+
+`scripts/prerender-bodies.ts` and `scripts/prerender-routes.ts` are not a
+build detail, they are the site as every non JavaScript reader sees it,
+which includes Google's first pass and every LLM crawler.
+
+- Every copy or fact change is applied to the React page and to the
+  prerender scripts in the same change set. One without the other is drift,
+  and drift is only visible in View Source.
+- Any figure or list that exists in `src/data/` is imported, never retyped.
+  Prices through `src/data/territoryPriceProse.ts`, territory lists through
+  `listNames` on `src/data/hubTiers.ts` filtered by the season flag, shared
+  titles, descriptions and standing sentences through `src/data/pageMeta.ts`.
+- The scripts run in Node and must not import anything that imports an image
+  asset. `hubTiers.ts`, `territoryPricing.ts`, `pageMeta.ts` and
+  `territoryPriceProse.ts` are safe, `destinations.ts` is not.
+- Both founders are always named together, there is no rating, no review
+  count, no invented lead time and no "the only" claim.
+- `src/test/prerenderDrift.test.ts` fails the build on any of the above.
+
+---
+
 # ONWARD DESTINATION RULE
 
 Any list, grid, strip, banner or link block that points a visitor at a

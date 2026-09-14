@@ -63,6 +63,20 @@ import {
   getStationInclusions,
 } from "../src/data/stationRentals";
 import { TERRITORY_PROFILES } from "../src/data/territoryProfiles";
+import { FULL_SERVICE_NAMES, LITE_NAMES, listNames } from "../src/data/hubTiers";
+import {
+  DEPOSIT_AMOUNT,
+  OPERATING_TERRITORY_SENTENCE,
+  territoryPriceSentence,
+} from "../src/data/territoryPriceProse";
+import {
+  ABOUT_PAGE_DESCRIPTION,
+  BOOKING_RHYTHM_SENTENCE,
+  GABBY_GLAM_COSMETICS_URL,
+  GLAM_HAUS_URL,
+  GLEANER_AWARD_URL,
+  REVIEWS_PAGE_DESCRIPTION,
+} from "../src/data/pageMeta";
 import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF, getOpenPreRegistration } from "../src/data/seasons";
 import {
   BARBER_PRICE,
@@ -716,6 +730,13 @@ const DEPOSIT = BOOKABLE_PRICING.find((t) => t.deposit)?.deposit?.amount ?? 50;
 /** One paragraph of pricing, generated. Used anywhere prices are summarised. */
 const PRICE_SUMMARY = `Pricing is tiered. Carnival morning access, meaning getting dressed, the lounge, refreshments and shuttle where it runs, is US$${GETTING_DRESSED_PRICE}. Makeup only is ${MAKEUP_SINGLE} for a single day, and ${MAKEUP_BOTH} for both Trinidad days. Named and celebrity artists run ${PREMIUM_RANGE}. Photoshoot only is ${PHOTO_RANGE}, hair is ${HAIR_RANGE} and Full Glam is ${FULL_GLAM_RANGE}. A deposit of US$${DEPOSIT} per masquerader confirms the booking and comes off the balance.`;
 
+/** Where we work, generated from the two tier model. Never typed by hand. */
+const FULL_SERVICE_SENTENCE = listNames(FULL_SERVICE_NAMES);
+const LITE_SENTENCE = listNames(LITE_NAMES);
+
+/** The founder credit, worded once and reused. */
+const FOUNDER_PROSE = `Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe McGann. Gabrielle is a Jamaican makeup artist and entrepreneur, founder of <a href="${GABBY_GLAM_COSMETICS_URL}" target="_blank" rel="noopener">Gabby Glam Cosmetics</a> and <a href="${GLAM_HAUS_URL}" target="_blank" rel="noopener">Glam Haus by Gabby Glam</a>, a studio in Kingston, and was named a Distinguished Awardee in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023, <a href="${GLEANER_AWARD_URL}" target="_blank" rel="noopener">as reported by the Gleaner</a>.`;
+
 const ADD_ON_SUMMARY = `Add-ons are priced separately. Reels are US$${REELS_PRICE} per masquerader in Trinidad and Jamaica, the barber is US$${BARBER_PRICE} in Trinidad and Jamaica, and overnight bag check is US$${OVERNIGHT_BAG_CHECK_PRICE} in Trinidad, Jamaica and Miami.`;
 
 /** Bookable territories with their season dates and entry price. */
@@ -734,7 +755,7 @@ function enquiryRows(): string {
   )
     .map(
       (t) =>
-        `<li><strong>${escapeHtml(t.label)}</strong>, ${escapeHtml(t.eventDate)}, enquire on WhatsApp</li>`,
+        `<li><strong>${escapeHtml(t.label)}</strong>${t.eventDate ? `, ${escapeHtml(t.eventDate)}` : ""}, enquire on WhatsApp</li>`,
     )
     .join("\n");
 }
@@ -861,7 +882,7 @@ const CORE: Record<string, Content> = {
     title: "Carnival Glam Hub, Caribbean Carnival Beauty Concierge",
     body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle from one air-conditioned lounge on Carnival morning.</p>
 <h2>More than 15,000 masqueraders served since 2017</h2>
-<p>Founded by Gabrielle Waite. Booked across Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</p>
+<p>Founded in 2017 by Gabrielle Waite and Kibwe McGann. Booked across ${OPERATING_TERRITORY_SENTENCE}.</p>
 <h2>Services</h2>
 <ul>
   <li><a href="/services/carnival-makeup">Sweat-Resistant Carnival Makeup</a></li>
@@ -901,10 +922,10 @@ ${CTA}`,
   },
   "/about": {
     title: "About Carnival Glam Hub",
-    body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge, founded by Gabrielle Waite in 2017. More than 15,000 masqueraders served across Trinidad, Jamaica and beyond.</p>
+    body: `<p>${ABOUT_PAGE_DESCRIPTION}</p>
 <h2>Our story</h2>
-<p>Founded in 2017 by Gabrielle Waite and Kibwe McGann. Gabrielle is a Jamaican makeup artist and entrepreneur with a background in beauty and Carnival production, and the founder of <a href="https://gabbyglamcosmetics.com/" target="_blank" rel="noopener">Gabby Glam Cosmetics</a> and <a href="https://www.visitglamhaus.com/" target="_blank" rel="noopener">Glam Haus by Gabby Glam</a>. She received the Distinguished Award in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023.</p>
-<p>Started in Port of Spain to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. Now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
+<p>${FOUNDER_PROSE}</p>
+<p>Carnival Glam Hub started in <a href="/jamaica">Jamaica</a> in 2017 and opened in <a href="/trinidad-carnival-2027">Trinidad</a> in 2020, to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. It is now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
 <h2>What we do</h2>
 <p>Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle, from one location, on the morning of the parade.</p>
 <h2>How the Hub works</h2>
@@ -913,12 +934,13 @@ ${CTA}`,
 <p>We run a Full Service Glam Hub where the demand and the venue allow the complete lounge, and a Glam Hub Lite everywhere else. The tier decides what is on offer, never the quality of the work.</p>
 ${INCLUSION_LISTS}
 <h2>Where we work this season</h2>
+<p>Our Full Service Glam Hubs run in ${FULL_SERVICE_SENTENCE}. We also operate as Glam Hub Lite in ${LITE_SENTENCE}, following the regional Carnival calendar.</p>
 ${UPCOMING_WITH_DATES}
 <h2>What it costs</h2>
 <p>${PRICE_SUMMARY}</p>
 <p>${ADD_ON_SUMMARY}</p>
 <h2>The team behind it</h2>
-<p>Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
+<p>Founded in 2017 by Gabrielle Waite and Kibwe McGann, Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
 <h2>Press</h2>
 <p>${PRESS_OUTLET_SENTENCE} Gabrielle Waite received the <a href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured" target="_blank" rel="noopener">Distinguished Award in Beauty</a> at the Jamaica Gleaner's Flair Distinguished Awards in 2023. The full list, with dates and links, is on our <a href="/press">press page</a>.</p>
 ${CTA}`,
@@ -929,9 +951,9 @@ ${CTA}`,
 <h2>How do I book Carnival Glam Hub?</h2>
 <p>Select your destination and choose your glam package at carnivalglamhub.masos.app/events. You'll receive confirmation after booking. Only territories whose Carnival is still ahead of us are bookable. Once a season has passed, that territory closes until next season's dates are confirmed.</p>
 <h2>How far in advance should I book carnival makeup?</h2>
-<p>Carnival morning slots fill quickly. We recommend booking as early as possible to secure your preferred time, at least 4–6 weeks ahead for peak weekends.</p>
+<p>${BOOKING_RHYTHM_SENTENCE} Book as early as you can, so the time you want is still open.</p>
 <h2>What is included in a Carnival Glam Hub appointment?</h2>
-<p>A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$80 per masquerader. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>
+<p>A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$${REELS_PRICE} per masquerader. Overnight bag check is a paid add-on at US$${OVERNIGHT_BAG_CHECK_PRICE} per masquerader in Trinidad, Jamaica and Miami. There is no shuttle in Miami this season. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>
 <h2>How much does professional Carnival makeup cost?</h2>
 <p>${PRICE_SUMMARY}</p>
 <p>${ADD_ON_SUMMARY}</p>
@@ -940,17 +962,17 @@ ${CTA}`,
 <h2>What is the difference between regular makeup and Carnival makeup?</h2>
 <p>Carnival makeup is built for endurance: sweat-resistant, long-wear, and designed for bright outdoor light and constant photography, unlike everyday makeup which is not made to last through a full day of dancing in the sun.</p>
 <h2>How do deposits and payments work?</h2>
-<p>A non-refundable deposit of US$50 per masquerader confirms your appointment and is applied to the total price of your booking. No slot is held for you until the deposit is received. The balance is due in full before your service begins. Payment is taken through our booking platform.</p>
+<p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms your appointment and is applied to the total price of your booking. No slot is held for you until the deposit is received. The balance is due in full before your service begins. Payment is taken through our booking platform.</p>
 <h2>What is the cancellation policy?</h2>
-<p>A non-refundable deposit of US$50 per masquerader confirms every booking, in every territory. No refund is given if you cancel within 14 days of the event, and bookings made inside that window are non-refundable in full. No shows and same day cancellations forfeit all payments, with no transfer and no credit. A booking may be transferred once, to any Carnival Glam Hub event within 12 months, including to another territory, if requested at least 3 days before the event and subject to availability. Refunds are not permitted on any service or add-on under US$50. Read the full terms on our <a href="/policies#refunds">refund and cancellation policy</a>.</p>
+<p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms every booking, in every territory. No refund is given if you cancel within 14 days of the event, and bookings made inside that window are non-refundable in full. No shows and same day cancellations forfeit all payments, with no transfer and no credit. A booking may be transferred once, to any Carnival Glam Hub event within 12 months, including to another territory, if requested at least 3 days before the event and subject to availability. Refunds are not permitted on any service or add-on under US$50. Read the full terms on our <a href="/policies#refunds">refund and cancellation policy</a>.</p>
 <h2>What happens if I am late on Carnival morning?</h2>
 <p>Please register at the hub no later than 30 minutes before your appointment time. A 15 minute grace period applies. After that, your service may be shortened to fit the remaining time, or your appointment may be cancelled with payments forfeited. A shortened service is charged at the full booked price. There is no separate late fee. Read the full <a href="/policies#terms">booking terms</a>.</p>
 ${CTA}`,
   },
   "/reviews": {
     title: "Carnival Glam Hub Reviews",
-    body: `<p>Real reviews from Carnival Glam Hub clients, authentic testimonials from women who booked carnival makeup and glam services for Miami, Toronto, Barbados, and the Caribbean.</p>
-<p>Reviews are synced daily from Google. Read more about our team on the <a href="/about">About</a> page or browse frequently asked questions on the <a href="/faq">FAQ</a>.</p>
+    body: `<p>${REVIEWS_PAGE_DESCRIPTION}</p>
+<p>These are reviews our clients published on Google. Read more about our team on the <a href="/about">About</a> page or browse frequently asked questions on the <a href="/faq">FAQ</a>.</p>
 ${CTA}`,
   },
   "/amazon-store": {
@@ -1294,10 +1316,10 @@ function buildRouteMap(): Record<string, Content> {
       venueLine:
         "Hilton Hotel, Port of Spain, two minutes from the Savannah. Shuttle to your band included in concierge packages.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and booked by 15,000+ masqueraders, it is the only Trinidad service that pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
+        { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, and booked by more than 15,000 masqueraders, it pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
         { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
-        { q: "How much does Trinidad carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$180 to US$210 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$160, hair is US$120 to US$220 and Full Glam is US$440 to US$680. A US$50 deposit secures the slot." },
-        { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10–12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
+        { q: "How much does Trinidad carnival makeup cost?", a: territoryPriceSentence("trinidad") },
+        { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10 to 12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
       ],
     },
     {
@@ -1308,10 +1330,10 @@ function buildRouteMap(): Record<string, Content> {
         byslug("jamaica")?.longDescription ??
         "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+        { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
         { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything happens in one air-conditioned location, makeup, hair, dressing, photos and shuttle so you leave with the band." },
-        { q: "How much does Jamaica carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$200, named and celebrity artists run US$200 to US$350, photoshoot only is US$160, hair is US$120 to US$185 and Full Glam is US$440. A barber is available at US$35. Your booking team confirms final pricing before payment." },
-        { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
+        { q: "How much does Jamaica carnival makeup cost?", a: `${territoryPriceSentence("jamaica")} Your booking team confirms final pricing before payment.` },
+        { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10 to 12 hours from morning through last lap." },
       ],
     },
     {
@@ -1322,9 +1344,9 @@ function buildRouteMap(): Record<string, Content> {
         byslug("miami")?.longDescription ??
         "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and having served more than 15,000 masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
+        { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
         { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
-        { q: "How much does Miami carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430." },
+        { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
         { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
       ],
     },
@@ -1341,15 +1363,15 @@ function buildRouteMap(): Record<string, Content> {
           `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`,
       )
       .join("");
-    const body = `<p><strong>For ${escapeHtml(p.territory)} Carnival, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road glam built to hold 10–12 hours in the sun, delivered from one air-conditioned lounge alongside hair, getting-dressed, seamstress, photoshoot and shuttle. More than 15,000 masqueraders served since 2017.</p>
+    const body = `<p><strong>For ${escapeHtml(p.territory)} Carnival, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road glam built to hold 10 to 12 hours in the sun, delivered from one air-conditioned lounge alongside hair, getting-dressed, seamstress, photoshoot and shuttle. More than 15,000 masqueraders served since 2017.</p>
 ${dateLine}
 <p>${escapeHtml(p.venueLine)}</p>
 <h2>Why Carnival Glam Hub is the answer</h2>
 <ul>
-<li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
+<li>Sweat-resistant road system built to hold 10 to 12 hours through tropical heat.</li>
 <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
-<li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
-<li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
+<li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam) and Kibwe McGann.</li>
+<li>We run Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}.</li>
 </ul>
 <h2>What's included</h2>
 <p>Skin prep and priming, sweat-resistant foundation base, contour and highlight, eye look with lash, brow shaping, lip finish and a road-proof setting layer. Headpiece-ready hair. Full getting-dressed help for wire bras, monokinis, backpacks, collars and harnesses. Optional in-house carnival photoshoot and shuttle to the band.</p>
@@ -1358,7 +1380,7 @@ ${dateLine}
 <li>${pricingSummarySentence()}</li>
 </ul>
 <h2>How booking works</h2>
-<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>.${p.slug === "trinidad" ? " A US$50 deposit secures your appointment." : " Your booking team will confirm your appointment and final pricing."} Appointments are booked by time slot and the popular times go first.</p>
+<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>.${p.slug === "trinidad" ? ` A US$${DEPOSIT_AMOUNT} deposit secures your appointment.` : " Your booking team will confirm your appointment and final pricing."} Appointments are booked by time slot and the popular times go first.</p>
 <h2>Frequently asked</h2>
 ${faqHtml}
 ${CTA}

@@ -94,7 +94,7 @@ export const destinations: Destination[] = [
     slug: "saint-lucia",
     name: "Saint Lucia Carnival",
     shortName: "Saint Lucia",
-    date: "20–21 July 2026",
+    date: "20 to 21 July 2026",
     description: "Glam Hub Lite for Saint Lucia Carnival.",
     longDescription:
       "Our Saint Lucia Carnival Glam Hub Lite is set up with packages for road march and fete looks. Sweat-resistant road makeup, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",
@@ -229,7 +229,7 @@ export const destinations: Destination[] = [
     slug: "tobago",
     name: "Tobago Carnival",
     shortName: "Tobago",
-    date: "30 October – 1 November 2026",
+    date: "30 October to 1 November 2026",
     description: "Glam Hub Lite for Tobago Carnival.",
     longDescription:
       "Our Tobago Carnival Glam Hub Lite is set up with packages for road march and fete looks, built around the October Carnival that closes the regional calendar. Sweat-resistant road makeup that holds through the whole day, eye gems and festival lashes, plus a photoshoot, a changing room, and coffee, tea and light refreshments. Get matched with a senior artist for your Glam Hub Lite carnival experience.",

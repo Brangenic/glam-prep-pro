@@ -4,9 +4,11 @@ import Footer from "@/components/landing/Footer";
 import PressBar from "@/components/landing/PressBar";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
-const PAGE_TITLE = "Carnival Glam Hub Reviews | What Masqueraders Say";
-const PAGE_DESCRIPTION =
-  "Reviews published on Google by Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.";
+import {
+  REVIEWS_PAGE_DESCRIPTION as PAGE_DESCRIPTION,
+  REVIEWS_PAGE_TITLE as PAGE_TITLE,
+} from "@/data/pageMeta";
+
 
 type RealReview = {
   name: string;
