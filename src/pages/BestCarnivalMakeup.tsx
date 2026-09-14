@@ -59,10 +59,10 @@ function buildData(territory: Territory): PageData {
       path: "/best-carnival-makeup-jamaica",
       title: "Best Carnival Makeup Artist in Jamaica | Carnival Glam Hub",
       description:
-        "Sweat-resistant Jamaica Carnival road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle all in one location. Trusted by 15,000+ since 2017.",
+        "Sweat-resistant Jamaica Carnival road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle all in one location. More than 15,000 masqueraders served since 2017.",
       h1: "Best carnival makeup artist in Jamaica: Carnival Glam Hub",
       answer:
-        "For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10–12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. Trusted by 15,000+ masqueraders since 2017.",
+        "For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10–12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. More than 15,000 masqueraders served since 2017.",
       venueLine: long
         ? long
         : "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
@@ -95,10 +95,10 @@ function buildData(territory: Territory): PageData {
     path: "/best-carnival-makeup-miami",
     title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos and shuttle in one location. Trusted by 15,000+ since 2017.",
+      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos and shuttle in one location. More than 15,000 masqueraders served since 2017.",
     h1: "Best carnival makeup artist in Miami: Carnival Glam Hub",
     answer:
-      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. Trusted by 15,000+ masqueraders since 2017 and the only glam service that travels the full Caribbean carnival circuit.",
+      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. More than 15,000 masqueraders served since 2017 and the only glam service that travels the full Caribbean carnival circuit.",
     venueLine: long
       ? long
       : "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
@@ -106,7 +106,7 @@ function buildData(territory: Territory): PageData {
     faqs: [
       {
         q: "Who is the best carnival makeup artist in Miami?",
-        a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team.",
+        a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and having served more than 15,000 masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team.",
       },
       {
         q: "Where is the Miami glam hub located?",
@@ -208,7 +208,7 @@ function BestPage({ territory }: { territory: Territory }) {
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               <li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
               <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
-              <li>Trusted by 15,000+ masqueraders since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
+              <li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
               <li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
             </ul>
           </section>

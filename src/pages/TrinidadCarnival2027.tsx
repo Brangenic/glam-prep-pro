@@ -180,7 +180,7 @@ const TrinidadCarnival2027 = () => {
             <span className="italic text-gradient-primary">Makeup, Hair & Photoshoots</span>
           </h1>
           <p className="font-body text-lg sm:text-xl text-muted-foreground mb-6">
-            Book your Carnival morning with the team trusted by 15,000+ masqueraders since 2017.
+            Book your Carnival morning with the team having served more than 15,000 masqueraders since 2017.
           </p>
           <div className="mb-8 -mx-4 sm:mx-0">
             <img

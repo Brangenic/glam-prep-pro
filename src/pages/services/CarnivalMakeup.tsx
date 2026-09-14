@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE = "Sweat-Resistant Carnival Makeup | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
-  "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ since 2017.";
+  "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. More than 15,000 masqueraders served since 2017.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-makeup";
 
 
