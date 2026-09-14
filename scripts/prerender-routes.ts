@@ -680,7 +680,7 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     areaServed: { "@type": "Country", name: "Jamaica" },
     destPath: "/jamaica",
     faqs: [
-      { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+      { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
       { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything happens in one air-conditioned location, makeup, hair, dressing, photos and shuttle so you leave with the band." },
       { q: "How much does Jamaica carnival makeup cost?", a: `${territoryPriceSentence("jamaica")} Your booking team confirms final pricing before payment.` },
       { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10 to 12 hours from morning through last lap." },
@@ -692,7 +692,7 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "Country", name: "United States" } },
     destPath: "/miami",
     faqs: [
-      { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
+      { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
       { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
       { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
       { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
