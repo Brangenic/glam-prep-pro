@@ -216,6 +216,11 @@ const Services = () => {
                           </li>
                         ))}
                       </ul>
+                      {s.availability && (
+                        <p className="font-body text-[11px] text-muted-foreground mt-2">
+                          {s.availability}
+                        </p>
+                      )}
                     </div>
                   </div>
 
