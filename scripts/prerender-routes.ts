@@ -27,6 +27,16 @@ import {
   VENDOR_SPACE_PER_DAY,
 } from "../src/data/stationRentals";
 import { TRINIDAD_ANSWER_SECTIONS } from "../src/data/answerPages";
+import {
+  ABOUT_PAGE_DESCRIPTION,
+  ABOUT_PAGE_TITLE,
+  REVIEWS_PAGE_DESCRIPTION,
+  REVIEWS_PAGE_TITLE,
+} from "../src/data/pageMeta";
+import {
+  OPERATING_TERRITORY_SENTENCE,
+  territoryPriceSentence,
+} from "../src/data/territoryPriceProse";
 import { hasSeasonPassed, passedSeasonYear, seasonAwareMeta, getOpenPreRegistration } from "../src/data/seasons";
 import {
   MIAMI_VENUE_NAME,
@@ -404,9 +414,8 @@ const staticRoutes: RouteMeta[] = [
   },
   {
     path: "/about",
-    title: "About Carnival Glam Hub | Caribbean Beauty Concierge",
-    description:
-      "The Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. More than 15,000 masqueraders served across Trinidad, Jamaica and beyond.",
+    title: ABOUT_PAGE_TITLE,
+    description: ABOUT_PAGE_DESCRIPTION,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -425,9 +434,8 @@ const staticRoutes: RouteMeta[] = [
   },
   {
     path: "/reviews",
-    title: "Carnival Glam Hub Reviews | Real Client Testimonials",
-    description:
-      "Real reviews from Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.",
+    title: REVIEWS_PAGE_TITLE,
+    description: REVIEWS_PAGE_DESCRIPTION,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -670,10 +678,10 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     areaServed: { "@type": "Country", name: "Jamaica" },
     destPath: "/jamaica",
     faqs: [
-      { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+      { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
       { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything happens in one air-conditioned location, makeup, hair, dressing, photos and shuttle so you leave with the band." },
-      { q: "How much does Jamaica carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$200, named and celebrity artists run US$200 to US$350, photoshoot only is US$160, hair is US$120 to US$185 and Full Glam is US$440. A barber is available at US$35. Your booking team confirms final pricing before payment." },
-      { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap." },
+      { q: "How much does Jamaica carnival makeup cost?", a: `${territoryPriceSentence("jamaica")} Your booking team confirms final pricing before payment.` },
+      { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10 to 12 hours from morning through last lap." },
     ],
   },
   "/best-carnival-makeup-miami": {
@@ -682,9 +690,9 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "Country", name: "United States" } },
     destPath: "/miami",
     faqs: [
-      { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and having served more than 15,000 masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
+      { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
       { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
-      { q: "How much does Miami carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430." },
+      { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
       { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
     ],
   },
