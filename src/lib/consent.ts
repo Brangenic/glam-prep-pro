@@ -6,7 +6,7 @@
 
 export type ConsentState = "unknown" | "granted" | "denied";
 
-export const CONSENT_VERSION = 1;
+export const CONSENT_VERSION = 2;
 export const CONSENT_STORAGE_KEY = "cgh.cookieConsent";
 
 type StoredConsent = {

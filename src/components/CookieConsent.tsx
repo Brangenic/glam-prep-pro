@@ -60,8 +60,8 @@ const CookieConsent = () => {
       data-testid="cookie-consent"
       className="fixed bottom-40 left-4 right-4 z-[60] lg:bottom-6 lg:left-auto lg:right-6 lg:w-[26rem]"
     >
-      <div className="rounded-2xl border border-border bg-background/98 p-4 shadow-2xl backdrop-blur-md">
-        <p className="font-body text-sm text-muted-foreground leading-snug">
+      <div className="rounded-2xl border border-border bg-background p-4 shadow-2xl">
+        <p className="font-body text-sm text-foreground leading-snug">
           We use cookies to measure how this site is used and how bookings are
           found. You can accept or decline. Read our{" "}
           <a
@@ -86,7 +86,7 @@ const CookieConsent = () => {
             type="button"
             data-testid="cookie-decline"
             onClick={() => choose("denied")}
-            className="flex-1 min-h-[44px] rounded-full border border-border bg-background px-4 font-body text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="flex-1 min-h-[44px] rounded-full border border-border bg-muted px-4 font-body text-sm font-semibold text-foreground transition-colors hover:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Decline
           </button>
