@@ -631,8 +631,8 @@ function destinationBody(d: ParsedDest): string {
     // to Grenada for now, the other Lite bodies are unchanged.
     parts.push(
       d.slug === "grenada"
-        ? `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. ${escapeHtml(d.shortName ?? d.name)} is a Glam Hub Lite, not a Full Service Glam Hub. What we run here is ${escapeHtml((getHubInclusions(d.slug) ?? []).map((i) => i.toLowerCase()).join(", "))}.</p>`
-        : `<p>Carnival Glam Hub is trusted by 15,000+ masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
+        ? `<p>Carnival Glam Hub has served more than 15,000 masqueraders since 2017. ${escapeHtml(d.shortName ?? d.name)} is a Glam Hub Lite, not a Full Service Glam Hub. What we run here is ${escapeHtml((getHubInclusions(d.slug) ?? []).map((i) => i.toLowerCase()).join(", "))}.</p>`
+        : `<p>Carnival Glam Hub has served more than 15,000 masqueraders since 2017. Full Service Glam Hubs run in Jamaica, Trinidad and Miami; every other territory is a Glam Hub Lite covering makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.</p>`,
     );
     parts.push(CTA);
   }
@@ -760,7 +760,7 @@ const PRESS_OUTLET_SENTENCE = `Carnival Glam Hub has been covered by ${PRESS_OUT
 const SERVICES: Record<string, Content> = {
   "/services/carnival-makeup": {
     title: "Sweat-Resistant Carnival Makeup",
-    body: `<p>Sweat-resistant Carnival makeup that holds through the road. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami. Trusted by 15,000+ masqueraders since 2017.</p>
+    body: `<p>Sweat-resistant Carnival makeup that holds through the road. Booked across the Caribbean Carnival circuit, including Trinidad, Jamaica and Miami. More than 15,000 masqueraders served since 2017.</p>
 <h2>What's included in your Carnival makeup</h2>
 <p>Skin prep and priming, full base with sweat-resistant foundation and concealer, contour and highlight, eye look with adhesive lash or strip lash, brow shaping, lip finish, and a final setting layer designed to hold through the parade. Each session runs around 90 minutes per masquerader and is delivered inside the air-conditioned Carnival Glam Hub lounge.</p>
 <h2>How much does Carnival makeup cost?</h2>
@@ -901,7 +901,7 @@ ${CTA}`,
   },
   "/about": {
     title: "About Carnival Glam Hub",
-    body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge, founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica and beyond.</p>
+    body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge, founded by Gabrielle Waite in 2017. More than 15,000 masqueraders served across Trinidad, Jamaica and beyond.</p>
 <h2>Our story</h2>
 <p>Started in Port of Spain to solve one problem: masqueraders piecing together makeup, hair, dressing and transport across five appointments on Carnival morning. Now delivered from one air-conditioned lounge with a senior Caribbean team.</p>
 <h2>What we do</h2>
@@ -1321,7 +1321,7 @@ function buildRouteMap(): Record<string, Content> {
         byslug("miami")?.longDescription ??
         "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
+        { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and having served more than 15,000 masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
         { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
         { q: "How much does Miami carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430." },
         { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
@@ -1340,14 +1340,14 @@ function buildRouteMap(): Record<string, Content> {
           `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`,
       )
       .join("");
-    const body = `<p><strong>For ${escapeHtml(p.territory)} Carnival, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road glam built to hold 10–12 hours in the sun, delivered from one air-conditioned lounge alongside hair, getting-dressed, seamstress, photoshoot and shuttle. Trusted by 15,000+ masqueraders since 2017.</p>
+    const body = `<p><strong>For ${escapeHtml(p.territory)} Carnival, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road glam built to hold 10–12 hours in the sun, delivered from one air-conditioned lounge alongside hair, getting-dressed, seamstress, photoshoot and shuttle. More than 15,000 masqueraders served since 2017.</p>
 ${dateLine}
 <p>${escapeHtml(p.venueLine)}</p>
 <h2>Why Carnival Glam Hub is the answer</h2>
 <ul>
 <li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
 <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
-<li>Trusted by 15,000+ masqueraders since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
+<li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
 <li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
 </ul>
 <h2>What's included</h2>
