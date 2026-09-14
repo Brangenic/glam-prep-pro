@@ -176,22 +176,11 @@ const About = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe
               McGann. Gabrielle is a Jamaican makeup artist and entrepreneur with a
-              background in beauty and Carnival production. She was named a
-              Distinguished Awardee in Beauty at the Jamaica Gleaner&apos;s Flair
-              Distinguished Awards in 2023, as{" "}
-              <a
-                href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                reported by the Jamaica Gleaner
-              </a>
-              , and she founded{" "}
+              background in beauty and Carnival production, and the founder of{" "}
               <a
                 href="https://gabbyglamcosmetics.com/"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 className="text-primary hover:underline"
               >
                 Gabby Glam Cosmetics
@@ -200,12 +189,14 @@ const About = () => {
               <a
                 href="https://www.visitglamhaus.com/"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 className="text-primary hover:underline"
               >
                 Glam Haus by Gabby Glam
               </a>
-              , a studio in Kingston. Together they built the
+              . She received the Distinguished Award in Beauty at the Jamaica
+              Gleaner&apos;s Flair Distinguished Awards in 2023. Together they built the
+
               concept around a real masquerader&apos;s needs:{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 sweat-resistant makeup
