@@ -25,8 +25,6 @@ const ORGANISATION = {
 const ANSWER_SUMMARY =
   "Carnival Glam Hub has been covered by the press since 2019. Coverage includes Teen Vogue, theGrio, the Jamaica Observer, the Jamaica Gleaner, Our Today, CaribVoxx and Haute People, spanning Carnival in Jamaica, Trinidad, Miami, Saint Lucia, Barbados, Grenada and Toronto.";
 
-const favicon = (domain: string) =>
-  `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
 
 const formatDate = (iso: string) => {
   const parsed = new Date(`${iso}T12:00:00Z`);
