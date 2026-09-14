@@ -1379,7 +1379,7 @@ ${dateLine}
 <li>${pricingSummarySentence()}</li>
 </ul>
 <h2>How booking works</h2>
-<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>.${p.slug === "trinidad" ? " A US$50 deposit secures your appointment." : " Your booking team will confirm your appointment and final pricing."} Appointments are booked by time slot and the popular times go first.</p>
+<p>Choose your slot at <a href="https://carnivalglamhub.masos.app/events">carnivalglamhub.masos.app/events</a>.${p.slug === "trinidad" ? " A US$${DEPOSIT} deposit secures your appointment." : " Your booking team will confirm your appointment and final pricing."} Appointments are booked by time slot and the popular times go first.</p>
 <h2>Frequently asked</h2>
 ${faqHtml}
 ${CTA}
