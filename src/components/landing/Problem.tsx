@@ -1,4 +1,7 @@
-import solutionImg from "@/assets/experience-hero.jpg";
+// Shared with the hero of /blogs/what-to-bring-for-carnival, one asset, one
+// URL. It exists at a single size (1006 x 488), so there is no srcset here.
+const solutionImg =
+  "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/content/trinidad-vs-jamaica/alliyah.png";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const luxuryFeatures = [
@@ -87,16 +90,16 @@ const Problem = () => {
 
         {/* Wide image */}
         <div
-          className={`relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[16/9] sm:aspect-[21/9] mb-10 sm:mb-14 gold-glow transition-all duration-1000 ${
+          className={`relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[16/9] lg:aspect-[2/1] mb-10 sm:mb-14 gold-glow transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
           <img
             src={solutionImg}
-            alt="Masquerader getting glam at Carnival Glam Hub"
-            width={1600}
-            height={900}
-            className="w-full h-full object-cover object-[center_60%]"
+            alt="Masquerader in a full feathered headpiece and wings before the road"
+            width={1006}
+            height={488}
+            className="w-full h-full object-cover object-[center_top]"
             loading="lazy"
             decoding="async"
           />
