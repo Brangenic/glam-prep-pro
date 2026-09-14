@@ -383,7 +383,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/services/carnival-makeup",
     title: "Sweat-Resistant Carnival Makeup | Carnival Glam Hub",
     description:
-      "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. More than 15,000 served since 2017.",
+      "Sweat-resistant Carnival makeup that holds through the road. Booked across the Caribbean Carnival circuit. More than 15,000 masqueraders served since 2017.",
     ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
   },
   {
@@ -1327,7 +1327,7 @@ async function main() {
     "@type": "VideoObject",
     name: "Carnival Glam Hub Reviews from Trinidad, Jamaica and Miami Masqueraders",
     description:
-      "Real masquerader reviews and testimonials of Carnival Glam Hub from Trinidad, Jamaica and Miami. Hear directly from women who booked their Carnival morning with the original Carnival morning concierge for sweat-resistant makeup, hair, getting dressed, photos and shuttle.",
+      "Reviews published on Google by Carnival Glam Hub clients in Trinidad, Jamaica and Miami. Read what masqueraders say about their Carnival morning makeup, hair, getting dressed, photos and shuttle.",
     thumbnailUrl: [`${BASE_URL}/og-home.jpg`],
     uploadDate: "2024-07-02T04:06:01-07:00",
     contentUrl: "https://www.youtube.com/watch?v=W4b98oLRTCE",
