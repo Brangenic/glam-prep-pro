@@ -17,11 +17,15 @@ declare global {
   }
 }
 
-// The Google Ads and GA4 IDs live in src/lib/trackerLoader.ts, which is the
-// only place a tracker ID appears. Nothing here loads a tracker: every call
-// goes through window.gtag / window.fbq, which exist only once the visitor
-// has consented, so all of it no-ops safely before then.
-import { GA4_ID, GOOGLE_ADS_ID } from "./trackerLoader";
+// The Google Ads and GA4 IDs live in src/lib/analytics.ts, which is the only
+// place a tag ID appears. Nothing here loads a tag: every call goes through
+// window.gtag / window.fbq, which exist only once the visitor has consented,
+// so all of it no-ops safely before then.
+import { ANALYTICS_IDS } from "./analytics";
+
+const GA4_ID = ANALYTICS_IDS.ga4;
+const GOOGLE_ADS_ID = ANALYTICS_IDS.googleAds;
+
 
 const ENQUIRY_LABEL = "7s1DCKX357McEI-9_coo";
 const WHATSAPP_LABEL = "ZigKCKv357McEI-9_coo";
