@@ -34,6 +34,8 @@ import {
   REVIEWS_PAGE_TITLE,
 } from "../src/data/pageMeta";
 import {
+  DEPOSIT_AMOUNT,
+  HAIR_FROM,
   OPERATING_TERRITORY_SENTENCE,
   territoryPriceSentence,
 } from "../src/data/territoryPriceProse";
@@ -315,7 +317,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Spicemas 2027 Makeup, 9 to 10 August | Grenada Glam Hub",
     description:
-      "Spicemas 2027 is Monday 9 and Tuesday 10 August. Grenada Carnival makeup at the Radisson Hotel, band route outside. Pre-register US$50 to 31 December 2026.",
+      `Spicemas 2027 is Monday 9 and Tuesday 10 August. Grenada Carnival makeup at the Radisson Hotel, band route outside. Pre-register US$${getOpenPreRegistration("grenada")?.amount ?? DEPOSIT_AMOUNT} to ${getOpenPreRegistration("grenada")?.closesOnText ?? "31 December 2026"}.`,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -388,7 +390,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/services/carnival-hair",
     title: "Carnival Hair & Hairstyles | Headpiece-Ready | Glam Hub",
     description:
-      "Carnival hair built to hold under feathers, wires and tropical heat: sleek ponies, curls, braided crowns and headpiece-ready installs, from US$100.",
+      `Carnival hair built to hold under feathers, wires and tropical heat: sleek ponies, curls, braided crowns and headpiece-ready installs, from US$${HAIR_FROM}.`,
     ogImage: `${BASE_URL}/images/services/hair-hero.jpg`,
   },
   {
@@ -423,7 +425,7 @@ const staticRoutes: RouteMeta[] = [
     title:
       "Carnival Glam Hub FAQ | Booking and Service Answers",
     description:
-      "Answers on booking Carnival Glam Hub: makeup, hair, photoshoot, dressing, shuttle, the US$50 deposit, cancellations and what to bring on the morning.",
+      `Answers on booking Carnival Glam Hub: makeup, hair, photoshoot, dressing, shuttle, the US$${DEPOSIT_AMOUNT} deposit, cancellations and what to bring on the morning.`,
   },
   {
     path: "/press",
@@ -454,7 +456,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/station-rentals",
     title: "Carnival Station Rental for Makeup Artists | Glam Hub",
     description:
-      "Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$200 per day, plus vendor and merchandise spaces.",
+      `Rent a station inside a Carnival Glam Hub. Makeup artist and hair stylist stations from US$${STATION_RATE_LOW} per day, plus vendor and merchandise spaces.`,
     ogImage: `${BASE_URL}/images/station-rentals/station-rentals-hero.png`,
   },
   {
@@ -482,7 +484,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/trinidad-carnival-2027",
     title: "Trinidad Carnival 2027 Makeup & Hair | Glam Hub",
     description:
-      "Trinidad Carnival 2027 runs Monday 8 and Tuesday 9 February. Hair, makeup and photos from the Hilton, two minutes from the Savannah. US$50 books a slot.",
+      `Trinidad Carnival 2027 runs Monday 8 and Tuesday 9 February. Hair, makeup and photos from the Hilton, two minutes from the Savannah. US$${DEPOSIT_AMOUNT} books a slot.`,
     ogImage: HERO_FALLBACK,
   },
 ];

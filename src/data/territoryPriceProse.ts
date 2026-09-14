@@ -113,3 +113,16 @@ export const OPERATING_TERRITORY_NAMES: string[] = [
 
 /** "a, b and c" for the territories we are operating this season. */
 export const OPERATING_TERRITORY_SENTENCE = listNames(OPERATING_TERRITORY_NAMES);
+
+/** The standard booking deposit, in USD. */
+export const DEPOSIT_AMOUNT: number =
+  TERRITORY_PRICING.find((t) => t.deposit)?.deposit?.amount ?? 50;
+
+/** Cheapest hair-only product on file, in USD. */
+export const HAIR_FROM: number = Math.min(
+  ...TERRITORY_PRICING.flatMap((t) =>
+    t.products
+      .filter((p) => !p.premium && sameTags(p, ["hair"]))
+      .map((p) => p.price),
+  ),
+);
