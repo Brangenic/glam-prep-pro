@@ -1,3 +1,4 @@
+import { pricingSummarySentence } from "@/data/territoryPricing";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -5,7 +6,6 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { getDestinationBySlug } from "@/data/destinations";
 import {
-import { pricingSummarySentence } from "@/data/territoryPricing";
   TRINIDAD_ANSWER_SECTIONS,
   TRINIDAD_VENUES,
   TRINIDAD_APPOINTMENT_WINDOW,

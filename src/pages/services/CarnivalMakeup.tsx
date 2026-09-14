@@ -1,3 +1,4 @@
+import { pricingSummarySentence } from "@/data/territoryPricing";
 import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
@@ -5,7 +6,6 @@ import Footer from "@/components/landing/Footer";
 import RelatedLinks from "@/components/RelatedLinks";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
-import { pricingSummarySentence } from "@/data/territoryPricing";
 
 const PAGE_TITLE = "Sweat-Resistant Carnival Makeup | Carnival Glam Hub";
 const PAGE_DESCRIPTION =
