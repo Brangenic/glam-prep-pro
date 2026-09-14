@@ -267,8 +267,18 @@ const About = () => {
               </Link>{" "}
               Our Today, the Jamaica Observer, the Jamaica Gleaner and CaribVoxx for its
               role in raising the standard of Carnival morning experiences across the
-              region.
+              region. Gabrielle Waite received the{" "}
+              <a
+                href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured"
+                target="_blank"
+                rel="noopener"
+                className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors"
+              >
+                Distinguished Award in Beauty
+              </a>{" "}
+              at the Jamaica Gleaner's Flair Distinguished Awards in 2023.
             </p>
+
           </section>
 
           <section className="mb-12">
