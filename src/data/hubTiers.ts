@@ -383,3 +383,50 @@ export const EXTRA_LITE_TERRITORIES = [
 
 /** Territories where the shuttle runs this season. */
 export const SHUTTLE_TERRITORIES = ["Jamaica", "Trinidad"];
+
+/**
+ * Display names for every tiered slug, so prose about where we operate is
+ * always generated from the tier model rather than typed out.
+ */
+const TERRITORY_NAMES: Record<string, string> = {
+  jamaica: "Jamaica",
+  trinidad: "Trinidad",
+  miami: "Miami",
+  "saint-lucia": "Saint Lucia",
+  grenada: "Grenada",
+  antigua: "Antigua",
+  barbados: "Barbados",
+  toronto: "Toronto",
+  guyana: "Guyana",
+  tobago: "Tobago",
+  atlanta: "Atlanta",
+};
+
+export const FULL_SERVICE_NAMES: string[] = FULL_SERVICE_SLUGS.map(
+  (s) => TERRITORY_NAMES[s],
+);
+
+export const LITE_NAMES: string[] = LITE_SLUGS.map((s) => TERRITORY_NAMES[s]);
+
+/** Total number of territories in the two tier model. */
+export const TERRITORY_COUNT = FULL_SERVICE_SLUGS.length + LITE_SLUGS.length;
+
+/** "a, b and c" in house style. */
+export function listNames(names: string[]): string {
+  if (names.length < 2) return names[0] ?? "";
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+}
+
+/** Countries and cities served, for schema `areaServed`. */
+export const AREA_SERVED = [
+  "Trinidad and Tobago",
+  "Jamaica",
+  "Barbados",
+  "Grenada",
+  "Saint Lucia",
+  "Antigua and Barbuda",
+  "Guyana",
+  "Miami",
+  "Atlanta",
+  "Toronto",
+];

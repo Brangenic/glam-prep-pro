@@ -554,7 +554,7 @@ const StationRentals = () => {
             Stations are capped by the floor space of each venue
           </h2>
           <p className="font-body text-base text-muted-foreground mb-6 leading-relaxed">
-            Carnival morning sells out well ahead of the season. Get your
+            Carnival morning runs to a fixed schedule. Get your
             territory and your days confirmed early.
           </p>
           <a

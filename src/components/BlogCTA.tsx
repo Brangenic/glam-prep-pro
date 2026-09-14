@@ -108,7 +108,7 @@ const BlogCTA = ({ slug, tags, category }: BlogCTAProps) => {
       <p className="font-body text-base sm:text-lg text-foreground/80 leading-relaxed mb-6">
         Carnival Glam Hub handles your whole Carnival morning in one location:
         sweat-resistant makeup, hair, getting dressed, photos and shuttle.
-        Slots sell out by territory, so secure yours early.
+        Appointments are booked by time slot in each territory, so secure yours early.
       </p>
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <a

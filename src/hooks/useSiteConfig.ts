@@ -10,7 +10,7 @@ const DEFAULTS: Record<string, string> = {
   hero_cta_text: "Book Your Carnival Glam",
   cta_headline: "Secure Your Carnival Glam Slot",
   cta_description:
-    "Carnival morning appointments are limited and typically sell out early. Reserve your spot now to ensure a smooth, stress-free start to your Carnival day.",
+    "Carnival morning is a fixed window and appointments are booked by time slot. Reserve yours early to ensure a smooth, stress-free start to your Carnival day.",
   cta_button_text: "Book Your Glam Appointment",
   announcement_banner: "",
 };

@@ -664,7 +664,7 @@ const Press = () => {
                 Ready when you are
               </h3>
               <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Spaces sell out months before Carnival. Secure yours now.
+                Appointments run to a fixed schedule on Carnival morning. Book early to get the time you want.
               </p>
               <a
                 href={BOOKING_URL}

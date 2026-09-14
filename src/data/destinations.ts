@@ -505,8 +505,8 @@ export function getDestinationFaqs(d: Destination): Faq[] {
     {
       question: `How early should I book ${loc} carnival glam?`,
       answer: passed
-        ? `Peak road march slots sell out first every season, so when ${loc} bookings reopen we recommend securing your appointment at least 4 to 6 weeks ahead of the parade.`
-        : `For ${event} (${date}), we recommend booking your ${loc} carnival glam appointment at least 4 to 6 weeks ahead. Peak road march slots sell out first every season.`,
+        ? `Peak road march times go first every season, so when ${loc} bookings reopen we recommend securing your appointment at least 4 to 6 weeks ahead of the parade.`
+        : `For ${event} (${date}), we recommend booking your ${loc} carnival glam appointment at least 4 to 6 weeks ahead. Peak road march times go first every season.`,
     },
     {
       question: `Are your ${loc} carnival makeup artists professional?`,

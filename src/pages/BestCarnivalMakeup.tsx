@@ -5,6 +5,7 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { getDestinationBySlug } from "@/data/destinations";
 import {
+import { pricingSummarySentence } from "@/data/territoryPricing";
   TRINIDAD_ANSWER_SECTIONS,
   TRINIDAD_VENUES,
   TRINIDAD_APPOINTMENT_WINDOW,
@@ -117,7 +118,7 @@ function buildData(territory: Territory): PageData {
       },
       {
         q: "How does booking work?",
-        a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Slots are limited and sell out weeks ahead.",
+        a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first.",
       },
     ],
     destinationPath: "/miami",
@@ -222,10 +223,7 @@ function BestPage({ territory }: { territory: Territory }) {
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">Pricing tiers</h2>
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              <li>Carnival morning access (getting-dressed, lounge, shuttle where it runs), US$35.</li>
-              <li>Makeup only, US$170 to US$200 single day, US$380 for both Trinidad days.</li>
-              <li>Named and celebrity artists, US$200 to US$580.</li>
-              <li>Photoshoot only US$140 to US$160, hair US$120 to US$220, Full Glam US$430 to US$680.</li>
+              <li>{pricingSummarySentence()}</li>
             </ul>
           </section>
 
@@ -245,7 +243,7 @@ function BestPage({ territory }: { territory: Territory }) {
               {data.slug === "trinidad"
                 ? "A US$50 deposit secures your appointment."
                 : "Your booking team will confirm your appointment and final pricing."}{" "}
-              Slots are limited and sell out weeks ahead.
+              Appointments are booked by time slot and the popular times go first.
             </p>
           </section>
 

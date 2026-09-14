@@ -4,12 +4,22 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import {
+  AREA_SERVED,
+  FULL_SERVICE_NAMES,
+  LITE_NAMES,
+  listNames,
+} from "@/data/hubTiers";
 
 const PAGE_TITLE =
   "About Carnival Glam Hub | Caribbean Beauty Concierge";
 const PAGE_DESCRIPTION =
-  "The Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica and beyond.";
+  "Caribbean Carnival morning concierge, founded in 2017 by Gabrielle Waite and Kibwe McGann. More than 15,000 masqueraders served since 2017.";
 const CANONICAL = "https://www.carnivalglamhub.com/about";
+
+/** Where we operate, generated from the two tier model. */
+const FULL_SERVICE_SENTENCE = listNames(FULL_SERVICE_NAMES);
+const LITE_SENTENCE = listNames(LITE_NAMES);
 
 const aboutPageSchema = {
   "@context": "https://schema.org",
@@ -27,15 +37,12 @@ const aboutPageSchema = {
     "@type": "Organization",
     name: "Carnival Glam Hub",
     url: "https://www.carnivalglamhub.com",
-    founder: { "@type": "Person", name: "Gabrielle Waite" },
-    foundingDate: "2017",
-    areaServed: [
-      "Trinidad and Tobago",
-      "Jamaica",
-      "Barbados",
-      "Grenada",
-      "Antigua and Barbuda",
+    founder: [
+      { "@type": "Person", name: "Gabrielle Waite" },
+      { "@type": "Person", name: "Kibwe McGann" },
     ],
+    foundingDate: "2017",
+    areaServed: AREA_SERVED,
     sameAs: [
       "https://www.instagram.com/carnivalglamhub",
       "https://www.facebook.com/carnivalglamhub",
@@ -144,10 +151,14 @@ const About = () => {
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Carnival Glam Hub started in{" "}
+              <a href="/jamaica" className="text-primary hover:underline">
+                Jamaica
+              </a>{" "}
+              in 2017 with a simple observation, and opened in{" "}
               <a href="/trinidad-carnival-2027" className="text-primary hover:underline">
                 Trinidad
               </a>{" "}
-              in 2017 with a simple observation. The morning of Carnival is the most
+              in 2020. The morning of Carnival is the most
               expensive and most fragile part of the entire experience. Masqueraders
               were paying for costumes, flights, hotels and fetes, then losing the
               morning to late makeup artists, hair appointments on the other side of
@@ -160,12 +171,13 @@ const About = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Founder: Gabrielle Waite
+              Founders
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub was founded by Gabrielle Waite, a Trinidadian
-              entrepreneur with a background in beauty and Carnival production.
-              Gabrielle built the concept around a real masquerader&apos;s needs:{" "}
+              Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe
+              McGann. Gabrielle is a Jamaican makeup artist and entrepreneur with a
+              background in beauty and Carnival production. Together they built the
+              concept around a real masquerader&apos;s needs:{" "}
               <a href="/services/carnival-makeup" className="text-primary hover:underline">
                 sweat-resistant makeup
               </a>{" "}
@@ -194,10 +206,10 @@ const About = () => {
               Where we operate
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub serves masqueraders in Trinidad, Jamaica, Barbados,
-              Grenada and Antigua, with seasonal pop-ups around the regional Carnival
-              calendar. Most clients travel internationally for Carnival from the
-              United States, Canada and the United Kingdom.
+              Our Full Service Glam Hubs run in {FULL_SERVICE_SENTENCE}. We also
+              operate as Glam Hub Lite in {LITE_SENTENCE}, following the regional
+              Carnival calendar. Most clients travel internationally for Carnival
+              from the United States, Canada and the United Kingdom.
             </p>
           </section>
 
@@ -208,8 +220,7 @@ const About = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Premium, organised, calm. We treat the Carnival morning as a production,
               not a series of appointments. Every booking includes a schedule, a point
-              of contact, an air-conditioned lounge, refreshments, and a team that has
-              done this thousands of times.
+              of contact, an air-conditioned lounge and refreshments.
             </p>
           </section>
 
@@ -235,15 +246,10 @@ const About = () => {
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
               Ready when you are
             </h2>
-            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-6">
-              Spaces sell out months before Carnival. Secure yours now.
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Appointments run to a fixed schedule on Carnival morning. Book early to
+              get the time you want.
             </p>
-            <a
-              href={BOOKING_URL} target="_blank" rel="noopener"
-              className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
-            >
-              Book your Carnival morning
-            </a>
           </section>
         </article>
 
@@ -253,7 +259,7 @@ const About = () => {
               Carnival morning, <span className="italic text-gradient-primary">handled.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Book your spot before your territory sells out.
+              Choose your territory and book your appointment.
             </p>
             <a
               href={BOOKING_URL} target="_blank" rel="noopener"

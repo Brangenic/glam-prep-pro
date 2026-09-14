@@ -427,7 +427,7 @@ const CarnivalPhotoshoot = () => {
               <span className="italic text-gradient-primary">properly.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Photographer slots are limited and sell out before glam slots.
+              Photographer time is booked by slot, and the popular times go first.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

@@ -349,7 +349,7 @@ export const CARNIVAL_GUIDE_GROUPS: CarnivalGuideGroup[] = [
       {
         slug: "caribbean-carnival-has-an-airlift-problem",
         anchor: "Caribbean Carnival has an airlift problem",
-        blurb: "Why flights sell out and how to plan around it.",
+        blurb: "Why flights fill up and how to plan around it.",
       },
     ],
   },

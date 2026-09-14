@@ -342,7 +342,7 @@ export const STATION_FAQS: { q: string; a: string }[] = [
   },
   {
     q: "When do I need to book a station?",
-    a: "As early as you can. Station numbers are capped by the floor space of each venue and Carnival morning sells out well ahead of the season, so popular territories close first.",
+    a: "As early as you can. Station numbers are capped by the floor space of each venue, so popular territories close first.",
   },
   {
     q: "What happens if I need two days?",

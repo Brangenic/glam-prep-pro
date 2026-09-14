@@ -69,7 +69,7 @@ export const TRINIDAD_ANSWER_SECTIONS: AnswerSection[] = [
   },
   {
     q: "What time should I book my Carnival morning appointment?",
-    a: `Most masqueraders book between ${TRINIDAD_APPOINTMENT_WINDOW}. That window leaves time for makeup, hair, photos, getting dressed and the shuttle before your band steps off, and it is the first part of the day to sell out.`,
+    a: `Most masqueraders book between ${TRINIDAD_APPOINTMENT_WINDOW}. That window leaves time for makeup, hair, photos, getting dressed and the shuttle before your band steps off, and it is the first part of the day to fill.`,
   },
   {
     q: "How much does Trinidad Carnival makeup cost in 2027?",
