@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import {
   getConsent,
   setConsent,
-  subscribeConsent,
-  type ConsentState,
+  subscribe,
+  unsubscribe,
+  type ConsentStatus,
 } from "@/lib/consent";
-import { initTrackingConsent } from "@/lib/trackerLoader";
+import { loadAnalytics } from "@/lib/analytics";
 
 const REOPEN_EVENT = "cgh:open-cookie-settings";
 
@@ -17,68 +18,83 @@ export function openCookieSettings() {
 /*
  * Consent banner. Quiet card, not a wall.
  *
- * Position: on mobile it sits above the Ask JADE launcher (bottom-24) and
- * well clear of the sticky Book Your Glam bar (bottom-0). On large screens
- * it sits bottom right. Do not move it down into either of those, that
- * collision has been checked at 390 wide.
+ * Position: on mobile it sits above the Ask JADE launcher and well clear of
+ * the sticky Book Your Glam bar at the bottom. On large screens it sits
+ * bottom right. Do not move it down into either of those, that collision
+ * has been checked at 375 wide.
  */
 const CookieConsent = () => {
-  const [state, setState] = useState<ConsentState>("unknown");
+  const [status, setStatus] = useState<ConsentStatus | null>(null);
+  const [ready, setReady] = useState(false);
   const [reopened, setReopened] = useState(false);
-  const acceptRef = useRef<HTMLButtonElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
-    initTrackingConsent();
-    setState(getConsent());
-    const unsubscribe = subscribeConsent(setState);
+    setStatus(getConsent());
+    setReady(true);
+    const onChange = (next: ConsentStatus | null) => setStatus(next);
+    subscribe(onChange);
     const onReopen = () => setReopened(true);
     window.addEventListener(REOPEN_EVENT, onReopen);
     return () => {
-      unsubscribe();
+      unsubscribe(onChange);
       window.removeEventListener(REOPEN_EVENT, onReopen);
     };
   }, []);
 
-  const visible = state === "unknown" || reopened;
+  const visible = ready && (status === null || reopened);
 
   useEffect(() => {
-    if (visible) acceptRef.current?.focus();
+    if (visible) headingRef.current?.focus();
   }, [visible]);
 
   if (!visible) return null;
 
-  const choose = (next: "granted" | "denied") => {
+  const choose = (next: ConsentStatus) => {
     setConsent(next);
     setReopened(false);
+    if (next === "granted") loadAnalytics();
   };
+
+  const buttonBase =
+    "flex-1 min-h-[44px] rounded-full px-4 font-body text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
   return (
     <div
       role="dialog"
+      aria-labelledby="cookie-consent-heading"
       aria-modal="false"
-      aria-label="Cookie settings"
       data-testid="cookie-consent"
       className="fixed bottom-40 left-4 right-4 z-[60] lg:bottom-6 lg:left-auto lg:right-6 lg:w-[26rem]"
     >
       <div className="rounded-2xl border border-border bg-background p-4 shadow-2xl">
-        <p className="font-body text-sm text-foreground leading-snug">
-          We use cookies to measure how this site is used and how bookings are
-          found. You can accept or decline. Read our{" "}
+        <h2
+          id="cookie-consent-heading"
+          ref={headingRef}
+          tabIndex={-1}
+          className="font-display text-base text-foreground focus-visible:outline-none"
+        >
+          Cookies on this site
+        </h2>
+        <p className="mt-2 font-body text-sm text-foreground leading-snug">
+          We use cookies to measure how the site is used and to show our
+          adverts. You can accept or decline. Declining does not affect
+          anything you can do here.
+        </p>
+        <p className="mt-2 font-body text-sm">
           <a
             href="/policies#privacy"
             className="text-primary underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            privacy policy
+            Read our privacy notice
           </a>
-          .
         </p>
         <div className="mt-3 flex gap-2">
           <button
-            ref={acceptRef}
             type="button"
             data-testid="cookie-accept"
             onClick={() => choose("granted")}
-            className="flex-1 min-h-[44px] rounded-full bg-primary px-4 font-body text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className={`${buttonBase} bg-primary text-primary-foreground hover:bg-primary/90`}
           >
             Accept
           </button>
@@ -86,7 +102,7 @@ const CookieConsent = () => {
             type="button"
             data-testid="cookie-decline"
             onClick={() => choose("denied")}
-            className="flex-1 min-h-[44px] rounded-full border border-border bg-muted px-4 font-body text-sm font-semibold text-foreground transition-colors hover:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className={`${buttonBase} border border-border bg-muted text-foreground hover:bg-muted/80`}
           >
             Decline
           </button>
