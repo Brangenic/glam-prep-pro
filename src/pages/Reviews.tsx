@@ -4,9 +4,9 @@ import Footer from "@/components/landing/Footer";
 import PressBar from "@/components/landing/PressBar";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 
-const PAGE_TITLE = "Carnival Glam Hub Reviews | Real Client Testimonials";
+const PAGE_TITLE = "Carnival Glam Hub Reviews | What Masqueraders Say";
 const PAGE_DESCRIPTION =
-  "Real reviews from Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.";
+  "Reviews published on Google by Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.";
 
 type RealReview = {
   name: string;
@@ -72,23 +72,19 @@ const getInitials = (name: string) =>
     .map((n) => n[0]?.toUpperCase() ?? "")
     .join("");
 
+// No rating or review count is held here. The live figure is on Google,
+// which is the only place it is true.
 const googleProfiles = [
   {
     location: "Jamaica",
-    rating: 4.8,
-    count: 18,
     url: "https://www.google.com/maps/place/Carnival+GLAM+HUB+Jamaica",
   },
   {
     location: "Trinidad",
-    rating: 4.8,
-    count: 24,
     url: "https://www.google.com/maps/search/Carnival+Glam+Hub+Trinidad+Port+of+Spain",
   },
   {
     location: "Saint Lucia",
-    rating: 5.0,
-    count: 1,
     url: "https://www.google.com/maps/search/Carnival+Glam+Hub+Saint+Lucia",
   },
 ];
@@ -163,7 +159,7 @@ const Reviews = () => {
                 Client Reviews
               </p>
               <h2 id="google-ratings-heading" className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold">
-                Rated <span className="italic text-gradient-primary">4.8 stars</span> across the Caribbean
+                What masqueraders say <span className="italic text-gradient-primary">on Google</span>
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
@@ -175,21 +171,8 @@ const Reviews = () => {
                   rel="noopener noreferrer"
                   className="group rounded-2xl border border-border bg-card p-6 sm:p-7 text-center transition hover:border-primary hover:shadow-lg"
                 >
-                  <p className="font-display text-lg sm:text-xl font-semibold mb-2">{p.location}</p>
-                  <div className="flex items-center justify-center gap-1 mb-2">
-                    <span className="font-display text-3xl sm:text-4xl font-bold text-gradient-primary">{p.rating.toFixed(1)}</span>
-                  </div>
-                  <div className="flex justify-center gap-0.5 mb-3" aria-label={`${p.rating} stars`}>
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className={`w-4 h-4 ${i < Math.round(p.rating) ? "text-primary" : "text-muted"}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                    {p.count} {p.count === 1 ? "review" : "reviews"} on Google
-                  </p>
-                  <p className="font-body text-xs text-secondary mt-3 group-hover:underline">View on Google →</p>
+                  <p className="font-display text-lg sm:text-xl font-semibold mb-3">{p.location}</p>
+                  <p className="font-body text-xs text-secondary group-hover:underline">View on Google →</p>
                 </a>
               ))}
             </div>
@@ -203,7 +186,7 @@ const Reviews = () => {
                 Reviews
               </p>
               <h1 id="reviews-page-heading" className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-5">
-                Real Love from <span className="italic text-gradient-primary">Carnival Mornings</span>
+                Love from <span className="italic text-gradient-primary">Carnival Mornings</span>
               </h1>
             </div>
 
@@ -231,7 +214,7 @@ const Reviews = () => {
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="font-body text-sm font-semibold text-foreground truncate">{review.name}</p>
-                        <p className="font-body text-xs text-muted-foreground">Verified Google review</p>
+                        <p className="font-body text-xs text-muted-foreground">Review published on Google</p>
                       </div>
                     </div>
                     <div className="flex gap-0.5 mb-4" aria-label={`${rating} star review`}>

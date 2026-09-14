@@ -436,7 +436,7 @@ const TrinidadCarnival2027 = () => {
               <span className="italic text-gradient-primary">That Sells Out.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-3">
-              Flights sell out. Hotels sell out. Costumes sell out. The best glam appointments do too.
+              Flights fill up. Hotels fill up. Costumes go. The best glam appointment times go early too.
             </p>
             <p className="font-body text-base sm:text-lg text-foreground/85 mb-8">
               Secure your Trinidad Carnival 2027 appointment today. Only US$50 holds your slot.

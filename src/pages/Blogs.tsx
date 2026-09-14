@@ -604,7 +604,7 @@ const Blogs = () => {
               <span className="italic text-gradient-primary">Carnival morning?</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Spaces sell out months before Carnival.
+              Appointments are booked by time slot on Carnival morning.
             </p>
             <a
               href={BOOKING_URL}

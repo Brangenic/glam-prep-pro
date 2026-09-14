@@ -1,4 +1,5 @@
 import { BOOKING_URL } from "@/lib/constants";
+import { pricingSummarySentence } from "@/data/territoryPricing";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -22,7 +23,7 @@ const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string }
   },
   {
     q: "How early should I book?",
-    a: "Book the moment your costume is collected. Slots typically sell out two to three months before the parade in our busiest territories, Trinidad, Jamaica and Miami. Late bookings, if available, are charged at a premium.",
+    a: "Book the moment your costume is collected. Carnival morning is a fixed window and appointments are booked by time slot, so the popular times go first in our busiest territories, Trinidad, Jamaica and Miami. Late bookings, if available, are charged at a premium.",
   },
   {
     q: "Do you travel internationally?",
@@ -76,7 +77,7 @@ const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string }
   },
   {
     q: "How much does professional Carnival makeup cost?",
-    a: "Carnival morning access is US$35. Makeup only is US$170 to US$200 for a single day and US$380 for both Trinidad days. Named and celebrity artists run US$200 to US$580. Photoshoot only is US$140 to US$160, hair is US$120 to US$220 and Full Glam is US$430 to US$680.",
+    a: pricingSummarySentence(),
   },
   {
     q: "Can I do my own Carnival makeup without experience?",
@@ -224,7 +225,7 @@ const FAQ = () => {
               <span className="italic text-gradient-primary">questions?</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Book your call or secure your slot before your territory sells out.
+              Book your call or secure your appointment time for your territory.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

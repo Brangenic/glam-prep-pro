@@ -484,3 +484,38 @@ export function schemaPriceRange(): string {
   const fmt = (n: number) => `$${n.toLocaleString("en-US")}`;
   return `${fmt(min)}-${fmt(max)}`;
 }
+
+/** Both-day makeup-only price for a two-day territory, if it sells one. */
+export function bothDayMakeupPrice(slug = "trinidad"): number | null {
+  const t = getTerritoryPricing(slug);
+  if (!t || !t.quotable) return null;
+  const prices = t.products
+    .filter((p) => p.day === "both" && onlyTag(p, "makeup"))
+    .map((p) => p.price);
+  return prices.length ? Math.min(...prices) : null;
+}
+
+/**
+ * The one published pricing paragraph. Every surface that quotes a price
+ * range renders this, so no figure is ever typed by hand again.
+ */
+export function pricingSummarySentence(): string {
+  const all = overallPriceRange();
+  const makeup = makeupOnlyRange();
+  const photo = photoshootOnlyRange();
+  const hair = hairPriceRange();
+  const full = fullGlamRange();
+  const premium = premiumArtistRange();
+  const both = bothDayMakeupPrice();
+  const bothPart = both ? ` Both Trinidad days together is US$${both}.` : "";
+  return (
+    `Published prices run from US$${all.min} to US$${all.max} across our territories. ` +
+    `Single-day makeup only is US$${makeup.min} to US$${makeup.max}.${bothPart} ` +
+    `Named and celebrity artists run US$${premium.min} to US$${premium.max}. ` +
+    `Photoshoot only is US$${photo.min} to US$${photo.max}, hair is US$${hair.min} to US$${hair.max} ` +
+    `and Full Glam is US$${full.min} to US$${full.max}. ` +
+    `Reels are US$${REELS_PRICE} per masquerader in Trinidad and Jamaica. ` +
+    `Getting dressed on its own, a barber and overnight bag check are US$${GETTING_DRESSED_PRICE} each. ` +
+    `Your final price depends on your territory and the package you choose.`
+  );
+}
