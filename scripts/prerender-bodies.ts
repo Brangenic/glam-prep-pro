@@ -755,7 +755,7 @@ function enquiryRows(): string {
   )
     .map(
       (t) =>
-        `<li><strong>${escapeHtml(t.label)}</strong>, ${escapeHtml(t.eventDate)}, enquire on WhatsApp</li>`,
+        `<li><strong>${escapeHtml(t.label)}</strong>${t.eventDate ? `, ${escapeHtml(t.eventDate)}` : ""}, enquire on WhatsApp</li>`,
     )
     .join("\n");
 }

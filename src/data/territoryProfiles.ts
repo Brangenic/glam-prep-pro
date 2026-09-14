@@ -87,7 +87,7 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     slug: "tobago",
     name: "Tobago Carnival",
     shortName: "Tobago",
-    dateText: "30 October – 1 November 2026",
+    dateText: "30 October to 1 November 2026",
     path: "/tobago",
     venue: null,
     aliases: ["tobago"],
