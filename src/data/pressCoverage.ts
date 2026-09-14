@@ -164,7 +164,7 @@ export const PRESS_STORIES: PressStory[] = [
       "Carnival in Jamaica 2023 will be our 10th staging of Glam Hub. Our service has been trusted by more than 6,000 women to do their faces.",
     pullQuoteAttribution: "Gabrielle Waite, speaking to Our Today",
     summary:
-      "A dedicated brand feature on the tenth staging of Glam Hub, covering the 2017 founding by Gabrielle Waite and Kibwe McGann and the full service line from hair and makeup to barber, henna, spray tan, photography, breakfast, shuttle, changing rooms, wing check and an air-conditioned lounge.",
+      "A dedicated brand feature on the tenth staging of Glam Hub, covering the 2017 founding by Kibwe McGann and Gabrielle Waite and the full service line from hair and makeup to barber, henna, spray tan, photography, breakfast, shuttle, changing rooms, wing check and an air-conditioned lounge.",
     tier: "caribbean",
   },
   {

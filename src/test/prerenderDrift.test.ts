@@ -21,7 +21,7 @@ const ALL_SCRIPTS = SCRIPTS.map(read).join("\n");
 describe("prerendered surface does not drift from the data layer", () => {
   it("names both founders and never one alone", () => {
     const bodies = read("scripts/prerender-bodies.ts");
-    expect(bodies).toContain("Gabrielle Waite and Kibwe McGann");
+    expect(bodies).toContain("Kibwe McGann and Gabrielle Waite");
     expect(ALL_SCRIPTS).not.toMatch(
       /founded by Gabrielle Waite(?![^<.]{0,60}Kibwe)/i,
     );
