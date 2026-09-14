@@ -411,15 +411,6 @@ const Press = () => {
                   aria-label={`Jump to ${o.name} coverage`}
                   className="group flex items-center gap-2 opacity-50 grayscale transition-all duration-500 ease-out hover:-translate-y-0.5 hover:opacity-100 hover:grayscale-0"
                 >
-                  <img
-                    src={favicon(o.domain)}
-                    alt={`${o.name} logo`}
-                    width={28}
-                    height={28}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-6 w-6 object-contain sm:h-7 sm:w-7"
-                  />
                   <span className="font-display text-base tracking-wide text-foreground/80 transition-colors group-hover:text-primary 2xl:text-lg">
                     {o.name}
                   </span>
