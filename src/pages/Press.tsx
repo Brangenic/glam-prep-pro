@@ -676,10 +676,10 @@ const Press = () => {
               <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                 For interviews, comment or imagery, write to{" "}
                 <a
-                  href="mailto:bookings@carnivalglamhub.com"
+                  href="mailto:carnivalglamhub@gmail.com"
                   className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:decoration-primary"
                 >
-                  bookings@carnivalglamhub.com
+                  carnivalglamhub@gmail.com
                 </a>
                 .
               </p>

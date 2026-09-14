@@ -410,3 +410,77 @@ export function lowestPremiumPrice(t: TerritoryPricing, day: DayKey): number | n
   const prices = t.products.filter((p) => p.day === day && p.premium).map((p) => p.price);
   return prices.length ? Math.min(...prices) : null;
 }
+
+/* ------------------------------------------------------------------ *
+ * Derived price figures.
+ *
+ * Nothing below is typed by hand. Every figure is computed from the
+ * product lists above, so schema and copy can never claim a price that
+ * no product supports. Only `quotable` territories count.
+ * `src/test/schemaPrices.test.ts` fails the build if `index.html`
+ * drifts from these numbers.
+ * ------------------------------------------------------------------ */
+
+/** Flat add-ons a masquerader can buy on their own. */
+export const FLAT_ADDON_PRICES: number[] = [
+  GETTING_DRESSED_PRICE,
+  BARBER_PRICE,
+  OVERNIGHT_BAG_CHECK_PRICE,
+  REELS_PRICE,
+];
+
+/** Every published product across quotable territories. */
+export function publishedProducts(): QuoteProduct[] {
+  return TERRITORY_PRICING.filter((t) => t.quotable).flatMap((t) => t.products);
+}
+
+type Range = { min: number; max: number };
+
+function rangeOf(prices: number[]): Range {
+  if (!prices.length) throw new Error("No published prices to derive a range from.");
+  return { min: Math.min(...prices), max: Math.max(...prices) };
+}
+
+function pricesWhere(predicate: (p: QuoteProduct) => boolean): number[] {
+  return publishedProducts().filter(predicate).map((p) => p.price);
+}
+
+const onlyTag = (p: QuoteProduct, tag: ServiceTag) =>
+  p.tags.length === 1 && p.tags[0] === tag && !p.premium;
+
+/** Lowest and highest of anything a masquerader can buy, add-ons included. */
+export function overallPriceRange(): Range {
+  return rangeOf([...publishedProducts().map((p) => p.price), ...FLAT_ADDON_PRICES]);
+}
+
+/** Single-day makeup only, standard artists. */
+export function makeupOnlyRange(): Range {
+  return rangeOf(pricesWhere((p) => p.day !== "both" && onlyTag(p, "makeup")));
+}
+
+/** Photoshoot only. */
+export function photoshootOnlyRange(): Range {
+  return rangeOf(pricesWhere((p) => onlyTag(p, "photoshoot")));
+}
+
+/** Hair only. */
+export function hairPriceRange(): Range {
+  return rangeOf(pricesWhere((p) => onlyTag(p, "hair")));
+}
+
+/** Full Glam packages. */
+export function fullGlamRange(): Range {
+  return rangeOf(pricesWhere((p) => /full glam/i.test(p.label)));
+}
+
+/** Named or celebrity artist products. */
+export function premiumArtistRange(): Range {
+  return rangeOf(pricesWhere((p) => p.premium === true));
+}
+
+/** The Organization `priceRange` string, plain hyphen, house style. */
+export function schemaPriceRange(): string {
+  const { min, max } = overallPriceRange();
+  const fmt = (n: number) => `$${n.toLocaleString("en-US")}`;
+  return `${fmt(min)}-${fmt(max)}`;
+}

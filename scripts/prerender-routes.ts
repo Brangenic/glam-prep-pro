@@ -997,18 +997,11 @@ function buildJsonLd(route: RouteMeta): object[] {
       name: "Carnival Glam Hub",
       alternateName: "Carnival Glam Hub, Trinidad Carnival",
       url,
-      sameAs: ["https://www.wikidata.org/wiki/Q140323641"],
-      image: `${BASE_URL}/og/trinidad-carnival-2027.jpg`,
+          image: `${BASE_URL}/og/trinidad-carnival-2027.jpg`,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Port of Spain",
         addressCountry: "TT",
-      },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        reviewCount: "43",
-        bestRating: "5",
       },
       review: [
         {
