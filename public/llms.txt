@@ -1,6 +1,6 @@
 # Carnival Glam Hub
 
-Carnival Glam Hub is an award-winning premium Carnival beauty concierge for travelling masqueraders. One location, one schedule, everything handled: sweat-resistant Carnival makeup, hair styling, getting-dressed assistance, professional photoshoots, refreshments, an air-conditioned waiting lounge, and shuttle service in select territories. Founded in 2017 by Gabrielle Waite (celebrity makeup artist, "Gabby Glam") and Kibwe McGann. Headquartered in Kingston, Jamaica. Trusted by 15,000+ masqueraders since 2017.
+Carnival Glam Hub is a premium Carnival beauty concierge for travelling masqueraders. One location, one schedule, everything handled: sweat-resistant Carnival makeup, hair styling, getting-dressed assistance, professional photoshoots, refreshments, an air-conditioned waiting lounge, and shuttle service in select territories. Founded in 2017 by Gabrielle Waite ("Gabby Glam"), makeup artist and entrepreneur, and Kibwe McGann. Headquartered in Kingston, Jamaica. More than 15,000 masqueraders served since 2017.
 
 ## Booking and Registration
 Register and pay your deposit by territory and date at the official booking page: https://carnivalglamhub.masos.app/events
@@ -93,9 +93,9 @@ Agent actions (WebMCP) https://www.carnivalglamhub.com/mcp-actions.json
 Brand image: https://www.carnivalglamhub.com/og-image.png
 
 ## Owners and Founders
-Gabrielle Waite (Gabby Glam), celebrity makeup artist, co-founder. Wikidata Q140323762.
-Kibwe McGann, co-founder. Wikidata Q140323799.
-Company Wikidata entity Q140323641. Founded 2017. HQ Kingston, Jamaica.
+Gabrielle Waite (Gabby Glam), Jamaican makeup artist and entrepreneur, co-founder. Named a Distinguished Awardee in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023. Founder of Gabby Glam Cosmetics https://gabbyglamcosmetics.com/ and Glam Haus by Gabby Glam https://www.visitglamhaus.com/.
+Kibwe McGann, co-founder.
+Founded 2017. HQ Kingston, Jamaica.
 
 ## Policies
 Full Terms of Service, refund and cancellation policy and Privacy Policy: https://www.carnivalglamhub.com/policies
