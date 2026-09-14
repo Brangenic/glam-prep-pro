@@ -39,8 +39,17 @@ const aboutPageSchema = {
     name: "Carnival Glam Hub",
     url: "https://www.carnivalglamhub.com",
     founder: [
-      { "@type": "Person", name: "Gabrielle Waite" },
-      { "@type": "Person", name: "Kibwe McGann" },
+      {
+        "@type": "Person",
+        name: "Kibwe McGann",
+        jobTitle: "Co-Founder, Carnival Glam Hub",
+      },
+      {
+        "@type": "Person",
+        name: "Gabrielle Waite",
+        alternateName: "Gabby Glam",
+        jobTitle: "Co-Founder, Carnival Glam Hub",
+      },
     ],
     foundingDate: "2017",
     areaServed: AREA_SERVED,
