@@ -17,10 +17,10 @@ const Founder = () => {
               About Gabby
             </p>
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-6 sm:mb-8">
-              Founded by <span className="italic text-gradient-primary">Gabby Glam</span>
+              Co-founded by <span className="italic text-gradient-primary">Gabby Glam</span>
             </h2>
             <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed mb-5 sm:mb-6">
-              Carnival Glam Hub was built by Gabby Glam and Kibwe McGann to make carnival mornings easier, more organized, and more enjoyable.
+              Carnival Glam Hub was co-founded by Kibwe McGann and Gabby Glam to make carnival mornings easier, more organised, and more enjoyable.
             </p>
             <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed mb-5 sm:mb-6">
               Gabrielle is a Jamaican makeup artist and entrepreneur. She was named a Distinguished Awardee in Beauty at the Jamaica Gleaner&apos;s Flair Distinguished Awards in 2023, and she founded{" "}
@@ -60,7 +60,7 @@ const Founder = () => {
             <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-square max-w-sm sm:max-w-md mx-auto gold-glow">
               <img
                 src={founderImg}
-                alt="Gabrielle Waite, founder of Carnival Glam Hub"
+                alt="Gabrielle Waite, co-founder of Carnival Glam Hub"
                 width={800}
                 height={800}
                 className="w-full h-full object-cover object-top"

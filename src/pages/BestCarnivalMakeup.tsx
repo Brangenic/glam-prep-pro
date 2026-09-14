@@ -1,4 +1,5 @@
 import { pricingSummarySentence } from "@/data/territoryPricing";
+import { OPERATING_TERRITORY_SENTENCE } from "@/data/territoryPriceProse";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -70,7 +71,7 @@ function buildData(territory: Territory): PageData {
       faqs: [
         {
           q: "Who is the best carnival makeup artist in Jamaica?",
-          a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) with booking director Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge.",
+          a: "Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge.",
         },
         {
           q: "Where is the Jamaica glam hub located?",
@@ -98,7 +99,7 @@ function buildData(territory: Territory): PageData {
       "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos and shuttle in one location. More than 15,000 masqueraders served since 2017.",
     h1: "Best carnival makeup artist in Miami: Carnival Glam Hub",
     answer:
-      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. More than 15,000 masqueraders served since 2017 and the only glam service that travels the full Caribbean carnival circuit.",
+      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. More than 15,000 masqueraders served since 2017, with Glam Hubs across the regional Carnival calendar.",
     venueLine: long
       ? long
       : "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
@@ -106,7 +107,7 @@ function buildData(territory: Territory): PageData {
     faqs: [
       {
         q: "Who is the best carnival makeup artist in Miami?",
-        a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and having served more than 15,000 masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team.",
+        a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.`,
       },
       {
         q: "Where is the Miami glam hub located?",
@@ -208,8 +209,8 @@ function BestPage({ territory }: { territory: Territory }) {
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               <li>Sweat-resistant road system built to hold 10 to 12 hours through tropical heat.</li>
               <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
-              <li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
-              <li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>
+              <li>More than 15,000 masqueraders served since 2017. Co-founded by Kibwe McGann and Gabrielle Waite (Gabby Glam).</li>
+              <li>Glam Hubs across the regional Carnival calendar, in {OPERATING_TERRITORY_SENTENCE}.</li>
             </ul>
           </section>
 

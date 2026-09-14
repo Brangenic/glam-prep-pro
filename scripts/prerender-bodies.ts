@@ -735,7 +735,7 @@ const FULL_SERVICE_SENTENCE = listNames(FULL_SERVICE_NAMES);
 const LITE_SENTENCE = listNames(LITE_NAMES);
 
 /** The founder credit, worded once and reused. */
-const FOUNDER_PROSE = `Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe McGann. Gabrielle is a Jamaican makeup artist and entrepreneur, founder of <a href="${GABBY_GLAM_COSMETICS_URL}" target="_blank" rel="noopener">Gabby Glam Cosmetics</a> and <a href="${GLAM_HAUS_URL}" target="_blank" rel="noopener">Glam Haus by Gabby Glam</a>, a studio in Kingston, and was named a Distinguished Awardee in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023, <a href="${GLEANER_AWARD_URL}" target="_blank" rel="noopener">as reported by the Gleaner</a>.`;
+const FOUNDER_PROSE = `Carnival Glam Hub was co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Gabrielle is a Jamaican makeup artist and entrepreneur, founder of <a href="${GABBY_GLAM_COSMETICS_URL}" target="_blank" rel="noopener">Gabby Glam Cosmetics</a> and <a href="${GLAM_HAUS_URL}" target="_blank" rel="noopener">Glam Haus by Gabby Glam</a>, a studio in Kingston, and was named a Distinguished Awardee in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023, <a href="${GLEANER_AWARD_URL}" target="_blank" rel="noopener">as reported by the Gleaner</a>.`;
 
 const ADD_ON_SUMMARY = `Add-ons are priced separately. Reels are US$${REELS_PRICE} per masquerader in Trinidad and Jamaica, the barber is US$${BARBER_PRICE} in Trinidad and Jamaica, and overnight bag check is US$${OVERNIGHT_BAG_CHECK_PRICE} in Trinidad, Jamaica and Miami.`;
 
@@ -882,7 +882,7 @@ const CORE: Record<string, Content> = {
     title: "Carnival Glam Hub, Caribbean Carnival Beauty Concierge",
     body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle from one air-conditioned lounge on Carnival morning.</p>
 <h2>More than 15,000 masqueraders served since 2017</h2>
-<p>Founded in 2017 by Gabrielle Waite and Kibwe McGann. Booked across ${OPERATING_TERRITORY_SENTENCE}.</p>
+<p>Co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Booked across ${OPERATING_TERRITORY_SENTENCE}.</p>
 <h2>Services</h2>
 <ul>
   <li><a href="/services/carnival-makeup">Sweat-Resistant Carnival Makeup</a></li>
@@ -940,7 +940,7 @@ ${UPCOMING_WITH_DATES}
 <p>${PRICE_SUMMARY}</p>
 <p>${ADD_ON_SUMMARY}</p>
 <h2>The team behind it</h2>
-<p>Founded in 2017 by Gabrielle Waite and Kibwe McGann, Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
+<p>Co-founded in 2017 by Kibwe McGann and Gabrielle Waite, Carnival Glam Hub employs Caribbean makeup artists, hair stylists, photographers, seamstresses, dressers and front of house crew, hundreds of them across a season, and the great majority are women working in their own territory. Artists who want to work a season can <a href="/joinourteam">apply to join the team</a>, and independent professionals can <a href="/station-rentals">rent a station</a> and bring their own clients.</p>
 <h2>Press</h2>
 <p>${PRESS_OUTLET_SENTENCE} Gabrielle Waite received the <a href="https://past.jamaica-gleaner.com/article/lifestyle/20230428/leading-women-business-media-and-beauty-honoured" target="_blank" rel="noopener">Distinguished Award in Beauty</a> at the Jamaica Gleaner's Flair Distinguished Awards in 2023. The full list, with dates and links, is on our <a href="/press">press page</a>.</p>
 ${CTA}`,
@@ -1316,7 +1316,7 @@ function buildRouteMap(): Record<string, Content> {
       venueLine:
         "Hilton Hotel, Port of Spain, two minutes from the Savannah. Shuttle to your band included in concierge packages.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, and booked by more than 15,000 masqueraders, it pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
+        { q: "Who is the best carnival makeup artist in Trinidad?", a: "Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and booked by more than 15,000 masqueraders, it pairs a full bench of sweat-resistant road MUAs with hair, getting-dressed, seamstress, photoshoot and shuttle from one lounge on Carnival morning." },
         { q: "Where is the Trinidad glam hub located?", a: "At the Hilton in Port of Spain, two minutes from the Savannah, so you finish glam and reach your band with time to spare." },
         { q: "How much does Trinidad carnival makeup cost?", a: territoryPriceSentence("trinidad") },
         { q: "How long does the makeup last on the road?", a: "The sweat-resistant system is built to hold 10 to 12 hours through Carnival Monday and Tuesday, from morning departure through the last truck." },
@@ -1330,7 +1330,7 @@ function buildRouteMap(): Record<string, Content> {
         byslug("jamaica")?.longDescription ??
         "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
+        { q: "Who is the best carnival makeup artist in Jamaica?", a: "Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it is the Jamaica Carnival service that combines sweat-resistant road makeup with hair, gem application, body paint, lashes, dressing, photos and shuttle from one Kingston lounge." },
         { q: "Where is the Jamaica glam hub located?", a: "At the Jamaica Pegasus Hotel in Kingston. Everything happens in one air-conditioned location, makeup, hair, dressing, photos and shuttle so you leave with the band." },
         { q: "How much does Jamaica carnival makeup cost?", a: `${territoryPriceSentence("jamaica")} Your booking team confirms final pricing before payment.` },
         { q: "Does the makeup survive the Jamaica heat?", a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10 to 12 hours from morning through last lap." },
@@ -1344,7 +1344,7 @@ function buildRouteMap(): Record<string, Content> {
         byslug("miami")?.longDescription ??
         "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
       faqs: [
-        { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Founded in 2017 by Gabrielle Waite (Gabby Glam) and Kibwe McGann, and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
+        { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
         { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
         { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
         { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
@@ -1370,7 +1370,7 @@ ${dateLine}
 <ul>
 <li>Sweat-resistant road system built to hold 10 to 12 hours through tropical heat.</li>
 <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
-<li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam) and Kibwe McGann.</li>
+<li>More than 15,000 masqueraders served since 2017. Co-founded by Kibwe McGann and Gabrielle Waite (Gabby Glam).</li>
 <li>We run Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}.</li>
 </ul>
 <h2>What's included</h2>

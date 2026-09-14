@@ -39,8 +39,17 @@ const aboutPageSchema = {
     name: "Carnival Glam Hub",
     url: "https://www.carnivalglamhub.com",
     founder: [
-      { "@type": "Person", name: "Gabrielle Waite" },
-      { "@type": "Person", name: "Kibwe McGann" },
+      {
+        "@type": "Person",
+        name: "Kibwe McGann",
+        jobTitle: "Co-Founder, Carnival Glam Hub",
+      },
+      {
+        "@type": "Person",
+        name: "Gabrielle Waite",
+        alternateName: "Gabby Glam",
+        jobTitle: "Co-Founder, Carnival Glam Hub",
+      },
     ],
     foundingDate: "2017",
     areaServed: AREA_SERVED,
@@ -172,11 +181,11 @@ const About = () => {
 
           <section className="mb-12">
             <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">
-              Founders
+              Co-founders
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Carnival Glam Hub was founded in 2017 by Gabrielle Waite and Kibwe
-              McGann. Gabrielle is a Jamaican makeup artist and entrepreneur with a
+              Carnival Glam Hub was co-founded in 2017 by Kibwe McGann and
+              Gabrielle Waite. Gabrielle is a Jamaican makeup artist and entrepreneur with a
               background in beauty and Carnival production, and the founder of{" "}
               <a
                 href="https://gabbyglamcosmetics.com/"

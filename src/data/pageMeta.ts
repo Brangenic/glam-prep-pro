@@ -11,7 +11,7 @@ export const ABOUT_PAGE_TITLE =
   "About Carnival Glam Hub | Caribbean Beauty Concierge";
 
 export const ABOUT_PAGE_DESCRIPTION =
-  "Caribbean Carnival morning concierge, founded in 2017 by Gabrielle Waite and Kibwe McGann. More than 15,000 masqueraders served since 2017.";
+  "Caribbean Carnival morning concierge, co-founded in 2017 by Kibwe McGann and Gabrielle Waite. More than 15,000 masqueraders served since 2017.";
 
 export const REVIEWS_PAGE_TITLE =
   "Carnival Glam Hub Reviews | What Masqueraders Say";
@@ -19,8 +19,11 @@ export const REVIEWS_PAGE_TITLE =
 export const REVIEWS_PAGE_DESCRIPTION =
   "Reviews published on Google by Carnival Glam Hub clients who booked Carnival makeup, hair and glam across Trinidad, Jamaica, Miami, Toronto and the wider Caribbean.";
 
-/** The two founders, in the order they are always named. */
-export const FOUNDER_NAMES = ["Gabrielle Waite", "Kibwe McGann"] as const;
+/**
+ * The two co-founders, in the order they are always named. Both co-founded
+ * Carnival Glam Hub, neither founded it alone.
+ */
+export const FOUNDER_NAMES = ["Kibwe McGann", "Gabrielle Waite"] as const;
 
 /** Verified outbound links for the founder credit. */
 export const GABBY_GLAM_COSMETICS_URL = "https://gabbyglamcosmetics.com/";
