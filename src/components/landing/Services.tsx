@@ -199,7 +199,7 @@ const Services = () => {
                     {/* Expandable details */}
                     <div
                       className={`overflow-hidden transition-all duration-500 ${
-                        i === active ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"
+                        i === active ? "max-h-60 opacity-100 mt-2" : "max-h-0 opacity-0"
                       }`}
                     >
                       <p className="font-body text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
