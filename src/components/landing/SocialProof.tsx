@@ -1,8 +1,17 @@
+import { FULL_SERVICE_SLUGS, LITE_SLUGS } from "@/data/hubTiers";
+
+/**
+ * Territory count is derived from the tier model so it can never go
+ * stale. Full Service hubs plus Glam Hub Lite territories. Partnerships
+ * such as Epic Cruise are not hubs, so they are deliberately excluded.
+ */
+const TERRITORY_COUNT = FULL_SERVICE_SLUGS.length + LITE_SLUGS.length;
+
 const stats = [
-  { value: "15,000+", label: "Clients Served" },
-  { value: "Trusted", label: "By Carnival Bands & Influencers" },
-  { value: "Pro Artists", label: "Professional Glam Team" },
-  { value: "Premium", label: "Carnival Morning Experience" },
+  { value: "15,000+", label: "Masqueraders Served Since 2017" },
+  { value: "2017", label: "Serving Carnival Since" },
+  { value: String(TERRITORY_COUNT), label: "Territories" },
+  { value: "Band Neutral", label: "Every Band, Every Section" },
 ];
 
 const SocialProof = () => (
