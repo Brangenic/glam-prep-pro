@@ -289,7 +289,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -297,7 +297,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -313,7 +313,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -336,7 +336,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Trinidad Carnival Makeup, Hair & Photoshoots | Glam Hub",
     description:
-      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
+      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. More than 15,000 masqueraders served since 2017.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -344,7 +344,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening runs 30 October to 1 November 2026. Slots are limited.",
+      "Sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening runs 30 October to 1 November 2026.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -371,7 +371,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/services/carnival-makeup",
     title: "Sweat-Resistant Carnival Makeup | Carnival Glam Hub",
     description:
-      "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. Trusted by 15,000+ since 2017.",
+      "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. More than 15,000 served since 2017.",
     ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
   },
   {
@@ -406,7 +406,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/about",
     title: "About Carnival Glam Hub | Caribbean Beauty Concierge",
     description:
-      "The Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. Trusted by 15,000+ masqueraders across Trinidad, Jamaica and beyond.",
+      "The Caribbean's premium Carnival beauty concierge. Founded by Gabrielle Waite in 2017. More than 15,000 masqueraders served across Trinidad, Jamaica and beyond.",
     ogImage: HERO_FALLBACK,
   },
   {
@@ -682,7 +682,7 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "Country", name: "United States" } },
     destPath: "/miami",
     faqs: [
-      { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and trusted by 15,000+ masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
+      { q: "Who is the best carnival makeup artist in Miami?", a: "Carnival Glam Hub. Founded by Gabrielle Waite (Gabby Glam) in 2017 and having served more than 15,000 masqueraders, it is the only Miami Carnival service that travels the full Caribbean circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Toronto, Guyana and the EPIC Cruise, with the same senior MUA team." },
       { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
       { q: "How much does Miami carnival makeup cost?", a: "Carnival morning access is US$35. Makeup only is US$190, makeup and photoshoot is US$310, named and celebrity artists are US$240 to US$360, photoshoot only is US$150, hair is US$130 and Full Glam is US$430." },
       { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },

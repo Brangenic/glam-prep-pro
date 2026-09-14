@@ -110,7 +110,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
   },
   {
     slug: "antigua",
@@ -132,7 +132,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
   },
   {
     slug: "grenada",
@@ -248,7 +248,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Tobago Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening runs 30 October to 1 November 2026. Slots are limited.",
+      "Sweat-resistant Tobago Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. The Awakening runs 30 October to 1 November 2026.",
   },
   {
     slug: "barbados",
@@ -270,7 +270,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     metaDescription:
-      "Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. Trusted by 15,000+ masqueraders since 2017. Slots are limited.",
+      "Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
   },
   {
     slug: "miami",
@@ -339,7 +339,7 @@ export const destinations: Destination[] = [
     metaTitle:
       "Trinidad Carnival Makeup, Hair & Photoshoots | Glam Hub",
     metaDescription:
-      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. Trusted by 15,000+ masqueraders since 2017.",
+      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. More than 15,000 masqueraders served since 2017.",
   },
   {
     slug: "guyana",

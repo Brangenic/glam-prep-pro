@@ -165,9 +165,7 @@ describe("J'ouvert is editorial, never an offer", () => {
       STRICT.test(stripEditorial(readFileSync(join(REPO, f), "utf8"))),
     );
     expect(offenders, `J'ouvert found on commercial surfaces: ${offenders.join(", ")}`).toEqual([]);
-    // Walking four directories and matching every file is slow, so this one
-    // gets a generous timeout. It is file reading, not a long running task.
-  }, 30000);
+  });
 });
 
 // Keeps the loose pattern referenced so a future edit cannot silently

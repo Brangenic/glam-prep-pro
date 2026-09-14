@@ -23,7 +23,25 @@ const Founder = () => {
               Carnival Glam Hub was built by Gabby Glam and Kibwe McGann to make carnival mornings easier, more organized, and more enjoyable.
             </p>
             <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed mb-5 sm:mb-6">
-              Gabby is a professional celebrity makeup artist whose experience behind the chair brings an elevated level of polish, speed, and glamour to every carnival morning.
+              Gabrielle is a Jamaican makeup artist and entrepreneur. She was named a Distinguished Awardee in Beauty at the Jamaica Gleaner&apos;s Flair Distinguished Awards in 2023, and she founded{" "}
+              <a
+                href="https://gabbyglamcosmetics.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Gabby Glam Cosmetics
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://www.visitglamhaus.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Glam Haus by Gabby Glam
+              </a>{" "}
+              in Kingston. That experience behind the chair sets the standard for every Carnival morning we run.
             </p>
             <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed mb-5 sm:mb-6">
               As the founder of her own glam line, she brings real beauty-industry credibility to the brand, combining artistry, product expertise, and a deep understanding of what lasts on the road.
