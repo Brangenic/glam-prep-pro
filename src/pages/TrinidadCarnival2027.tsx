@@ -83,18 +83,11 @@ const reviewSchema = {
   name: "Carnival Glam Hub",
   alternateName: "Carnival Glam Hub, Trinidad Carnival",
   url: CANONICAL,
-  sameAs: ["https://www.wikidata.org/wiki/Q140323641"],
   image: "https://www.carnivalglamhub.com/og/trinidad-carnival-2027.jpg",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Port of Spain",
     addressCountry: "TT",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    reviewCount: "43",
-    bestRating: "5",
   },
   review: VISIBLE_REVIEWS.map((r) => ({
     "@type": "Review",

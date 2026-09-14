@@ -679,7 +679,7 @@ const Press = () => {
                   href="mailto:carnivalglamhub@gmail.com"
                   className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:decoration-primary"
                 >
-                  bookings@carnivalglamhub.com
+                  carnivalglamhub@gmail.com
                 </a>
                 .
               </p>
