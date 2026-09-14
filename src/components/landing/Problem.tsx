@@ -90,16 +90,16 @@ const Problem = () => {
 
         {/* Wide image */}
         <div
-          className={`relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[16/9] sm:aspect-[21/9] mb-10 sm:mb-14 gold-glow transition-all duration-1000 ${
+          className={`relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[16/9] lg:aspect-[2/1] mb-10 sm:mb-14 gold-glow transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
           <img
             src={solutionImg}
-            alt="Masquerader getting glam at Carnival Glam Hub"
-            width={1600}
-            height={900}
-            className="w-full h-full object-cover object-[center_60%]"
+            alt="Masquerader in a full feathered headpiece and wings before the road"
+            width={1006}
+            height={488}
+            className="w-full h-full object-cover object-[center_top]"
             loading="lazy"
             decoding="async"
           />
