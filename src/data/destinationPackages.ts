@@ -180,7 +180,7 @@ export const destinationPackages: Record<string, DestinationPackages> = {
   },
   "epic-cruise": {
     eventTitle: "EPIC Carnival Experience x Carnival Glam Hub Trinidad 2027",
-    eventDate: "8–9 February 2027",
+    eventDate: "8 to 9 February 2027",
     bookingUrl: "https://carnivalglamhub.masos.app/events/ce2934a4-386a-4dea-8d3f-180daca7b244",
     sections: [
       {

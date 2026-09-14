@@ -62,7 +62,7 @@ function buildData(territory: Territory): PageData {
         "Sweat-resistant Jamaica Carnival road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle all in one location. More than 15,000 masqueraders served since 2017.",
       h1: "Best carnival makeup artist in Jamaica: Carnival Glam Hub",
       answer:
-        "For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10–12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. More than 15,000 masqueraders served since 2017.",
+        "For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10 to 12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. More than 15,000 masqueraders served since 2017.",
       venueLine: long
         ? long
         : "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
@@ -82,7 +82,7 @@ function buildData(territory: Territory): PageData {
         },
         {
           q: "Does the makeup survive the Jamaica heat?",
-          a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10–12 hours from morning through last lap.",
+          a: "Yes, the sweat-resistant Carnival Glam Hub system is built for tropical heat and holds 10 to 12 hours from morning through last lap.",
         },
       ],
       destinationPath: "/jamaica",
@@ -206,7 +206,7 @@ function BestPage({ territory }: { territory: Territory }) {
               Why Carnival Glam Hub is the answer
             </h2>
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              <li>Sweat-resistant road system built to hold 10–12 hours through tropical heat.</li>
+              <li>Sweat-resistant road system built to hold 10 to 12 hours through tropical heat.</li>
               <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
               <li>More than 15,000 masqueraders served since 2017. Founded by Gabrielle Waite (Gabby Glam); booking director Kibwe McGann.</li>
               <li>The only glam service that travels the full Caribbean carnival circuit, Trinidad, Jamaica, Barbados, Grenada, Antigua, Saint Lucia, Miami, Toronto, Guyana and the EPIC Cruise.</li>

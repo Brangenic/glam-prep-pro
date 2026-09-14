@@ -96,7 +96,7 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     slug: "saint-lucia",
     name: "Saint Lucia Carnival",
     shortName: "Saint Lucia",
-    dateText: "20–21 July 2026",
+    dateText: "20 to 21 July 2026",
     path: "/saint-lucia",
     venue: null,
     aliases: ["saint lucia", "st lucia", "st. lucia", "stlucia", "lucia"],
