@@ -250,6 +250,14 @@ export const MIAMI_HUB_LOCATION =
   "Our Glam Hub is at the Renaissance Fort Lauderdale Marina Hotel, 1617 SE 17th Street, Fort Lauderdale, about fifteen minutes from the Carnival.";
 
 /**
+ * Miami Carnival says a new Parade and Concert venue is in the
+ * planning stages, so the venue is always worded as the currently
+ * announced location rather than a fixed promise.
+ */
+export const MIAMI_VENUE_NOTE =
+  `Miami Carnival has moved to Broward County. As announced by Miami Carnival, the Parade of Bands is at ${MIAMI_VENUE_NAME}, ${MIAMI_VENUE_ADDRESS}, sometimes listed as the ${MIAMI_VENUE_ALIAS}. ${MIAMI_HUB_LOCATION}`;
+
+/**
  * No shuttle is a considered decision, not an omission. Per Kibwe on
  * 24 September 2026, the hub is about fifteen minutes from the Carnival
  * with ready Uber access at the venue. It must stay unambiguous that no
