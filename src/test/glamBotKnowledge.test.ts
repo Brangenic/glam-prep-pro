@@ -103,7 +103,7 @@ describe("group 3: knowledge questions", () => {
   });
 
   it("2. where will Glam Hub be next", () => {
-    expect(promptFor("Where will Glam Hub be next?")).toContain("Lauderhill");
+    expect(promptFor("Where will Glam Hub be next?")).toContain("Renaissance Fort Lauderdale Marina Hotel");
   });
 
   it("3. how much is makeup in Trinidad, with day labels", () => {

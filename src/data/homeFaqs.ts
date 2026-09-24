@@ -3,6 +3,7 @@ import {
   OVERNIGHT_BAG_CHECK_PRICE,
   REELS_PRICE,
 } from "@/data/territoryPricing";
+import { MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
 
 /**
  * The single source for the home page FAQ.
@@ -36,7 +37,7 @@ export const HOME_FAQS: HomeFaq[] = [
   {
     q: "What is included in my appointment?",
     schemaQ: "What is included in a Carnival Glam Hub appointment?",
-    a: `A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$${REELS_PRICE} per masquerader. Overnight bag check is a paid add-on at US$${OVERNIGHT_BAG_CHECK_PRICE} per masquerader in Trinidad, Jamaica and Miami. Jamaica and Trinidad also offer a barber. We are not running a shuttle in Miami this season. At 6 minutes from the Carnival, with ready Uber access at the venue, a shuttle is not needed, so please plan your own ride on Carnival morning. You can come back to the hotel that night or early the next morning and collect your bag yourself, or opt for delivery the following day at additional cost, confirmed when you book. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.`,
+    a: `A Full Service Glam Hub appointment (Jamaica, Trinidad, Miami) includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$${REELS_PRICE} per masquerader. Overnight bag check is a paid add-on at US$${OVERNIGHT_BAG_CHECK_PRICE} per masquerader in Trinidad, Jamaica and Miami. Jamaica and Trinidad also offer a barber. ${MIAMI_SHUTTLE_NOTE} You can come back to the hotel that night or early the next morning and collect your bag yourself, or opt for delivery the following day at additional cost, confirmed when you book. A Glam Hub Lite appointment, offered in all other territories, includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments.`,
   },
   {
     q: "Where does the glam take place?",
