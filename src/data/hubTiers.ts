@@ -241,27 +241,22 @@ export const MIAMI_VENUE_DISTANCES =
   "Lauderhill is about 6 miles from Fort Lauderdale, roughly a 12 minute drive, and about 26 miles from Miami, so Fort Lauderdale is the closer airport and the closer place to stay.";
 
 /**
- * Where our hub sits. The hotel is never named, because it is only
- * named after booking. The 6 minutes is the reassuring figure.
+ * Where our hub sits. Confirmed by Kibwe on 24 September 2026: the hub
+ * is at the Renaissance Fort Lauderdale Marina Hotel, which is named
+ * publicly. Fifteen minutes is the figure. The hub is in Fort
+ * Lauderdale; the parade venue above is in Lauderhill. Do not merge them.
  */
 export const MIAMI_HUB_LOCATION =
-  "Our Glam Hub will be at a hotel in Lauderhill, 6 minutes from the Carnival.";
+  "Our Glam Hub is at the Renaissance Fort Lauderdale Marina Hotel, 1617 SE 17th Street, Fort Lauderdale, about fifteen minutes from the Carnival.";
 
 /**
- * Miami Carnival says a new Parade and Concert venue is in the
- * planning stages, so the venue is always worded as the currently
- * announced location rather than a fixed promise.
- */
-export const MIAMI_VENUE_NOTE =
-  `Miami Carnival has moved to Broward County. As announced by Miami Carnival, the Parade of Bands is at ${MIAMI_VENUE_NAME}, ${MIAMI_VENUE_ADDRESS}, sometimes listed as the ${MIAMI_VENUE_ALIAS}. ${MIAMI_HUB_LOCATION}`;
-
-/**
- * No shuttle is a considered decision, not an omission, because we are
- * 6 minutes away and the venue has ready Uber access. It still has to
- * be unambiguous that no shuttle is provided.
+ * No shuttle is a considered decision, not an omission. Per Kibwe on
+ * 24 September 2026, the hub is about fifteen minutes from the Carnival
+ * with ready Uber access at the venue. It must stay unambiguous that no
+ * shuttle is provided.
  */
 export const MIAMI_SHUTTLE_NOTE =
-  "We are not running a shuttle in Miami this season. At 6 minutes from the Carnival, with ready Uber access at the venue, a shuttle is not needed, so please plan your own ride on Carnival morning.";
+  "We are not running a shuttle in Miami this season. We are about fifteen minutes from the Carnival, with ready Uber access at the venue, so please plan your own ride on Carnival morning.";
 
 /**
  * Two ways to get an overnight bag back, both paid. The US$35 comes
