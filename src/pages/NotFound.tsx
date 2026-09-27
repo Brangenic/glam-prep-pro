@@ -9,20 +9,49 @@ const NotFound = () => {
   }, [location.pathname]);
 
   // Static hosting cannot return a real 404 status, so emit the strongest
-  // signal we can for crawlers: noindex,nofollow plus a canonical to home.
+  // signal we can: noindex,nofollow, a distinct title and description, and
+  // no canonical at all. Every tag is replaced in place, never appended, so
+  // the head can never carry two of anything. Restored on unmount.
   useEffect(() => {
-    document.title = "Page not found | Carnival Glam Hub";
-    const robots = document.createElement("meta");
-    robots.setAttribute("name", "robots");
-    robots.setAttribute("content", "noindex, follow");
-    document.head.appendChild(robots);
-    const canonical = document.createElement("link");
-    canonical.setAttribute("rel", "canonical");
-    canonical.setAttribute("href", "https://www.carnivalglamhub.com/");
-    document.head.appendChild(canonical);
+    const upsertMeta = (name: string, content: string) => {
+      const all = document.head.querySelectorAll<HTMLMetaElement>(`meta[name="${name}"]`);
+      all.forEach((n, i) => i > 0 && n.remove());
+      let tag = all[0];
+      const previous = tag ? tag.getAttribute("content") : null;
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute("name", name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+      return () => {
+        if (previous === null) tag.remove();
+        else tag.setAttribute("content", previous);
+      };
+    };
+
+    const previousTitle = document.title;
+    document.title = "Page not found (404) | Carnival Glam Hub";
+    const restoreRobots = upsertMeta("robots", "noindex, nofollow");
+    const restoreDescription = upsertMeta(
+      "description",
+      "This page could not be found on Carnival Glam Hub. Return to the home page to explore Carnival makeup, hair and glam services.",
+    );
+
+    const removed = Array.from(document.head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]'));
+    const lastHref = removed[0]?.getAttribute("href") ?? null;
+    removed.forEach((n) => n.remove());
+
     return () => {
-      robots.remove();
-      canonical.remove();
+      document.title = previousTitle;
+      restoreRobots();
+      restoreDescription();
+      if (lastHref && !document.head.querySelector('link[rel="canonical"]')) {
+        const c = document.createElement("link");
+        c.setAttribute("rel", "canonical");
+        c.setAttribute("href", lastHref);
+        document.head.appendChild(c);
+      }
     };
   }, []);
 
