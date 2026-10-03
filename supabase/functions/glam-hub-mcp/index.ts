@@ -5,6 +5,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import catalogue from "./catalogue.json" with { type: "json" };
 import { WIDGET_URI, widgetHtml } from "./widget.ts";
+import { markPaidFromSession, sendBookingEmails } from "../_shared/glamHubFulfil.ts";
 
 type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[] };
 const CAT = catalogue as unknown as {
@@ -206,8 +207,19 @@ async function startBooking(a: Record<string, unknown>, source: string) {
 async function bookingStatus(a: Record<string, unknown>) {
   const ref = String(a.reference ?? "").trim().toUpperCase();
   const email = String(a.email ?? "").trim().toLowerCase();
-  const { data } = await db().from("ai_bookings").select("reference,email,status,product_label,day_key,amount_usd,hold_expires_at").eq("reference", ref).maybeSingle();
+  const { data } = await db().from("ai_bookings").select("reference,email,status,stripe_checkout_session_id,product_label,day_key,amount_usd,hold_expires_at").eq("reference", ref).maybeSingle();
   if (!data || data.email !== email) return text("No booking matches that reference and email.");
+  // Fallback for a late webhook: reconcile a pending booking with Stripe.
+  const key = Deno.env.get("STRIPE_SECRET_KEY");
+  if (data.status === "pending_payment" && data.stripe_checkout_session_id && key) {
+    try {
+      const r = await fetch(`https://api.stripe.com/v1/checkout/sessions/${data.stripe_checkout_session_id}`, { headers: { Authorization: `Bearer ${key}` } });
+      if (r.ok) {
+        const id = await markPaidFromSession(db(), await r.json());
+        if (id) { data.status = "paid"; await sendBookingEmails(db(), id); }
+      } else console.error(`Stripe session fetch failed [${r.status}]`);
+    } catch (e) { console.error("reconcile failed", (e as Error).message); }
+  }
   const status = data.status === "pending_payment" && new Date(data.hold_expires_at) < new Date() ? "expired" : data.status;
   const out = { reference: data.reference, status, summary: `${CAT.event}, ${data.product_label}, US$${data.amount_usd}.` };
   return text(`Booking ${out.reference}: ${status}. ${out.summary}`, out);
