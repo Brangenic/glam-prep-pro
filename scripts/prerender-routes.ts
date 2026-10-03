@@ -28,6 +28,10 @@ import {
 } from "../src/data/stationRentals";
 import { TRINIDAD_ANSWER_SECTIONS } from "../src/data/answerPages";
 import {
+  TRINIDAD_BOOK_PATH, TRINIDAD_BOOK_TITLE, TRINIDAD_BOOK_DESCRIPTION, TRINIDAD_BOOK_FAQ,
+  TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
+} from "../src/data/trinidadBookPage";
+import {
   ABOUT_PAGE_DESCRIPTION,
   ABOUT_PAGE_TITLE,
   REVIEWS_PAGE_DESCRIPTION,
@@ -89,6 +93,8 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/tobago": "asset:carnival-8",
   // Trinidad Carnival 2027 uses the same hero as the Trinidad destination.
   "/trinidad-carnival-2027":
+    "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
+  "/trinidad/book":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
   // Services already ship 1200-ish source images under /images/services/.
   // We still transcode them to 1200×630 so previews render correctly.
@@ -159,6 +165,8 @@ const OG_IMAGE_ALT: Record<string, string> = {
     "Masquerader glammed by Carnival Glam Hub aboard the EPIC Carnival Experience cruise",
   "/trinidad-carnival-2027":
     "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub for the 2027 season",
+  "/trinidad/book":
+    "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub at the Hilton, Port of Spain",
   "/services/carnival-makeup":
     "Carnival Glam Hub artist applying sweat-resistant Carnival makeup to a masquerader",
   "/services/carnival-hair":
@@ -379,6 +387,11 @@ const destinationRoutes: RouteMeta[] = [
 // component sets at runtime so Helmet/effect updates don't conflict with
 // the static head.
 const staticRoutes: RouteMeta[] = [
+  {
+    path: TRINIDAD_BOOK_PATH,
+    title: TRINIDAD_BOOK_TITLE,
+    description: TRINIDAD_BOOK_DESCRIPTION,
+  },
   {
     path: "/services/carnival-makeup",
     title: "Sweat-Resistant Carnival Makeup | Carnival Glam Hub",
@@ -753,8 +766,41 @@ function buildJsonLd(route: RouteMeta): object[] {
       "/joinourteam": "Join Our Team",
       "/blogs": "Journal",
       "/policies": "Terms and Policies",
+      "/trinidad/book": "Book Trinidad Carnival 2027",
     };
     blocks.push(homeCrumb(NAME[route.path] ?? route.title, route.path));
+  }
+
+  // 1a) /trinidad/book: Service with one Offer per bookable product, and
+  // FAQPage matching the visible questions. All figures from the catalogue.
+  if (route.path === TRINIDAD_BOOK_PATH) {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: "Trinidad Carnival 2027 makeup and photoshoot at the Hilton",
+      serviceType: "Carnival makeup and photoshoot",
+      url,
+      description: route.description,
+      provider: PROVIDER,
+      areaServed: { "@type": "Country", name: "Trinidad and Tobago" },
+      offers: TRINIDAD_BOOK_PRODUCTS.map((p) => ({
+        "@type": "Offer",
+        name: `${p.label}, ${p.dayLabel}`,
+        price: String(p.price),
+        priceCurrency: TRINIDAD_BOOK_CATALOGUE.currency,
+        availability: "https://schema.org/InStock",
+        url,
+      })),
+    });
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: TRINIDAD_BOOK_FAQ.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    });
   }
 
   // 1b) /policies: a plain WebPage node. No FAQPage here on purpose.
