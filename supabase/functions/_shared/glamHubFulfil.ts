@@ -2,7 +2,7 @@
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { accountsEmail, receiptEmail, ACCOUNTS_EMAIL, type EmailBooking } from "./glamHubEmails.ts";
 
-import catalogue from "../glam-hub-mcp/catalogue.json" with { type: "json" };
+import catalogue from "./glamHubCatalogue.json" with { type: "json" };
 
 // Venue and inclusions come from the generated catalogue, never retyped.
 export const TRINIDAD_VENUE: string = catalogue.venue;

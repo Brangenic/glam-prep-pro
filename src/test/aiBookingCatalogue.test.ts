@@ -13,6 +13,10 @@ describe("AI booking catalogue", () => {
   it("committed catalogue equals a fresh generation", () => {
     expect(committed).toEqual(buildAiBookingCatalogue());
   });
+  it("shared copy equals the committed catalogue", () => {
+    const shared = readFileSync(resolve(process.cwd(), "supabase/functions/_shared/glamHubCatalogue.json"), "utf8");
+    expect(shared).toBe(committedRaw);
+  });
   it("contains exactly the eight approved products", () => {
     const ids = committed.products.map((p: { id: string }) => p.id).sort();
     expect(ids).toEqual([...AI_BOOKING_PRODUCT_IDS].sort());
