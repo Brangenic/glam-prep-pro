@@ -33,6 +33,8 @@ import StationRentals from "./pages/StationRentals.tsx";
 import Policies from "./pages/Policies.tsx";
 import JoinOurTeam from "./pages/JoinOurTeam.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import TrinidadBook from "./pages/TrinidadBook.tsx";
+import TrinidadBookResult from "./pages/TrinidadBookResult.tsx";
 
 import {
   BestCarnivalMakeupTrinidad,
@@ -79,6 +81,9 @@ const App = () => (
           <Route path="/faq" element={<FAQ />} />
           <Route path="/press" element={<Press />} />
           <Route path="/trinidad-carnival-2027" element={<TrinidadCarnival2027 />} />
+          <Route path="/trinidad/book" element={<TrinidadBook />} />
+          <Route path="/trinidad/book/confirmed" element={<TrinidadBookResult paid />} />
+          <Route path="/trinidad/book/cancelled" element={<TrinidadBookResult paid={false} />} />
           <Route path="/amazon-store" element={<AmazonStore />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route

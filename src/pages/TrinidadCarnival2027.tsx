@@ -231,6 +231,9 @@ const TrinidadCarnival2027 = () => {
           >
             BOOK NOW
           </a>
+          <a href="/trinidad/book" className="inline-block ml-0 sm:ml-3 mt-3 sm:mt-0 border-2 border-primary text-foreground font-body font-bold tracking-wider text-sm px-10 py-4 rounded-full hover:bg-primary hover:text-primary-foreground transition-all">
+            BOOK YOUR HILTON SLOT
+          </a>
         </section>
 
         {/* Dates */}
@@ -449,6 +452,9 @@ const TrinidadCarnival2027 = () => {
             >
               BOOK NOW
             </a>
+            <a href="/trinidad/book" className="inline-block ml-0 sm:ml-3 mt-3 sm:mt-0 border-2 border-primary text-foreground font-body font-bold tracking-wider text-sm px-10 py-4 rounded-full hover:bg-primary hover:text-primary-foreground transition-all">
+            BOOK YOUR HILTON SLOT
+          </a>
           <p className="mt-6 font-body text-sm text-muted-foreground">
             Looking for the evergreen Trinidad hub?{" "}
             <a href="/trinidad" className="font-semibold text-primary hover:underline">
