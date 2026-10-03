@@ -667,6 +667,7 @@ function buildLinks(): { label: string; url: string }[] {
     { label: "Reviews", url: "/reviews" },
     { label: "Station rentals and vendor spaces", url: "/station-rentals" },
     { label: "Booking calculator", url: "/booking-calculator" },
+    { label: "Book a Trinidad 2027 Hilton slot", url: "/trinidad/book" },
     { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
     { label: "Blog", url: "/blogs" },
     {
