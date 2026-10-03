@@ -1,7 +1,7 @@
 // Stripe webhook for the Glam Hub AI booking app.
-// Events: checkout.session.completed, checkout.session.async_payment_succeeded, checkout.session.expired.
+// Events: checkout.session.completed, checkout.session.async_payment_succeeded, checkout.session.expired, charge.refunded.
 import Stripe from "npm:stripe@17.7.0";
-import { markPaidFromSession, sendBookingEmails, serviceClient } from "../_shared/glamHubFulfil.ts";
+import { handleRefund, markPaidFromSession, sendBookingEmails, serviceClient } from "../_shared/glamHubFulfil.ts";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") ?? "sk_unset", { httpClient: Stripe.createFetchHttpClient() });
 const crypto = Stripe.createSubtleCryptoProvider();
@@ -24,6 +24,8 @@ Deno.serve(async (req) => {
     if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
       const id = await markPaidFromSession(db, event.data.object as never);
       if (id) console.log("emails", id, await sendBookingEmails(db, id));
+    } else if (event.type === "charge.refunded") {
+      console.log("refund", await handleRefund(db, event.data.object as never));
     } else if (event.type === "checkout.session.expired") {
       const s = event.data.object as Stripe.Checkout.Session;
       await db.from("ai_bookings").update({ status: "expired" }).eq("stripe_checkout_session_id", s.id).eq("status", "pending_payment");

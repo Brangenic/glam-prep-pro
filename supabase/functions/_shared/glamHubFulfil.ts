@@ -1,6 +1,6 @@
 // Shared payment reconciliation and email sending for the AI booking app.
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
-import { accountsEmail, receiptEmail, ACCOUNTS_EMAIL, type EmailBooking } from "./glamHubEmails.ts";
+import { accountsEmail, receiptEmail, refundEmail, isFullRefund, ACCOUNTS_EMAIL, type EmailBooking } from "./glamHubEmails.ts";
 
 import { catalogue } from "./glamHubCatalogue.ts";
 
@@ -114,4 +114,38 @@ export async function sendBookingEmails(db: SupabaseClient, id: string): Promise
     }
   }
   return { notification, receipt };
+}
+
+type StripeCharge = { id: string; amount: number; amount_refunded: number; currency?: string | null; payment_intent?: string | { id: string } | null };
+
+/**
+ * charge.refunded. A full refund cancels the booking, which frees its slot
+ * under the counting rule, and records refunded_at. A partial refund only
+ * logs and notifies accounts. Idempotent: the accounts notice is sent once
+ * per refunded amount, tracked in refund_notified_cents.
+ */
+export async function handleRefund(db: SupabaseClient, c: StripeCharge): Promise<string> {
+  const pi = typeof c.payment_intent === "string" ? c.payment_intent : c.payment_intent?.id ?? null;
+  if (!pi) return "no payment_intent";
+  const { data: b } = await db.from("ai_bookings").select("id,status,refund_notified_cents").eq("stripe_payment_intent_id", pi).maybeSingle();
+  if (!b) { console.warn("refund for unknown payment intent", pi); return "unknown booking"; }
+  const full = isFullRefund(c.amount, c.amount_refunded);
+  if (full) {
+    if (b.status !== "cancelled") {
+      const { error } = await db.from("ai_bookings").update({ status: "cancelled", refunded_at: new Date().toISOString(), refund_amount_cents: c.amount_refunded }).eq("id", b.id);
+      if (error) throw new Error(error.message);
+    }
+  } else {
+    console.log(`PARTIAL REFUND ${b.id}: ${c.amount_refunded} of ${c.amount}`);
+    await db.from("ai_bookings").update({ refund_amount_cents: c.amount_refunded }).eq("id", b.id);
+  }
+  if (b.refund_notified_cents === c.amount_refunded) return full ? "cancelled, already notified" : "partial, already notified";
+  const loaded = await loadEmailBooking(db, b.id);
+  if (!loaded) return "not loaded";
+  const m = refundEmail(loaded.eb, c.amount_refunded / 100, !full);
+  if (await gmailSend(ACCOUNTS_EMAIL, m.subject, m.text)) {
+    await db.from("ai_bookings").update({ refund_notified_cents: c.amount_refunded }).eq("id", b.id);
+    return full ? "cancelled, notified" : "partial, notified";
+  }
+  return full ? "cancelled, email skipped" : "partial, email skipped";
 }
