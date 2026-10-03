@@ -14,8 +14,9 @@ describe("AI booking catalogue", () => {
     expect(committed).toEqual(buildAiBookingCatalogue());
   });
   it("shared copy equals the committed catalogue", () => {
-    const shared = readFileSync(resolve(process.cwd(), "supabase/functions/_shared/glamHubCatalogue.json"), "utf8");
-    expect(shared).toBe(committedRaw);
+    const shared = readFileSync(resolve(process.cwd(), "supabase/functions/_shared/glamHubCatalogue.ts"), "utf8");
+    const json = shared.slice(shared.indexOf("=") + 1).trim().replace(/;$/, "");
+    expect(JSON.parse(json)).toEqual(committed);
   });
   it("contains exactly the eight approved products", () => {
     const ids = committed.products.map((p: { id: string }) => p.id).sort();
