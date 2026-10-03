@@ -107,7 +107,7 @@ const TrinidadBook = () => {
           <div className="relative container mx-auto px-4 sm:px-6 max-w-3xl pt-32 pb-14 text-center">
             <p className="font-body text-xs uppercase tracking-[0.25em] text-primary mb-3">{C.event}</p>
             <h1 className="font-display text-3xl sm:text-5xl font-bold leading-tight">{TRINIDAD_BOOK_H1}</h1>
-            <p className="font-body text-sm sm:text-base text-background/80 mt-4 capitalize-first">
+            <p className="font-body text-sm sm:text-base text-background/80 mt-4">
               {C.dates.map((d) => d.display).join(" and ")}, at {C.venue}.
             </p>
           </div>
