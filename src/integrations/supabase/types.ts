@@ -85,6 +85,9 @@ export type Database = {
           product_label: string
           receipt_sent_at: string | null
           reference: string
+          refund_amount_cents: number | null
+          refund_notified_cents: number | null
+          refunded_at: string | null
           source: string | null
           status: string
           stripe_checkout_session_id: string | null
@@ -107,6 +110,9 @@ export type Database = {
           product_label: string
           receipt_sent_at?: string | null
           reference: string
+          refund_amount_cents?: number | null
+          refund_notified_cents?: number | null
+          refunded_at?: string | null
           source?: string | null
           status?: string
           stripe_checkout_session_id?: string | null
@@ -129,6 +135,9 @@ export type Database = {
           product_label?: string
           receipt_sent_at?: string | null
           reference?: string
+          refund_amount_cents?: number | null
+          refund_notified_cents?: number | null
+          refunded_at?: string | null
           source?: string | null
           status?: string
           stripe_checkout_session_id?: string | null
