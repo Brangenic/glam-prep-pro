@@ -29,3 +29,9 @@ verify_jwt = false
 
 [functions.glam-hub-mcp]
 verify_jwt = false
+
+[functions.glam-hub-stripe-webhook]
+verify_jwt = false
+
+[functions.glam-hub-email-retry]
+verify_jwt = true

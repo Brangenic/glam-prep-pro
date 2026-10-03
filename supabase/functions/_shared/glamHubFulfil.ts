@@ -2,8 +2,11 @@
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { accountsEmail, receiptEmail, ACCOUNTS_EMAIL, type EmailBooking } from "./glamHubEmails.ts";
 
-export const TRINIDAD_VENUE = "the Hilton Hotel, Port of Spain";
-export const INCLUSIONS = ["Shuttle", "Getting-dressed assistance", "Breakfast and refreshments", "Coffee and tea"];
+import catalogue from "../glam-hub-mcp/catalogue.json" with { type: "json" };
+
+// Venue and inclusions come from the generated catalogue, never retyped.
+export const TRINIDAD_VENUE: string = catalogue.venue;
+export const INCLUSIONS: string[] = catalogue.inclusions;
 
 export function serviceClient(): SupabaseClient {
   return createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
