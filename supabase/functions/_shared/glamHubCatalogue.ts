@@ -17,6 +17,7 @@ export const catalogue = {
   ],
   "venue": "the Hilton Hotel, Port of Spain",
   "currency": "USD",
+  "whatsapp": "https://wa.me/18765090997",
   "inclusions": [
     "Shuttle",
     "Getting-dressed assistance",
