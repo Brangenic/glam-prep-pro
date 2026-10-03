@@ -33,3 +33,4 @@ Blogs: NEVER generate AI images. Hero/body images must come only from the curate
 - [Onward Destination Links](mem://constraints/onward-destination-links) — Onward lists show upcoming Carnivals only via getUpcomingDestinations; card links decided only by getDestinationCardLink
 - [J'ouvert Not An Offer](mem://constraints/jouvert-not-an-offer) — J'ouvert never appears on any commercial surface or in the bot pack; every J'ouvert blog post stays untouched
 - [Prerendered Surface Sync](mem://constraints/prerender-surface-sync) — Prerender scripts are a second rendering surface; apply every copy change to both and import figures and lists from src/data, never retype
+- [AI Booking App](mem://features/ai-booking-app) — ChatGPT/Claude MCP booking for Trinidad 2027 makeup and photoshoot, 3 per slot, pay in full, no discounts
