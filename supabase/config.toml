@@ -26,3 +26,6 @@ verify_jwt = false
 [functions.glam-match-generate]
 verify_jwt = false
 
+
+[functions.glam-hub-mcp]
+verify_jwt = false

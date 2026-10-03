@@ -271,3 +271,15 @@ scripts or the generated bot pack. Blog directories and blog scripts are
 scoped out on purpose. A future session that finds a Grenada or Trinidad
 page with no J'ouvert mention and thinks it is an oversight is wrong.
 
+
+---
+
+# AI BOOKING APP
+
+A remote MCP server, the `glam-hub-mcp` edge function, sells Trinidad Carnival 2027 appointments inside ChatGPT and Claude with Stripe Checkout on Carnival Glam Hub's own Stripe account.
+
+- The catalogue `supabase/functions/glam-hub-mcp/catalogue.json` is generated from `src/data/` by `src/data/aiBookingCatalogue.ts` and `scripts/generate-ai-booking-catalogue.ts` on predev and prebuild. Never hand-edit it. `src/test/aiBookingCatalogue.test.ts` fails on drift.
+- Trinidad 2027 makeup and photoshoot only, standard artists: mon/tue/both makeup, makeup and photoshoot, and Monday and Tuesday photoshoot only. Nothing premium, no hair, bronzing, Full Glam, reels, bag check or barber.
+- Slots 04:00 to 08:00 each day, capacity 3. A both-days booking holds one Monday and one Tuesday slot. A slot counts paid bookings and unexpired pending holds (31 minutes). Paid in full at booking.
+- No discount, coupon or promotion code of any kind, anywhere.
+- A frontend publish does not redeploy edge functions. Redeploy `glam-hub-mcp` after any catalogue or function change.

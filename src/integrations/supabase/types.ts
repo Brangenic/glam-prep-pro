@@ -14,6 +14,129 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_booking_slot_holds: {
+        Row: {
+          booking_id: string
+          slot_id: string
+        }
+        Insert: {
+          booking_id: string
+          slot_id: string
+        }
+        Update: {
+          booking_id?: string
+          slot_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_booking_slot_holds_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "ai_bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_booking_slot_holds_slot_id_fkey"
+            columns: ["slot_id"]
+            isOneToOne: false
+            referencedRelation: "ai_booking_slots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_booking_slots: {
+        Row: {
+          capacity: number
+          event_date: string
+          event_day: string
+          id: string
+          slot_time: string
+        }
+        Insert: {
+          capacity?: number
+          event_date: string
+          event_day: string
+          id?: string
+          slot_time: string
+        }
+        Update: {
+          capacity?: number
+          event_date?: string
+          event_day?: string
+          id?: string
+          slot_time?: string
+        }
+        Relationships: []
+      }
+      ai_bookings: {
+        Row: {
+          amount_usd: number
+          created_at: string | null
+          day_key: string
+          email: string
+          first_name: string
+          hold_expires_at: string
+          id: string
+          last_name: string
+          notification_sent_at: string | null
+          paid_at: string | null
+          phone: string
+          product_id: string
+          product_label: string
+          receipt_sent_at: string | null
+          reference: string
+          source: string | null
+          status: string
+          stripe_checkout_session_id: string | null
+          stripe_payment_intent_id: string | null
+          terms_accepted_at: string
+        }
+        Insert: {
+          amount_usd: number
+          created_at?: string | null
+          day_key: string
+          email: string
+          first_name: string
+          hold_expires_at: string
+          id?: string
+          last_name: string
+          notification_sent_at?: string | null
+          paid_at?: string | null
+          phone: string
+          product_id: string
+          product_label: string
+          receipt_sent_at?: string | null
+          reference: string
+          source?: string | null
+          status?: string
+          stripe_checkout_session_id?: string | null
+          stripe_payment_intent_id?: string | null
+          terms_accepted_at: string
+        }
+        Update: {
+          amount_usd?: number
+          created_at?: string | null
+          day_key?: string
+          email?: string
+          first_name?: string
+          hold_expires_at?: string
+          id?: string
+          last_name?: string
+          notification_sent_at?: string | null
+          paid_at?: string | null
+          phone?: string
+          product_id?: string
+          product_label?: string
+          receipt_sent_at?: string | null
+          reference?: string
+          source?: string | null
+          status?: string
+          stripe_checkout_session_id?: string | null
+          stripe_payment_intent_id?: string | null
+          terms_accepted_at?: string
+        }
+        Relationships: []
+      }
       amazon_products: {
         Row: {
           category: string | null
@@ -642,8 +765,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ai_slot_availability: {
+        Args: never
+        Returns: {
+          capacity: number
+          event_day: string
+          slot_time: string
+          spots_left: number
+        }[]
+      }
       glam_match_purge_previews_and_leads: { Args: never; Returns: undefined }
       glam_match_purge_uploads: { Args: never; Returns: undefined }
+      reserve_ai_booking: {
+        Args: {
+          p_amount: number
+          p_day_key: string
+          p_email: string
+          p_first: string
+          p_last: string
+          p_phone: string
+          p_product_id: string
+          p_product_label: string
+          p_slot_ids: string[]
+          p_source: string
+        }
+        Returns: {
+          id: string
+          reference: string
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
