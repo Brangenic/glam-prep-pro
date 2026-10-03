@@ -6,6 +6,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import catalogue from "./catalogue.json" with { type: "json" };
 import { WIDGET_URI, widgetHtml } from "./widget.ts";
 import { markPaidFromSession, sendBookingEmails } from "../_shared/glamHubFulfil.ts";
+import { prePaymentSummary, startBookingText, statusSummary } from "./copy.ts";
 
 type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[] };
 const CAT = catalogue as unknown as {
@@ -164,7 +165,7 @@ async function startBooking(a: Record<string, unknown>, source: string) {
     throw new Error(error.message);
   }
   const row = (Array.isArray(res) ? res[0] : res) as { id: string; reference: string };
-  const summary = `${CAT.event}, ${p.label}, ${when}, at ${CAT.venue}. US$${p.price} paid in full.`;
+  const summary = prePaymentSummary(CAT.event, p.label, when, CAT.venue, p.price);
 
   const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
   if (!stripeKey) {
@@ -201,7 +202,7 @@ async function startBooking(a: Record<string, unknown>, source: string) {
   }
   await client.from("ai_bookings").update({ stripe_checkout_session_id: sj.id }).eq("id", row.id);
   const out = { reference: row.reference, checkout_url: sj.url, amount_usd: p.price, summary };
-  return text(`${summary} Reference ${row.reference}. Your time is held for 30 minutes. Pay securely here: ${sj.url}`, out);
+  return text(startBookingText(summary, row.reference, sj.url), out);
 }
 
 async function bookingStatus(a: Record<string, unknown>) {
@@ -221,7 +222,7 @@ async function bookingStatus(a: Record<string, unknown>) {
     } catch (e) { console.error("reconcile failed", (e as Error).message); }
   }
   const status = data.status === "pending_payment" && new Date(data.hold_expires_at) < new Date() ? "expired" : data.status;
-  const out = { reference: data.reference, status, summary: `${CAT.event}, ${data.product_label}, US$${data.amount_usd}.` };
+  const out = { reference: data.reference, status, summary: statusSummary(CAT.event, data.product_label, data.amount_usd, status) };
   return text(`Booking ${out.reference}: ${status}. ${out.summary}`, out);
 }
 
