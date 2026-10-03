@@ -21,7 +21,7 @@ const CORS = {
   "Access-Control-Allow-Headers": "*",
   "Access-Control-Expose-Headers": "Mcp-Session-Id",
 };
-const WHATSAPP = "https://wa.me/18768093571";
+const WHATSAPP = (catalogue as { whatsapp: string }).whatsapp; // from src/lib/constants.ts
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const FN_URL = `${SUPABASE_URL}/functions/v1/glam-hub-mcp`;
 const LOGO = "https://www.carnivalglamhub.com/brand-logo.png";

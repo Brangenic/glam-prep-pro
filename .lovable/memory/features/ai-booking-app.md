@@ -9,5 +9,5 @@ type: feature
 - Slots 04:00 to 08:00, capacity 3 each. Both-days holds one slot on each day.
 - Pay in full at booking via Stripe Checkout on our own account. No MasOS. No discount codes ever.
 - Collect only first name, last name, email, cell, plus required Terms acceptance.
-- Catalogue generated from src/data, never hand-edited. Fallback with no Stripe key: send to JADE on WhatsApp https://wa.me/18768093571.
-- Phase 2: Stripe webhook confirms payment (amount must match). Accounts email to carnivalglamhub@gmail.com, subject starts "ACCOUNTS |". Receipt "You're booked, Glam Girl. Trinidad Carnival 2027", never shows the booking reference. Sent via Gmail connector; skipped and retried if not linked. Owner confirmed wa.me/18768093571 for Talk to JADE in this app.
+- Catalogue generated from src/data, never hand-edited. Fallback with no Stripe key: send to JADE on WhatsApp the site WhatsApp number (WHATSAPP_URL, +1 876 509 0997).
+- Phase 2: Stripe webhook confirms payment (amount must match). Accounts email to carnivalglamhub@gmail.com, subject starts "ACCOUNTS |". Receipt "You're booked, Glam Girl. Trinidad Carnival 2027", never shows the booking reference. Sent via Gmail connector; skipped and retried if not linked. Owner confirmed Talk to JADE uses the site number +1 876 509 0997, read from WHATSAPP_URL.

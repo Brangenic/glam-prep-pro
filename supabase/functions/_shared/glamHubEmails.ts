@@ -2,7 +2,9 @@
 // vitest and Deno can both load it. British spelling, no em dashes, no
 // emoji. The receipt never carries the booking reference (house rule).
 
-export const JADE_WHATSAPP = "https://wa.me/18768093571";
+import { catalogue } from "./glamHubCatalogue.ts";
+// From WHATSAPP_URL in src/lib/constants.ts via the generated catalogue.
+export const JADE_WHATSAPP = catalogue.whatsapp;
 export const POLICIES_URL = "https://www.carnivalglamhub.com/policies";
 export const LOGO_URL = "https://www.carnivalglamhub.com/brand-logo.png";
 export const ACCOUNTS_EMAIL = "carnivalglamhub@gmail.com";

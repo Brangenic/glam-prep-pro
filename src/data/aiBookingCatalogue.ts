@@ -7,6 +7,7 @@
 import { getTerritoryPricing } from "@/data/territoryPricing";
 import { TRINIDAD_HUB_VENUE, ALWAYS_INCLUDED } from "@/data/hubTiers";
 import { TERMS_BLOCKS } from "@/data/policies";
+import { WHATSAPP_URL } from "@/lib/constants";
 
 export const AI_BOOKING_PRODUCT_IDS = [
   "mon-makeup",
@@ -48,6 +49,7 @@ export function buildAiBookingCatalogue() {
     ],
     venue: TRINIDAD_HUB_VENUE,
     currency: "USD",
+    whatsapp: WHATSAPP_URL,
     inclusions: ["Shuttle", "Getting-dressed assistance", "Breakfast and refreshments", ALWAYS_INCLUDED],
     products,
     slot_times: AI_BOOKING_SLOT_TIMES,
