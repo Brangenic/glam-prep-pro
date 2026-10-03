@@ -388,6 +388,12 @@ export const EXTRA_LITE_TERRITORIES = [
 export const SHUTTLE_TERRITORIES = ["Jamaica", "Trinidad"];
 
 /**
+ * Trinidad Carnival 2027 hub venue, as quoted by the AI booking app.
+ * Read by scripts/generate-ai-booking-catalogue.ts.
+ */
+export const TRINIDAD_HUB_VENUE = "the Hilton Hotel, Port of Spain";
+
+/**
  * Display names for every tiered slug, so prose about where we operate is
  * always generated from the tier model rather than typed out.
  */

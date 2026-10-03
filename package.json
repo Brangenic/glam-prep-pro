@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/check-robots-lock.ts && bunx tsx scripts/generate-bot-knowledge.ts",
+    "predev": "bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/check-robots-lock.ts && bunx tsx scripts/generate-bot-knowledge.ts && bunx tsx scripts/generate-ai-booking-catalogue.ts",
     "dev": "vite",
-    "prebuild": "bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/check-robots-lock.ts && bunx tsx scripts/generate-bot-knowledge.ts",
+    "prebuild": "bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/check-robots-lock.ts && bunx tsx scripts/generate-bot-knowledge.ts && bunx tsx scripts/generate-ai-booking-catalogue.ts",
     "build": "vite build",
     "postbuild": "bunx tsx scripts/prerender-blog-meta.ts && bunx tsx scripts/prerender-wix-redirects.ts && bunx tsx scripts/prerender-routes.ts && bunx tsx scripts/prerender-bodies.ts && bunx tsx scripts/generate-news-sitemap.ts && bunx tsx scripts/prerender-removed-posts.ts",
     "build:dev": "vite build --mode development",
