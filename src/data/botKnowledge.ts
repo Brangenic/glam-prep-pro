@@ -7,8 +7,7 @@
  *   pressCoverage, stationRentals and lib/constants.
  *
  * It imports only asset-free modules, so `scripts/generate-bot-knowledge.ts`
- * can import { TRINIDAD_BOOK_MIN_PRICE, TRINIDAD_BOOK_MAX_PRICE } from "@/data/trinidadBookPage";
-import it under bunx tsx. Never import `src/data/destinations.ts`
+ * can import it under bunx tsx. Never import `src/data/destinations.ts`
  * or anything that pulls in an image asset.
  *
  * Nothing here may compute what season is next or what has passed. This
@@ -26,6 +25,7 @@ import {
   CONTACT_EMAIL,
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
+import { TRINIDAD_BOOK_MIN_PRICE, TRINIDAD_BOOK_MAX_PRICE } from "@/data/trinidadBookPage";
 import { CARNIVAL_GUIDE_GROUPS, FEATURED_CARNIVAL_GUIDES } from "@/data/carnivalGuides";
 import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
 import {
