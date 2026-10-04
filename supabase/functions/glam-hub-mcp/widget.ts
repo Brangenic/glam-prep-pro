@@ -77,7 +77,7 @@ function render(){
  days.forEach(function(day){var h=document.createElement("h2");h.textContent=(day==="monday"?"Monday 8 February":"Tuesday 9 February")+", choose a time";sw.appendChild(h);var g=document.createElement("div");g.className="slots";
   CAT.slot_times.forEach(function(t){var n=left(day,t);var b=document.createElement("button");b.className="slot"+(state.slots[day]===t?" on":"");b.disabled=n<=0;b.innerHTML=t+"<small>"+(n<=0?"Full":n+" left")+"</small>";b.onclick=function(){state.slots[day]=t;render()};g.appendChild(b)});sw.appendChild(g)});
  var p=CAT.products.find(function(x){return x.id===state.product});var pay=$("pay");
- var ready=p&&days.every(function(d){return state.slots[d]});pay.disabled=!ready;setTimeout(sendSize,0);pay.textContent=p?"Pay US$"+p.price+" securely":"Choose a service";
+ var canPay=p&&days.every(function(d){return state.slots[d]});pay.disabled=!canPay;setTimeout(sendSize,0);pay.textContent=p?"Pay US$"+p.price+" securely":"Choose a service";
 }
 $("pay").onclick=function(){
  var msg=$("msg");msg.textContent="";
