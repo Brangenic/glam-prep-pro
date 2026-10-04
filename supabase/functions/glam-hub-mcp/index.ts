@@ -114,7 +114,7 @@ function optionsPayload(av: Avail) {
   return {
     event: CAT.event, dates: CAT.dates, venue: CAT.venue, inclusions: CAT.inclusions,
     products: CAT.products.map((p) => ({ id: p.id, label: p.label, day: p.day, price_usd: p.price })),
-    terms: CAT.terms, availability: av, payment: "Paid in full at booking. No discounts or codes.",
+    terms: CAT.terms, availability: av, payment: "Payable in full at booking. No discounts or codes.",
   };
 }
 
