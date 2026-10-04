@@ -105,6 +105,8 @@ const TOOLS = [
     annotations: { readOnlyHint: true, openWorldHint: false },
   },
 ];
+// Directory review: annotations.title mirrors each tool's top-level title.
+for (const t of TOOLS) (t as { annotations: Record<string, unknown> }).annotations = { title: t.title, ...t.annotations };
 
 function text(t: string, structured?: unknown, isError = false) {
   return { content: [{ type: "text", text: t }], ...(structured ? { structuredContent: structured } : {}), ...(isError ? { isError: true } : {}) };
