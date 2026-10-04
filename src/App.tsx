@@ -34,6 +34,7 @@ import Policies from "./pages/Policies.tsx";
 import JoinOurTeam from "./pages/JoinOurTeam.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import TrinidadBook from "./pages/TrinidadBook.tsx";
+import AiBookingApp from "./pages/AiBookingApp.tsx";
 import TrinidadBookResult from "./pages/TrinidadBookResult.tsx";
 
 import {
@@ -82,6 +83,7 @@ const App = () => (
           <Route path="/press" element={<Press />} />
           <Route path="/trinidad-carnival-2027" element={<TrinidadCarnival2027 />} />
           <Route path="/trinidad/book" element={<TrinidadBook />} />
+          <Route path="/ai-booking-app" element={<AiBookingApp />} />
           <Route path="/trinidad/book/confirmed" element={<TrinidadBookResult paid />} />
           <Route path="/trinidad/book/cancelled" element={<TrinidadBookResult paid={false} />} />
           <Route path="/amazon-store" element={<AmazonStore />} />

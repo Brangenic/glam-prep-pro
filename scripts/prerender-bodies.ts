@@ -38,6 +38,7 @@ import {
   TRINIDAD_BOOK_PATH, TRINIDAD_BOOK_H1, TRINIDAD_BOOK_FAQ, TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
   TRINIDAD_BOOK_SLOTS_SENTENCE, TRINIDAD_BOOK_PAYMENT_SENTENCE, TRINIDAD_BOOK_INCLUSIONS_SENTENCE,
 } from "../src/data/trinidadBookPage";
+import { AI_APP_PATH, AI_APP_H1, AI_APP_SECTIONS } from "../src/data/aiBookingAppPage";
 import { getGuidesForTerritory, getRelatedGuides, guideHref } from "../src/data/carnivalGuides";
 import { deEmDash } from "../src/lib/metaText";
 import {
@@ -1266,6 +1267,15 @@ ${faq}
 <p>More about the season on our <a href="/trinidad-carnival-2027">Trinidad Carnival 2027 page</a> and our <a href="/trinidad">Trinidad Carnival hub</a>.</p>`;
 }
 
+function aiBookingAppBody(): string {
+  return AI_APP_SECTIONS.map((s) => {
+    const paras = s.paras.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n");
+    const items = s.items ? `\n<ul>\n${s.items.map((i) => `<li>${escapeHtml(i)}</li>`).join("\n")}\n</ul>` : "";
+    const links = s.links ? `\n<p>${s.links.map((l) => `<a href="${escapeHtml(l.href)}"${l.external ? ' rel="noopener noreferrer"' : ""}>${escapeHtml(l.label)}</a>`).join(" | ")}</p>` : "";
+    return `<section><h2>${escapeHtml(s.heading)}</h2>\n${paras}${items}${links}</section>`;
+  }).join("\n");
+}
+
 function buildRouteMap(): Record<string, Content> {
   const map: Record<string, Content> = { ...CORE, ...SERVICES };
   map["/policies"] = {
@@ -1279,6 +1289,10 @@ function buildRouteMap(): Record<string, Content> {
   map["/booking-calculator"] = {
     title: "Carnival Glam Quote Calculator",
     body: bookingCalculatorBody(),
+  };
+  map[AI_APP_PATH] = {
+    title: AI_APP_H1,
+    body: aiBookingAppBody(),
   };
   map[TRINIDAD_BOOK_PATH] = {
     title: TRINIDAD_BOOK_H1,

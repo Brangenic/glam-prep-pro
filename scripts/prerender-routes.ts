@@ -31,6 +31,7 @@ import {
   TRINIDAD_BOOK_PATH, TRINIDAD_BOOK_TITLE, TRINIDAD_BOOK_DESCRIPTION, TRINIDAD_BOOK_FAQ,
   TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
 } from "../src/data/trinidadBookPage";
+import { AI_APP_PATH, AI_APP_TITLE, AI_APP_DESCRIPTION } from "../src/data/aiBookingAppPage";
 import {
   ABOUT_PAGE_DESCRIPTION,
   ABOUT_PAGE_TITLE,
@@ -95,6 +96,8 @@ const ROUTE_HERO_SOURCES: Record<string, string> = {
   "/trinidad-carnival-2027":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
   "/trinidad/book":
+    "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
+  "/ai-booking-app":
     "https://www.dropbox.com/scl/fi/onz3y4le6o3odlfa2kvyo/Mala.png?rlkey=df6azxcg4aqlwko4tce3ewqk7&raw=1",
   // Services already ship 1200-ish source images under /images/services/.
   // We still transcode them to 1200×630 so previews render correctly.
@@ -166,6 +169,8 @@ const OG_IMAGE_ALT: Record<string, string> = {
   "/trinidad-carnival-2027":
     "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub for the 2027 season",
   "/trinidad/book":
+    "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub at the Hilton, Port of Spain",
+  "/ai-booking-app":
     "Masquerader in a Trinidad Carnival costume glammed by Carnival Glam Hub at the Hilton, Port of Spain",
   "/services/carnival-makeup":
     "Carnival Glam Hub artist applying sweat-resistant Carnival makeup to a masquerader",
@@ -391,6 +396,11 @@ const staticRoutes: RouteMeta[] = [
     path: TRINIDAD_BOOK_PATH,
     title: TRINIDAD_BOOK_TITLE,
     description: TRINIDAD_BOOK_DESCRIPTION,
+  },
+  {
+    path: AI_APP_PATH,
+    title: AI_APP_TITLE,
+    description: AI_APP_DESCRIPTION,
   },
   {
     path: "/services/carnival-makeup",
