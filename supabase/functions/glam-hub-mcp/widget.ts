@@ -9,7 +9,7 @@ export function widgetHtml(catalogue: unknown): string {
 <title>Trinidad Carnival 2027 booking</title>
 <style>
 :root{--bg:#0d0d0d;--card:#171717;--gold:#c9a24a;--gold2:#e6c878;--text:#f4efe6;--mute:#a59c8c;--line:#2a2a2a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px}
+*{box-sizing:border-box}html,body{height:auto;min-height:0;overflow:visible}body{margin:0;background:var(--bg);color:var(--text);font-family:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px}
 .wrap{max-width:520px;margin:0 auto;padding:16px}
 h1{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:20px;color:var(--gold2);margin:0 0 4px}
 .sub{color:var(--mute);font-size:13px;margin-bottom:14px}
@@ -18,7 +18,7 @@ h1{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:20px;c
 .prods{display:grid;gap:6px}.prod{display:flex;justify-content:space-between;text-align:left}
 .price{color:var(--gold2);font-weight:600}
 h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:16px 0 6px}
-.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.slot{padding:8px 4px;text-align:center;font-size:13px}.slot small{display:block;color:var(--mute);font-size:11px}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}@media (max-width:479px){.slots{grid-template-columns:repeat(2,1fr)}}.slot{padding:8px 4px;text-align:center;font-size:13px}.slot small{display:block;color:var(--mute);font-size:11px}
 .slot:disabled{opacity:.35;cursor:not-allowed}
 .inc{font-size:13px;color:var(--mute);margin-top:12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -28,7 +28,7 @@ label.t{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:12px 0
 .pay:disabled{opacity:.5;cursor:not-allowed}.msg{font-size:13px;margin-top:10px;color:var(--gold2)}
 </style></head><body><div class="wrap">
 <h1>Trinidad Carnival 2027, <span id="venue"></span></h1>
-<div class="sub">Carnival Monday 8 February and Carnival Tuesday 9 February 2027. Paid in full at booking.</div>
+<div class="sub">Carnival Monday 8 February and Carnival Tuesday 9 February 2027. Payable in full at booking.</div>
 <div class="seg" id="days"></div>
 <div class="prods" id="prods"></div>
 <div id="slotwrap"></div>
@@ -50,14 +50,24 @@ $("inc").textContent="Included free with every appointment: "+CAT.inclusions.joi
 // Host bridge: MCP Apps (postMessage JSON-RPC), with ChatGPT fallback.
 var rid=0,pending={};
 function rpc(method,params){return new Promise(function(res,rej){var id=++rid;pending[id]={res:res,rej:rej};window.parent.postMessage({jsonrpc:"2.0",id:id,method:method,params:params},"*");setTimeout(function(){if(pending[id]){delete pending[id];rej(new Error("timeout"))}},60000)})}
+function notify(method,params){window.parent.postMessage({jsonrpc:"2.0",method:method,params:params||{}},"*")}
+function take(sc){if(!sc)return false;if(sc.structuredContent)sc=sc.structuredContent;if(sc&&sc.availability){state.avail=sc.availability;render();return true}return false}
 window.addEventListener("message",function(e){var m=e.data;if(!m||m.jsonrpc!=="2.0")return;
- if(m.id&&pending[m.id]){var p=pending[m.id];delete pending[m.id];m.error?p.rej(new Error(m.error.message||"error")):p.res(m.result);return}
- if(m.method==="ui/notifications/tool-result"&&m.params){var sc=m.params.structuredContent;if(sc&&sc.availability){state.avail=sc.availability;render()}}});
+ if(m.id!=null&&pending[m.id]&&!m.method){var p=pending[m.id];delete pending[m.id];m.error?p.rej(new Error(m.error.message||"error")):p.res(m.result);return}
+ if(m.method==="ui/notifications/tool-result"&&m.params){take(m.params)}
+ if(m.method==="ui/notifications/tool-input"&&m.params&&m.params.arguments){var a=m.params.arguments;if(a.day==="monday"||a.day==="tuesday"||a.day==="both"){state.day=a.day;render()}}});
 var isOpenAI=!!window.openai;
-if(!isOpenAI){rpc("ui/initialize",{protocolVersion:"2025-06-18",appInfo:{name:"glam-hub-booking-card",version:"1.0.0"},appCapabilities:{}}).then(function(){window.parent.postMessage({jsonrpc:"2.0",method:"ui/notifications/initialized"},"*")}).catch(function(){})}
-if(isOpenAI&&window.openai.toolOutput&&window.openai.toolOutput.availability){state.avail=window.openai.toolOutput.availability}
-function callTool(name,args){if(isOpenAI&&window.openai.callTool)return window.openai.callTool(name,args).then(function(r){return r&&r.structuredContent?r.structuredContent:r});return rpc("tools/call",{name:name,arguments:args}).then(function(r){return r&&r.structuredContent?r.structuredContent:r})}
-function openLink(url){if(isOpenAI&&window.openai.openExternal){window.openai.openExternal({href:url});return}rpc("ui/open-link",{url:url}).catch(function(){window.open(url,"_blank","noopener")})}
+var ready=isOpenAI?Promise.resolve():rpc("ui/initialize",{protocolVersion:"2025-06-18",appInfo:{name:"glam-hub-booking-card",version:"1.1.0"},appCapabilities:{}}).then(function(r){notify("ui/notifications/initialized");return r});
+function openaiData(){if(isOpenAI&&window.openai.toolOutput)take(window.openai.toolOutput)}
+openaiData();window.addEventListener("openai:set_globals",openaiData);
+function callTool(name,args){if(isOpenAI&&window.openai.callTool)return window.openai.callTool(name,args).then(function(r){return r&&r.structuredContent?r.structuredContent:r});return ready.then(function(){return rpc("tools/call",{name:name,arguments:args})}).then(function(r){return r&&r.structuredContent?r.structuredContent:r})}
+function openLink(url){if(isOpenAI&&window.openai.openExternal){window.openai.openExternal({href:url});return}ready.then(function(){return rpc("ui/open-link",{url:url})}).catch(function(){window.open(url,"_blank","noopener")})}
+// Auto-size: tell the host our real height whenever content changes.
+var lastH=0;
+function sendSize(){var h=Math.ceil(Math.max(document.documentElement.scrollHeight,document.body.scrollHeight));var w=Math.ceil(document.documentElement.scrollWidth);if(h===lastH)return;lastH=h;
+ if(isOpenAI){if(window.openai.notifyIntrinsicHeight)window.openai.notifyIntrinsicHeight(h)}else{ready.then(function(){notify("ui/notifications/size-changed",{height:h,width:w})}).catch(function(){notify("ui/notifications/size-changed",{height:h,width:w})})}}
+if(typeof ResizeObserver!=="undefined"){var ro=new ResizeObserver(sendSize);ro.observe(document.documentElement);ro.observe(document.body)}
+window.addEventListener("load",sendSize);
 $("tlink").onclick=function(e){e.preventDefault();openLink(CAT.terms.url)};
 function left(day,t){if(!state.avail)return CAT.slot_capacity;var r=(state.avail[day]||[]).find(function(x){return x.time===t});return r?r.spots_left:0}
 function render(){
@@ -67,7 +77,7 @@ function render(){
  days.forEach(function(day){var h=document.createElement("h2");h.textContent=(day==="monday"?"Monday 8 February":"Tuesday 9 February")+", choose a time";sw.appendChild(h);var g=document.createElement("div");g.className="slots";
   CAT.slot_times.forEach(function(t){var n=left(day,t);var b=document.createElement("button");b.className="slot"+(state.slots[day]===t?" on":"");b.disabled=n<=0;b.innerHTML=t+"<small>"+(n<=0?"Full":n+" left")+"</small>";b.onclick=function(){state.slots[day]=t;render()};g.appendChild(b)});sw.appendChild(g)});
  var p=CAT.products.find(function(x){return x.id===state.product});var pay=$("pay");
- var ready=p&&days.every(function(d){return state.slots[d]});pay.disabled=!ready;pay.textContent=p?"Pay US$"+p.price+" securely":"Choose a service";
+ var ready=p&&days.every(function(d){return state.slots[d]});pay.disabled=!ready;setTimeout(sendSize,0);pay.textContent=p?"Pay US$"+p.price+" securely":"Choose a service";
 }
 $("pay").onclick=function(){
  var msg=$("msg");msg.textContent="";
@@ -83,6 +93,6 @@ $("pay").onclick=function(){
  }).catch(function(){msg.textContent="Something went wrong, please try again.";btn.disabled=false});
 };
 render();
-if(!state.avail){callTool("check_slot_availability",{day:"both"}).then(function(r){if(r&&r.availability){state.avail=r.availability;render()}}).catch(function(){})}
+setTimeout(function(){if(state.avail)return;callTool("check_slot_availability",{day:"both"}).then(function(r){if(!take(r))return callTool("get_trinidad_glam_options",{}).then(take)}).catch(function(){$("msg").textContent="Live times could not load. Please try again shortly."})},isOpenAI?600:1200);
 </script></body></html>`;
 }
