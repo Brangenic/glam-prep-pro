@@ -11,3 +11,4 @@ type: feature
 - Collect only first name, last name, email, cell, plus required Terms acceptance.
 - Catalogue generated from src/data, never hand-edited. Fallback with no Stripe key: send to JADE on WhatsApp the site WhatsApp number (WHATSAPP_URL, +1 876 509 0997).
 - Phase 2: Stripe webhook confirms payment (amount must match). Accounts email to carnivalglamhub@gmail.com, subject starts "ACCOUNTS |". Receipt "You're booked, Glam Girl. Trinidad Carnival 2027", never shows the booking reference. Sent via Gmail connector; skipped and retried if not linked. Owner confirmed Talk to JADE uses the site number +1 876 509 0997, read from WHATSAPP_URL.
+- Phase 3: website channel /trinidad/book (Google visitors), same backend, source website. Refunds via charge.refunded: full cancels and frees slot, partial only notifies accounts. Checkout collects no address beyond Stripe auto, no phone or custom fields.

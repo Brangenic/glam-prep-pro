@@ -27,7 +27,7 @@ describe("/trinidad/book", () => {
     expect(all.toLowerCase()).not.toContain("masos");
   });
   it("confirmed page never shows a reference", () => {
-    expect(readFileSync("src/pages/TrinidadBookResult.tsx", "utf8")).not.toMatch(/reference|ref=/i.source === "" ? /x^/ : /searchParams|CGH-TT27/);
+    expect(readFileSync("src/pages/TrinidadBookResult.tsx", "utf8")).not.toMatch(/searchParams|CGH-TT27/);
   });
 });
 
