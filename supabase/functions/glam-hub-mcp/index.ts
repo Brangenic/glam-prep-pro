@@ -52,7 +52,7 @@ const TOOLS = [
     name: "get_trinidad_glam_options",
     title: "Trinidad Carnival 2027 glam options",
     description:
-      "Use this first when someone wants makeup or a photoshoot for Trinidad Carnival 2027 (Carnival Monday 8 February and Carnival Tuesday 9 February 2027) with Carnival Glam Hub. Returns the venue, what is included free, the eight bookable services with prices in US dollars, the Terms summary and live time-slot availability. Shows a booking card.",
+      "Returns Carnival Glam Hub's Trinidad Carnival 2027 makeup and photoshoot services at the Hilton Hotel, Port of Spain (Carnival Monday 8 and Tuesday 9 February 2027): venue, free inclusions, the eight services with US dollar prices, a Terms summary and live time-slot availability. Displays a booking card.",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
     annotations: { readOnlyHint: true, openWorldHint: false },
     _meta: UI_META,
@@ -61,7 +61,7 @@ const TOOLS = [
     name: "check_slot_availability",
     title: "Check time slots",
     description:
-      "Returns live remaining spaces for each appointment time (04:00 to 08:00) on Carnival Monday, Carnival Tuesday or both days, Trinidad Carnival 2027.",
+      "Returns the remaining places at each start time (04:00 to 08:00) for Carnival Monday, Carnival Tuesday or both days.",
     inputSchema: {
       type: "object",
       properties: { day: { type: "string", enum: ["monday", "tuesday", "both"] } },
@@ -74,7 +74,7 @@ const TOOLS = [
     name: "start_booking",
     title: "Start a booking",
     description:
-      "Holds a Trinidad Carnival 2027 appointment for 30 minutes and returns a secure Stripe Checkout link for full payment. Requires the service id, a time for each booked day (monday_slot for Monday products, tuesday_slot for Tuesday products, both for both-days products), first name, last name, email, cell number in international format and accepted_terms set to true only after the person has explicitly agreed to the Terms. Prices are fixed; there are no discounts or codes. Give the person the checkout link to pay.",
+      "Holds the chosen appointment time for 30 minutes and returns a Stripe Checkout link where the customer pays in full, plus a booking reference. Requires the service, a time for each booked day, first name, last name, email, cell number and accepted_terms, which records that the customer accepted the Terms. Prices are fixed; no discounts.",
     inputSchema: {
       type: "object",
       properties: {
@@ -84,8 +84,12 @@ const TOOLS = [
         first_name: { type: "string", minLength: 1, maxLength: 80 },
         last_name: { type: "string", minLength: 1, maxLength: 80 },
         email: { type: "string", format: "email", maxLength: 254 },
-        phone: { type: "string", description: "Cell number with country code, e.g. +1 868 555 0100", maxLength: 25 },
-        accepted_terms: { type: "boolean", const: true },
+        phone: { type: "string", description: "Cell number with country code, for example +1 868 555 0100.", maxLength: 25 },
+        accepted_terms: {
+          type: "boolean",
+          const: true,
+          description: "True when the customer has accepted the booking Terms at https://www.carnivalglamhub.com/policies.",
+        },
       },
       required: ["product_id", "first_name", "last_name", "email", "phone", "accepted_terms"],
       additionalProperties: false,
@@ -95,7 +99,7 @@ const TOOLS = [
   {
     name: "get_booking_status",
     title: "Booking status",
-    description: "Looks up a Trinidad Carnival 2027 booking by its reference (CGH-TT27-XXXXX) and the email used to book. Both must match.",
+    description: "Returns whether a booking is pending or paid, given its reference and the email used to book.",
     inputSchema: {
       type: "object",
       properties: { reference: { type: "string", maxLength: 20 }, email: { type: "string", maxLength: 254 } },
