@@ -25,6 +25,7 @@ import {
   CONTACT_EMAIL,
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
+import { TRINIDAD_BOOK_MIN_PRICE, TRINIDAD_BOOK_MAX_PRICE } from "@/data/trinidadBookPage";
 import { CARNIVAL_GUIDE_GROUPS, FEATURED_CARNIVAL_GUIDES } from "@/data/carnivalGuides";
 import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
 import {
@@ -467,7 +468,9 @@ function topicBooking(): string {
 
 Book 4 to 6 weeks ahead. Book earlier for Trinidad, Jamaica and Miami, where slots go two to three months out.
 
-You can also reach the booking team on WhatsApp at ${WHATSAPP_DISPLAY} (${WHATSAPP_URL}) or by email at ${CONTACT_EMAIL}. Estimate a total first with the booking calculator at /booking-calculator.`;
+You can also reach the booking team on WhatsApp at ${WHATSAPP_DISPLAY} (${WHATSAPP_URL}) or by email at ${CONTACT_EMAIL}. Estimate a total first with the booking calculator at /booking-calculator.
+
+Trinidad Carnival 2027 at the Hilton: masqueraders can book a makeup, makeup and photoshoot, or photoshoot time for Carnival Monday, Carnival Tuesday or both days directly at /trinidad/book, choose a live time slot and pay in full online. Prices there are fixed, from US$${TRINIDAD_BOOK_MIN_PRICE} to US$${TRINIDAD_BOOK_MAX_PRICE}, with no discount codes.`;
 }
 
 function policyClause(prefix: string): string | null {
@@ -664,6 +667,7 @@ function buildLinks(): { label: string; url: string }[] {
     { label: "Reviews", url: "/reviews" },
     { label: "Station rentals and vendor spaces", url: "/station-rentals" },
     { label: "Booking calculator", url: "/booking-calculator" },
+    { label: "Book a Trinidad 2027 Hilton slot", url: "/trinidad/book" },
     { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
     { label: "Blog", url: "/blogs" },
     {

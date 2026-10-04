@@ -32,6 +32,7 @@ const links: NavItem[] = [
     label: "More",
     href: "#",
     children: [
+      { label: "Book a Hilton slot", href: "/trinidad/book" },
       { label: "Gallery", href: "#gallery" },
       { label: "Reviews", href: "/reviews" },
       { label: "Amazon Store", href: "/amazon-store" },

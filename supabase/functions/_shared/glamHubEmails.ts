@@ -135,3 +135,30 @@ ${row("Package", b.productLabel)}${row("When", when)}${row("Where", where)}${row
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }
+
+/** Full refund when the whole charge has been returned. */
+export function isFullRefund(amountCents: number, refundedCents: number): boolean {
+  return amountCents > 0 && refundedCents >= amountCents;
+}
+
+/** Accounts-only refund notice. The customer gets nothing from us here. */
+export function refundEmail(b: EmailBooking, refundedUsd: number, partial: boolean): { subject: string; text: string } {
+  const ds = sorted(b.days);
+  const dayPart = ds.map((d) => SHORT[d.day]).join(" and ");
+  const timePart = ds.map((d) => friendlyTime(d.time)).join(" and ");
+  const subject = `ACCOUNTS | REFUND | Trinidad 2027 | ${dayPart} ${timePart} | ${b.productLabel} | US$${b.amountUsd} | ${b.firstName} ${b.lastName}`;
+  const lines = [
+    ...(partial ? ["PARTIAL REFUND, booking still active, slot still held", ""] : ["Full refund, booking cancelled and slot released", ""]),
+    `Reference: ${b.reference}`,
+    `Name: ${b.firstName} ${b.lastName}`,
+    `Email: ${b.email}`,
+    `Cell: ${b.phone}`,
+    `Package: ${b.productLabel}`,
+    ...ds.map((d) => `${LONG[d.day]}: ${friendlyTime(d.time)}`),
+    `Amount paid (USD): US$${b.amountUsd}`,
+    `Amount refunded (USD): US$${refundedUsd}`,
+    `Stripe payment id: ${b.paymentIntentId ?? "not recorded"}`,
+    `Booked through: ${b.source}`,
+  ];
+  return { subject, text: lines.join("\n") };
+}

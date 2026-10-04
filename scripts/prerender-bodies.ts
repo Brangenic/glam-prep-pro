@@ -34,6 +34,10 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import { micromark } from "micromark";
 import { getHubInclusions, getHubTier, TIER_LABEL, MIAMI_LOGISTICS_SUMMARY, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ, GRENADA_INCLUSIONS_SENTENCE } from "../src/data/hubTiers";
+import {
+  TRINIDAD_BOOK_PATH, TRINIDAD_BOOK_H1, TRINIDAD_BOOK_FAQ, TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
+  TRINIDAD_BOOK_SLOTS_SENTENCE, TRINIDAD_BOOK_PAYMENT_SENTENCE, TRINIDAD_BOOK_INCLUSIONS_SENTENCE,
+} from "../src/data/trinidadBookPage";
 import { getGuidesForTerritory, getRelatedGuides, guideHref } from "../src/data/carnivalGuides";
 import { deEmDash } from "../src/lib/metaText";
 import {
@@ -1244,6 +1248,24 @@ ${PRIVACY_BLOCKS.map((b) => policyBlockHtml(b, "privacy")).join("\n")}
 ${CTA}`;
 }
 
+function trinidadBookBody(): string {
+  const C = TRINIDAD_BOOK_CATALOGUE;
+  const rows = TRINIDAD_BOOK_PRODUCTS.map((p) => `<li>${p.dayLabel}, ${p.label}: US$${p.price}</li>`).join("\n");
+  const faq = TRINIDAD_BOOK_FAQ.map((f) => `<h3>${f.q}</h3>\n<p>${f.a}</p>`).join("\n");
+  return `<p>${C.event}, ${C.dates.map((d) => d.display).join(" and ")}, at ${C.venue}. Book makeup, makeup and photoshoot, or a photoshoot on this page and pay securely.</p>
+<section><h2>Services and prices</h2>
+<ul>
+${rows}
+</ul></section>
+<section><h2>Time slots</h2><p>${TRINIDAD_BOOK_SLOTS_SENTENCE}</p></section>
+<section><h2>Included with every booking</h2><p>${TRINIDAD_BOOK_INCLUSIONS_SENTENCE}</p></section>
+<section><h2>Payment</h2><p>${TRINIDAD_BOOK_PAYMENT_SENTENCE} Read the <a href="/policies">Terms and refund policy</a>.</p></section>
+<section><h2>Questions</h2>
+${faq}
+</section>
+<p>More about the season on our <a href="/trinidad-carnival-2027">Trinidad Carnival 2027 page</a> and our <a href="/trinidad">Trinidad Carnival hub</a>.</p>`;
+}
+
 function buildRouteMap(): Record<string, Content> {
   const map: Record<string, Content> = { ...CORE, ...SERVICES };
   map["/policies"] = {
@@ -1257,6 +1279,10 @@ function buildRouteMap(): Record<string, Content> {
   map["/booking-calculator"] = {
     title: "Carnival Glam Quote Calculator",
     body: bookingCalculatorBody(),
+  };
+  map[TRINIDAD_BOOK_PATH] = {
+    title: TRINIDAD_BOOK_H1,
+    body: trinidadBookBody(),
   };
   map["/joinourteam"] = {
     title: "Join the Carnival Glam Hub Team",

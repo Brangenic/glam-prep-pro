@@ -124,6 +124,10 @@ function normPhone(p: string): string | null {
   return /^\+?\d{7,15}$/.test(d) ? (d.startsWith("+") ? d : `+${d}`) : null;
 }
 
+const SITE = "https://www.carnivalglamhub.com";
+
+// One booking path for every channel. The AI app returns to the hosted
+// confirmation pages; the website returns to carnivalglamhub.com.
 async function startBooking(a: Record<string, unknown>, source: string) {
   const allowed = new Set(["product_id", "monday_slot", "tuesday_slot", "first_name", "last_name", "email", "phone", "accepted_terms"]);
   for (const k of Object.keys(a)) if (!allowed.has(k)) return text(`Unexpected field: ${k}. Prices are fixed and there are no discounts.`, undefined, true);
@@ -177,6 +181,8 @@ async function startBooking(a: Record<string, unknown>, source: string) {
   f.set("mode", "payment");
   f.set("customer_email", email);
   f.set("allow_promotion_codes", "false");
+  // Collect nothing beyond name, email and cell, which we already hold.
+  f.set("billing_address_collection", "auto");
   f.set("expires_at", String(Math.floor(Date.now() / 1000) + 30 * 60));
   f.set("line_items[0][quantity]", "1");
   f.set("line_items[0][price_data][currency]", "usd");
@@ -186,8 +192,13 @@ async function startBooking(a: Record<string, unknown>, source: string) {
     f.set(`${pre}[booking_id]`, row.id);
     f.set(`${pre}[reference]`, row.reference);
   }
-  f.set("success_url", `${FN_URL}/confirmed?ref=${row.reference}`);
-  f.set("cancel_url", `${FN_URL}/cancelled?ref=${row.reference}`);
+  if (source === "website") {
+    f.set("success_url", `${SITE}/trinidad/book/confirmed`);
+    f.set("cancel_url", `${SITE}/trinidad/book/cancelled`);
+  } else {
+    f.set("success_url", `${FN_URL}/confirmed?ref=${row.reference}`);
+    f.set("cancel_url", `${FN_URL}/cancelled?ref=${row.reference}`);
+  }
   const sr = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
     headers: { Authorization: `Bearer ${stripeKey}`, "Content-Type": "application/x-www-form-urlencoded" },
@@ -302,6 +313,27 @@ Deno.serve(async (req) => {
   }
   if (req.method === "GET" && path.endsWith("/cancelled")) {
     return new Response(page("No payment taken", `<p>No payment was taken${ref ? ` for ${ref}` : ""}. Your time slot will be released shortly.</p><p>You can return to your chat to try again.</p>`), { headers: { ...CORS, "Content-Type": "text/html; charset=utf-8" } });
+  }
+  // Public JSON endpoints for the /trinidad/book page. Same catalogue,
+  // same reservation and same Checkout as the MCP tools.
+  const JSON_H = { ...CORS, "Content-Type": "application/json" };
+  if (req.method === "GET" && path.endsWith("/web/options")) {
+    try { return new Response(JSON.stringify(optionsPayload(await availability())), { headers: JSON_H }); }
+    catch (e) { console.error("web options", (e as Error).message); return new Response(JSON.stringify({ error: "Availability is unavailable just now." }), { status: 503, headers: JSON_H }); }
+  }
+  if (req.method === "POST" && path.endsWith("/web/book")) {
+    let a: Record<string, unknown>;
+    try { a = await req.json(); } catch { return new Response(JSON.stringify({ error: "Invalid request." }), { status: 400, headers: JSON_H }); }
+    if (!a || typeof a !== "object" || Array.isArray(a)) return new Response(JSON.stringify({ error: "Invalid request." }), { status: 400, headers: JSON_H });
+    try {
+      const res = await startBooking(a, "website") as { content: { text: string }[]; structuredContent?: { checkout_url?: string; message?: string; availability?: unknown }; isError?: boolean };
+      const sc = res.structuredContent;
+      if (sc?.checkout_url) return new Response(JSON.stringify({ checkout_url: sc.checkout_url }), { headers: JSON_H });
+      return new Response(JSON.stringify({ error: sc?.message ?? res.content[0].text, availability: sc?.availability }), { status: 409, headers: JSON_H });
+    } catch (e) {
+      console.error("web book", (e as Error).message);
+      return new Response(JSON.stringify({ error: "We could not start your booking just now. Please try again." }), { status: 500, headers: JSON_H });
+    }
   }
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405, headers: { ...CORS, Allow: "POST" } });
 

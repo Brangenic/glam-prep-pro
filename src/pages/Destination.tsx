@@ -363,6 +363,12 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               >
                 Book Now
               </a>
+              <Link
+                to="/trinidad/book"
+                className="inline-block ml-0 sm:ml-3 mt-3 sm:mt-0 border-2 border-primary text-foreground font-body font-semibold text-sm px-8 py-3 rounded-full hover:bg-primary hover:text-primary-foreground transition-all"
+              >
+                Book your Hilton slot
+              </Link>
             </div>
           </section>
         )}
