@@ -7,4 +7,4 @@
 - [x] CTAs on /trinidad and /trinidad-carnival-2027, footer and nav links
 - [x] SEO: prerender meta, body, JSON-LD, sitemap, llms.txt, JADE pack
 - [x] Tests, deploy three functions, preview booking check, publish
-- [ ] Live check of /trinidad/book after deploy
+- [x] Live check of /trinidad/book after deploy
