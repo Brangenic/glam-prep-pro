@@ -8,7 +8,7 @@ import { WIDGET_URI, widgetHtml } from "./widget.ts";
 import { markPaidFromSession, sendBookingEmails } from "../_shared/glamHubFulfil.ts";
 import { prePaymentSummary, startBookingText, statusSummary } from "./copy.ts";
 
-type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[] };
+type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[]; image_url: string; image_alt: string };
 const CAT = catalogue as unknown as {
   event: string; venue: string; inclusions: string[]; products: Product[];
   slot_times: string[]; slot_capacity: number; dates: { day: string; display: string }[];
@@ -119,7 +119,7 @@ function text(t: string, structured?: unknown, isError = false) {
 function optionsPayload(av: Avail) {
   return {
     event: CAT.event, dates: CAT.dates, venue: CAT.venue, inclusions: CAT.inclusions,
-    products: CAT.products.map((p) => ({ id: p.id, label: p.label, day: p.day, price_usd: p.price })),
+    products: CAT.products.map((p) => ({ id: p.id, label: p.label, day: p.day, price_usd: p.price, image_url: p.image_url, image_alt: p.image_alt })),
     terms: CAT.terms, availability: av, payment: "Payable in full at booking. No discounts or codes.",
   };
 }

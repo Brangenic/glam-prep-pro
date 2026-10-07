@@ -18,6 +18,13 @@ export const catalogue = {
   "venue": "the Hilton Hotel, Port of Spain",
   "currency": "USD",
   "whatsapp": "https://wa.me/18765090997",
+  "google_rating": {
+    "rating": 4.8,
+    "count": 19,
+    "as_of": "2026-10-07",
+    "url": "https://www.google.com/maps/place/?q=place_id:ChIJPdRIg80_244RBmWn-OdDPzM"
+  },
+  "gallery_url": "https://www.carnivalglamhub.com/#gallery",
   "inclusions": [
     "Shuttle",
     "Getting-dressed assistance",
@@ -32,7 +39,9 @@ export const catalogue = {
       "price": 180,
       "tags": [
         "makeup"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup.webp",
+      "image_alt": "Carnival makeup by Carnival Glam Hub"
     },
     {
       "id": "mon-makeup-photo",
@@ -42,7 +51,9 @@ export const catalogue = {
       "tags": [
         "makeup",
         "photoshoot"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup-photo.webp",
+      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub"
     },
     {
       "id": "mon-photo",
@@ -51,7 +62,9 @@ export const catalogue = {
       "price": 160,
       "tags": [
         "photoshoot"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/photo.webp",
+      "image_alt": "Carnival photoshoot by Carnival Glam Hub"
     },
     {
       "id": "tue-makeup",
@@ -60,7 +73,9 @@ export const catalogue = {
       "price": 210,
       "tags": [
         "makeup"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup.webp",
+      "image_alt": "Carnival makeup by Carnival Glam Hub"
     },
     {
       "id": "tue-makeup-photo",
@@ -70,7 +85,9 @@ export const catalogue = {
       "tags": [
         "makeup",
         "photoshoot"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup-photo.webp",
+      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub"
     },
     {
       "id": "tue-photo",
@@ -79,7 +96,9 @@ export const catalogue = {
       "price": 160,
       "tags": [
         "photoshoot"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/photo.webp",
+      "image_alt": "Carnival photoshoot by Carnival Glam Hub"
     },
     {
       "id": "both-makeup",
@@ -88,7 +107,9 @@ export const catalogue = {
       "price": 380,
       "tags": [
         "makeup"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup.webp",
+      "image_alt": "Carnival makeup by Carnival Glam Hub"
     },
     {
       "id": "both-makeup-photo",
@@ -98,7 +119,9 @@ export const catalogue = {
       "tags": [
         "makeup",
         "photoshoot"
-      ]
+      ],
+      "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup-photo.webp",
+      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub"
     }
   ],
   "slot_times": [

@@ -33,3 +33,19 @@ describe("AI booking catalogue", () => {
     expect(committedRaw).not.toContain("\u2014");
   });
 });
+
+import { existsSync } from "fs";
+import { GOOGLE_RATING } from "@/data/googleRating";
+describe("AI booking catalogue photos, rating and gallery", () => {
+  it("every product has an image_url and image_alt with a file on disk", () => {
+    for (const p of committed.products) {
+      expect(p.image_url).toMatch(/^https:\/\/www\.carnivalglamhub\.com\/images\/ai-booking\/[a-z-]+\.webp$/);
+      expect(p.image_alt).toMatch(/by Carnival Glam Hub$/);
+      expect(existsSync(resolve(process.cwd(), "public", p.image_url.replace("https://www.carnivalglamhub.com/", "")))).toBe(true);
+    }
+  });
+  it("reads the Google rating from the constant and links the Gallery", () => {
+    expect(committed.google_rating).toEqual({ rating: GOOGLE_RATING.rating, count: GOOGLE_RATING.count, as_of: GOOGLE_RATING.asOf, url: GOOGLE_RATING.url });
+    expect(committed.gallery_url).toBe("https://www.carnivalglamhub.com/#gallery");
+  });
+});

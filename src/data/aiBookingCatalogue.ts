@@ -7,7 +7,9 @@
 import { getTerritoryPricing } from "@/data/territoryPricing";
 import { TRINIDAD_HUB_VENUE, ALWAYS_INCLUDED } from "@/data/hubTiers";
 import { TERMS_BLOCKS } from "@/data/policies";
-import { WHATSAPP_URL } from "@/lib/constants";
+import { WHATSAPP_URL, SITE_URL } from "@/lib/constants";
+import { GALLERY_HREF } from "@/data/seasons";
+import { GOOGLE_RATING } from "@/data/googleRating";
 
 export const AI_BOOKING_PRODUCT_IDS = [
   "mon-makeup",
@@ -24,6 +26,19 @@ export const AI_BOOKING_SLOT_TIMES = ["04:00", "05:00", "06:00", "07:00", "08:00
 export const AI_BOOKING_SLOT_CAPACITY = 3;
 export const POLICIES_URL = "https://www.carnivalglamhub.com/policies";
 
+/** One photo per product type, shared by the Monday, Tuesday and both-days lines. */
+export const AI_BOOKING_IMAGES = {
+  makeup: { file: "makeup.webp", alt: "Carnival makeup by Carnival Glam Hub" },
+  "makeup-photo": { file: "makeup-photo.webp", alt: "Carnival makeup and costume photoshoot by Carnival Glam Hub" },
+  photo: { file: "photo.webp", alt: "Carnival photoshoot by Carnival Glam Hub" },
+} as const;
+
+function productType(id: string): keyof typeof AI_BOOKING_IMAGES {
+  const type = id.replace(/^(mon|tue|both)-/, "");
+  if (!(type in AI_BOOKING_IMAGES)) throw new Error(`No image for product type ${type}`);
+  return type as keyof typeof AI_BOOKING_IMAGES;
+}
+
 function clause(n: string): string {
   for (const b of TERMS_BLOCKS) {
     const c = b.clauses?.find((x) => x.n === n);
@@ -39,7 +54,11 @@ export function buildAiBookingCatalogue() {
     const p = t.products.find((x) => x.id === id);
     if (!p) throw new Error(`Product ${id} missing from territoryPricing.ts`);
     if (p.premium) throw new Error(`Product ${id} is premium`);
-    return { id: p.id, label: p.label, day: p.day, price: p.price, tags: p.tags };
+    const img = AI_BOOKING_IMAGES[productType(id)];
+    return {
+      id: p.id, label: p.label, day: p.day, price: p.price, tags: p.tags,
+      image_url: `${SITE_URL}/images/ai-booking/${img.file}`, image_alt: img.alt,
+    };
   });
   return {
     event: "Trinidad Carnival 2027",
@@ -50,6 +69,8 @@ export function buildAiBookingCatalogue() {
     venue: TRINIDAD_HUB_VENUE,
     currency: "USD",
     whatsapp: WHATSAPP_URL,
+    google_rating: { rating: GOOGLE_RATING.rating, count: GOOGLE_RATING.count, as_of: GOOGLE_RATING.asOf, url: GOOGLE_RATING.url },
+    gallery_url: `${SITE_URL}${GALLERY_HREF}`,
     inclusions: ["Shuttle", "Getting-dressed assistance", "Breakfast and refreshments", ALWAYS_INCLUDED],
     products,
     slot_times: AI_BOOKING_SLOT_TIMES,

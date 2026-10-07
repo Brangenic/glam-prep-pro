@@ -25,3 +25,19 @@ describe("AI booking card", () => {
     expect(html).not.toContain("\u2014");
   });
 });
+
+describe("AI booking card photos, rating and gallery", () => {
+  const html = widgetHtml(buildAiBookingCatalogue());
+  it("shows lazy photos that resize the card and hide on error", () => {
+    expect(html).toContain('loading="lazy"');
+    expect(html).toContain("im.onload");
+    expect(html).toContain("im.onerror");
+  });
+  it("reads the rating from the catalogue, not hardcoded markup", () => {
+    expect(html).toContain('" on Google, "');
+    expect(html).not.toMatch(/4\.8 on Google/);
+    expect(html.toLowerCase()).not.toContain("verified");
+    expect(html).toContain("See our Gallery");
+    expect(html).not.toContain("\u2014");
+  });
+});
