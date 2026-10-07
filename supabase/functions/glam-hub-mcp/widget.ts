@@ -15,7 +15,8 @@ h1{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:20px;c
 .sub{color:var(--mute);font-size:13px;margin-bottom:14px}
 .seg{display:flex;gap:6px;margin:8px 0 12px}.seg button,.prod,.slot{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;cursor:pointer}
 .seg button{flex:1}.on{border-color:var(--gold)!important;box-shadow:0 0 0 1px var(--gold) inset}
-.prods{display:grid;gap:6px}.prod{display:flex;justify-content:space-between;text-align:left}
+.prods{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.prod{display:flex;flex-direction:column;gap:6px;text-align:left}.prod .row{display:flex;justify-content:space-between;gap:6px;width:100%}.prod img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px;background:var(--line)}
+.trust{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13px;margin:-6px 0 12px}.stars{color:var(--gold2);letter-spacing:1px}
 .price{color:var(--gold2);font-weight:600}
 h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:16px 0 6px}
 .slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}@media (max-width:479px){.slots{grid-template-columns:repeat(2,1fr)}}.slot{padding:8px 4px;text-align:center;font-size:13px}.slot small{display:block;color:var(--mute);font-size:11px}
@@ -29,6 +30,7 @@ label.t{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:12px 0
 </style></head><body><div class="wrap">
 <h1>Trinidad Carnival 2027, <span id="venue"></span></h1>
 <div class="sub">Carnival Monday 8 February and Carnival Tuesday 9 February 2027. Payable in full at booking.</div>
+<div class="trust"><a id="glink" target="_blank" rel="noopener noreferrer"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span id="gtext"></span></a><a id="gallink" target="_blank" rel="noopener noreferrer">See our Gallery</a></div>
 <div class="seg" id="days"></div>
 <div class="prods" id="prods"></div>
 <div id="slotwrap"></div>
@@ -68,11 +70,13 @@ function sendSize(){var h=Math.ceil(Math.max(document.documentElement.scrollHeig
  if(isOpenAI){if(window.openai.notifyIntrinsicHeight)window.openai.notifyIntrinsicHeight(h)}else{ready.then(function(){notify("ui/notifications/size-changed",{height:h,width:w})}).catch(function(){notify("ui/notifications/size-changed",{height:h,width:w})})}}
 if(typeof ResizeObserver!=="undefined"){var ro=new ResizeObserver(sendSize);ro.observe(document.documentElement);ro.observe(document.body)}
 window.addEventListener("load",sendSize);
+var GR=CAT.google_rating;$("gtext").textContent=GR.rating+" on Google, "+GR.count+" reviews";$("glink").href=GR.url;$("gallink").href=CAT.gallery_url;
+[["glink",GR.url],["gallink",CAT.gallery_url]].forEach(function(x){$(x[0]).onclick=function(e){if(isOpenAI&&window.openai.openExternal){e.preventDefault();window.openai.openExternal({href:x[1]})}else if(!isOpenAI&&window.parent!==window){e.preventDefault();openLink(x[1])}}});
 $("tlink").onclick=function(e){e.preventDefault();openLink(CAT.terms.url)};
 function left(day,t){if(!state.avail)return CAT.slot_capacity;var r=(state.avail[day]||[]).find(function(x){return x.time===t});return r?r.spots_left:0}
 function render(){
  $("days").innerHTML="";DAYS.forEach(function(d){var b=document.createElement("button");b.textContent=d[1];if(state.day===d[0])b.className="on";b.onclick=function(){state.day=d[0];state.product=null;state.slots={};render()};$("days").appendChild(b)});
- $("prods").innerHTML="";CAT.products.filter(function(p){return p.day===state.day}).forEach(function(p){var b=document.createElement("button");b.className="prod"+(state.product===p.id?" on":"");b.innerHTML="<span></span><span class=price></span>";b.firstChild.textContent=p.label;b.lastChild.textContent="US$"+p.price;b.onclick=function(){state.product=p.id;render()};$("prods").appendChild(b)});
+ $("prods").innerHTML="";CAT.products.filter(function(p){return p.day===state.day}).forEach(function(p){var b=document.createElement("button");b.className="prod"+(state.product===p.id?" on":"");b.innerHTML="<div class=row><span></span><span class=price></span></div>";var r=b.firstChild;r.firstChild.textContent=p.label;r.lastChild.textContent="US$"+p.price;if(p.image_url){var im=document.createElement("img");im.loading="lazy";im.decoding="async";im.alt=p.image_alt||"";im.src=p.image_url;im.onload=function(){lastH=0;sendSize()};im.onerror=function(){im.remove();lastH=0;sendSize()};b.insertBefore(im,r)}b.onclick=function(){state.product=p.id;render()};$("prods").appendChild(b)});
  var sw=$("slotwrap");sw.innerHTML="";var days=state.day==="both"?["monday","tuesday"]:[state.day];
  days.forEach(function(day){var h=document.createElement("h2");h.textContent=(day==="monday"?"Monday 8 February":"Tuesday 9 February")+", choose a time";sw.appendChild(h);var g=document.createElement("div");g.className="slots";
   CAT.slot_times.forEach(function(t){var n=left(day,t);var b=document.createElement("button");b.className="slot"+(state.slots[day]===t?" on":"");b.disabled=n<=0;b.innerHTML=t+"<small>"+(n<=0?"Full":n+" left")+"</small>";b.onclick=function(){state.slots[day]=t;render()};g.appendChild(b)});sw.appendChild(g)});
