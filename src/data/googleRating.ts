@@ -7,5 +7,5 @@ export const GOOGLE_RATING = {
   rating: 4.8,
   count: 19,
   asOf: "2026-10-07",
-  url: "https://www.google.com/maps/place/?q=place_id:ChIJPdRIg80_244RBmWn-OdDPzM",
+  url: "https://www.google.com/maps?cid=3692744883055322374",
 } as const;
