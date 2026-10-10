@@ -538,6 +538,5 @@ describe("JADE AI disclosure in the system prompt", () => {
   it("keeps the retired name ban but no blanket ban on the word AI", () => {
     expect(prompt).toContain("Never call yourself Glam Bot. That name is retired.");
     expect(prompt).not.toMatch(/never call yourself[^.\n]*\b(a chatbot|an AI|AI model)/i);
-    expect(prompt).not.toContain("Never call yourself Glam Bot, a chatbot or an AI model");
   });
 });
