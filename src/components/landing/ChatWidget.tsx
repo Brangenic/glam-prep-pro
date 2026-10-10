@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
+import { WHATSAPP_URL } from "@/lib/constants";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -150,6 +151,12 @@ const ChatWidget = ({ open, onOpenChange }: ChatWidgetProps) => {
     [messages, loading]
   );
 
+  // The conversation is not kept: closing the chat clears it, which is what
+  // Privacy Policy section 17 tells visitors.
+  useEffect(() => {
+    if (!open) { setMessages([]); setInput(""); }
+  }, [open]);
+
   if (!open) return null;
 
   return (
@@ -160,7 +167,10 @@ const ChatWidget = ({ open, onOpenChange }: ChatWidgetProps) => {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-primary-foreground" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
-          <span className="font-heading text-primary-foreground text-sm font-semibold">JADE</span>
+          <div className="flex flex-col leading-tight">
+            <span className="font-heading text-primary-foreground text-sm font-semibold">JADE</span>
+            <span className="font-body text-[11px] text-primary-foreground/80">AI assistant</span>
+          </div>
         </div>
         <button onClick={() => setOpen(false)} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors" aria-label="Close JADE">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
@@ -173,7 +183,7 @@ const ChatWidget = ({ open, onOpenChange }: ChatWidgetProps) => {
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-3">
         {messages.length === 0 && (
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">I am JADE, the Carnival Glam Hub assistant. Ask me about dates, prices, services or what is included at any Glam Hub.</p>
+            <p className="text-sm text-muted-foreground">I am JADE, the Carnival Glam Hub AI assistant. I am software, not a person. Ask me about dates, prices, services or what is included at any Glam Hub, and I will point you to a human whenever you want one.</p>
             <div className="flex flex-wrap gap-1.5">
               {SUGGESTIONS.map((s) => (
                 <button key={s} onClick={() => send(s)} className="text-xs rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-primary hover:bg-primary/10 transition-colors">
@@ -232,6 +242,14 @@ const ChatWidget = ({ open, onOpenChange }: ChatWidgetProps) => {
           </svg>
         </button>
       </form>
+
+      {/* AI disclosure, always visible, not dismissible */}
+      <p className="border-t border-border px-3 py-1.5 text-[11px] leading-snug text-muted-foreground">
+        JADE is an AI assistant and can get things wrong. Check prices at checkout.{" "}
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">Speak to a person</a>
+        {" · "}
+        <a href="/policies#privacy" onClick={(e) => { e.preventDefault(); setOpen(false); navigate("/policies#privacy"); }} className="text-primary underline underline-offset-2">Privacy</a>
+      </p>
     </div>
   );
 };
