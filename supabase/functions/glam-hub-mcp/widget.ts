@@ -38,7 +38,7 @@ label.t{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:12px 0
 <h2>Your details</h2>
 <div class="grid"><input type="text" id="fn" placeholder="First name" autocomplete="given-name"><input type="text" id="ln" placeholder="Last name" autocomplete="family-name"></div>
 <div class="grid" style="margin-top:8px"><input type="email" id="em" placeholder="Email" autocomplete="email"><input type="tel" id="ph" placeholder="Cell, e.g. +1 868 555 0100" autocomplete="tel"></div>
-<label class="t"><input type="checkbox" id="terms"> <span>I accept the <a href="#" id="tlink">Terms and booking policy</a>.</span></label>
+<label class="t"><input type="checkbox" id="terms"> <span>I accept the <a href="#" id="tlink">Terms and booking policy</a> (<a href="#" id="plink">Privacy Policy</a>).</span></label>
 <button class="pay" id="pay" disabled>Choose a service</button>
 <div class="msg" id="msg"></div>
 </div>
@@ -73,6 +73,7 @@ window.addEventListener("load",sendSize);
 var GR=CAT.google_rating;$("gtext").textContent=GR.rating+" on Google, "+GR.count+" reviews";$("glink").href=GR.url;$("gallink").href=CAT.gallery_url;
 [["glink",GR.url],["gallink",CAT.gallery_url]].forEach(function(x){$(x[0]).onclick=function(e){if(isOpenAI&&window.openai.openExternal){e.preventDefault();window.openai.openExternal({href:x[1]})}else if(!isOpenAI&&window.parent!==window){e.preventDefault();openLink(x[1])}}});
 $("tlink").onclick=function(e){e.preventDefault();openLink(CAT.terms.url)};
+$("plink").onclick=function(e){e.preventDefault();openLink(CAT.terms.url+"#privacy")};
 function left(day,t){if(!state.avail)return CAT.slot_capacity;var r=(state.avail[day]||[]).find(function(x){return x.time===t});return r?r.spots_left:0}
 function render(){
  $("days").innerHTML="";DAYS.forEach(function(d){var b=document.createElement("button");b.textContent=d[1];if(state.day===d[0])b.className="on";b.onclick=function(){state.day=d[0];state.product=null;state.slots={};render()};$("days").appendChild(b)});

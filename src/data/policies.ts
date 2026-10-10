@@ -2,7 +2,9 @@
 // Consumed by src/pages/Policies.tsx (runtime) AND
 // scripts/prerender-bodies.ts (static HTML), so the two can never drift.
 
-export const EFFECTIVE_DATE = "Effective 24 August 2026";
+export const EFFECTIVE_DATE = "Effective 10 October 2026";
+/** Version of the Terms and Privacy Policy. To be stored on booking records in a later pass. */
+export const POLICY_VERSION = "2026-10-10";
 export const CONTACT_EMAIL = "carnivalglamhub@gmail.com";
 
 export const TERMS_INTRO = [
@@ -148,6 +150,7 @@ export const TERMS_BLOCKS: Block[] = [
       { n: "10.4", body: "If you do not wish your images to be used in our marketing, tell us in writing before the Event and we will record the restriction against your booking." },
       { n: "10.5", body: "We may photograph or film generally at the Hub for marketing purposes. Tell our representative on arrival if you do not wish to appear in general Hub footage." },
       { n: "10.6", body: "Edited images are delivered after the Event through a private gallery. Delivery times are indicative and are not a term of the booking." },
+      { n: "10.7", body: `Where the law of your country gives you a right to withdraw consent to the use of your image, that right is not affected by this clause. Write to ${CONTACT_EMAIL} and we will stop using your images in our marketing and remove them from material we control.` },
     ],
   },
   {
@@ -222,6 +225,35 @@ export const TERMS_BLOCKS: Block[] = [
       `Questions about a booking or about these Terms: Carnival Glam Hub, ${CONTACT_EMAIL}, carnivalglamhub.com`,
     ],
   },
+  {
+    heading: "20. Our AI assistant",
+    clauses: [
+      { n: "20.1", body: "JADE is an automated assistant. She is software, not a member of our team. When you use JADE you are interacting with an artificial intelligence system and not with a person." },
+      { n: "20.2", body: "JADE is there to answer questions about our dates, prices, services and policies, and to point you to the right page. She does not take payment and she cannot confirm a booking." },
+      { n: "20.3", body: "JADE's answers are generated from our published information. We work to keep them accurate, but an answer from JADE is not a quotation, not an offer and not a confirmation of availability. Where anything JADE says differs from these Terms or from the price shown at checkout, these Terms and the checkout price apply." },
+      { n: "20.4", body: `If you would rather speak to a person, message our team on WhatsApp or write to ${CONTACT_EMAIL}. We will always tell you if you ask whether you are speaking to a person or to JADE.` },
+      { n: "20.5", body: "To answer you, your messages are sent to a third-party provider that operates the language model behind JADE. Please do not type payment card details, identification numbers or health information into the chat. Our Privacy Policy explains this." },
+      { n: "20.6", body: "We also make Carnival Glam Hub booking available inside third-party assistants such as ChatGPT and Claude. Where you book through one of those, these Terms apply to the booking in the same way, and the terms of that assistant apply to your use of it." },
+    ],
+  },
+  {
+    heading: "21. Our content and your use of this site",
+    clauses: [
+      { n: "21.1", body: "The Carnival Glam Hub name, our logo, the photographs we publish, our written content and the design of this website belong to us or to the people who licensed them to us. Nothing in these Terms transfers any of that to you." },
+      { n: "21.2", body: "You may view, share and link to our pages. You may not copy, republish, resell or use our photographs or written content commercially without our written permission." },
+      { n: "21.3", body: "You may not use this site, JADE or our booking tools to send unlawful, abusive, misleading or infringing material, to make a booking you do not intend to keep, to scrape or copy our content at scale, or to attempt to interfere with how any of it works." },
+    ],
+  },
+  {
+    heading: "22. Content you give us, and copyright complaints",
+    clauses: [
+      { n: "22.1", body: "Where a part of our service lets you submit a photograph, a video or any other material, you confirm that it is yours to submit, or that you have permission from whoever owns it, and that it does not infringe anyone's rights. Do not submit a photograph of someone else without their agreement." },
+      { n: "22.2", body: "You keep ownership of anything you submit. You give us permission to store it and to use it only for the purpose you submitted it for, unless you separately agree to marketing use under clause 10." },
+      { n: "22.3", body: "We may remove anything submitted to us, at any time, without notice." },
+      { n: "22.4", body: `If you believe something published on carnivalglamhub.com infringes your copyright, write to ${CONTACT_EMAIL} with the subject line COPYRIGHT, telling us what the work is, where on our site it appears, and confirming that you own it or act for the owner. We will look into it and remove anything we should not be using.` },
+      { n: "22.5", body: "We will also end the access of anyone who repeatedly submits material that infringes other people's rights." },
+    ],
+  },
 ];
 
 export const PRIVACY_BLOCKS: Block[] = [
@@ -233,6 +265,7 @@ export const PRIVACY_BLOCKS: Block[] = [
       "Service information. Information you choose to tell us so that we can carry out your service safely, such as an allergy, a skin or scalp sensitivity, or a hair type or preference.",
       "Payment information. Payments are processed by third-party payment providers. We receive confirmation that a payment has succeeded, along with limited details such as the amount, the date and the last digits of the card. We do not collect or store full payment card numbers.",
       "Images. Photographs and video taken during your service where you have booked a photoshoot service, and general photography and video taken at our Hubs.",
+      "Chat messages. What you type to JADE, our automated assistant, during that conversation. We do not store these.",
       "Communications. The messages you send us and our replies, so that we have a record of what was agreed.",
       "Website information. Standard technical information such as pages viewed, approximate location derived from IP address, device and browser type, collected through our website and analytics tools.",
       "We do not ask for, and do not want, national identification numbers, passport numbers or banking credentials. Please do not send them to us.",
@@ -278,6 +311,7 @@ export const PRIVACY_BLOCKS: Block[] = [
       "our artists and Hub team, who receive the booking details needed to deliver your service",
       "our booking, scheduling and payment providers",
       "our email, messaging and analytics providers",
+      "the third-party provider that operates the language model behind JADE, which receives your chat messages so that an answer can be generated",
       "venue and event partners, where a Hub operates inside their premises or programme and they require an attendee list",
       "our professional advisers, such as accountants and lawyers, where required",
       "a purchaser or successor, if our business or part of it changes hands",
@@ -354,6 +388,16 @@ export const PRIVACY_BLOCKS: Block[] = [
     heading: "16. Governing law",
     paragraphs: [
       "Any dispute arising under or in connection with this Privacy Policy is subject to the jurisdiction of the courts of Jamaica, save where the law of your country of residence gives you a right to bring proceedings there which cannot be excluded by agreement.",
+    ],
+  },
+  {
+    heading: "17. Our AI assistant and automated tools",
+    paragraphs: [
+      "JADE is an automated assistant on our website. She is software, not a person.",
+      "What we send. When you type a message to JADE, that message and the rest of that conversation are sent to a third-party provider that operates the language model behind her, so that an answer can be generated. We do not send your name, your email address, your phone number, your booking history or any identifier along with it. We do not keep a copy of the conversation on our own systems, and the conversation is lost when you close the chat.",
+      `What the provider does with it is governed by that provider's own terms, which we do not control. For that reason, please do not type payment card details, identification numbers, health information or anything else you would not want handled by a third party into the chat. If you need to tell us something sensitive, message our team on WhatsApp or write to ${CONTACT_EMAIL}.`,
+      "Booking through ChatGPT or Claude. We make Carnival Glam Hub booking available inside third-party assistants. Where you book that way, the first name, last name, email address and mobile number you give are sent to us and handled under this Policy. Your payment is taken by Stripe on Stripe's own secure checkout, and we never see your card number. Your use of the assistant itself is governed by that company's privacy policy, not ours.",
+      "No automated decisions about you. We do not use automated processing to make a decision that has a legal or similarly significant effect on you. JADE answers questions. A person at Carnival Glam Hub decides anything that affects your booking.",
     ],
   },
 ];

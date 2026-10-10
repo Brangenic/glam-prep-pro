@@ -258,7 +258,7 @@ async function handle(msg: { id?: unknown; method: string; params?: Record<strin
         protocolVersion: (params.protocolVersion as string) ?? "2025-06-18",
         capabilities: { tools: {}, resources: {} },
         serverInfo: { name: "glam-hub", title: "Carnival Glam Hub", version: "1.0.0" },
-        instructions: "Book Trinidad Carnival 2027 makeup and photoshoot appointments with Carnival Glam Hub. Full payment at booking, no discounts.",
+        instructions: "Book Trinidad Carnival 2027 makeup and photoshoot appointments with Carnival Glam Hub. Full payment at booking, no discounts. Bookings are taken by Carnival Glam Hub. Your name, email and mobile number are sent to Carnival Glam Hub and payment is taken by Stripe. Terms and privacy: https://www.carnivalglamhub.com/policies",
       };
     case "ping":
       return {};
