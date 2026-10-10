@@ -486,7 +486,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/policies",
     title: "Terms, Refund Policy and Privacy Policy | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub booking terms, deposit and refund policy, cancellation and transfer rules, referral terms and privacy policy. Effective 24 August 2026.",
+      "Carnival Glam Hub booking terms, deposit and refund policy, cancellation and transfer rules, referral terms and privacy policy. Effective 10 October 2026.",
     ogImage: `${BASE_URL}/images/policies/refund-policy.png`,
   },
 

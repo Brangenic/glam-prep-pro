@@ -527,3 +527,16 @@ describe("group 9: booking links are territory specific", () => {
     }
   });
 });
+
+describe("JADE AI disclosure in the system prompt", () => {
+  const prompt = buildSystemPrompt(pack, user("hello"), NOW);
+  it("answers honestly when asked if she is a person", () => {
+    expect(prompt).toContain("answer plainly and immediately that you are an AI assistant and not a person");
+    expect(prompt).toContain("Never imply, suggest or allow a visitor to believe you are a human being.");
+    expect(prompt).toContain("You are Carnival Glam Hub's AI assistant.");
+  });
+  it("keeps the retired name ban but no blanket ban on the word AI", () => {
+    expect(prompt).toContain("Never call yourself Glam Bot. That name is retired.");
+    expect(prompt).not.toMatch(/never call yourself[^.\n]*\b(a chatbot|an AI|AI model)/i);
+  });
+});

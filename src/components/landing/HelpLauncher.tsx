@@ -55,7 +55,7 @@ const HelpLauncher = () => {
                   Ask JADE
                 </span>
                 <span className="font-body text-sm text-muted-foreground leading-snug">
-                  Quick answers about services, destinations, bookings and Carnival morning.
+                  AI assistant. Quick answers about services, destinations, bookings and Carnival morning.
                 </span>
               </button>
               <button
