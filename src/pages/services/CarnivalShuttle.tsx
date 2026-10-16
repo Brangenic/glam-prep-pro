@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/YouTubeEmbed";
 const PAGE_TITLE =
   "Carnival Shuttle Service | Trinidad Transport | Glam Hub";
 const PAGE_DESCRIPTION =
-  "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. There is no shuttle in Miami this season.";
+  "Complimentary one-way Carnival shuttle pick-up from the Carnival Glam Hub lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. Miami details for the next season will be confirmed when dates are announced.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-shuttle";
 
 
@@ -108,7 +108,7 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">from the lounge to the road</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-foreground/90 leading-relaxed mb-5 font-medium">
-              Carnival Glam Hub provides a complimentary one-way Carnival shuttle pick-up from our air-conditioned lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. There is no shuttle in Miami this season.
+              Carnival Glam Hub provides a complimentary one-way Carnival shuttle pick-up from our air-conditioned lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. Miami details for the next season will be confirmed when dates are announced.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               The Carnival shuttle service at{" "}
@@ -142,8 +142,8 @@ const CarnivalShuttle = () => {
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Shuttle is a Full Service Glam Hub inclusion. It runs in
-              Jamaica and Trinidad. There is no shuttle in Miami this season,
-              and Glam Hub Lite territories do not offer a shuttle.
+              Jamaica and Trinidad. Miami details for the next season will be confirmed when dates are announced.
+              Glam Hub Lite territories do not offer a shuttle.
             </p>
           </section>
 

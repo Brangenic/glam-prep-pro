@@ -864,7 +864,7 @@ ${CTA}`,
   },
   "/services/carnival-shuttle": {
     title: "Carnival Shuttle Service",
-    body: `<p>Carnival shuttle from the Carnival Glam Hub lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not include a shuttle.</p>
+    body: `<p>Carnival shuttle from the Carnival Glam Hub lounge to your band's start point. Shuttle is a Full Service Glam Hub inclusion, available in Jamaica and Trinidad. Miami details for the next season will be confirmed when dates are announced. Glam Hub Lite territories do not include a shuttle.</p>
 <h2>Lounge to your band</h2>
 <p>Air-conditioned transport with your section, so you arrive fresh, dry and on time. Route pre-mapped to avoid Carnival morning gridlock.</p>
 <h2>Group capacity</h2>
