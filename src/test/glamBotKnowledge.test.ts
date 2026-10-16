@@ -1,3 +1,4 @@
+import { hasSeasonPassed } from "@/data/seasons";
 /**
  * JADE knowledge and logic suite.
  *
@@ -134,7 +135,12 @@ describe("group 3: knowledge questions", () => {
     const p = promptFor("Is the shuttle included?");
     expect(p).toContain("Jamaica and Trinidad only");
     expect(p).toContain("it is an inclusion and is never charged");
-    expect(p).toContain("Not running in Miami this season");
+    // The pack is generated on the real clock; Miami 2026 wrapped on 11 October 2026.
+    expect(p).toContain(
+      hasSeasonPassed("miami")
+        ? "Miami details for the next season are not confirmed yet"
+        : "Not running in Miami this season",
+    );
   });
 
   it("7. do I have to pay for getting dressed", () => {
