@@ -54,7 +54,7 @@ import {
   type QuoteProduct,
   type TerritoryPricing,
 } from "@/data/territoryPricing";
-import { SEASON_END_DATES, SEASON_FORWARD_SLUGS, getOpenPreRegistration } from "@/data/seasons";
+import { SEASON_END_DATES, SEASON_FORWARD_SLUGS, getOpenPreRegistration, hasSeasonPassed } from "@/data/seasons";
 import {
   EFFECTIVE_DATE,
   TERMS_BLOCKS,
@@ -263,7 +263,7 @@ Epic Cruise is a cruise partnership rather than a hub, so it carries no tier.
 ## Free with any booking at a ${TIER_LABEL.full}
 ${bullets(getFreeInclusions("trinidad"))}
 
-Miami is a ${TIER_LABEL.full} but runs no shuttle this season, so its free list is:
+${hasSeasonPassed("miami") ? `Miami is a ${TIER_LABEL.full}. Miami 2026 has wrapped and the next season's details, including shuttle, are not confirmed yet. Its 2026 free list was:` : `Miami is a ${TIER_LABEL.full} but runs no shuttle this season, so its free list is:`}
 ${bullets(getFreeInclusions("miami"))}
 
 ## Free with any booking at a ${TIER_LABEL.lite}
@@ -318,7 +318,9 @@ function buildEvents(): KnowledgeEvent[] {
 function buildBrief(slug: string): string {
   const profile = getProfile(slug)!;
   const pricing = pricingFor(slug);
-  const bookableEvent = hasBookableEvent(slug);
+  // A wrapped season is never bookable, whatever event is still on file.
+  const wrapped = hasSeasonPassed(slug);
+  const bookableEvent = hasBookableEvent(slug) && !wrapped;
   const tier = tierLabelFor(slug);
   const free = getFreeInclusions(slug);
   const caps = capabilityLines(slug);
@@ -343,7 +345,9 @@ function buildBrief(slug: string): string {
   }
 
   parts.push(
-    profile.venue
+    wrapped
+      ? "Location: this season has wrapped and the venue for the next season is not confirmed. Never name a venue for this territory."
+      : profile.venue
       ? `Location: ${profile.venue}`
       : "Location: the venue is confirmed after booking. Never guess or name a venue for this territory.",
   );
@@ -356,6 +360,10 @@ function buildBrief(slug: string): string {
       `## Prices\nPer masquerader in US dollars.\n\n${dayBlocks.join("\n\n")}`,
     );
     if (pricing.provisionalNote) parts.push(pricing.provisionalNote);
+  } else if (wrapped) {
+    parts.push(
+      "## Prices\nThis season has wrapped and bookings are closed. Never quote a price for this territory. Next season's prices and dates are not confirmed.",
+    );
   } else {
     const preRegistration = getOpenPreRegistration(slug);
     parts.push(
@@ -411,7 +419,7 @@ function buildBrief(slug: string): string {
     );
   }
 
-  if (slug === "miami") parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
+  if (slug === "miami" && !hasSeasonPassed("miami")) parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
 
   parts.push(
     profile.path
@@ -449,7 +457,7 @@ function topicServices(): string {
 - **Hair**: styling and installs built to hold under a headpiece. Full Service hubs only, Trinidad, Jamaica and Miami. Always charged, from ${money(hairFloor() ?? 0)} depending on the style and the territory. Page /services/carnival-hair
 - **Photoshoot**: a shoot in costume before you hit the road. Available at every hub. Always charged. Page /services/carnival-photoshoot
 - **Getting dressed**: help into the costume, wires and headpiece. Trinidad, Jamaica and Miami only. ${money(GETTING_DRESSED_PRICE)} on its own, free with any Glam Hub service. Page /services/getting-dressed
-- **Shuttle**: transport from the hub. ${sentenceList(SHUTTLE_TERRITORIES)} only. Where it runs it is an inclusion and is never charged. Not running in Miami this season. Page /services/carnival-shuttle
+- **Shuttle**: transport from the hub. ${sentenceList(SHUTTLE_TERRITORIES)} only. Where it runs it is an inclusion and is never charged. ${hasSeasonPassed("miami") ? "Miami details for the next season are not confirmed yet." : "Not running in Miami this season."} Page /services/carnival-shuttle
 - **Barber**: ${money(BARBER_PRICE)}, Trinidad and Jamaica only. Charged.
 - **Bronzing**: ${money(BRONZING_PRICE)}, Trinidad and Jamaica only. Charged.
 - **Reels**: Trinidad and Jamaica only. A paid add-on at ${money(getReelsPrice("trinidad"))} per masquerader.

@@ -1,6 +1,6 @@
 import { BOOKING_URL } from "@/lib/constants";
 import { pricingSummarySentence } from "@/data/territoryPricing";
-import { MIAMI_HUB_LOCATION, MIAMI_SHUTTLE_NOTE } from "@/data/hubTiers";
+import { SHUTTLE_FAQ_ANSWER } from "@/data/miamiCopy";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -20,7 +20,7 @@ const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string }
   },
   {
     q: "What is the difference between a Full Service Glam Hub and a Glam Hub Lite?",
-    a: "A Full Service Glam Hub includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$80 per masquerader. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. Full Service Glam Hubs run in Jamaica, Trinidad and Miami, with one exception: there is no shuttle in Miami this season. Jamaica and Trinidad also offer a barber. A Glam Hub Lite includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments only. Glam Hub Lite does not offer getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Grenada is the one exception: it offers dressing assistance, and still no seamstress. Every other territory we serve is a Glam Hub Lite, including Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta.",
+    a: "A Full Service Glam Hub includes shuttle, wing and bag check while you are with us, space permitting, breakfast and refreshments, alcohol, makeup, hair, seamstress, a changing room, photoshoot, and coffee and tea. Bronzing is available in Trinidad and Jamaica. Reels are a paid add-on in Trinidad and Jamaica at US$80 per masquerader. Overnight bag check is a paid add-on at US$35 per masquerader in Trinidad, Jamaica and Miami. Full Service Glam Hubs run in Jamaica, Trinidad and Miami. Jamaica and Trinidad also offer a barber. A Glam Hub Lite includes makeup, photoshoot, a changing room, wing and bag check while you are with us space permitting, and coffee, tea and light refreshments only. Glam Hub Lite does not offer getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Grenada is the one exception: it offers dressing assistance, and still no seamstress. Every other territory we serve is a Glam Hub Lite, including Saint Lucia, Grenada, Antigua, Barbados, Toronto, Guyana, Tobago and Atlanta.",
   },
   {
     q: "How early should I book?",
@@ -52,7 +52,7 @@ const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string }
   },
   {
     q: "Do you offer a shuttle service?",
-    a: `Shuttle is a Full Service Glam Hub inclusion and runs in Jamaica and Trinidad. Miami Carnival has moved to Broward County: as announced by Miami Carnival, the Parade of Bands is at Central Broward Park and Broward County Stadium, 3700 NW 11th Place, Lauderhill, Florida 33311, sometimes listed as the Fort Lauderdale cricket stadium. ${MIAMI_HUB_LOCATION} ${MIAMI_SHUTTLE_NOTE} Overnight bag check is a paid add-on at US$35 per masquerader. You can come back to the hotel that night or early the next morning and collect your bag yourself, or opt for delivery the following day at additional cost, confirmed when you book. Lauderhill is about 6 miles from Fort Lauderdale, roughly a 12 minute drive, and about 26 miles from Miami, so Fort Lauderdale is the closer airport and the closer place to stay. Glam Hub Lite territories do not include a shuttle.`,
+    a: SHUTTLE_FAQ_ANSWER,
   },
   {
     q: "How do deposits and payments work?",

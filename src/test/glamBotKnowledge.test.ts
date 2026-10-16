@@ -1,3 +1,4 @@
+import { hasSeasonPassed } from "@/data/seasons";
 /**
  * JADE knowledge and logic suite.
  *
@@ -103,7 +104,16 @@ describe("group 3: knowledge questions", () => {
   });
 
   it("2. where will Glam Hub be next", () => {
-    expect(promptFor("Where will Glam Hub be next?")).toContain("Renaissance Fort Lauderdale Marina Hotel");
+    // NOW is 24 August 2026, so Miami is next. The pack itself is built on
+    // the real clock, and once Miami 2026 has wrapped its brief stops
+    // naming the 2026 hotel as a current venue.
+    const p = promptFor("Where will Glam Hub be next?");
+    expect(p).toContain("Miami Carnival");
+    if (hasSeasonPassed("miami")) {
+      expect(pack.territories.miami.brief).not.toContain("Renaissance Fort Lauderdale Marina Hotel");
+    } else {
+      expect(p).toContain("Renaissance Fort Lauderdale Marina Hotel");
+    }
   });
 
   it("3. how much is makeup in Trinidad, with day labels", () => {
@@ -134,7 +144,12 @@ describe("group 3: knowledge questions", () => {
     const p = promptFor("Is the shuttle included?");
     expect(p).toContain("Jamaica and Trinidad only");
     expect(p).toContain("it is an inclusion and is never charged");
-    expect(p).toContain("Not running in Miami this season");
+    // The pack is generated on the real clock; Miami 2026 wrapped on 11 October 2026.
+    expect(p).toContain(
+      hasSeasonPassed("miami")
+        ? "Miami details for the next season are not confirmed yet"
+        : "Not running in Miami this season",
+    );
   });
 
   it("7. do I have to pay for getting dressed", () => {

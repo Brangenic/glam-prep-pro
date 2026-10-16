@@ -415,7 +415,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           question: `Is ${loc} a Full Service Glam Hub or a Glam Hub Lite?`,
           answer:
             tier === "full"
-              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" ? `. ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_NOTE}` : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
+              ? `${loc} is a ${tierLabel}. That means ${inclusionText}${d.slug === "miami" && !hasSeasonPassed("miami") ? `. ${MIAMI_TRAVEL_WARNING} ${MIAMI_VENUE_NOTE}` : ""}. Full Service Glam Hubs run in Jamaica, Trinidad and Miami.`
               : d.slug === "grenada"
                 ? `${loc} is a ${tierLabel}, not a Full Service Glam Hub. What you get in ${loc} is ${inclusionText}. There is no ${notOfferedText} in ${loc}.`
                 : `${loc} is a ${tierLabel}. Glam Hub Lite covers ${inclusionText} only, with no getting dressed, seamstress, overnight bag check, shuttle, hair, bronzing, reels, alcohol or breakfast. Our Full Service Glam Hubs, which add those services, run in Jamaica, Trinidad and Miami.`,
@@ -429,7 +429,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
   // Where a venue is published, the venue question leads the FAQ list
   // and the FAQPage structured data.
   const venueFaq: Faq[] =
-    d.slug === "miami" ? [MIAMI_VENUE_FAQ] : d.slug === "grenada" ? [GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ] : [];
+    d.slug === "miami" && !hasSeasonPassed("miami") ? [MIAMI_VENUE_FAQ] : d.slug === "grenada" ? [GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ] : [];
 
   const passed = hasSeasonPassed(d.slug);
   const year = passedSeasonYear(d.slug);

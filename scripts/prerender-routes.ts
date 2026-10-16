@@ -1,3 +1,4 @@
+import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "../src/data/miamiCopy";
 // PRICING NOTE: every figure quoted in this file comes from
 // src/data/territoryPricing.ts (masos products). Keep them in step with
 // that file. Never invent a price here.
@@ -532,7 +533,7 @@ const answerRoutes: RouteMeta[] = [
     path: "/best-carnival-makeup-miami",
     title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos and shuttle in one location.",
+      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos in one location.",
     ogImage: HERO_FALLBACK,
   },
 ];
@@ -716,9 +717,9 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     destPath: "/miami",
     faqs: [
       { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
-      { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
+      { q: "Where is the Miami glam hub located?", a: miamiBestLocationAnswer() },
       { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
-      { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
+      { q: "How does booking work?", a: miamiBestBookingAnswer() },
     ],
   },
 };
@@ -861,7 +862,7 @@ function buildJsonLd(route: RouteMeta): object[] {
     });
     // Miami Carnival has moved to Broward County. The announced venue and
     // the no-shuttle warning ship in the crawler-visible head.
-    if (route.path === "/miami") {
+    if (route.path === "/miami" && !hasSeasonPassed("miami")) {
       blocks.push({
         "@context": "https://schema.org",
         "@type": "Place",

@@ -251,7 +251,7 @@ function listSentence(items: string[]): string {
 /** Territory-specific logistics notes that must not be generalised. */
 export const STATION_TERRITORY_NOTES: Record<string, string> = {
   miami:
-    "There is no shuttle in Miami this season. The venue has ready Uber access, and overnight bag check is available as a paid add-on.",
+    "Miami details for the next season, including the venue and shuttle, will be confirmed when dates are announced. Overnight bag check is a paid add-on.",
 };
 
 /**
