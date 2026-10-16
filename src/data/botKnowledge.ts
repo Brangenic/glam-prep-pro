@@ -411,7 +411,7 @@ function buildBrief(slug: string): string {
     );
   }
 
-  if (slug === "miami") parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
+  if (slug === "miami" && !hasSeasonPassed("miami")) parts.push(`## Miami logistics\n${MIAMI_LOGISTICS_SUMMARY}`);
 
   parts.push(
     profile.path

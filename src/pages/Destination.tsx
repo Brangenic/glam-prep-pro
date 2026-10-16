@@ -498,7 +498,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
         )}
 
         {/* Miami logistics notice, venue move and no shuttle, above packages */}
-        {dest.slug === "miami" && (
+        {dest.slug === "miami" && !hasSeasonPassed("miami") && (
           <section
             aria-label="Miami Carnival 2026 venue and travel notice"
             className="border-y border-border bg-card/60"
@@ -740,7 +740,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 )}
 
 
-                {dest.slug === "miami" && (
+                {dest.slug === "miami" && !hasSeasonPassed("miami") && (
                   <p className="font-body text-sm text-muted-foreground mb-8">
                     {MIAMI_SHUTTLE_NOTE} {MIAMI_BAG_CHECK_NOTE}
                   </p>

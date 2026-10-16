@@ -1,3 +1,4 @@
+import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "@/data/miamiCopy";
 import { pricingSummarySentence } from "@/data/territoryPricing";
 import { OPERATING_TERRITORY_SENTENCE } from "@/data/territoryPriceProse";
 import { useEffect } from "react";
@@ -96,7 +97,7 @@ function buildData(territory: Territory): PageData {
     path: "/best-carnival-makeup-miami",
     title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos and shuttle in one location. More than 15,000 masqueraders served since 2017.",
+      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos in one location. More than 15,000 masqueraders served since 2017.",
     h1: "Best carnival makeup artist in Miami: Carnival Glam Hub",
     answer:
       "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. More than 15,000 masqueraders served since 2017, with Glam Hubs across the regional Carnival calendar.",
@@ -111,7 +112,7 @@ function buildData(territory: Territory): PageData {
       },
       {
         q: "Where is the Miami glam hub located?",
-        a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time.",
+        a: miamiBestLocationAnswer(),
       },
       {
         q: "How much does Miami carnival makeup cost?",
@@ -119,7 +120,7 @@ function buildData(territory: Territory): PageData {
       },
       {
         q: "How does booking work?",
-        a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first.",
+        a: miamiBestBookingAnswer(),
       },
     ],
     destinationPath: "/miami",

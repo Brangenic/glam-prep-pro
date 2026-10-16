@@ -1,3 +1,4 @@
+import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "../src/data/miamiCopy";
 // PRICING NOTE: every figure quoted in this file comes from
 // src/data/territoryPricing.ts (masos products). Keep them in step with
 // that file. Never invent a price here.
@@ -526,7 +527,7 @@ function destinationBody(d: ParsedDest): string {
   }
   // Miami's venue has moved to Broward County and there is no shuttle,
   // so the planning notice is crawler-visible, high in the body.
-  if (d.slug === "miami") {
+  if (d.slug === "miami" && !hasSeasonPassed("miami")) {
     parts.push(`<h2>Miami Carnival 2026 venue and travel notice</h2>`);
     parts.push(`<p>${escapeHtml(MIAMI_LOGISTICS_SUMMARY)}</p>`);
   }
@@ -871,7 +872,7 @@ ${CTA}`,
 <h2>What the shuttle costs</h2>
 <p>The shuttle is included in Carnival morning access at US$${GETTING_DRESSED_PRICE} per masquerader, free with any Glam Hub service, in the territories where it runs. It is not sold separately as a taxi service.</p>
 <h2>Where the shuttle runs</h2>
-<p>Shuttle is a Full Service Glam Hub inclusion. Glam Hub Lite territories do not include it, and there is no shuttle in Miami this season. These are the Carnivals open now.</p>
+<p>Shuttle is a Full Service Glam Hub inclusion. Glam Hub Lite territories do not include it, and Miami details for the next season will be confirmed when dates are announced. These are the Carnivals open now.</p>
 ${UPCOMING_WITH_DATES}
 <h2>What your appointment includes</h2>
 ${INCLUSION_LISTS}
@@ -1385,9 +1386,9 @@ function buildRouteMap(): Record<string, Content> {
         "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
       faqs: [
         { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
-        { q: "Where is the Miami glam hub located?", a: "A dedicated Miami Carnival lounge covering Columbus Day weekend, makeup, hair, dressing, photoshoot and shuttle in one location so you arrive at the band on time." },
+        { q: "Where is the Miami glam hub located?", a: miamiBestLocationAnswer() },
         { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
-        { q: "How does booking work?", a: "Choose your Miami slot at carnivalglamhub.masos.app/events and your booking team will confirm your appointment. Appointments are booked by time slot and the popular times go first." },
+        { q: "How does booking work?", a: miamiBestBookingAnswer() },
       ],
     },
   ];

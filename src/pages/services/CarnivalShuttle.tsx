@@ -24,7 +24,7 @@ const faqSchema = {
       name: "Where the shuttle runs",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Shuttle is a Full Service Glam Hub inclusion. It runs in Jamaica and Trinidad. There is no shuttle in Miami this season, and Glam Hub Lite territories do not offer a shuttle.",
+        text: "Shuttle is a Full Service Glam Hub inclusion. It runs in Jamaica and Trinidad. Miami details for the next season will be confirmed when dates are announced, and Glam Hub Lite territories do not offer a shuttle.",
       },
     },
     {
@@ -193,7 +193,7 @@ const CarnivalShuttle = () => {
               <span className="italic text-gradient-primary">Carnival shuttle.</span>
             </h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground mb-7">
-              Complimentary with any Full Service Glam Hub booking in Jamaica and Trinidad. Not available in Miami this season or at Glam Hub Lite territories.
+              Complimentary with any Full Service Glam Hub booking in Jamaica and Trinidad. Not available at Glam Hub Lite territories. Miami details for the next season will be confirmed when dates are announced.
             </p>
             <a
               href={BOOKING_URL} target="_blank" rel="noopener"
