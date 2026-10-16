@@ -318,7 +318,9 @@ function buildEvents(): KnowledgeEvent[] {
 function buildBrief(slug: string): string {
   const profile = getProfile(slug)!;
   const pricing = pricingFor(slug);
-  const bookableEvent = hasBookableEvent(slug);
+  // A wrapped season is never bookable, whatever event is still on file.
+  const wrapped = hasSeasonPassed(slug);
+  const bookableEvent = hasBookableEvent(slug) && !wrapped;
   const tier = tierLabelFor(slug);
   const free = getFreeInclusions(slug);
   const caps = capabilityLines(slug);
@@ -343,7 +345,9 @@ function buildBrief(slug: string): string {
   }
 
   parts.push(
-    profile.venue
+    wrapped
+      ? "Location: this season has wrapped and the venue for the next season is not confirmed. Never name a venue for this territory."
+      : profile.venue
       ? `Location: ${profile.venue}`
       : "Location: the venue is confirmed after booking. Never guess or name a venue for this territory.",
   );
@@ -356,6 +360,10 @@ function buildBrief(slug: string): string {
       `## Prices\nPer masquerader in US dollars.\n\n${dayBlocks.join("\n\n")}`,
     );
     if (pricing.provisionalNote) parts.push(pricing.provisionalNote);
+  } else if (wrapped) {
+    parts.push(
+      "## Prices\nThis season has wrapped and bookings are closed. Never quote a price for this territory. Next season's prices and dates are not confirmed.",
+    );
   } else {
     const preRegistration = getOpenPreRegistration(slug);
     parts.push(
