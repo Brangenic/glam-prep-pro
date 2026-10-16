@@ -104,7 +104,16 @@ describe("group 3: knowledge questions", () => {
   });
 
   it("2. where will Glam Hub be next", () => {
-    expect(promptFor("Where will Glam Hub be next?")).toContain("Renaissance Fort Lauderdale Marina Hotel");
+    // NOW is 24 August 2026, so Miami is next. The pack itself is built on
+    // the real clock, and once Miami 2026 has wrapped its brief stops
+    // naming the 2026 hotel as a current venue.
+    const p = promptFor("Where will Glam Hub be next?");
+    expect(p).toContain("Miami Carnival");
+    if (hasSeasonPassed("miami")) {
+      expect(pack.territories.miami.brief).not.toContain("Renaissance Fort Lauderdale Marina Hotel");
+    } else {
+      expect(p).toContain("Renaissance Fort Lauderdale Marina Hotel");
+    }
   });
 
   it("3. how much is makeup in Trinidad, with day labels", () => {
