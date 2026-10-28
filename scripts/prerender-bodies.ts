@@ -110,6 +110,7 @@ import {
   CONTACT_EMAIL,
   WHATSAPP_DISPLAY,
   WHATSAPP_URL,
+  TEAM_APPLICATION_URL,
 } from "../src/lib/constants";
 
 // Onward destination links in the prerendered HTML show upcoming Carnivals
