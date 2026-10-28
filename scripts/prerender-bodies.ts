@@ -1110,14 +1110,14 @@ ${UPCOMING_WITH_DATES}
 <p>Carnival morning is not a salon day. Chairs run back to back from the early hours, every client leaves for the road, and the work has to hold through heat, sweat, paint and a full day of jumping. We look for artists who are fast without cutting corners, strictly hygienic with their kit, comfortable working to a schedule alongside a large team, and warm with clients who are nervous, jet lagged or running late.</p>
 <h2>How to apply</h2>
 <ol>
-  <li>Send your portfolio. Message us on WhatsApp at ${WHATSAPP_DISPLAY} or email ${escapeHtml(CONTACT_EMAIL)} with your role, your territory and a link to your work. Instagram is fine.</li>
+  <li>Complete the Team Application. Fill in the <a href="${TEAM_APPLICATION_URL}" rel="noopener noreferrer" target="_blank">Carnival Glam Hub Team Application form</a> with your role, your territory and a link to your work. Instagram is fine.</li>
   <li>We review and shortlist. Your work is reviewed against the standard we hold on Carnival morning: speed, hygiene and a finish that survives the road.</li>
   <li>Trial and briefing. Shortlisted artists are briefed on the Hub schedule, the products we use and how the stations run.</li>
   <li>Work the season. Confirmed crew are allocated to a territory and a Carnival day, and paid for the work they take on.</li>
 </ol>
 <h2>Bringing your own clients instead</h2>
 <p>If you would rather work independently and keep your own bookings, you can rent a station inside the Hub instead of joining the crew. Rates, what is provided and which territories are open are all on the <a href="/station-rentals">station rentals page</a>.</p>
-<p><a href="${WHATSAPP_URL}" rel="noopener noreferrer" target="_blank">Apply on WhatsApp</a></p>
+<p><a href="${TEAM_APPLICATION_URL}" rel="noopener noreferrer" target="_blank">Apply now</a>, or message us on <a href="${WHATSAPP_URL}" rel="noopener noreferrer" target="_blank">WhatsApp ${WHATSAPP_DISPLAY}</a> or email ${escapeHtml(CONTACT_EMAIL)}.</p>
 ${CTA}`;
 }
 

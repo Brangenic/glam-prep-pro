@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import RelatedLinks from "@/components/RelatedLinks";
-import { CONTACT_EMAIL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/constants";
+import { CONTACT_EMAIL, TEAM_APPLICATION_URL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/constants";
 import { STATION_SERVICE_TYPES } from "@/data/stationRentals";
 import { getUpcomingDestinations } from "@/data/seasons";
 
@@ -26,8 +26,16 @@ const ROLES = [
 
 const STEPS = [
   {
-    title: "Send your portfolio",
-    body: "Message us on WhatsApp or email with your role, your territory and a link to your work. Instagram is fine.",
+    title: "Complete the Team Application",
+    body: (
+      <>
+        Fill in the{" "}
+        <a href={TEAM_APPLICATION_URL} target="_blank" rel="noopener noreferrer" className="underline">
+          Carnival Glam Hub Team Application form
+        </a>{" "}
+        with your role, your territory and a link to your work. Instagram is fine.
+      </>
+    ),
   },
   {
     title: "We review and shortlist",
@@ -156,14 +164,22 @@ const JoinOurTeam = () => {
               </li>
             ))}
           </ol>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
-              href={WHATSAPP_URL}
+              href={TEAM_APPLICATION_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-primary px-6 font-body text-sm font-semibold text-primary-foreground"
             >
-              Apply on WhatsApp {WHATSAPP_DISPLAY}
+              Apply now
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-border px-6 font-body text-sm font-semibold"
+            >
+              WhatsApp {WHATSAPP_DISPLAY}
             </a>
             <a
               href={`mailto:${CONTACT_EMAIL}?subject=Join%20the%20team`}
