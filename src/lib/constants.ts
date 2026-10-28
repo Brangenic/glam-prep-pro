@@ -18,6 +18,10 @@ export const AMAZON_STORE_PATH = "/amazon-store";
 export const WHATSAPP_URL = "https://wa.me/18765090997";
 export const WHATSAPP_DISPLAY = "+1 876 509 0997";
 
+/** Evergreen Team Application form. Never use the old 2026 intake or payment onboarding links. */
+export const TEAM_APPLICATION_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSfatcdkmAEaPDXcB1XY-GYASAtqZpYCjH3Q97sZOhm0CkujYg/viewform";
+
 /** The address published in the live Terms and Privacy Policy. */
 export const CONTACT_EMAIL = "carnivalglamhub@gmail.com";
 
