@@ -32,9 +32,9 @@ export const SEO_TITLE_OVERRIDES: Record<string, string> = {
   "rihannas-carnival-looks-over-the-years-50-photos":
     "Rihanna's Carnival Looks Over the Years: 50 Photos",
   "jab-jab-grenada-2026-guide":
-    "Jab Jab Grenada 2026: What to Wear, Bring & How to Clean Up",
+    "Jab Jab Grenada: What to Wear, Bring and How to Clean Up",
   "chloe-baileys-saint-lucia-carnival-costume-breaks-the-internet":
-    "Chloe Bailey's Saint Lucia Carnival Costume Breaks the Internet",
+    "Chloe Bailey's Saint Lucia Carnival Costume Goes Viral",
   "behind-the-scenes-with-hoppy-how-stink-dutty-became-a-global-phenomenon":
     "Behind the Scenes with Hoppy: Stink & Dutty Goes Global",
   "carnival-ponytails-bald-spots-what-no-one-tells-you":
@@ -54,7 +54,7 @@ export const SEO_TITLE_OVERRIDES: Record<string, string> = {
   "from-brushes-to-baddie-dolls-glam-hub-launches-first-ever-mondaywear-store":
     "Glam Hub Launches Its First-Ever Mondaywear Store",
   "chloe-bailey-just-broke-the-internet-again-at-saint-lucia-carnival-2025":
-    "Chloe Bailey Breaks the Internet at Saint Lucia Carnival 2025",
+    "Chloe Bailey at Saint Lucia Carnival 2025: The Looks",
   "bianca-manzano-on-hibiscus-bloom-designing-for-iconic-mas-and-why-tobago-carnival-matters":
     "Bianca Manzano on Hibiscus Bloom & Tobago Carnival",
   "chatgpt-picks-the-top-5-best-caribbean-carnivals":
@@ -66,6 +66,22 @@ export const SEO_TITLE_OVERRIDES: Record<string, string> = {
   "is-trinidad-carnival-safe": "Is Trinidad Carnival Safe? The Real Talk",
   "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival":
     "Jab Jab 101: What to Know About Grenada Spicemas",
+  "caribbean-carnival-has-an-airlift-problem":
+    "Caribbean Carnival's Real Problem Is Airlift, Not Demand",
+  "yuma-ferocious-trinidad-carnival-2027-band-launch":
+    "YUMA Ferocious: Trinidad Carnival 2027 Band Launch",
+  "trinidad-carnival-vs-jamaica-carnival":
+    "Trinidad Carnival vs Jamaica Carnival: Which to Choose",
+  "saint-lucia-carnival-2025-travel-tips-for-international-visitors":
+    "Saint Lucia Carnival: Travel Tips for Visitors Flying In",
+  "dont-skip-jouvert-because-of-your-hair-tips-to-keep-it-fabulous":
+    "Don't Skip J'ouvert Over Your Hair: How to Protect It",
+  "spirit-mas-band-launch-trinidad-carnival-2025-the-stage-is-set":
+    "Spirit Mas Band Launch: Trinidad Carnival 2025",
+  "meet-kalista-genevieve-carnival-glam-queen-content-creator":
+    "Meet Kalista Genevieve: Carnival Glam Queen and Creator",
+  "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing":
+    "Trinidad J'ouvert Hair: What Is Yours Actually Doing?",
 };
 
 const SUFFIX = " | Carnival Glam Hub Blog";
