@@ -1412,7 +1412,11 @@ async function main() {
       path: p.path,
       title: p.title,
       description: p.description,
-      ogImage: privateOgImage,
+      // Borrow a real page hero so no private route ships the homepage card.
+      ogImage:
+        allRoutes.find((r) =>
+          r.path === (p.path.startsWith("/trinidad/book") ? "/trinidad/book" : "/about"),
+        )?.ogImage ?? HERO_FALLBACK,
     };
     let html = rewriteHead(template, route);
     if (/<meta\s+name="robots"[^>]*>/i.test(html)) {
