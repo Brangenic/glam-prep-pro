@@ -31,14 +31,6 @@ function readMap(file: string, name: string): Record<string, string> {
 const PRERENDER = readMap("scripts/prerender-blog-meta.ts", "SEO_TITLE_OVERRIDES");
 const RUNTIME = readMap("src/pages/BlogPost.tsx", "SLUG_META_TITLE_OVERRIDES");
 
-// Runtime-only overrides that predate this guard and still need a shorter
-// title chosen by the owner. Remove an entry once its title is replaced.
-// Nothing may be added to this list.
-const PENDING_RUNTIME = new Set([
-  "10-tips-for-trinidad-carnival-jouvert",
-  "carnival-queen-rihannas-stunning-return-to-crop-over-2024",
-]);
-
 const NEW_TITLES: Record<string, string> = {
   "caribbean-carnival-has-an-airlift-problem": "Caribbean Carnival's Real Problem Is Airlift, Not Demand",
   "yuma-ferocious-trinidad-carnival-2027-band-launch": "YUMA Ferocious: Trinidad Carnival 2027 Band Launch",
@@ -56,6 +48,9 @@ const NEW_TITLES: Record<string, string> = {
     "Chloe Bailey at Saint Lucia Carnival 2025: The Looks",
   "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing":
     "Trinidad J'ouvert Hair: What Is Yours Actually Doing?",
+  "10-tips-for-trinidad-carnival-jouvert": "10 Trinidad J'ouvert Tips From People Who Have Done It",
+  "carnival-queen-rihannas-stunning-return-to-crop-over-2024": "Rihanna's Crop Over 2024: The Carnival Queen Returns",
+  "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival": "Jab Jab 101: What to Know About Grenada Spicemas",
 };
 
 describe("blog title overrides fit 60 characters escaped", () => {
@@ -63,18 +58,13 @@ describe("blog title overrides fit 60 characters escaped", () => {
     expect(escapedLength(title)).toBeLessThanOrEqual(TITLE_MAX);
   });
 
-  it.each(Object.entries(RUNTIME).filter(([slug]) => !PENDING_RUNTIME.has(slug)))("runtime: %s", (_slug, title) => {
+  // No exemptions. Every runtime override fits too.
+  it.each(Object.entries(RUNTIME))("runtime: %s", (_slug, title) => {
     expect(escapedLength(title)).toBeLessThanOrEqual(TITLE_MAX);
-  });
-
-  it("the pending list only holds entries that are still too long", () => {
-    for (const slug of PENDING_RUNTIME) {
-      expect(escapedLength(RUNTIME[slug] ?? "")).toBeGreaterThan(TITLE_MAX);
-    }
   });
 });
 
-describe("the eleven replacement titles", () => {
+describe("the replacement titles", () => {
   it.each(Object.entries(NEW_TITLES))("%s is identical on both surfaces", (slug, title) => {
     expect(PRERENDER[slug]).toBe(title);
     expect(RUNTIME[slug]).toBe(title);
