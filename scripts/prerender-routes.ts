@@ -38,7 +38,16 @@ import {
   ABOUT_PAGE_TITLE,
   REVIEWS_PAGE_DESCRIPTION,
   REVIEWS_PAGE_TITLE,
+  TRINIDAD_2027_PAGE_TITLE,
 } from "../src/data/pageMeta";
+import {
+  PRIVATE_ROBOTS,
+  PRIVATE_ROUTES,
+  ROOT_ALIASES,
+  destinationStubMeta,
+  isTerritoryStubPath,
+  rootAliasMeta,
+} from "../src/data/legacyRoutes";
 import {
   DEPOSIT_AMOUNT,
   HAIR_FROM,
@@ -506,7 +515,7 @@ const staticRoutes: RouteMeta[] = [
   },
   {
     path: "/trinidad-carnival-2027",
-    title: "Trinidad Carnival 2027 Makeup & Hair | Glam Hub",
+    title: TRINIDAD_2027_PAGE_TITLE,
     description:
       `Trinidad Carnival 2027 runs Monday 8 and Tuesday 9 February. Hair, makeup and photos from the Hilton, two minutes from the Savannah. US$${DEPOSIT_AMOUNT} books a slot.`,
     ogImage: HERO_FALLBACK,
