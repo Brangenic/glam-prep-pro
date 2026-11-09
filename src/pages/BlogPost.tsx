@@ -290,19 +290,41 @@ const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
   "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips":
     "Trinidad Carnival 2027 Guide: Dates, Bands, Costumes",
   "what-is-jouvert-and-why-should-you-do-it-at-least-once":
-    "What Is J'ouvert? The Pre-Dawn Carnival Ritual Explained | Carnival Glam Hub",
+    "What Is J'ouvert? The Pre-Dawn Carnival Ritual Explained",
   "10-tips-for-trinidad-carnival-jouvert":
     "10 J'ouvert Tips for Trinidad Carnival, From People Who Have Played | Carnival Glam Hub",
   "top-seven-best-carnival-hairstyles":
-    "The Best Carnival Hairstyles That Survive the Road | Carnival Glam Hub",
+    "The Best Carnival Hairstyles That Survive the Road",
   "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival":
-    "Jab Jab 101: What You Need to Know About Grenada Spicemas | Carnival Glam Hub",
+    "Jab Jab 101: What You Need to Know About Grenada Spicemas",
   "top-5-caribbean-carnival-jouvert-bands-experiences":
-    "The 5 Best Caribbean Carnival J'ouvert Bands and Experiences | Carnival Glam Hub",
+    "The 5 Best Caribbean Carnival J'ouvert Bands and Experiences",
   "strut-or-struggle-the-ultimate-guide-to-carnival-shoes":
-    "The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle | Carnival Glam Hub",
+    "The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle",
   "carnival-queen-rihannas-stunning-return-to-crop-over-2024":
     "Rihanna's Crop Over Looks: The Carnival Queen Returns to Barbados | Carnival Glam Hub",
+  "caribbean-carnival-has-an-airlift-problem":
+    "Caribbean Carnival's Real Problem Is Airlift, Not Demand",
+  "yuma-ferocious-trinidad-carnival-2027-band-launch":
+    "YUMA Ferocious: Trinidad Carnival 2027 Band Launch",
+  "trinidad-carnival-vs-jamaica-carnival":
+    "Trinidad Carnival vs Jamaica Carnival: Which to Choose",
+  "jab-jab-grenada-2026-guide":
+    "Jab Jab Grenada: What to Wear, Bring and How to Clean Up",
+  "saint-lucia-carnival-2025-travel-tips-for-international-visitors":
+    "Saint Lucia Carnival: Travel Tips for Visitors Flying In",
+  "dont-skip-jouvert-because-of-your-hair-tips-to-keep-it-fabulous":
+    "Don't Skip J'ouvert Over Your Hair: How to Protect It",
+  "spirit-mas-band-launch-trinidad-carnival-2025-the-stage-is-set":
+    "Spirit Mas Band Launch: Trinidad Carnival 2025",
+  "meet-kalista-genevieve-carnival-glam-queen-content-creator":
+    "Meet Kalista Genevieve: Carnival Glam Queen and Creator",
+  "chloe-baileys-saint-lucia-carnival-costume-breaks-the-internet":
+    "Chloe Bailey's Saint Lucia Carnival Costume Goes Viral",
+  "chloe-bailey-just-broke-the-internet-again-at-saint-lucia-carnival-2025":
+    "Chloe Bailey at Saint Lucia Carnival 2025: The Looks",
+  "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing":
+    "Trinidad J'ouvert Hair: What Is Yours Actually Doing?",
 };
 
 // Per-slug body content cleanup: strip broken images (and their orphan
