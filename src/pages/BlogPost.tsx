@@ -3,6 +3,8 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PromoBookingCard from "@/components/PromoBookingCard";
+import SeasonNotice from "@/components/blog/SeasonNotice";
+import { blogImageAlt } from "@/data/blogImageAlt";
 import { fitTitle, fitDescription, plainTextExcerpt, deEmDash } from "@/lib/metaText";
 
 // Extract a YouTube video id from any common URL form. Strips tracking
@@ -693,6 +695,9 @@ const BlogPost = () => {
                   </div>
                 )}
 
+                {/* Current-season notice, top of the article body */}
+                <SeasonNotice slug={slug} />
+
                 {/* Content */}
                 {post.content ? (
                   <div className="prose prose-base max-w-none dark:prose-invert
@@ -715,6 +720,11 @@ const BlogPost = () => {
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
+                        // Synced articles can carry images with an empty alt.
+                        // Fill it from the shared map so every image is described.
+                        img: ({ node, src, alt, ...props }) => (
+                          <img src={src} alt={blogImageAlt(src, alt) ?? ""} {...props} />
+                        ),
                         a: ({ node, href, children, ...props }) => {
                           const rewritten = rewriteHref(href);
                           // Drop anchors to dead internal placeholder domains
@@ -751,7 +761,11 @@ const BlogPost = () => {
                             nonWs[0].type === "element" &&
                             nonWs[0].tagName === "img";
                           if (onlyImage) {
-                            const alt = (nonWs[0].properties?.alt ?? "").toString().trim();
+                            const alt =
+                              blogImageAlt(
+                                (nonWs[0].properties?.src ?? "").toString(),
+                                (nonWs[0].properties?.alt ?? "").toString(),
+                              ) ?? "";
                             derivedAriaLabel =
                               alt || labelForHost(finalHref ?? "") || undefined;
                           }

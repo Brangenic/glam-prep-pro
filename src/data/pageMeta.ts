@@ -13,6 +13,13 @@ export const ABOUT_PAGE_TITLE =
 export const ABOUT_PAGE_DESCRIPTION =
   "Caribbean Carnival morning concierge, co-founded in 2017 by Kibwe McGann and Gabrielle Waite. More than 15,000 masqueraders served since 2017.";
 
+/**
+ * The dates go in the title because Bing showed date queries ("when is
+ * trinidad carnival 2027") earning impressions and no clicks.
+ */
+export const TRINIDAD_2027_PAGE_TITLE =
+  "Trinidad Carnival 2027: 8 and 9 February | Glam Hub";
+
 export const REVIEWS_PAGE_TITLE =
   "Carnival Glam Hub Reviews | What Masqueraders Say";
 

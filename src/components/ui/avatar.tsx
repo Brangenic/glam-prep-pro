@@ -17,7 +17,9 @@ Avatar.displayName = AvatarPrimitive.Root.displayName;
 
 const AvatarImage = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+  // alt is required so this component can never render an <img> without one.
+  // Pass alt="" only for a purely decorative image.
+  Omit<React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>, "alt"> & { alt: string }
 >(({ className, ...props }, ref) => (
   <AvatarPrimitive.Image ref={ref} className={cn("aspect-square h-full w-full", className)} {...props} />
 ));

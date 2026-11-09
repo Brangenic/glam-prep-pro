@@ -122,6 +122,9 @@ const UPCOMING_LIST_HTML = getUpcomingDestinations(undefined, undefined, { dedup
   .join("\n");
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+import { PRIVATE_ROUTES } from "../src/data/legacyRoutes";
+import { getSeasonNotice } from "../src/data/blogSeasonNotices";
+import { blogImageAlt } from "../src/data/blogImageAlt";
 import {
   TERMS_BLOCKS,
   PRIVACY_BLOCKS,
@@ -1477,6 +1480,13 @@ ${relatedBlock({
     };
   }
 
+  // Private and post-transaction routes. Their head (with noindex,
+  // follow) is written by prerender-routes.ts from the same module; this
+  // adds the h1 and the one-line description to the body.
+  for (const p of PRIVATE_ROUTES) {
+    map[p.path] = { title: escapeHtml(p.h1), body: `<p>${escapeHtml(p.description)}</p>` };
+  }
+
   return map;
 }
 
@@ -1558,6 +1568,11 @@ function markdownToSafeHtml(md: string): string {
     .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
     .replace(/\son[a-z]+="[^"]*"/gi, "")
     .replace(/\son[a-z]+='[^']*'/gi, "");
+  // Fill empty alts from the shared map, as BlogPost.tsx does at runtime.
+  html = html.replace(/<img src="([^"]*)" alt="" \/>/g, (m, src: string) => {
+    const alt = blogImageAlt(src.replace(/&amp;/g, "&"));
+    return alt ? `<img src="${src}" alt="${escapeHtml(alt).replace(/"/g, "&quot;")}" />` : m;
+  });
   return html;
 }
 
@@ -1685,6 +1700,21 @@ function blogRelatedBlock(slug: string, allSlugs: string[]): string {
   });
 }
 
+// Current-season notice from src/data/blogSeasonNotices.ts, the same copy
+// the React SeasonNotice component renders at the top of the article.
+function seasonNoticeHtml(slug: string): string {
+  const parts = getSeasonNotice(slug);
+  if (!parts) return "";
+  const inner = parts
+    .map((p) =>
+      typeof p === "string"
+        ? escapeHtml(p)
+        : `<a href="${escapeHtml(p.href)}">${escapeHtml(p.text)}</a>`,
+    )
+    .join("");
+  return `<aside aria-label="Current season"><p>${inner}</p></aside>\n`;
+}
+
 function blogFullContent(post: BlogRow, allSlugs: string[]): Content {
   const article = markdownToSafeHtml(post.content);
   const lead = post.description
@@ -1693,7 +1723,7 @@ function blogFullContent(post: BlogRow, allSlugs: string[]): Content {
   return {
     title: post.title,
     body: `${lead}<article data-prerender-article="1">
-${article}
+${seasonNoticeHtml(post.slug)}${article}
 </article>
 <p><a href="/blogs">Back to the Carnival Glam Hub journal</a> · <a href="/">Home</a> · <a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a></p>
 ${blogRelatedBlock(post.slug, allSlugs)}
@@ -1707,7 +1737,7 @@ function blogStubContent(html: string, slug: string, allSlugs: string[]): Conten
   if (!c) return null;
   return {
     title: c.title,
-    body: `${c.body}\n${blogRelatedBlock(slug, allSlugs)}`,
+    body: `${seasonNoticeHtml(slug)}${c.body}\n${blogRelatedBlock(slug, allSlugs)}`,
   };
 }
 
