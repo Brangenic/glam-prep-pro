@@ -16,7 +16,7 @@
 
 import { mkdirSync, writeFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
-import { WIX_REDIRECTS, WIX_REDIRECT_BASE, wixRedirectHeading, WIX_TITLE_SUFFIX } from "../src/lib/wixRedirects";
+import { WIX_REDIRECTS, WIX_REDIRECT_BASE, wixRedirectHeading, wixRedirectTitle } from "../src/lib/wixRedirects";
 
 const DIST = resolve("dist");
 
@@ -26,7 +26,8 @@ const escapeAttr = (s: string) =>
 function buildHtml(targetAbs: string, targetPath: string): string {
   const t = escapeAttr(targetAbs);
   const heading = escapeAttr(wixRedirectHeading(targetPath));
-  const title = `${heading}${WIX_TITLE_SUFFIX}`;
+  // Fitted to 60 characters escaped by the shared rule in wixRedirects.ts.
+  const title = escapeAttr(wixRedirectTitle(targetPath));
   // NOTE: intentionally NO `noindex`. Self-canonical to the new URL is
   // the correct consolidation signal. Google will drop the /post/*
   // slug and index the target instead.
