@@ -10,6 +10,7 @@
  *   their own title, such as src/pages/blog/AirliftProblem.tsx
  * - destination meta titles, season aware, as Destination.tsx sets them
  * - the moved-page and private route titles from src/data/legacyRoutes.ts
+ * - the legacy Wix /post/<slug> pages and literal <title> tags in scripts/
  * - the homepage title in index.html
  */
 import { describe, expect, it } from "vitest";
@@ -25,6 +26,7 @@ import {
 } from "@/data/legacyRoutes";
 import { destinations } from "@/data/destinations";
 import { seasonAwareMeta } from "@/data/seasons";
+import { WIX_REDIRECTS, WIX_TITLE_SUFFIX, wixRedirectHeading } from "@/lib/wixRedirects";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 
@@ -57,7 +59,7 @@ for (const m of routesSrc.matchAll(/path:\s*"([^"]+)"/g)) routePaths.push(m[1]);
 for (const file of walk(resolve("src"))) {
   const rel = relative(process.cwd(), file);
   const src = readFileSync(file, "utf8");
-  for (const m of src.matchAll(/const ([A-Z0-9_]*TITLE)\s*(?::\s*string\s*)?=\s*"([^"]+)"/g)) {
+  for (const m of src.matchAll(/const ([A-Z0-9_]*_TITLE)\s*(?::\s*string\s*)?=\s*"([^"]+)"/g)) {
     add(`${rel} ${m[1]}`, m[2]);
   }
   for (const m of src.matchAll(/document\.title\s*=\s*"([^"]+)"/g)) add(`${rel} document.title`, m[1]);
@@ -68,9 +70,23 @@ for (const m of read("src/pages/BestCarnivalMakeup.tsx").matchAll(/\btitle:\s*"(
   add("src/pages/BestCarnivalMakeup.tsx", m[1]);
 }
 
-// Destination pages, as the runtime sets them.
+// Destination pages: the stored title, which serves while a season is
+// open, and the season aware title the runtime sets once it has passed.
 for (const d of destinations) {
-  add(`destination ${d.slug}`, seasonAwareMeta(d.slug, d.name, d.metaTitle, d.metaDescription).title);
+  add(`destinations.ts ${d.slug} metaTitle`, d.metaTitle);
+  add(`destination ${d.slug} season aware`, seasonAwareMeta(d.slug, d.name, d.metaTitle, d.metaDescription).title);
+}
+
+// Literal <title> tags in the build scripts, such as the withdrawn post page.
+for (const file of readdirSync(resolve("scripts")).filter((f) => f.endsWith(".ts"))) {
+  for (const m of read(`scripts/${file}`).matchAll(/<title>([^<$]+)<\/title>/g)) add(`scripts/${file} <title>`, m[1]);
+}
+
+// Legacy Wix /post/<slug> pages, built from the same heading function as
+// scripts/prerender-wix-redirects.ts. The heading is escaped there before
+// the suffix is added, which escapedLength accounts for.
+for (const [from, to] of Object.entries(WIX_REDIRECTS)) {
+  add(`/post/${from}`, `${wixRedirectHeading(to)}${WIX_TITLE_SUFFIX}`);
 }
 
 // Moved pages and private routes.
