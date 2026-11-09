@@ -82,6 +82,10 @@ export const SEO_TITLE_OVERRIDES: Record<string, string> = {
     "Meet Kalista Genevieve: Carnival Glam Queen and Creator",
   "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing":
     "Trinidad J'ouvert Hair: What Is Yours Actually Doing?",
+  "10-tips-for-trinidad-carnival-jouvert":
+    "10 Trinidad J'ouvert Tips From People Who Have Done It",
+  "carnival-queen-rihannas-stunning-return-to-crop-over-2024":
+    "Rihanna's Crop Over 2024: The Carnival Queen Returns",
 };
 
 const SUFFIX = " | Carnival Glam Hub Blog";

@@ -292,17 +292,17 @@ const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
   "what-is-jouvert-and-why-should-you-do-it-at-least-once":
     "What Is J'ouvert? The Pre-Dawn Carnival Ritual Explained",
   "10-tips-for-trinidad-carnival-jouvert":
-    "10 J'ouvert Tips for Trinidad Carnival, From People Who Have Played | Carnival Glam Hub",
+    "10 Trinidad J'ouvert Tips From People Who Have Done It",
   "top-seven-best-carnival-hairstyles":
     "The Best Carnival Hairstyles That Survive the Road",
   "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival":
-    "Jab Jab 101: What You Need to Know About Grenada Spicemas",
+    "Jab Jab 101: What to Know About Grenada Spicemas",
   "top-5-caribbean-carnival-jouvert-bands-experiences":
     "The 5 Best Caribbean Carnival J'ouvert Bands and Experiences",
   "strut-or-struggle-the-ultimate-guide-to-carnival-shoes":
     "The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle",
   "carnival-queen-rihannas-stunning-return-to-crop-over-2024":
-    "Rihanna's Crop Over Looks: The Carnival Queen Returns to Barbados | Carnival Glam Hub",
+    "Rihanna's Crop Over 2024: The Carnival Queen Returns",
   "caribbean-carnival-has-an-airlift-problem":
     "Caribbean Carnival's Real Problem Is Airlift, Not Demand",
   "yuma-ferocious-trinidad-carnival-2027-band-launch":
