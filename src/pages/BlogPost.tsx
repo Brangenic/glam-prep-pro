@@ -3,6 +3,8 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PromoBookingCard from "@/components/PromoBookingCard";
+import SeasonNotice from "@/components/blog/SeasonNotice";
+import { blogImageAlt } from "@/data/blogImageAlt";
 import { fitTitle, fitDescription, plainTextExcerpt, deEmDash } from "@/lib/metaText";
 
 // Extract a YouTube video id from any common URL form. Strips tracking
