@@ -1287,12 +1287,21 @@ async function main() {
   // while consolidating signals onto the short slug via canonical + meta
   // refresh. Deliberately NO robots noindex: noindex plus canonical is a
   // contradictory signal and would block consolidation.
+  //
+  // Only real territory slugs get a stub (see isTerritoryStubPath), and
+  // each stub carries its own "has moved" title, description and h1 from
+  // src/data/legacyRoutes.ts, so it never duplicates its target page.
+  let destinationStubs = 0;
   for (const route of destinationRoutes) {
+    if (!isTerritoryStubPath(route.path)) continue;
     const slug = route.path.replace(/^\//, "");
-    const target = `${BASE_URL}/${slug}`;
+    const meta = destinationStubMeta(slug, BASE_URL);
+    const target = meta.absoluteTarget;
     const ogImage = route.ogImage?.startsWith("http")
       ? route.ogImage
       : `${BASE_URL}${route.ogImage ?? ""}`;
+    const title = escapeAttr(meta.title);
+    const desc = escapeAttr(meta.description);
     const stub = `<!doctype html>
 <html lang="en">
   <head>
@@ -1300,11 +1309,11 @@ async function main() {
     <meta charset="utf-8" />
     <meta http-equiv="refresh" content="0; url=/${slug}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${route.title}</title>
-    <meta name="description" content="${route.description.replace(/"/g, "&quot;")}" />
+    <title>${escapeHtml(meta.title)}</title>
+    <meta name="description" content="${desc}" />
     <link rel="canonical" href="${target}" />
-    <meta property="og:title" content="${route.title}" />
-    <meta property="og:description" content="${route.description.replace(/"/g, "&quot;")}" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${desc}" />
     <meta property="og:url" content="${target}" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="${ogImage}" />
@@ -1312,50 +1321,59 @@ async function main() {
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="${target}" />
-    <meta name="twitter:title" content="${route.title}" />
-    <meta name="twitter:description" content="${route.description.replace(/"/g, "&quot;")}" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${desc}" />
     <meta name="twitter:image" content="${ogImage}" />
   </head>
-  <body><a href="/${slug}">Continue to ${route.title}</a></body>
+  <body>
+    <h1>${escapeHtml(meta.h1)}</h1>
+    <p>${escapeHtml(meta.sentence)}</p>
+    <p><a href="/${slug}">Continue to ${escapeHtml(route.title)}</a></p>
+  </body>
 </html>
 `;
     const dir = join(DIST, "destinations", slug);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), stub);
+    destinationStubs++;
   }
   console.log(
-    `prerender-routes: wrote ${destinationRoutes.length} /destinations/* redirect stubs.`,
+    `prerender-routes: wrote ${destinationStubs} /destinations/* redirect stubs.`,
   );
 
-  // Root-level legacy aliases. /glam-store is the old name for the Amazon
-  // storefront, so it is one page under two URLs. It gets its own head and
-  // a canonical onto /amazon-store rather than a second self-canonical
-  // page, which would split the signals between duplicates. Same stub
-  // shape as the /destinations/* aliases: canonical, meta refresh and a
-  // JavaScript replace, with a real link in the body so it is never read
-  // as a Soft 404.
-  const rootAliases: { from: string; to: string }[] = [
-    { from: "/glam-store", to: "/amazon-store" },
-  ];
-  for (const alias of rootAliases) {
+  // Root-level legacy aliases, for example /glam-store, /privacy-policy
+  // and /trinidad-and-tobago. Each exists in src/App.tsx only as a
+  // Navigate, so without a file here it serves the homepage head. Every
+  // alias gets its own head with a title derived from the OLD path (so
+  // aliases sharing a target never duplicate each other), a canonical onto
+  // the target, a meta refresh and a JavaScript replace, with a real h1,
+  // sentence and link in the body so it is never read as a Soft 404.
+  // The hash only steers the visitor to the right section, as the React
+  // Navigate does, and never appears in the canonical.
+  let rootStubs = 0;
+  for (const alias of ROOT_ALIASES) {
+    const meta = rootAliasMeta(alias, BASE_URL);
+    const abs = meta.absoluteTarget;
     const target = allRoutes.find((r) => r.path === alias.to);
-    if (!target) continue;
-    const abs = `${BASE_URL}${alias.to}`;
-    const ogImage = target.ogImage?.startsWith("http")
-      ? target.ogImage
-      : `${BASE_URL}${target.ogImage ?? ""}`;
-    const desc = target.description.replace(/"/g, "&quot;");
+    const rawImage = target?.ogImage ?? HERO_FALLBACK;
+    const ogImage = rawImage.startsWith("http") ? rawImage : `${BASE_URL}${rawImage}`;
+    const title = escapeAttr(meta.title);
+    const desc = escapeAttr(meta.description);
+    const hash = alias.hash ?? "";
+    const jsTarget = hash
+      ? `"${alias.to}" + location.search + (location.hash || "${hash}")`
+      : `"${alias.to}" + location.search + location.hash`;
     const stub = `<!doctype html>
 <html lang="en">
   <head>
-    <script>location.replace("${alias.to}" + location.search + location.hash);</script>
+    <script>location.replace(${jsTarget});</script>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url=${alias.to}" />
+    <meta http-equiv="refresh" content="0; url=${alias.to}${hash}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${target.title}</title>
+    <title>${escapeHtml(meta.title)}</title>
     <meta name="description" content="${desc}" />
     <link rel="canonical" href="${abs}" />
-    <meta property="og:title" content="${target.title}" />
+    <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${desc}" />
     <meta property="og:url" content="${abs}" />
     <meta property="og:type" content="website" />
@@ -1364,22 +1382,56 @@ async function main() {
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="${abs}" />
-    <meta name="twitter:title" content="${target.title}" />
+    <meta name="twitter:title" content="${title}" />
     <meta name="twitter:description" content="${desc}" />
     <meta name="twitter:image" content="${ogImage}" />
   </head>
   <body>
-    <h1>${target.title}</h1>
-    <p>The Glam Store has moved. Every Carnival Glam Hub product pick now lives on one page, the Amazon storefront, with the makeup, hair, costume and travel items our artists actually use on Carnival morning.</p>
-    <p><a href="${alias.to}">Continue to the Carnival Glam Hub Amazon storefront</a></p>
+    <h1>${escapeHtml(meta.h1)}</h1>
+    <p>${escapeHtml(alias.body)}</p>
+    <p><a href="${alias.to}${hash}">${escapeHtml(alias.linkText)}</a></p>
   </body>
 </html>
 `;
     const dir = join(DIST, alias.from.replace(/^\//, ""));
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), stub);
+    rootStubs++;
   }
-  console.log(`prerender-routes: wrote ${rootAliases.length} root alias redirect stubs.`);
+  console.log(`prerender-routes: wrote ${rootStubs} root alias redirect stubs.`);
+
+  // Private and post-transaction routes (/auth, /admin, the booking
+  // confirmations). These boot the full SPA, so they are written from the
+  // template through rewriteHead, then the template's index robots tag is
+  // swapped for noindex, follow. They are NOT disallowed in robots.txt,
+  // because a crawler that cannot fetch the page cannot see the noindex.
+  // prerender-bodies.ts adds the matching h1 from the same module.
+  let privateWritten = 0;
+  for (const p of PRIVATE_ROUTES) {
+    const route: RouteMeta = {
+      path: p.path,
+      title: p.title,
+      description: p.description,
+      ogImage: privateOgImage,
+    };
+    let html = rewriteHead(template, route);
+    if (/<meta\s+name="robots"[^>]*>/i.test(html)) {
+      html = html.replace(
+        /<meta\s+name="robots"[^>]*>/i,
+        `<meta name="robots" content="${PRIVATE_ROBOTS}" />`,
+      );
+    } else {
+      html = html.replace(
+        "</head>",
+        `    <meta name="robots" content="${PRIVATE_ROBOTS}" />\n  </head>`,
+      );
+    }
+    const dir = join(DIST, p.path.replace(/^\//, ""));
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "index.html"), html);
+    privateWritten++;
+  }
+  console.log(`prerender-routes: wrote ${privateWritten} private noindex routes.`);
 
   console.log(`prerender-routes: wrote ${written} per-route HTML files.`);
 
