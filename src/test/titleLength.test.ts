@@ -110,3 +110,9 @@ describe("every site title tag fits 60 characters escaped", () => {
     expect(escapedLength(title)).toBeLessThanOrEqual(TITLE_MAX);
   });
 });
+
+describe("legacy Wix page titles", () => {
+  it.each(Object.entries(WIX_REDIRECTS))("/post/%s ends on a real word", (_from, to) => {
+    expect(wixRedirectTitle(to)).not.toMatch(/[\s,;:.\-–|]$|\s(?:&|and|or|plus|with|the)$/i);
+  });
+});
