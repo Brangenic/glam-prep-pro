@@ -100,13 +100,76 @@ for (const p of PRIVATE_ROUTES) add(`private ${p.path}`, p.title);
 const home = read("index.html").match(/<title>([^<]+)<\/title>/)?.[1];
 if (home) add("index.html", home);
 
+// Titles found over 60 characters when this guard was extended, reported
+// to the owner and awaiting her wording. Nothing new may be added here:
+// any other over-length title fails, and an entry that has been fixed
+// fails until it is removed, so the list can only shrink.
+//
+// - /saint-lucia: the stored 2026 title. It is not served today, because
+//   the season has wrapped and the season aware title replaces it, but it
+//   would serve again once a 2027 date is set.
+// - /post/*: legacy Wix pages titled from their target slug plus
+//   " | Carnival Glam Hub Journal" by scripts/prerender-wix-redirects.ts.
+const AWAITING_WORDING = new Set<string>([
+  "prerender-routes /saint-lucia",
+  "destinations.ts saint-lucia metaTitle",
+  "/post/ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips",
+  "/post/amazon-finds-i-swear-by-for-carnival-season",
+  "/post/carnival_hairstyle",
+  "/post/top-5-caribbean-carnival-jouvert-bands-experiences",
+  "/post/strut-or-struggle-the-ultimate-guide-to-carnival-shoes",
+  "/post/behind-the-scenes-with-hoppy-how-stink-dutty-became-a-global-carnival-phenomenon",
+  "/post/spirit-mas-carnival-band-launch-trinidad-2025-the-stage-is-set",
+  "/post/what-shoes-to-wear-for-trinidad-carnival-monday-tuesday-no-not-heels",
+  "/post/jab-jab-101-what-you-really-need-to-know-about-grenada-carnival",
+  "/post/tribe-2026-band-launch-a-sea-of-mas-magic-mystery",
+  "/post/serena-s-trinidad-carnival-journey-an-inspiration-for-all-masqueraders",
+  "/post/what-is-jouvert-and-why-should-you-do-it-at-least-once",
+  "/post/chloe-bailey-s-saint-lucia-carnival-costume-breaks-the-internet-khloe-kardashian-approves",
+  "/post/bianca-marzano-on-hibiscus-bloom-designing-for-iconic-mas-and-why-tobago-carnival-matters",
+  "/post/the-excitement-of-trinidad-carnival-2025-band-launch-season",
+  "/post/2025-carnival-makeup-guide-50-looks-to-show-your-mua",
+  "/post/what-you-need-to-know-about-saint-lucia-carnival",
+  "/post/meet-kalista-genevieve-carnival-glam-queen-content-creator",
+  "/post/carnival-ponytails-bald-spots",
+  "/post/chloe-bailey-just-broke-the-internet-again-at-saint-lucia-carnival-2025",
+  "/post/should-the-makeup-match-your-costume",
+  "/post/rihanna-s-carnival-looks-over-the-years-50-photos",
+  "/post/de-fete-need-rules-fete-etiquette",
+  "/post/you-re-outside-for-trinidad-jouvert-but-your-hair-what-s-she-doing",
+  "/post/from-brushes-to-baddie-dolls-glam-hub-launches-first-ever-mondaywear-store",
+  "/post/winnie-harlow-turns-heads-at-jamaica-carnival-a-genxs-glam-hub-experience",
+  "/post/saint-lucia-carnival-2025-travel-tips-for-international-visitors",
+  "/post/carnival-icon-beyond-the-bacchanal",
+  "/post/is-soft-glam-the-new-trend-uncovering-the-top-carnival-makeup-looks-for-2024",
+  "/post/epic-carnival-cruise-partners-with-carnival-glam-hub-for-trinidad-carnival-2026",
+  "/post/epic-welcomes-carnival-glam-hub-aboard-for-trinidad-carnival-2026",
+  "/post/chatgpt-picks-the-top-5-best-caribbean-carnivals-here-s-my-wild-take",
+  "/post/carnival-queen-rihanna-s-stunning-return-to-crop-over-2024",
+  "/post/your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know",
+  "/post/barbados-crop-over-2025-what-to-know-before-you-go",
+  "/post/don-t-make-these-5-rookie-mistakes-trinidad-carnival-2026",
+  "/post/jouvert-hair-tips",
+  "/post/how-to-put-on-your-carnival-wire-bra",
+  "/post/10-tips-for-trinidad-carnival-jouvert",
+  "/post/your-carnival-hair-is-not-a-joke-jouvert-essentials-you-ll-thank-yourself-for",
+]);
+
 describe("every site title tag fits 60 characters escaped", () => {
   it("found the title sources", () => {
     expect(home).toBeTruthy();
     expect(titles.length).toBeGreaterThan(60);
   });
 
-  it.each(titles)("%s: %s", (_where, title) => {
+  it.each(titles.filter(([where]) => !AWAITING_WORDING.has(where)))("%s: %s", (_where, title) => {
     expect(escapedLength(title)).toBeLessThanOrEqual(TITLE_MAX);
+  });
+
+  it("the awaiting list only holds titles that exist and are still too long", () => {
+    const found = new Map(titles);
+    for (const where of AWAITING_WORDING) {
+      expect(found.has(where), `${where} no longer exists`).toBe(true);
+      expect(escapedLength(found.get(where)!), `${where} now fits, remove it`).toBeGreaterThan(TITLE_MAX);
+    }
   });
 });
