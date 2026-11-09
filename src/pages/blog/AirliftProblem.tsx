@@ -9,7 +9,9 @@ const SLUG = "caribbean-carnival-has-an-airlift-problem";
 const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
 const TITLE =
   "The Caribbean Carnival economy doesn\u2019t have a demand problem. It has an airlift problem.";
-const META_TITLE = "The Caribbean Carnival airlift problem | Carnival Glam Hub";
+// Title tag only, kept identical to SEO_TITLE_OVERRIDES in
+// scripts/prerender-blog-meta.ts. The headline (TITLE) is unchanged.
+const META_TITLE = "Caribbean Carnival's Real Problem Is Airlift, Not Demand";
 const DESCRIPTION =
   "From inside the Caribbean Carnival economy, demand for Trinidad, Jamaica, Crop Over, Spice Mas, Caribana, Miami, and other regional Carnivals is strong. What\u2019s broken is the air capacity moving masqueraders between them.";
 const META_DESCRIPTION =

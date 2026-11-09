@@ -80,6 +80,11 @@ describe("the eleven replacement titles", () => {
     expect(RUNTIME[slug]).toBe(title);
   });
 
+  it("the airlift post's own page sets the same title tag", () => {
+    const src = readFileSync(resolve("src/pages/blog/AirliftProblem.tsx"), "utf8");
+    expect(src.match(/const META_TITLE = "([^"]+)"/)?.[1]).toBe(NEW_TITLES["caribbean-carnival-has-an-airlift-problem"]);
+  });
+
   it("use no em dash", () => {
     expect(Object.values(NEW_TITLES).join(" ")).not.toMatch(/\u2014/);
   });
