@@ -108,7 +108,7 @@ export const destinations: Destination[] = [
       "Photoshoot in the lounge",
     ],
     metaTitle:
-      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam",
     metaDescription:
       "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
   },

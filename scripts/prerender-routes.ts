@@ -322,7 +322,7 @@ const destinationRoutes: RouteMeta[] = [
   {
     path: "/saint-lucia",
     title:
-      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
+      "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam",
     description:
       "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
     ogImage: HERO_FALLBACK,

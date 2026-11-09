@@ -1,3 +1,5 @@
+import { fitTitle } from "./metaText";
+
 // Single source of truth for legacy Wix /post/<slug> → current site redirects.
 // Imported by both the React Router catch-all and the postbuild prerender
 // script that emits static HTML at dist/post/<slug>/index.html.
@@ -137,9 +139,8 @@ export const WIX_TITLE_SUFFIX = " | Carnival Glam Hub Journal";
 
 /**
  * Heading for a legacy /post/<slug> page, from its target path:
- * "/blogs/some-slug-name" becomes "Some Slug Name". The prerender script
- * builds the page title from this plus WIX_TITLE_SUFFIX, and the title
- * length test reads the same function, so the two cannot drift.
+ * "/blogs/some-slug-name" becomes "Some Slug Name". The page title is
+ * built from it by wixRedirectTitle.
  */
 export function wixRedirectHeading(targetPath: string): string {
   const slug = targetPath.replace(/^\/blogs\//, "").replace(/^\/+/, "");
@@ -148,4 +149,14 @@ export function wixRedirectHeading(targetPath: string): string {
     .split("-")
     .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
     .join(" ");
+}
+
+/**
+ * <title> for a legacy /post/<slug> page. fitTitle drops the suffix before
+ * it cuts the heading, and never ends on a dangling conjunction, so a long
+ * slug cannot produce a title over 60 characters. The prerender script and
+ * the title length test both read this, so the two cannot drift.
+ */
+export function wixRedirectTitle(targetPath: string): string {
+  return fitTitle(wixRedirectHeading(targetPath), WIX_TITLE_SUFFIX);
 }
