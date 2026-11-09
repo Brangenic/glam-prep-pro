@@ -60,6 +60,16 @@ at the top of `index.html`, and never point a canonical at a
   enough real content that Google does not classify it as a Soft 404. A
   bare stub was previously flagged as Soft 404 in Search Console, so
   never reduce those pages to one sentence.
+- Every URL that exists in `src/App.tsx` only as a `Navigate`, every
+  `/destinations/<slug>` alias and every private page (auth, admin,
+  booking confirmations) is listed in `src/data/legacyRoutes.ts` and
+  prerendered by `scripts/prerender-routes.ts`. Otherwise it falls through
+  to the homepage head and Bing reports duplicate titles. Alias titles
+  derive from the old path, never the target, and must stay unique, which
+  `src/test/legacyRoutes.test.ts` enforces. Private pages carry
+  `noindex, follow` and are never disallowed in `robots.txt`. A new alias
+  or private route is added to that module in the same change as the
+  route.
 - Three vanity domains point at this site and are managed at the
   registrar, not here. `trinidadcarnivalmakeup.com` 301s to `/trinidad`,
   `miamicarnivalmakeup.com` 301s to `/miami`, and `bookglamhub.com` is
