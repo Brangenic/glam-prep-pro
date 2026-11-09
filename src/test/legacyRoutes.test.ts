@@ -16,7 +16,7 @@ import {
   rootAliasMeta,
 } from "@/data/legacyRoutes";
 import { TRINIDAD_2027_PAGE_TITLE } from "@/data/pageMeta";
-import { BLOG_SEASON_NOTICES, seasonNoticeText } from "@/data/blogSeasonNotices";
+import { BLOG_SEASON_NOTICES, getSeasonNotice, seasonNoticeText } from "@/data/blogSeasonNotices";
 import { blogImageAlt } from "@/data/blogImageAlt";
 
 const BASE = "https://www.carnivalglamhub.com";
@@ -144,16 +144,18 @@ describe("Trinidad Carnival 2027 dates", () => {
     expect(TRINIDAD_2027_PAGE_TITLE).toBe("Trinidad Carnival 2027: 8 and 9 February | Glam Hub");
   });
 
-  it("are in the notice on the 2026 guide, with both links", () => {
-    const parts = BLOG_SEASON_NOTICES["ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips"];
-    expect(seasonNoticeText(parts)).toBe(
-      "Looking for Trinidad Carnival 2027? Carnival Monday and Tuesday 2027 fall on 8 and 9 February. See our Trinidad Carnival 2027 page and the 2027 first-time masquerader guide.",
-    );
-    const links = parts.filter((p): p is { text: string; href: string } => typeof p !== "string");
-    expect(links).toEqual([
-      { text: "Trinidad Carnival 2027 page", href: "/trinidad-carnival-2027" },
-      { text: "2027 first-time masquerader guide", href: "/blogs/trinidad-carnival-2027-first-time-masquerader-guide" },
-    ]);
+});
+
+describe("blog season notices", () => {
+  const slug = "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips";
+
+  it("are empty for now, so the refreshed 2027 guide carries no notice", () => {
+    expect(BLOG_SEASON_NOTICES).toEqual({});
+    expect(getSeasonNotice(slug)).toBeUndefined();
+  });
+
+  it("still join notice parts into plain text when one is added", () => {
+    expect(seasonNoticeText(["See our ", { text: "2027 page", href: "/x" }, "."])).toBe("See our 2027 page.");
   });
 });
 

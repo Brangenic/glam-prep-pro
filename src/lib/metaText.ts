@@ -22,15 +22,45 @@ const collapse = (s: string) =>
 const escapedLength = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").length;
 
+const TRAILING_PUNCTUATION = /[\s,;:.\-–|]+$/;
+// A whole trailing word that only joins to something that has been cut.
+// The leading space requirement means a one-word string is never emptied
+// and words such as "Brand" or "Weather" are never touched.
+const DANGLING_CONJUNCTION = /\s+(?:&|and|or|plus|with|the)$/i;
+
+/**
+ * Tidy the end of a string cut at a word boundary: strip trailing
+ * punctuation, then a dangling conjunction, then any punctuation the
+ * conjunction left behind, until the string ends on a real word. Exported
+ * for tests.
+ */
+export function stripDanglingEnd(text: string): string {
+  let out = text;
+  let prev: string;
+  do {
+    prev = out;
+    out = out.replace(TRAILING_PUNCTUATION, "").replace(DANGLING_CONJUNCTION, "");
+  } while (out !== prev);
+  return out;
+}
+
 /** Trim text until its escaped length fits the budget, on a word boundary. */
 function fitEscaped(text: string, max: number): string {
   let out = text;
   while (escapedLength(out) > max) {
     const cut = out.lastIndexOf(" ");
     if (cut <= 0) return out.slice(0, max);
-    out = out.slice(0, cut).replace(/[\s,;:.\-–|]+$/, "");
+    out = stripDanglingEnd(out.slice(0, cut));
   }
   return out;
+}
+
+/**
+ * True when fitTitle has to cut the substantive title itself, as opposed
+ * to dropping the suffix. Used by the build to log which titles are cut.
+ */
+export function isTitleTrimmed(title: string): boolean {
+  return escapedLength(collapse(title)) > TITLE_MAX;
 }
 
 /** Trim to `max` characters on a word boundary, never mid-word. */
