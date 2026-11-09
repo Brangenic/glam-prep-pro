@@ -16,27 +16,17 @@
 
 import { mkdirSync, writeFileSync, existsSync } from "fs";
 import { resolve, join } from "path";
-import { WIX_REDIRECTS, WIX_REDIRECT_BASE } from "../src/lib/wixRedirects";
+import { WIX_REDIRECTS, WIX_REDIRECT_BASE, wixRedirectHeading, WIX_TITLE_SUFFIX } from "../src/lib/wixRedirects";
 
 const DIST = resolve("dist");
 
 const escapeAttr = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-function humanTitle(targetPath: string): string {
-  // Turn "/blogs/some-slug-name" into "Some Slug Name"
-  const slug = targetPath.replace(/^\/blogs\//, "").replace(/^\/+/, "");
-  if (!slug) return "Carnival Glam Hub Journal";
-  return slug
-    .split("-")
-    .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
-    .join(" ");
-}
-
 function buildHtml(targetAbs: string, targetPath: string): string {
   const t = escapeAttr(targetAbs);
-  const heading = escapeAttr(humanTitle(targetPath));
-  const title = `${heading} | Carnival Glam Hub Journal`;
+  const heading = escapeAttr(wixRedirectHeading(targetPath));
+  const title = `${heading}${WIX_TITLE_SUFFIX}`;
   // NOTE: intentionally NO `noindex`. Self-canonical to the new URL is
   // the correct consolidation signal. Google will drop the /post/*
   // slug and index the target instead.

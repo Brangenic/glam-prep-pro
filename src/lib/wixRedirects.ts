@@ -133,3 +133,19 @@ export function getWixRedirectTarget(slug: string | null | undefined): string | 
   })();
   return WIX_REDIRECTS[decoded] ?? WIX_REDIRECTS[slug] ?? null;
 }
+export const WIX_TITLE_SUFFIX = " | Carnival Glam Hub Journal";
+
+/**
+ * Heading for a legacy /post/<slug> page, from its target path:
+ * "/blogs/some-slug-name" becomes "Some Slug Name". The prerender script
+ * builds the page title from this plus WIX_TITLE_SUFFIX, and the title
+ * length test reads the same function, so the two cannot drift.
+ */
+export function wixRedirectHeading(targetPath: string): string {
+  const slug = targetPath.replace(/^\/blogs\//, "").replace(/^\/+/, "");
+  if (!slug) return "Carnival Glam Hub Journal";
+  return slug
+    .split("-")
+    .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(" ");
+}
