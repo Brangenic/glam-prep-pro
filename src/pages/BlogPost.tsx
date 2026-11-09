@@ -288,7 +288,7 @@ const SLUG_META_TITLE_OVERRIDES: Record<string, string> = {
   "2025-carnival-makeup-guide-50-looks-to-show-your-mua":
     "2026 Carnival Makeup Guide: 50 Looks | Glam Hub",
   "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips":
-    "Trinidad Carnival 2027: Dates, Bands, Costumes & First-Timer Guide | Carnival Glam Hub",
+    "Trinidad Carnival 2027 Guide: Dates, Bands, Costumes",
   "what-is-jouvert-and-why-should-you-do-it-at-least-once":
     "What Is J'ouvert? The Pre-Dawn Carnival Ritual Explained | Carnival Glam Hub",
   "10-tips-for-trinidad-carnival-jouvert":

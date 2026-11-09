@@ -11,7 +11,7 @@ import sharp from "sharp";
 import { getBlogPlaceSchema } from "../src/data/blogPlaceSchema";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 import { buildFaqSchema } from "../src/lib/faqSchema";
-import { fitTitle, fitDescription, plainTextExcerpt } from "../src/lib/metaText";
+import { fitTitle, fitDescription, plainTextExcerpt, isTitleTrimmed } from "../src/lib/metaText";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -27,6 +27,8 @@ export const SEO_TITLE_OVERRIDES: Record<string, string> = {
     "TRIBE Carnival 2027: Inside the Elysia Band Launch",
   "trinidad-carnival-2027-first-time-masquerader-guide":
     "Trinidad Carnival 2027: First-Time Masquerader Guide",
+  "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips":
+    "Trinidad Carnival 2027 Guide: Dates, Bands, Costumes",
   "rihannas-carnival-looks-over-the-years-50-photos":
     "Rihanna's Carnival Looks Over the Years: 50 Photos",
   "jab-jab-grenada-2026-guide":
@@ -557,6 +559,19 @@ async function main() {
     }
   } catch (err) {
     console.warn("prerender-blog-meta: failed to fetch blog posts.", err);
+  }
+
+  // Log every post whose title fitTitle has to cut, stored title beside
+  // the fitted result, so cut titles can be reviewed. Nothing is changed.
+  const trimmed = posts.filter((p) => isTitleTrimmed(SEO_TITLE_OVERRIDES[p.slug] ?? p.title));
+  if (trimmed.length) {
+    console.log(`prerender-blog-meta: ${trimmed.length} blog title(s) trimmed by fitTitle:`);
+    for (const p of trimmed) {
+      const stored = SEO_TITLE_OVERRIDES[p.slug] ?? p.title;
+      console.log(`  ${p.slug}\n    stored: ${stored}\n    fitted: ${buildBlogTitle(p.slug, p.title)}`);
+    }
+  } else {
+    console.log("prerender-blog-meta: no blog titles trimmed by fitTitle.");
   }
 
   let written = 0;

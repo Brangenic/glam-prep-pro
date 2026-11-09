@@ -12,18 +12,9 @@
 
 export type SeasonNoticePart = string | { text: string; href: string };
 
-export const BLOG_SEASON_NOTICES: Record<string, SeasonNoticePart[]> = {
-  "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips": [
-    "Looking for Trinidad Carnival 2027? Carnival Monday and Tuesday 2027 fall on 8 and 9 February. See our ",
-    { text: "Trinidad Carnival 2027 page", href: "/trinidad-carnival-2027" },
-    " and the ",
-    {
-      text: "2027 first-time masquerader guide",
-      href: "/blogs/trinidad-carnival-2027-first-time-masquerader-guide",
-    },
-    ".",
-  ],
-};
+// Empty for now. The Trinidad guide whose slug still says 2026 was already
+// refreshed to 2027 in its title and h1, so it needs no notice.
+export const BLOG_SEASON_NOTICES: Record<string, SeasonNoticePart[]> = {};
 
 export function getSeasonNotice(slug: string | undefined): SeasonNoticePart[] | undefined {
   return slug ? BLOG_SEASON_NOTICES[slug] : undefined;
