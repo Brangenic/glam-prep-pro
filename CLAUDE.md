@@ -16,6 +16,10 @@ Every factual thing the site says lives in `src/data/` or
 - `policies.ts` for Terms, refunds and privacy
 - `pressCoverage.ts` for verified press
 - `stationRentals.ts` for station and vendor space offers
+- `manualBlogPosts.ts` for in-repo journal posts and their fixed
+  publication dates (never a computed or current date). The `/blogs`
+  order and Latest Post hero live in `src/lib/blogIndex.ts`, shared by
+  the page and the prerender so both pick the same hero
 - `constants.ts` for the booking URL, site URL, Amazon storefront,
   WhatsApp and contact email
 

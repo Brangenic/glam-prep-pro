@@ -122,6 +122,8 @@ const UPCOMING_LIST_HTML = getUpcomingDestinations(undefined, undefined, { dedup
   .join("\n");
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+import { MANUAL_POSTS } from "../src/data/manualBlogPosts";
+import { buildBlogIndex, resolveSlug, truncateText, type BlogIndexPost } from "../src/lib/blogIndex";
 import { PRIVATE_ROUTES } from "../src/data/legacyRoutes";
 import { getSeasonNotice } from "../src/data/blogSeasonNotices";
 import { blogImageAlt } from "../src/data/blogImageAlt";
@@ -1741,6 +1743,46 @@ function blogStubContent(html: string, slug: string, allSlugs: string[]): Conten
   };
 }
 
+/**
+ * The /blogs Latest Post hero, chosen by the same shared rule the React
+ * page uses (src/lib/blogIndex.ts) over the same rows, read the same way.
+ * Returns null when the database cannot be read, so the crawler copy never
+ * guesses a hero that the live page would not show.
+ */
+async function fetchJournalHero(): Promise<BlogIndexPost | null> {
+  try {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("external_id, title, excerpt, image_url, slug, post_url, author_name, author_avatar_url, published_date, read_time")
+      .order("synced_at", { ascending: false });
+    if (error) throw error;
+    const index = buildBlogIndex((data as BlogIndexPost[]) ?? [], MANUAL_POSTS as BlogIndexPost[]);
+    return index[0] ?? null;
+  } catch (err) {
+    console.warn("prerender-bodies: journal hero fetch failed, /blogs ships without it.", err);
+    return null;
+  }
+}
+
+function latestPostHtml(post: BlogIndexPost): string {
+  const href = `/blogs/${encodeURIComponent(resolveSlug(post))}`;
+  const byline = [post.author_name, post.published_date, post.read_time]
+    .filter(Boolean)
+    .map((v) => escapeHtml(String(v)))
+    .join(" · ");
+  return [
+    `<section aria-label="Latest Post">`,
+    `<p>Latest Post</p>`,
+    `<h2><a href="${href}">${escapeHtml(post.title)}</a></h2>`,
+    post.excerpt ? `<p>${escapeHtml(truncateText(post.excerpt, 160))}</p>` : "",
+    byline ? `<p>${byline}</p>` : "",
+    `</section>`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
 function discoverBlogSlugs(): string[] {
   const blogsDir = join(DIST, "blogs");
   if (!existsSync(blogsDir)) return [];
@@ -1757,6 +1799,18 @@ async function main() {
   }
 
   const routes = buildRouteMap();
+  const journalHero = await fetchJournalHero();
+  if (journalHero && routes["/blogs"]) {
+    const blogs = routes["/blogs"];
+    const [intro, ...restParts] = blogs.body.split("\n<h2>Popular guides</h2>");
+    routes["/blogs"] = {
+      ...blogs,
+      body: restParts.length
+        ? `${intro}\n${latestPostHtml(journalHero)}\n<h2>Popular guides</h2>${restParts.join("\n<h2>Popular guides</h2>")}`
+        : `${latestPostHtml(journalHero)}\n${blogs.body}`,
+    };
+    console.log(`prerender-bodies: /blogs Latest Post is ${resolveSlug(journalHero)}.`);
+  }
   let written = 0;
   let skipped = 0;
 

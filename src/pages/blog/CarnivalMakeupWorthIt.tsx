@@ -5,6 +5,7 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import heroImage from "@/assets/blog-carnival-makeup-worth-it-hero-v2.webp";
 import diyImage from "@/assets/blog-carnival-makeup-worth-it-diy.webp";
+import { REACT_POST_PUBLISHED_DATES } from "@/data/manualBlogPosts";
 
 const SLUG = "is-professional-carnival-makeup-worth-it";
 const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
@@ -14,7 +15,8 @@ const DESCRIPTION =
   "Makeup only runs US$170 to US$210 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.";
 const META_DESCRIPTION = DESCRIPTION;
 const AUTHOR = "Carnival Glam Hub";
-const DATE_PUBLISHED = "2026-06-21";
+// Fixed publication date, shared with the /blogs card.
+const DATE_PUBLISHED = REACT_POST_PUBLISHED_DATES[SLUG];
 const FEATURED_IMAGE_ABS = `https://www.carnivalglamhub.com${heroImage}`;
 const YOUTUBE_ID = "DWuZ147fSbU";
 const TAGS = [

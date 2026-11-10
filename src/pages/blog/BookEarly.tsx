@@ -5,6 +5,7 @@ import Footer from "@/components/landing/Footer";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import heroImage from "@/assets/blog-book-early-hero.webp";
 import costumeImage from "@/assets/blog-book-early-costume.webp";
+import { REACT_POST_PUBLISHED_DATES } from "@/data/manualBlogPosts";
 
 const SLUG = "how-far-in-advance-to-book-carnival-makeup";
 const URL = `https://www.carnivalglamhub.com/blogs/${SLUG}`;
@@ -14,7 +15,8 @@ const DESCRIPTION =
   "When to book your Carnival makeup artist, why the 4am to 8am slots go first, and how to lock in a smooth Carnival morning. A Glam Hub guide.";
 const META_DESCRIPTION = DESCRIPTION;
 const AUTHOR = "Carnival Glam Hub";
-const DATE_PUBLISHED = "2026-06-21";
+// Fixed publication date, shared with the /blogs card.
+const DATE_PUBLISHED = REACT_POST_PUBLISHED_DATES[SLUG];
 const FEATURED_IMAGE_ABS = `https://www.carnivalglamhub.com${heroImage}`;
 const YOUTUBE_ID = "6bNZE5AI4sk";
 const TAGS = [

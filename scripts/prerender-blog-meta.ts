@@ -9,6 +9,7 @@ import { resolve, join } from "path";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { getBlogPlaceSchema } from "../src/data/blogPlaceSchema";
+import { REACT_POST_PUBLISHED_DATES, type ReactPostSlug } from "../src/data/manualBlogPosts";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 import { buildFaqSchema } from "../src/lib/faqSchema";
 import { fitTitle, fitDescription, plainTextExcerpt, isTitleTrimmed } from "../src/lib/metaText";
@@ -260,9 +261,11 @@ async function resolveOgImage(slug: string, image: string, content?: string): Pr
 
 function manualPosts(): Post[] {
   const out: Post[] = [];
-  const push = (slug: string, title: string, description: string, basename: string, fallback: string) => {
+  const push = (slug: ReactPostSlug, title: string, description: string, basename: string, fallback: string) => {
     const image = findHashedAsset(basename) ?? fallback;
-    out.push({ slug, title, description, image });
+    // Fixed publication date shared with the article page and its /blogs card.
+    const publishedDate = REACT_POST_PUBLISHED_DATES[slug];
+    out.push({ slug, title, description, image, publishedDate, modifiedDate: publishedDate });
   };
   push(
     "is-professional-carnival-makeup-worth-it",

@@ -9,21 +9,15 @@ import { supabase } from "@/integrations/supabase/client";
 import airliftHero from "@/assets/blog-airlift-hero.webp";
 import worthItHero from "@/assets/blog-carnival-makeup-worth-it-hero-v2.webp";
 import bookEarlyHero from "@/assets/blog-book-early-hero.webp";
-import { RECOVERED_POSTS_META } from "@/data/recoveredPostsMeta";
-import { isRemovedPostSlug } from "@/lib/removedPosts";
+import { MANUAL_POSTS as MANUAL_POST_DATA } from "@/data/manualBlogPosts";
+import {
+  buildBlogIndex,
+  getSlugFromPostUrl,
+  truncateText,
+  type BlogIndexPost,
+} from "@/lib/blogIndex";
 
-type BlogPost = {
-  external_id: string;
-  title: string;
-  excerpt: string | null;
-  image_url: string | null;
-  slug: string | null;
-  post_url: string;
-  author_name: string | null;
-  author_avatar_url: string | null;
-  published_date: string | null;
-  read_time: string | null;
-};
+type BlogPost = BlogIndexPost;
 
 const PAGE_TITLE =
   "Carnival Beauty and Travel Journal | Carnival Glam Hub";
@@ -31,110 +25,19 @@ const PAGE_DESCRIPTION =
   "Guides, tips and stories on Carnival makeup, hair, costumes and travel for masqueraders across the Caribbean and the diaspora. Read the journal.";
 const CANONICAL = "https://www.carnivalglamhub.com/blogs";
 
-const EXCLUDED_SLUG_PATTERNS: RegExp[] = [
-  /^atlanta-/i,
-  /^antigua-/i,
-  /^spicemas-/i,
-  /^crop-over-/i,
-  /^chatgpt-/i,
-  /gpt/i,
-  /^ai-/i,
-  /^artificial-/i,
-];
-
-// Slugs that bypass the exclusion patterns and the EXCLUDED_AUTHORS filter.
-// Used for legacy Wix posts we have intentionally restored.
-const ALLOWED_OVERRIDE_SLUGS = new Set<string>(
-  RECOVERED_POSTS_META.map((p) => p.slug),
-);
-
-const isExcludedSlug = (slug: string | null | undefined) => {
-  if (!slug) return false;
-  // Withdrawn posts never appear in the index, whatever else they match.
-  if (isRemovedPostSlug(slug)) return true;
-  if (slug && ALLOWED_OVERRIDE_SLUGS.has(slug)) return false;
-  return EXCLUDED_SLUG_PATTERNS.some((re) => re.test(slug));
+// Hero images for the posts rendered by their own React page. The post
+// metadata, including each fixed publication date, lives in
+// src/data/manualBlogPosts.ts.
+const MANUAL_POST_IMAGES: Record<string, string> = {
+  "is-professional-carnival-makeup-worth-it": worthItHero,
+  "how-far-in-advance-to-book-carnival-makeup": bookEarlyHero,
+  "caribbean-carnival-has-an-airlift-problem": airliftHero,
 };
 
-const getSlugFromPostUrl = (postUrl: string) => {
-  const match = postUrl.match(/\/post\/([^/?#]+)/i);
-  return match?.[1] ? decodeURIComponent(match[1]) : null;
-};
-
-const TODAY_ISO = new Date().toISOString().slice(0, 10);
-
-const MANUAL_POSTS: BlogPost[] = [
-  {
-    external_id: "manual-is-professional-carnival-makeup-worth-it",
-    title: "Is Professional Carnival Makeup Worth It?",
-    excerpt:
-      "Makeup only runs US$170 to US$200 for a single day. Here is what you are really paying for, and whether it is worth it once Carnival is over.",
-    image_url: worthItHero,
-    slug: "is-professional-carnival-makeup-worth-it",
-    post_url: "/blogs/is-professional-carnival-makeup-worth-it",
-    author_name: "Carnival Glam Hub",
-    author_avatar_url: null,
-    published_date: TODAY_ISO,
-    read_time: "6 min read",
-  },
-  {
-    external_id: "manual-how-far-in-advance-to-book-carnival-makeup",
-    title: "How Far In Advance Should I Book My Carnival Makeup Artist?",
-    excerpt:
-      "When to book your Carnival makeup artist, why the 4am to 8am slots go first, and how to lock in a smooth Carnival morning. A Glam Hub guide.",
-    image_url: bookEarlyHero,
-    slug: "how-far-in-advance-to-book-carnival-makeup",
-    post_url: "/blogs/how-far-in-advance-to-book-carnival-makeup",
-    author_name: "Carnival Glam Hub",
-    author_avatar_url: null,
-    published_date: TODAY_ISO,
-    read_time: "5 min read",
-  },
-  {
-    external_id: "manual-caribbean-carnival-has-an-airlift-problem",
-    title:
-      "The Caribbean Carnival economy doesn't have a demand problem. It has an airlift problem.",
-    excerpt:
-      "Masqueraders are ready to spend, but flights into the region are the bottleneck. An editorial on Carnival's airlift problem.",
-    image_url: airliftHero,
-    slug: "caribbean-carnival-has-an-airlift-problem",
-    post_url: "/blogs/caribbean-carnival-has-an-airlift-problem",
-    author_name: "Carnival Glam Hub",
-    author_avatar_url: null,
-    published_date: "2026-05-29",
-    read_time: "7 min read",
-  },
-  ...RECOVERED_POSTS_META.map((p) => ({
-    external_id: `manual-${p.slug}`,
-    title: p.title,
-    excerpt: p.excerpt,
-    image_url: p.coverImage,
-    slug: p.slug,
-    post_url: `/blogs/${p.slug}`,
-    author_name: p.author,
-    author_avatar_url: null,
-    published_date: p.publishedDate,
-    read_time: p.readTime,
-  })),
-];
-
-const FEATURED_SLUG = "trinidad-carnival-2027-first-time-masquerader-guide";
-const MANUAL_GRID_ORDER: string[] = [
-  "is-professional-carnival-makeup-worth-it",
-  "how-far-in-advance-to-book-carnival-makeup",
-  "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips",
-  "youre-outside-for-trinidad-jouvert-but-your-hair-whats-she-doing",
-  "caribbean-carnival-has-an-airlift-problem",
-  "2025-carnival-makeup-guide-50-looks-to-show-your-mua",
-  "what-is-jouvert-and-why-should-you-do-it-at-least-once",
-  "jab-jab-grenada-2026-guide",
-  "jab-jab-101-what-you-really-need-to-know-about-grenada-carnival",
-  "should-the-makeup-match-your-costume",
-  "genx-miami-carnival-2024-costumes",
-];
-
-const resolveSlug = (post: BlogPost) =>
-  post.slug || getSlugFromPostUrl(post.post_url) || post.external_id;
+const MANUAL_POSTS: BlogPost[] = MANUAL_POST_DATA.map((p) => ({
+  ...p,
+  image_url: MANUAL_POST_IMAGES[p.slug] ?? p.image_url,
+}));
 
 // Synonym groups for meaning-aware search. A query that matches any
 // term in a group expands to include every other term in the group, so
@@ -191,20 +94,6 @@ const Blogs = () => {
   };
   const PAGE_SIZE = 24;
 
-  const EXCLUDED_AUTHORS = [
-    "Krystal Angelique",
-    "Melissa Chung",
-    "Shadge Henry",
-    "Marissa Williams",
-    "Tamika Campbell",
-    "Mala Morrison",
-    "Antoinette Dixon",
-    "Jade Amiel",
-    "Shadae Henry",
-    "Snowwhite Hogie",
-    "Daydrie Burke",
-  ];
-
   useEffect(() => {
     let isMounted = true;
 
@@ -219,60 +108,9 @@ const Blogs = () => {
         .order("synced_at", { ascending: false });
 
       if (isMounted) {
-        const filtered = ((data as BlogPost[]) ?? []).filter(
-          (p) =>
-            (
-              (p.slug && ALLOWED_OVERRIDE_SLUGS.has(p.slug)) ||
-              !p.author_name ||
-              !EXCLUDED_AUTHORS.includes(p.author_name.trim())
-            ) &&
-            !isExcludedSlug(p.slug) &&
-            !isExcludedSlug(getSlugFromPostUrl(p.post_url))
-        );
-        // Merge manual posts, deduping by slug in case the synced source
-        // ever picks them up later.
-        const existingSlugs = new Set(filtered.map((p) => resolveSlug(p)));
-        const manuals = MANUAL_POSTS.filter((p) => !existingSlugs.has(resolveSlug(p)));
-        const merged = [...manuals, ...filtered];
-
-        // Parse published_date defensively; unparseable/missing → null so those
-        // posts can never win the "Latest Post" hero slot.
-        const parseDate = (v: string | null | undefined): number | null => {
-          if (!v) return null;
-          const t = Date.parse(v);
-          return Number.isFinite(t) ? t : null;
-        };
-
-        // Find the newest post across the merged set (DB + manual). This slug
-        // is always pinned to the hero regardless of the curated grid order,
-        // so any future post with a newer date automatically takes the slot.
-        let newestSlug: string | null = null;
-        let newestTime = -Infinity;
-        for (const p of merged) {
-          const t = parseDate(p.published_date);
-          if (t !== null && t > newestTime) {
-            newestTime = t;
-            newestSlug = resolveSlug(p);
-          }
-        }
-
-        // Display order: newest post first (hero), then the old FEATURED_SLUG,
-        // then MANUAL_GRID_ORDER, then everything else by published_date desc.
-        // The hero post is excluded from later buckets so it never repeats.
-        const orderIndex = (slug: string) => {
-          if (newestSlug && slug === newestSlug) return -2;
-          if (slug === FEATURED_SLUG) return -1;
-          const i = MANUAL_GRID_ORDER.indexOf(slug);
-          return i === -1 ? Number.POSITIVE_INFINITY : i;
-        };
-        const sorted = [...merged].sort((a, b) => {
-          const ai = orderIndex(resolveSlug(a));
-          const bi = orderIndex(resolveSlug(b));
-          if (ai !== bi) return ai - bi;
-          const ad = parseDate(a.published_date) ?? 0;
-          const bd = parseDate(b.published_date) ?? 0;
-          return bd - ad;
-        });
+        // Filtering, merging and the Latest Post hero are shared with the
+        // prerendered /blogs page through src/lib/blogIndex.ts.
+        const sorted = buildBlogIndex((data as BlogPost[]) ?? [], MANUAL_POSTS);
         setPosts(sorted);
         setLoading(false);
       }
@@ -359,8 +197,7 @@ const Blogs = () => {
     return `/blogs/${encodeURIComponent(resolvedSlug)}`;
   };
 
-  const truncate = (s: string, n: number) =>
-    s.length > n ? `${s.slice(0, n - 1).trimEnd()}…` : s;
+  const truncate = truncateText;
 
   const blogJsonLd = {
     "@context": "https://schema.org",
