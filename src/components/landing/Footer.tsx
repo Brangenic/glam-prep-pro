@@ -44,8 +44,6 @@ const PLAN_AND_EXPLORE: FooterLink[] = [
   { label: "Reviews", href: "/reviews" },
   { label: "About", href: "/about" },
   { label: "Press", href: "/press" },
-  { label: "Book your Hilton slot", href: "/trinidad/book" },
-  { label: "Book in ChatGPT and Claude", href: "/ai-booking-app" },
   { label: "Booking Calculator", href: "/booking-calculator" },
   { label: "Amazon Store", href: "/amazon-store" },
 ];

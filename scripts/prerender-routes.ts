@@ -33,6 +33,7 @@ import {
   TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
 } from "../src/data/trinidadBookPage";
 import { AI_APP_PATH, AI_APP_TITLE, AI_APP_DESCRIPTION } from "../src/data/aiBookingAppPage";
+import { AI_DISCOVERY_ONLY_ROBOTS, isAiDiscoveryOnlyPath } from "../src/data/aiDiscoveryOnly";
 import {
   ABOUT_PAGE_DESCRIPTION,
   ABOUT_PAGE_TITLE,
@@ -1114,6 +1115,14 @@ const escapeAttr = (s: string) =>
 const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+/** Replace (or add) the robots meta in a written head. */
+function setRobots(html: string, content: string): string {
+  if (/<meta\s+name="robots"[^>]*>/i.test(html)) {
+    return html.replace(/<meta\s+name="robots"[^>]*>/i, `<meta name="robots" content="${content}" />`);
+  }
+  return html.replace("</head>", `    <meta name="robots" content="${content}" />\n  </head>`);
+}
+
 function rewriteHead(template: string, route: RouteMeta): string {
   const url = `${BASE_URL}${route.path}`;
   const title = route.title;
@@ -1273,7 +1282,10 @@ async function main() {
 
   let written = 0;
   for (const route of allRoutes) {
-    const html = rewriteHead(template, route);
+    let html = rewriteHead(template, route);
+    // AI-discovery-only pages (/trinidad/book, /ai-booking-app) stay live
+    // for AI assistants but carry noindex, nofollow and no sitemap entry.
+    if (isAiDiscoveryOnlyPath(route.path)) html = setRobots(html, AI_DISCOVERY_ONLY_ROBOTS);
     const dir = join(DIST, route.path.replace(/^\//, ""));
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);
@@ -1418,18 +1430,12 @@ async function main() {
           r.path === (p.path.startsWith("/trinidad/book") ? "/trinidad/book" : "/about"),
         )?.ogImage ?? HERO_FALLBACK,
     };
-    let html = rewriteHead(template, route);
-    if (/<meta\s+name="robots"[^>]*>/i.test(html)) {
-      html = html.replace(
-        /<meta\s+name="robots"[^>]*>/i,
-        `<meta name="robots" content="${PRIVATE_ROBOTS}" />`,
-      );
-    } else {
-      html = html.replace(
-        "</head>",
-        `    <meta name="robots" content="${PRIVATE_ROBOTS}" />\n  </head>`,
-      );
-    }
+    // The Trinidad portal return pages are AI-discovery only, so they take
+    // noindex, nofollow rather than the private noindex, follow.
+    const html = setRobots(
+      rewriteHead(template, route),
+      isAiDiscoveryOnlyPath(p.path) ? AI_DISCOVERY_ONLY_ROBOTS : PRIVATE_ROBOTS,
+    );
     const dir = join(DIST, p.path.replace(/^\//, ""));
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);

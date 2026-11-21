@@ -5,12 +5,18 @@
  * AI booking catalogue or src/lib/constants.ts.
  */
 import { buildAiBookingCatalogue } from "@/data/aiBookingCatalogue";
-import { CONTACT_EMAIL, SITE_URL, WHATSAPP_URL } from "@/lib/constants";
+import { BOOKING_URL, CONTACT_EMAIL, SITE_URL, WHATSAPP_URL } from "@/lib/constants";
+import { getTerritoryPricing } from "@/data/territoryPricing";
 
 export const AI_APP_PATH = "/ai-booking-app";
 export const AI_APP_URL = `${SITE_URL}${AI_APP_PATH}`;
 export const AI_APP_SERVER_URL = "https://bvrejdrsrmvdknzoskxi.supabase.co/functions/v1/glam-hub-mcp";
 export const AI_APP_PRIVACY_HREF = "/policies#privacy";
+/**
+ * Website booking link on this page. Website paths always go to MasOS, so
+ * this is the Trinidad MasOS event, never the /trinidad/book portal.
+ */
+export const AI_APP_WEBSITE_BOOKING_URL = getTerritoryPricing("trinidad")?.bookingUrl ?? BOOKING_URL;
 
 const C = buildAiBookingCatalogue();
 const venueShort = C.venue.split(",").slice(0, 2).join(",").trim();
@@ -70,11 +76,11 @@ export const AI_APP_SECTIONS: AiAppSection[] = [
   },
   {
     heading: "Support",
-    paras: [`Email ${CONTACT_EMAIL} or talk to JADE on WhatsApp. Prefer the website? Book the same times directly on our booking page.`],
+    paras: [`Email ${CONTACT_EMAIL} or talk to JADE on WhatsApp. Prefer the website? Book Trinidad Carnival 2027 on our booking platform.`],
     links: [
       { label: `Email ${CONTACT_EMAIL}`, href: `mailto:${CONTACT_EMAIL}` },
       { label: "Talk to JADE", href: WHATSAPP_URL, external: true },
-      { label: "Book on the website", href: "/trinidad/book" },
+      { label: "Book on the website", href: AI_APP_WEBSITE_BOOKING_URL, external: true },
     ],
   },
 ];

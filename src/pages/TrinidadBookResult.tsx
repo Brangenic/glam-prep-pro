@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { useNoindex } from "@/hooks/useNoindex";
+import { AI_DISCOVERY_ONLY_ROBOTS } from "@/data/aiDiscoveryOnly";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
 // Return pages for the website booking channel. Never shows the booking
 // reference (house rule, matches the receipt).
 const TrinidadBookResult = ({ paid }: { paid: boolean }) => {
-  useNoindex();
+  useNoindex(AI_DISCOVERY_ONLY_ROBOTS);
   return (
     <>
       <Navbar />

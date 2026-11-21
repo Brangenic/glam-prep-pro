@@ -3,6 +3,7 @@
 ## Core
 Premium aesthetic: warm-white base, Gold & Pink accents. Playfair Display (headings) & Outfit (body).
 Use high-res real event photography. No AI portraits, UI overlays, or watermarks.
+Website paths always go to MasOS; the Trinidad portal (/trinidad/book, /ai-booking-app) is AI-discovery only, never linked on the site or by JADE.
 Band-neutral regional service. External booking: carnivalglamhub.masos.app/events. Contact: Bookings@carnivalglamhub.com, 8765090997.
 Automated daily sync (06:00 AM) for Google reviews, Amazon collections, and Wix blog metadata.
 Legal: STRICT removal of specific individuals from all assets and metadata.

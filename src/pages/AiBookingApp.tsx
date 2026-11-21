@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import { useNoindex } from "@/hooks/useNoindex";
+import { AI_DISCOVERY_ONLY_ROBOTS } from "@/data/aiDiscoveryOnly";
 import {
   AI_APP_DESCRIPTION,
   AI_APP_H1,
@@ -30,6 +32,7 @@ function useMeta() {
 
 const AiBookingApp = () => {
   useMeta();
+  useNoindex(AI_DISCOVERY_ONLY_ROBOTS);
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

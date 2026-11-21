@@ -5,6 +5,8 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import heroCover from "@/assets/trinidad-2027-hero.webp";
 import { hasSeasonPassed } from "@/data/seasons";
+import { useNoindex } from "@/hooks/useNoindex";
+import { AI_DISCOVERY_ONLY_ROBOTS } from "@/data/aiDiscoveryOnly";
 import {
   TRINIDAD_BOOK_CATALOGUE as C,
   TRINIDAD_BOOK_DESCRIPTION,
@@ -44,6 +46,7 @@ function useMeta() {
 
 const TrinidadBook = () => {
   useMeta();
+  useNoindex(AI_DISCOVERY_ONLY_ROBOTS);
   const closed = hasSeasonPassed("trinidad");
   const [day, setDay] = useState<DayKey>("monday");
   const products = TRINIDAD_BOOK_PRODUCTS.filter((p) => p.day === day);

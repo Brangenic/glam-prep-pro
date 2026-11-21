@@ -32,8 +32,6 @@ const links: NavItem[] = [
     label: "More",
     href: "#",
     children: [
-      { label: "Book a Hilton slot", href: "/trinidad/book" },
-      { label: "Book in ChatGPT and Claude", href: "/ai-booking-app" },
       { label: "Gallery", href: "#gallery" },
       { label: "Reviews", href: "/reviews" },
       { label: "Amazon Store", href: "/amazon-store" },

@@ -105,6 +105,13 @@ which is built from `territoryProfiles.ts` plus the service, policy and
 utility pages. Every entry must resolve against the route table in
 `src/App.tsx`.
 
+Website paths always go to MasOS; the Trinidad portal is AI-discovery
+only. JADE never sends a website visitor to `/trinidad/book` or
+`/ai-booking-app`. For Trinidad booking it uses the Trinidad event link
+from `territoryPricing.ts`. The rule is a `neverSay` entry in
+`src/data/botKnowledge.ts` and a line in the link rules of
+`supabase/functions/chat/logic.ts`.
+
 ## 9. The Amazon cart rules
 
 Three directives, decided server side, never by the model.

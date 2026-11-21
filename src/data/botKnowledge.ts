@@ -25,7 +25,6 @@ import {
   CONTACT_EMAIL,
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
-import { TRINIDAD_BOOK_MIN_PRICE, TRINIDAD_BOOK_MAX_PRICE } from "@/data/trinidadBookPage";
 import { CARNIVAL_GUIDE_GROUPS, FEATURED_CARNIVAL_GUIDES } from "@/data/carnivalGuides";
 import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
 import {
@@ -75,6 +74,10 @@ import {
   VENDOR_SPACE_NOTE,
   VENDOR_SPACE_PER_DAY,
 } from "@/data/stationRentals";
+
+// Website visitors always book Trinidad on MasOS, never on the AI-discovery
+// only /trinidad/book portal.
+const TRINIDAD_WEBSITE_BOOKING_URL = getTerritoryPricing("trinidad")?.bookingUrl ?? BOOKING_URL;
 
 /** Bronzing is a masos product, so its price comes from the product list. */
 const BRONZING_PRICE = 160;
@@ -478,7 +481,7 @@ Book 4 to 6 weeks ahead. Book earlier for Trinidad, Jamaica and Miami, where slo
 
 You can also reach the booking team on WhatsApp at ${WHATSAPP_DISPLAY} (${WHATSAPP_URL}) or by email at ${CONTACT_EMAIL}. Estimate a total first with the booking calculator at /booking-calculator.
 
-Trinidad Carnival 2027 at the Hilton: masqueraders can book a makeup, makeup and photoshoot, or photoshoot time for Carnival Monday, Carnival Tuesday or both days directly at /trinidad/book, choose a live time slot and pay in full online. Prices there are fixed, from US$${TRINIDAD_BOOK_MIN_PRICE} to US$${TRINIDAD_BOOK_MAX_PRICE}, with no discount codes.`;
+Trinidad Carnival 2027 is booked on the booking platform, through the Trinidad booking link: ${TRINIDAD_WEBSITE_BOOKING_URL}`;
 }
 
 function policyClause(prefix: string): string | null {
@@ -675,7 +678,6 @@ function buildLinks(): { label: string; url: string }[] {
     { label: "Reviews", url: "/reviews" },
     { label: "Station rentals and vendor spaces", url: "/station-rentals" },
     { label: "Booking calculator", url: "/booking-calculator" },
-    { label: "Book a Trinidad 2027 Hilton slot", url: "/trinidad/book" },
     { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
     { label: "Blog", url: "/blogs" },
     {
@@ -717,6 +719,7 @@ const NEVER_SAY = [
   "Any price for bag delivery in Miami",
   "Any date for Atlanta Carnival",
   "The word masos in prose. It may only ever appear inside a booking URL.",
+  "Any link to /trinidad/book or /ai-booking-app. Website visitors always book on the booking platform, and Trinidad bookings use the Trinidad booking link.",
   "Any J'ouvert package, paint, oil or body art as something Carnival Glam Hub sells, includes or offers. We do not offer it in any territory.",
   "Any seamstress, shuttle, breakfast, alcohol, hair, bronzing, barber, reels or overnight bag check in Grenada. None of those are offered there.",
 ];
