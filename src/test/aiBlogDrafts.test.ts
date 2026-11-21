@@ -51,6 +51,7 @@ describe("public blog queries only read published posts", () => {
     "scripts/generate-news-sitemap.ts",
     "supabase/functions/generate-sitemap/index.ts",
     "supabase/functions/blog-post-gate/index.ts",
+    "supabase/functions/scrape-blog-content/index.ts",
   ];
   for (const f of files) {
     it(`${f} filters status published on every blog_posts read`, () => {
@@ -59,6 +60,7 @@ describe("public blog queries only read published posts", () => {
       expect(reads.length).toBeGreaterThan(0);
       for (const chunk of reads) {
         const query = chunk.slice(0, chunk.indexOf(";"));
+        if (!query.trimStart().startsWith(".select(")) continue; // writes are not reads
         expect(query).toContain('.eq("status", "published")');
       }
     });

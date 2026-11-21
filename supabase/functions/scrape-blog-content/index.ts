@@ -68,6 +68,7 @@ Deno.serve(async (req) => {
     const { data } = await supabaseAdmin
       .from("blog_posts")
       .select("external_id, post_url, content")
+      .eq("status", "published")
       .eq(field, slug)
       .maybeSingle();
     if (data) { post = data; break; }
@@ -77,6 +78,7 @@ Deno.serve(async (req) => {
     const { data } = await supabaseAdmin
       .from("blog_posts")
       .select("external_id, post_url, content")
+      .eq("status", "published")
       .ilike("post_url", `%/post/${slug}`)
       .maybeSingle();
     if (data) post = data;
