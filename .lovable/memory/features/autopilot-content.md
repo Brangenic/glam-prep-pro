@@ -13,7 +13,7 @@ type: feature
 5. **FAQ schema** — each blog includes FAQ section + JSON-LD FAQPage schema embedded as HTML comment for BlogPost.tsx to extract
 6. **User-provided hero images only** — selects the least-used photo from the curated `blog-images/pool` bucket and fails loudly if no pool photos exist
 7. **Content ideas** (not full posts) — generates hooks, angles, talking points, hashtags for social content inspiration
-8. **Sitemap regeneration** — triggers `generate-sitemap` edge function after each run
+8. **Drafts only** — AI posts are saved as drafts; the admin presses Publish in the Autopilot tab, which then regenerates the sitemap. No auto-publish, no IndexNow ping for drafts
 
 ## Key Files
 - `supabase/functions/autopilot-content/index.ts` — main orchestrator

@@ -6,12 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { RefreshCw, Zap, Clock, FileText, Lightbulb, Image, Link2 } from "lucide-react";
+import { RefreshCw, Zap, Clock, FileText, Lightbulb, Image, Link2, Send } from "lucide-react";
 
 export default function AutopilotTab() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [running, setRunning] = useState(false);
+  const [publishingId, setPublishingId] = useState<string | null>(null);
 
   const { data: lastRun } = useQuery({
     queryKey: ["autopilot_last_run"],
@@ -35,7 +36,7 @@ export default function AutopilotTab() {
     queryFn: async () => {
       const { data } = await supabase
         .from("blog_posts")
-        .select("title, slug, created_at, meta_description, image_url")
+        .select("id, title, slug, created_at, meta_description, image_url, status, published_date")
         .eq("source", "ai_generated")
         .order("created_at", { ascending: false })
         .limit(10);
@@ -74,6 +75,28 @@ export default function AutopilotTab() {
     setRunning(false);
   };
 
+  // AI posts arrive as drafts. Publishing makes the post public, gives it
+  // today's date as its publication date if it has none, then regenerates
+  // the sitemap.
+  const handlePublish = async (post: { id: string; title: string; published_date: string | null }) => {
+    setPublishingId(post.id);
+    try {
+      const update: { status: string; published_date?: string } = { status: "published" };
+      if (!post.published_date) update.published_date = new Date().toISOString().slice(0, 10);
+      const { error } = await supabase.from("blog_posts").update(update).eq("id", post.id).eq("status", "draft");
+      if (error) throw error;
+      const { error: sitemapError } = await supabase.functions.invoke("generate-sitemap", { body: { trigger: "admin-publish" } });
+      toast({
+        title: "Post published",
+        description: sitemapError ? `${post.title} is live. The sitemap did not refresh, it will update on the next run.` : `${post.title} is live and the sitemap has been refreshed.`,
+      });
+      queryClient.invalidateQueries({ queryKey: ["autopilot_blogs"] });
+    } catch (e: any) {
+      toast({ title: "Error", description: e.message, variant: "destructive" });
+    }
+    setPublishingId(null);
+  };
+
   const lastRunTime = lastRun?.timestamp
     ? new Date(lastRun.timestamp).toLocaleString()
     : "Never";
@@ -105,7 +128,9 @@ export default function AutopilotTab() {
           </CardHeader>
           <CardContent>
             <p className="text-lg font-semibold">{recentBlogs?.length ?? 0}</p>
-            <p className="text-xs text-muted-foreground mt-1">Auto-published</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {recentBlogs?.filter((b: any) => b.status === "draft").length ?? 0} awaiting Publish
+            </p>
           </CardContent>
         </Card>
 
@@ -202,7 +227,7 @@ export default function AutopilotTab() {
       {recentBlogs && recentBlogs.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm">Recent Blog Posts</CardTitle>
+            <CardTitle className="text-sm">Recent AI Blog Posts</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <Table>
@@ -211,6 +236,7 @@ export default function AutopilotTab() {
                   <TableHead>Title</TableHead>
                   <TableHead>Image</TableHead>
                   <TableHead>Created</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -220,6 +246,16 @@ export default function AutopilotTab() {
                     <TableCell>{b.image_url ? "✅" : ", "}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {new Date(b.created_at).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      {b.status === "draft" ? (
+                        <Button size="sm" onClick={() => handlePublish(b)} disabled={publishingId === b.id}>
+                          {publishingId === b.id ? <RefreshCw className="h-4 w-4 mr-1 animate-spin" /> : <Send className="h-4 w-4 mr-1" />}
+                          Publish
+                        </Button>
+                      ) : (
+                        <Badge variant="default">Published</Badge>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

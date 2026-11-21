@@ -146,6 +146,7 @@ async function main() {
     const { data, error } = await supabase
       .from("blog_posts")
       .select("slug, post_url, author_name, updated_at, published_date, raw_payload")
+      .eq("status", "published")
       .order("synced_at", { ascending: false })
       .limit(500);
 

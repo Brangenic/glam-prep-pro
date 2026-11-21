@@ -121,6 +121,7 @@ async function main() {
     const { data, error } = await supabase
       .from("blog_posts")
       .select("slug, post_url, title, published_date, raw_payload")
+      .eq("status", "published")
       .gte("published_date", since)
       .order("published_date", { ascending: false })
       .limit(500);

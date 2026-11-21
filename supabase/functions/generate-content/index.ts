@@ -1,4 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { requireAdminOrCron } from "../_shared/requireAdminOrCron.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -144,6 +145,10 @@ Return JSON: { "title": "...", "body": "...", "hashtags": ["..."] }`;
 // ── Main handler ────────────────────────────────────────────────
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  // Cron secret, service role (admin-chat) or a signed-in admin only, before any paid call.
+  const denied = await requireAdminOrCron(req, corsHeaders);
+  if (denied) return denied;
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");

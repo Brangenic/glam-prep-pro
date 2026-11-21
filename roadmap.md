@@ -1,10 +1,9 @@
-# Roadmap: AI booking app Phase 3
+# Roadmap: security fix (21 November 2026)
 
-- [x] Delete refunded test booking CGH-TT27-J4CV6 and its slot hold
-- [x] Checkout: billing_address_collection auto, nothing else collected
-- [x] Refunds: charge.refunded handler, refunded_at, accounts email, tests
-- [x] /trinidad/book page, confirmed and cancelled pages, shared backend endpoint
-- [x] CTAs on /trinidad and /trinidad-carnival-2027, footer and nav links
-- [x] SEO: prerender meta, body, JSON-LD, sitemap, llms.txt, JADE pack
-- [x] Tests, deploy three functions, preview booking check, publish
-- [x] Live check of /trinidad/book after deploy
+- [x] Lock autopilot-content, autopilot-engine, generate-content (cron secret, service role or admin)
+- [x] Cron jobs send x-cron-secret read at run time
+- [x] AI posts saved as drafts, admin Publish button, published-only public reads
+- [x] Booking anti-hoarding: 15 minute holds, attempt log, limits, circuit breaker, 24 hour purge
+- [x] Turnstile: skipped, no Turnstile secret configured
+- [x] Sign-up disabled, sign-up removed from /auth, leaked-password protection on
+- [ ] Minimum password length 12: owner sets it in Auth settings (no tool for it)

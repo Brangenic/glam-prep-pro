@@ -6,7 +6,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import catalogue from "./catalogue.json" with { type: "json" };
 import { WIDGET_URI, widgetHtml } from "./widget.ts";
 import { markPaidFromSession, sendBookingEmails } from "../_shared/glamHubFulfil.ts";
-import { prePaymentSummary, startBookingText, statusSummary } from "./copy.ts";
+import { limitMessage, prePaymentSummary, startBookingText, statusSummary } from "./copy.ts";
 
 type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[]; image_url: string; image_alt: string };
 const CAT = catalogue as unknown as {
@@ -31,6 +31,34 @@ function db() {
   const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!SUPABASE_URL || !key) throw new Error("Server not configured");
   return createClient(SUPABASE_URL, key, { auth: { persistSession: false } });
+}
+
+// Client IP, hashed with SHA-256 and the internal cron_secret as salt. The raw
+// IP is never stored. Through ChatGPT or Claude this is the host's server IP.
+let saltCache: string | null = null;
+async function ipHash(req: Request): Promise<string | null> {
+  const ip = req.headers.get("cf-connecting-ip") ?? req.headers.get("x-real-ip") ??
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "";
+  if (!ip) return null;
+  if (!saltCache) {
+    const { data, error } = await db().rpc("internal_secret", { p_name: "cron_secret" });
+    if (error || typeof data !== "string" || !data) { console.error("ip salt unavailable", error?.message); return null; }
+    saltCache = data;
+  }
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${saltCache}:${ip}`));
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Expires the Stripe Checkout of a hold this customer has just replaced.
+async function expireSessions(ids: string[]) {
+  const key = Deno.env.get("STRIPE_SECRET_KEY");
+  if (!key) return;
+  for (const id of ids) {
+    try {
+      const r = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(id)}/expire`, { method: "POST", headers: { Authorization: `Bearer ${key}` } });
+      if (!r.ok) console.warn(`Stripe expire ${id} [${r.status}]`);
+    } catch (e) { console.warn("Stripe expire failed", (e as Error).message); }
+  }
 }
 
 type Avail = Record<string, { time: string; spots_left: number }[]>;
@@ -74,7 +102,7 @@ const TOOLS = [
     name: "start_booking",
     title: "Start a booking",
     description:
-      "Holds the chosen appointment time for 30 minutes and returns a Stripe Checkout link where the customer pays in full, plus a booking reference. Requires the service, a time for each booked day, first name, last name, email, cell number and accepted_terms, which records that the customer accepted the Terms. Prices are fixed; no discounts.",
+      "Holds the chosen appointment time for 15 minutes and returns a Stripe Checkout link where the customer pays in full, plus a booking reference. Requires the service, a time for each booked day, first name, last name, email, cell number and accepted_terms, which records that the customer accepted the Terms. Prices are fixed; no discounts.",
     inputSchema: {
       type: "object",
       properties: {
@@ -134,7 +162,7 @@ const SITE = "https://www.carnivalglamhub.com";
 
 // One booking path for every channel. The AI app returns to the hosted
 // confirmation pages; the website returns to carnivalglamhub.com.
-async function startBooking(a: Record<string, unknown>, source: string) {
+async function startBooking(a: Record<string, unknown>, source: string, ip: string | null) {
   const allowed = new Set(["product_id", "monday_slot", "tuesday_slot", "first_name", "last_name", "email", "phone", "accepted_terms"]);
   for (const k of Object.keys(a)) if (!allowed.has(k)) return text(`Unexpected field: ${k}. Prices are fixed and there are no discounts.`, undefined, true);
   if (a.accepted_terms !== true) return text(`The Terms must be accepted before booking: ${CAT.terms.url}`, undefined, true);
@@ -164,17 +192,25 @@ async function startBooking(a: Record<string, unknown>, source: string) {
   const when = days.map((d) => `${DAY_NAME[d]} ${picks[d]}`).join(" and ");
   const { data: res, error } = await client.rpc("reserve_ai_booking", {
     p_first: first, p_last: last, p_email: email, p_phone: phone, p_product_id: p.id, p_product_label: p.label,
-    p_day_key: p.day, p_amount: p.price, p_slot_ids: ids, p_source: source,
+    p_day_key: p.day, p_amount: p.price, p_slot_ids: ids, p_source: source, p_ip_hash: ip,
   });
-  if (error) {
-    if (error.message.includes("SLOT_FULL")) {
-      const av = await availability();
-      const open = days.map((d) => `${DAY_NAME[d]}: ${av[d].filter((s) => s.spots_left > 0).map((s) => s.time).join(", ") || "fully booked"}`).join("; ");
-      return text(`Sorry, that time has just filled. Times still open, ${open}.`, { message: `That time has just filled. Still open, ${open}.`, availability: av });
-    }
-    throw new Error(error.message);
+  if (error) throw new Error(error.message);
+  const row = (Array.isArray(res) ? res[0] : res) as { id: string | null; reference: string | null; error: string | null; cancelled_sessions: string[] | null };
+  if (row?.error === "SLOT_FULL") {
+    const av = await availability();
+    const open = days.map((d) => `${DAY_NAME[d]}: ${av[d].filter((s) => s.spots_left > 0).map((s) => s.time).join(", ") || "fully booked"}`).join("; ");
+    return text(`Sorry, that time has just filled. Times still open, ${open}.`, { message: `That time has just filled. Still open, ${open}.`, availability: av });
   }
-  const row = (Array.isArray(res) ? res[0] : res) as { id: string; reference: string };
+  if (row?.error === "HOARD_TRIPPED") {
+    console.error(`SLOT_HOARD_ALERT live pending holds exceed half of capacity; new holds paused for 5 minutes (source ${source})`);
+  }
+  if (row?.error) {
+    const m = limitMessage(row.error, WHATSAPP);
+    if (m) return text(m, { message: m }, true);
+    throw new Error(row.error);
+  }
+  if (!row?.id || !row.reference) throw new Error("Reservation returned no booking");
+  if (row.cancelled_sessions?.length) await expireSessions(row.cancelled_sessions);
   const summary = prePaymentSummary(CAT.event, p.label, when, CAT.venue, p.price);
 
   const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
@@ -293,7 +329,7 @@ async function handle(msg: { id?: unknown; method: string; params?: Record<strin
         const t = Object.entries(pick).map(([k, v]) => `${DAY_NAME[k]}: ${v.map((s) => `${s.time} ${s.spots_left} left`).join(", ")}`).join("; ");
         return text(t, { availability: pick });
       }
-      if (name === "start_booking") return await startBooking(args, detectSource(req, ua));
+      if (name === "start_booking") return await startBooking(args, detectSource(req, ua), await ipHash(req));
       if (name === "get_booking_status") return await bookingStatus(args);
       throw Object.assign(new Error(`Unknown tool ${name}`), { code: -32602 });
     }
@@ -332,7 +368,7 @@ Deno.serve(async (req) => {
     try { a = await req.json(); } catch { return new Response(JSON.stringify({ error: "Invalid request." }), { status: 400, headers: JSON_H }); }
     if (!a || typeof a !== "object" || Array.isArray(a)) return new Response(JSON.stringify({ error: "Invalid request." }), { status: 400, headers: JSON_H });
     try {
-      const res = await startBooking(a, "website") as { content: { text: string }[]; structuredContent?: { checkout_url?: string; message?: string; availability?: unknown }; isError?: boolean };
+      const res = await startBooking(a, "website", await ipHash(req)) as { content: { text: string }[]; structuredContent?: { checkout_url?: string; message?: string; availability?: unknown }; isError?: boolean };
       const sc = res.structuredContent;
       if (sc?.checkout_url) return new Response(JSON.stringify({ checkout_url: sc.checkout_url }), { headers: JSON_H });
       return new Response(JSON.stringify({ error: sc?.message ?? res.content[0].text, availability: sc?.availability }), { status: 409, headers: JSON_H });

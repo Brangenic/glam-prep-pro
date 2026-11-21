@@ -1,4 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { requireAdminOrCron } from "../_shared/requireAdminOrCron.ts";
+import { aiBlogDraftRow } from "../_shared/aiBlogDraft.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -259,7 +261,7 @@ async function generateContentIdeas(
 
 Generate 2 social media CONTENT IDEAS (not full posts) for ${territory.name}, ${territory.country}.
 
-BLOG JUST PUBLISHED: "${blogTitle}"
+BLOG JUST DRAFTED: "${blogTitle}"
 TRENDING TOPICS: ${trendingSummary}
 HASHTAGS: ${territory.hashtags?.join(" ")}
 
@@ -291,28 +293,17 @@ Return JSON: { "ideas": [{ "channel": "...", "hook": "...", "platform_format": "
   return parsed.ideas ?? (Array.isArray(parsed) ? parsed : [parsed]);
 }
 
-/* ───── Regenerate sitemap ───── */
-async function regenerateSitemap(supabase: ReturnType<typeof createClient>, supabaseUrl: string, anonKey: string) {
-  try {
-    await fetch(`${supabaseUrl}/functions/v1/generate-sitemap`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${anonKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ trigger: "autopilot" }),
-    });
-    console.log("Sitemap regeneration triggered");
-  } catch (e) {
-    console.error("Sitemap regen failed:", e);
-  }
-}
-
 /* ───── Main handler ───── */
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
+  // Cron secret, service role or a signed-in admin only, before any paid call.
+  const denied = await requireAdminOrCron(req, corsHeaders);
+  if (denied) return denied;
+
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? "";
     const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
@@ -384,18 +375,16 @@ Deno.serve(async (req) => {
           territoryResult.image = true;
           console.log(`[${territory.name}] Selected hero image from pool: ${imageUrl}`);
 
-          const { error: blogErr } = await supabase.from("blog_posts").insert({
-            external_id: `ai-${territory.slug}-${Date.now()}`,
+          // Saved as a draft: not public until an admin publishes it.
+          const { error: blogErr } = await supabase.from("blog_posts").insert(aiBlogDraftRow({
+            externalId: `ai-${territory.slug}-${Date.now()}`,
             title: blog.title,
             slug: blog.slug,
             excerpt: blog.excerpt,
             content: fullContent,
-            meta_description: blog.meta_description,
-            image_url: imageUrl,
-            post_url: `https://www.carnivalglamhub.com/blogs/${blog.slug}`,
-            source: "ai_generated",
-            author_name: "Carnival Glam Hub",
-          });
+            metaDescription: blog.meta_description,
+            imageUrl,
+          }));
 
           if (blogErr) throw blogErr;
           territoryResult.blog = blog.title;
@@ -454,8 +443,8 @@ Deno.serve(async (req) => {
       value: JSON.stringify({ timestamp: new Date().toISOString(), results }),
     }, { onConflict: "key" });
 
-    // Regenerate sitemap
-    await regenerateSitemap(supabase, SUPABASE_URL, SUPABASE_ANON_KEY);
+    // New posts are drafts, so there is no sitemap regeneration or IndexNow
+    // ping here. Publishing from the Admin Autopilot tab regenerates the sitemap.
 
     return json({ success: true, results });
   } catch (e: any) {

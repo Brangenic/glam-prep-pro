@@ -1645,6 +1645,7 @@ async function fetchBlogBodies(): Promise<Map<string, BlogRow>> {
     const { data, error } = await supabase
       .from("blog_posts")
       .select("slug, post_url, title, excerpt, meta_description, content, published_date, raw_payload")
+      .eq("status", "published")
       .order("synced_at", { ascending: false })
       .limit(1000);
     if (error) throw error;
@@ -1755,6 +1756,7 @@ async function fetchJournalHero(): Promise<BlogIndexPost | null> {
     const { data, error } = await supabase
       .from("blog_posts")
       .select("external_id, title, excerpt, image_url, slug, post_url, author_name, author_avatar_url, published_date, read_time")
+      .eq("status", "published")
       .order("synced_at", { ascending: false });
     if (error) throw error;
     const index = buildBlogIndex((data as BlogIndexPost[]) ?? [], MANUAL_POSTS as BlogIndexPost[]);

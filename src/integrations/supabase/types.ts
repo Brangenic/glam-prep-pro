@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_booking_attempts: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          ip_hash: string | null
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          ip_hash?: string | null
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          ip_hash?: string | null
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      ai_booking_guard: {
+        Row: {
+          name: string
+          until: string
+        }
+        Insert: {
+          name: string
+          until: string
+        }
+        Update: {
+          name?: string
+          until?: string
+        }
+        Relationships: []
+      }
       ai_booking_slot_holds: {
         Row: {
           booking_id: string
@@ -209,6 +248,7 @@ export type Database = {
           read_time: string | null
           slug: string | null
           source: string
+          status: string
           synced_at: string
           title: string
           updated_at: string
@@ -230,6 +270,7 @@ export type Database = {
           read_time?: string | null
           slug?: string | null
           source?: string
+          status?: string
           synced_at?: string
           title: string
           updated_at?: string
@@ -251,6 +292,7 @@ export type Database = {
           read_time?: string | null
           slug?: string | null
           source?: string
+          status?: string
           synced_at?: string
           title?: string
           updated_at?: string
@@ -785,12 +827,14 @@ export type Database = {
       }
       glam_match_purge_previews_and_leads: { Args: never; Returns: undefined }
       glam_match_purge_uploads: { Args: never; Returns: undefined }
+      internal_secret: { Args: { p_name: string }; Returns: string }
       reserve_ai_booking: {
         Args: {
           p_amount: number
           p_day_key: string
           p_email: string
           p_first: string
+          p_ip_hash?: string
           p_last: string
           p_phone: string
           p_product_id: string
@@ -799,6 +843,8 @@ export type Database = {
           p_source: string
         }
         Returns: {
+          cancelled_sessions: string[]
+          error: string
           id: string
           reference: string
         }[]

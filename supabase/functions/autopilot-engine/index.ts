@@ -1,4 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { requireAdminOrCron } from "../_shared/requireAdminOrCron.ts";
+import { aiBlogDraftRow } from "../_shared/aiBlogDraft.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -322,55 +324,17 @@ Return JSON only:
 
 /* ───── 5. Pick hero image from curated user-provided pool ───── */
 
-/* ───── 6. Trigger sitemap regen ───── */
-async function triggerSitemap(supabaseUrl: string, anonKey: string) {
-  try {
-    await fetch(`${supabaseUrl}/functions/v1/generate-sitemap`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${anonKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ trigger: "autopilot-engine" }),
-    });
-  } catch (e) {
-    console.error("Sitemap regen failed:", e);
-  }
-}
-
-/* ───── 7. IndexNow ping ───── */
-async function pingIndexNow(slug: string) {
-  const apiKey = Deno.env.get("INDEXNOW_API_KEY");
-  if (!apiKey) {
-    console.warn("INDEXNOW_API_KEY not set, skipping IndexNow ping");
-    return;
-  }
-
-  const host = "www.carnivalglamhub.com";
-  const url = `https://${host}/blogs/${slug}`;
-
-  try {
-    const res = await fetch("https://api.indexnow.org/IndexNow", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        host,
-        key: apiKey,
-        keyLocation: `https://${host}/${apiKey}.txt`,
-        urlList: [url],
-      }),
-    });
-    console.log(`IndexNow ping for ${url}: ${res.status}`);
-  } catch (e) {
-    console.error("IndexNow ping failed:", e);
-  }
-}
-
 /* ───── Main handler ───── */
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
+  // Cron secret, service role or a signed-in admin only, before any paid call.
+  const denied = await requireAdminOrCron(req, corsHeaders);
+  if (denied) return denied;
+
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? "";
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
 
@@ -428,28 +392,22 @@ Deno.serve(async (req) => {
       fullContent += `\n\n<!-- FAQ_SCHEMA_JSON\n${JSON.stringify(article.faq_schema)}\n-->`;
     }
 
-    // Step 8: Insert into blog_posts (with hero image)
-    const { error: insertErr } = await supabase.from("blog_posts").insert({
-      external_id: `ai-engine-${Date.now()}`,
+    // Step 8: Insert into blog_posts as a draft (not public until an admin publishes it)
+    const { error: insertErr } = await supabase.from("blog_posts").insert(aiBlogDraftRow({
+      externalId: `ai-engine-${Date.now()}`,
       title: article.title,
       slug: article.slug,
       excerpt: article.excerpt,
       content: fullContent,
-      meta_description: article.meta_description,
-      image_url: heroImageUrl,
-      post_url: `https://www.carnivalglamhub.com/blogs/${article.slug}`,
-      source: "ai_generated",
-      author_name: "Carnival Glam Hub",
-    });
+      metaDescription: article.meta_description,
+      imageUrl: heroImageUrl,
+    }));
 
     if (insertErr) throw new Error(`Insert failed: ${insertErr.message}`);
-    console.log("Blog post published successfully");
+    console.log("Blog post saved as a draft");
 
-    // Step 9: Trigger sitemap regeneration + IndexNow ping
-    await Promise.all([
-      triggerSitemap(SUPABASE_URL, SUPABASE_ANON_KEY),
-      pingIndexNow(article.slug),
-    ]);
+    // Drafts get no sitemap regeneration and no IndexNow ping. Publishing
+    // from the Admin Autopilot tab regenerates the sitemap.
 
     // Log the run
     await supabase.from("site_config").upsert({
@@ -468,7 +426,8 @@ Deno.serve(async (req) => {
 
     return json({
       success: true,
-      published: true,
+      published: false,
+      status: "draft",
       title: article.title,
       slug: article.slug,
       url: `https://www.carnivalglamhub.com/blogs/${article.slug}`,

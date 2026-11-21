@@ -294,7 +294,7 @@ A remote MCP server, the `glam-hub-mcp` edge function, sells Trinidad Carnival 2
 
 - The catalogue `supabase/functions/glam-hub-mcp/catalogue.json` is generated from `src/data/` by `src/data/aiBookingCatalogue.ts` and `scripts/generate-ai-booking-catalogue.ts` on predev and prebuild. Never hand-edit it. `src/test/aiBookingCatalogue.test.ts` fails on drift.
 - Trinidad 2027 makeup and photoshoot only, standard artists: mon/tue/both makeup, makeup and photoshoot, and Monday and Tuesday photoshoot only. Nothing premium, no hair, bronzing, Full Glam, reels, bag check or barber.
-- Slots 04:00 to 08:00 each day, capacity 3. A both-days booking holds one Monday and one Tuesday slot. A slot counts paid bookings and unexpired pending holds (31 minutes). Paid in full at booking.
+- Slots 04:00 to 08:00 each day, capacity 3. A both-days booking holds one Monday and one Tuesday slot. A slot counts paid bookings and unexpired pending holds (15 minutes; Stripe Checkout itself stays open 30 minutes, the Stripe minimum). Paid in full at booking.
 - No discount, coupon or promotion code of any kind, anywhere.
 - A frontend publish does not redeploy edge functions. Redeploy `glam-hub-mcp` after any catalogue or function change.
 - Payment confirmation: `glam-hub-stripe-webhook` (signature checked with STRIPE_WEBHOOK_SECRET, 5 minute tolerance) marks a booking paid only when amount and currency match, and `get_booking_status` reconciles with Stripe if a webhook is late. A paid booking stays paid even if its slot is now over capacity; the accounts email then opens "OVERBOOKED, CHECK SLOT".
@@ -303,3 +303,13 @@ A remote MCP server, the `glam-hub-mcp` edge function, sells Trinidad Carnival 2
 - Checkout collects nothing beyond what we already hold: `billing_address_collection` auto, no shipping, phone or custom fields, promotion codes off.
 - Refunds: `charge.refunded` on the webhook. A full refund sets status cancelled, which frees the slot, and records `refunded_at`. A partial refund only logs and notifies accounts with "PARTIAL REFUND". The accounts notice subject starts "ACCOUNTS | REFUND |", is sent once per refunded amount (`refund_notified_cents`) and nothing goes to the customer.
 - "Talk to JADE" in this app reads `WHATSAPP_URL` from `src/lib/constants.ts` through the generated catalogue, the same number as the rest of the site. Never hardcode a WhatsApp number in the edge functions.
+- Anti-hoarding lives inside `reserve_ai_booking` (one advisory lock, so it is atomic): every attempt is logged in `ai_booking_attempts` (IP as SHA-256 with the cron_secret salt, never raw), max 5 per IP per 15 minutes, 3 per email and 3 per phone per hour, one live hold per email and phone (a new attempt releases the old one and its Checkout is expired), and holds pause for 5 minutes (`ai_booking_guard`) once live pending holds would exceed half of capacity, logged as `SLOT_HOARD_ALERT`. Limit outcomes return an `error` code rather than raising, so the log survives. `src/test/bookingLimiter.test.ts` runs the real SQL from the migrations in PGlite.
+
+---
+
+# CONTENT GENERATORS AND ADMIN ACCESS
+
+- `autopilot-content`, `autopilot-engine` and `generate-content` call `requireAdminOrCron` (`supabase/functions/_shared/`) before any Firecrawl or AI call. Allowed: `x-cron-secret` equal to `private.internal_secrets.cron_secret`, the service-role key as bearer (admin-chat), or a signed-in admin. The anon key is never enough. The rules are pure in `adminOrCronCore.ts` and tested in `src/test/requireAdminOrCron.test.ts`.
+- The cron jobs read the secret at run time inside the cron command. Never paste the secret into a job, a file or chat. Edge functions read it through `public.internal_secret()`, executable by service_role only.
+- AI posts are inserted only through `aiBlogDraftRow` with `status = 'draft'` and no publication date. Nothing is public, in the sitemap or pinged to IndexNow until an admin presses Publish in the Admin Autopilot tab. Every public blog read filters `status = 'published'`, and RLS enforces the same.
+- Public sign-up is disabled. `/auth` is sign-in only; accounts are added by the owner. Never reintroduce a sign-up path.

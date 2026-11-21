@@ -444,6 +444,7 @@ const BlogPost = () => {
       const { data: bySlug } = await supabase
         .from("blog_posts")
         .select(selectColumns)
+        .eq("status", "published")
         .eq("slug", normalizedSlug)
         .maybeSingle();
 
@@ -453,6 +454,7 @@ const BlogPost = () => {
         const { data: byExternalId } = await supabase
           .from("blog_posts")
           .select(selectColumns)
+          .eq("status", "published")
           .eq("external_id", normalizedSlug)
           .maybeSingle();
 
@@ -463,6 +465,7 @@ const BlogPost = () => {
         const { data: byPostUrlSlug } = await supabase
           .from("blog_posts")
           .select(selectColumns)
+          .eq("status", "published")
           .ilike("post_url", `%/post/${normalizedSlug}`)
           .maybeSingle();
 

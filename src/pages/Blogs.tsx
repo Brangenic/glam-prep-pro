@@ -105,6 +105,7 @@ const Blogs = () => {
       const { data } = await supabase
         .from("blog_posts")
         .select("external_id, title, excerpt, image_url, slug, post_url, author_name, author_avatar_url, published_date, read_time")
+        .eq("status", "published")
         .order("synced_at", { ascending: false });
 
       if (isMounted) {

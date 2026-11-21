@@ -76,6 +76,7 @@ Deno.serve(async (req) => {
   const { data: post, error } = await supabase
     .from("blog_posts")
     .select("published_date, raw_payload")
+    .eq("status", "published")
     .eq("slug", slug)
     .maybeSingle();
 

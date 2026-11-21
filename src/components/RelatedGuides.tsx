@@ -55,6 +55,7 @@ const RelatedGuides = ({
       const { data } = await supabase
         .from("blog_posts")
         .select("slug, title, published_date, post_url")
+        .eq("status", "published")
         .order("published_date", { ascending: false })
         .limit(40);
 
