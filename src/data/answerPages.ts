@@ -100,3 +100,9 @@ export const TRINIDAD_ANSWER_SECTIONS: AnswerSection[] = [
 /** Booking link for the Trinidad answer page, from the pricing data layer. */
 export const TRINIDAD_BOOKING_URL =
   t?.bookingUrl ?? "https://carnivalglamhub.masos.app/events";
+
+/**
+ * Jamaica answer sections and FAQ live in src/data/jamaicaPage.ts, so the
+ * /jamaica page, its prerender and its JSON-LD read one source.
+ */
+export { JAMAICA_SECTIONS as JAMAICA_ANSWER_SECTIONS, JAMAICA_FAQ } from "@/data/jamaicaPage";

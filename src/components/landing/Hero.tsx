@@ -1,14 +1,21 @@
 import { useSiteConfig } from "@/hooks/useSiteConfig";
-import { trackBookingCtaClick } from "@/lib/tracking";
+import { useEffect } from "react";
+import TerritoryBookingRow from "@/components/booking/TerritoryBookingRow";
+import { BOOK_TERRITORY_ANCHOR } from "@/lib/bookingBar";
 
 const HERO_768 = "/hero-768.webp";
 const HERO_1280 = "/hero-1280.webp";
 const HERO_1920 = "/hero-1920.webp";
 
-const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
-
 const Hero = () => {
   const { get } = useSiteConfig();
+
+  // A "Book Now" from another page lands on /#book-territory. The row is
+  // rendered after load, so scroll to it once it exists.
+  useEffect(() => {
+    if (typeof window === "undefined" || window.location.hash !== `#${BOOK_TERRITORY_ANCHOR}`) return;
+    document.getElementById(BOOK_TERRITORY_ANCHOR)?.scrollIntoView({ block: "center" });
+  }, []);
 
   return (
     <section
@@ -48,26 +55,14 @@ const Hero = () => {
           <p className="font-body text-sm text-white/60 leading-relaxed mb-8 sm:mb-10 max-w-lg animate-fade-up" style={{ animationDelay: "0.25s" }}>
             {get("hero_subtext")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto animate-fade-up" style={{ animationDelay: "0.35s" }}>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-mcp-action="register-event"
-              data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
-              onClick={() => {
-                trackBookingCtaClick();
-              }}
-              className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-body font-semibold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all group"
-            >
-              {get("hero_cta_text")}
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-1 transition-transform" aria-hidden="true">
-                <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
+          {/* Territory row sits inside the hero, under the headline, so it is
+              in view on a phone without pushing the headline off screen.
+              Each button goes straight to that territory's MasOS event. */}
+          <div className="w-full max-w-md animate-fade-up" style={{ animationDelay: "0.35s" }}>
+            <TerritoryBookingRow anchor campaign="home_booking_bar" heading={get("hero_cta_text")} />
             <a
               href="#destinations"
-              className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-body font-medium text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-white/10 transition-all"
+              className="mt-4 inline-flex items-center justify-center gap-2 border border-white/30 text-white font-body font-medium text-sm px-6 sm:px-8 py-3 rounded-full hover:bg-white/10 transition-all"
             >
               Choose Your Destination
             </a>

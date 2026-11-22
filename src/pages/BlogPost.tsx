@@ -167,6 +167,7 @@ import { RECOVERED_POST_BY_SLUG } from "@/data/recoveredPosts";
 import RelatedGuides from "@/components/RelatedGuides";
 import RelatedLinks from "@/components/RelatedLinks";
 import BlogCTA from "@/components/BlogCTA";
+import { blogExtraDestinations } from "@/data/blogDestinationLinks";
 import { buildFaqSchema } from "@/lib/faqSchema";
 import { getBlogPlaceSchema } from "@/data/blogPlaceSchema";
 import { removedPostTarget } from "@/lib/removedPosts";
@@ -986,7 +987,11 @@ const BlogPost = () => {
                     ? { to: "/antigua", label: "Antigua Carnival" }
                     : { to: "/trinidad", label: "Trinidad Carnival" };
                   return (
-                    <RelatedLinks services={[service]} destinations={[dest]} guides={[]} />
+                    <RelatedLinks
+                      services={[service]}
+                      destinations={[dest, ...blogExtraDestinations(slug).filter((x) => x.to !== dest.to)]}
+                      guides={[]}
+                    />
                   );
                 })()}
 

@@ -149,9 +149,16 @@ describe("Trinidad Carnival 2027 dates", () => {
 describe("blog season notices", () => {
   const slug = "ultimate-guide-to-trinidad-carnival-2026-mas-bands-dates-insider-tips";
 
-  it("are empty for now, so the refreshed 2027 guide carries no notice", () => {
-    expect(BLOG_SEASON_NOTICES).toEqual({});
+  it("leave the refreshed 2027 Trinidad guide without a notice", () => {
     expect(getSeasonNotice(slug)).toBeUndefined();
+  });
+
+  it("point the 2025 Jamaica guide at /jamaica for the 2027 season, and nothing else", () => {
+    const jam = "your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know";
+    expect(Object.keys(BLOG_SEASON_NOTICES)).toEqual([jam]);
+    const parts = getSeasonNotice(jam)!;
+    expect(parts.some((p) => typeof p !== "string" && p.href === "/jamaica")).toBe(true);
+    expect(seasonNoticeText(parts)).toContain("Jamaica Carnival 2027 is on Sunday 4 April 2027");
   });
 
   it("still join notice parts into plain text when one is added", () => {

@@ -215,6 +215,9 @@ that decides. A destination card goes:
 - to the destination page when it is upcoming but has no event UUID, which
   today is Jamaica and Tobago, so the visitor lands on the waitlist or
   enquiry block
+- to the territory's own page when its profile in `territoryProfiles.ts`
+  sets `cardToPage`, checked before the event, so the visitor reads the
+  hub details first (Jamaica today); the page carries the booking button
 - to the Gallery when the season has wrapped
 - to a WhatsApp enquiry where a territory has no date, no page and no
   event, for example Atlanta, worded as an enquiry rather than a booking.
@@ -229,6 +232,26 @@ register-interest block lives.
 Outbound cards use `target="_blank"` and `rel="noopener noreferrer"` to
 match every other booking call to action. Internal cards stay client side
 routes so the SPA does not reload.
+
+## Homepage booking row and generic Book Now buttons
+
+- The homepage "Book now" row lists every territory that is upcoming, has
+  its own MasOS event and has quotable products or an open pre-registration,
+  soonest first, from `getActiveBookingTerritories` in `src/lib/bookingBar.ts`.
+  Never a hand kept list; the React hero, the closing card and the
+  prerendered homepage body all read it.
+- Generic Book Now buttons (navbar, sticky mobile bar) resolve through
+  `resolveBookNowLink`: a territory page deep-links to its own event, every
+  other page goes to the homepage row at `#book-territory`. Never the bare
+  events list. `src/test/homeBookingRow.test.tsx` pins this.
+
+## Destination SEO pages built from one module
+
+A territory page with its own answer-first sections, FAQ and Event JSON-LD
+(Jamaica today, `src/data/jamaicaPage.ts`) keeps head, body, FAQ, JSON-LD
+and its `public/llms.txt` section in that one asset-free module, read by
+`destinations.ts`, the React page and both prerender scripts, so the
+surfaces cannot drift.
 
 ## Reopening a territory
 

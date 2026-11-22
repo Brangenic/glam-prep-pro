@@ -24,6 +24,13 @@ export type TerritoryProfile = {
   venue: string | null;
   /** Lowercase strings a visitor might type. */
   aliases: string[];
+  /**
+   * Destination cards send visitors to this territory's own page rather
+   * than straight to its booking event, so they read the hub details
+   * first. Booking still goes direct from the homepage "Book now" row and
+   * from the page itself. Owner decision, November 2026, Jamaica.
+   */
+  cardToPage?: boolean;
 };
 
 const TRINIDAD_VENUE =
@@ -38,6 +45,7 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     path: "/jamaica",
     venue: "Jamaica Pegasus Hotel, Kingston",
     aliases: ["jamaica", "kingston", "pegasus"],
+    cardToPage: true,
   },
   {
     slug: "trinidad",

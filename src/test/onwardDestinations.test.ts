@@ -78,13 +78,17 @@ describe("onward destination rule", () => {
       expect(link.href).toContain("utm_campaign=homepage_card");
     });
 
-    it("sends Jamaica and Tobago straight to their own MasOS events", () => {
-      for (const slug of ["jamaica", "tobago"] as const) {
-        expect(hasBookableEvent(slug)).toBe(true);
-        const link = getDestinationCardLink(slug, "homepage_card");
-        expect(link.external).toBe(true);
-        expect(link.href).toContain("masos.app/events/");
-      }
+    it("sends Tobago straight to its own MasOS event", () => {
+      expect(hasBookableEvent("tobago")).toBe(true);
+      const link = getDestinationCardLink("tobago", "homepage_card");
+      expect(link.external).toBe(true);
+      expect(link.href).toContain("masos.app/events/");
+    });
+
+    it("sends the Jamaica card to /jamaica, which carries the booking button", () => {
+      expect(hasBookableEvent("jamaica")).toBe(true);
+      const link = getDestinationCardLink("jamaica", "homepage_card");
+      expect(link).toEqual({ href: "/jamaica", external: false });
     });
 
     it("sends an upcoming Carnival with no event on file to its own page", () => {

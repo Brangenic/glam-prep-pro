@@ -54,6 +54,7 @@ const SERVICE_DEFAULTS: Record<string, { destinations: LinkRef[]; guides: LinkRe
     destinations: [
       { to: "/trinidad", label: "Trinidad Carnival dressing" },
       { to: "/grenada", label: "Grenada Spicemas dressing" },
+      { to: "/jamaica", label: "Jamaica Carnival dressing" },
     ],
     guides: [
       { to: "/blogs/strut-or-struggle-the-ultimate-guide-to-carnival-shoes", label: "Strut or struggle: Carnival shoes" },
@@ -64,6 +65,7 @@ const SERVICE_DEFAULTS: Record<string, { destinations: LinkRef[]; guides: LinkRe
     destinations: [
       { to: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027 shuttle" },
       { to: "/trinidad", label: "Trinidad Carnival hub" },
+      { to: "/jamaica", label: "Jamaica Carnival shuttle" },
     ],
     guides: [
       { to: "/blogs/trinidad-carnival-vs-jamaica-carnival", label: "Trinidad vs Jamaica Carnival guide" },

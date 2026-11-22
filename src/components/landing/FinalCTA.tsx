@@ -1,8 +1,6 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
-import { trackBookingCtaClick } from "@/lib/tracking";
-
-const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
+import TerritoryBookingRow from "@/components/booking/TerritoryBookingRow";
 
 const FinalCTA = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -29,23 +27,13 @@ const FinalCTA = () => {
           {get("cta_description")}
         </p>
         <div
-          className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-700 delay-300 ${
+          className={`flex flex-col items-center gap-4 sm:gap-5 justify-center transition-all duration-700 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-mcp-action="register-event"
-            data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
-            onClick={() => {
-              trackBookingCtaClick();
-            }}
-            className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-3.5 sm:py-4 rounded-full hover:shadow-xl hover:shadow-primary/30 transition-all"
-          >
-            {get("cta_button_text")}
-          </a>
+          <div className="w-full max-w-xl mx-auto">
+            <TerritoryBookingRow tone="light" campaign="closing_card" heading={get("cta_button_text")} />
+          </div>
           <a
             href="#destinations"
             className="inline-flex items-center justify-center gap-2 border border-primary/30 text-primary font-body font-medium text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-primary/10 transition-all"

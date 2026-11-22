@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import brandLogo from "@/assets/gabby-glam-logo.png";
 import { trackBookingCtaClick } from "@/lib/tracking";
-
-const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
+import { useBookNowLink } from "@/hooks/useBookNowLink";
 
 type NavItem = {
   label: string;
@@ -46,6 +45,12 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  // Territory pages book that territory directly; everywhere else the
+  // button goes to the homepage territory row, never the bare events list.
+  const bookNow = useBookNowLink("navbar_book_now");
+  const bookNowProps = bookNow.external
+    ? { target: "_blank", rel: "noopener noreferrer", "data-mcp-action": "register-event", "data-mcp-description": "Register and pay a deposit for a Carnival Glam Hub event, by territory and date." }
+    : {};
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -108,13 +113,10 @@ const Navbar = () => {
             ),
           )}
           <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-mcp-action="register-event"
-            data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
+            href={bookNow.href}
+            {...bookNowProps}
             onClick={() => {
-              trackBookingCtaClick();
+              if (bookNow.external) trackBookingCtaClick();
             }}
             className="bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
           >
@@ -174,13 +176,10 @@ const Navbar = () => {
             ),
           )}
           <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-mcp-action="register-event"
-            data-mcp-description="Register and pay a deposit for a Carnival Glam Hub event, by territory and date."
+            href={bookNow.href}
+            {...bookNowProps}
             onClick={() => {
-              trackBookingCtaClick();
+              if (bookNow.external) trackBookingCtaClick();
               setOpen(false);
             }}
             className="block text-center bg-primary text-primary-foreground font-body font-semibold text-sm px-6 py-3 rounded-full"

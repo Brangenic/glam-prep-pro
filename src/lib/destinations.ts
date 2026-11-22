@@ -77,6 +77,8 @@ export function getDestinationCardLink(
   campaign: string,
 ): DestinationCardLink {
   if (hasSeasonPassed(slug)) return { href: GALLERY_HREF, external: false };
+  const profile = getProfile(slug);
+  if (profile?.cardToPage && profile.path) return { href: profile.path, external: false };
   if (hasBookableEvent(slug)) {
     return { href: buildDestinationUrl(slug, campaign), external: true };
   }

@@ -10,11 +10,27 @@
  * or a link. This module imports no assets, so Node scripts can read it.
  */
 
+import {
+  JAMAICA_DATE_TEXT,
+  JAMAICA_EVENT_NAME,
+  JAMAICA_PATH,
+  JAMAICA_VENUE,
+} from "@/data/jamaicaPage";
+
 export type SeasonNoticePart = string | { text: string; href: string };
 
-// Empty for now. The Trinidad guide whose slug still says 2026 was already
-// refreshed to 2027 in its title and h1, so it needs no notice.
-export const BLOG_SEASON_NOTICES: Record<string, SeasonNoticePart[]> = {};
+/** The recovered 2025 Jamaica guide, kept word for word below its notice. */
+export const JAMAICA_2025_GUIDE_SLUG = "your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know";
+
+// The Trinidad guide whose slug still says 2026 was already refreshed to
+// 2027 in its title and h1, so it needs no notice.
+export const BLOG_SEASON_NOTICES: Record<string, SeasonNoticePart[]> = {
+  [JAMAICA_2025_GUIDE_SLUG]: [
+    `Planning for 2027? This guide was written for the 2025 season. ${JAMAICA_EVENT_NAME} is on ${JAMAICA_DATE_TEXT}, with the Carnival Glam Hub at the ${JAMAICA_VENUE}. See the `,
+    { text: `${JAMAICA_EVENT_NAME} Glam Hub page`, href: JAMAICA_PATH },
+    " for prices, what is included and booking.",
+  ],
+};
 
 export function getSeasonNotice(slug: string | undefined): SeasonNoticePart[] | undefined {
   return slug ? BLOG_SEASON_NOTICES[slug] : undefined;

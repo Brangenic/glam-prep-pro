@@ -43,7 +43,7 @@ const staticEntries: StaticEntry[] = [
   { path: "/joinourteam", priority: "0.4", changefreq: "monthly" },
   { path: "/policies", priority: "0.3", changefreq: "yearly" },
 
-  { path: "/jamaica", priority: "0.8", changefreq: "weekly" },
+  { path: "/jamaica", priority: "0.9", changefreq: "weekly" },
   { path: "/trinidad", priority: "0.8", changefreq: "weekly" },
   { path: "/saint-lucia", priority: "0.8", changefreq: "weekly" },
   { path: "/grenada", priority: "0.8", changefreq: "weekly" },

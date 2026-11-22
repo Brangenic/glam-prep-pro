@@ -29,6 +29,14 @@ import {
 } from "../src/data/stationRentals";
 import { TRINIDAD_ANSWER_SECTIONS } from "../src/data/answerPages";
 import {
+  JAMAICA_HERO_ALT,
+  JAMAICA_META_DESCRIPTION,
+  JAMAICA_META_TITLE,
+  JAMAICA_PATH,
+  jamaicaJsonLd,
+  jamaicaSeasonOpen,
+} from "../src/data/jamaicaPage";
+import {
   TRINIDAD_BOOK_PATH, TRINIDAD_BOOK_TITLE, TRINIDAD_BOOK_DESCRIPTION, TRINIDAD_BOOK_FAQ,
   TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
 } from "../src/data/trinidadBookPage";
@@ -155,8 +163,7 @@ const OG_RULE_HEX = "#dba724";
 // or illustration, describe the picture rather than repeating the title.
 // Routes not listed here fall back to the page title.
 const OG_IMAGE_ALT: Record<string, string> = {
-  "/jamaica":
-    "Masquerader in a Jamaica Carnival costume with sweat-resistant Carnival Glam Hub makeup",
+  "/jamaica": JAMAICA_HERO_ALT,
   "/saint-lucia":
     "Masquerader in a Saint Lucia Carnival costume with Carnival Glam Hub makeup and headpiece",
   "/antigua":
@@ -314,10 +321,9 @@ type RouteMeta = {
 const destinationRoutes: RouteMeta[] = [
   {
     path: "/jamaica",
-    title:
-      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
-    description:
-      "Jamaica Carnival, Sunday 4 April 2027. Makeup, hair, bronzing, shuttle and photoshoot at our Full Service Glam Hub in Kingston. Book your morning slot.",
+    // Shared with destinations.ts through src/data/jamaicaPage.ts.
+    title: JAMAICA_META_TITLE,
+    description: JAMAICA_META_DESCRIPTION,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -770,6 +776,8 @@ function buildJsonLd(route: RouteMeta): object[] {
   if (route.path.startsWith("/services/")) {
     const meta = SERVICE_META[route.path];
     blocks.push(sectionCrumb("Services", meta?.crumb ?? route.title, route.path));
+  } else if (route.path === JAMAICA_PATH && jamaicaSeasonOpen()) {
+    blocks.push(jamaicaJsonLd().breadcrumb);
   } else if (DEST_AREA[route.path]) {
     blocks.push(sectionCrumb("Destinations", DEST_CRUMB[route.path] ?? route.title, route.path));
   } else if (ANSWER_META[route.path]) {
@@ -870,6 +878,13 @@ function buildJsonLd(route: RouteMeta): object[] {
       provider: PROVIDER,
       areaServed: DEST_AREA[route.path],
     });
+    // Jamaica Carnival 2027: Event with one Offer per product, the Kingston
+    // hub as a BeautySalon, and the FAQPage matching the visible questions.
+    // Built from src/data/jamaicaPage.ts, the same source as the page.
+    if (route.path === JAMAICA_PATH && jamaicaSeasonOpen()) {
+      const ld = jamaicaJsonLd({ image: `${BASE_URL}${ROUTE_HERO_SOURCES[JAMAICA_PATH]}` });
+      blocks.push(ld.event, ld.business, ld.faq);
+    }
     // Miami Carnival has moved to Broward County. The announced venue and
     // the no-shuttle warning ship in the crawler-visible head.
     if (route.path === "/miami" && !hasSeasonPassed("miami")) {

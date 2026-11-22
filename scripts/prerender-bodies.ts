@@ -122,6 +122,18 @@ const UPCOMING_LIST_HTML = getUpcomingDestinations(undefined, undefined, { dedup
   .join("\n");
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
+import {
+  JAMAICA_DATE_TEXT,
+  JAMAICA_EVENT_NAME,
+  JAMAICA_FAQ,
+  JAMAICA_H1,
+  JAMAICA_SECTIONS,
+  JAMAICA_VENUE,
+  jamaicaBookingHref,
+  jamaicaSeasonOpen,
+} from "../src/data/jamaicaPage";
+import { getActiveBookingTerritories } from "../src/lib/bookingBar";
+import { blogExtraDestinations } from "../src/data/blogDestinationLinks";
 import { MANUAL_POSTS } from "../src/data/manualBlogPosts";
 import { buildBlogIndex, resolveSlug, truncateText, type BlogIndexPost } from "../src/lib/blogIndex";
 import { PRIVATE_ROUTES } from "../src/data/legacyRoutes";
@@ -249,6 +261,7 @@ const SERVICE_RELATED: Record<string, string> = {
       { href: "/trinidad", label: "Trinidad Carnival dressing" },
       { href: "/grenada", label: "Grenada Spicemas dressing" },
       { href: "/barbados", label: "Barbados Crop Over dressing" },
+      { href: "/jamaica", label: "Jamaica Carnival dressing" },
     ],
     guides: [
       { href: "/blogs/how-far-in-advance-to-book-carnival-makeup", label: "How far in advance should I book?" },
@@ -259,7 +272,7 @@ const SERVICE_RELATED: Record<string, string> = {
     destinations: [
       { href: "/trinidad-carnival-2027", label: "Trinidad Carnival 2027 shuttle" },
       { href: "/trinidad", label: "Trinidad Carnival hub" },
-      { href: "/jamaica", label: "Jamaica Carnival hub" },
+      { href: "/jamaica", label: "Jamaica Carnival shuttle" },
     ],
     guides: [
       { href: "/blogs/caribbean-carnival-has-an-airlift-problem", label: "Caribbean Carnival has an airlift problem" },
@@ -518,6 +531,16 @@ function escapeHtml(s: string): string {
     .replace(/>/g, "&gt;");
 }
 
+function jamaicaGuideBody(): string {
+  const book = `<p><a href="${escapeHtml(jamaicaBookingHref("jamaica_page"))}" rel="noopener noreferrer">Book ${escapeHtml(JAMAICA_EVENT_NAME)}</a></p>`;
+  const sections = JAMAICA_SECTIONS.map((s) => {
+    const bullets = s.bullets?.length ? `\n<ul>${s.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>` : "";
+    return `<section><h2>${escapeHtml(s.q)}</h2>\n<p>${escapeHtml(s.a)}</p>${bullets}</section>`;
+  }).join("\n");
+  const faq = JAMAICA_FAQ.map((f) => `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join("\n");
+  return `<p>${escapeHtml(JAMAICA_DATE_TEXT)}, ${escapeHtml(JAMAICA_VENUE)}.</p>\n${book}\n${sections}\n<h2>${escapeHtml(JAMAICA_EVENT_NAME)} questions</h2>\n${faq}\n${book}`;
+}
+
 function destinationBody(d: ParsedDest): string {
   const parts: string[] = [];
   // Header line, include date only if present in source data.
@@ -615,6 +638,11 @@ function destinationBody(d: ParsedDest): string {
       parts.push(
         `<p><a href="${d.editorial.linkTo}">${escapeHtml(d.editorial.linkLabel)}</a></p>`,
       );
+    }
+    // Jamaica Carnival 2027 answer-first guide and FAQ. Same text as the
+    // React page, from src/data/jamaicaPage.ts.
+    if (d.slug === "jamaica" && jamaicaSeasonOpen()) {
+      parts.push(jamaicaGuideBody());
     }
     // Grenada answer engine block. Same questions and answers as the
     // React FAQ, so a crawler and a visitor read the same thing.
@@ -745,6 +773,14 @@ const PRICE_SUMMARY = `Pricing is tiered. Carnival morning access, meaning getti
 /** Where we work, generated from the two tier model. Never typed by hand. */
 const FULL_SERVICE_SENTENCE = listNames(FULL_SERVICE_NAMES);
 const LITE_SENTENCE = listNames(LITE_NAMES);
+
+/** Homepage "Book now" territory row, same helper as the React hero. */
+function homeBookingRow(): string {
+  const items = getActiveBookingTerritories(new Date(), "home_booking_bar")
+    .map((t) => `<li><a href="${escapeHtml(t.href)}" rel="noopener noreferrer">${escapeHtml(t.label)}</a></li>`)
+    .join("");
+  return items ? `<nav aria-label="Book by territory"><p>Book now</p><ul>${items}</ul></nav>` : "";
+}
 
 /** The founder credit, worded once and reused. */
 const FOUNDER_PROSE = `Carnival Glam Hub was co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Gabrielle is a Jamaican makeup artist and entrepreneur, founder of <a href="${GABBY_GLAM_COSMETICS_URL}" target="_blank" rel="noopener">Gabby Glam Cosmetics</a> and <a href="${GLAM_HAUS_URL}" target="_blank" rel="noopener">Glam Haus by Gabby Glam</a>, a studio in Kingston, and was named a Distinguished Awardee in Beauty at the Jamaica Gleaner's Flair Distinguished Awards in 2023, <a href="${GLEANER_AWARD_URL}" target="_blank" rel="noopener">as reported by the Gleaner</a>.`;
@@ -893,6 +929,7 @@ const CORE: Record<string, Content> = {
   "/": {
     title: "Carnival Glam Hub, Caribbean Carnival Beauty Concierge",
     body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle from one air-conditioned lounge on Carnival morning.</p>
+${homeBookingRow()}
 <h2>More than 15,000 masqueraders served since 2017</h2>
 <p>Co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Booked across ${OPERATING_TERRITORY_SENTENCE}.</p>
 <h2>Services</h2>
@@ -1335,7 +1372,10 @@ function buildRouteMap(): Record<string, Content> {
   const dests = parseDestinations();
   for (const d of dests) {
     const path = `/${d.slug}`;
-    map[path] = { title: d.name, body: destinationBody(d) };
+    map[path] = {
+      title: d.slug === "jamaica" && jamaicaSeasonOpen() ? JAMAICA_H1 : d.name,
+      body: destinationBody(d),
+    };
   }
   // Alias page: /trinidad-carnival-2027 mirrors the Trinidad record
   // (uses only fields from destinations.ts, no invented copy).
@@ -1698,6 +1738,9 @@ function blogRelatedBlock(slug: string, allSlugs: string[]): string {
     services: [hub],
     guides: siblings,
     destinations: [
+      ...blogExtraDestinations(slug)
+        .filter((x) => x.to !== hub.href)
+        .map((x) => ({ href: x.to, label: x.label })),
       { href: "/blogs", label: "All Carnival Glam Hub guides" },
     ],
   });

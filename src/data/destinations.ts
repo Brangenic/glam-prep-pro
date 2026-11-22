@@ -6,6 +6,7 @@ import tobagoImg from "@/assets/carnival-8.jpg";
 import { getTerritoryPricing } from "@/data/territoryPricing";
 import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
+import { JAMAICA_FAQ, JAMAICA_HERO_ALT, JAMAICA_META_DESCRIPTION, JAMAICA_META_TITLE } from "@/data/jamaicaPage";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -77,6 +78,7 @@ export const destinations: Destination[] = [
     longDescription:
       "Our Jamaica Carnival Full Service Glam Hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-resistant carnival looks built for the Jamaica heat.",
     image: "/images/destinations/jamaica-meliza-hernandez.jpg",
+    imageAlt: JAMAICA_HERO_ALT,
     cta: "Book Jamaica Glam",
     objectPosition: "50% 25%",
     highlights: [
@@ -85,10 +87,9 @@ export const destinations: Destination[] = [
       "Hair styling and braiding",
       "Lash application and body paint",
     ],
-    metaTitle:
-      "Jamaica Carnival Makeup 2027 | Sweat-Proof Glam | Glam Hub",
-    metaDescription:
-      "Jamaica Carnival, Sunday 4 April 2027. Makeup, hair, bronzing, shuttle and photoshoot at our Full Service Glam Hub in Kingston. Book your morning slot.",
+    // Shared with the prerendered head through src/data/jamaicaPage.ts.
+    metaTitle: JAMAICA_META_TITLE,
+    metaDescription: JAMAICA_META_DESCRIPTION,
   },
   {
     slug: "saint-lucia",
@@ -469,6 +470,13 @@ export function getDestinationFaqs(d: Destination): Faq[] {
           },
         ]
       : [];
+
+  // Jamaica 2027 has its own answer-first FAQ, shared with the prerendered
+  // body and the FAQPage JSON-LD through src/data/jamaicaPage.ts. Once the
+  // season passes the page falls back to the generic wrapped answers.
+  if (d.slug === "jamaica" && !passed) {
+    return JAMAICA_FAQ.map((f) => ({ question: f.q, answer: f.a }));
+  }
 
   return [
     ...venueFaq,

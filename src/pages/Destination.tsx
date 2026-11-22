@@ -35,6 +35,8 @@ import {
 } from "@/data/seasons";
 
 import CarnivalGuides from "@/components/landing/CarnivalGuides";
+import JamaicaGuide from "@/components/destinations/JamaicaGuide";
+import { JAMAICA_FAQ, JAMAICA_H1 } from "@/data/jamaicaPage";
 
 const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
   trinidad: { city: "Port of Spain", country: "TT" },
@@ -162,7 +164,16 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       el.textContent = JSON.stringify(data);
     };
 
-    upsertJsonLd("destination-faq-jsonld", {
+    // Where the prerendered head already carries this page's FAQPage (Jamaica),
+    // do not add a second copy after hydration.
+    const firstQ = faqs[0]?.question ?? "";
+    const prerenderedFaq =
+      dest.slug === "jamaica" &&
+      firstQ === JAMAICA_FAQ[0]?.q &&
+      Array.from(document.querySelectorAll('script[type="application/ld+json"][data-prerender]')).some(
+        (s) => (s.textContent ?? "").includes('"FAQPage"') && (s.textContent ?? "").includes(firstQ),
+      );
+    if (!prerenderedFaq) upsertJsonLd("destination-faq-jsonld", {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: faqs.map((f) => ({
@@ -324,11 +335,14 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
               </span>
             )}
             <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold italic text-white max-w-3xl">
-              {dest.name}
+              {dest.slug === "jamaica" && !seasonPassed ? JAMAICA_H1 : dest.name}
             </h1>
             <p className="font-body text-sm sm:text-base text-white/80 mt-3">{dest.date}</p>
           </div>
         </section>
+
+        {/* Jamaica 2027 answer-first guide, while the season is ahead */}
+        {dest.slug === "jamaica" && !seasonPassed && <JamaicaGuide />}
 
         {/* Trinidad evergreen hub intro + cross-link to dated edition */}
         {dest.slug === "trinidad" && (

@@ -22,9 +22,9 @@ describe("Jamaica is a live bookable territory", () => {
 
   it("has a real MasOS event and no card points at the bare events list", () => {
     expect(hasBookableEvent("jamaica")).toBe(true);
-    const link = getDestinationCardLink("jamaica", "test");
-    expect(link.external).toBe(true);
-    expect(link.href.startsWith(`${JAMAICA_EVENT}?`)).toBe(true);
+    // The card goes to /jamaica, the page and the booking row go to the event.
+    expect(getDestinationCardLink("jamaica", "test")).toEqual({ href: "/jamaica", external: false });
+    expect(buildDestinationUrl("jamaica", "test").startsWith(`${JAMAICA_EVENT}?`)).toBe(true);
     expect(buildDestinationUrl("jamaica")).not.toMatch(
       /masos\.app\/events\?/,
     );
