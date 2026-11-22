@@ -1,13 +1,13 @@
 /**
- * Owner rule: website paths always go to MasOS; the Trinidad portal is
- * AI-discovery only.
+ * Owner rule: website paths always go to MasOS. The Trinidad portal has no
+ * internal links but is open to Google and AI assistants.
  *
- * These pages stay live for people arriving from AI assistants (ChatGPT,
- * Claude, Perplexity and the glam-hub-mcp app), but nothing on
- * carnivalglamhub.com links to them, they carry noindex, nofollow on both
- * surfaces and they are kept out of every sitemap. They are NOT disallowed
- * in robots.txt, because a crawler that cannot fetch a page cannot see its
- * noindex. public/llms.txt keeps its lines for AI discovery.
+ * Nothing on carnivalglamhub.com links to any path in PORTAL_PATHS. Of
+ * those, /trinidad/book is indexable and in the sitemap. The payment return
+ * pages and /ai-booking-app carry noindex, nofollow on both surfaces and stay
+ * out of every sitemap. None is ever disallowed in robots.txt, because a
+ * crawler that cannot fetch a page cannot see its noindex. public/llms.txt
+ * keeps its lines for AI discovery.
  *
  * Asset-free, so the prerender scripts can import it.
  */
@@ -18,9 +18,25 @@ export const AI_DISCOVERY_ONLY_PATHS = [
   "/ai-booking-app",
 ] as const;
 
+/** Portal paths that are hidden from search engines. /trinidad/book is not one of them. */
+export const NOINDEX_PORTAL_PATHS = [
+  "/trinidad/book/confirmed",
+  "/trinidad/book/cancelled",
+  "/ai-booking-app",
+] as const;
+
 export const AI_DISCOVERY_ONLY_ROBOTS = "noindex, nofollow";
 
+function clean(path: string): string {
+  return path.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+}
+
+/** True for every portal path: none may be linked from the website. */
 export function isAiDiscoveryOnlyPath(path: string): boolean {
-  const clean = path.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
-  return (AI_DISCOVERY_ONLY_PATHS as readonly string[]).includes(clean);
+  return (AI_DISCOVERY_ONLY_PATHS as readonly string[]).includes(clean(path));
+}
+
+/** True for portal paths that carry noindex, nofollow. */
+export function isNoindexPortalPath(path: string): boolean {
+  return (NOINDEX_PORTAL_PATHS as readonly string[]).includes(clean(path));
 }

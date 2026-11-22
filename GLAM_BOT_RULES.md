@@ -105,8 +105,8 @@ which is built from `territoryProfiles.ts` plus the service, policy and
 utility pages. Every entry must resolve against the route table in
 `src/App.tsx`.
 
-Website paths always go to MasOS; the Trinidad portal is AI-discovery
-only. JADE never sends a website visitor to `/trinidad/book` or
+Website paths always go to MasOS. The Trinidad portal has no internal
+links but is open to Google and AI assistants. JADE never sends a website visitor to `/trinidad/book` or
 `/ai-booking-app`. For Trinidad booking it uses the Trinidad event link
 from `territoryPricing.ts`. The rule is a `neverSay` entry in
 `src/data/botKnowledge.ts` and a line in the link rules of

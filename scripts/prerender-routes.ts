@@ -33,7 +33,7 @@ import {
   TRINIDAD_BOOK_PRODUCTS, TRINIDAD_BOOK_CATALOGUE,
 } from "../src/data/trinidadBookPage";
 import { AI_APP_PATH, AI_APP_TITLE, AI_APP_DESCRIPTION } from "../src/data/aiBookingAppPage";
-import { AI_DISCOVERY_ONLY_ROBOTS, isAiDiscoveryOnlyPath } from "../src/data/aiDiscoveryOnly";
+import { AI_DISCOVERY_ONLY_ROBOTS, isNoindexPortalPath } from "../src/data/aiDiscoveryOnly";
 import {
   ABOUT_PAGE_DESCRIPTION,
   ABOUT_PAGE_TITLE,
@@ -1283,9 +1283,9 @@ async function main() {
   let written = 0;
   for (const route of allRoutes) {
     let html = rewriteHead(template, route);
-    // AI-discovery-only pages (/trinidad/book, /ai-booking-app) stay live
-    // for AI assistants but carry noindex, nofollow and no sitemap entry.
-    if (isAiDiscoveryOnlyPath(route.path)) html = setRobots(html, AI_DISCOVERY_ONLY_ROBOTS);
+    // /ai-booking-app carries noindex, nofollow and no sitemap entry.
+    // /trinidad/book is indexable; it simply has no internal links.
+    if (isNoindexPortalPath(route.path)) html = setRobots(html, AI_DISCOVERY_ONLY_ROBOTS);
     const dir = join(DIST, route.path.replace(/^\//, ""));
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), html);
@@ -1430,11 +1430,11 @@ async function main() {
           r.path === (p.path.startsWith("/trinidad/book") ? "/trinidad/book" : "/about"),
         )?.ogImage ?? HERO_FALLBACK,
     };
-    // The Trinidad portal return pages are AI-discovery only, so they take
+    // The Trinidad portal payment return pages are never indexed, so they take
     // noindex, nofollow rather than the private noindex, follow.
     const html = setRobots(
       rewriteHead(template, route),
-      isAiDiscoveryOnlyPath(p.path) ? AI_DISCOVERY_ONLY_ROBOTS : PRIVATE_ROBOTS,
+      isNoindexPortalPath(p.path) ? AI_DISCOVERY_ONLY_ROBOTS : PRIVATE_ROBOTS,
     );
     const dir = join(DIST, p.path.replace(/^\//, ""));
     mkdirSync(dir, { recursive: true });
