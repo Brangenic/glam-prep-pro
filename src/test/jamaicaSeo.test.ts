@@ -10,6 +10,8 @@ import { resolve } from "path";
 import {
   JAMAICA_EVENT_URL,
   JAMAICA_FAQ,
+  JAMAICA_GALLERY,
+  JAMAICA_GALLERY_HEADING,
   JAMAICA_H1,
   JAMAICA_HERO_ALT,
   JAMAICA_HERO_IMAGE,
@@ -163,7 +165,27 @@ describe("Jamaica photos", () => {
   it("shares a 1200 by 630 JPG of the same photo", () => {
     expect(JAMAICA_OG_IMAGE).toBe("/images/destinations/jamaica-glam-hub-feathers-og.jpg");
     expect(exists(JAMAICA_OG_IMAGE)).toBe(true);
-    expect(read("scripts/prerender-routes.ts")).toContain('"/jamaica": JAMAICA_OG_IMAGE,');
+    expect(read("scripts/prerender-routes.ts")).toContain("ogImage: `${BASE_URL}${JAMAICA_OG_IMAGE}`,");
+  });
+
+  it("shows an Inside Glam Hub Jamaica gallery of distinct owner photos above the FAQ", () => {
+    expect(JAMAICA_GALLERY_HEADING).toBe("Inside Glam Hub Jamaica");
+    expect(JAMAICA_GALLERY).toHaveLength(5);
+    const alts = JAMAICA_GALLERY.map((p) => p.alt);
+    expect(new Set(alts).size).toBe(alts.length);
+    const used = [JAMAICA_HERO_IMAGE, ...JAMAICA_PHOTOS.map((p) => p.src)];
+    for (const p of JAMAICA_GALLERY) {
+      expect(used).not.toContain(p.src);
+      expect(p.alt.endsWith("Carnival Glam Hub Jamaica")).toBe(true);
+      expect(p.src.endsWith(".webp")).toBe(true);
+      for (const src of p.srcSet.split(",").map((x) => x.trim().split(" ")[0])) expect(exists(src)).toBe(true);
+    }
+    const page = read("src/pages/Destination.tsx");
+    expect(page.indexOf("<JamaicaGallery />")).toBeGreaterThan(-1);
+    expect(page.indexOf("<JamaicaGallery />")).toBeLessThan(page.indexOf("FAQ section, renders the same Q&A"));
+    const gallery = read("src/components/destinations/JamaicaGallery.tsx");
+    expect(gallery).toContain('loading="lazy"');
+    expect(read("scripts/prerender-bodies.ts")).toContain("jamaicaGalleryBody()");
   });
 
   it("puts the second owner photo on the page with Glam Hub Jamaica alt text", () => {
@@ -203,5 +225,37 @@ describe("Jamaica discovery", () => {
     const parts = getSeasonNotice("your-ultimate-guide-to-jamaica-carnival-2025-everything-you-need-to-know")!;
     expect(parts.some((p) => typeof p !== "string" && p.href === "/jamaica")).toBe(true);
     expect(seasonNoticeText(parts)).toContain("Jamaica Pegasus Hotel, Kingston");
+  });
+});
+
+describe("Jamaica link preview in the prerendered head", () => {
+  it("carries a 1200 by 630 JPG share image on www.carnivalglamhub.com and every share tag", async () => {
+    const { rewriteHead, allRoutes } = await import("../../scripts/prerender-routes");
+    const route = allRoutes.find((r) => r.path === "/jamaica")!;
+    const html = rewriteHead(read("index.html"), route);
+    const meta = (attr: "property" | "name", key: string) =>
+      html.match(new RegExp(`<meta\\s+${attr}="${key.replace(/[:]/g, "\\$&")}"\\s+content="([^"]*)"`, "i"))?.[1];
+
+    const image = "https://www.carnivalglamhub.com/images/destinations/jamaica-glam-hub-feathers-og.jpg";
+    expect(meta("property", "og:image")).toBe(image);
+    expect(meta("name", "twitter:image")).toBe(image);
+    expect(meta("property", "og:image:width")).toBe("1200");
+    expect(meta("property", "og:image:height")).toBe("630");
+    expect(meta("property", "og:image:alt")).toBe(JAMAICA_HERO_ALT);
+    expect(meta("property", "og:title")).toBe(JAMAICA_META_TITLE);
+    expect(meta("property", "og:description")).toBe(JAMAICA_META_DESCRIPTION);
+    expect(meta("property", "og:url")).toBe("https://www.carnivalglamhub.com/jamaica");
+    expect(meta("property", "og:type")).toBe("website");
+    expect(meta("name", "twitter:card")).toBe("summary_large_image");
+  });
+
+  it("the share JPG is in public/, 1200 by 630 and under 600 KB", async () => {
+    const file = resolve(process.cwd(), "public", JAMAICA_OG_IMAGE.replace(/^\//, ""));
+    const sharp = (await import("sharp")).default;
+    const info = await sharp(file).metadata();
+    expect(info.format).toBe("jpeg");
+    expect(info.width).toBe(1200);
+    expect(info.height).toBe(630);
+    expect(readFileSync(file).length).toBeLessThan(600 * 1024);
   });
 });

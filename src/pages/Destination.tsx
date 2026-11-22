@@ -36,6 +36,7 @@ import {
 
 import CarnivalGuides from "@/components/landing/CarnivalGuides";
 import JamaicaGuide from "@/components/destinations/JamaicaGuide";
+import JamaicaGallery from "@/components/destinations/JamaicaGallery";
 import { JAMAICA_FAQ, JAMAICA_H1 } from "@/data/jamaicaPage";
 
 const TERRITORY_PLACE: Record<string, { city: string; country: string }> = {
@@ -947,6 +948,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </section>
         )}
 
+
+        {/* Inside Glam Hub Jamaica, owner photos, above the FAQ */}
+        {dest.slug === "jamaica" && <JamaicaGallery />}
 
         {/* FAQ section, renders the same Q&A captured in FAQPage JSON-LD */}
         <section

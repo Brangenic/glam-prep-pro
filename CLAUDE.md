@@ -252,6 +252,9 @@ A territory page with its own answer-first sections, FAQ and Event JSON-LD
 and its `public/llms.txt` section in that one asset-free module, read by
 `destinations.ts`, the React page and both prerender scripts, so the
 surfaces cannot drift.
+Its photo gallery lives in the same module. A page whose share image is a
+hand-cropped 1200 by 630 JPG in `public/` points `ogImage` straight at that
+stable URL and stays out of `ROUTE_HERO_SOURCES`, so it is never re-encoded.
 
 ## Reopening a territory
 

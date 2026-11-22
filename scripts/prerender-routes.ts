@@ -90,8 +90,8 @@ const OG_H = 630;
 // transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
 // social crawlers always see a page-specific preview in the raw HTML.
 const ROUTE_HERO_SOURCES: Record<string, string> = {
-  // Pre-cropped 1200 by 630 JPG of the owner supplied Glam Hub Jamaica hero.
-  "/jamaica": JAMAICA_OG_IMAGE,
+  // /jamaica is not transcoded: its route points og:image straight at the
+  // pre-cropped 1200 by 630 JPG in public/, a stable URL (see destinationRoutes).
   "/saint-lucia":
     "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
   "/antigua":
@@ -327,7 +327,9 @@ const destinationRoutes: RouteMeta[] = [
     // Shared with destinations.ts through src/data/jamaicaPage.ts.
     title: JAMAICA_META_TITLE,
     description: JAMAICA_META_DESCRIPTION,
-    ogImage: HERO_FALLBACK,
+    // Pre-cropped 1200 by 630 JPG of the Glam Hub Jamaica hero, served from
+    // public/ at a stable URL, never re-encoded at build time.
+    ogImage: `${BASE_URL}${JAMAICA_OG_IMAGE}`,
   },
   {
     path: "/saint-lucia",
@@ -557,7 +559,7 @@ const answerRoutes: RouteMeta[] = [
   },
 ];
 
-const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes, ...answerRoutes];
+export const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes, ...answerRoutes];
 
 // ============================================================
 // JSON-LD enrichment
@@ -1141,7 +1143,7 @@ function setRobots(html: string, content: string): string {
   return html.replace("</head>", `    <meta name="robots" content="${content}" />\n  </head>`);
 }
 
-function rewriteHead(template: string, route: RouteMeta): string {
+export function rewriteHead(template: string, route: RouteMeta): string {
   const url = `${BASE_URL}${route.path}`;
   const title = route.title;
   const desc = route.description;
@@ -1509,7 +1511,10 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  console.error("prerender-routes failed:", err);
-  process.exit(0); // never block the build
-});
+// Tests import rewriteHead and allRoutes; only the build runs main().
+if (!process.env.VITEST) {
+  main().catch((err) => {
+    console.error("prerender-routes failed:", err);
+    process.exit(0); // never block the build
+  });
+}

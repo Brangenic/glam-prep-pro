@@ -126,6 +126,9 @@ import {
   JAMAICA_DATE_TEXT,
   JAMAICA_EVENT_NAME,
   JAMAICA_FAQ,
+  JAMAICA_GALLERY,
+  JAMAICA_GALLERY_HEADING,
+  JAMAICA_GALLERY_NOTE,
   JAMAICA_H1,
   JAMAICA_PHOTOS,
   JAMAICA_SECTIONS,
@@ -532,6 +535,15 @@ function escapeHtml(s: string): string {
     .replace(/>/g, "&gt;");
 }
 
+/** Inside Glam Hub Jamaica, the same photos and alt text as the React gallery. */
+function jamaicaGalleryBody(): string {
+  if (!JAMAICA_GALLERY.length) return "";
+  const figs = JAMAICA_GALLERY.map(
+    (p) => `<figure><img src="${escapeHtml(p.src)}" srcset="${escapeHtml(p.srcSet)}" alt="${escapeHtml(p.alt)}" width="${p.width}" height="${p.height}" loading="lazy" /></figure>`,
+  ).join("\n");
+  return `<section><h2>${escapeHtml(JAMAICA_GALLERY_HEADING)}</h2>\n<p>${escapeHtml(JAMAICA_GALLERY_NOTE)}</p>\n${figs}</section>`;
+}
+
 function jamaicaGuideBody(): string {
   const book = `<p><a href="${escapeHtml(jamaicaBookingHref("jamaica_page"))}" rel="noopener noreferrer">Book ${escapeHtml(JAMAICA_EVENT_NAME)}</a></p>`;
   const photos = JAMAICA_PHOTOS.map(
@@ -542,7 +554,7 @@ function jamaicaGuideBody(): string {
     return `<section><h2>${escapeHtml(s.q)}</h2>\n<p>${escapeHtml(s.a)}</p>${bullets}${i === 0 ? photos : ""}</section>`;
   }).join("\n");
   const faq = JAMAICA_FAQ.map((f) => `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join("\n");
-  return `<p>${escapeHtml(JAMAICA_DATE_TEXT)}, ${escapeHtml(JAMAICA_VENUE)}.</p>\n${book}\n${sections}\n<h2>${escapeHtml(JAMAICA_EVENT_NAME)} questions</h2>\n${faq}\n${book}`;
+  return `<p>${escapeHtml(JAMAICA_DATE_TEXT)}, ${escapeHtml(JAMAICA_VENUE)}.</p>\n${book}\n${sections}\n${jamaicaGalleryBody()}\n<h2>${escapeHtml(JAMAICA_EVENT_NAME)} questions</h2>\n${faq}\n${book}`;
 }
 
 function destinationBody(d: ParsedDest): string {
@@ -647,6 +659,8 @@ function destinationBody(d: ParsedDest): string {
     // React page, from src/data/jamaicaPage.ts.
     if (d.slug === "jamaica" && jamaicaSeasonOpen()) {
       parts.push(jamaicaGuideBody());
+    } else if (d.slug === "jamaica") {
+      parts.push(jamaicaGalleryBody());
     }
     // Grenada answer engine block. Same questions and answers as the
     // React FAQ, so a crawler and a visitor read the same thing.

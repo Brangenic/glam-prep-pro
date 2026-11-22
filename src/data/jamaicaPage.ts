@@ -7,9 +7,8 @@
  * territoryProfiles.ts, the season from seasons.ts, prices and the MasOS
  * event from territoryPricing.ts, inclusions and add-ons from hubTiers.ts,
  * and the arrival, deposit and transfer rules from policies.ts. Nothing is
- * typed out here that already exists there. Anything not in the data layer
- * (street address, appointment start times, a confirmed Jamaica photo) is
- * left out.
+ * typed out here that already exists there. The address, start times and
+ * photos are owner confirmed.
  *
  * Asset free, so the prerender scripts can import it.
  */
@@ -119,6 +118,52 @@ export const JAMAICA_PHOTOS: JamaicaPhoto[] = [
     width: 1080,
     height: 1228,
   },
+];
+
+/* ---------- Inside Glam Hub Jamaica, owner supplied gallery ---------- */
+
+export const JAMAICA_GALLERY_HEADING = "Inside Glam Hub Jamaica";
+export const JAMAICA_GALLERY_NOTE = "Masqueraders glammed by Carnival Glam Hub Jamaica.";
+
+const galleryPhoto = (name: string, height: number, alt: string): JamaicaPhoto => ({
+  src: `/images/destinations/jamaica-glam-hub-${name}-1080.webp`,
+  srcSet: `/images/destinations/jamaica-glam-hub-${name}-640.webp 640w, /images/destinations/jamaica-glam-hub-${name}-1080.webp 1080w`,
+  alt,
+  width: 1080,
+  height,
+});
+
+/**
+ * Every photo is from the owner's Glam Hub Jamaica folder. Alt text
+ * describes only what is visible, never names the masquerader, and ends
+ * with "Carnival Glam Hub Jamaica". The hero is not repeated here.
+ */
+export const JAMAICA_GALLERY: JamaicaPhoto[] = [
+  galleryPhoto(
+    "blue-crown",
+    1337,
+    "Smiling masquerader with one hand raised to her head, wearing a blue and silver jewelled crown with blue glitter spikes, a matching jewelled collar and bodywear, teal eyeliner and face gems, in front of green trees, Carnival Glam Hub Jamaica",
+  ),
+  galleryPhoto(
+    "peace-sign",
+    1345,
+    "Laughing masquerader in orange sunglasses making a peace sign, wearing an orange, teal and pink feathered backpiece, orange jewelled bodywear and orange feathered leg pieces, on grass under palm trees, Carnival Glam Hub Jamaica",
+  ),
+  galleryPhoto(
+    "portrait",
+    1354,
+    "Close-up of a masquerader with long highlighted hair and sunglasses on her head, winged eyeliner with small gems above the eyes and nude lips, wearing a pink and gold jewelled necklace with purple tassels, in front of a feathered backpiece, Carnival Glam Hub Jamaica",
+  ),
+  galleryPhoto(
+    "gold-eyes",
+    1253,
+    "Smiling masquerader with a high curly ponytail tied in gold, gold eye makeup, a gold jewelled collar and pale blue feathered sleeves with gold trim, one hand on her hip, outdoors, Carnival Glam Hub Jamaica",
+  ),
+  galleryPhoto(
+    "sun-moon-beach",
+    1440,
+    "Masquerader on a white sand beach by the sea wearing a large sun and moon face headpiece with orange and pink feathers, a lilac jewelled costume and headband, and white trainers, Carnival Glam Hub Jamaica",
+  ),
 ];
 
 /* ---------- Policy clauses, quoted, never retyped ---------- */
