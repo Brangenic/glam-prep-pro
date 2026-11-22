@@ -105,6 +105,8 @@ const Destinations = () => {
             >
               <img
                 src={d.image}
+                srcSet={d.imageSrcSet}
+                sizes={d.imageSrcSet ? "(min-width: 1024px) 25vw, 50vw" : undefined}
                 alt={d.imageAlt ?? `${d.name} masquerader in costume, ${d.description}`}
                 width={600}
                 height={800}

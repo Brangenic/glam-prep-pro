@@ -4,13 +4,18 @@
  * layer. These tests pin the owner's facts and the schema shape.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 import {
   JAMAICA_EVENT_URL,
   JAMAICA_FAQ,
   JAMAICA_H1,
+  JAMAICA_HERO_ALT,
+  JAMAICA_HERO_IMAGE,
+  JAMAICA_HERO_SRCSET,
+  JAMAICA_OG_IMAGE,
+  JAMAICA_PHOTOS,
   JAMAICA_LLMS_SECTION,
   JAMAICA_META_DESCRIPTION,
   JAMAICA_META_TITLE,
@@ -66,6 +71,12 @@ describe("Jamaica content", () => {
     expect(JAMAICA_FAQ.find((f) => /shuttle/i.test(f.q))!.a.startsWith("Yes")).toBe(true);
     expect(JAMAICA_FAQ.find((f) => /transfer/i.test(f.q))!.a).toContain("12 months");
     expect(JAMAICA_FAQ.find((f) => /arrive/i.test(f.q))!.a).toContain("30 minutes");
+    expect(JAMAICA_FAQ.find((f) => /times are available/i.test(f.q))!.a).toContain(
+      "Appointment start times run from 4:00am to 12:00 noon on Sunday 4 April 2027.",
+    );
+    expect(JAMAICA_FAQ.find((f) => /where is/i.test(f.q))!.a).toContain(
+      "The Jamaica Pegasus Hotel, 81 Knutsford Boulevard, New Kingston, Kingston 5, Jamaica. The hotel is next to Emancipation Park.",
+    );
     const d = getDestination("jamaica")!;
     expect(getDestinationFaqs(d).map((f) => f.question)).toEqual(JAMAICA_FAQ.map((f) => f.q));
   });
@@ -90,9 +101,17 @@ describe("Jamaica JSON-LD", () => {
     const e = ld.event as any;
     expect(e["@context"]).toBe("https://schema.org");
     expect(e["@type"]).toBe("Event");
-    expect(e.startDate).toBe("2027-04-04");
-    expect(e.location.name).toBe("Jamaica Pegasus Hotel");
-    expect(e.location.address.addressLocality).toBe("Kingston");
+    expect(e.startDate).toBe("2027-04-04T04:00:00-05:00");
+    expect(e.endDate).toBe("2027-04-04T12:00:00-05:00");
+    expect(e.location.name).toBe("The Jamaica Pegasus Hotel");
+    expect(e.location.address).toEqual({
+      "@type": "PostalAddress",
+      streetAddress: "81 Knutsford Boulevard",
+      addressLocality: "Kingston",
+      addressRegion: "Kingston 5",
+      addressCountry: "JM",
+    });
+    expect(e.location.geo).toEqual({ "@type": "GeoCoordinates", latitude: 18.0025, longitude: -76.7878 });
     expect(e.offers).toHaveLength(getTerritoryPricing("jamaica")!.products.length);
     for (const o of e.offers) {
       expect(o.priceCurrency).toBe("USD");
@@ -103,6 +122,14 @@ describe("Jamaica JSON-LD", () => {
 
   it("describes the Kingston hub and the breadcrumb", () => {
     expect((ld.business as any)["@type"]).toBe("BeautySalon");
+    expect((ld.business as any).address.streetAddress).toBe("81 Knutsford Boulevard");
+    expect((ld.business as any).geo.latitude).toBe(18.0025);
+    expect((ld.business as any).openingHoursSpecification).toMatchObject({
+      opens: "04:00",
+      closes: "12:00",
+      validFrom: "2027-04-04",
+      validThrough: "2027-04-04",
+    });
     expect((ld.business as any).priceRange).toBe("US$120-US$440");
     const crumbs = (ld.breadcrumb as any).itemListElement;
     expect(crumbs.at(-1).item).toBe("https://www.carnivalglamhub.com/jamaica");
@@ -120,6 +147,34 @@ describe("Jamaica JSON-LD", () => {
   });
 });
 
+describe("Jamaica photos", () => {
+  const exists = (p: string) => existsSync(resolve(process.cwd(), "public", p.replace(/^\//, "")));
+
+  it("uses the owner supplied Glam Hub Jamaica hero, not the old overlay photo", () => {
+    expect(JAMAICA_HERO_IMAGE).toBe("/images/destinations/jamaica-glam-hub-feathers-1280.webp");
+    expect(getDestination("jamaica")?.image).toBe(JAMAICA_HERO_IMAGE);
+    expect(getDestination("jamaica")?.imageSrcSet).toBe(JAMAICA_HERO_SRCSET);
+    for (const src of JAMAICA_HERO_SRCSET.split(",").map((x) => x.trim().split(" ")[0])) expect(exists(src)).toBe(true);
+    expect(JAMAICA_HERO_ALT.endsWith("Carnival Glam Hub Jamaica")).toBe(true);
+    expect(read("src/data/destinations.ts")).not.toContain("jamaica-meliza-hernandez");
+    expect(read("scripts/prerender-routes.ts")).not.toContain("jamaica-meliza-hernandez");
+  });
+
+  it("shares a 1200 by 630 JPG of the same photo", () => {
+    expect(JAMAICA_OG_IMAGE).toBe("/images/destinations/jamaica-glam-hub-feathers-og.jpg");
+    expect(exists(JAMAICA_OG_IMAGE)).toBe(true);
+    expect(read("scripts/prerender-routes.ts")).toContain('"/jamaica": JAMAICA_OG_IMAGE,');
+  });
+
+  it("puts the second owner photo on the page with Glam Hub Jamaica alt text", () => {
+    expect(JAMAICA_PHOTOS).toHaveLength(1);
+    for (const p of JAMAICA_PHOTOS) {
+      expect(exists(p.src)).toBe(true);
+      expect(p.alt.endsWith("Carnival Glam Hub Jamaica")).toBe(true);
+    }
+  });
+});
+
 describe("Jamaica discovery", () => {
   it("is in sitemap.xml at priority 0.9", () => {
     expect(read("public/sitemap.xml")).toContain(
@@ -132,6 +187,16 @@ describe("Jamaica discovery", () => {
   it("llms.txt carries the Jamaica section exactly as the data builds it", () => {
     expect(read("public/llms.txt")).toContain(JAMAICA_LLMS_SECTION);
     expect(JAMAICA_LLMS_SECTION).toContain(EVENT);
+    expect(JAMAICA_LLMS_SECTION).toContain("81 Knutsford Boulevard, New Kingston, Kingston 5, Jamaica");
+    expect(JAMAICA_LLMS_SECTION).toContain("4:00am to 12:00 noon");
+  });
+
+  it("JADE knows the address and the appointment times", () => {
+    const pack = JSON.parse(read("supabase/functions/chat/knowledge.json"));
+    const brief: string = pack.territories.jamaica.brief;
+    expect(brief).toContain("Address: The Jamaica Pegasus Hotel, 81 Knutsford Boulevard, New Kingston, Kingston 5, Jamaica.");
+    expect(brief).toContain("next to Emancipation Park");
+    expect(brief).toContain("4:00am to 12:00 noon");
   });
 
   it("the 2025 guide points at /jamaica at the top", () => {

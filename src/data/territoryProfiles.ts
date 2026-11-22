@@ -31,7 +31,69 @@ export type TerritoryProfile = {
    * from the page itself. Owner decision, November 2026, Jamaica.
    */
   cardToPage?: boolean;
+  /**
+   * Full postal address of the hub, owner confirmed. Only set where the
+   * owner has confirmed it; everywhere else the address is never guessed.
+   */
+  venueAddress?: VenueAddress;
+  /** Appointment start times on Carnival day, owner confirmed. */
+  appointmentHours?: AppointmentHours;
 };
+
+export type VenueAddress = {
+  /** Venue name as written in the address, for example "The Jamaica Pegasus Hotel". */
+  venueName: string;
+  streetAddress: string;
+  district?: string;
+  /** schema.org addressLocality */
+  locality: string;
+  /** schema.org addressRegion */
+  region: string;
+  country: string;
+  /** ISO 3166-1 alpha-2 */
+  countryCode: string;
+  lat: number;
+  lng: number;
+  /** Owner-stated landmark beside the venue. */
+  nextTo?: string;
+};
+
+export type AppointmentHours = {
+  /** 24 hour local time, "HH:MM". */
+  start: string;
+  end: string;
+  /** UTC offset of local time on the day, for structured data. */
+  utcOffset: string;
+  /** How the site says it, for example "4:00am to 12:00 noon". */
+  text: string;
+};
+
+/** Owner and hotel confirmed, 22 November 2026. */
+export const JAMAICA_VENUE_ADDRESS: VenueAddress = {
+  venueName: "The Jamaica Pegasus Hotel",
+  streetAddress: "81 Knutsford Boulevard",
+  district: "New Kingston",
+  locality: "Kingston",
+  region: "Kingston 5",
+  country: "Jamaica",
+  countryCode: "JM",
+  lat: 18.0025,
+  lng: -76.7878,
+  nextTo: "Emancipation Park",
+};
+
+/** Owner confirmed, 22 November 2026. Jamaica keeps UTC-5 all year. */
+export const JAMAICA_APPOINTMENT_HOURS: AppointmentHours = {
+  start: "04:00",
+  end: "12:00",
+  utcOffset: "-05:00",
+  text: "4:00am to 12:00 noon",
+};
+
+/** "81 Knutsford Boulevard, New Kingston, Kingston 5, Jamaica" */
+export function formatAddress(a: VenueAddress): string {
+  return [a.streetAddress, a.district, a.region, a.country].filter(Boolean).join(", ");
+}
 
 const TRINIDAD_VENUE =
   "The Hilton Hotel, two minutes from the Savannah, Port of Spain";
@@ -46,6 +108,8 @@ export const TERRITORY_PROFILES: TerritoryProfile[] = [
     venue: "Jamaica Pegasus Hotel, Kingston",
     aliases: ["jamaica", "kingston", "pegasus"],
     cardToPage: true,
+    venueAddress: JAMAICA_VENUE_ADDRESS,
+    appointmentHours: JAMAICA_APPOINTMENT_HOURS,
   },
   {
     slug: "trinidad",

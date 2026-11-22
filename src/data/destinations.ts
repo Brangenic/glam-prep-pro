@@ -6,7 +6,7 @@ import tobagoImg from "@/assets/carnival-8.jpg";
 import { getTerritoryPricing } from "@/data/territoryPricing";
 import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
-import { JAMAICA_FAQ, JAMAICA_HERO_ALT, JAMAICA_META_DESCRIPTION, JAMAICA_META_TITLE } from "@/data/jamaicaPage";
+import { JAMAICA_FAQ, JAMAICA_HERO_ALT, JAMAICA_HERO_IMAGE, JAMAICA_HERO_SRCSET, JAMAICA_META_DESCRIPTION, JAMAICA_META_TITLE } from "@/data/jamaicaPage";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -28,6 +28,8 @@ export type Destination = {
   image: string;
   /** Overrides the generated alt text when the hero is not location specific. */
   imageAlt?: string;
+  /** Responsive WebP sizes of `image`, where they exist. */
+  imageSrcSet?: string;
   cta: string;
   upcoming?: boolean;
   objectPosition?: string;
@@ -77,7 +79,9 @@ export const destinations: Destination[] = [
     description: "Premium glam hub services for Jamaica Carnival.",
     longDescription:
       "Our Jamaica Carnival Full Service Glam Hub is based at the Jamaica Pegasus Hotel, Kingston. We deliver full makeup, hair, gem application, body paint and lash services so you can hit the road flawless. Our Caribbean-trained artists specialise in long-wear, sweat-resistant carnival looks built for the Jamaica heat.",
-    image: "/images/destinations/jamaica-meliza-hernandez.jpg",
+    // Owner supplied Glam Hub Jamaica photo, November 2026.
+    image: JAMAICA_HERO_IMAGE,
+    imageSrcSet: JAMAICA_HERO_SRCSET,
     imageAlt: JAMAICA_HERO_ALT,
     cta: "Book Jamaica Glam",
     objectPosition: "50% 25%",

@@ -26,7 +26,7 @@ import {
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
 import { CARNIVAL_GUIDE_GROUPS, FEATURED_CARNIVAL_GUIDES } from "@/data/carnivalGuides";
-import { TERRITORY_PROFILES, getProfile } from "@/data/territoryProfiles";
+import { TERRITORY_PROFILES, getProfile, formatAddress } from "@/data/territoryProfiles";
 import {
   FULL_SERVICE_SLUGS,
   LITE_SLUGS,
@@ -354,6 +354,17 @@ function buildBrief(slug: string): string {
       ? `Location: ${profile.venue}`
       : "Location: the venue is confirmed after booking. Never guess or name a venue for this territory.",
   );
+  if (!wrapped && profile.venueAddress) {
+    const a = profile.venueAddress;
+    parts.push(
+      `Address: ${a.venueName}, ${formatAddress(a)}.${a.nextTo ? ` The hotel is next to ${a.nextTo}.` : ""}`,
+    );
+  }
+  if (!wrapped && profile.appointmentHours && profile.dateText) {
+    parts.push(
+      `Appointment times: start times run from ${profile.appointmentHours.text} on ${profile.dateText}. Your exact time is the one you book. Never state how long a session takes.`,
+    );
+  }
 
   if (pricing?.quotable && bookableEvent) {
     const dayBlocks = pricing.days

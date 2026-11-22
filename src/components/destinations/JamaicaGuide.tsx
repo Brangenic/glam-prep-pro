@@ -2,6 +2,7 @@ import { trackBookingCtaClick } from "@/lib/tracking";
 import {
   JAMAICA_DATE_TEXT,
   JAMAICA_EVENT_NAME,
+  JAMAICA_PHOTOS,
   JAMAICA_SECTIONS,
   JAMAICA_VENUE,
   jamaicaBookingHref,
@@ -36,7 +37,7 @@ const JamaicaGuide = () => {
           {JAMAICA_DATE_TEXT} · {JAMAICA_VENUE}
         </p>
         <BookButton className="w-full sm:w-auto mb-10" />
-        {JAMAICA_SECTIONS.map((s) => (
+        {JAMAICA_SECTIONS.map((s, i) => (
           <div key={s.q} className="mb-10">
             <h2 className="font-display text-2xl sm:text-3xl font-bold leading-tight mb-3">{s.q}</h2>
             <p className="font-body text-base text-muted-foreground leading-relaxed">{s.a}</p>
@@ -50,6 +51,23 @@ const JamaicaGuide = () => {
                 ))}
               </ul>
             )}
+            {/* Owner supplied Glam Hub Jamaica photos, after the first section */}
+            {i === 0 &&
+              JAMAICA_PHOTOS.map((p) => (
+                <figure key={p.src} className="mt-8">
+                  <img
+                    src={p.src}
+                    srcSet={p.srcSet}
+                    sizes="(min-width: 768px) 672px, 100vw"
+                    alt={p.alt}
+                    width={p.width}
+                    height={p.height}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-auto rounded-2xl object-cover"
+                  />
+                </figure>
+              ))}
           </div>
         ))}
         <BookButton className="w-full sm:w-auto" />

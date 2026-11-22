@@ -127,6 +127,7 @@ import {
   JAMAICA_EVENT_NAME,
   JAMAICA_FAQ,
   JAMAICA_H1,
+  JAMAICA_PHOTOS,
   JAMAICA_SECTIONS,
   JAMAICA_VENUE,
   jamaicaBookingHref,
@@ -533,9 +534,12 @@ function escapeHtml(s: string): string {
 
 function jamaicaGuideBody(): string {
   const book = `<p><a href="${escapeHtml(jamaicaBookingHref("jamaica_page"))}" rel="noopener noreferrer">Book ${escapeHtml(JAMAICA_EVENT_NAME)}</a></p>`;
-  const sections = JAMAICA_SECTIONS.map((s) => {
+  const photos = JAMAICA_PHOTOS.map(
+    (p) => `<figure><img src="${escapeHtml(p.src)}" alt="${escapeHtml(p.alt)}" width="${p.width}" height="${p.height}" loading="lazy" /></figure>`,
+  ).join("");
+  const sections = JAMAICA_SECTIONS.map((s, i) => {
     const bullets = s.bullets?.length ? `\n<ul>${s.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>` : "";
-    return `<section><h2>${escapeHtml(s.q)}</h2>\n<p>${escapeHtml(s.a)}</p>${bullets}</section>`;
+    return `<section><h2>${escapeHtml(s.q)}</h2>\n<p>${escapeHtml(s.a)}</p>${bullets}${i === 0 ? photos : ""}</section>`;
   }).join("\n");
   const faq = JAMAICA_FAQ.map((f) => `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join("\n");
   return `<p>${escapeHtml(JAMAICA_DATE_TEXT)}, ${escapeHtml(JAMAICA_VENUE)}.</p>\n${book}\n${sections}\n<h2>${escapeHtml(JAMAICA_EVENT_NAME)} questions</h2>\n${faq}\n${book}`;

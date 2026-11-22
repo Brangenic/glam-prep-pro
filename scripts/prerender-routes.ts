@@ -30,6 +30,8 @@ import {
 import { TRINIDAD_ANSWER_SECTIONS } from "../src/data/answerPages";
 import {
   JAMAICA_HERO_ALT,
+  JAMAICA_HERO_IMAGE,
+  JAMAICA_OG_IMAGE,
   JAMAICA_META_DESCRIPTION,
   JAMAICA_META_TITLE,
   JAMAICA_PATH,
@@ -88,7 +90,8 @@ const OG_H = 630;
 // transcoded to a 1200×630 JPEG at /og/route-<slug>.jpg at build time so
 // social crawlers always see a page-specific preview in the raw HTML.
 const ROUTE_HERO_SOURCES: Record<string, string> = {
-  "/jamaica": "/images/destinations/jamaica-meliza-hernandez.jpg",
+  // Pre-cropped 1200 by 630 JPG of the owner supplied Glam Hub Jamaica hero.
+  "/jamaica": JAMAICA_OG_IMAGE,
   "/saint-lucia":
     "https://www.dropbox.com/scl/fi/wvkuyil1teg9kdvl6wdbp/Alliyah.png?rlkey=q8zy5e0rd8zbtpb2bi2yh6imc&raw=1",
   "/antigua":
@@ -882,7 +885,7 @@ function buildJsonLd(route: RouteMeta): object[] {
     // hub as a BeautySalon, and the FAQPage matching the visible questions.
     // Built from src/data/jamaicaPage.ts, the same source as the page.
     if (route.path === JAMAICA_PATH && jamaicaSeasonOpen()) {
-      const ld = jamaicaJsonLd({ image: `${BASE_URL}${ROUTE_HERO_SOURCES[JAMAICA_PATH]}` });
+      const ld = jamaicaJsonLd({ image: `${BASE_URL}${JAMAICA_HERO_IMAGE}` });
       blocks.push(ld.event, ld.business, ld.faq);
     }
     // Miami Carnival has moved to Broward County. The announced venue and

@@ -14,7 +14,7 @@
  * Asset free, so the prerender scripts can import it.
  */
 import type { AnswerSection } from "@/data/answerPages";
-import { getProfile } from "@/data/territoryProfiles";
+import { formatAddress, getProfile } from "@/data/territoryProfiles";
 import {
   BARBER_PRICE,
   OVERNIGHT_BAG_CHECK_PRICE,
@@ -53,6 +53,17 @@ export const JAMAICA_VENUE_NAME = JAMAICA_VENUE.split(",")[0].trim();
 export const JAMAICA_CITY = JAMAICA_VENUE.split(",").slice(1).join(",").trim();
 export const JAMAICA_EVENT_NAME = `${profile.name} ${JAMAICA_YEAR}`;
 
+/** Full hub address and appointment hours, owner confirmed, from territoryProfiles.ts. */
+export const JAMAICA_ADDRESS = profile.venueAddress!;
+/** "81 Knutsford Boulevard, New Kingston, Kingston 5, Jamaica" */
+export const JAMAICA_ADDRESS_TEXT = formatAddress(JAMAICA_ADDRESS);
+/** "The Jamaica Pegasus Hotel, 81 Knutsford Boulevard, New Kingston, Kingston 5, Jamaica" */
+export const JAMAICA_FULL_ADDRESS = `${JAMAICA_ADDRESS.venueName}, ${JAMAICA_ADDRESS_TEXT}`;
+const nextToText = JAMAICA_ADDRESS.nextTo ? ` The hotel is next to ${JAMAICA_ADDRESS.nextTo}.` : "";
+export const JAMAICA_HOURS = profile.appointmentHours!;
+/** "Appointment start times run from 4:00am to 12:00 noon on Sunday 4 April 2027." */
+export const JAMAICA_HOURS_SENTENCE = `Appointment start times run from ${JAMAICA_HOURS.text} on ${profile.dateText}.`;
+
 /** The Jamaica MasOS event, never the bare events list. */
 export const JAMAICA_EVENT_URL = (getDestination(JAMAICA_SLUG)?.masosUrl ?? pricing.bookingUrl) as string;
 export function jamaicaBookingHref(campaign = "jamaica_page"): string {
@@ -84,13 +95,31 @@ export const JAMAICA_META_TITLE = `${JAMAICA_EVENT_NAME} Makeup Artist, ${JAMAIC
 export const JAMAICA_META_DESCRIPTION =
   `${JAMAICA_EVENT_NAME} makeup on ${JAMAICA_DATE_TEXT} at the ${JAMAICA_VENUE}. Makeup from ${money(makeupOnly)}, plus hair, photoshoot and shuttle.`;
 export const JAMAICA_H1 = `${JAMAICA_EVENT_NAME} Makeup, ${JAMAICA_CITY}`;
+/* ---------- Photos, owner supplied, Glam Hub Jamaica ---------- */
+
 /**
- * Describes the photograph only. The current hero is not confirmed as a
- * Jamaica Carnival photograph, so the alt text does not claim a place,
- * and it never names the masquerader.
+ * Alt text describes only what is in each photograph, never names the
+ * masquerader, and ends with "Carnival Glam Hub Jamaica".
  */
 export const JAMAICA_HERO_ALT =
-  "Masquerader in a pink and blue feathered Carnival costume with jewelled bodywear and white boots, arms outstretched";
+  "Masquerader with eyes closed in an orange, teal and pink feathered Carnival costume with a large feathered backpiece, gold eye makeup, jewelled bodywear and bronze sleeves, standing on grass among trees, Carnival Glam Hub Jamaica";
+export const JAMAICA_HERO_IMAGE = "/images/destinations/jamaica-glam-hub-feathers-1280.webp";
+export const JAMAICA_HERO_SRCSET =
+  "/images/destinations/jamaica-glam-hub-feathers-768.webp 768w, /images/destinations/jamaica-glam-hub-feathers-1280.webp 1280w";
+/** 1200 by 630 crop of the hero, the share image source for the prerender. */
+export const JAMAICA_OG_IMAGE = "/images/destinations/jamaica-glam-hub-feathers-og.jpg";
+
+export type JamaicaPhoto = { src: string; srcSet: string; alt: string; width: number; height: number };
+export const JAMAICA_PHOTOS: JamaicaPhoto[] = [
+  {
+    src: "/images/destinations/jamaica-glam-hub-jewelled-1080.webp",
+    srcSet:
+      "/images/destinations/jamaica-glam-hub-jewelled-640.webp 640w, /images/destinations/jamaica-glam-hub-jewelled-1080.webp 1080w",
+    alt: "Masquerader in a pink and gold jewelled Carnival costume with a jewelled headpiece, colourful eye makeup and gold ribbon armbands, in front of palm leaves, Carnival Glam Hub Jamaica",
+    width: 1080,
+    height: 1228,
+  },
+];
 
 /* ---------- Policy clauses, quoted, never retyped ---------- */
 
@@ -128,7 +157,7 @@ const shuttleOffered = JAMAICA_AMENITIES.includes("Shuttle");
 export const JAMAICA_SECTIONS: AnswerSection[] = [
   {
     q: `When and where is ${JAMAICA_EVENT_NAME}?`,
-    a: `${JAMAICA_EVENT_NAME} is on ${JAMAICA_DATE_TEXT}, and the Carnival Glam Hub runs from the ${JAMAICA_VENUE}. It is a ${JAMAICA_TIER_LABEL}: ${listNames([...JAMAICA_SERVICES.map(lower), "getting dressed", ...(shuttleOffered ? ["the shuttle"] : [])])} all run from the same hub.`,
+    a: `${JAMAICA_EVENT_NAME} is on ${JAMAICA_DATE_TEXT}, and the Carnival Glam Hub runs from ${JAMAICA_FULL_ADDRESS}.${nextToText} ${JAMAICA_HOURS_SENTENCE} It is a ${JAMAICA_TIER_LABEL}: ${listNames([...JAMAICA_SERVICES.map(lower), "getting dressed", ...(shuttleOffered ? ["the shuttle"] : [])])} all run from the same hub.`,
   },
   {
     q: "What is included at the Jamaica Glam Hub?",
@@ -147,9 +176,9 @@ export const JAMAICA_SECTIONS: AnswerSection[] = [
   },
   {
     q: "How does the Jamaica Carnival morning work?",
-    a: `You book a time on the booking platform, register at the ${JAMAICA_VENUE_NAME} before your appointment, and everything you booked happens at the hub before you leave for the road. ${clause("6.1")}`,
+    a: `You book a start time, from ${JAMAICA_HOURS.text}, on the booking platform, register at the ${JAMAICA_VENUE_NAME} before your appointment, and everything you booked happens at the hub before you leave for the road. ${clause("6.1")}`,
     bullets: [
-      `Book your time on the booking platform. ${pricing.deposit?.note ?? ""} ${clause("1.4")}`.replace(/\s+/g, " ").trim(),
+      `Book your start time, from ${JAMAICA_HOURS.text}, on the booking platform. ${pricing.deposit?.note ?? ""} ${clause("1.4")}`.replace(/\s+/g, " ").trim(),
       `${clause("6.1")} ${clause("6.2")}`,
       "Makeup, and hair if you booked it, with breakfast and refreshments, coffee and tea.",
       "Getting-dressed assistance, a seamstress and a changing room.",
@@ -167,11 +196,11 @@ export type JamaicaFaq = { q: string; a: string };
 export const JAMAICA_FAQ: JamaicaFaq[] = [
   {
     q: `When is ${JAMAICA_EVENT_NAME}?`,
-    a: `${JAMAICA_EVENT_NAME} is on ${JAMAICA_DATE_TEXT}. Carnival Glam Hub appointments for ${JAMAICA_EVENT_NAME} are on that day at the ${JAMAICA_VENUE}.`,
+    a: `${JAMAICA_EVENT_NAME} is on ${JAMAICA_DATE_TEXT}. Carnival Glam Hub appointments for ${JAMAICA_EVENT_NAME} are on that day at the ${JAMAICA_VENUE}, with start times from ${JAMAICA_HOURS.text}.`,
   },
   {
     q: "Where is the Carnival Glam Hub in Jamaica?",
-    a: `The Carnival Glam Hub for ${JAMAICA_EVENT_NAME} is at the ${JAMAICA_VENUE}. It is a ${JAMAICA_TIER_LABEL}.`,
+    a: `The Carnival Glam Hub for ${JAMAICA_EVENT_NAME} is at ${JAMAICA_FULL_ADDRESS}.${nextToText} It is a ${JAMAICA_TIER_LABEL}.`,
   },
   {
     q: "How much is carnival makeup in Jamaica?",
@@ -192,8 +221,8 @@ export const JAMAICA_FAQ: JamaicaFaq[] = [
     a: `Yes. Hair only is ${money(hairOnly)}, and Full Glam, makeup, hair and photoshoot together, is ${money(fullGlam)}.`,
   },
   {
-    q: "What time should I arrive?",
-    a: `${clause("6.1")} ${clause("6.2")} ${clause("6.3")}`,
+    q: "What times are available, and what time should I arrive?",
+    a: `${JAMAICA_HOURS_SENTENCE} ${clause("6.1")} ${clause("6.2")} ${clause("6.3")}`,
   },
   {
     q: "Can I transfer my booking?",
@@ -207,19 +236,28 @@ export function jamaicaJsonLd(opts: { image?: string } = {}) {
   const ORG_ID = `${SITE_URL}/#organization`;
   const place = {
     "@type": "Place",
-    name: JAMAICA_VENUE_NAME,
+    name: JAMAICA_ADDRESS.venueName,
     address: {
       "@type": "PostalAddress",
-      addressLocality: JAMAICA_CITY,
-      addressCountry: "JM",
+      streetAddress: JAMAICA_ADDRESS.streetAddress,
+      addressLocality: JAMAICA_ADDRESS.locality,
+      addressRegion: JAMAICA_ADDRESS.region,
+      addressCountry: JAMAICA_ADDRESS.countryCode,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: JAMAICA_ADDRESS.lat,
+      longitude: JAMAICA_ADDRESS.lng,
     },
   };
+  const at = (t: string) => `${JAMAICA_DATE_ISO}T${t}:00${JAMAICA_HOURS.utcOffset}`;
   const event = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: `${JAMAICA_EVENT_NAME} Glam Hub`,
-    startDate: JAMAICA_DATE_ISO,
-    endDate: JAMAICA_DATE_ISO,
+    // Appointment window on the day, owner confirmed.
+    startDate: at(JAMAICA_HOURS.start),
+    endDate: at(JAMAICA_HOURS.end),
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
     url: JAMAICA_URL,
@@ -245,7 +283,15 @@ export function jamaicaJsonLd(opts: { image?: string } = {}) {
     parentOrganization: { "@id": ORG_ID },
     ...(opts.image ? { image: opts.image } : {}),
     address: place.address,
+    geo: place.geo,
     location: place,
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      opens: JAMAICA_HOURS.start,
+      closes: JAMAICA_HOURS.end,
+      validFrom: JAMAICA_DATE_ISO,
+      validThrough: JAMAICA_DATE_ISO,
+    },
     priceRange: `US$${JAMAICA_MIN_PRICE}-US$${JAMAICA_MAX_PRICE}`,
     areaServed: { "@type": "City", name: JAMAICA_CITY, containedInPlace: { "@type": "Country", name: "Jamaica" } },
   };
@@ -284,7 +330,8 @@ export function jamaicaSeasonOpen(today: Date = new Date()): boolean {
 export const JAMAICA_LLMS_SECTION = [
   `## ${JAMAICA_EVENT_NAME}`,
   `${JAMAICA_EVENT_NAME} is on ${JAMAICA_DATE_TEXT}.`,
-  `The Carnival Glam Hub for ${JAMAICA_EVENT_NAME} is at the ${JAMAICA_VENUE}. It is a ${JAMAICA_TIER_LABEL}.`,
+  `The Carnival Glam Hub for ${JAMAICA_EVENT_NAME} is at ${JAMAICA_FULL_ADDRESS}.${nextToText} It is a ${JAMAICA_TIER_LABEL}.`,
+  JAMAICA_HOURS_SENTENCE,
   `Every appointment comes with ${amenitiesText}.`,
   `Prices run from ${money(JAMAICA_MIN_PRICE)} to ${money(JAMAICA_MAX_PRICE)} per masquerader: ${JAMAICA_PRODUCTS.map((p) => `${p.label} ${money(p.price)}`).join(", ")}.`,
   ...(JAMAICA_ADD_ONS.length ? [`Add-ons: ${JAMAICA_ADD_ONS.map((a) => lower(a).replace(/\.$/, "")).join("; ")}.`] : []),
