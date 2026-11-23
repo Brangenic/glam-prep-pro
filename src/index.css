@@ -120,3 +120,18 @@
     box-shadow: 0 0 40px -10px hsl(43 72% 55% / 0.3);
   }
 }
+/* Photo lightbox open: floating layers step aside without unmounting. See src/lib/lightboxLayer.ts. */
+html[data-lightbox-open] [data-hide-under-lightbox] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Photo lightbox fits inside the screen and its safe-area insets on every phone. */
+.lightbox-safe {
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+.lightbox-photo {
+  max-height: calc(100vh - max(1rem, env(safe-area-inset-top)) - max(1rem, env(safe-area-inset-bottom)));
+  max-height: calc(100dvh - max(1rem, env(safe-area-inset-top)) - max(1rem, env(safe-area-inset-bottom)));
+}

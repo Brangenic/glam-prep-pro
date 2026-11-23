@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
+import { hideUnderLightbox } from "@/lib/lightboxLayer";
 import { WHATSAPP_URL } from "@/lib/constants";
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -160,7 +161,7 @@ const ChatWidget = ({ open, onOpenChange }: ChatWidgetProps) => {
   if (!open) return null;
 
   return (
-    <div className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 w-[min(360px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-2xl flex flex-col overflow-hidden" style={{ height: "min(520px, calc(100vh - 8rem))" }}>
+    <div {...hideUnderLightbox} className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 w-[min(360px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-2xl flex flex-col overflow-hidden" style={{ height: "min(520px, calc(100vh - 8rem))" }}>
       {/* Header */}
       <div className="flex items-center justify-between bg-primary px-4 py-3">
         <div className="flex items-center gap-2">

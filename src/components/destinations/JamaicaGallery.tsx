@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Dialog, DialogDescription, DialogOverlay, DialogPortal, DialogTitle } from "@/components/ui/dialog";
+import { setLightboxOpen } from "@/lib/lightboxLayer";
 import { JAMAICA_GALLERY, JAMAICA_GALLERY_HEADING, JAMAICA_GALLERY_NOTE } from "@/data/jamaicaPage";
 
 /**
@@ -13,6 +15,14 @@ const JamaicaGallery = () => {
   const count = JAMAICA_GALLERY.length;
   const current = open === null ? null : JAMAICA_GALLERY[open];
   const step = (d: number) => setOpen((i) => (i === null ? i : (i + d + count) % count));
+
+  // Hide the cookie banner, Ask JADE and the sticky booking bar while a
+  // photo is open, and restore them untouched when it closes.
+  const isOpen = open !== null;
+  useEffect(() => {
+    setLightboxOpen(isOpen);
+    return () => setLightboxOpen(false);
+  }, [isOpen]);
 
   if (count === 0) return null;
 
@@ -57,50 +67,64 @@ const JamaicaGallery = () => {
         </div>
       </div>
 
-      <Dialog open={open !== null} onOpenChange={(o) => !o && setOpen(null)}>
-        <DialogContent
-          className="max-w-3xl w-[calc(100%-2rem)] p-3 sm:p-4 bg-background"
-          onKeyDown={(e) => {
-            if (e.key === "ArrowRight") step(1);
-            if (e.key === "ArrowLeft") step(-1);
-          }}
-        >
-          <DialogTitle className="sr-only">
-            {JAMAICA_GALLERY_HEADING}, photo {(open ?? 0) + 1} of {count}
-          </DialogTitle>
-          <DialogDescription className="sr-only">{current?.alt}</DialogDescription>
-          {current && (
-            <div className="relative">
-              <img
-                src={current.src}
-                alt={current.alt}
-                width={current.width}
-                height={current.height}
-                className="mx-auto max-h-[80vh] w-auto rounded-lg object-contain"
-              />
-              {count > 1 && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => step(-1)}
-                    aria-label="Previous photo"
-                    className="absolute left-2 top-1/2 -translate-y-1/2 h-11 w-11 inline-flex items-center justify-center rounded-full bg-background/80 text-foreground shadow hover:bg-background"
-                  >
-                    <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => step(1)}
-                    aria-label="Next photo"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-11 w-11 inline-flex items-center justify-center rounded-full bg-background/80 text-foreground shadow hover:bg-background"
-                  >
-                    <ChevronRight className="h-5 w-5" aria-hidden="true" />
-                  </button>
-                </>
-              )}
-            </div>
-          )}
-        </DialogContent>
+      <Dialog open={isOpen} onOpenChange={(o) => !o && setOpen(null)}>
+        <DialogPortal>
+          {/* Above the cookie banner (z-60), Ask JADE and the sticky bar (z-50). */}
+          <DialogOverlay className="z-[70]" data-testid="lightbox-overlay" />
+          <DialogPrimitive.Content
+            data-testid="lightbox"
+            className="lightbox-safe fixed inset-0 z-[80] flex items-center justify-center focus:outline-none"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setOpen(null);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowRight") step(1);
+              if (e.key === "ArrowLeft") step(-1);
+            }}
+          >
+            <DialogTitle className="sr-only">
+              {JAMAICA_GALLERY_HEADING}, photo {(open ?? 0) + 1} of {count}
+            </DialogTitle>
+            <DialogDescription className="sr-only">{current?.alt}</DialogDescription>
+            {current && (
+              <div className="relative max-w-3xl">
+                <img
+                  src={current.src}
+                  alt={current.alt}
+                  width={current.width}
+                  height={current.height}
+                  className="lightbox-photo block h-auto w-auto max-w-full rounded-lg object-contain"
+                />
+                <DialogPrimitive.Close
+                  aria-label="Close photo"
+                  className="absolute right-2 top-2 h-11 w-11 inline-flex items-center justify-center rounded-full bg-background/80 text-foreground shadow hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </DialogPrimitive.Close>
+                {count > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => step(-1)}
+                      aria-label="Previous photo"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 h-11 w-11 inline-flex items-center justify-center rounded-full bg-background/80 text-foreground shadow hover:bg-background"
+                    >
+                      <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => step(1)}
+                      aria-label="Next photo"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-11 w-11 inline-flex items-center justify-center rounded-full bg-background/80 text-foreground shadow hover:bg-background"
+                    >
+                      <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+          </DialogPrimitive.Content>
+        </DialogPortal>
       </Dialog>
     </section>
   );

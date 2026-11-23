@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ChatWidget from "@/components/landing/ChatWidget";
 import { WHATSAPP_URL } from "@/lib/constants";
+import { hideUnderLightbox } from "@/lib/lightboxLayer";
 
 /*
  * One floating launcher, not two. The old Ask Glam Bot bubble and the
@@ -39,7 +40,7 @@ const HelpLauncher = () => {
       <ChatWidget open={chatOpen} onOpenChange={setChatOpen} />
 
       {!chatOpen && (
-        <div className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 flex flex-col items-start gap-2">
+        <div {...hideUnderLightbox} data-testid="help-launcher" className="fixed bottom-24 left-4 z-50 lg:bottom-6 lg:left-6 flex flex-col items-start gap-2">
           {menuOpen && (
             <div className="w-[min(280px,calc(100vw-2rem))] rounded-2xl border border-border bg-background p-2 shadow-2xl">
               <button

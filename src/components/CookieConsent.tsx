@@ -6,6 +6,7 @@ import {
   type ConsentState,
 } from "@/lib/consent";
 import { initTrackingConsent } from "@/lib/trackerLoader";
+import { hideUnderLightbox } from "@/lib/lightboxLayer";
 
 const REOPEN_EVENT = "cgh:open-cookie-settings";
 
@@ -58,6 +59,7 @@ const CookieConsent = () => {
       aria-modal="false"
       aria-label="Cookie settings"
       data-testid="cookie-consent"
+      {...hideUnderLightbox}
       className="fixed bottom-40 left-4 right-4 z-[60] lg:bottom-6 lg:left-auto lg:right-6 lg:w-[26rem]"
     >
       <div className="rounded-2xl border border-border bg-background p-4 shadow-2xl">
