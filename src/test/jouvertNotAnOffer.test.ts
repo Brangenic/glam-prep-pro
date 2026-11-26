@@ -52,6 +52,8 @@ const EXEMPT = [
   // editorial is fine and only an offer is false.
   "src/data/carnivalGuides.ts",
   "src/data/blogCatalogue.ts",
+  // Frozen journal titles are editorial metadata, never commercial offers.
+  "src/data/blogTitleBaseline.ts",
 ];
 
 const isExempt = (rel: string) => EXEMPT.some((e) => rel === e || rel.startsWith(`${e}/`));

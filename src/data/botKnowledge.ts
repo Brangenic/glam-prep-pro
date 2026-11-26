@@ -1,3 +1,4 @@
+import { STATS_HEADLINE, STATS_LATEST_YEAR, STATS_HOW_WE_COUNT } from "@/data/glamHubStats";
 /**
  * JADE knowledge composer. JADE is the customer-facing assistant name.
  *
@@ -226,7 +227,9 @@ function hairFloor(): number | null {
 
 const BRAND = `# Carnival Glam Hub
 
-Carnival Glam Hub was co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Both are co-founders, neither founded the business alone. Gabrielle Waite is separately the founder of Gabby Glam Cosmetics and of Glam Haus by Gabby Glam. More than 15,000 masqueraders have been served since 2017.
+Carnival Glam Hub was co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Both are co-founders, neither founded the business alone. Gabrielle Waite is separately the founder of Gabby Glam Cosmetics and of Glam Haus by Gabby Glam. ${STATS_HEADLINE}
+${STATS_LATEST_YEAR}
+${STATS_HOW_WE_COUNT}
 
 We are band neutral. We serve masqueraders from every band, in every section.
 
@@ -617,7 +620,10 @@ function topicAbout(): string {
   const lite = [...LITE_SLUGS].map((s) => getProfile(s)?.shortName ?? s);
   return `# About Carnival Glam Hub
 
-Co-founded in 2017 by Kibwe McGann and Gabrielle Waite, Carnival Glam Hub has served more than 15,000 masqueraders. We are band neutral and serve masqueraders from every band.
+Carnival Glam Hub was co-founded in 2017 by Kibwe McGann and Gabrielle Waite. ${STATS_HEADLINE}
+${STATS_LATEST_YEAR}
+${STATS_HOW_WE_COUNT}
+We are band neutral and serve masqueraders from every band.
 
 The idea is simple. Instead of chasing an artist, a hotel room and a photographer on Carnival morning, everything happens in one location.
 

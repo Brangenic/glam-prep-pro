@@ -1,3 +1,5 @@
+import { STATS_SHORT_PHRASE } from "@/data/glamHubStats";
+import { CARNIVAL_MAKEUP_PAGE_DESCRIPTION as PAGE_DESCRIPTION } from "@/data/pageMeta";
 import { pricingSummarySentence } from "@/data/territoryPricing";
 import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
@@ -8,8 +10,6 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 const PAGE_TITLE = "Sweat-Resistant Carnival Makeup | Carnival Glam Hub";
-const PAGE_DESCRIPTION =
-  "Sweat-resistant Carnival makeup that holds through the road. Booked across Trinidad, Jamaica, Barbados, Grenada and Antigua. More than 15,000 masqueraders served since 2017.";
 const CANONICAL = "https://www.carnivalglamhub.com/services/carnival-makeup";
 
 
@@ -145,7 +145,7 @@ const CarnivalMakeup = () => {
               is sweat-resistant makeup designed for the road, applied by
               professional MUAs in our air-conditioned lounge. It is engineered
               for tropical heat, hours of dancing and full-day costume wear,
-              and has been tested by 15,000+ masqueraders since 2017.
+              and is part of our work across {STATS_SHORT_PHRASE}.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">
               Carnival morning access is US$35. Makeup only is US$170 to

@@ -1,3 +1,5 @@
+import { STATS_HEADLINE, STATS_SHORT_PHRASE } from "@/data/glamHubStats";
+import { JAMAICA_BEST_PAGE_DESCRIPTION, MIAMI_BEST_PAGE_DESCRIPTION } from "@/data/pageMeta";
 import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "@/data/miamiCopy";
 import { pricingSummarySentence } from "@/data/territoryPricing";
 import { OPERATING_TERRITORY_SENTENCE } from "@/data/territoryPriceProse";
@@ -61,10 +63,10 @@ function buildData(territory: Territory): PageData {
       path: "/best-carnival-makeup-jamaica",
       title: "Best Carnival Makeup Artist in Jamaica | Carnival Glam Hub",
       description:
-        "Sweat-resistant Jamaica Carnival road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle all in one location. More than 15,000 masqueraders served since 2017.",
+        JAMAICA_BEST_PAGE_DESCRIPTION,
       h1: "Best carnival makeup artist in Jamaica: Carnival Glam Hub",
       answer:
-        "For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10 to 12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. More than 15,000 masqueraders served since 2017.",
+        `For Jamaica Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam engineered for the Jamaica heat, built to hold 10 to 12 hours, delivered from the Jamaica Pegasus Hotel in Kingston with hair, getting-dressed, photoshoot and shuttle in the same location. ${STATS_HEADLINE}`,
       venueLine: long
         ? long
         : "Jamaica Pegasus Hotel, Kingston. Full makeup, hair, gem application, body paint and lash services.",
@@ -97,10 +99,10 @@ function buildData(territory: Territory): PageData {
     path: "/best-carnival-makeup-miami",
     title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos in one location. More than 15,000 masqueraders served since 2017.",
+      MIAMI_BEST_PAGE_DESCRIPTION,
     h1: "Best carnival makeup artist in Miami: Carnival Glam Hub",
     answer:
-      "For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. More than 15,000 masqueraders served since 2017, with Glam Hubs across the regional Carnival calendar.",
+      `For Miami Carnival, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road glam and full concierge in one location, with hair, getting-dressed, photoshoot and shuttle for Miami Carnival weekend. ${STATS_HEADLINE} Glam Hubs operate across the regional Carnival calendar.`,
     venueLine: long
       ? long
       : "Miami Carnival glam hub with makeup, hair, gems and body art by our pro carnival team.",
@@ -108,7 +110,7 @@ function buildData(territory: Territory): PageData {
     faqs: [
       {
         q: "Who is the best carnival makeup artist in Miami?",
-        a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.`,
+        a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it has recorded ${STATS_SHORT_PHRASE} and runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.`,
       },
       {
         q: "Where is the Miami glam hub located?",
@@ -210,7 +212,7 @@ function BestPage({ territory }: { territory: Territory }) {
             <ul className="list-disc pl-6 space-y-2 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               <li>Sweat-resistant road system built to hold 10 to 12 hours through tropical heat.</li>
               <li>Everything in one location, makeup, hair, getting-dressed, seamstress, photoshoot, shuttle, air-conditioned lounge, refreshments.</li>
-              <li>More than 15,000 masqueraders served since 2017. Co-founded by Kibwe McGann and Gabrielle Waite (Gabby Glam).</li>
+              <li>{STATS_HEADLINE} Co-founded by Kibwe McGann and Gabrielle Waite (Gabby Glam).</li>
               <li>Glam Hubs across the regional Carnival calendar, in {OPERATING_TERRITORY_SENTENCE}.</li>
             </ul>
           </section>

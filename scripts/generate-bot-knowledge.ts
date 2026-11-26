@@ -16,6 +16,7 @@ import { buildKnowledgePack } from "../src/data/botKnowledge";
 import { TRINIDAD_DIRECT_LLMS_SECTION } from "../src/data/trinidadPackages";
 import { TRINIDAD_HISTORY_SENTENCE, TRINIDAD_PRESS_STORY } from "../src/data/pressCoverage";
 import { TRUSTPILOT_PROFILE_URL } from "../src/lib/constants";
+import { STATS_LLMS_SECTION } from "../src/data/glamHubStats";
 
 const OUT = resolve(process.cwd(), "supabase/functions/chat/knowledge.json");
 
@@ -37,7 +38,12 @@ function main() {
   const section = [TRINIDAD_DIRECT_LLMS_SECTION, `## Trustpilot\nCarnival Glam Hub profile: ${TRUSTPILOT_PROFILE_URL}`, `## Trinidad press evidence\n${TRINIDAD_HISTORY_SENTENCE}\n${TRINIDAD_PRESS_STORY ? `${TRINIDAD_PRESS_STORY.outlet}, ${TRINIDAD_PRESS_STORY.publishedDate}: ${TRINIDAD_PRESS_STORY.summary} ${TRINIDAD_PRESS_STORY.url}` : ""}`].join("\n\n");
   const start = "<!-- generated-trinidad-discovery:start -->";
   const end = "<!-- generated-trinidad-discovery:end -->";
-  const existing = readFileSync(discoveryPath, "utf8");
+  const source = readFileSync(discoveryPath, "utf8");
+  const statsStart = "<!-- generated-glam-hub-stats:start -->";
+  const statsEnd = "<!-- generated-glam-hub-stats:end -->";
+  const existing = source.includes(statsStart)
+    ? source.replace(new RegExp(`${statsStart}[\\s\\S]*?${statsEnd}`), STATS_LLMS_SECTION)
+    : source.replace("\n\n## Booking and Registration", `\n\n${STATS_LLMS_SECTION}\n\n## Booking and Registration`);
   const generated = `${start}\n${section}\n${end}`;
   writeFileSync(discoveryPath, existing.includes(start) ? existing.replace(new RegExp(`${start}[\\s\\S]*?${end}`), generated) : existing.replace("End of llms.txt body.", `${generated}\n\nEnd of llms.txt body.`));
 

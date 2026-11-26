@@ -1,3 +1,4 @@
+import { STATS_HEADLINE } from "@/data/glamHubStats";
 import { BOOKING_URL } from "@/lib/constants";
 import { pricingSummarySentence } from "@/data/territoryPricing";
 import { SHUTTLE_FAQ_ANSWER } from "@/data/miamiCopy";
@@ -32,7 +33,7 @@ const FAQS: Array<{ q: string; a: string; link?: { href: string; label: string }
   },
   {
     q: "Why does Carnival makeup need to be sweat-resistant?",
-    a: "Caribbean Carnival happens in tropical heat with hours of dancing on the road. Standard wedding or event makeup will not survive. We use a layered, sweat-resistant system built for the road and tested by 15,000+ masqueraders.",
+    a: `Caribbean Carnival happens in tropical heat with hours of dancing on the road. Standard wedding or event makeup will not survive. We use a layered, sweat-resistant system built for the road. ${STATS_HEADLINE}`,
   },
   {
     q: "What hair options do you offer?",

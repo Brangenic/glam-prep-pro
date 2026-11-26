@@ -1,3 +1,4 @@
+import { STATS_SHORT } from "@/data/glamHubStats";
 /**
  * Page titles and meta descriptions shared by the React pages and the
  * build-time prerender scripts.
@@ -11,7 +12,14 @@ export const ABOUT_PAGE_TITLE =
   "About Carnival Glam Hub | Caribbean Beauty Concierge";
 
 export const ABOUT_PAGE_DESCRIPTION =
-  "Caribbean Carnival morning concierge, co-founded in 2017 by Kibwe McGann and Gabrielle Waite. More than 15,000 masqueraders served since 2017.";
+  `Caribbean Carnival morning concierge, co-founded in 2017 by Kibwe McGann and Gabrielle Waite. ${STATS_SHORT}`;
+
+export const CARNIVAL_MAKEUP_PAGE_DESCRIPTION =
+  `Sweat-resistant Carnival makeup that holds through the road. Booked across the Caribbean Carnival circuit. ${STATS_SHORT}`;
+export const JAMAICA_BEST_PAGE_DESCRIPTION =
+  `Jamaica Carnival makeup at the Jamaica Pegasus Hotel, Kingston, with hair, dressing, photos and shuttle. ${STATS_SHORT}`;
+export const MIAMI_BEST_PAGE_DESCRIPTION =
+  `Miami Carnival makeup, hair, dressing and photos in one location with Carnival Glam Hub. ${STATS_SHORT}`;
 
 /**
  * The dates go in the title because Bing showed date queries ("when is

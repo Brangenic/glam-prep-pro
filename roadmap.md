@@ -10,6 +10,11 @@
 
 # AI recommendation and direct booking fixes (26 November 2026)
 
+## Follow-ups
+- [x] Freeze the 27 existing overlong titles without changing articles; reject new or changed overlong titles
+- [x] Centralise owner-confirmed size and growth across React, prerender, metadata and JADE; preserve blogs
+- [x] Run full tests, check automatic build and preview About and a package page; do not publish
+
 - [x] Section 1: eight catalogue-derived dated package routes, preselection, live slots, both surfaces, sitemap, links, JADE and MCP URLs
 - [x] Section 2: unconditional Trustpilot invitation on confirmations and receipts, footer and discovery links
 - [x] Section 3: existing Trinidad press evidence and supported FAQ history
@@ -18,5 +23,5 @@
 - [x] Full tests and package-page acceptance checks at mobile and desktop, no publishing
 - [ ] Missing facts: appointment duration, required items and immediate receipt guarantee need Kibwe's confirmation
 - [ ] Grenada impressions and canonical recommendation: waiting for Kibwe's search performance figures; current canonicals unchanged
-- [ ] Review existing overlong synced blog titles: strict publish guard will reject eligible overlong titles; no articles changed
+- [ ] Shorten legacy blog titles: waiting for Kibwe's editorial corrections; unchanged baseline titles no longer block publishing
 - [ ] Publish and deploy changed functions: withheld until Kibwe reviews and approves; shared live backend left unchanged

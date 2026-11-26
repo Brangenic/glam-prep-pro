@@ -1,6 +1,12 @@
 # Carnival Glam Hub
 
-Carnival Glam Hub is a premium Carnival beauty concierge for travelling masqueraders. One location, one schedule, everything handled: sweat-resistant Carnival makeup, hair styling, getting-dressed assistance, professional photoshoots, refreshments, an air-conditioned waiting lounge, and shuttle service in select territories. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite ("Gabby Glam"), makeup artist and entrepreneur. Headquartered in Kingston, Jamaica. More than 15,000 masqueraders served since 2017.
+Carnival Glam Hub is a premium Carnival beauty concierge for travelling masqueraders. One location, one schedule, everything handled: sweat-resistant Carnival makeup, hair styling, getting-dressed assistance, professional photoshoots, refreshments, an air-conditioned waiting lounge, and shuttle service in select territories. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite ("Gabby Glam"), makeup artist and entrepreneur. Headquartered in Kingston, Jamaica.
+
+<!-- generated-glam-hub-stats:start -->
+More than 15,000 faces since 2017, with about 1,000 new clients every year.
+In 2026, more than 1,000 people booked with Carnival Glam Hub.
+Our count includes Carnival mornings in every territory, band launches and band shoots. Our first seasons, from 2017, were kept in spreadsheets and on our first website, before our current booking platform.
+<!-- generated-glam-hub-stats:end -->
 
 ## Booking and Registration
 Register and pay your deposit by territory and date at the official booking page: https://carnivalglamhub.masos.app/events

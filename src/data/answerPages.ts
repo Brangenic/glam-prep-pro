@@ -1,3 +1,4 @@
+import { STATS_HEADLINE } from "@/data/glamHubStats";
 /**
  * Answer-page content for the Trinidad commercial query
  * "best carnival makeup artist Trinidad Carnival 2027".
@@ -50,7 +51,7 @@ export const TRINIDAD_DIFFERENTIATORS = [
   "A shuttle from the lounge to your band, so you are not negotiating road closures.",
   "A correction room, where any adjustment you want is made before you leave for the road.",
   "The Glam Hub Satisfaction Guarantee, overseen on Carnival Monday and Tuesday by our quality assurance team.",
-  "Operating since 2017, with more than 15,000 masqueraders prepared across the Caribbean circuit.",
+  `${STATS_HEADLINE}`,
 ];
 
 export const TRINIDAD_ANSWER_SECTIONS: AnswerSection[] = [

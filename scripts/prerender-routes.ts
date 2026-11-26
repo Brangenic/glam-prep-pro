@@ -1,3 +1,5 @@
+import { STATS_SHORT, STATS_SHORT_PHRASE } from "../src/data/glamHubStats";
+import { CARNIVAL_MAKEUP_PAGE_DESCRIPTION, JAMAICA_BEST_PAGE_DESCRIPTION, MIAMI_BEST_PAGE_DESCRIPTION } from "../src/data/pageMeta";
 import { TRINIDAD_PACKAGES, packageJsonLd } from "../src/data/trinidadPackages";
 import { TRINIDAD_HISTORY_FAQ } from "../src/data/pressCoverage";
 import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "../src/data/miamiCopy";
@@ -338,7 +340,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Saint Lucia Carnival Makeup 2026 | Sweat-Proof Glam",
     description:
-      "Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
+      `Sweat-resistant Saint Lucia Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. ${STATS_SHORT}`,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -346,7 +348,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Antigua Carnival Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
+      `Sweat-resistant Antigua Carnival 2026 makeup with a photoshoot at our Glam Hub Lite. ${STATS_SHORT}`,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -362,7 +364,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Barbados Crop Over Makeup 2026 | Sweat-Proof Glam | Glam Hub",
     description:
-      "Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. More than 15,000 masqueraders served since 2017.",
+      `Sweat-resistant Barbados Crop Over 2026 makeup with a photoshoot at our Glam Hub Lite. ${STATS_SHORT}`,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -385,7 +387,7 @@ const destinationRoutes: RouteMeta[] = [
     title:
       "Trinidad Carnival Makeup, Hair & Photoshoots | Glam Hub",
     description:
-      "Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. More than 15,000 masqueraders served since 2017.",
+      `Trinidad Carnival makeup, hair, photoshoots, getting-dressed and shuttle from one Port of Spain lounge. ${STATS_SHORT}`,
     ogImage: HERO_FALLBACK,
   },
   {
@@ -431,7 +433,7 @@ const staticRoutes: RouteMeta[] = [
     path: "/services/carnival-makeup",
     title: "Sweat-Resistant Carnival Makeup | Carnival Glam Hub",
     description:
-      "Sweat-resistant Carnival makeup that holds through the road. Booked across the Caribbean Carnival circuit. More than 15,000 masqueraders served since 2017.",
+      CARNIVAL_MAKEUP_PAGE_DESCRIPTION,
     ogImage: `${BASE_URL}/images/services/makeup-hero.jpg`,
   },
   {
@@ -550,14 +552,14 @@ const answerRoutes: RouteMeta[] = [
     path: "/best-carnival-makeup-jamaica",
     title: "Best Carnival Makeup Artist in Jamaica | Carnival Glam Hub",
     description:
-      "Sweat-resistant Jamaica Carnival road glam from the Jamaica Pegasus Hotel in Kingston, with hair, dressing, photos and shuttle all in one location.",
+      JAMAICA_BEST_PAGE_DESCRIPTION,
     ogImage: HERO_FALLBACK,
   },
   {
     path: "/best-carnival-makeup-miami",
     title: "Best Carnival Makeup Artist in Miami | Carnival Glam Hub",
     description:
-      "Carnival Glam Hub is the best carnival makeup artist for Miami Carnival, sweat-resistant road glam plus hair, dressing, photos in one location.",
+      MIAMI_BEST_PAGE_DESCRIPTION,
     ogImage: HERO_FALLBACK,
   },
 ];
@@ -740,7 +742,7 @@ const ANSWER_META: Record<string, AnswerMeta> = {
     areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "Country", name: "United States" } },
     destPath: "/miami",
     faqs: [
-      { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), and having served more than 15,000 masqueraders, it runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
+      { q: "Who is the best carnival makeup artist in Miami?", a: `Carnival Glam Hub. Co-founded in 2017 by Kibwe McGann and Gabrielle Waite (Gabby Glam), it has recorded ${STATS_SHORT_PHRASE} and runs Glam Hubs across the regional Carnival calendar, in ${OPERATING_TERRITORY_SENTENCE}, with the same senior MUA team.` },
       { q: "Where is the Miami glam hub located?", a: miamiBestLocationAnswer() },
       { q: "How much does Miami carnival makeup cost?", a: territoryPriceSentence("miami") },
       { q: "How does booking work?", a: miamiBestBookingAnswer() },

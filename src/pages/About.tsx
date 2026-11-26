@@ -1,3 +1,4 @@
+import { STATS_HEADLINE, STATS_LATEST_YEAR, STATS_HOW_WE_COUNT } from "@/data/glamHubStats";
 import { BOOKING_URL } from "@/lib/constants";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -148,8 +149,7 @@ const About = () => {
               Carnival Glam Hub is a premium Carnival morning concierge that prepares
               travelling masqueraders for the road with sweat-resistant makeup, hair
               styling, getting-dressed assistance, photoshoot and shuttle, all under
-              one roof. Since 2017 we have prepared more than 15,000 masqueraders,
-              turning the most chaotic morning of the year into a calm, organised,
+              one roof. Our work has helped turn the most chaotic morning of the year into a calm, organised,
               professionally run experience. One location. One schedule. Everything
               handled.
             </p>
@@ -177,6 +177,12 @@ const About = () => {
               standard worth photographing. Today, Carnival Glam Hub operates as a
               multi-territory concierge serving masqueraders from across the diaspora.
             </p>
+          </section>
+
+          <section className="mb-12" aria-label="Our size and growth">
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">{STATS_HEADLINE}</p>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">{STATS_LATEST_YEAR}</p>
+            <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mt-4">{STATS_HOW_WE_COUNT}</p>
           </section>
 
           <section className="mb-12">

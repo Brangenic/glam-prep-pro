@@ -1,3 +1,4 @@
+import { STATS_HEADLINE, STATS_SHORT_PHRASE } from "@/data/glamHubStats";
 import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
 import { useEffect, useMemo, useState } from "react";
 import { Check, Play } from "lucide-react";
@@ -182,7 +183,7 @@ const TrinidadCarnival2027 = () => {
             <span className="italic text-gradient-primary">Makeup, Hair & Photoshoots</span>
           </h1>
           <p className="font-body text-lg sm:text-xl text-muted-foreground mb-6">
-            Book your Carnival morning with the team having served more than 15,000 masqueraders since 2017.
+            Book your Carnival morning with the team behind {STATS_SHORT_PHRASE}.
           </p>
           <div className="mb-8 -mx-4 sm:mx-0">
             <img
@@ -274,7 +275,7 @@ const TrinidadCarnival2027 = () => {
             ))}
           </div>
           <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-            We have glammed more than 15,000 masqueraders since 2017. Our work has been featured internationally and trusted by Carnival models, influencers and everyday masqueraders who just want to look incredible on the road. We have been doing this across multiple Carnival territories for years, so we know exactly what it takes to keep your Trinidad Carnival glam flawless from your first photo to your last lap.
+            {STATS_HEADLINE} Our work has been featured internationally and trusted by Carnival models, influencers and everyday masqueraders who just want to look incredible on the road. We have been doing this across multiple Carnival territories for years, so we know exactly what it takes to keep your Trinidad Carnival glam flawless from your first photo to your last lap.
           </p>
         </section>
 

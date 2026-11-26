@@ -1,3 +1,4 @@
+import { STATS_SHORT_PHRASE } from "@/data/glamHubStats";
 import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
 import TrinidadProof from "@/components/TrinidadProof";
 import { useEffect, useMemo } from "react";
@@ -361,7 +362,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
                 <span className="text-gradient-primary italic">Trinidad Carnival</span>
               </h2>
               <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-                Sweat-resistant makeup, road-ready hair, getting-dressed help, on-site photos and shuttle from our Port of Spain lounge, from the team that has served more than 15,000 masqueraders since 2017.
+                Sweat-resistant makeup, road-ready hair, getting-dressed help, on-site photos and shuttle from our Port of Spain lounge, from the team behind {STATS_SHORT_PHRASE}.
               </p>
               <div className="mb-6 rounded-2xl border border-primary/30 bg-background/60 px-5 py-4 max-w-2xl mx-auto">
                 <p className="font-body text-sm sm:text-base text-foreground/85">

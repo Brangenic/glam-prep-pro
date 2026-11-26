@@ -1,4 +1,5 @@
 import { FULL_SERVICE_SLUGS, LITE_SLUGS } from "@/data/hubTiers";
+import { FACES_FORMATTED, STATS_STARTED_YEAR, STATS_HEADLINE } from "@/data/glamHubStats";
 
 /**
  * Territory count is derived from the tier model so it can never go
@@ -8,7 +9,7 @@ import { FULL_SERVICE_SLUGS, LITE_SLUGS } from "@/data/hubTiers";
 const TERRITORY_COUNT = FULL_SERVICE_SLUGS.length + LITE_SLUGS.length;
 
 const stats = [
-  { value: "15,000+", label: "Masqueraders Served Since 2017" },
+  { value: `${FACES_FORMATTED}+`, label: `Faces Since ${STATS_STARTED_YEAR}` },
   { value: "2017", label: "Serving Carnival Since" },
   { value: String(TERRITORY_COUNT), label: "Territories" },
   { value: "Band Neutral", label: "Every Band, Every Section" },
@@ -29,6 +30,7 @@ const SocialProof = () => (
           </div>
         ))}
       </div>
+      <p className="font-body text-sm text-muted-foreground text-center mt-6">{STATS_HEADLINE}</p>
     </div>
   </section>
 );

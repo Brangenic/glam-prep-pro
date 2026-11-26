@@ -1,3 +1,4 @@
+import { STATS_SHORT_PHRASE } from "@/data/glamHubStats";
 // Single source of truth for press coverage.
 // Used by /press (src/pages/Press.tsx), the homepage press strip
 // (src/components/landing/PressBar.tsx) and the llms.txt press block.
@@ -65,7 +66,7 @@ export const PRESS_STORIES: PressStory[] = [
       "Glam Hub was never just about makeup. It started with vision, and that vision was rooted in faith.",
     pullQuoteAttribution: "Gabrielle Waite, speaking to CaribVoxx",
     summary:
-      "A ninth-year retrospective tracing Carnival Glam Hub from Gabrielle Waite, her mother and seventeen masqueraders to a regional Carnival-day platform serving more than 15,000 clients and employing hundreds of Caribbean beauty professionals.",
+      `A ninth-year retrospective tracing Carnival Glam Hub from Gabrielle Waite, her mother and seventeen masqueraders to a regional Carnival-day platform with ${STATS_SHORT_PHRASE}, employing hundreds of Caribbean beauty professionals.`,
     tier: "feature",
   },
   {
