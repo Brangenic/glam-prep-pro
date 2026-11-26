@@ -1,5 +1,9 @@
 # Roadmap: security fix (21 November 2026)
 
+## Homepage proof placement (26 November 2026)
+- [ ] Move proof after founders, keep one quiet hero line and match prerender
+- [ ] Run full tests, verify 375px and 1280px screenshots and overflow, publish and verify live
+
 ## Sync record access (26 November 2026)
 - [x] Restrict operational sync records without changing data or public content
 - [x] Verify production privileges, local role enforcement, live blogs and service sync; 716 tests pass and critical finding resolved (no test accounts)

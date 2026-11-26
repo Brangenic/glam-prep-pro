@@ -26,6 +26,7 @@
     /* Muted: soft warm grey */
     --muted: 40 10% 92%;
     --muted-foreground: 0 0% 40%;
+    --hero-muted-foreground: 0 0% 80%;
 
     /* Accent: carnival pink */
     --accent: 330 65% 58%;

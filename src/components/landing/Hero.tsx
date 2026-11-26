@@ -2,6 +2,8 @@ import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { useEffect } from "react";
 import TerritoryBookingRow from "@/components/booking/TerritoryBookingRow";
 import { BOOK_TERRITORY_ANCHOR } from "@/lib/bookingBar";
+import { Link } from "react-router-dom";
+import { HOME_COVERAGE_PATH, HOME_FACES_PROOF, HOME_FEATURED_OUTLET } from "@/data/homeProof";
 
 const HERO_768 = "/hero-768.webp";
 const HERO_1280 = "/hero-1280.webp";
@@ -37,7 +39,7 @@ const Hero = () => {
       />
       <div className="absolute inset-0 bg-black/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30" />
-      <div className="relative z-10 container mx-auto px-5 sm:px-6 pt-32 pb-16 sm:pt-36 sm:pb-24 lg:pt-32 lg:pb-16 text-center flex flex-col items-center">
+      <div className="relative z-10 container mx-auto px-5 sm:px-6 pt-24 pb-28 sm:pt-36 sm:pb-24 lg:pt-32 lg:pb-16 text-center flex flex-col items-center">
         <div className="max-w-2xl flex flex-col items-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
@@ -60,6 +62,9 @@ const Hero = () => {
               Each button goes straight to that territory's MasOS event. */}
           <div className="w-full max-w-md animate-fade-up" style={{ animationDelay: "0.35s" }}>
             <TerritoryBookingRow anchor campaign="home_booking_bar" heading={get("hero_cta_text")} />
+            <p data-home-proof="hero" className="mt-2 text-center font-body text-xs leading-5 text-hero-muted-foreground">
+              {HOME_FACES_PROOF}{HOME_FEATURED_OUTLET && <> · <Link to={HOME_COVERAGE_PATH} className="hover:underline underline-offset-2">Featured in {HOME_FEATURED_OUTLET}</Link></>}
+            </p>
             <a
               href="#destinations"
               className="mt-4 inline-flex items-center justify-center gap-2 border border-white/30 text-white font-body font-medium text-sm px-6 sm:px-8 py-3 rounded-full hover:bg-white/10 transition-all"

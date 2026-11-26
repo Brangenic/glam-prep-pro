@@ -2,8 +2,6 @@ import Navbar from "@/components/landing/Navbar";
 import { useEffect } from "react";
 import { homeMetaDescription } from "@/data/homeMeta";
 import Hero from "@/components/landing/Hero";
-import SocialProof from "@/components/landing/SocialProof";
-import PressBar from "@/components/landing/PressBar";
 import Problem from "@/components/landing/Problem";
 import Services from "@/components/landing/Services";
 import Destinations from "@/components/landing/Destinations";
@@ -69,8 +67,6 @@ const Index = () => {
     <Navbar />
     <main>
       <Hero />
-      <SocialProof />
-      <PressBar />
       <Problem />
       <Services />
       <Destinations />

@@ -1,5 +1,6 @@
 import founderImg from "@/assets/gabby-founder.jpg";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import FounderProof from "./FounderProof";
 
 const Founder = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -71,6 +72,7 @@ const Founder = () => {
             </div>
           </div>
         </div>
+        <FounderProof />
       </div>
     </section>
   );

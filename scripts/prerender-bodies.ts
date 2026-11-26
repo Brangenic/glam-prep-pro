@@ -1,4 +1,5 @@
 import { STATS_HEADLINE, STATS_SHORT_PHRASE, STATS_LATEST_YEAR, STATS_HOW_WE_COUNT } from "../src/data/glamHubStats";
+import { HOME_COVERAGE_PATH, HOME_FACES_PROOF, HOME_FEATURED_OUTLET, HOME_PROOF_LINE } from "../src/data/homeProof";
 import { TRINIDAD_PACKAGES, timeHeading, TRINIDAD_CHECKOUT_NOTE, TRINIDAD_RECEIPT_NOTE, type TrinidadPackage } from "../src/data/trinidadPackages";
 import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "../src/data/miamiCopy";
 // PRICING NOTE: every figure quoted in this file comes from
@@ -952,8 +953,9 @@ const CORE: Record<string, Content> = {
     title: "Carnival Glam Hub, Caribbean Carnival Beauty Concierge",
     body: `<p>Carnival Glam Hub is the Caribbean's premium Carnival beauty concierge. Sweat-resistant makeup, headpiece-ready hair, costume dressing, photoshoot and shuttle from one air-conditioned lounge on Carnival morning.</p>
 ${homeBookingRow()}
-<h2>${STATS_HEADLINE}</h2>
-<p>Co-founded in 2017 by Kibwe McGann and Gabrielle Waite. Booked across ${OPERATING_TERRITORY_SENTENCE}.</p>
+<p data-home-proof="hero">${escapeHtml(HOME_FACES_PROOF)}${HOME_FEATURED_OUTLET ? ` · <a href="${HOME_COVERAGE_PATH}">Featured in ${escapeHtml(HOME_FEATURED_OUTLET)}</a>` : ""}</p>
+<h2>A Complete Carnival Morning Experience</h2>
+<p>More than a makeup appointment, a luxury, full-service preparation experience so you feel confident, relaxed, and fully ready before you step onto the road.</p>
 <h2>Services</h2>
 <ul>
   <li><a href="/services/carnival-makeup">Sweat-Resistant Carnival Makeup</a></li>
@@ -985,8 +987,9 @@ ${enquiryRows()}
 <p>Work out your own total on the <a href="/booking-calculator">quote calculator</a>, or message us on WhatsApp at ${WHATSAPP_DISPLAY}.</p>
 <h2>Booking and cancellation</h2>
 <p>A non-refundable deposit of US$${DEPOSIT} per masquerader confirms your appointment and comes off the balance. No slot is held until the deposit is received. No refund is given if you cancel within 14 days of the event, and a booking may be transferred once to another Carnival Glam Hub event within 12 months if requested at least 3 days ahead. The full wording is on our <a href="/policies">terms and policies page</a>.</p>
-<h2>Press</h2>
-<p>${PRESS_OUTLET_SENTENCE} See the coverage on our <a href="/press">press page</a>.</p>
+<h2>Co-founded by Gabby Glam</h2>
+<p>${FOUNDER_PROSE}</p>
+<div data-home-proof="founder"><p>${escapeHtml(HOME_PROOF_LINE)}</p><p>${PRESS_OUTLETS.map((outlet) => `<a href="${HOME_COVERAGE_PATH}#story-${outlet.anchorId}">${escapeHtml(outlet.name)}</a>`).join(" · ")} · <a href="${HOME_COVERAGE_PATH}">See all coverage →</a></p></div>
 <h2>Working with us</h2>
 <p>Beauty professionals can <a href="/joinourteam">join the team</a> for the season, or <a href="/station-rentals">rent a station</a> inside a Hub and bring their own clients. Our product picks live on the <a href="/amazon-store">Amazon storefront</a>.</p>
 ${CTA}`,
