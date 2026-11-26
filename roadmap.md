@@ -1,13 +1,14 @@
 # Roadmap: security fix (21 November 2026)
 
 ## Homepage proof placement (26 November 2026)
-- [ ] Move proof after founders, keep one quiet hero line and match prerender
-- [ ] Run full tests, verify 375px and 1280px screenshots and overflow, publish and verify live
+- [x] Move proof after founders, keep one quiet hero line and match prerender
+- [x] Run full tests (716), verify 375px and 1280px screenshots and overflow, publish and verify live
 
 ## Sync record access (26 November 2026)
 - [x] Restrict operational sync records without changing data or public content
 - [x] Verify production privileges, local role enforcement, live blogs and service sync; 716 tests pass and critical finding resolved (no test accounts)
-- [ ] Deep security scan result: background scan pending; automated notification will report it
+- [x] Deep security scan completed; sync-record finding remains resolved
+- [ ] Review new deep-scan critical findings concerning Glam Match ownership and paid AI chat; outside the approved homepage change
 
 - [x] Lock autopilot-content, autopilot-engine, generate-content (cron secret, service role or admin)
 - [x] Cron jobs send x-cron-secret read at run time
