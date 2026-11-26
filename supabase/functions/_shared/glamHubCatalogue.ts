@@ -15,8 +15,25 @@ export const catalogue = {
       "display": "Tuesday 9 February 2027"
     }
   ],
+  "time_zone": "Trinidad time",
+  "utc_offset": "-04:00",
   "venue": "the Hilton Hotel, Port of Spain",
+  "venue_place": {
+    "@type": "Place",
+    "name": "the Hilton Hotel, Port of Spain",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Port of Spain",
+      "addressCountry": "TT"
+    }
+  },
   "currency": "USD",
+  "review_invitation": {
+    "text": "After Carnival, tell the next masquerader how your morning went.",
+    "url": "https://www.trustpilot.com/evaluate/carnivalglamhub.com",
+    "profile_url": "https://www.trustpilot.com/review/carnivalglamhub.com",
+    "label": "Review us on Trustpilot"
+  },
   "whatsapp": "https://wa.me/18765090997",
   "google_rating": {
     "rating": 4.8,
@@ -41,7 +58,8 @@ export const catalogue = {
         "makeup"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup.webp",
-      "image_alt": "Carnival makeup by Carnival Glam Hub"
+      "image_alt": "Carnival makeup by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/makeup/monday-8-feb"
     },
     {
       "id": "mon-makeup-photo",
@@ -53,7 +71,8 @@ export const catalogue = {
         "photoshoot"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup-photo.webp",
-      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub"
+      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/makeup-and-photoshoot/monday-8-feb"
     },
     {
       "id": "mon-photo",
@@ -64,7 +83,8 @@ export const catalogue = {
         "photoshoot"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/photo.webp",
-      "image_alt": "Carnival photoshoot by Carnival Glam Hub"
+      "image_alt": "Carnival photoshoot by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/photoshoot/monday-8-feb"
     },
     {
       "id": "tue-makeup",
@@ -75,7 +95,8 @@ export const catalogue = {
         "makeup"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup.webp",
-      "image_alt": "Carnival makeup by Carnival Glam Hub"
+      "image_alt": "Carnival makeup by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/makeup/tuesday-9-feb"
     },
     {
       "id": "tue-makeup-photo",
@@ -87,7 +108,8 @@ export const catalogue = {
         "photoshoot"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup-photo.webp",
-      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub"
+      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/makeup-and-photoshoot/tuesday-9-feb"
     },
     {
       "id": "tue-photo",
@@ -98,7 +120,8 @@ export const catalogue = {
         "photoshoot"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/photo.webp",
-      "image_alt": "Carnival photoshoot by Carnival Glam Hub"
+      "image_alt": "Carnival photoshoot by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/photoshoot/tuesday-9-feb"
     },
     {
       "id": "both-makeup",
@@ -109,7 +132,8 @@ export const catalogue = {
         "makeup"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup.webp",
-      "image_alt": "Carnival makeup by Carnival Glam Hub"
+      "image_alt": "Carnival makeup by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/makeup/both-days-8-9-feb"
     },
     {
       "id": "both-makeup-photo",
@@ -121,7 +145,8 @@ export const catalogue = {
         "photoshoot"
       ],
       "image_url": "https://www.carnivalglamhub.com/images/ai-booking/makeup-photo.webp",
-      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub"
+      "image_alt": "Carnival makeup and costume photoshoot by Carnival Glam Hub",
+      "web_url": "https://www.carnivalglamhub.com/trinidad/book/makeup-and-photoshoot/both-days-8-9-feb"
     }
   ],
   "slot_times": [
@@ -133,6 +158,7 @@ export const catalogue = {
   ],
   "slot_capacity": 3,
   "terms": {
+    "acceptance_label": "I accept the Carnival Glam Hub Terms and refund policy.",
     "summary": [
       "Full payment is taken at booking. We reserve the right to require full payment at the time of booking for certain services, add-ons, group bookings or promotional rates. Where this applies, it is stated at checkout.",
       "Cancellation within 14 days of the Event. No refund is given if you cancel within 14 days before the Event. Bookings made within this period are non-refundable in full.",

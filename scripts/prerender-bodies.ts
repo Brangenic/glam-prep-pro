@@ -1,3 +1,4 @@
+import { TRINIDAD_PACKAGES, timeHeading, TRINIDAD_CHECKOUT_NOTE, TRINIDAD_RECEIPT_NOTE, type TrinidadPackage } from "../src/data/trinidadPackages";
 import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "../src/data/miamiCopy";
 // PRICING NOTE: every figure quoted in this file comes from
 // src/data/territoryPricing.ts (masos products). Keep them in step with
@@ -98,6 +99,7 @@ import {
   PRESS_OUTLETS,
   PRESS_STORIES,
   PRESS_TIMELINE,
+  TRINIDAD_PRESS_STORY, TRINIDAD_HISTORY_SENTENCE, TRINIDAD_HISTORY_FAQ,
 } from "../src/data/pressCoverage";
 import {
   FULL_SERVICE_INCLUSIONS,
@@ -111,6 +113,7 @@ import {
   WHATSAPP_DISPLAY,
   WHATSAPP_URL,
   TEAM_APPLICATION_URL,
+  TRUSTPILOT_PROFILE_URL, TRUSTPILOT_REVIEW_URL, TRUSTPILOT_INVITATION, TRUSTPILOT_REVIEW_LABEL,
 } from "../src/lib/constants";
 
 // Onward destination links in the prerendered HTML show upcoming Carnivals
@@ -198,7 +201,7 @@ function wrap(c: Content): string {
 const PRERENDER_HIDE_STYLE = `<style id="prerender-static-style">[data-prerender="static"]{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}</style>`;
 
 
-const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a></p>`;
+const CTA = `<p><a href="https://carnivalglamhub.masos.app/events">Book your Carnival glam</a> · <a href="/">Home</a> · <a href="/about">About</a> · <a href="/faq">FAQ</a> · <a href="/reviews">Reviews</a> · <a href="/blogs">Journal</a> · <a href="${TRUSTPILOT_PROFILE_URL}" target="_blank" rel="noopener noreferrer">Trustpilot</a></p>`;
 
 // Reusable internal-link block. Rendered into the STATIC body so
 // non-JS crawlers see the hub-and-spoke internal links, not just the
@@ -1311,6 +1314,27 @@ ${PRIVACY_BLOCKS.map((b) => policyBlockHtml(b, "privacy")).join("\n")}
 ${CTA}`;
 }
 
+export function trinidadDirectPackagesBody(): string {
+  if (hasSeasonPassed("trinidad")) return "";
+  return `<section><h2>Book a package directly</h2>${TRINIDAD_PACKAGES.map((p) => `<p>${escapeHtml(p.directSentence)} <a href="${p.path}">${escapeHtml(p.url.replace(/^https:\/\/www\./, ""))}</a></p>`).join("\n")}</section>`;
+}
+
+export function trinidadProofBody(): string {
+  if (!TRINIDAD_PRESS_STORY) return "";
+  const date = new Date(`${TRINIDAD_PRESS_STORY.publishedDate}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  return `<section><h2>Trinidad since ${new Date(TRINIDAD_PRESS_STORY.publishedDate).getUTCFullYear()}</h2><p>${TRINIDAD_HISTORY_SENTENCE}</p><p>${TRINIDAD_PRESS_STORY.outlet}, ${date}: ${escapeHtml(TRINIDAD_PRESS_STORY.summary)} <a href="${TRINIDAD_PRESS_STORY.url}">Read the article</a>.</p><h3>${TRINIDAD_HISTORY_FAQ.question}</h3><p>${TRINIDAD_HISTORY_FAQ.answer}</p></section>`;
+}
+
+export function trinidadPackageBody(p: TrinidadPackage): string {
+  return `<p>${escapeHtml(p.intro)}</p>
+<section aria-label="Selected package"><p>${escapeHtml(p.summary)}</p><a href="/trinidad/book">Change</a></section>
+<section><h2>1. Pick your time for ${p.fullDate}. All times are ${TRINIDAD_BOOK_CATALOGUE.time_zone}.</h2>
+<p>${TRINIDAD_BOOK_SLOTS_SENTENCE}</p>${p.dates.map((d) => `<h3>${timeHeading(d.display)}</h3>`).join("\n")}</section>
+<section><h2>Included with every booking</h2><p>${TRINIDAD_BOOK_INCLUSIONS_SENTENCE}</p></section>
+<section><h2>2. Where should we send your confirmation?</h2><p>${TRINIDAD_CHECKOUT_NOTE} ${TRINIDAD_RECEIPT_NOTE} ${TRINIDAD_BOOK_INCLUSIONS_SENTENCE}</p></section>
+<section><h2>Questions</h2>${TRINIDAD_BOOK_FAQ.map((f) => `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join("\n")}</section>`;
+}
+
 function trinidadBookBody(): string {
   const C = TRINIDAD_BOOK_CATALOGUE;
   const rows = TRINIDAD_BOOK_PRODUCTS.map((p) => `<li>${p.dayLabel}, ${p.label}: US$${p.price}</li>`).join("\n");
@@ -1354,12 +1378,13 @@ function buildRouteMap(): Record<string, Content> {
   };
   map[AI_APP_PATH] = {
     title: AI_APP_H1,
-    body: aiBookingAppBody(),
+    body: `${aiBookingAppBody()}\n${trinidadDirectPackagesBody()}`,
   };
   map[TRINIDAD_BOOK_PATH] = {
     title: TRINIDAD_BOOK_H1,
     body: trinidadBookBody(),
   };
+  for (const p of TRINIDAD_PACKAGES) map[p.path] = { title: p.h1, body: trinidadPackageBody(p) };
   map["/joinourteam"] = {
     title: "Join the Carnival Glam Hub Team",
     body: joinOurTeamBody(),
@@ -1392,7 +1417,7 @@ function buildRouteMap(): Record<string, Content> {
     const path = `/${d.slug}`;
     map[path] = {
       title: d.slug === "jamaica" && jamaicaSeasonOpen() ? JAMAICA_H1 : d.name,
-      body: destinationBody(d),
+      body: `${destinationBody(d)}${d.slug === "trinidad" ? `${trinidadDirectPackagesBody()}${trinidadProofBody()}` : ""}`,
     };
   }
   // Alias page: /trinidad-carnival-2027 mirrors the Trinidad record
@@ -1401,7 +1426,7 @@ function buildRouteMap(): Record<string, Content> {
   if (trinidad) {
     map["/trinidad-carnival-2027"] = {
       title: `${trinidad.name}${trinidad.date ? `, ${trinidad.date}` : ""}`,
-      body: destinationBody(trinidad),
+      body: `${destinationBody(trinidad)}${trinidadDirectPackagesBody()}`,
     };
   }
 
@@ -1544,7 +1569,7 @@ ${relatedBlock({
   // follow) is written by prerender-routes.ts from the same module; this
   // adds the h1 and the one-line description to the body.
   for (const p of PRIVATE_ROUTES) {
-    map[p.path] = { title: escapeHtml(p.h1), body: `<p>${escapeHtml(p.description)}</p>` };
+    map[p.path] = { title: escapeHtml(p.h1), body: `<p>${escapeHtml(p.description)}</p>${p.path === "/trinidad/book/confirmed" ? `<p>${TRUSTPILOT_INVITATION} <a href="${TRUSTPILOT_REVIEW_URL}">${TRUSTPILOT_REVIEW_LABEL}</a></p>` : ""}` };
   }
 
   return map;
@@ -1929,7 +1954,7 @@ async function main() {
   );
 }
 
-main()
+if (!process.env.VITEST) main()
   .catch((err) => {
     console.error("prerender-bodies failed:", err);
   })

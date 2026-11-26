@@ -1,8 +1,9 @@
 /**
- * Owner rule: website paths always go to MasOS. The Trinidad portal has no
- * internal links but is open to Google and AI assistants.
+ * Owner update: generic booking CTAs use external events. Dated Trinidad
+ * catalogue package links are permitted in the requested Trinidad/AI page
+ * blocks, llms.txt, JADE and MCP options.
  *
- * Nothing on carnivalglamhub.com links to any path in PORTAL_PATHS. Of
+ * Navbar and footer do not link to any path in PORTAL_PATHS. Of
  * those, /trinidad/book is indexable and in the sitemap. The payment return
  * pages and /ai-booking-app carry noindex, nofollow on both surfaces and stay
  * out of every sitemap. None is ever disallowed in robots.txt, because a

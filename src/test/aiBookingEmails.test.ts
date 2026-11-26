@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { accountsEmail, receiptEmail, type EmailBooking } from "../../supabase/functions/_shared/glamHubEmails";
 import { TRINIDAD_HUB_VENUE } from "@/data/hubTiers";
 import catalogue from "../../supabase/functions/glam-hub-mcp/catalogue.json";
+import { TRUSTPILOT_REVIEW_URL, TRUSTPILOT_INVITATION } from "@/lib/constants";
 
 const base: EmailBooking = {
   reference: "CGH-TT27-ABCDE", firstName: "Ana", lastName: "Lee", email: "ana@test.com", phone: "+18685550100",
@@ -31,4 +32,14 @@ describe.each([["single day", base], ["both days", both]])("AI booking emails, %
 it("both-days subject and receipt order the days", () => {
   expect(accountsEmail(both).subject).toBe("ACCOUNTS | Trinidad 2027 | Mon and Tue 5am and 6am | Makeup and photoshoot | US$480 | Ana Lee");
   expect(receiptEmail(both).text).toContain("When: Carnival Monday 8 February 2027 at 5am and Carnival Tuesday 9 February 2027 at 6am");
+});
+
+it("every customer receives the same Trustpilot invitation without filtering or incentives", () => {
+  for (const product of catalogue.products) for (const source of ["website", "chatgpt", "claude"]) {
+    const email = receiptEmail({ ...base, productLabel: product.label, amountUsd: product.price, source });
+    expect(email.text).toContain(TRUSTPILOT_INVITATION);
+    expect(email.text).toContain(TRUSTPILOT_REVIEW_URL);
+    expect(email.html).toContain(`href="${TRUSTPILOT_REVIEW_URL}"`);
+    expect(email.html).not.toMatch(/in return|reward|five.star|5.star|positive review/i);
+  }
 });

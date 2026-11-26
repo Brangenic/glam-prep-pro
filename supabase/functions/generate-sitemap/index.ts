@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { catalogue } from "../_shared/glamHubCatalogue.ts";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const TODAY = new Date().toISOString().split("T")[0];
@@ -16,6 +17,7 @@ type SitemapEntry = {
 };
 
 const staticEntries: SitemapEntry[] = [
+  ...catalogue.products.map((p): SitemapEntry => ({ path: new URL(p.web_url).pathname, lastmod: TODAY, changefreq: "daily", priority: "0.9" })),
   { path: "/", lastmod: TODAY, changefreq: "weekly", priority: "1.0" },
   { path: "/blogs", lastmod: TODAY, changefreq: "daily", priority: "0.9" },
   { path: "/reviews", lastmod: TODAY, changefreq: "weekly", priority: "0.8" },

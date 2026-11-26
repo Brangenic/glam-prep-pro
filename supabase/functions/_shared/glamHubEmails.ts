@@ -28,10 +28,7 @@ export type EmailBooking = {
 };
 
 const SHORT: Record<string, string> = { monday: "Mon", tuesday: "Tue" };
-const LONG: Record<string, string> = {
-  monday: "Carnival Monday 8 February 2027",
-  tuesday: "Carnival Tuesday 9 February 2027",
-};
+const LONG: Record<string, string> = Object.fromEntries(catalogue.dates.map((d) => [d.day, `Carnival ${d.display}`]));
 
 /** "05:00" -> "5am", "12:30" -> "12:30pm". */
 export function friendlyTime(t: string): string {
@@ -115,6 +112,9 @@ export function receiptEmail(b: EmailBooking): { subject: string; text: string; 
     "",
     "See you on Carnival morning,",
     "Carnival Glam Hub",
+    "",
+    catalogue.review_invitation.text,
+    `${catalogue.review_invitation.label}: ${catalogue.review_invitation.url}`,
   ].join("\n");
 
   const row = (k: string, v: string) =>
@@ -132,6 +132,7 @@ ${row("Package", b.productLabel)}${row("When", when)}${row("Where", where)}${row
 <tr><td style="padding:12px 28px 0;color:#f4efe6;font-size:15px;line-height:1.6;font-family:Arial,Helvetica,sans-serif">Please check in at the Hub 30 minutes before your time. There's a 15 minute grace period, and after that your service may be shortened so the next masquerader stays on schedule.</td></tr>
 <tr><td style="padding:12px 28px 0;color:#f4efe6;font-size:15px;line-height:1.6;font-family:Arial,Helvetica,sans-serif">Questions about your morning? <a href="${JADE_WHATSAPP}" style="color:#e6c878">Talk to JADE</a>. Our booking policies are <a href="${POLICIES_URL}" style="color:#e6c878">here</a>.</td></tr>
 <tr><td style="padding:20px 28px 28px;color:#f4efe6;font-size:15px;line-height:1.6;font-family:Arial,Helvetica,sans-serif">See you on Carnival morning,<br><span style="color:#e6c878">Carnival Glam Hub</span></td></tr>
+<tr><td style="padding:0 28px 28px;color:#f4efe6;font-size:15px;line-height:1.6;font-family:Arial,Helvetica,sans-serif">${esc(catalogue.review_invitation.text)} <a href="${catalogue.review_invitation.url}" style="color:#e6c878">${esc(catalogue.review_invitation.label)}</a></td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }

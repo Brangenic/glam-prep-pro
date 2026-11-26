@@ -7,6 +7,7 @@ import { getTerritoryPricing } from "@/data/territoryPricing";
 import { getHubTier, getHubInclusions, getNotOffered, TIER_LABEL, MIAMI_VENUE_NOTE, MIAMI_TRAVEL_WARNING, MIAMI_VENUE_FAQ, GRENADA_VENUE_FAQ, GRENADA_ROUTE_FAQ } from "@/data/hubTiers";
 import { hasSeasonPassed, passedSeasonYear, getOpenPreRegistration } from "@/data/seasons";
 import { JAMAICA_FAQ, JAMAICA_HERO_ALT, JAMAICA_HERO_IMAGE, JAMAICA_HERO_SRCSET, JAMAICA_META_DESCRIPTION, JAMAICA_META_TITLE } from "@/data/jamaicaPage";
+import { TRINIDAD_HISTORY_FAQ } from "@/data/pressCoverage";
 
 export const BOOKING_URL = "https://carnivalglamhub.masos.app/events";
 
@@ -484,6 +485,7 @@ export function getDestinationFaqs(d: Destination): Faq[] {
 
   return [
     ...venueFaq,
+    ...(d.slug === "trinidad" ? [TRINIDAD_HISTORY_FAQ] : []),
     ...grenadaAeoFaqs,
     {
       question: `Where can I book ${loc} carnival glam?`,

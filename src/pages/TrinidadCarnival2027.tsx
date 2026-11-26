@@ -1,3 +1,4 @@
+import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
 import { useEffect, useMemo, useState } from "react";
 import { Check, Play } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
@@ -233,6 +234,8 @@ const TrinidadCarnival2027 = () => {
             BOOK NOW
           </a>
         </section>
+
+        <TrinidadDirectPackages />
 
         {/* Dates */}
         <section className="container mx-auto px-4 sm:px-6 max-w-3xl mt-20">

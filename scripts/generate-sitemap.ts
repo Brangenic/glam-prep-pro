@@ -1,8 +1,10 @@
+import { TRINIDAD_PACKAGES } from "../src/data/trinidadPackages";
 // Regenerates public/sitemap.xml from live Supabase data.
 // Runs automatically before `vite dev` and `vite build` via the
 // predev/prebuild npm scripts, so every publish ships a fresh sitemap.
 
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
+import { homeMetaDescription } from "../src/data/homeMeta";
 import { resolve } from "path";
 import { createClient } from "@supabase/supabase-js";
 
@@ -15,6 +17,10 @@ const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2cmVqZHJzcm12ZGtuem9za3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDM2NzQsImV4cCI6MjA4OTQxOTY3NH0.H6KmuQu8xb__RDjPx2ELH92WdhR4rqhfReRm23XSDN4";
 
 const TODAY = new Date().toISOString().split("T")[0];
+// The static homepage head is kept in step with the live season calendar.
+const indexPath = resolve("index.html");
+const homeDescription = homeMetaDescription();
+writeFileSync(indexPath, readFileSync(indexPath, "utf8").replace(/(<meta (?:name="(?:description|twitter:description)"|property="og:description") content=")[^"]*(")/g, `$1${homeDescription}$2`));
 
 type StaticEntry = {
   path: string;
@@ -24,6 +30,7 @@ type StaticEntry = {
 };
 
 const staticEntries: StaticEntry[] = [
+  ...TRINIDAD_PACKAGES.map((p): StaticEntry => ({ path: p.path, priority: "0.9", changefreq: "daily" })),
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/blogs", priority: "0.9", changefreq: "daily" },
   { path: "/reviews", priority: "0.8", changefreq: "weekly" },

@@ -8,11 +8,11 @@ import { WIDGET_URI, widgetHtml } from "./widget.ts";
 import { markPaidFromSession, sendBookingEmails } from "../_shared/glamHubFulfil.ts";
 import { limitMessage, prePaymentSummary, startBookingText, statusSummary } from "./copy.ts";
 
-type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[]; image_url: string; image_alt: string };
+type Product = { id: string; label: string; day: "monday" | "tuesday" | "both"; price: number; tags: string[]; image_url: string; image_alt: string; web_url: string };
 const CAT = catalogue as unknown as {
   event: string; venue: string; inclusions: string[]; products: Product[];
   slot_times: string[]; slot_capacity: number; dates: { day: string; display: string }[];
-  terms: { summary: string[]; url: string };
+  terms: { summary: string[]; url: string; acceptance_label: string };
 };
 
 const CORS = {
@@ -112,11 +112,11 @@ const TOOLS = [
         first_name: { type: "string", minLength: 1, maxLength: 80 },
         last_name: { type: "string", minLength: 1, maxLength: 80 },
         email: { type: "string", format: "email", maxLength: 254 },
-        phone: { type: "string", description: "Cell number with country code, for example +1 868 555 0100.", maxLength: 25 },
+        phone: { type: "string", description: "Cell number with country code.", maxLength: 25 },
         accepted_terms: {
           type: "boolean",
           const: true,
-          description: "True when the customer has accepted the booking Terms at https://www.carnivalglamhub.com/policies.",
+          description: CAT.terms.acceptance_label,
         },
       },
       required: ["product_id", "first_name", "last_name", "email", "phone", "accepted_terms"],
@@ -147,7 +147,7 @@ function text(t: string, structured?: unknown, isError = false) {
 function optionsPayload(av: Avail) {
   return {
     event: CAT.event, dates: CAT.dates, venue: CAT.venue, inclusions: CAT.inclusions,
-    products: CAT.products.map((p) => ({ id: p.id, label: p.label, day: p.day, price_usd: p.price, image_url: p.image_url, image_alt: p.image_alt })),
+    products: CAT.products.map((p) => ({ id: p.id, label: p.label, day: p.day, price_usd: p.price, image_url: p.image_url, image_alt: p.image_alt, web_url: p.web_url })),
     terms: CAT.terms, availability: av, payment: "Payable in full at booking. No discounts or codes.",
   };
 }

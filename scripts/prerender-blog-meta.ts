@@ -13,6 +13,7 @@ import { REACT_POST_PUBLISHED_DATES, type ReactPostSlug } from "../src/data/manu
 import { RECOVERED_POSTS_META } from "../src/data/recoveredPostsMeta";
 import { buildFaqSchema } from "../src/lib/faqSchema";
 import { fitTitle, fitDescription, plainTextExcerpt, isTitleTrimmed } from "../src/lib/metaText";
+import { assertSyncedBlogTitle, SyncedBlogTitleError } from "../src/lib/syncedBlogTitleGuard";
 
 const BASE_URL = "https://www.carnivalglamhub.com";
 const DIST = resolve("dist");
@@ -564,9 +565,10 @@ async function main() {
       if (!isPublished(row)) continue;
       const slug = row.slug || getSlugFromPostUrl(row.post_url);
       if (!slug || isExcludedSlug(slug)) continue;
-      if (seen.has(slug)) continue;
       const title = (row.title ?? "").trim();
       if (!title) continue;
+      assertSyncedBlogTitle(slug, title);
+      if (seen.has(slug)) continue;
       const description = (row.meta_description ?? row.excerpt ?? "").toString().trim();
       const image = (row.image_url ?? "").toString().trim() || `${BASE_URL}/og-image.png`;
       seen.add(slug);
@@ -582,6 +584,7 @@ async function main() {
       });
     }
   } catch (err) {
+    if (err instanceof SyncedBlogTitleError) throw err;
     console.warn("prerender-blog-meta: failed to fetch blog posts.", err);
   }
 
@@ -612,5 +615,5 @@ async function main() {
 
 main().catch((err) => {
   console.error("prerender-blog-meta failed:", err);
-  process.exit(0); // never block the build
+  process.exit(err instanceof SyncedBlogTitleError ? 1 : 0);
 });

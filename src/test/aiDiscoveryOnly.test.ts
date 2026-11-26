@@ -21,6 +21,9 @@ const EXCLUDED = new Set([
   "src/pages/TrinidadBookResult.tsx",
   "src/pages/AiBookingApp.tsx",
   "src/data/trinidadBookPage.ts",
+  "src/data/trinidadPackages.ts",
+  "src/lib/trinidadPackageLinks.ts",
+  "src/components/TrinidadDirectPackages.tsx",
   "src/data/aiBookingAppPage.ts",
   "src/data/aiDiscoveryOnly.ts",
   "src/data/legacyRoutes.ts",
@@ -94,13 +97,12 @@ describe("Trinidad portal has no internal links", () => {
     expect(hrefs.filter((h) => isAiDiscoveryOnlyPath(h))).toEqual([]);
   });
 
-  it("JADE never links website visitors to the portal", () => {
+  it("JADE only offers the permitted catalogue-derived package links", () => {
     const pack = JSON.parse(readFileSync("supabase/functions/chat/knowledge.json", "utf8"));
     const urls: string[] = pack.links.map((l: { url: string }) => l.url);
     expect(urls.filter((u) => isAiDiscoveryOnlyPath(u))).toEqual([]);
-    const { neverSay, ...rest } = pack;
-    expect(JSON.stringify(rest)).not.toMatch(/\/trinidad\/book|\/ai-booking-app/);
-    expect(JSON.stringify(neverSay)).toMatch(/\/trinidad\/book/);
+    expect(urls.filter((u) => u.startsWith("/trinidad/book/"))).toHaveLength(8);
+    expect(JSON.stringify(pack.links)).not.toContain("/ai-booking-app");
   });
 
   it("/trinidad/book is indexable on both surfaces", () => {
@@ -108,7 +110,7 @@ describe("Trinidad portal has no internal links", () => {
     expect(isAiDiscoveryOnlyPath("/trinidad/book")).toBe(true);
     const page = readFileSync("src/pages/TrinidadBook.tsx", "utf8");
     expect(page).not.toContain("useNoindex");
-    expect(page).toContain("c.href = TRINIDAD_BOOK_URL");
+    expect(page).toContain("c.href = pkg?.url ?? TRINIDAD_BOOK_URL");
     const prerender = readFileSync("scripts/prerender-routes.ts", "utf8");
     expect(prerender).toContain("isNoindexPortalPath(route.path)");
     expect(prerender).not.toContain("isAiDiscoveryOnlyPath(route.path)");

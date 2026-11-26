@@ -617,8 +617,9 @@ CURRENT VERSUS HISTORICAL
 Press coverage describes what we have done. It never establishes where we operate now or what a territory offers this season. The FACTS block is the only authority on what is current.
 
 LINKS
-Answer first, then link. Always link to the most specific page that exists, never the home page when a destination or service page covers it. Write links as markdown with descriptive text, for example [View Trinidad Carnival Glam Hub details](/trinidad), never a bare URL. Use the paths in the LINKS directory exactly. Internal paths stay root-relative. For human help use the WhatsApp link. Never link to /trinidad/book or /ai-booking-app; website visitors book Trinidad through the Trinidad booking link on the booking platform. One or two links per reply, never a list of them.
-When a territory has been established, any booking link must be that territory's own event URL, exactly as given in its brief and in the FACTS block. Never link the generic events list once a territory is established, and never link it for a territory that has no bookable event.
+Answer first, then link. Always link to the most specific page that exists, never the home page when a destination or service page covers it. Write links as markdown with descriptive text, for example [View Trinidad Carnival Glam Hub details](/trinidad), never a bare URL. Use the paths in the LINKS directory exactly. Internal paths stay root-relative. For human help use the WhatsApp link. Never link to /ai-booking-app. One or two links per reply, never a list of them.
+When a visitor wants to book Trinidad Carnival 2027, ask which service and which day if she has not said, then reply with the matching package link. Never send the general booking page when you know the package. Only use catalogue pairs in the LINKS directory. There is no both-days photoshoot package. Do not quote live availability from this knowledge pack.
+For other services and territories, any booking link must be that territory's own event URL, exactly as given in its brief and in the FACTS block. Never link the generic events list once a territory is established, and never link it for a territory that has no bookable event.
 
 NEVER SAY
 The following must never appear in a reply under any circumstances, including when a visitor asks directly for a discount or a promotion code:
@@ -633,4 +634,26 @@ ${cartInstruction(pack, directive)}
 ${buildKnowledgeContext(pack, topics, territorySlug)}
 
 ${buildFacts(pack, now, territorySlug)}`;
+}
+
+/** Resolve simple direct package requests from the generated links, not model guesses. */
+export function directTrinidadBookingReply(pack: Pack, messages: Msg[], now: Date): string | null {
+  const users = messages.filter((m) => m.role === "user").map((m) => m.content);
+  const last = users[users.length - 1]?.toLowerCase() ?? "";
+  if (!/\b(book|reserve)\b/.test(last) || /\b(not|don't|cancel|refund|change|hair|bronzing|gabby|premium)\b|j.?ouvert|jab jab/.test(last)) return null;
+  const territory = resolveTerritory(pack, users);
+  if (territory && !territory.startsWith("trinidad")) return null;
+  if (!territory && !/carnival (monday|tuesday)|trinidad/.test(last)) return null;
+  const event = pack.events.find((e) => e.slug === "trinidad");
+  if (!event?.seasonEndISO || now.getTime() > endOfDay(event.seasonEndISO)) return null;
+  const makeup = /\bmakeup\b|make-up/.test(last);
+  const photo = /\bphotoshoot\b|\bphotos?\b/.test(last);
+  if (!makeup && !photo) return "Which service would you like, makeup, makeup and photoshoot, or photoshoot?";
+  const both = /both days|monday and tuesday/.test(last);
+  const day = both ? "both-days" : /tuesday/.test(last) ? "tuesday" : /monday/.test(last) ? "monday" : null;
+  if (!day) return "Which day would you like, Carnival Monday, Carnival Tuesday or both days?";
+  const service = makeup && photo ? "makeup-and-photoshoot" : makeup ? "makeup" : "photoshoot";
+  const link = pack.links.find((l) => l.url.startsWith(`/trinidad/book/${service}/${day}-`));
+  if (!link) return "There is no both-days photoshoot package. Would you like Carnival Monday or Carnival Tuesday?";
+  return `Choose a live appointment time for ${link.label}. [Book this package](${link.url}). Payment is taken in full through Stripe.`;
 }

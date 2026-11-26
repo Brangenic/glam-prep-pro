@@ -5,6 +5,7 @@
 export const EFFECTIVE_DATE = "Effective 10 October 2026";
 /** Version of the Terms and Privacy Policy. To be stored on booking records in a later pass. */
 export const POLICY_VERSION = "2026-10-10";
+export const BOOKING_TERMS_LABEL = "I accept the Carnival Glam Hub Terms and refund policy.";
 export const CONTACT_EMAIL = "carnivalglamhub@gmail.com";
 
 export const TERMS_INTRO = [

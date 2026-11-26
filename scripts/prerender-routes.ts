@@ -1,3 +1,5 @@
+import { TRINIDAD_PACKAGES, packageJsonLd } from "../src/data/trinidadPackages";
+import { TRINIDAD_HISTORY_FAQ } from "../src/data/pressCoverage";
 import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "../src/data/miamiCopy";
 // PRICING NOTE: every figure quoted in this file comes from
 // src/data/territoryPricing.ts (masos products). Keep them in step with
@@ -414,6 +416,7 @@ const destinationRoutes: RouteMeta[] = [
 // component sets at runtime so Helmet/effect updates don't conflict with
 // the static head.
 const staticRoutes: RouteMeta[] = [
+  ...TRINIDAD_PACKAGES.map((p) => ({ path: p.path, title: p.title, description: p.description, ogImage: `${BASE_URL}/og/route-trinidad-book.jpg` })),
   {
     path: TRINIDAD_BOOK_PATH,
     title: TRINIDAD_BOOK_TITLE,
@@ -804,6 +807,10 @@ function buildJsonLd(route: RouteMeta): object[] {
     };
     blocks.push(homeCrumb(NAME[route.path] ?? route.title, route.path));
   }
+
+  const pkg = TRINIDAD_PACKAGES.find((p) => p.path === route.path);
+  if (pkg) blocks.push(...packageJsonLd(pkg));
+  if (route.path === "/trinidad") blocks.push(faqPage([{ q: TRINIDAD_HISTORY_FAQ.question, a: TRINIDAD_HISTORY_FAQ.answer }]));
 
   // 1a) /trinidad/book: Service with one Offer per bookable product, and
   // FAQPage matching the visible questions. All figures from the catalogue.
@@ -1285,6 +1292,22 @@ async function main() {
   }
   const template = readFileSync(indexPath, "utf8");
 
+  // Public read only. A bounded live snapshot sets package Offer availability;
+  // absent configuration or a failed read retains the documented InStock default.
+  const backendUrl = process.env.VITE_SUPABASE_URL;
+  const publicKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (backendUrl && publicKey) {
+    try {
+      const response = await fetch(`${backendUrl}/functions/v1/glam-hub-mcp/web/options`, { headers: { apikey: publicKey }, signal: AbortSignal.timeout(4000) });
+      if (!response.ok) throw new Error("Availability read failed");
+      const snapshot = await response.json();
+      if (snapshot.availability) for (const p of TRINIDAD_PACKAGES) {
+        const route = allRoutes.find((r) => r.path === p.path);
+        if (route) route.jsonLd = packageJsonLd(p, snapshot.availability);
+      }
+    } catch { console.warn("prerender-routes: package availability unavailable, using InStock default."); }
+  }
+
   // Transcode every route's hero to a 1200×630 JPEG so social crawlers
   // never fall back to the generic brand logo. Failures leave the route
   // on its declared ogImage (or HERO_FALLBACK), never blocks the build.
@@ -1300,11 +1323,17 @@ async function main() {
     if (transcoded) route.ogImage = transcoded;
   }
 
+  const bookingImage = allRoutes.find((r) => r.path === TRINIDAD_BOOK_PATH)?.ogImage;
+  if (bookingImage) for (const p of TRINIDAD_PACKAGES) {
+    const route = allRoutes.find((r) => r.path === p.path);
+    if (route) route.ogImage = bookingImage;
+  }
+
   let written = 0;
   for (const route of allRoutes) {
     let html = rewriteHead(template, route);
     // /ai-booking-app carries noindex, nofollow and no sitemap entry.
-    // /trinidad/book is indexable; it simply has no internal links.
+    // /trinidad/book and its dated catalogue packages are indexable.
     if (isNoindexPortalPath(route.path)) html = setRobots(html, AI_DISCOVERY_ONLY_ROBOTS);
     const dir = join(DIST, route.path.replace(/^\//, ""));
     mkdirSync(dir, { recursive: true });

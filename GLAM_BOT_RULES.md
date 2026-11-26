@@ -105,12 +105,7 @@ which is built from `territoryProfiles.ts` plus the service, policy and
 utility pages. Every entry must resolve against the route table in
 `src/App.tsx`.
 
-Website paths always go to MasOS. The Trinidad portal has no internal
-links but is open to Google and AI assistants. JADE never sends a website visitor to `/trinidad/book` or
-`/ai-booking-app`. For Trinidad booking it uses the Trinidad event link
-from `territoryPricing.ts`. The rule is a `neverSay` entry in
-`src/data/botKnowledge.ts` and a line in the link rules of
-`supabase/functions/chat/logic.ts`.
+Owner update, 26 November 2026: generic website booking CTAs retain the external territory event or homepage row. The requested Trinidad and AI app page blocks, llms.txt, JADE and MCP options may now link to dated Trinidad catalogue packages. JADE asks for service and day when missing, then sends the matching package, never the general booking page when the package is known. There is one route per catalogue product and no both-days photoshoot package. `/ai-booking-app` and payment returns remain noindex. Do not add links to the AI app page or change blog posts.
 
 ## 9. The Amazon cart rules
 

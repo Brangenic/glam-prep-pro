@@ -7,9 +7,11 @@
 import { getTerritoryPricing } from "@/data/territoryPricing";
 import { TRINIDAD_HUB_VENUE, ALWAYS_INCLUDED } from "@/data/hubTiers";
 import { TERMS_BLOCKS } from "@/data/policies";
-import { WHATSAPP_URL, SITE_URL } from "@/lib/constants";
+import { WHATSAPP_URL, SITE_URL, TRUSTPILOT_REVIEW_URL, TRUSTPILOT_PROFILE_URL, TRUSTPILOT_INVITATION, TRUSTPILOT_REVIEW_LABEL } from "@/lib/constants";
 import { GALLERY_HREF } from "@/data/seasons";
 import { GOOGLE_RATING } from "@/data/googleRating";
+import { packagePath } from "@/lib/trinidadPackageLinks";
+import { BOOKING_TERMS_LABEL } from "@/data/policies";
 
 export const AI_BOOKING_PRODUCT_IDS = [
   "mon-makeup",
@@ -60,22 +62,28 @@ export function buildAiBookingCatalogue() {
       image_url: `${SITE_URL}/images/ai-booking/${img.file}`, image_alt: img.alt,
     };
   });
+  const dates = [
+    { day: "monday", label: "Carnival Monday", date: "2027-02-08", display: "Monday 8 February 2027" },
+    { day: "tuesday", label: "Carnival Tuesday", date: "2027-02-09", display: "Tuesday 9 February 2027" },
+  ];
   return {
     event: "Trinidad Carnival 2027",
-    dates: [
-      { day: "monday", label: "Carnival Monday", date: "2027-02-08", display: "Monday 8 February 2027" },
-      { day: "tuesday", label: "Carnival Tuesday", date: "2027-02-09", display: "Tuesday 9 February 2027" },
-    ],
+    dates,
+    time_zone: "Trinidad time",
+    utc_offset: "-04:00",
     venue: TRINIDAD_HUB_VENUE,
+    venue_place: { "@type": "Place", name: TRINIDAD_HUB_VENUE, address: { "@type": "PostalAddress", addressLocality: "Port of Spain", addressCountry: "TT" } },
     currency: "USD",
+    review_invitation: { text: TRUSTPILOT_INVITATION, url: TRUSTPILOT_REVIEW_URL, profile_url: TRUSTPILOT_PROFILE_URL, label: TRUSTPILOT_REVIEW_LABEL },
     whatsapp: WHATSAPP_URL,
     google_rating: { rating: GOOGLE_RATING.rating, count: GOOGLE_RATING.count, as_of: GOOGLE_RATING.asOf, url: GOOGLE_RATING.url },
     gallery_url: `${SITE_URL}${GALLERY_HREF}`,
     inclusions: ["Shuttle", "Getting-dressed assistance", "Breakfast and refreshments", ALWAYS_INCLUDED],
-    products,
+    products: products.map((p) => ({ ...p, web_url: `${SITE_URL}${packagePath(p, dates)}` })),
     slot_times: AI_BOOKING_SLOT_TIMES,
     slot_capacity: AI_BOOKING_SLOT_CAPACITY,
     terms: {
+      acceptance_label: BOOKING_TERMS_LABEL,
       summary: [
         `Full payment is taken at booking. ${clause("1.6")}`,
         clause("3.2"),

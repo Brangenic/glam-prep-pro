@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 const src = readFileSync("supabase/functions/glam-hub-mcp/index.ts", "utf8");
 const toolsBlock = src.slice(src.indexOf("const TOOLS = ["), src.indexOf("// Directory review: annotations.title"));
 const descriptions = [...toolsBlock.matchAll(/description:\s*"([^"]*)"/g)].map((m) => m[1]);
+import { BOOKING_TERMS_LABEL } from "@/data/policies";
+if (toolsBlock.includes("description: CAT.terms.acceptance_label")) descriptions.push(BOOKING_TERMS_LABEL);
 
 describe("glam-hub-mcp tool descriptions are plain facts", () => {
   it("finds every tool and parameter description", () => {

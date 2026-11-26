@@ -23,6 +23,7 @@ import {
   WHATSAPP_URL,
   WHATSAPP_DISPLAY,
   CONTACT_EMAIL,
+  TRUSTPILOT_PROFILE_URL,
 } from "@/lib/constants";
 import { hasBookableEvent } from "@/lib/destinations";
 import { CARNIVAL_GUIDE_GROUPS, FEATURED_CARNIVAL_GUIDES } from "@/data/carnivalGuides";
@@ -61,6 +62,8 @@ import {
   CONTENTS as POLICY_CONTENTS,
 } from "@/data/policies";
 import { PRESS_STORIES } from "@/data/pressCoverage";
+import { TRINIDAD_PACKAGES } from "@/data/trinidadPackages";
+import { TRINIDAD_BOOK_FAQ } from "@/data/trinidadBookPage";
 import {
   HIGH_CHAIR_RATE_PER_DAY,
   STATION_BRING,
@@ -492,7 +495,11 @@ Book 4 to 6 weeks ahead. Book earlier for Trinidad, Jamaica and Miami, where slo
 
 You can also reach the booking team on WhatsApp at ${WHATSAPP_DISPLAY} (${WHATSAPP_URL}) or by email at ${CONTACT_EMAIL}. Estimate a total first with the booking calculator at /booking-calculator.
 
-Trinidad Carnival 2027 is booked on the booking platform, through the Trinidad booking link: ${TRINIDAD_WEBSITE_BOOKING_URL}`;
+Other Trinidad services are booked through the territory's event: ${TRINIDAD_WEBSITE_BOOKING_URL}
+For catalogue makeup and photoshoots, ask which service and day if missing, then send the matching dated package link. These bookings are paid in full, not by deposit:
+${TRINIDAD_PACKAGES.map((p) => `${p.directSentence} ${p.url}`).join("\n")}
+Before booking:
+${TRINIDAD_BOOK_FAQ.map((f) => `${f.q} ${f.a}`).join("\n")}`;
 }
 
 function policyClause(prefix: string): string | null {
@@ -666,6 +673,7 @@ function topicGuides(): string {
 
 function buildLinks(): { label: string; url: string }[] {
   const links: { label: string; url: string }[] = [];
+  links.push(...TRINIDAD_PACKAGES.map((p) => ({ label: `${p.service}, ${p.fullDate}`, url: p.path })));
   for (const p of TERRITORY_PROFILES) {
     if (!p.path) continue;
     links.push({
@@ -687,6 +695,7 @@ function buildLinks(): { label: string; url: string }[] {
     { label: "Press coverage", url: "/press" },
     { label: "About us", url: "/about" },
     { label: "Reviews", url: "/reviews" },
+    { label: "Trustpilot profile", url: TRUSTPILOT_PROFILE_URL },
     { label: "Station rentals and vendor spaces", url: "/station-rentals" },
     { label: "Booking calculator", url: "/booking-calculator" },
     { label: "Amazon storefront on our site", url: AMAZON_STORE_PATH },
@@ -730,7 +739,7 @@ const NEVER_SAY = [
   "Any price for bag delivery in Miami",
   "Any date for Atlanta Carnival",
   "The word masos in prose. It may only ever appear inside a booking URL.",
-  "Any link to /trinidad/book or /ai-booking-app. Website visitors always book on the booking platform, and Trinidad bookings use the Trinidad booking link.",
+  "Any link to /ai-booking-app. Never send the general /trinidad/book page when a catalogue package is known. Use the matching dated package link.",
   "Any J'ouvert package, paint, oil or body art as something Carnival Glam Hub sells, includes or offers. We do not offer it in any territory.",
   "Any seamstress, shuttle, breakfast, alcohol, hair, bronzing, barber, reels or overnight bag check in Grenada. None of those are offered there.",
 ];

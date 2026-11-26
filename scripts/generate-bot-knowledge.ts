@@ -10,9 +10,12 @@
 // Nothing here may import src/data/destinations.ts, because that module
 // imports image assets and cannot be loaded outside Vite.
 
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { buildKnowledgePack } from "../src/data/botKnowledge";
+import { TRINIDAD_DIRECT_LLMS_SECTION } from "../src/data/trinidadPackages";
+import { TRINIDAD_HISTORY_SENTENCE, TRINIDAD_PRESS_STORY } from "../src/data/pressCoverage";
+import { TRUSTPILOT_PROFILE_URL } from "../src/lib/constants";
 
 const OUT = resolve(process.cwd(), "supabase/functions/chat/knowledge.json");
 
@@ -30,6 +33,13 @@ function main() {
   const json = `${JSON.stringify(pack, null, 2)}\n`;
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, json, "utf8");
+  const discoveryPath = resolve("public/llms.txt");
+  const section = [TRINIDAD_DIRECT_LLMS_SECTION, `## Trustpilot\nCarnival Glam Hub profile: ${TRUSTPILOT_PROFILE_URL}`, `## Trinidad press evidence\n${TRINIDAD_HISTORY_SENTENCE}\n${TRINIDAD_PRESS_STORY ? `${TRINIDAD_PRESS_STORY.outlet}, ${TRINIDAD_PRESS_STORY.publishedDate}: ${TRINIDAD_PRESS_STORY.summary} ${TRINIDAD_PRESS_STORY.url}` : ""}`].join("\n\n");
+  const start = "<!-- generated-trinidad-discovery:start -->";
+  const end = "<!-- generated-trinidad-discovery:end -->";
+  const existing = readFileSync(discoveryPath, "utf8");
+  const generated = `${start}\n${section}\n${end}`;
+  writeFileSync(discoveryPath, existing.includes(start) ? existing.replace(new RegExp(`${start}[\\s\\S]*?${end}`), generated) : existing.replace("End of llms.txt body.", `${generated}\n\nEnd of llms.txt body.`));
 
   console.log(
     `[bot-knowledge] wrote ${OUT} (${Buffer.byteLength(json, "utf8")} bytes)`,

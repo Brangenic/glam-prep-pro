@@ -8,6 +8,7 @@ import {
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_HREF,
   WHATSAPP_URL,
+  TRUSTPILOT_PROFILE_URL,
 } from "@/lib/constants";
 
 /*
@@ -272,6 +273,7 @@ const Footer = () => {
           {/* Left inset keeps the utility row clear of the fixed Ask JADE launcher. */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-sm text-muted-foreground pl-0 lg:pl-44">
             <span>© {new Date().getFullYear()} Carnival Glam Hub</span>
+            <a href={TRUSTPILOT_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Trustpilot</a>
             <span aria-hidden="true">·</span>
             <a href="/policies#terms" className="inline-flex min-h-[44px] items-center hover:text-primary transition-colors">Terms</a>
             <span aria-hidden="true">·</span>

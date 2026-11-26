@@ -238,7 +238,7 @@ export const PRESS_STORIES: PressStory[] = [
       "After successfully executing the Glam Hub experience in Jamaica, it was time to move into the mecca of Carnival, Trinidad.",
     pullQuoteAttribution: "Kibwe McGann, speaking to the Jamaica Observer",
     summary:
-      "The Trinidad expansion documented at the Hilton Trinidad, with roughly 150 clients on Carnival Monday and more than 400 people on Carnival Tuesday.",
+      "The Trinidad expansion documented at the Hilton Trinidad's Grand Ballroom, with about 150 clients on Carnival Monday and over 400 people between midnight and 2pm on Carnival Tuesday.",
     tier: "caribbean",
   },
   {
@@ -321,6 +321,10 @@ export const PRESS_STORIES: PressStory[] = [
 
 export const storiesByTier = (tier: PressTier) =>
   PRESS_STORIES.filter((s) => s.tier === tier);
+
+export const TRINIDAD_PRESS_STORY = PRESS_STORIES.find((s) => s.id === "observer-trinidad-centrestage-2020");
+export const TRINIDAD_HISTORY_SENTENCE = "Glam Hub opened in Trinidad at the Hilton for Carnival 2020.";
+export const TRINIDAD_HISTORY_FAQ = { question: "When did Glam Hub open in Trinidad?", answer: TRINIDAD_HISTORY_SENTENCE };
 
 export type PressOutlet = {
   name: string;

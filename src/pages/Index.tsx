@@ -1,4 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
+import { useEffect } from "react";
+import { homeMetaDescription } from "@/data/homeMeta";
 import Hero from "@/components/landing/Hero";
 import SocialProof from "@/components/landing/SocialProof";
 import PressBar from "@/components/landing/PressBar";
@@ -42,7 +44,19 @@ const faqSchema = homeFaqSchema;
 // Founder Person JSON-LD is rendered statically in index.html to avoid
 // duplicate structured-data on the homepage.
 
-const Index = () => (
+const Index = () => {
+  useEffect(() => {
+    const description = homeMetaDescription();
+    const selectors = ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]'];
+    const restorers = selectors.map((selector) => {
+      const tag = document.querySelector<HTMLMetaElement>(selector);
+      const old = tag?.content;
+      if (tag) tag.content = description;
+      return () => { if (tag && old !== undefined) tag.content = old; };
+    });
+    return () => restorers.forEach((restore) => restore());
+  }, []);
+  return (
   <div className="min-h-screen bg-background text-foreground">
     <script
       type="application/ld+json"
@@ -71,6 +85,7 @@ const Index = () => (
     <Footer />
     <StickyMobileCTA />
   </div>
-);
+  );
+};
 
 export default Index;

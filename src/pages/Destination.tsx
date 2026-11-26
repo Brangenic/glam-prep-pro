@@ -1,3 +1,5 @@
+import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
+import TrinidadProof from "@/components/TrinidadProof";
 import { useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -683,6 +685,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
             </div>
           </section>
         )}
+
+        {dest.slug === "trinidad" && <TrinidadDirectPackages />}
+        {dest.slug === "trinidad" && <TrinidadProof />}
 
         {/* Body */}
         <section className="section-y">

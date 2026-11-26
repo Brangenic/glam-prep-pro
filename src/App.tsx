@@ -83,6 +83,8 @@ const App = () => (
           <Route path="/press" element={<Press />} />
           <Route path="/trinidad-carnival-2027" element={<TrinidadCarnival2027 />} />
           <Route path="/trinidad/book" element={<TrinidadBook />} />
+          <Route path="/trinidad/book/:service/:day" element={<TrinidadBook />} />
+          <Route path="/trinidad/book/*" element={<Navigate to="/trinidad/book" replace />} />
           <Route path="/ai-booking-app" element={<AiBookingApp />} />
           <Route path="/trinidad/book/confirmed" element={<TrinidadBookResult paid />} />
           <Route path="/trinidad/book/cancelled" element={<TrinidadBookResult paid={false} />} />

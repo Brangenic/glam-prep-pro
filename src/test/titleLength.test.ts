@@ -17,6 +17,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve, relative } from "node:path";
 import { TITLE_MAX } from "@/lib/metaText";
+import { TRINIDAD_PACKAGES } from "@/data/trinidadPackages";
 import {
   ROOT_ALIASES,
   PRIVATE_ROUTES,
@@ -45,6 +46,7 @@ function walk(dir: string): string[] {
 
 const titles: [string, string][] = [];
 const add = (where: string, title: string) => titles.push([where, title]);
+TRINIDAD_PACKAGES.forEach((p) => add(p.path, p.title));
 
 // Route titles in the prerender script, string literals only. Imported
 // constants are picked up from their own modules below.

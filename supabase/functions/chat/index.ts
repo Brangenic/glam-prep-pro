@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { buildSystemPrompt, type Msg, type Pack } from "./logic.ts";
+import { buildSystemPrompt, directTrinidadBookingReply, type Msg, type Pack } from "./logic.ts";
 import knowledge from "./knowledge.json" with { type: "json" };
 
 const corsHeaders = {
@@ -30,6 +30,11 @@ serve(async (req) => {
 
   try {
     const { messages } = await req.json();
+    const directReply = directTrinidadBookingReply(pack, (messages ?? []) as Msg[], new Date());
+    if (directReply) {
+      const chunk = JSON.stringify({ choices: [{ delta: { content: directReply } }] });
+      return new Response(`data: ${chunk}\n\ndata: [DONE]\n\n`, { headers: { ...corsHeaders, "Content-Type": "text/event-stream" } });
+    }
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 

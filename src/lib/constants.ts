@@ -31,3 +31,8 @@ export const CONTACT_PHONE_HREF = "tel:+18765090997";
 
 /** Customer-facing name of our virtual assistant. */
 export const ASSISTANT_NAME = "JADE";
+
+export const TRUSTPILOT_REVIEW_URL = "https://www.trustpilot.com/evaluate/carnivalglamhub.com";
+export const TRUSTPILOT_PROFILE_URL = "https://www.trustpilot.com/review/carnivalglamhub.com";
+export const TRUSTPILOT_INVITATION = "After Carnival, tell the next masquerader how your morning went.";
+export const TRUSTPILOT_REVIEW_LABEL = "Review us on Trustpilot";

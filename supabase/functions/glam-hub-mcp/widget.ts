@@ -37,8 +37,8 @@ label.t{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:12px 0
 <div class="inc" id="inc"></div>
 <h2>Your details</h2>
 <div class="grid"><input type="text" id="fn" placeholder="First name" autocomplete="given-name"><input type="text" id="ln" placeholder="Last name" autocomplete="family-name"></div>
-<div class="grid" style="margin-top:8px"><input type="email" id="em" placeholder="Email" autocomplete="email"><input type="tel" id="ph" placeholder="Cell, e.g. +1 868 555 0100" autocomplete="tel"></div>
-<label class="t"><input type="checkbox" id="terms"> <span>I accept the <a href="#" id="tlink">Terms and booking policy</a> (<a href="#" id="plink">Privacy Policy</a>).</span></label>
+<div class="grid" style="margin-top:8px"><input type="email" id="em" placeholder="Email" autocomplete="email"><input type="tel" id="ph" placeholder="Cell, with country code" autocomplete="tel"></div>
+<label class="t"><input type="checkbox" id="terms"> <span><a href="#" id="tlink"></a> (<a href="#" id="plink">Privacy Policy</a>).</span></label>
 <button class="pay" id="pay" disabled>Choose a service</button>
 <div class="msg" id="msg"></div>
 </div>
@@ -48,6 +48,7 @@ var state={day:"monday",product:null,slots:{},avail:null};
 var DAYS=[["monday","Monday"],["tuesday","Tuesday"],["both","Both days"]];
 var $=function(id){return document.getElementById(id)};
 $("venue").textContent=CAT.venue;
+$("tlink").textContent=CAT.terms.acceptance_label;
 $("inc").textContent="Included free with every appointment: "+CAT.inclusions.join(", ")+".";
 // Host bridge: MCP Apps (postMessage JSON-RPC), with ChatGPT fallback.
 var rid=0,pending={};
