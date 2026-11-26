@@ -24,4 +24,4 @@
 - [ ] Missing facts: appointment duration, required items and immediate receipt guarantee need Kibwe's confirmation
 - [ ] Grenada impressions and canonical recommendation: waiting for Kibwe's search performance figures; current canonicals unchanged
 - [ ] Shorten legacy blog titles: waiting for Kibwe's editorial corrections; unchanged baseline titles no longer block publishing
-- [ ] Publish and deploy changed functions: withheld until Kibwe reviews and approves; shared live backend left unchanged
+- [ ] Approved live release: deploy chat, MCP, Stripe webhook, receipt retry and sitemap functions; publish the site; verify all eight live acceptance checks without bookings or payments
