@@ -7,3 +7,4 @@
 - Generate only the marked Trinidad discovery section when refreshing JADE knowledge; this preserves unrelated llms.txt content.
 - Reject new or changed overlong synced blog titles before prerender output, exempting only exact frozen baseline titles; this protects publishing without editing legacy articles.
 - Keep size, annual growth and counting-scope prose in the asset-free stats module, with generated discovery text and Vite HTML substitution; this keeps React, JADE and crawler content tied to one annual update.
+- Keep sync_state accessible only to the service role; the admin dashboard reads other tables and needs no direct sync-record access.
