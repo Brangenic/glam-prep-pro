@@ -1,3 +1,6 @@
+import { getSeasonMakeupPages, TRINIDAD_BEST_OPENING, TRINIDAD_COMPARISON } from "../src/data/carnivalMakeupPages";
+import { seasonMakeupBody } from "../src/lib/seasonMakeupHtml";
+import { getTerritoryPricing as territoryEventPricing } from "../src/data/territoryPricing";
 import { STATS_HEADLINE, STATS_SHORT_PHRASE, STATS_LATEST_YEAR, STATS_HOW_WE_COUNT } from "../src/data/glamHubStats";
 import { HOME_COVERAGE_PATH, HOME_FACES_PROOF, HOME_FEATURED_OUTLET, HOME_PROOF_LINE } from "../src/data/homeProof";
 import { TRINIDAD_PACKAGES, timeHeading, TRINIDAD_CHECKOUT_NOTE, TRINIDAD_RECEIPT_NOTE, type TrinidadPackage } from "../src/data/trinidadPackages";
@@ -87,7 +90,7 @@ import {
   GLEANER_AWARD_URL,
   REVIEWS_PAGE_DESCRIPTION,
 } from "../src/data/pageMeta";
-import { hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF, getOpenPreRegistration } from "../src/data/seasons";
+import { SEASON_END_DATES, hasSeasonPassed, isUpcomingDestination, getUpcomingDestinations, passedSeasonYear, GALLERY_HREF, getOpenPreRegistration } from "../src/data/seasons";
 import {
   BARBER_PRICE,
   GETTING_DRESSED_PRICE,
@@ -728,6 +731,11 @@ function destinationBody(d: ParsedDest): string {
         .join("")}</ul>`,
     );
   }
+  const eventPricing = territoryEventPricing(d.slug);
+  const year = SEASON_END_DATES[d.slug]?.slice(0, 4);
+  if (!hasSeasonPassed(d.slug) && eventPricing?.bookingUrl.includes("/events/")) parts.push(`<p><a href="${escapeHtml(eventPricing.bookingUrl)}">Book ${escapeHtml(d.shortName ?? d.name)} Carnival Makeup ${year} on our booking platform</a></p>`);
+  const seasonal = getSeasonMakeupPages().find((p) => p.slug === d.slug && !hasSeasonPassed(p.slug));
+  if (seasonal) parts.push(`<p><a href="${seasonal.path}">${escapeHtml(seasonal.h1)}</a></p>`);
   parts.push(destinationRelated(d.slug));
   return parts.join("\n");
 }
@@ -968,6 +976,7 @@ ${homeBookingRow()}
 <h2>Destinations</h2>
 <ul>
 ${UPCOMING_LIST_HTML}
+${getSeasonMakeupPages().filter((p) => p.slug === "trinidad" && !hasSeasonPassed(p.slug)).map((p) => `<li><a href="${p.path}">${escapeHtml(p.h1)}</a></li>`).join("\n")}
 </ul>
 <h2>What happens on Carnival morning</h2>
 <p>You arrive at the Glam Hub before sunrise, check in at reception and move through the lounge in one flow: hair, makeup, getting dressed with a seamstress on hand, then photographs in full costume while the look is at its freshest. When your section is ready the shuttle takes you to your band. Nothing is spread across five appointments and three parts of the city, which is the problem the Hub was built to solve.</p>
@@ -1395,6 +1404,7 @@ function buildRouteMap(): Record<string, Content> {
     body: trinidadBookBody(),
   };
   for (const p of TRINIDAD_PACKAGES) map[p.path] = { title: p.h1, body: trinidadPackageBody(p) };
+  for (const p of getSeasonMakeupPages()) map[p.path] = { title: p.h1, body: seasonMakeupBody(p) };
   map["/joinourteam"] = {
     title: "Join the Carnival Glam Hub Team",
     body: joinOurTeamBody(),
@@ -1556,8 +1566,11 @@ ${relatedBlock({
           : ""),
     ).join("\n");
     map["/best-carnival-makeup-trinidad"] = {
-      title: "Best carnival makeup artist in Trinidad: Carnival Glam Hub",
-      body: `<p><strong>For Trinidad Carnival 2027, Carnival Monday 8 and Tuesday 9 February, the best carnival makeup artist is Carnival Glam Hub.</strong> Sweat-resistant road makeup, headpiece-ready hair, an on-site seamstress, getting-dressed assistance, a photoshoot and a shuttle to your band, all from ${escapeHtml(TRINIDAD_VENUES)}, minutes from the Queen's Park Savannah. Appointments run from ${escapeHtml(TRINIDAD_APPOINTMENT_WINDOW)}.</p>
+      title: "Choosing Trinidad Carnival makeup",
+      body: `<p>${escapeHtml(TRINIDAD_BEST_OPENING)}</p>
+<h2>How to choose a Trinidad Carnival makeup service</h2>
+${TRINIDAD_COMPARISON.map((s) => `<h3>${escapeHtml(s.q)}</h3><p>${escapeHtml(s.a)}</p>`).join("\n")}
+${getSeasonMakeupPages().filter((p) => p.slug === "trinidad" && !hasSeasonPassed(p.slug)).map((p) => `<p><a href="${p.path}">${escapeHtml(p.h1)}</a></p>`).join("\n")}
 ${dest?.date ? `<p><strong>Trinidad Carnival dates:</strong> ${escapeHtml(dest.date)}.</p>` : ""}
 ${sections}
 <p><a href="${escapeHtml(TRINIDAD_BOOKING_URL)}">Book Trinidad Carnival 2027</a></p>

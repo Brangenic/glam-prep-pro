@@ -1,4 +1,5 @@
 import { TRINIDAD_PACKAGES } from "../src/data/trinidadPackages";
+import { getSeasonMakeupPages } from "../src/data/carnivalMakeupPages";
 // Regenerates public/sitemap.xml from live Supabase data.
 // Runs automatically before `vite dev` and `vite build` via the
 // predev/prebuild npm scripts, so every publish ships a fresh sitemap.
@@ -17,6 +18,10 @@ const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2cmVqZHJzcm12ZGtuem9za3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDM2NzQsImV4cCI6MjA4OTQxOTY3NH0.H6KmuQu8xb__RDjPx2ELH92WdhR4rqhfReRm23XSDN4";
 
 const TODAY = new Date().toISOString().split("T")[0];
+const seasonalPages = getSeasonMakeupPages();
+// Retain previously published seasons, with their historical facts, after closing.
+writeFileSync(resolve("src/data/publishedMakeupSeasons.json"), JSON.stringify(seasonalPages, null, 2) + "\n");
+writeFileSync(resolve("supabase/functions/_shared/seasonMakeupRoutes.json"), JSON.stringify(seasonalPages.map((p) => p.path), null, 2) + "\n");
 // The static homepage head is kept in step with the live season calendar.
 const indexPath = resolve("index.html");
 const homeDescription = homeMetaDescription();
@@ -30,6 +35,7 @@ type StaticEntry = {
 };
 
 const staticEntries: StaticEntry[] = [
+  ...seasonalPages.map((p): StaticEntry => ({ path: p.path, priority: "0.9", changefreq: "weekly" })),
   ...TRINIDAD_PACKAGES.map((p): StaticEntry => ({ path: p.path, priority: "0.9", changefreq: "daily" })),
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/blogs", priority: "0.9", changefreq: "daily" },

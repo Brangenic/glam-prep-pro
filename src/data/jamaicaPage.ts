@@ -299,7 +299,8 @@ export function jamaicaJsonLd(opts: { image?: string } = {}) {
   const event = {
     "@context": "https://schema.org",
     "@type": "Event",
-    name: `${JAMAICA_EVENT_NAME} Glam Hub`,
+    "@id": `${JAMAICA_URL}#hub`,
+    name: `Carnival Glam Hub, ${JAMAICA_EVENT_NAME}`,
     // Appointment window on the day, owner confirmed.
     startDate: at(JAMAICA_HOURS.start),
     endDate: at(JAMAICA_HOURS.end),
@@ -309,7 +310,7 @@ export function jamaicaJsonLd(opts: { image?: string } = {}) {
     description: JAMAICA_META_DESCRIPTION,
     ...(opts.image ? { image: [opts.image] } : {}),
     location: place,
-    organizer: { "@type": "Organization", name: "Carnival Glam Hub", url: SITE_URL },
+    organizer: { "@type": "Organization", "@id": ORG_ID },
     offers: JAMAICA_PRODUCTS.map((p) => ({
       "@type": "Offer",
       name: p.label,
@@ -318,27 +319,6 @@ export function jamaicaJsonLd(opts: { image?: string } = {}) {
       availability: "https://schema.org/InStock",
       url: JAMAICA_EVENT_URL,
     })),
-  };
-  const business = {
-    "@context": "https://schema.org",
-    "@type": "BeautySalon",
-    "@id": `${JAMAICA_URL}#hub`,
-    name: `Carnival Glam Hub, ${profile.name}`,
-    url: JAMAICA_URL,
-    parentOrganization: { "@id": ORG_ID },
-    ...(opts.image ? { image: opts.image } : {}),
-    address: place.address,
-    geo: place.geo,
-    location: place,
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      opens: JAMAICA_HOURS.start,
-      closes: JAMAICA_HOURS.end,
-      validFrom: JAMAICA_DATE_ISO,
-      validThrough: JAMAICA_DATE_ISO,
-    },
-    priceRange: `US$${JAMAICA_MIN_PRICE}-US$${JAMAICA_MAX_PRICE}`,
-    areaServed: { "@type": "City", name: JAMAICA_CITY, containedInPlace: { "@type": "Country", name: "Jamaica" } },
   };
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -358,7 +338,7 @@ export function jamaicaJsonLd(opts: { image?: string } = {}) {
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
-  return { event, business, breadcrumb, faq };
+  return { event, breadcrumb, faq };
 }
 
 /** True while the Jamaica 2027 season is still ahead. */

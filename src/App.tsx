@@ -36,6 +36,8 @@ import NotFound from "./pages/NotFound.tsx";
 import TrinidadBook from "./pages/TrinidadBook.tsx";
 import AiBookingApp from "./pages/AiBookingApp.tsx";
 import TrinidadBookResult from "./pages/TrinidadBookResult.tsx";
+import CarnivalSeasonMakeup from "./pages/CarnivalSeasonMakeup";
+import { getSeasonMakeupPages } from "@/data/carnivalMakeupPages";
 
 import {
   BestCarnivalMakeupTrinidad,
@@ -72,6 +74,7 @@ const App = () => (
         <RouteTracker />
         <Routes>
           <Route path="/" element={<Index />} />
+          {getSeasonMakeupPages().map((page) => <Route key={page.path} path={page.path} element={<CarnivalSeasonMakeup page={page} />} />)}
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/about" element={<About />} />
           <Route path="/services/carnival-makeup" element={<CarnivalMakeup />} />

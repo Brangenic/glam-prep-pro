@@ -1,3 +1,7 @@
+import { hubEvent } from "@/data/hubEvents";
+import { getSeasonMakeupPages } from "@/data/carnivalMakeupPages";
+import { hasSeasonPassed } from "@/data/seasons";
+import { Link } from "react-router-dom";
 import { STATS_HEADLINE, STATS_SHORT_PHRASE } from "@/data/glamHubStats";
 import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
 import { useEffect, useMemo, useState } from "react";
@@ -19,40 +23,7 @@ const PAGE_DESCRIPTION =
 const CANONICAL = "https://www.carnivalglamhub.com/trinidad-carnival-2027";
 const YT_ID = "IHUJsYg0GhI";
 
-const eventSchema = {
-  "@context": "https://schema.org",
-  "@type": "Event",
-  name: "Trinidad Carnival 2027, Glam Hub Morning Concierge",
-  startDate: "2027-02-08T04:00:00-04:00",
-  endDate: "2027-02-09T20:00:00-04:00",
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  eventStatus: "https://schema.org/EventScheduled",
-  url: CANONICAL,
-  description:
-    "Trinidad Carnival 2027 makeup, hair, photoshoot, getting-dressed, seamstress and shuttle, by Carnival Glam Hub.",
-  location: {
-    "@type": "Place",
-    name: "Port of Spain, Trinidad and Tobago",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Port of Spain",
-      addressCountry: "TT",
-    },
-  },
-  organizer: {
-    "@type": "Organization",
-    name: "Carnival Glam Hub",
-    url: "https://www.carnivalglamhub.com",
-  },
-  offers: {
-    "@type": "Offer",
-    url: "https://www.carnivalglamhub.com/trinidad-carnival-2027",
-    availability: "https://schema.org/InStock",
-    priceCurrency: "USD",
-    price: "50",
-    validFrom: "2026-05-01",
-  },
-};
+const eventSchema = hubEvent("trinidad", "/trinidad-carnival-2027");
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -81,17 +52,12 @@ const VISIBLE_REVIEWS = [
 
 const reviewSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": `${CANONICAL}#business`,
+  "@type": "Organization",
+  "@id": "https://www.carnivalglamhub.com/#organization",
   name: "Carnival Glam Hub",
   alternateName: "Carnival Glam Hub, Trinidad Carnival",
   url: CANONICAL,
   image: "https://www.carnivalglamhub.com/og/trinidad-carnival-2027.jpg",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Port of Spain",
-    addressCountry: "TT",
-  },
   review: VISIBLE_REVIEWS.map((r) => ({
     "@type": "Review",
     author: { "@type": "Person", name: r.author },
@@ -154,8 +120,14 @@ const TrinidadCarnival2027 = () => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", CANONICAL);
+    const eventTag = document.createElement("script");
+    eventTag.type = "application/ld+json";
+    eventTag.textContent = JSON.stringify(eventSchema);
+    const prerenderedEvent = [...document.querySelectorAll('script[data-prerender]')].some((s) => s.textContent?.includes('"Event"'));
+    if (!prerenderedEvent) document.head.appendChild(eventTag);
 
     return () => {
+      eventTag.remove();
       document.title = previousTitle;
       restorers.forEach((r) => r());
       if (previousCanonical !== null) canonical?.setAttribute("href", previousCanonical);
@@ -236,6 +208,10 @@ const TrinidadCarnival2027 = () => {
           </a>
         </section>
 
+        <div className="container mx-auto px-4 py-6 text-center">
+          {getSeasonMakeupPages().filter((p) => p.slug === "trinidad" && !hasSeasonPassed(p.slug)).map((p) => <p key={p.path} className="mb-4"><Link to={p.path} className="text-primary underline">{p.h1}</Link></p>)}
+          {!hasSeasonPassed("trinidad") && <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">{getSeasonMakeupPages().find((p) => p.slug === "trinidad")?.bookingLabel} on our booking platform</a>}
+        </div>
         <TrinidadDirectPackages />
 
         {/* Dates */}

@@ -1,3 +1,7 @@
+import { hubEvent } from "@/data/hubEvents";
+import { getSeasonMakeupPages } from "@/data/carnivalMakeupPages";
+import { SEASON_END_DATES } from "@/data/seasons";
+import { getTerritoryPricing } from "@/data/territoryPricing";
 import { STATS_SHORT_PHRASE } from "@/data/glamHubStats";
 import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
 import TrinidadProof from "@/components/TrinidadProof";
@@ -168,6 +172,9 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
       el.textContent = JSON.stringify(data);
     };
 
+    const hub = hubEvent(dest.slug);
+    const prerenderedEvent = [...document.querySelectorAll('script[data-prerender]')].some((s) => s.textContent?.includes('"Event"'));
+    if (hub && !prerenderedEvent) upsertJsonLd("destination-hub-event", hub);
     // Where the prerendered head already carries this page's FAQPage (Jamaica),
     // do not add a second copy after hydration.
     const firstQ = faqs[0]?.question ?? "";
@@ -190,6 +197,7 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
     return () => {
       document.title = prevTitle;
       document.getElementById("destination-faq-jsonld")?.remove();
+      document.getElementById("destination-hub-event")?.remove();
     };
   }, [dest, faqs, bookingUrl, seasonPassed, seasonMeta.title, seasonMeta.description]);
 
@@ -347,6 +355,10 @@ const Destination = ({ slugOverride }: { slugOverride?: string } = {}) => {
           </div>
         </section>
 
+        {!seasonPassed && <div className="container mx-auto px-4 py-6 text-center text-sm">
+          {getTerritoryPricing(dest.slug)?.bookingUrl.includes("/events/") && <p><a href={getTerritoryPricing(dest.slug)?.bookingUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">Book {dest.shortName} Carnival Makeup {SEASON_END_DATES[dest.slug]?.slice(0, 4)} on our booking platform</a></p>}
+          {getSeasonMakeupPages().filter((p) => p.slug === dest.slug).map((p) => <p key={p.path} className="mt-3"><Link to={p.path} className="text-primary underline">{p.h1}</Link></p>)}
+        </div>}
         {/* Jamaica 2027 answer-first guide, while the season is ahead */}
         {dest.slug === "jamaica" && !seasonPassed && <JamaicaGuide />}
 

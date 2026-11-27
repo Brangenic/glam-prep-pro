@@ -28,6 +28,7 @@ import { getTerritoryPricing } from "@/data/territoryPricing";
 import { destinations, getDestinationFaqs } from "@/data/destinations";
 const getDestination = (slug: string) => destinations.find((d) => d.slug === slug);
 import { getSeasonNotice, seasonNoticeText } from "@/data/blogSeasonNotices";
+import { assertAppointmentOnlyMarkup } from "@/lib/hubSchemaGuard";
 
 const EVENT = "https://carnivalglamhub.masos.app/events/0ad062ce-d1e0-4838-aeaf-f418ed526440";
 const read = (p: string) => readFileSync(resolve(process.cwd(), p), "utf8");
@@ -123,16 +124,9 @@ describe("Jamaica JSON-LD", () => {
   });
 
   it("describes the Kingston hub and the breadcrumb", () => {
-    expect((ld.business as any)["@type"]).toBe("BeautySalon");
-    expect((ld.business as any).address.streetAddress).toBe("81 Knutsford Boulevard");
-    expect((ld.business as any).geo.latitude).toBe(18.0025);
-    expect((ld.business as any).openingHoursSpecification).toMatchObject({
-      opens: "04:00",
-      closes: "12:00",
-      validFrom: "2027-04-04",
-      validThrough: "2027-04-04",
-    });
-    expect((ld.business as any).priceRange).toBe("US$120-US$440");
+    expect(ld.event["@type"]).toBe("Event");
+    expect(ld.event.organizer["@id"]).toBe("https://www.carnivalglamhub.com/#organization");
+    expect(JSON.stringify(ld)).not.toMatch(/BeautySalon|openingHoursSpecification/);
     const crumbs = (ld.breadcrumb as any).itemListElement;
     expect(crumbs.at(-1).item).toBe("https://www.carnivalglamhub.com/jamaica");
   });
@@ -146,6 +140,7 @@ describe("Jamaica JSON-LD", () => {
 
   it("serialises to valid JSON", () => {
     for (const block of Object.values(ld)) expect(() => JSON.parse(JSON.stringify(block))).not.toThrow();
+    assertAppointmentOnlyMarkup(JSON.stringify(ld), "Jamaica JSON-LD");
   });
 });
 

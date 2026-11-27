@@ -15,8 +15,13 @@ import { dirname, resolve } from "path";
 import { buildKnowledgePack } from "../src/data/botKnowledge";
 import { TRINIDAD_DIRECT_LLMS_SECTION } from "../src/data/trinidadPackages";
 import { TRINIDAD_HISTORY_SENTENCE, TRINIDAD_PRESS_STORY } from "../src/data/pressCoverage";
-import { TRUSTPILOT_PROFILE_URL } from "../src/lib/constants";
+import { TRUSTPILOT_PROFILE_URL, SITE_URL as SITE_URL_FOR_DISCOVERY } from "../src/lib/constants";
 import { STATS_LLMS_SECTION } from "../src/data/glamHubStats";
+import { getSeasonMakeupPages } from "../src/data/carnivalMakeupPages";
+import { TERRITORY_PROFILES } from "../src/data/territoryProfiles";
+import { getTerritoryPricing } from "../src/data/territoryPricing";
+import { SEASON_END_DATES } from "../src/data/seasons";
+import { ORGANIZATION_DESCRIPTION } from "../src/data/hubEvents";
 
 const OUT = resolve(process.cwd(), "supabase/functions/chat/knowledge.json");
 
@@ -44,7 +49,8 @@ function main() {
   const existing = source.includes(statsStart)
     ? source.replace(new RegExp(`${statsStart}[\\s\\S]*?${statsEnd}`), STATS_LLMS_SECTION)
     : source.replace("\n\n## Booking and Registration", `\n\n${STATS_LLMS_SECTION}\n\n## Booking and Registration`);
-  const generated = `${start}\n${section}\n${end}`;
+  const seasonSection = ["## Dated Carnival makeup pages", ORGANIZATION_DESCRIPTION, ...getSeasonMakeupPages().map((p) => `- [${p.h1}](${SITE_URL_FOR_DISCOVERY}${p.path}): ${p.intro}`), "## Territory booking events", ...TERRITORY_PROFILES.filter((p) => p.slug !== "trinidad-carnival-2027").flatMap((p) => { const t = getTerritoryPricing(p.slug); return t?.bookingUrl.includes("/events/") ? [`- [${p.shortName} Carnival ${SEASON_END_DATES[p.slug]?.slice(0, 4) ?? ""} booking event](${t.bookingUrl}): ${p.dateText}`] : []; })].join("\n");
+  const generated = `${start}\n${section}\n\n${seasonSection}\n${end}`;
   writeFileSync(discoveryPath, existing.includes(start) ? existing.replace(new RegExp(`${start}[\\s\\S]*?${end}`), generated) : existing.replace("End of llms.txt body.", `${generated}\n\nEnd of llms.txt body.`));
 
   console.log(

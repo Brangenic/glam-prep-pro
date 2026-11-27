@@ -28,6 +28,10 @@ const EXCLUDED = new Set([
   "src/data/aiDiscoveryOnly.ts",
   "src/data/legacyRoutes.ts",
   "src/App.tsx",
+  // Explicit owner exception, 27 November: the seasonal Trinidad page links to the portal.
+  "src/data/carnivalMakeupPages.ts",
+  "src/data/hubEvents.ts",
+  "src/data/publishedMakeupSeasons.json",
 ]);
 
 function walk(dir: string, out: string[] = []): string[] {

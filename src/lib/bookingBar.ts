@@ -82,6 +82,8 @@ export function territoryForPath(pathname: string): string | null {
   const clean = pathname.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
   const profile = TERRITORY_PROFILES.find((p) => p.path === clean);
   if (profile) return profile.slug;
+  const seasonal = clean.match(/^\/([a-z-]+)-carnival-makeup-\d{4}$/);
+  if (seasonal && getProfile(seasonal[1])) return seasonal[1];
   const answer = clean.match(/^\/best-carnival-makeup-([a-z-]+)$/);
   if (answer && getProfile(answer[1])) return answer[1];
   return null;

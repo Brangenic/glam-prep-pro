@@ -1,3 +1,5 @@
+import { getSeasonMakeupPages, TRINIDAD_BEST_OPENING, TRINIDAD_COMPARISON } from "@/data/carnivalMakeupPages";
+import { hasSeasonPassed } from "@/data/seasons";
 import { STATS_HEADLINE, STATS_SHORT_PHRASE } from "@/data/glamHubStats";
 import { JAMAICA_BEST_PAGE_DESCRIPTION, MIAMI_BEST_PAGE_DESCRIPTION } from "@/data/pageMeta";
 import { miamiBestLocationAnswer, miamiBestBookingAnswer } from "@/data/miamiCopy";
@@ -47,9 +49,8 @@ function buildData(territory: Territory): PageData {
       title: "Best Carnival Makeup Artist in Trinidad | Carnival Glam Hub",
       description:
         "Sweat-resistant Trinidad Carnival makeup, hair, dressing, photos and shuttle from the Hilton and The BRIX, minutes from the Savannah. Since 2017.",
-      h1: "Best carnival makeup artist in Trinidad: Carnival Glam Hub",
-      answer:
-        `For Trinidad Carnival 2027, Carnival Monday 8 and Tuesday 9 February, the best carnival makeup artist is Carnival Glam Hub. Sweat-resistant road makeup, headpiece-ready hair, an on-site seamstress, getting-dressed assistance, a photoshoot and a shuttle to your band, all from ${TRINIDAD_VENUES}, minutes from the Queen's Park Savannah. Appointments run from ${TRINIDAD_APPOINTMENT_WINDOW}.`,
+      h1: "Choosing Trinidad Carnival makeup",
+      answer: TRINIDAD_BEST_OPENING,
       venueLine: `We work from ${TRINIDAD_VENUES}, minutes from the Queen's Park Savannah.`,
       eventLine: date ? `Trinidad Carnival dates: ${date}.` : "",
       faqs: TRINIDAD_ANSWER_SECTIONS.map((sx) => ({ q: sx.q, a: sx.a })),
@@ -166,7 +167,7 @@ function BestPage({ territory }: { territory: Territory }) {
 
           <div className="mb-12 text-center">
             <a
-              href={BOOKING_URL}
+              href={territory === "trinidad" ? TRINIDAD_BOOKING_URL : BOOKING_URL}
               target="_blank"
               rel="noopener"
               className="inline-block bg-primary text-primary-foreground font-body font-semibold text-sm px-7 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all"
@@ -177,6 +178,11 @@ function BestPage({ territory }: { territory: Territory }) {
 
           {(data.slug as string) === "trinidad" ? (
             <div>
+              <section className="mb-12">
+                <h2 className="font-display text-2xl font-bold mb-6">How to choose a Trinidad Carnival makeup service</h2>
+                {TRINIDAD_COMPARISON.map((s) => <div key={s.q} className="mb-6"><h3 className="font-display text-xl font-semibold mb-2">{s.q}</h3><p className="font-body text-muted-foreground leading-relaxed">{s.a}</p></div>)}
+                {getSeasonMakeupPages().filter((p) => p.slug === "trinidad" && !hasSeasonPassed(p.slug)).map((p) => <Link key={p.path} to={p.path} className="text-primary underline">{p.h1}</Link>)}
+              </section>
               {TRINIDAD_ANSWER_SECTIONS.map((sx) => (
                 <section className="mb-12" key={sx.q}>
                   <h2 className="font-display text-2xl sm:text-3xl font-bold mb-5">{sx.q}</h2>

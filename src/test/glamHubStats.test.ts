@@ -49,7 +49,9 @@ describe("owner-confirmed size and annual growth", () => {
   });
   it("generates crawler HTML and JADE from the same figures", () => {
     const html = renderStatsHtml(read("index.html"));
-    expect(html).toContain(STATS_HEADLINE);
+    // The Organization now has the owner's appointment-only description.
+    expect(renderStatsHtml("__GLAM_HUB_STATS_HEADLINE__")).toBe(STATS_HEADLINE);
+    expect(html).toContain('"@type": "Organization"');
     expect(html).not.toContain("__GLAM_HUB_STATS_HEADLINE__");
     const knowledge = JSON.stringify(buildKnowledgePack());
     expect(knowledge).toContain(STATS_HEADLINE);

@@ -1,3 +1,5 @@
+import { getSeasonMakeupPages, seasonPageJsonLd } from "../src/data/carnivalMakeupPages";
+import { hubEvent } from "../src/data/hubEvents";
 import { STATS_SHORT, STATS_SHORT_PHRASE } from "../src/data/glamHubStats";
 import { CARNIVAL_MAKEUP_PAGE_DESCRIPTION, JAMAICA_BEST_PAGE_DESCRIPTION, MIAMI_BEST_PAGE_DESCRIPTION } from "../src/data/pageMeta";
 import { TRINIDAD_PACKAGES, packageJsonLd } from "../src/data/trinidadPackages";
@@ -564,7 +566,12 @@ const answerRoutes: RouteMeta[] = [
   },
 ];
 
-export const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes, ...answerRoutes];
+const seasonalPages = getSeasonMakeupPages();
+for (const p of seasonalPages) {
+  OG_IMAGE_ALT[p.path] = p.imageAlt;
+  // Both seasonal share images are stable, pre-sized 1200 by 630 JPGs.
+}
+export const allRoutes: RouteMeta[] = [...destinationRoutes, ...staticRoutes, ...answerRoutes, ...seasonalPages.map((p) => ({ path: p.path, title: p.title, description: p.description, ogImage: p.ogImage }))];
 
 // ============================================================
 // JSON-LD enrichment
@@ -780,6 +787,8 @@ const MAKEUP_HOWTO = {
 
 function buildJsonLd(route: RouteMeta): object[] {
   const url = `${BASE_URL}${route.path}`;
+  const seasonal = seasonalPages.find((p) => p.path === route.path);
+  if (seasonal) return seasonPageJsonLd(seasonal);
   const blocks: object[] = [];
 
   // 1) BreadcrumbList for every route.
@@ -892,12 +901,14 @@ function buildJsonLd(route: RouteMeta): object[] {
       provider: PROVIDER,
       areaServed: DEST_AREA[route.path],
     });
+    const hub = hubEvent(route.path.slice(1), route.path);
+    if (hub && route.path !== JAMAICA_PATH) blocks.push(hub);
     // Jamaica Carnival 2027: Event with one Offer per product, the Kingston
-    // hub as a BeautySalon, and the FAQPage matching the visible questions.
+    // appointment-only hub Event and the FAQPage matching the visible questions.
     // Built from src/data/jamaicaPage.ts, the same source as the page.
     if (route.path === JAMAICA_PATH && jamaicaSeasonOpen()) {
       const ld = jamaicaJsonLd({ image: `${BASE_URL}${JAMAICA_HERO_IMAGE}` });
-      blocks.push(ld.event, ld.business, ld.faq);
+      blocks.push(ld.event, ld.faq);
     }
     // Miami Carnival has moved to Broward County. The announced venue and
     // the no-shuttle warning ship in the crawler-visible head.
@@ -1061,53 +1072,16 @@ function buildJsonLd(route: RouteMeta): object[] {
   // 3) Trinidad 2027 gets its real Event + reviewed-business schemas in
   // the static head as well (moved out of the page component).
   if (route.path === "/trinidad-carnival-2027") {
+    const event = hubEvent("trinidad", route.path);
+    if (event) blocks.push(event);
     blocks.push({
       "@context": "https://schema.org",
-      "@type": "Event",
-      name: "Trinidad Carnival 2027, Glam Hub Morning Concierge",
-      startDate: "2027-02-08T04:00:00-04:00",
-      endDate: "2027-02-09T20:00:00-04:00",
-      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      eventStatus: "https://schema.org/EventScheduled",
-      url,
-      description:
-        "Trinidad Carnival 2027 makeup, hair, photoshoot, getting-dressed, seamstress and shuttle, by Carnival Glam Hub.",
-      location: {
-        "@type": "Place",
-        name: "Port of Spain, Trinidad and Tobago",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Port of Spain",
-          addressCountry: "TT",
-        },
-      },
-      organizer: {
-        "@type": "Organization",
-        name: "Carnival Glam Hub",
-        url: BASE_URL,
-      },
-      offers: {
-        "@type": "Offer",
-        url,
-        availability: "https://schema.org/InStock",
-        priceCurrency: "USD",
-        price: "50",
-        validFrom: "2026-05-01",
-      },
-    });
-    blocks.push({
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "@id": `${url}#business`,
+      "@type": "Organization",
+      "@id": ORG_ID,
       name: "Carnival Glam Hub",
       alternateName: "Carnival Glam Hub, Trinidad Carnival",
       url,
           image: `${BASE_URL}/og/trinidad-carnival-2027.jpg`,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Port of Spain",
-        addressCountry: "TT",
-      },
       review: [
         {
           "@type": "Review",

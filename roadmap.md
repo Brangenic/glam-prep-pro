@@ -1,5 +1,10 @@
 # Roadmap: security fix (21 November 2026)
 
+## Appointment-only search pages (27 November 2026)
+- [ ] Replace salon and opening-hours structured data with Organization and dated hub Events
+- [ ] Shared fact-led seasonal makeup pages, Trinidad comparison copy, booking and discovery links
+- [ ] Full tests, mobile/desktop checks, publish and verify production
+
 ## Homepage proof placement (26 November 2026)
 - [x] Move proof after founders, keep one quiet hero line and match prerender
 - [x] Run full tests (716), verify 375px and 1280px screenshots and overflow, publish and verify live

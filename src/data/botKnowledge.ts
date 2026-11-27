@@ -1,4 +1,6 @@
 import { STATS_HEADLINE, STATS_LATEST_YEAR, STATS_HOW_WE_COUNT } from "@/data/glamHubStats";
+import { getSeasonMakeupPages } from "@/data/carnivalMakeupPages";
+import { ORGANIZATION_DESCRIPTION } from "@/data/hubEvents";
 /**
  * JADE knowledge composer. JADE is the customer-facing assistant name.
  *
@@ -679,6 +681,7 @@ function topicGuides(): string {
 
 function buildLinks(): { label: string; url: string }[] {
   const links: { label: string; url: string }[] = [];
+  links.push(...getSeasonMakeupPages().map((p) => ({ label: p.h1, url: p.path })));
   links.push(...TRINIDAD_PACKAGES.map((p) => ({ label: `${p.service}, ${p.fullDate}`, url: p.path })));
   for (const p of TERRITORY_PROFILES) {
     if (!p.path) continue;
@@ -802,6 +805,7 @@ export function buildKnowledgePack(): KnowledgePack {
       about: topicAbout(),
       jabJab: topicJabJab(),
       guides: topicGuides(),
+      seasonalMakeup: [ORGANIZATION_DESCRIPTION, ...getSeasonMakeupPages().map((p) => `${p.h1}: ${p.intro} ${SITE_URL}${p.path} Booking: ${p.eventUrl}`)].join("\n\n"),
     },
     links: buildLinks(),
     neverSay: NEVER_SAY,

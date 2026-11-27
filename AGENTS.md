@@ -1,5 +1,7 @@
 # Architecture rules
 
+- Compose seasonal makeup pages and hub Event schemas from asset-free shared data for React, prerender, discovery and sitemap parity; retain generated published-season snapshots so closed pages keep their historical facts.
+
 - Derive direct Trinidad package routes from the existing catalogue using the pure URL mapper; this keeps website and MCP product links identical without circular imports.
 - Keep dated package text and Offer schema in the asset-free package data module, read by React and prerender scripts; this prevents crawler and browser drift.
 - Carry shared consent wording and review invitations through the generated catalogue into edge code; this keeps browser, MCP and receipt wording consistent.

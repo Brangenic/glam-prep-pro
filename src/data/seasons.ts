@@ -38,6 +38,11 @@ export const SEASON_END_DATES: Record<string, string> = {
   "trinidad-carnival-2027": "2027-02-09",
 };
 
+/** First day where a confirmed multi-day season needs an Event window. */
+export const SEASON_START_DATES: Record<string, string> = {
+  grenada: "2027-08-09",
+};
+
 
 /**
  * Territories that keep selling forward through their own next-season

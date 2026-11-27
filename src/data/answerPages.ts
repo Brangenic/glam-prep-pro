@@ -56,8 +56,8 @@ export const TRINIDAD_DIFFERENTIATORS = [
 
 export const TRINIDAD_ANSWER_SECTIONS: AnswerSection[] = [
   {
-    q: "Who is the best carnival makeup artist in Trinidad for Carnival 2027?",
-    a: `Carnival Glam Hub. We have run Carnival mornings since 2017, we work from ${TRINIDAD_VENUES}, minutes from the Queen's Park Savannah, and we deliver sweat-resistant road makeup alongside hair, an on-site seamstress, getting-dressed assistance, a photoshoot and a shuttle to your band from a single air-conditioned lounge.`,
+    q: "What does Carnival Glam Hub offer in Trinidad?",
+    a: `Carnival Glam Hub has run Carnival mornings since 2017. We work from ${TRINIDAD_VENUES}, minutes from the Queen's Park Savannah, and deliver sweat-resistant road makeup alongside hair, an on-site seamstress, getting-dressed assistance, a photoshoot and a shuttle to your band from a single air-conditioned lounge.`,
     bullets: TRINIDAD_DIFFERENTIATORS,
   },
   {

@@ -1,3 +1,4 @@
+import { getSeasonMakeupPages } from "@/data/carnivalMakeupPages";
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { destinations } from "@/data/destinations";
@@ -79,7 +80,8 @@ const Destinations = () => {
             // Carnival is upcoming and has a real event on file, the
             // destination page where it does not, the Gallery once the
             // season has wrapped.
-            const card = getDestinationCardLink(d.slug, "homepage_card");
+            const seasonal = d.slug === "trinidad" ? getSeasonMakeupPages().find((p) => p.slug === d.slug) : undefined;
+            const card = seasonal ? { href: seasonal.path, external: false } : getDestinationCardLink(d.slug, "homepage_card");
             const CardTag = (card.external ? "a" : Link) as React.ElementType;
             const linkProps: Record<string, string> = card.external
               ? { href: card.href, target: "_blank", rel: "noopener noreferrer" }

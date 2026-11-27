@@ -93,7 +93,7 @@ const googleProfiles = [
 
 const Reviews = () => {
   const ORG_ID = "https://www.carnivalglamhub.com/#organization";
-  const ORG_REF = { "@type": "BeautySalon", "@id": ORG_ID, name: "Carnival Glam Hub" };
+  const ORG_REF = { "@type": "Organization", "@id": ORG_ID, name: "Carnival Glam Hub" };
 
   // Each visible Google review is emitted as an individual schema.org
   // Review, all itemReviewed against the existing Organization @id so no
