@@ -1,6 +1,6 @@
 So, you've heard the rumours. Everyone's got an opinion on crime in Trinidad. But let's cut through the noise and get real. Is Trinidad Carnival 2027 safe? With common sense and the right moves, absolutely. Here's the lowdown.
 
-![Carnival Glam Hub team at Trinidad Carnival](https://static.wixstatic.com/media/477465_baa9b30cac7a4024958652d1deaadcd6~mv2.jpeg)
+![Carnival Glam Hub team at Trinidad Carnival](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_baa9b30cac7a4024958652d1deaadcd6_mv2.jpeg)
 *Carnival Glam Hub, Trinidad Carnival*
 
 **1. Avoid bling, blend in.** Excessive bling attracts the wrong attention. Carnival isn't worth your most expensive jewellery. Keep valuables low-key and opt for plastic or beaded accessories.

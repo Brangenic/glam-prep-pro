@@ -13,7 +13,7 @@
 
 **Travel Hack:** Stay along Rodney Bay or Gros Islet. Anywhere outside that makes transport hell and you'll be stuck in traffic for hours.
 
-![Chloe Bailey and Patrice Roberts at Saint Lucia Carnival](https://static.wixstatic.com/media/477465_75776fe5438b4c7291676bac3f52ed10~mv2.jpg)
+![Chloe Bailey and Patrice Roberts at Saint Lucia Carnival](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_75776fe5438b4c7291676bac3f52ed10_mv2.jpg)
 *Chloe Bailey and Patrice Roberts*
 
 ### 4. Grenada's Spicemas, Raw & Unfiltered 🖤💥
@@ -27,7 +27,7 @@
 
 **Travel Hack:** The men get a little handsy during Jab Jab, make sure you're with a crew.
 
-![Kalista at Jab Jab, Grenada Spicemas](https://static.wixstatic.com/media/477465_656b0900767442aaa697abf379fd3a91~mv2.jpg)
+![Kalista at Jab Jab, Grenada Spicemas](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_656b0900767442aaa697abf379fd3a91_mv2.jpg)
 *Kalista, Jab Jab Grenada*
 
 ### 3. Jamaica Carnival, Cool Vibes, Hot Energy 🇯🇲🔥
@@ -41,7 +41,7 @@
 
 **Travel Hack:** Stay in the New Kingston area; it's worth renting a car.
 
-![Winnie Harlow at GenXS Jamaica Carnival](https://static.wixstatic.com/media/477465_73e0499c12ff45f9a9598aa01e6f2881~mv2.jpg)
+![Winnie Harlow at GenXS Jamaica Carnival](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_73e0499c12ff45f9a9598aa01e6f2881_mv2.jpg)
 *Winnie Harlow, GenXS Jamaica*
 
 ### 2. Barbados Crop Over, Glam & Culture 🇧🇧✨
@@ -51,7 +51,7 @@
 
 **Things to Do:** Visit **Bridgetown** (a UNESCO World Heritage site), chill at **Crane or Accra Beach**, and try the Bajan staple, **flying fish and cou-cou**.
 
-![Rihanna and Ayra Starr at Crop Over](https://static.wixstatic.com/media/477465_43849b58c22544ad9ff4a764bd45b4b4~mv2.jpg)
+![Rihanna and Ayra Starr at Crop Over](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_43849b58c22544ad9ff4a764bd45b4b4_mv2.jpg)
 *Rihanna and Ayra Starr, Crop Over*
 
 ### 1. Trinidad & Tobago Carnival, The Mecca of Carnival 🇹🇹🎉
@@ -65,7 +65,7 @@
 
 **Travel Hack:** Buy most things a year in advance and party tickets at least 6 months before. Prices get crazy otherwise.
 
-![Carnival Glam Hub team at Trinidad Carnival](https://static.wixstatic.com/media/477465_baa9b30cac7a4024958652d1deaadcd6~mv2.jpeg)
+![Carnival Glam Hub team at Trinidad Carnival](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_baa9b30cac7a4024958652d1deaadcd6_mv2.jpeg)
 *Trinidad Carnival with the Glam Hub team*
 
 **Final Travel Gems, essentials for every Carnival chaser:**

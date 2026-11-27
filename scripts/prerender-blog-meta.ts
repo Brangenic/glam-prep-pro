@@ -198,7 +198,7 @@ async function generateLocalJpeg(slug: string, sourceUrl: string): Promise<strin
 
 async function generateRemoteJpeg(slug: string, sourceUrl: string): Promise<string | null> {
   // Download any remote image and transcode to a 1200x630 JPEG. Works for
-  // Supabase Storage WebP, wixstatic, or any other absolute URL. Returns
+  // Supabase Storage WebP or any other absolute URL. Returns
   // a site-hosted /og/<slug>.jpg URL on success.
   try {
     const res = await fetch(sourceUrl);

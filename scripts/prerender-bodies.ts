@@ -45,6 +45,7 @@ import {
 import { AI_APP_PATH, AI_APP_H1, AI_APP_SECTIONS } from "../src/data/aiBookingAppPage";
 import { getGuidesForTerritory, getRelatedGuides, guideHref } from "../src/data/carnivalGuides";
 import { deEmDash } from "../src/lib/metaText";
+import { DUPLICATE_IMAGE_RE } from "../src/lib/duplicateImages";
 import {
   TRINIDAD_ANSWER_SECTIONS,
   TRINIDAD_VENUES,
@@ -1644,7 +1645,9 @@ function blogContentFromHtml(html: string, slug: string): Content | null {
 // OFF so raw HTML in markdown is escaped by micromark itself.
 function markdownToSafeHtml(md: string): string {
   const cleaned = deEmDash(md)
-    // Data URI placeholder images that Wix uses, remove them. The
+    // Drop the first of an identical adjacent image pair, as the React page does.
+    .replace(DUPLICATE_IMAGE_RE, "")
+    // Data URI placeholder images from legacy exports, remove them. The
     // data URI itself may contain `)` chars (encoded SVG paths), so
     // consume greedily up to the last `)` on the same line.
     .replace(/!\[[^\]]*\]\(data:[^\n]*\)\s*/g, "")

@@ -24,7 +24,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Carnival Chaser",
     publishedDate: "2024-09-15",
     coverImage:
-      "https://static.wixstatic.com/media/477465_5d9a216d559442279bb4e143c2de0ad1~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_5d9a216d559442279bb4e143c2de0ad1_mv2.jpg",
     excerpt:
       "ChatGPT ranked the top Caribbean Carnivals, here's a Carnival chaser's honest take on Trinidad, Crop Over, Jamaica, Spicemas and Saint Lucia.",
     category: "Caribbean Carnivals",
@@ -40,7 +40,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Jade Amiel",
     publishedDate: "2025-01-26",
     coverImage:
-      "https://static.wixstatic.com/media/477465_a6095efb7ff846228e5a9a603caea64c~mv2.png",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_a6095efb7ff846228e5a9a603caea64c_mv2.png",
     excerpt:
       "Everything you need to know about Jamaica Carnival, dates, where to stay, fetes to hit, Carnival makeup, and the dos and don'ts.",
     category: "Jamaica Carnival",
@@ -60,7 +60,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Carnival Chaser",
     publishedDate: "2024-08-06",
     coverImage:
-      "https://static.wixstatic.com/media/477465_63eed778f7644b009bf3f8ad3f634b92~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_63eed778f7644b009bf3f8ad3f634b92_mv2.jpg",
     excerpt:
       "Rihanna's stunning return to the 2024 Crop Over Festival in Barbados, in a custom costume by Lauren Austin of Aura Experience.",
     category: "Carnival Band Review",
@@ -81,7 +81,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Carnival Chaser",
     publishedDate: "2025-05-29",
     coverImage:
-      "https://static.wixstatic.com/media/477465_f64bba7b59bc410282d0e27d701838a3~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_f64bba7b59bc410282d0e27d701838a3_mv2.jpg",
     excerpt:
       "Planning Crop Over 2025? From where to stay and what to eat to glam tips and road-day hacks, here's your ultimate guide to enjoying Barbados' biggest carnival like a pro.",
     category: "Crop Over",
@@ -96,7 +96,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Carnival Chaser",
     publishedDate: "2026-06-19",
     coverImage:
-      "https://static.wixstatic.com/media/477465_3333540afbef4f60a48b009fbc85bc60~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_3333540afbef4f60a48b009fbc85bc60_mv2.jpg",
     excerpt:
       "First time doing J'ouvert at Trinidad Carnival 2027? Here's how to survive and enjoy Trinidad's wildest Carnival event, from outfits to safety and glam that lasts.",
     category: "Carnival Tips",
@@ -111,7 +111,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Shanique Singh",
     publishedDate: "2026-06-20",
     coverImage:
-      "https://static.wixstatic.com/media/477465_8616a66eef5a4afaaff222aa9ba5a238~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_8616a66eef5a4afaaff222aa9ba5a238_mv2.jpg",
     excerpt:
       "Insider tips for Trinidad Carnival 2027 first-timers. From shoe choices to fete essentials, learn the ropes from a seasoned masquerader and model, and avoid the rookie pitfalls.",
     category: "Carnival Tips",
@@ -126,7 +126,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Carnival Glam Hub",
     publishedDate: "2026-06-17",
     coverImage:
-      "https://static.wixstatic.com/media/477465_d867c068593945b4999d3ae7c72d3ef6~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_d867c068593945b4999d3ae7c72d3ef6_mv2.jpg",
     excerpt:
       "Is Trinidad Carnival 2027 safe? We cut through the noise with real, practical safety advice for masqueraders, from cash tactics to ride-share moves and squad goals.",
     category: "Carnival Tips",
@@ -141,7 +141,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Carnival Glam Hub",
     publishedDate: "2026-06-16",
     coverImage:
-      "https://static.wixstatic.com/media/477465_ae49750d61e4486c9bb571455a196957~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_ae49750d61e4486c9bb571455a196957_mv2.jpg",
     excerpt:
       "Carnival wire bras cause 90% of costume malfunctions. Here are four must-know tips to put yours on right and avoid wardrobe disasters on the road.",
     category: "Carnival Tips",
@@ -156,7 +156,7 @@ export const RECOVERED_POSTS_META: RecoveredPostMeta[] = [
     author: "Mary Esdelle",
     publishedDate: "2026-06-18",
     coverImage:
-      "https://static.wixstatic.com/media/477465_25db9dd2b93b40089c6a0adf739f9e08~mv2.jpg",
+      "https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_25db9dd2b93b40089c6a0adf739f9e08_mv2.jpg",
     excerpt:
       "Heels or flats for the road? A real-talk Carnival footwear guide for Trinidad Carnival 2027, block heels, peep-toe booties, platforms and the half-and-half move.",
     category: "Carnival Tips",

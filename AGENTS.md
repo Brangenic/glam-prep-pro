@@ -8,4 +8,4 @@
 - Reject new or changed overlong synced blog titles before prerender output, exempting only exact frozen baseline titles; this protects publishing without editing legacy articles.
 - Keep size, annual growth and counting-scope prose in the asset-free stats module, with generated discovery text and Vite HTML substitution; this keeps React, JADE and crawler content tied to one annual update.
 - Keep sync_state accessible only to the service role; the admin dashboard reads other tables and needs no direct sync-record access.
-- Build homepage proof wording from the asset-free homeProof module for React and prerender parity; keep its facts sourced from stats, hub tiers and verified press.
+- Build homepage proof wording from the asset-free homeProof module for React and prerender parity; keep its facts sourced from stats, hub tiers and verified press.- No runtime dependency on Wix hosts in src, scripts, public or edge functions; `src/test/noWixHost.test.ts` enforces it, because the owner retired Wix permanently. Legacy blog images live in the blog-images bucket under archive/.

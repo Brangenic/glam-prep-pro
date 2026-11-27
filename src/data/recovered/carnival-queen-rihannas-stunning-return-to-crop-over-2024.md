@@ -1,6 +1,6 @@
 **RIHANNA!** The Queen herself graced the annual Crop Over Festival with her presence at 36, looking flawless as always. RiRi made a dazzling return to the streets of [Barbados](https://www.carnivalglamhub.com/barbados) for the 2024 Crop Over Festival, also known as the Grand Kadooment parade. On August 5th, the "Diamonds" singer appeared in a breathtaking custom costume adorned with intricate gold and bronze jewels and a matching headpiece, perfectly complementing her chestnut and blonde-highlighted hair. Naturally, she wore a custom super backpack to complete the look.
 
-![Rihanna at Crop Over 2024](https://static.wixstatic.com/media/477465_076b9f9d715742fca2bdfeeac5951d48~mv2.jpg)
+![Rihanna at Crop Over 2024](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_076b9f9d715742fca2bdfeeac5951d48_mv2.jpg)
 *Rihanna, Crop Over 2024. Photo: Just Jared*
 
 And did you check out her shoes? Not Rihanna wearing heels on the road! RiRi is definitely a Hot Gyal, not a Comfort Queen. Although the Fenty Beauty mogul is known for her barely-there Carnival looks, this year was giving hot-mom vibes as she was certainly more covered.
@@ -13,7 +13,7 @@ Rihanna has been gracing the festival with her iconic presence as far back as 20
 
 Lauren Austin, co-founder, director, and head designer of Aura Experience, is the creative genius behind Rihanna's stunning costumes over the years. Originally from Trinidad, Austin has lived in Barbados creating eye-catching costumes for over eight years. Aura Experience is the band Rihanna chose to jump with this year, continuing a tradition of dazzling Carnival looks.
 
-![Rihanna's Crop Over looks over the years, Aura Experience by Lauren Austin](https://static.wixstatic.com/media/477465_86031d3935004c29a7fd465b4d6e6f9d~mv2.jpg)
+![Rihanna's Crop Over looks over the years, Aura Experience by Lauren Austin](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_86031d3935004c29a7fd465b4d6e6f9d_mv2.jpg)
 *Rihanna's Crop Over looks over the years, Aura Experience by Lauren Austin*
 
 ### Join the Fun

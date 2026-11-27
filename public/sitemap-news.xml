@@ -24,17 +24,6 @@
     </news:news>
   </url>
   <url>
-    <loc>https://www.carnivalglamhub.com/blogs/carnival-icon-beyond-the-bacchanal</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Carnival Glam Hub</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-09-21T00:00:00.000Z</news:publication_date>
-      <news:title>Carnival ICON: Beyond the Bacchanal</news:title>
-    </news:news>
-  </url>
-  <url>
     <loc>https://www.carnivalglamhub.com/blogs/behind-the-scenes-with-hoppy-how-stink-dutty-became-a-global-phenomenon</loc>
     <news:news>
       <news:publication>
@@ -54,6 +43,17 @@
       </news:publication>
       <news:publication_date>2024-09-21T00:00:00.000Z</news:publication_date>
       <news:title>The Ultimate Carnival Shoes Guide: Strut, Do Not Struggle</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.carnivalglamhub.com/blogs/carnival-icon-beyond-the-bacchanal</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2024-09-21T00:00:00.000Z</news:publication_date>
+      <news:title>Carnival ICON: Beyond the Bacchanal</news:title>
     </news:news>
   </url>
   <url>
@@ -156,6 +156,17 @@
     </news:news>
   </url>
   <url>
+    <loc>https://www.carnivalglamhub.com/blogs/what-to-bring-for-carnival</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Carnival Glam Hub</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-06-27T00:00:00.000Z</news:publication_date>
+      <news:title>What to Bring for Carnival: The No-Nonsense Packing List</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://www.carnivalglamhub.com/blogs/trinidad-carnival-vs-grenada-carnival</loc>
     <news:news>
       <news:publication>
@@ -175,17 +186,6 @@
       </news:publication>
       <news:publication_date>2026-06-27T00:00:00.000Z</news:publication_date>
       <news:title>Trinidad Carnival vs Jamaica Carnival: The Honest Guide to Choosing</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.carnivalglamhub.com/blogs/what-to-bring-for-carnival</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Carnival Glam Hub</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-06-27T00:00:00.000Z</news:publication_date>
-      <news:title>What to Bring for Carnival: The No-Nonsense Packing List</news:title>
     </news:news>
   </url>
   <url>
@@ -483,17 +483,6 @@
       </news:publication>
       <news:publication_date>2024-08-12T00:00:00.000Z</news:publication_date>
       <news:title>50 Stunning Photos of Rihanna&apos;s Carnival Looks: The Bajan Queen&apos;s Jaw-Dropping Crop Over Looks Over The Years</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://www.carnivalglamhub.com/blogs/2027-carnival-calendar</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Carnival Glam Hub</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2026-11-09T00:00:00.000Z</news:publication_date>
-      <news:title>The 2027 Carnival Calendar: Every Road Day Worth Planning Around</news:title>
     </news:news>
   </url>
 </urlset>

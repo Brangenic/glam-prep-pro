@@ -4,7 +4,7 @@ Hey Carnival newbie, so you're venturing into Trinidad for Carnival 2027. Exciti
 
 **2. Bag drama? No thanks.** Crime exists everywhere, so ditch the flashy handbags. A slim wallet, fanny pack or thigh pack is your friend. Keep cash modest, around $300 to $400 TT (about US$40 to 50). Download [TT Ride Share](https://ttrideshare.com/) for safe, card-friendly taxis.
 
-![Trinidad Carnival Tuesday on the road](https://static.wixstatic.com/media/477465_34b52785b25241dcbd393cdb8274a992~mv2.png)
+![Trinidad Carnival Tuesday on the road](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_34b52785b25241dcbd393cdb8274a992_mv2.png)
 *Trinidad Carnival, GenXS cart, Tribe Carnival Tuesday*
 
 **3. Headgear rule: keep it on.** If your costume comes with headgear, don't take it off mid-march. It messes with your makeup, and we're here for the Instagrammable moments. Embrace the tan line, it's a Carnival souvenir.
@@ -17,5 +17,5 @@ Cheers to an epic Trinidad Carnival 2027! 🎉
 
 *About the writer: International model, med student and former Miss Jamaica World, Shanique Singh is a Carnival chaser and Soca lover who has experienced Carnival Glam Hub in Trinidad, Jamaica and Miami.*
 
-![Shanique Singh, Miss Jamaica World](https://static.wixstatic.com/media/477465_d98cc4b21bcb497abd515e8bcecfbf8e~mv2.jpg)
+![Shanique Singh, Miss Jamaica World](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_d98cc4b21bcb497abd515e8bcecfbf8e_mv2.jpg)
 *Shanique Singh*

@@ -21,7 +21,7 @@ J'ouvert is the French Creole term meaning **"dawn" or "daybreak"**, the time at
 
 **10. Less is more.** As with any Caribbean J'ouvert, the less clothing the better.
 
-![J'ouvert, Trinidad Carnival](https://static.wixstatic.com/media/477465_48467c2b6dd24230a3823da342d0d8ed~mv2.jpg)
+![J'ouvert, Trinidad Carnival](https://bvrejdrsrmvdknzoskxi.supabase.co/storage/v1/object/public/blog-images/archive/477465_48467c2b6dd24230a3823da342d0d8ed_mv2.jpg)
 *Credit: J. Hamilton Photography*
 
 Keep your squad close, when everyone's painted, everyone looks the same. Set a meeting time and spot, and try to leave an hour before it ends to beat the madness. Enjoy and have a safe Carnival.

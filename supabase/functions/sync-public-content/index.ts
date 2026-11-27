@@ -1,7 +1,8 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { syncAmazonStorefront } from "../_shared/amazonStore.ts";
 
-type SourceKey = "google_reviews" | "amazon_store" | "blog_posts";
+// Blog posts are written in-site; the old external blog sync is retired.
+type SourceKey = "google_reviews" | "amazon_store";
 
 type SyncStateRow = {
   source_key: SourceKey;
@@ -241,94 +242,6 @@ const syncAmazonProducts = async (
 };
 
 
-const slugify = (text: string) =>
-  text
-    .toLowerCase()
-    .replace(/['']/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 120);
-
-const scrapePostContent = async (firecrawlApiKey: string, postUrl: string) => {
-  try {
-    const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${firecrawlApiKey}`,
-        "Content-Type": "application/json",
-      },
-      signal: AbortSignal.timeout(FIRECRAWL_TIMEOUT_MS),
-      body: JSON.stringify({
-        url: postUrl,
-        formats: ["markdown"],
-        onlyMainContent: true,
-        waitFor: 2000,
-      }),
-    });
-
-    const payload = await response.json();
-    if (!response.ok) return null;
-
-    return payload?.data?.markdown ?? payload?.markdown ?? null;
-  } catch {
-    return null;
-  }
-};
-
-const syncBlogPosts = async (
-  supabaseAdmin: ReturnType<typeof createClient>,
-  firecrawlApiKey: string,
-  sourceUrl: string,
-) => {
-  const extracted = await callFirecrawlJson(
-    firecrawlApiKey,
-    sourceUrl,
-    "Extract all visible blog post cards from this page into JSON with exact shape: { posts: [{ title, excerpt, image_url, post_url, author_name, author_avatar_url, published_date, read_time }] }. Include every visible blog post. Keep text verbatim. post_url must be the full URL to the blog post. image_url should be the featured/thumbnail image URL.",
-  );
-
-  const postsRaw = Array.isArray(extracted?.posts) ? extracted.posts : [];
-
-  const rows = postsRaw
-    .map((post: Record<string, unknown>) => {
-      const title = normalizeText(post.title);
-      const postUrl = normalizeText(post.post_url);
-      if (!title || !postUrl) return null;
-
-      const slug = slugify(title);
-      const externalId = `blog_${hashString(`${title}|${postUrl}`)}`;
-
-      return {
-        external_id: externalId,
-        title,
-        slug,
-        excerpt: normalizeText(post.excerpt) || null,
-        image_url: normalizeText(post.image_url) || null,
-        post_url: postUrl,
-        author_name: normalizeText(post.author_name) || null,
-        author_avatar_url: normalizeText(post.author_avatar_url) || null,
-        published_date: normalizeText(post.published_date) || null,
-        read_time: normalizeText(post.read_time) || null,
-        raw_payload: post,
-        synced_at: new Date().toISOString(),
-      };
-    })
-    .filter(Boolean) as Array<Record<string, unknown>>;
-
-  if (rows.length === 0) {
-    throw new Error("No blog posts could be extracted from the page.");
-  }
-
-  const { error: upsertError } = await supabaseAdmin
-    .from("blog_posts")
-    .upsert(rows, { onConflict: "external_id" });
-
-  if (upsertError) {
-    throw new Error(`Blog posts upsert failed: ${upsertError.message}`);
-  }
-
-  return rows.length;
-};
-
 const shouldSync = (lastSyncedAt: string | null, force: boolean) => {
   if (force || !lastSyncedAt) return true;
   const elapsed = Date.now() - new Date(lastSyncedAt).getTime();
@@ -372,7 +285,7 @@ Deno.serve(async (req) => {
   }
 
   const body = await req.json().catch(() => ({}));
-  const source = body?.source === "google_reviews" || body?.source === "amazon_store" || body?.source === "blog_posts" || body?.source === "all"
+  const source = body?.source === "google_reviews" || body?.source === "amazon_store" || body?.source === "all"
     ? body.source
     : "all";
   const force = Boolean(body?.force);
@@ -382,7 +295,7 @@ Deno.serve(async (req) => {
   });
 
   const selectedSources: SourceKey[] = source === "all"
-    ? ["google_reviews", "amazon_store", "blog_posts"]
+    ? ["google_reviews", "amazon_store"]
     : [source];
 
   const { data: stateRows, error: stateError } = await supabaseAdmin
@@ -423,9 +336,7 @@ Deno.serve(async (req) => {
     try {
       const count = sourceKey === "google_reviews"
         ? await syncGoogleReviews(supabaseAdmin, firecrawlApiKey, sourceState.source_url)
-        : sourceKey === "amazon_store"
-        ? await syncAmazonProducts(supabaseAdmin)
-        : await syncBlogPosts(supabaseAdmin, firecrawlApiKey, sourceState.source_url);
+        : await syncAmazonProducts(supabaseAdmin);
 
       await supabaseAdmin
         .from("sync_state")

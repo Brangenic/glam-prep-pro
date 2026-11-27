@@ -51,7 +51,6 @@ describe("public blog queries only read published posts", () => {
     "scripts/generate-news-sitemap.ts",
     "supabase/functions/generate-sitemap/index.ts",
     "supabase/functions/blog-post-gate/index.ts",
-    "supabase/functions/scrape-blog-content/index.ts",
   ];
   for (const f of files) {
     it(`${f} filters status published on every blog_posts read`, () => {

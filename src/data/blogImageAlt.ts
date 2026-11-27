@@ -6,17 +6,17 @@
  * it empty: src/pages/BlogPost.tsx and scripts/prerender-bodies.ts.
  *
  * Keys are a stable part of the image URL, matched with `includes`, so
- * resized Wix variants of the same file still match. Each value describes
+ * resized variants of the same file still match. Each value describes
  * what is actually in the picture. This module imports no assets.
  */
 
 const BLOG_IMAGE_ALT: [string, string][] = [
   [
-    "477465_ec03697c024549959a39d83b00518cd4~mv2.jpg",
+    "477465_ec03697c024549959a39d83b00518cd4_mv2.jpg",
     "Two progress photos side by side of a masquerader in a white bikini, dated 18 July 2023 and 29 March 2024, captioned Hard work pays off",
   ],
   [
-    "477465_59fef3335bdd4acdb9b2ff3fde78c74f~mv2.jpg",
+    "477465_59fef3335bdd4acdb9b2ff3fde78c74f_mv2.jpg",
     "Collage of five Carnival Glam Hub makeup looks with jewelled headpieces, gem face art and feathered costumes",
   ],
   [

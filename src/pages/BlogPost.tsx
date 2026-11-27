@@ -1,3 +1,4 @@
+import { DUPLICATE_IMAGE_RE } from "@/lib/duplicateImages";
 import { useEffect, useState, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -89,20 +90,19 @@ const cleanMarkdown = (md: string): string => {
   let out = md
     .replace(/\[!\[.*?\]\(https:\/\/smartarget\.online[^\]]*\)\]\([^)]*\)\s*/g, '')
     .replace(/Skip to Main Content\s*/gi, '')
-    .replace(/!\[\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*?fill\/w_\d+,h_1200[^)]*\)\s*/g, '')
     .replace(/^Search\s*$/gm, '')
     .replace(/bottom of page[\s\S]*$/gi, '')
     .replace(/Smartarget Apps are hidden[\s\S]*?top of page\s*/gi, '')
     .replace(/loadbalancer\.visitor-analytics\.io[\s\S]*?ERR_BLOCKED_BY_CLIENT[\s\S]*?Reload\s*/gi, '')
     .replace(/!\[\]\(data:image\/svg\+xml[^\n]*\n?/g, '')
     .replace(/!\[Close Button Icon\][^\n]*\n?/gi, '')
-    // Strip leftover Wix comments/ratings block at the bottom of any post
+    // Strip leftover legacy comments/ratings block at the bottom of any post
     .replace(/##\s*Comments[\s\S]*$/i, '')
     .replace(/!\[\]\(<Base64-Image-Removed>\)/g, '')
-    // Remove blurred thumbnail previews that immediately precede the full
-    // resolution version of the same Wix image (q_30,blur_30 placeholders).
-    .replace(/!\[[^\]]*\]\([^)]*?q_30,blur_30[^)]*?\)\s*\\?\s*/g, '')
-    // Strip stray literal backslashes that leak in from Wix markdown exports.
+    // Legacy posts placed a low-quality preview right before the same image;
+    // both now point at one stored file, so drop the first of an identical pair.
+    .replace(DUPLICATE_IMAGE_RE, '')
+    // Strip stray literal backslashes that leak in from legacy markdown exports.
     // These render as visible "\" characters next to images and captions.
     // Only strip backslashes that aren't escaping a markdown-meaningful char.
     .replace(/\\(?=\s|$)/g, '')
@@ -338,7 +338,7 @@ const slugContentCleaners: Record<string, (md: string) => string> = {
       // Orphan caption that belonged only to that removed cover image
       .replace(/^\s*Luxurios Soft Glam\s*$/gim, '')
       // Remove the Pinterest-linked AI-generated woman image
-      .replace(/\[!\[[^\]]*\]\(https:\/\/static\.wixstatic\.com\/media\/[^)]*\)\]\([^)]*pinterest[^)]*\)\s*/gi, '')
+      .replace(/\[!\[[^\]]*\]\([^)]*\)\]\([^)]*pinterest[^)]*\)\s*/gi, '')
       // Orphan caption that belonged only to that removed Pinterest image
       .replace(/^\s*[“"]Whatever you think looks good[”"][^\n]*\n?/gim, '')
       // Promote standalone bold lines to h2 headings so they get generous
@@ -479,17 +479,6 @@ const BlogPost = () => {
         }
         setPost(resolvedPost);
         setLoading(false);
-      }
-
-      // If post exists but has no content, trigger a background sync
-      if (resolvedPost && !resolvedPost.content) {
-        // Scrape this specific post's content on demand
-        const { data: scraped } = await supabase.functions.invoke("scrape-blog-content", {
-          body: { slug: normalizedSlug },
-        });
-        if (isMounted && scraped?.content) {
-          setPost((prev) => prev ? { ...prev, content: scraped.content } : prev);
-        }
       }
     };
 

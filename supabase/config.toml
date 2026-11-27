@@ -9,11 +9,6 @@ verify_jwt = false
 [functions.blog-post-gate]
 verify_jwt = false
 
-[functions.rehost-blog-images]
-verify_jwt = false
-
-[functions.rehost-blog-inline-images]
-verify_jwt = false
 [functions.sync-amazon-store]
 verify_jwt = false
 
