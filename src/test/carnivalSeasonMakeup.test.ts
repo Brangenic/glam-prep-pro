@@ -111,3 +111,13 @@ describe("appointment-only hub schemas", () => {
     expect(() => assertAppointmentOnlyMarkup('{"openingHoursSpecification":{}}', "test")).toThrow();
   });
 });
+import { TRINIDAD_PACKAGES } from "@/data/trinidadPackages";
+import { getSeasonMakeupPages as _pages } from "@/data/carnivalMakeupPages";
+describe("Trinidad makeup 2027 package block", () => {
+  it("prerender lists every catalogue package link", () => {
+    const t = _pages().find((p) => p.slug === "trinidad")!;
+    const html = seasonMakeupBody(t);
+    expect(TRINIDAD_PACKAGES.length).toBe(8);
+    for (const k of TRINIDAD_PACKAGES) expect(html).toContain(`href="${k.path}"`);
+  });
+});

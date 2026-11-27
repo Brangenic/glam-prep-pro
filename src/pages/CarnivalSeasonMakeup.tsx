@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { hasSeasonPassed } from "@/data/seasons";
 import { seasonPageJsonLd, type SeasonMakeupPage } from "@/data/carnivalMakeupPages";
 import { SITE_URL } from "@/lib/constants";
+import TrinidadDirectPackages from "@/components/TrinidadDirectPackages";
 
 export default function CarnivalSeasonMakeup({ page: p }: { page: SeasonMakeupPage }) {
   const closed = hasSeasonPassed(p.slug);
@@ -47,8 +48,8 @@ export default function CarnivalSeasonMakeup({ page: p }: { page: SeasonMakeupPa
             <Button asChild size="lg" className="w-full sm:w-auto whitespace-normal text-center h-auto min-h-11 py-3"><a href={p.bookingUrl} onClick={track} {...(p.slug === "trinidad" ? {} : { target: "_blank", rel: "noopener noreferrer" })}>{p.bookingLabel}</a></Button>
             <p className="mt-3 text-sm"><a href={p.eventUrl} target="_blank" rel="noopener noreferrer" onClick={track} className="text-primary underline">{p.bookingLabel} on our booking platform</a></p>
           </>}
-          {/* Reserved for catalogue-derived dated packages only. There are eight, not nine. */}
         </header>
+        {!closed && p.slug === "trinidad" && <TrinidadDirectPackages />}
         <figure className="mt-8 mb-12"><img src={p.image} alt={p.imageAlt} loading="lazy" className="w-full max-h-96 object-cover object-top" width="1280" height="720" /></figure>
         {p.timeline.length > 0 && <section className="border-t border-border py-8"><h2 className="font-display text-2xl font-bold mb-6">How the morning works</h2><div className="grid sm:grid-cols-2 gap-6">{p.timeline.map((s) => <div key={s.q}><h3 className="font-display text-xl font-semibold mb-2">{s.q}</h3><p className="text-sm text-muted-foreground leading-relaxed">{s.a}</p></div>)}</div></section>}
         {p.proof.length > 0 && <section className="border-t border-border py-8"><h2 className="font-display text-2xl font-bold mb-6">Past seasons and independent reviews</h2>{p.proof.map((r) => <p key={r.text} className="text-sm leading-relaxed mb-5">{r.text}{r.url && <> <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-primary underline">{r.label ?? r.text}</a></>}</p>)}</section>}
