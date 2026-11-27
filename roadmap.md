@@ -1,9 +1,13 @@
 # Roadmap: security fix (21 November 2026)
 
 ## Appointment-only search pages (27 November 2026)
-- [ ] Replace salon and opening-hours structured data with Organization and dated hub Events
-- [ ] Shared fact-led seasonal makeup pages, Trinidad comparison copy, booking and discovery links
-- [ ] Full tests, mobile/desktop checks, publish and verify production
+- [x] Replace salon and opening-hours structured data with Organization and dated hub Events
+- [x] Shared fact-led Trinidad and Jamaica seasonal makeup pages, comparison copy, booking and discovery links
+- [x] 738 tests pass, build OK, 375px/1280px production checks pass; published and scanned all 96 sitemap pages with no forbidden markup
+- [ ] TODO(Kibwe): confirm operational order, appointment durations and shuttle departure times
+- [ ] TODO(Kibwe): verify uninterrupted Trinidad Hilton seasons since 2020 and Trinidad-specific tenth-season claim
+- [ ] TODO(Kibwe): confirm Miami 2027 date/products, Grenada live service products and appointment window
+- [ ] TODO(Kibwe): confirm formal Hilton venue name; retained the existing catalogue wording
 
 ## Homepage proof placement (26 November 2026)
 - [x] Move proof after founders, keep one quiet hero line and match prerender
